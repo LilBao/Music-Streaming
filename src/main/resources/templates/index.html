@@ -19,12 +19,11 @@
 
 
 <body>
-    <div class="content">
-        <div class="sidebar">
-            <div class="w-100 ">
-                <h5 class="text-center">Aministrator admin</h5>
+    <div class="content d-flex">
+        <div class="sidebar container-fluid">
+            <div class="row">
                 <ul class="list-group">
-                    <div class="card shadow mb-4">
+                    <div class="card card-content shadow mb-4">
                         <div class="card-body">
                             <div class="table-responsive">
                                 <li>
@@ -40,24 +39,30 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card shadow">
+                    <div class="card card-content shadow">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <li>
-                                    <a class="list-group-item playlist-child py-3 m-2" th:href="@{|/admin-coupon|}">
-                                        <i class="mx-2 bi bi-ticket-perforated-fill"></i> Voucher
-                                    </a>
-                                </li>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5>Your Library</h5>
+                                    <div class="dropdown">
+                                        <button type="button" class="btn button-control"
+                                            data-bs-toggle="dropdown">
+                                            <i class="bi bi-plus-circle"></i>
+                                        </button>
+                                        <ul class="dropdown-menu drop-playlist ">
+                                            <li><a class="dropdown-item" href="#"><i class="bi bi-music-note-beamed"></i> Create a new Playlist</a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="bi bi-folder2-open"></i> Create a new folder playlist</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
                                 <div class="playlist">
                                     <li>
-                                        <a class="list-group-item playlist-child py-3 m-2"
-                                            th:href="@{|/admin-coupon|}">
+                                        <a class="list-group-item playlist-child py-3 m-2" th:href="@{|/admin-coupon|}">
                                             <i class="mx-2 bi bi-ticket-perforated-fill"></i> Voucher
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="list-group-item playlist-child py-3 m-2"
-                                            th:href="@{|/admin-orders|}">
+                                        <a class="list-group-item playlist-child py-3 m-2" th:href="@{|/admin-orders|}">
                                             <i class="mx-2 bi bi-bag-heart-fill"></i> Order
                                         </a>
                                     </li>
@@ -68,26 +73,22 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="list-group-item playlist-child py-3 m-2"
-                                            th:href="@{|/admin-coupon|}">
+                                        <a class="list-group-item playlist-child py-3 m-2" th:href="@{|/admin-coupon|}">
                                             <i class="mx-2 bi bi-ticket-perforated-fill"></i> Voucher
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="list-group-item playlist-child py-3 m-2"
-                                            th:href="@{|/admin-coupon|}">
+                                        <a class="list-group-item playlist-child py-3 m-2" th:href="@{|/admin-coupon|}">
                                             <i class="mx-2 bi bi-ticket-perforated-fill"></i> Voucher
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="list-group-item playlist-child py-3 m-2"
-                                            th:href="@{|/admin-coupon|}">
+                                        <a class="list-group-item playlist-child py-3 m-2" th:href="@{|/admin-coupon|}">
                                             <i class="mx-2 bi bi-ticket-perforated-fill"></i> Voucher
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="list-group-item playlist-child py-3 m-2"
-                                            th:href="@{|/admin-coupon|}">
+                                        <a class="list-group-item playlist-child py-3 m-2" th:href="@{|/admin-coupon|}">
                                             <i class="mx-2 bi bi-ticket-perforated-fill"></i> Voucher
                                         </a>
                                     </li>
@@ -98,793 +99,821 @@
                 </ul>
             </div>
         </div>
-        <main>
-            !-- part slider -->
-    <div class="container mt-5">
-        <div id="carouselExampleControls1" class="carousel slide" data-bs-ride="carousel1">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <img src="../static/img/ab1.webp" width="100%" alt="">
-                        </div>
-                        <div class="col-sm-4">
-                            <img src="img/carousel2.jpg" width="100%" alt="">
-                        </div>
-                        <div class="col-sm-4">
-                            <img src="img/carousel3.jpg" width="100%" alt="">
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <img src="img/carousel1.jpg" width="100%" alt="">
-                        </div>
-                        <div class="col-sm-4">
-                            <img src="img/carousel2.jpg" width="100%" alt="">
-                        </div>
-                        <div class="col-sm-4">
-                            <img src="img/carousel3.jpg" width="100%" alt="">
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <img src="img/carousel1.jpg" width="100%" alt="">
-                        </div>
-                        <div class="col-sm-4">
-                            <img src="img/carousel2.jpg" width="100%" alt="">
-                        </div>
-                        <div class="col-sm-4">
-                            <img src="img/carousel3.jpg" width="100%" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls1"
-                data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls1"
-                data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-    </div>
-
-    <!-- recently -->
-    <div class="container mt-5">
-        <div class="text-title mb-3">
-            <h3>Gần Đây</h3>
-            <div class="row mt-3">
-                <div class="col-sm-2">
-                    <div class="card play-list">
-                        <div class="card-img">
-                            <img src="img/ms1.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                            <div class="icon">
-                                <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                                <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                                <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                            </div>
-                        </div>
-                        <div class="card-play-list">
-                            <p class="card-text-recently">hoa tàn, tình tan</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <div class="card play-list">
-                        <div class="card-img">
-                            <img src="img/ms2.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                            <div class="icon">
-                                <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                                <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                                <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                            </div>
-                        </div>
-                        <div class="card-play-list">
-                            <p class="card-text-recently">hoa tàn, tình tan</p>
-                        </div>
-                    </div>
-                </div>               
-            </div>
-        </div>
-    </div>
-    <!-- Chill list -->
-    <div class="container mt-5">
-        <div class="text-title mb-3">
-            <h3>Chill</h3>
-        </div>
-        <div class="row">
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="../static/img/ms3.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                        <div class="icon">
-                            <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                            <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                            <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                        </div>
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="img/ms4.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                        <div class="icon">
-                            <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                            <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                            <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                        </div>
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="img/ms5.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                        <div class="icon">
-                            <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                            <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                            <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                        </div>
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="img/ms6.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                        <div class="icon">
-                            <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                            <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                            <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                        </div>
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <!-- love list -->
-    <div class="container mt-5">
-        <div class="text-title mb-3">
-            <h3>Một Chút Yêu Đời</h3>
-        </div>
-        <div class="row">
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="img/ms7.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                        <div class="icon">
-                            <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                            <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                            <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                        </div>
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="img/ms8.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                        <div class="icon">
-                            <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                            <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                            <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                        </div>
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="img/ms9.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                        <div class="icon">
-                            <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                            <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                            <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                        </div>
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="img/ms10.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                        <div class="icon">
-                            <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                            <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                            <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                        </div>
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <!-- Remix list -->
-    <div class="container mt-5">
-        <div class="text-title mb-3">
-            <h3>Remix Là Dance Luôn</h3>
-        </div>
-        <div class="row">
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="img/ms11.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                        <div class="icon">
-                            <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                            <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                            <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                        </div>
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="img/ms12.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                        <div class="icon">
-                            <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                            <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                            <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                        </div>
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="img/ms13.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                        <div class="icon">
-                            <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                            <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                            <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                        </div>
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="img/ms14.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                        <div class="icon">
-                            <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                            <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                            <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                        </div>
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <!-- Sad music list -->
-    <div class="container mt-5">
-        <div class="text-title mb-3">
-            <h3>Tâm Trạng Tan Chậm</h3>
-        </div>
-        <div class="row">
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="img/ms15.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                        <div class="icon">
-                            <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                            <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                            <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                        </div>
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="img/ms16.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                        <div class="icon">
-                            <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                            <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                            <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                        </div>
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="img/ms17.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                        <div class="icon">
-                            <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                            <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                            <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                        </div>
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="img/ms18.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                        <div class="icon">
-                            <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                            <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                            <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                        </div>
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <!-- musician list -->
-    <div class="container mt-5">
-        <div class="text-title mb-3">
-            <h3>Nghệ Sĩ Thịnh Hành</h3>
-        </div>
-        <div class="row">
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="img/cs1.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                        <div class="icon">
-                            <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                            <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                            <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                        </div>
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="img/cs2.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                        <div class="icon">
-                            <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                            <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                            <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                        </div>
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="img/cs3.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                        <div class="icon">
-                            <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                            <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                            <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                        </div>
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="img/cs4.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                        <div class="icon">
-                            <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                            <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                            <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                        </div>
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <!-- Ranking Music -->
-    <div class="container mt-5">
-        <div class="text-title mb-3">
-            <h3>BXH Nhạc Mới</h3>
-            <div id="carouselExampleControls" class="carousel slide mt-3" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <!-- Cột 1 -->
-                                <div class="card mb-3 ranking " style="max-width: 540px;">
-                                    <div class="row g-0">
-                                        <div class="col-md-4">
-                                            <img src="img/pl1.webp" class="img-fluid" alt="img/pl1.webp">
+        <main class="p-1">
+            <div class="card card-content shadow mb-4">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div class="container mt-5">
+                            <div id="carouselExampleControls1" class="carousel slide" data-bs-ride="carousel1">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <img src="../static/img/ab1.webp" width="100%" alt="">
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <img src="img/carousel2.jpg" width="100%" alt="">
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <img src="img/carousel3.jpg" width="100%" alt="">
+                                            </div>
                                         </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body">
-                                                <h5 class="card-title">Missing You</h5>
-                                                <p class="card-text">Từ nơi tôi sinh ra
-                                                </p>
-                                                <p class="card-text"><small class="text-muted">#1 </small>03/09/2023
-                                                </p>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <img src="img/carousel1.jpg" width="100%" alt="">
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <img src="img/carousel2.jpg" width="100%" alt="">
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <img src="img/carousel3.jpg" width="100%" alt="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <img src="img/carousel1.jpg" width="100%" alt="">
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <img src="img/carousel2.jpg" width="100%" alt="">
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <img src="img/carousel3.jpg" width="100%" alt="">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <button class="carousel-control-prev" type="button"
+                                    data-bs-target="#carouselExampleControls1" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button"
+                                    data-bs-target="#carouselExampleControls1" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
                             </div>
-                            <div class="col-sm-4">
-                                <!-- Cột 2 -->
-                                <div class="card mb-3 ranking" style="max-width: 540px;">
-                                    <div class="row g-0">
-                                        <div class="col-md-4">
-                                            <img src="img/pl1.webp" class="img-fluid" alt="img/pl1.webp">
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body">
-                                                <h5 class="card-title">Missing You</h5>
-                                                <p class="card-text">Từ nơi tôi sinh ra
-                                                </p>
-                                                <p class="card-text"><small class="text-muted">#1 </small>03/09/2023
-                                                </p>
+                        </div>
+
+                        <!-- recently -->
+                        <div class="container mt-5">
+                            <div class="text-title mb-3">
+                                <h3>Gần Đây</h3>
+                                <div class="row mt-3">
+                                    <div class="col-sm-2">
+                                        <div class="card play-list">
+                                            <div class="card-img">
+                                                <img src="img/ms1.webp" class="card-img-top"
+                                                    alt="Sunset Over the Sea" />
+                                                <div class="icon">
+                                                    <div class="icon-play"><i class="bi bi-play-circle"></i></div>
+                                                    <div class="icon-heart"><i class="bi bi-heart"></i></div>
+                                                    <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
+                                                </div>
+                                            </div>
+                                            <div class="card-play-list">
+                                                <p class="card-text-recently">hoa tàn, tình tan</p>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <!-- Cột 3 -->
-                                <div class="card mb-3 ranking" style="max-width: 540px;">
-                                    <div class="row g-0">
-                                        <div class="col-md-4">
-                                            <img src="img/pl1.webp" class="img-fluid" alt="img/pl1.webp">
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body">
-                                                <h5 class="card-title">Missing You</h5>
-                                                <p class="card-text">Từ nơi tôi sinh ra
-                                                </p>
-                                                <p class="card-text"><small class="text-muted">#1 </small>03/09/2023
-                                                </p>
+                                    <div class="col-sm-2">
+                                        <div class="card play-list">
+                                            <div class="card-img">
+                                                <img src="img/ms2.webp" class="card-img-top"
+                                                    alt="Sunset Over the Sea" />
+                                                <div class="icon">
+                                                    <div class="icon-play"><i class="bi bi-play-circle"></i></div>
+                                                    <div class="icon-heart"><i class="bi bi-heart"></i></div>
+                                                    <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
+                                                </div>
+                                            </div>
+                                            <div class="card-play-list">
+                                                <p class="card-text-recently">hoa tàn, tình tan</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <!-- Cột 1 -->
-                                <div class="card mb-3 ranking" style="max-width: 540px;">
-                                    <div class="row g-0">
-                                        <div class="col-md-4">
-                                            <img src="img/pl1.webp" class="img-fluid" alt="img/pl1.webp">
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body">
-                                                <h5 class="card-title">Missing You</h5>
-                                                <p class="card-text">Từ nơi tôi sinh ra
-                                                </p>
-                                                <p class="card-text"><small class="text-muted">#1 </small>03/09/2023
-                                                </p>
+                        <!-- Chill list -->
+                        <div class="container mt-5">
+                            <div class="text-title mb-3">
+                                <h3>Chill</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="card play-list">
+                                        <div class="card-img">
+                                            <img src="../static/img/ms3.webp" class="card-img-top"
+                                                alt="Sunset Over the Sea" />
+                                            <div class="icon">
+                                                <div class="icon-play"><i class="bi bi-play-circle"></i></div>
+                                                <div class="icon-heart"><i class="bi bi-heart"></i></div>
+                                                <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
                                             </div>
                                         </div>
+                                        <div class="card-play-list">
+                                            <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
+                                        </div>
                                     </div>
+
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="card play-list">
+                                        <div class="card-img">
+                                            <img src="img/ms4.webp" class="card-img-top" alt="Sunset Over the Sea" />
+                                            <div class="icon">
+                                                <div class="icon-play"><i class="bi bi-play-circle"></i></div>
+                                                <div class="icon-heart"><i class="bi bi-heart"></i></div>
+                                                <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="card-play-list">
+                                            <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="card play-list">
+                                        <div class="card-img">
+                                            <img src="img/ms5.webp" class="card-img-top" alt="Sunset Over the Sea" />
+                                            <div class="icon">
+                                                <div class="icon-play"><i class="bi bi-play-circle"></i></div>
+                                                <div class="icon-heart"><i class="bi bi-heart"></i></div>
+                                                <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="card-play-list">
+                                            <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="card play-list">
+                                        <div class="card-img">
+                                            <img src="img/ms6.webp" class="card-img-top" alt="Sunset Over the Sea" />
+                                            <div class="icon">
+                                                <div class="icon-play"><i class="bi bi-play-circle"></i></div>
+                                                <div class="icon-heart"><i class="bi bi-heart"></i></div>
+                                                <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="card-play-list">
+                                            <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
-                            <div class="col-sm-4">
-                                <!-- Cột 2 -->
-                                <div class="card mb-3 ranking" style="max-width: 540px;">
-                                    <div class="row g-0">
-                                        <div class="col-md-4">
-                                            <img src="img/pl1.webp" class="img-fluid" alt="img/pl1.webp">
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body">
-                                                <h5 class="card-title">Missing You</h5>
-                                                <p class="card-text">Từ nơi tôi sinh ra
-                                                </p>
-                                                <p class="card-text"><small class="text-muted">#1 </small>03/09/2023
-                                                </p>
+                        </div>
+                        <!-- love list -->
+                        <div class="container mt-5">
+                            <div class="text-title mb-3">
+                                <h3>Một Chút Yêu Đời</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="card play-list">
+                                        <div class="card-img">
+                                            <img src="img/ms7.webp" class="card-img-top" alt="Sunset Over the Sea" />
+                                            <div class="icon">
+                                                <div class="icon-play"><i class="bi bi-play-circle"></i></div>
+                                                <div class="icon-heart"><i class="bi bi-heart"></i></div>
+                                                <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
                                             </div>
                                         </div>
+                                        <div class="card-play-list">
+                                            <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
+                                        </div>
                                     </div>
+
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="card play-list">
+                                        <div class="card-img">
+                                            <img src="img/ms8.webp" class="card-img-top" alt="Sunset Over the Sea" />
+                                            <div class="icon">
+                                                <div class="icon-play"><i class="bi bi-play-circle"></i></div>
+                                                <div class="icon-heart"><i class="bi bi-heart"></i></div>
+                                                <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="card-play-list">
+                                            <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="card play-list">
+                                        <div class="card-img">
+                                            <img src="img/ms9.webp" class="card-img-top" alt="Sunset Over the Sea" />
+                                            <div class="icon">
+                                                <div class="icon-play"><i class="bi bi-play-circle"></i></div>
+                                                <div class="icon-heart"><i class="bi bi-heart"></i></div>
+                                                <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="card-play-list">
+                                            <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="card play-list">
+                                        <div class="card-img">
+                                            <img src="img/ms10.webp" class="card-img-top" alt="Sunset Over the Sea" />
+                                            <div class="icon">
+                                                <div class="icon-play"><i class="bi bi-play-circle"></i></div>
+                                                <div class="icon-heart"><i class="bi bi-heart"></i></div>
+                                                <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="card-play-list">
+                                            <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
-                            <div class="col-sm-4">
-                                <!-- Cột 3 -->
-                                <div class="card mb-3 ranking" style="max-width: 540px;">
-                                    <div class="row g-0">
-                                        <div class="col-md-4">
-                                            <img src="img/pl1.webp" class="img-fluid" alt="img/pl1.webp">
+                        </div>
+                        <!-- Remix list -->
+                        <div class="container mt-5">
+                            <div class="text-title mb-3">
+                                <h3>Remix Là Dance Luôn</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="card play-list">
+                                        <div class="card-img">
+                                            <img src="img/ms11.webp" class="card-img-top" alt="Sunset Over the Sea" />
+                                            <div class="icon">
+                                                <div class="icon-play"><i class="bi bi-play-circle"></i></div>
+                                                <div class="icon-heart"><i class="bi bi-heart"></i></div>
+                                                <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
+                                            </div>
                                         </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body">
-                                                <h5 class="card-title">Missing You</h5>
-                                                <p class="card-text">Từ nơi tôi sinh ra
-                                                </p>
-                                                <p class="card-text"><small class="text-muted">#1 </small>03/09/2023
-                                                </p>
+                                        <div class="card-play-list">
+                                            <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="card play-list">
+                                        <div class="card-img">
+                                            <img src="img/ms12.webp" class="card-img-top" alt="Sunset Over the Sea" />
+                                            <div class="icon">
+                                                <div class="icon-play"><i class="bi bi-play-circle"></i></div>
+                                                <div class="icon-heart"><i class="bi bi-heart"></i></div>
+                                                <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="card-play-list">
+                                            <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="card play-list">
+                                        <div class="card-img">
+                                            <img src="img/ms13.webp" class="card-img-top" alt="Sunset Over the Sea" />
+                                            <div class="icon">
+                                                <div class="icon-play"><i class="bi bi-play-circle"></i></div>
+                                                <div class="icon-heart"><i class="bi bi-heart"></i></div>
+                                                <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="card-play-list">
+                                            <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="card play-list">
+                                        <div class="card-img">
+                                            <img src="img/ms14.webp" class="card-img-top" alt="Sunset Over the Sea" />
+                                            <div class="icon">
+                                                <div class="icon-play"><i class="bi bi-play-circle"></i></div>
+                                                <div class="icon-heart"><i class="bi bi-heart"></i></div>
+                                                <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="card-play-list">
+                                            <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Sad music list -->
+                        <div class="container mt-5">
+                            <div class="text-title mb-3">
+                                <h3>Tâm Trạng Tan Chậm</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="card play-list">
+                                        <div class="card-img">
+                                            <img src="img/ms15.webp" class="card-img-top" alt="Sunset Over the Sea" />
+                                            <div class="icon">
+                                                <div class="icon-play"><i class="bi bi-play-circle"></i></div>
+                                                <div class="icon-heart"><i class="bi bi-heart"></i></div>
+                                                <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="card-play-list">
+                                            <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="card play-list">
+                                        <div class="card-img">
+                                            <img src="img/ms16.webp" class="card-img-top" alt="Sunset Over the Sea" />
+                                            <div class="icon">
+                                                <div class="icon-play"><i class="bi bi-play-circle"></i></div>
+                                                <div class="icon-heart"><i class="bi bi-heart"></i></div>
+                                                <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="card-play-list">
+                                            <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="card play-list">
+                                        <div class="card-img">
+                                            <img src="img/ms17.webp" class="card-img-top" alt="Sunset Over the Sea" />
+                                            <div class="icon">
+                                                <div class="icon-play"><i class="bi bi-play-circle"></i></div>
+                                                <div class="icon-heart"><i class="bi bi-heart"></i></div>
+                                                <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="card-play-list">
+                                            <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="card play-list">
+                                        <div class="card-img">
+                                            <img src="img/ms18.webp" class="card-img-top" alt="Sunset Over the Sea" />
+                                            <div class="icon">
+                                                <div class="icon-play"><i class="bi bi-play-circle"></i></div>
+                                                <div class="icon-heart"><i class="bi bi-heart"></i></div>
+                                                <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="card-play-list">
+                                            <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- musician list -->
+                        <div class="container mt-5">
+                            <div class="text-title mb-3">
+                                <h3>Nghệ Sĩ Thịnh Hành</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="card play-list">
+                                        <div class="card-img">
+                                            <img src="img/cs1.webp" class="card-img-top" alt="Sunset Over the Sea" />
+                                            <div class="icon">
+                                                <div class="icon-play"><i class="bi bi-play-circle"></i></div>
+                                                <div class="icon-heart"><i class="bi bi-heart"></i></div>
+                                                <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="card-play-list">
+                                            <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="card play-list">
+                                        <div class="card-img">
+                                            <img src="img/cs2.webp" class="card-img-top" alt="Sunset Over the Sea" />
+                                            <div class="icon">
+                                                <div class="icon-play"><i class="bi bi-play-circle"></i></div>
+                                                <div class="icon-heart"><i class="bi bi-heart"></i></div>
+                                                <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="card-play-list">
+                                            <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="card play-list">
+                                        <div class="card-img">
+                                            <img src="img/cs3.webp" class="card-img-top" alt="Sunset Over the Sea" />
+                                            <div class="icon">
+                                                <div class="icon-play"><i class="bi bi-play-circle"></i></div>
+                                                <div class="icon-heart"><i class="bi bi-heart"></i></div>
+                                                <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="card-play-list">
+                                            <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="card play-list">
+                                        <div class="card-img">
+                                            <img src="img/cs4.webp" class="card-img-top" alt="Sunset Over the Sea" />
+                                            <div class="icon">
+                                                <div class="icon-play"><i class="bi bi-play-circle"></i></div>
+                                                <div class="icon-heart"><i class="bi bi-heart"></i></div>
+                                                <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="card-play-list">
+                                            <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Ranking Music -->
+                        <div class="container mt-5">
+                            <div class="text-title mb-3">
+                                <h3>BXH Nhạc Mới</h3>
+                                <div id="carouselExampleControls" class="carousel slide mt-3" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <!-- Cột 1 -->
+                                                    <div class="card mb-3 ranking " style="max-width: 540px;">
+                                                        <div class="row g-0">
+                                                            <div class="col-md-4">
+                                                                <img src="img/pl1.webp" class="img-fluid"
+                                                                    alt="img/pl1.webp">
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">Missing You</h5>
+                                                                    <p class="card-text">Từ nơi tôi sinh ra
+                                                                    </p>
+                                                                    <p class="card-text"><small class="text-muted">#1
+                                                                        </small>03/09/2023
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <!-- Cột 2 -->
+                                                    <div class="card mb-3 ranking" style="max-width: 540px;">
+                                                        <div class="row g-0">
+                                                            <div class="col-md-4">
+                                                                <img src="img/pl1.webp" class="img-fluid"
+                                                                    alt="img/pl1.webp">
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">Missing You</h5>
+                                                                    <p class="card-text">Từ nơi tôi sinh ra
+                                                                    </p>
+                                                                    <p class="card-text"><small class="text-muted">#1
+                                                                        </small>03/09/2023
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <!-- Cột 3 -->
+                                                    <div class="card mb-3 ranking" style="max-width: 540px;">
+                                                        <div class="row g-0">
+                                                            <div class="col-md-4">
+                                                                <img src="img/pl1.webp" class="img-fluid"
+                                                                    alt="img/pl1.webp">
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">Missing You</h5>
+                                                                    <p class="card-text">Từ nơi tôi sinh ra
+                                                                    </p>
+                                                                    <p class="card-text"><small class="text-muted">#1
+                                                                        </small>03/09/2023
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <!-- Cột 1 -->
+                                                    <div class="card mb-3 ranking" style="max-width: 540px;">
+                                                        <div class="row g-0">
+                                                            <div class="col-md-4">
+                                                                <img src="img/pl1.webp" class="img-fluid"
+                                                                    alt="img/pl1.webp">
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">Missing You</h5>
+                                                                    <p class="card-text">Từ nơi tôi sinh ra
+                                                                    </p>
+                                                                    <p class="card-text"><small class="text-muted">#1
+                                                                        </small>03/09/2023
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <!-- Cột 2 -->
+                                                    <div class="card mb-3 ranking" style="max-width: 540px;">
+                                                        <div class="row g-0">
+                                                            <div class="col-md-4">
+                                                                <img src="img/pl1.webp" class="img-fluid"
+                                                                    alt="img/pl1.webp">
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">Missing You</h5>
+                                                                    <p class="card-text">Từ nơi tôi sinh ra
+                                                                    </p>
+                                                                    <p class="card-text"><small class="text-muted">#1
+                                                                        </small>03/09/2023
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <!-- Cột 3 -->
+                                                    <div class="card mb-3 ranking" style="max-width: 540px;">
+                                                        <div class="row g-0">
+                                                            <div class="col-md-4">
+                                                                <img src="img/pl1.webp" class="img-fluid"
+                                                                    alt="img/pl1.webp">
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">Missing You</h5>
+                                                                    <p class="card-text">Từ nơi tôi sinh ra
+                                                                    </p>
+                                                                    <p class="card-text"><small class="text-muted">#1
+                                                                        </small>03/09/2023
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <!-- Cột 1 -->
+                                                    <div class="card mb-3 ranking" style="max-width: 540px;">
+                                                        <div class="row g-0">
+                                                            <div class="col-md-4">
+                                                                <img src="img/pl1.webp" class="img-fluid"
+                                                                    alt="img/pl1.webp">
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">Missing You</h5>
+                                                                    <p class="card-text">Từ nơi tôi sinh ra
+                                                                    </p>
+                                                                    <p class="card-text"><small class="text-muted">#1
+                                                                        </small>03/09/2023
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <!-- Cột 2 -->
+                                                    <div class="card mb-3 ranking" style="max-width: 540px;">
+                                                        <div class="row g-0">
+                                                            <div class="col-md-4">
+                                                                <img src="img/pl1.webp" class="img-fluid"
+                                                                    alt="img/pl1.webp">
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">Missing You</h5>
+                                                                    <p class="card-text">Từ nơi tôi sinh ra
+                                                                    </p>
+                                                                    <p class="card-text"><small class="text-muted">#1
+                                                                        </small>03/09/2023
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <!-- Cột 3 -->
+                                                    <div class="card mb-3 ranking" style="max-width: 540px;">
+                                                        <div class="row g-0">
+                                                            <div class="col-md-4">
+                                                                <img src="img/pl1.webp" class="img-fluid"
+                                                                    alt="img/pl1.webp">
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">Missing You</h5>
+                                                                    <p class="card-text">Từ nơi tôi sinh ra
+                                                                    </p>
+                                                                    <p class="card-text"><small class="text-muted">#1
+                                                                        </small>03/09/2023
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <button class="icon-prev" type="button" data-bs-target="#carouselExampleControls"
+                                        data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="icon-next" type="button" data-bs-target="#carouselExampleControls"
+                                        data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Category music -->
+                        <div class="container mt-5">
+                            <div class="row">
+                                <div class="col-sm-4 imgct">
+                                    <img src="img/ctvn.jpg" width="100%" alt="">
+                                </div>
+                                <div class="col-sm-4 imgct">
+                                    <img src="img/ctusuk.jpg" width="100%" alt="">
+                                </div>
+                                <div class="col-sm-4 imgct">
+                                    <img src="img/ctkpop.jpg" width="100%" alt="">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- top100 -->
+                        <div class="container mt-5">
+                            <div class="text-title mb-3">
+                                <h3>Top 100</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="card play-list">
+                                        <div class="card-img">
+                                            <img src="img/t1.webp" class="card-img-top" alt="Sunset Over the Sea" />
+                                        </div>
+                                        <div class="card-play-list">
+                                            <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="card play-list">
+                                        <div class="card-img">
+                                            <img src="img/t2.webp" class="card-img-top" alt="Sunset Over the Sea" />
+                                        </div>
+                                        <div class="card-play-list">
+                                            <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="card play-list">
+                                        <div class="card-img">
+                                            <img src="img/t3.webp" class="card-img-top" alt="Sunset Over the Sea" />
+                                        </div>
+                                        <div class="card-play-list">
+                                            <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="card play-list">
+                                        <div class="card-img">
+                                            <img src="img/t4.webp" class="card-img-top" alt="Sunset Over the Sea" />
+                                        </div>
+                                        <div class="card-play-list">
+                                            <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Album hot -->
+                        <div class="container mt-5">
+                            <div class="text-title mb-3">
+                                <h3>Album Hot</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="card play-list">
+                                        <div class="card-img">
+                                            <img src="img/ab1.webp" class="card-img-top" alt="Sunset Over the Sea" />
+                                        </div>
+                                        <div class="card-play-list">
+                                            <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="card play-list">
+                                        <div class="card-img">
+                                            <img src="img/ab2.webp" class="card-img-top" alt="Sunset Over the Sea" />
+                                        </div>
+                                        <div class="card-play-list">
+                                            <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="card play-list">
+                                        <div class="card-img">
+                                            <img src="img/ab3.webp" class="card-img-top" alt="Sunset Over the Sea" />
+                                        </div>
+                                        <div class="card-play-list">
+                                            <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="card play-list">
+                                        <div class="card-img">
+                                            <img src="img/ab4.webp" class="card-img-top" alt="Sunset Over the Sea" />
+                                        </div>
+                                        <div class="card-play-list">
+                                            <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="carousel-item">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <!-- Cột 1 -->
-                                <div class="card mb-3 ranking" style="max-width: 540px;">
-                                    <div class="row g-0">
-                                        <div class="col-md-4">
-                                            <img src="img/pl1.webp" class="img-fluid" alt="img/pl1.webp">
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body">
-                                                <h5 class="card-title">Missing You</h5>
-                                                <p class="card-text">Từ nơi tôi sinh ra
-                                                </p>
-                                                <p class="card-text"><small class="text-muted">#1 </small>03/09/2023
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <!-- Cột 2 -->
-                                <div class="card mb-3 ranking" style="max-width: 540px;">
-                                    <div class="row g-0">
-                                        <div class="col-md-4">
-                                            <img src="img/pl1.webp" class="img-fluid" alt="img/pl1.webp">
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body">
-                                                <h5 class="card-title">Missing You</h5>
-                                                <p class="card-text">Từ nơi tôi sinh ra
-                                                </p>
-                                                <p class="card-text"><small class="text-muted">#1 </small>03/09/2023
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <!-- Cột 3 -->
-                                <div class="card mb-3 ranking" style="max-width: 540px;">
-                                    <div class="row g-0">
-                                        <div class="col-md-4">
-                                            <img src="img/pl1.webp" class="img-fluid" alt="img/pl1.webp">
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body">
-                                                <h5 class="card-title">Missing You</h5>
-                                                <p class="card-text">Từ nơi tôi sinh ra
-                                                </p>
-                                                <p class="card-text"><small class="text-muted">#1 </small>03/09/2023
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-                <button class="icon-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="icon-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
             </div>
-        </div>
-    </div>
-
-    <!-- Category music -->
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-sm-4 imgct">
-                <img src="img/ctvn.jpg" width="100%" alt="">
-            </div>
-            <div class="col-sm-4 imgct">
-                <img src="img/ctusuk.jpg" width="100%" alt="">
-            </div>
-            <div class="col-sm-4 imgct">
-                <img src="img/ctkpop.jpg" width="100%" alt="">
-            </div>
-        </div>
-    </div>
-
-    <!-- top100 -->
-    <div class="container mt-5">
-        <div class="text-title mb-3">
-            <h3>Top 100</h3>
-        </div>
-        <div class="row">
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="img/t1.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="img/t2.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="img/t3.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="img/t4.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <!-- Album hot -->
-    <div class="container mt-5">
-        <div class="text-title mb-3">
-            <h3>Album Hot</h3>
-        </div>
-        <div class="row">
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="img/ab1.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="img/ab2.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="img/ab3.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="img/ab4.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
         </main>
     </div>
-    <footer class="player-controls col-12 py-0" style="background-color: rgb(222, 89, 0)">
+    <footer class="player-controls col-12">
         <div class="row align-items-center">
             <div class="col-md-3 col-3 player-controls-left">
                 <div class="media d-flex align-items-center">
                     <div class="media-left">
                         <a href="">
-                            <img class="thumbnail"
-                                src="https://img.youtube.com/vi/lkzhGTwzDjc/maxresdefault.jpg" alt="">
+                            <img class="m-2 thumbnail" src="https://img.youtube.com/vi/lkzhGTwzDjc/maxresdefault.jpg"
+                                alt="">
                         </a>
                     </div>
                     <div class="media-content d-none d-md-block">
@@ -899,13 +928,18 @@
                         <div class="level-item d-none d-md-block">
                             <a href="#more" data-bs-toggle="collapse" title="Xem thêm"
                                 class="slide-toggle list-group-item">
-                                <i class=""></i> ...
+                                
                             </a>
-                            <ul id="more" class="px-0 collapse slide rounded shadow ">
-                                <li class="py-3 m-2"><a class="ps-5" th:href="@{|/admin-account|}">Account</a>
-                                </li>
-                                <li class="py-3 m-2"><a class="ps-5" th:href="@{|/admin-role|}">Role</a></li>
-                            </ul>
+                            <div class="dropdown">
+                                <button type="button" class="btn button-control"
+                                    data-bs-toggle="dropdown">
+                                    <i class="bi bi-three-dots"></i>
+                                </button>
+                                <ul class="dropdown-menu drop-playlist ">
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-music-note-beamed"></i> Create a new Playlist</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-folder2-open"></i> Create a new folder playlist</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -915,15 +949,12 @@
                     <button class="btn py-0 shuffle button-control-music" data-bs-hover="tooltip"
                         title="Bật phát ngẫu nhiên!"><i class="bi bi-shuffle"></i></button>
 
-                    <button class="btn py-0 prev button-control-music"><i
-                            class="bi bi-skip-start-circle"></i></button>
+                    <button class="btn py-0 prev button-control-music"><i class="bi bi-skip-start-circle"></i></button>
 
-                    <button class="btn py-0 resume button-control-music"><i
-                            class="bi bi-play-circle"></i></button>
+                    <button class="btn py-0 resume button-control-music-play"><i class="bi bi-play-circle"></i></button>
                     <!-- <i class="bi bi-pause-circle"></i> -->
 
-                    <button class="btn py-0 next button-control-music"><i
-                            class="bi bi-skip-end-circle"></i></button>
+                    <button class="btn py-0 next button-control-music"><i class="bi bi-skip-end-circle"></i></button>
 
                     <button class="btn py-0 repeat button-control-music"><i class="bi bi-repeat"></i></button>
                     <!-- <i class="bi bi-repeat-1"></i> -->
