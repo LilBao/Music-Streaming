@@ -19,7 +19,7 @@ body {
     top: 0;
     bottom: 0;
     left: 0;
-    width: 18rem;
+    width: calc(100% - (0% + 80%));
     overflow-y: visible;
     overflow-x: hidden;
     border-right:1px solid white ;
@@ -29,12 +29,13 @@ main {
     position: absolute;
     padding: 1rem;
     top: 0;
-    left: 18rem;
+    left: 20%;
     right: 0;
     bottom: 0;
     overflow-y: scroll;
     color: white;
 }
+
 
 footer {
     background-color: black;
@@ -57,7 +58,6 @@ footer {
 .playlist {
     overflow-y: visible;
     overflow-x: hidden;
-    height: 350px;
 }
 
 .playlist::-webkit-scrollbar {
@@ -103,7 +103,6 @@ footer {
 }
 
 .button-control-music i {
-    font-size: 20px;
     font-weight: bold;
     object-fit: cover;
     color: white;
@@ -118,17 +117,67 @@ footer {
 }
 
 .button-control i {
-    font-size: 20px;
     font-weight: bold;
     object-fit: cover;
     color: white;
 }
 
 .button-control-music-play i{
-    font-size: 35px;
     font-weight: bold;
     object-fit: cover;
     color: white;
+}
+@media screen and (max-width: 300px) {
+    main{
+        left: 0%;
+    }
+    .sidebar{
+       display: none;
+    }
+}
+
+@media screen and (max-width: 690px) {
+    .label {
+      font-size: 0px;
+    }
+    .list-group-item{
+        padding: 0px;
+    }
+    .table-responsive{
+        overflow-x: hidden;
+    }
+    .label + div{
+       flex-direction: column;
+    }
+}
+@media screen and (min-width: 768px) {
+    .button-control i {
+        font-size: 20px;
+    }
+    .button-control-music i {
+        font-size: 20px;
+    }
+    .button-control-music-play i {
+        font-size: 35px;
+    }
+    .playlist{
+        height: 300px;
+    }
+  }
+  
+  @media screen and (max-width: 767px) {
+    .button-control i {
+        font-size: 10px;
+    }
+    .button-control-music i {
+        font-size: 15px;
+    }
+    .button-control-music-play i {
+        font-size: 20px;
+    }
+    .playlist{
+        height: 200px;
+    }
 }
 
 /*---------------------------------------------------
