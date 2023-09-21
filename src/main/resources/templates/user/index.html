@@ -48,13 +48,15 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h5>Your Library</h5>
                                     <div class="dropdown">
-                                        <button type="button" class="btn button-control"
-                                            data-bs-toggle="dropdown">
+                                        <button type="button" class="btn button-control" data-bs-toggle="dropdown">
                                             <i class="bi bi-plus-circle"></i>
                                         </button>
                                         <ul class="dropdown-menu drop-playlist ">
-                                            <li><a class="dropdown-item" href="#"><i class="bi bi-music-note-beamed"></i> Create a new Playlist</a></li>
-                                            <li><a class="dropdown-item" href="#"><i class="bi bi-folder2-open"></i> Create a new folder playlist</a></li>
+                                            <li><a class="dropdown-item" href="#"><i
+                                                        class="bi bi-music-note-beamed"></i> Create a new Playlist</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="#"><i class="bi bi-folder2-open"></i>
+                                                    Create a new folder playlist</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -103,7 +105,7 @@
             </div>
         </div>
         <main class="bl-body p-1" ng-view>
-            
+
         </main>
     </div>
     <footer class="player-controls col-12 fixed-bottom">
@@ -126,18 +128,16 @@
                                     title="Thêm vào yêu thích!"><i class="bi bi-heart"></i></button></span>
                         </div>
                         <div class="level-item d-none d-md-block">
-                            <a href="#more" data-bs-toggle="collapse" title="Xem thêm"
-                                class="slide-toggle list-group-item">
-                                
-                            </a>
+                            
                             <div class="dropdown">
-                                <button type="button" class="btn button-control"
-                                    data-bs-toggle="dropdown">
+                                <button type="button" class="btn button-control" data-bs-toggle="dropdown">
                                     <i class="bi bi-three-dots"></i>
                                 </button>
                                 <ul class="dropdown-menu drop-playlist ">
-                                    <li><a class="dropdown-item" href="#"><i class="bi bi-music-note-beamed"></i> Create a new Playlist</a></li>
-                                    <li><a class="dropdown-item" href="#"><i class="bi bi-folder2-open"></i> Create a new folder playlist</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-music-note-beamed"></i> Create
+                                            a new Playlist</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-folder2-open"></i> Create a
+                                            new folder playlist</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -169,7 +169,7 @@
                 </div>
             </div>
             <div class="col-md-3 d-none d-md-block player-controls-right d-flex align-items-center">
-                <button class="btn"></button>
+                <button class="btn"  data-bs-toggle="modal" data-bs-target="#MV">MV</button>
                 <button class="btn button-control"><i class="bi bi-pip"></i></button>
                 <button class="btn button-control"><i class="bi bi-mic"></i></button>
                 <button class="btn button-control"><i class="bi bi-volume-up"></i></button>
@@ -177,6 +177,8 @@
             </div>
         </div>
     </footer>
+
+    <!-- Modal thông báo  -->
     <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="popup modal-dialog">
             <div class="popup-message modal-content">
@@ -185,6 +187,20 @@
                         <span type="button" aria-hidden="true" data-bs-dismiss="modal" aria-label="Close">&times;</span>
                     </div>
                     <p>This is the body of the modal.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal trình chiếu MV -->
+    <div class="modal " id="MV">
+        <div class="popup modal-dialog">
+            <div class="popup-message  modal-content"  style="background-color: transparent;">
+                <div class="modal-body p-0">
+                    <iframe class="w-100" height="600" src="https://www.youtube.com/embed/U0Vr1zotKIo?si=1psE6T1thDFwY7vY"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen></iframe>
                 </div>
             </div>
         </div>
@@ -202,11 +218,12 @@
             playlist.style = 'overflow-y: hidden;'
         }
 
-    // isPlaying: false,
-    // isRandom: false,
-    // isRepeat: false,
-    // isMute: false,
+        // isPlaying: false,
+        // isRandom: false,
+        // isRepeat: false,
+        // isMute: false,
     </script>
 
 </body>
+
 </html>
