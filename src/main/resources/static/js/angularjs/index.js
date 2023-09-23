@@ -4,8 +4,14 @@ app.config(function($routeProvider) {
     .when("/", {
         templateUrl : "discover.html"
     })
-    .when("/discover", {
+    .when("/main", {
         templateUrl : "discover.html"
+    })
+    .when("/search", {
+        templateUrl : "search.html"
+    })
+    .when("/search-detail", {
+        templateUrl: "search-detail.html"
     })
     .when("/green", {
         templateUrl : "green.html"

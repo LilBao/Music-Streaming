@@ -20,7 +20,6 @@
     <script src="../../static/js/angularjs/index.js"></script>
 </head>
 
-
 <body ng-app="myApp">
     <div class="content d-flex">
         <div class="sidebar container-fluid">
@@ -35,8 +34,8 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="list-group-item py-3 m-2" href="#!discover">
-                                        <i class="mx-2 bi bi-tags-fill"></i> Discovery
+                                    <a class="list-group-item py-3 m-2" href="#!search">
+                                        <i class="mx-2 bi bi-search"></i> Search
                                     </a>
                                 </li>
                             </div>
@@ -105,7 +104,7 @@
             </div>
         </div>
         <main class="bl-body p-1" ng-view>
-
+            
         </main>
     </div>
     <footer class="player-controls col-12 fixed-bottom">
@@ -222,6 +221,17 @@
         // isRandom: false,
         // isRepeat: false,
         // isMute: false,
+        app.controller('SearchController', ['$scope', '$location', function($scope, $location) {
+            // Watch for changes in the input field
+            $scope.$watch('searchInput', function(newVal) {
+              // Check if the input value meets your criteria
+              if (newVal && newVal.length > 0) {
+                // If the input is not empty, navigate to the desired route (search-detail)
+                $location.path('/search-detail');
+              }
+            });
+          }]);  
+          
     </script>
 
 </body>
