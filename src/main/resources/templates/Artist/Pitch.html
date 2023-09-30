@@ -52,8 +52,8 @@
     margin-bottom: 30px
   }
 
-  .thanks-message {
-    display: none
+  .thanks-message{
+    display: none;
   }
 
   .container {
@@ -82,6 +82,10 @@
 
   /*=================List tag============== 
   =========================================*/
+  p {
+    margin: 0px !important;
+  }
+
   .checkbox {
     width: 140px;
     height: 40px;
@@ -110,7 +114,7 @@
     border-radius: 5px;
     display: flex;
     justify-content: center;
-    align-items: stretch;
+    align-items: center;
     overflow: hidden;
     transition: all 0.6s;
   }
@@ -126,7 +130,7 @@
   <div class="container mt-5 col-7">
     <div class="row d-flex justify-content-center align-items-center">
       <form id="regForm">
-        <div class="all-steps my-0" id="all-steps">
+        <div class="all-steps my-0" id="all-steps" hidden>
           <span class="step"></span>
           <span class="step"></span>
           <span class="step"></span>
@@ -134,7 +138,10 @@
           <span class="step"></span>
         </div>
 
-        <div class="tab">
+        <div class="tab tab-1">
+          <div class="d-flex">
+            <h6>1 of 5 - Song</h6>
+          </div>
           <h1>Choose a song to pitch</h1>
           <p>We'll add this song to Release Radar if we get yout pitch at least a week before release</p>
           <div class="d-flex">
@@ -202,7 +209,10 @@
 
         </div>
 
-        <div class="tab">
+        <div class="tab tab-2">
+          <div class="d-flex">
+            <h6>2 of 5 - Location</h6>
+          </div>
           <h1>Confirm where the artist is from</h1>
           <p>We only use this information to look for music made by people from specific parts of the world</p>
           <div class="my-5">
@@ -223,6 +233,9 @@
         </div>
 
         <div class="tab tab-3">
+          <div class="d-flex">
+            <h6>3 of 5 - Details</h6>
+          </div>
           <h1>Add song details</h1>
           <p>Tell us what this song sounds like and how it was recorded</p>
           <div class="d-flex">
@@ -504,20 +517,75 @@
           </div>
         </div>
 
-        <div class="tab">
-          <h1>Add song details</h1>
-          <h6>Tell us what this song sounds like and how it was recorded</h6>
+        <div class="tab tab-4">
+          <div class="d-flex">
+            <h6>4 of 5 - Description</h6>
+          </div>
+          <h1>Add a description</h1>
+          <h6>Tell our team about the process of creating this song, as well as any plans to promote it</h6>
           <div class="mt-5">
             <h5>Description</h5>
-            <textarea class="w-100" name="" id="" cols="30" rows="10" placeholder="500 characters remaining"></textarea>
+            <textarea class="w-100 form-control" name="" id="" cols="30" rows="10"
+              placeholder="500 characters remaining"></textarea>
           </div>
 
         </div>
 
-        <div class="tab">
+        <div class="tab tab-5">
+          <div class="d-flex">
+            <h6>5 of 5 - Review</h6>
+          </div>
           <h1>Make sure everything looks goods</h1>
           <p>You can update your pitch up until release day. But changes made within a week of release won't be
             reflected on Release Radar</p>
+
+          <div class="d-flex">
+            <img style="height: 100px; width: 50px; object-fit: cover;" class="w-25" src="../../static/img/ab1.webp"
+              alt="">
+            <div>
+              <h6>Tên album</h6>
+              <p>Album - Release 23 Oct 2023</p>
+            </div>
+          </div>
+          <table class="table table-hover table-bordered">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Duration</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Doe</td>
+                <td>john@example.com</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Moe</td>
+                <td>mary@example.com</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="lgenre my-3">
+            <span class="p-2 badge bg-success">Genre</span>
+          </div>
+          <div class="lgenre my-3">
+            <span class="p-2 badge bg-success">Mood</span>
+          </div>
+          <div class="lgenre my-3">
+            <span class="p-2 badge bg-success">Culture</span>
+          </div>
+          <div class="lgenre my-3">
+            <span class="p-2 badge bg-success">Song style</span>
+          </div>
+          <div class="lgenre my-3">
+            <span class="p-2 badge bg-success">Instruments</span>
+          </div>
+          <div>
+            <textarea class="form-control" name="" id="" cols="30" rows="10"></textarea>
+          </div>
         </div>
 
         <div class="thanks-message text-center" id="text-message"> <img src="https://i.imgur.com/O18mJ1K.png"
@@ -566,7 +634,7 @@
         document.getElementById("nextprevious").style.display = "none";
         document.getElementById("all-steps").style.display = "none";
         document.getElementById("register").style.display = "none";
-        document.getElementById("text-message").style.display = "block";
+        $("#text-message").css("display","inline-block")
       }
       showTab(currentTab);
     }
