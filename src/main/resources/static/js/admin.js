@@ -20,3 +20,5 @@ $(document).ready(function(){
 
     });
 });
+
+// ============ upload anh blog ==================

@@ -19,6 +19,7 @@
     --text-color: #707070;
     --white-color: #ffffff;
     --white-alt: #e6e6e6;
+    --iq-border-bottom-light: #DFDFDF;
     ;
     /* --‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒FONT AND TYPOGRAPHY======== */
     --body-font: 'Poppins', sans-serif;
@@ -80,7 +81,7 @@ a {
 
 a:hover {
     text-decoration: none;
-    color: var(--white-color);
+    /* color: var(--white-color); */
 
 }
 
