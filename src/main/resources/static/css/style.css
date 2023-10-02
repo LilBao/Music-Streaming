@@ -6,7 +6,34 @@ body {
     overflow-x: hidden !important;
     background-color: rgb(23, 15, 35);
 }
+#line-chart {
+    min-height: 500px;
+}
 
+.chart {
+    background-color: rgb(68, 25, 98);
+    border-radius: 20px;
+}
+
+.btnchart {
+    border: 2px solid #fff;
+    /* Đặt đường viền kích thước 2px và màu trắng */
+    background-color: transparent;
+    /* Xóa màu nền của nút */
+    color: #fff;
+    /* Đặt màu chữ là trắng */
+    display: block;
+    /* Hiển thị nút như một khối để nó nằm giữa */
+    margin: 0 auto;
+    /* Đặt margin để căn giữa nút theo chiều ngang */
+    padding: 10px 20px;
+    /* Đặt khoảng cách bên trong nút */
+    text-align: center;
+    /* Canh văn bản giữa nút */
+    cursor: pointer;
+    /* Biểu tượng con trỏ khi di chuột qua nút */
+    border-radius: 20px;
+}
 .content {
     min-height: 90vh;
     position: relative;
