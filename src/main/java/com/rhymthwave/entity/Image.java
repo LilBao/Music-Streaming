@@ -29,41 +29,15 @@ public class Image implements Serializable {
 
 	@Column(name = "URL")
 	private String url;
+	
+	@Column(name = "WEIGHT")
+	private Integer weight;
 
 	@Column(name = "HEIGHT")
-	private float height;
-
-	@Column(name = "WEIGHT")
-	private float weight;
-
-	@OneToOne(mappedBy = "images")
-	private Account accounts;
-
-	@OneToOne(mappedBy = "images")
-	private News news;
-
-	@OneToOne(mappedBy = "images")
-	private Advertisement advertisement;
-
-	@OneToOne(mappedBy = "images")
-	private Playlist playlist;
+	private Integer height;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "images")
 	private List<Episode> episodes;
 
-	@OneToOne(mappedBy = "images")
-	private Podcast podcastId;
-
-	@OneToOne(mappedBy = "images")
-	private Album albumId;
-
-	@OneToOne(mappedBy = "imagesG")
-	private Artist artistIdImgG;
-
-	@OneToOne(mappedBy = "imagesP")
-	private Artist artistIdImgP;
-	
-	@OneToOne(mappedBy = "images")
-	private Song songId;
 }

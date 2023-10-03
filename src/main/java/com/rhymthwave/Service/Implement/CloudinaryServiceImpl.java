@@ -25,7 +25,7 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 			cloudinary.api().createFolder(parentFolder + "/" + childFolder, ObjectUtils.emptyMap());
 			String path = parentFolder + "/" + childFolder;
 			Map<String, Object> params = new HashMap<>();
-			params.put("public_id", path + "/" +UUID.randomUUID().toString()+"_"+ file.getOriginalFilename());
+			params.put("public_id", path + "/"+ file.getOriginalFilename());
 			Map<String, Object> result = cloudinary.uploader().upload(file.getBytes(), params);
 			return result;
 		} catch (Exception e) {
@@ -43,7 +43,7 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 			cloudinary.api().createFolder(parentFolder + "/" + childFolder, ObjectUtils.emptyMap());
 			String path = parentFolder + "/" + childFolder;
 			Map<String, Object> params = new HashMap<>();
-			params.put("public_id", path + "/" +UUID.randomUUID().toString()+"_"+ file.getOriginalFilename());
+			params.put("public_id", path + "/"+ file.getOriginalFilename());
 			params.put("width", Width);
 			params.put("height", Height);
 			Map<String, Object> result = cloudinary.uploader().upload(file.getBytes(), params);
