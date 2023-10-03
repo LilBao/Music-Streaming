@@ -1,14 +1,13 @@
-create database MusicStreaming
+﻿create database MusicStreaming
 
 use MusicStreaming
 
 CREATE TABLE IMAGES (
 	ACCESSID  NVARCHAR(100) PRIMARY KEY,
 	URL VARCHAR(MAX),
-	HEIGHT FLOAT,
-	WEIGHT FLOAT
+	HEIGHT INT,
+	WEIGHT INT
 );
-
 CREATE TABLE ROLE (
 	IDROLE INT IDENTITY(1,1) PRIMARY KEY,
 	NAMEROLE VARCHAR(35)
@@ -16,7 +15,7 @@ CREATE TABLE ROLE (
 
 CREATE TABLE ACCOUNTS (
 	EMAIL VARCHAR(255) PRIMARY KEY,
-	PASSWORD VARCHAR(45),
+	PASSWORD VARCHAR(500),
 	USENAME NVARCHAR(55),
 	BIRTHDAY DATE,
 	GENDER INT,
@@ -361,5 +360,41 @@ CREATE TABLE COUNTRY (
 	NAMECOUNTRY VARCHAR(30)
 );
 
+CREATE TABLE ARTIST (
+	ARTISTID BIGINT IDENTITY(1,1) PRIMARY KEY,
+	ARTISTNAME NVARCHAR(55),
+	DATEOFBIRTH DATE,
+	FULLNAME NVARCHAR(55),
+	PLACEOFBIRTH NVARCHAR(55),
+	BIO TEXT,
+	IMAGEGALERRY VARCHAR(500),
+	SOCIALMEDIALINKS VARCHAR(255),
+	ACTIVE NVARCHAR(55),
+	DATESTARTED DATE,
+	VERIFY BIT,
+	PROFILEIMAGE NVARCHAR(100),
+	BACKGROUDIMAGE NVARCHAR(100),
+	EMAIL VARCHAR(255),
 
-INSERT INTO  IMAGES VALUES ('Avatar/System/807831_rrsd2v.png','https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png',512,512)
+	FOREIGN KEY (EMAIL) REFERENCES ACCOUNTS(EMAIL) ON DELETE NO ACTION ON UPDATE CASCADE,
+	FOREIGN KEY (PROFILEIMAGE) REFERENCES IMAGES(ACCESSID) ON DELETE  NO ACTION,
+	FOREIGN KEY (BACKGROUDIMAGE) REFERENCES IMAGES(ACCESSID) ON DELETE  NO ACTION,
+);
+
+
+INSERT INTO  IMAGES 
+	VALUES ('Avatar/System/807831_rrsd2v.png','https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png',512,512)
+
+
+INSERT INTO ACCOUNTS(EMAIL,PASSWORD,USENAME,BIRTHDAY,GENDER,COUNTRY,ISVERIFY,IMAGEID) 
+	VALUES ('mck@gmail.com','$2a$12$eX7AUZVUW.QC.6ZNxwXtUu0Qn03546/D58VH/oqnN3uhXF1044v.G','rpt.mckeyyyyy','2001/03/02',1,'VN',1,'Avatar/System/807831_rrsd2v.png')
+
+	
+INSERT INTO ACCOUNTS(EMAIL,PASSWORD,USENAME,BIRTHDAY,GENDER,COUNTRY,ISVERIFY,IMAGEID) 
+	VALUES ('jvke@gmail.com','$2a$12$eX7AUZVUW.QC.6ZNxwXtUu0Qn03546/D58VH/oqnN3uhXF1044v.G','jvkeeee','2001/03/03',1,'US',1,'Avatar/System/807831_rrsd2v.png')
+
+INSERT INTO ARTIST(ARTISTNAME,FULLNAME,DATEOFBIRTH,PLACEOFBIRTH,BIO,SOCIALMEDIALINKS,VERIFY,EMAIL) 
+			VALUES('MCK','Nghiêm Vũ Hoàng Long','2001/03/02', N'Hà Nội, Việt Nam','Hanoi born-and-raised. CDSL // RPT
+Nghiêm Vũ Hoàng Long, also known as MCK, is a rapper/singer-songwriter from Hanoi, Vietnam. His music career started in early 2018 as an independent singer/songwriter under the alias Ngơ. His debut single was the smashing hit "Tình Đắng Như Ly Cà Phê" featuring Nân, accumulating over 60 million streams across the DSPs since its upload, kick-starting one of the most successful debuts in the local independent scene.
+MCKs career took a turn in 2020 when he appeared as a contestant on the hit TV show "Rap Việt.. He has proven himself to be a force to be reckoned with in Vietnams hip-hop scene as one of the most prominent independent rappers. MCK further solidified his position in the industry by winning the WeChoice Awards for Most Promising Hip-hop Act in 2020.
+In recent years, he has become a household name and an unstoppable force on the local chart, especially with the release of his debut album "99%." The album was immediately received with critical acclaim by the media and fans alike, with the single "Chìm Sâu" being the most streamed song on Spotify Việt Nam in 2022, and the rest of the album dominating Billboard Vietnams charts with 5 tracks in the top 10','https://www.instagram.com/rpt.mckeyyyyy/',1,'mck@gmail.com')

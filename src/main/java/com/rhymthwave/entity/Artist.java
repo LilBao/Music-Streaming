@@ -50,7 +50,7 @@ public class Artist implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "IMAGEGALERRY")
-	private Image imagesG;
+	private Image imagesGallery;
 
 	@Column(name = "SOCIALMEDIALINKS")
 	private String socialMediaLinks;
@@ -59,17 +59,18 @@ public class Artist implements Serializable {
 	private String active;
 
 	@Column(name = "VERIFY")
-	private boolean verify;
+	private boolean isVerify;
 
 	@Column(name = "DATESTARTED")
 	private Date dateStarted;
 
 	@OneToOne
 	@JoinColumn(name = "PROFILEIMAGE")
-	private Image imagesP;
+	private Image imagesProfile;
 
-	@Column(name = "BACKGROUDIMAGE")
-	private String backgroundImage;
+	@OneToOne
+	@JoinColumn(name = "BACKGROUDIMAGE")
+	private Image backgroundImage;
 
 	@ManyToOne
 	@JoinColumn(name = "EMAIL")
