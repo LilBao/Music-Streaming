@@ -1,30 +1,36 @@
 var app = angular.module('myApp', []);
 var host = "http://localhost:8080/api";
 app.controller('myCtrl', function ($scope, $http) {
+    
     $scope.artist = {}
-
-    $scope.create = function () {
-        var url = host + "/v1/artist"
-        var item = angular.copy($scope.artist)
+    $scope.createArtist = function() {
+        
+        var url = host + "/v1/artist";
         var formData = new FormData();
-        formData.append('artist', item);
+        formData.append('artistName', $scope.artist.artistName); 
+        formData.append('fullName', $scope.artist.fullName);
+        formData.append('bio', $scope.artist.bio); 
+        formData.append('artist.dateOfBirth', $scope.artist.dateOfBirth); 
+        formData.append('placeOfBirth', $scope.artist.placeOfBirth); 
         formData.append('avatar', $scope.avatarFile);
         formData.append('background', $scope.backgroundFile);
-
-        $http.post(url, formData, {
-            transformRequest: angular.identity,
-            headers: { 'Content-Type': undefined }
-        }).then(resp => {
+        $http({
+            method: 'POST',
+            url: url,
+            headers: { 'Content-Type': undefined }, 
+            data: formData,
+            transformRequest: angular.identity
+        }).then(function(response) {
             alert("Dang ky thanh cong");
-        }).catch(error => {
-            console.log(error)
+        }).catch(function(error) {
+            console.log(error);
             alert("Dang ky that bai");
-        })
+        });
     }
 
     $("#nextBtn").click(function () {
         if ($("#nextBtn").hasClass("submit")) {
-            $scope.create();
+            $scope.createArtist();
         }
     })
 
@@ -49,8 +55,6 @@ app.controller('myCtrl', function ($scope, $http) {
                     reader.readAsDataURL(file);
                 });
             }
-            console.log($scope.avatarFile)
-            console.log($scope.backgroundFile)
         });
     };
 
