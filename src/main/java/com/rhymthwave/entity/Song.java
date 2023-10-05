@@ -39,9 +39,6 @@ public class Song implements Serializable {
 	@JoinColumn(name = "IMAGEID")
 	private Image images;
 
-	@Column(name = "LYRICS")
-	private String lyrics;
-
 	@Column(name = "REALEASEDAY")
 	private Date releaseDay;
 

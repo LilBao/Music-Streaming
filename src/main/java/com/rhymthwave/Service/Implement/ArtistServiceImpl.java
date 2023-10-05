@@ -17,6 +17,7 @@ public class ArtistServiceImpl implements ArtistService, CRUD<Artist, Integer> {
 
 	@Override
 	public Artist create(Artist entity) {
+		entity.setVerify(false);
 		return dao.save(entity);
 	}
 
@@ -41,6 +42,9 @@ public class ArtistServiceImpl implements ArtistService, CRUD<Artist, Integer> {
 		return dao.findAll();
 	}
 
-	
+	@Override
+	public Artist findByEmail(String email) {
+		return dao.findByEmail(email);
+	}
 
 }

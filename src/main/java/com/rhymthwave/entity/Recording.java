@@ -72,7 +72,7 @@ public class Recording implements Serializable {
 	private String produce;
 
 	@Column(name = "RECORDINGDATE")
-	private Date recordingdate;
+	private Date recordingdate = new Date();
 
 	@Column(name = "ISDELETED")
 	private boolean isDeleted;

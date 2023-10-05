@@ -1,5 +1,7 @@
 package com.rhymthwave.Service;
 
-public interface ArtistService {
+import com.rhymthwave.entity.Artist;
 
+public interface ArtistService {
+	Artist findByEmail(String email);
 }
