@@ -1,5 +1,7 @@
 package com.rhymthwave.Service;
 
-public interface AccountService {
+import org.springframework.security.core.userdetails.UserDetails;
 
+public interface AccountService {
+	UserDetails loadUserByEmail(String email);
 }

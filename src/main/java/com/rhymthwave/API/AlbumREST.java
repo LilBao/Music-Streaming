@@ -38,10 +38,11 @@ public class AlbumREST {
 	CloudinaryService cloudinary;
 	
 	@Autowired
-	ImageService imgSer;
+	CRUD<Image, String> crudImage;
 	
 	@Autowired
-	CRUD<Image, Integer> crudImage;
+	ImageService imgSer;
+	
 	
 	@GetMapping("/api/v1/album")
 	public ResponseEntity<MessageResponse> getAllAlbum(){

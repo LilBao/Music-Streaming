@@ -41,7 +41,7 @@ public class SongREST {
 	ImageService imgSer;
 	
 	@Autowired
-	CRUD<Image, Integer> crudImage;
+	CRUD<Image, String> crudImage;
 	
 	@GetMapping("/api/v1/song")
 	public ResponseEntity<MessageResponse> getAllSong(){

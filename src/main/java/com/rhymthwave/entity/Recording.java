@@ -100,4 +100,9 @@ public class Recording implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "recording")
 	private List<Track> tracks;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "records")
+	private List<SongGenre> songGenres;
+	
 }
