@@ -1,18 +1,27 @@
-var app = angular.module('myApp',[]);
+var app = angular.module('myApp', []);
 var host = 'http://localhost:8080/api';
-app.controller('myCtrl',function($scope,$http){
+app.controller('myCtrl', function ($scope, $http) {
+    $('#opt').change(function () {
+        if ($('#opt').val() === "single") {
+            $('#writter').removeAttr('hidden');
+        } else {
+            $('#writter').attr('hidden', 'hidden');
+        }
+    })
 
-    $scope.album={};
-    $scope.song={};
+    $scope.upcoming = {};
+    $scope.artist={};
+    var writters = $('input[name="writter"]')
 
-    $scope.createAlbum= function(){
+    //tạo album
+    $scope.createAlbum = function () {
         var url = host + "/v1/album";
         var data = new FormData();
-        data.append('coverImg',$scope.coverImg);
-        data.append('coverImg',$scope.album.albumName);
-        data.append('coverImg',$scope.album.releaseDate);
-        $http.post(host,item,{
-            headers: { 'Content-Type': undefined }, 
+        data.append('coverImg', $scope.coverImg);
+        data.append('albumName', $scope.upcoming.albumName);
+        data.append('releaseDate', $scope.upcoming.releaseDate);
+        $http.post(host, item, {
+            headers: { 'Content-Type': undefined },
             transformRequest: angular.identity
         }).then(resp => {
 
@@ -21,21 +30,72 @@ app.controller('myCtrl',function($scope,$http){
         })
     }
 
-    $scope.createSong= function(){
+    $scope.createSong = function () {
         var url = host + "/v1/song";
         var data = new FormData();
-        data.append('coverImg',$scope.songName);
-        data.append('coverImg',$scope.album.albumName);
-        data.append('coverImg',$scope.album.releaseDate);
-        $http.post(host,item,{
-            headers: { 'Content-Type': undefined }, 
+        data.append('coverImg', $scope.coverImg);
+        data.append('songName', $scope.upcoming.albumName);
+        data.append('releaseDay', $scope.upcoming.releaseDate);
+        $http.post(host, item, {
+            headers: { 'Content-Type': undefined },
             transformRequest: angular.identity
         }).then(resp => {
-
+            writterInputs.each(function () {
+                $scope.findArist($(this).val());
+                $scope.createWritter(resp.data,$scope.artist);
+            });
         }).catch(error => {
 
         })
     }
 
 
+    $scope.createWritter = function (songId, artistID) {
+        var url = host + "/v1/song";
+        $scope.writter = {}
+        $scope.writter.artistId = artistID;
+        $scope.writter.songId = songId;
+        var data = angular.copy($scope.writter);
+        $http.post(host, data, {
+        }).then(resp => {
+            
+        }).catch(error => {
+
+        })
+    }
+
+    $scope.findArist=function(id){
+        var url = host + "/v1/artist/"+id;
+        $http.get(url).then(resp => {
+            $scope.artist = resp.data;
+        }).catch(error => {
+
+        })
+    }
+
+    $('#create-song').click(function () {
+        if ($('#opt').val() === "single") {
+            $scope.createSong();
+        } else {
+            $scope.createAlbum();
+        }
+    });
+
+    $scope.selectFile = function (id) {
+        $('#' + id).click();
+        $('#' + id).change(function (event) {
+            var file = event.target.files[0];
+            if (file) {
+                $scope.$apply(function () {
+                    $scope.coverImg = file;
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var imageDataUrl = e.target.result;
+                        $('.' + id).attr('src', imageDataUrl);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+        });
+    };
 })

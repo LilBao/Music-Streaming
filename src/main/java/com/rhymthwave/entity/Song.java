@@ -53,7 +53,4 @@ public class Song implements Serializable {
 	@OneToMany(mappedBy = "songId")
 	private List<Writter> writters;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "songId")
-	private List<SongGenre> songGenres;
 }

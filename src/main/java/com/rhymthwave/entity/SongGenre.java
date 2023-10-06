@@ -29,9 +29,9 @@ public class SongGenre implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "IDGENRE")
-	private Genre genreId;
+	private Genre genres;
 
 	@ManyToOne
-	@JoinColumn(name = "IDSONG")
-	private Song songId;
+	@JoinColumn(name = "IDRECORD")
+	private Recording records;
 }
