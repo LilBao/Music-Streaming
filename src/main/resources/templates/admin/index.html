@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
-    <script src="../../static/js/routing_admin.js"></script>
+    <script src="../../static/js/jscustom/UI-Js-Admin/routing_admin.js"></script>
 </head>
 
 <body ng-app="myApp">
@@ -36,13 +36,13 @@
                 <ul class="navbar-item flex-row ml-auto">
                     <li class="nav-item dropdown user-profile-dropdown">
                         <a href="" class="nav-link user" id="Notify" data-bs-toggle="dropdown">
-                            <img src="./img/bell.png" class="icon" alt="">
+                            <img src="../../static/img/bell.png" class="icon" alt="">
                             <p class="count purple-gradient">5</p>
                         </a>
                         <div class="dropdown-menu ">
                             <div class="dp-main-menu">
                                 <a href="#" class="dropdown-item message-item responsives">
-                                    <img src="./img/bell.png" alt="" class="user-note">
+                                    <img src="../../static/img/bell.png" alt="" class="user-note">
                                     <div class="note-info-desmis">
                                         <div class="user-notify-info">
                                             <p class="note-name">Server Report </p>
@@ -55,7 +55,7 @@
                                 </a>
 
                                 <a href="#" class="dropdown-item message-item responsives">
-                                    <img src="./img/bell.png" alt="" class="user-note">
+                                    <img src="../../static/img/bell.png" alt="" class="user-note">
                                     <div class="note-info-desmis">
                                         <div class="user-notify-info">
                                             <p class="note-name">Server Report</p>
@@ -68,7 +68,7 @@
                                 </a>
 
                                 <a href="#" class="dropdown-item message-item">
-                                    <img src="./img/bell.png" alt="" class="user-note">
+                                    <img src="../../static/img/bell.png" alt="" class="user-note">
                                     <div class="note-info-desmis">
                                         <div class="user-notify-info">
                                             <p class="note-name">Server Report</p>
@@ -85,13 +85,13 @@
 
                     <li class="nav-item dropdown user-profile-dropdown">
                         <a href="" class="nav-link user" id="Notify" data-bs-toggle="dropdown">
-                            <img src="./img/email.png" class="icon" alt="">
+                            <img src="../../static/img/email.png" class="icon" alt="">
                             <p class="count .bg-clc">5</p>
                         </a>
                         <div class="dropdown-menu">
                             <div class="dp-main-menu">
                                 <a href="#" class="dropdown-item message-item">
-                                    <img src="./img/email.png" alt="" class="user-note">
+                                    <img src="../../static/img/email.png" alt="" class="user-note">
                                     <div class="note-info-desmis">
                                         <div class="user-notify-info">
                                             <p class="note-name">Server Report </p>
@@ -107,12 +107,12 @@
                     </li>
                     <li class="nav-item dropdown user-profile-dropdown">
                         <a href="" class="nav-link user" id="Notify" data-bs-toggle="dropdown">
-                            <img src="./img/profile.png" class="icon" alt="">
+                            <img src="../../static/img/profile.png" class="icon" alt="">
                         </a>
                         <div class="dropdown-menu">
                             <div class="user-profile-section">
                                 <div class="media mx-auto">
-                                    <img src="./img/profile.png" alt="" class="img-fluid mr-2">
+                                    <img src="../../static/img/profile.png" alt="" class="img-fluid mr-2">
                                     <div class="media-body">
                                         <h5>Nguye Van A</h5>
                                         <p>Admin</p>
@@ -141,7 +141,7 @@
                     </li>
                     <li class="nav-item dropdown user-profile-dropdown">
                         <a href="" class="nav-link user" id="Notify" data-bs-toggle="dropdown">
-                            <img src="./img/settings.png" class="icon" alt="">
+                            <img src="../../static/img/settings.png" class="icon" alt="">
                         </a>
 
                         <div class="dropdown-menu">
@@ -245,10 +245,10 @@
     <div ng-view></div>
         <!--  CONTENT END  -->
     <!-- js -->   
-    <script src="../../static/js/chart.min.js"></script>
-    <script src="../../static/js/cdn.jsdelivr.net_npm_bootstrap@5.3.1_dist_js_bootstrap.bundle.min.js"></script>
-    <script src="../../static/js/code.jquery.com_jquery-3.7.1.min.js"></script>
-    <script src="../../static/js/admin.js"></script>
+    <script src="../../static/js/jscustom/UI-Js-Admin/chart.js"></script>
+    <script src="../../static/js/jscustom/UI-Js-Admin/cdn.jsdelivr.net_npm_bootstrap@5.3.1_dist_js_bootstrap.bundle.min.js"></script>
+    <script src="../../static/js/jscustom/UI-Js-Admin/code.jquery.com_jquery-3.7.1.min.js"></script>
+    <script src="../../static/js/jscustom/UI-Js-Admin/admin.js"></script>
     <script>
         var chrt = document.getElementById("chartId").getContext("2d");
         var chartId = new Chart(chrt, {
