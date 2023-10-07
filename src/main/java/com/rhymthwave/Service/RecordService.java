@@ -1,5 +1,9 @@
 package com.rhymthwave.Service;
 
-public interface RecordService {
+import java.util.List;
 
+import com.rhymthwave.entity.Recording;
+
+public interface RecordService {
+	List<Recording> findRecordByCreater(String email);
 }

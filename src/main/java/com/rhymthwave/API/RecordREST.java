@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.rhymthwave.DTO.MessageResponse;
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.Service.CloudinaryService;
+import com.rhymthwave.Service.RecordService;
 import com.rhymthwave.entity.Image;
 import com.rhymthwave.entity.Recording;
 import com.rhymthwave.entity.Song;
@@ -34,6 +35,9 @@ public class RecordREST {
 	@Autowired
 	CloudinaryService cloudinary;
 	
+	@Autowired
+	RecordService recordSer;
+	
 	@GetMapping("/api/v1/record")
 	public ResponseEntity<MessageResponse> getAllRecord(){
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudRecord.findAll()));
@@ -48,7 +52,7 @@ public class RecordREST {
 	public ResponseEntity<MessageResponse> createRecord(@ModelAttribute Recording record, @RequestParam("fileRecord") MultipartFile fileRecord, 
 														@RequestParam("fileLyrics") MultipartFile fileLyrics){
 		Map<String, Object> respRecord = cloudinary.Upload(fileRecord, "Records", "MCK");
-		if(fileLyrics.isEmpty()) {	
+		if(!fileLyrics.isEmpty()) {	
 			Map<String, Object> respLyrics = cloudinary.Upload(fileLyrics, "Lyrics", "MCK");
 			record.setLyricsUrl((String)respLyrics.get("url"));	
 		}

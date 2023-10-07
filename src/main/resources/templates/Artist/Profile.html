@@ -49,7 +49,6 @@
 
     .nav-link {
         border: 0px !important;
-        font-weight: bold;
         color: black;
     }
 
@@ -67,10 +66,11 @@
 </style>
 
 <body>
-    <div class="container-fluid profile">
+    <div class="profile">
         <img class="w-100 bg-profile" src="../../static/img/artistfeature.webp" alt="">
         <div class="change-bg">
-            <input type="file">
+            <button class="btn"><i class="bi bi-pencil-fill text-white"></i></button>
+            <input type="file" hidden>
         </div>
         <div class="m-0 name-artist">
             <h6 class="m-0 ">ARTIST</h6>
@@ -86,11 +86,11 @@
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item me-3 pb-3">
                     <a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab"
-                        aria-controls="tab1" aria-selected="true">Listeners</a>
+                        aria-controls="tab1" aria-selected="true">Overview</a>
                 </li>
                 <li class="nav-item me-3 pb-3">
                     <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2"
-                        aria-selected="false">Followers</a>
+                        aria-selected="false">About</a>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">

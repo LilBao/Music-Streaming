@@ -12,10 +12,13 @@
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+    <script src="../../static/js/angularjs/artist/RoutingArtist.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
-<body>
+<body ng-app="myApp" ng='myCtrl'>
     <nav class="navbar navbar-expand-lg bg-black text-white">
         <div class="container-fluid">
             <button class="navbar-toggler navbar-light buttonCss" type="button" data-bs-toggle="offcanvas"
@@ -37,28 +40,28 @@
                 <div class="offcanvas-body">
                     <ul class="nav mx-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Home</a>
+                            <a class="nav-link text-white" href="#!artist-home">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Music</a>
+                            <a class="nav-link text-white" href="#!artist-music">Music</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Audience</a>
+                            <a class="nav-link text-white" href="#!artist-audience">Audience</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Profile</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Charts</a>
+                            <a class="nav-link text-white" href="#!artist-profile">Profile</a>
                         </li>
                     </ul>
                 </div>
             </div>
     </nav>
     <section class="container">
-        <h1 class="title"></h1>
-        <div></div>
+        <main class="" ng-view>
+            
+        </main>
     </section>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
 </body>
 
 </html>

@@ -1,6 +1,6 @@
 var app = angular.module('myApp', []);
 var host = "http://localhost:8080/api";
-app.controller('myCtrl', function ($scope, $http) {
+app.controller('confirmCtrl', function ($scope, $http) {
     
     $scope.artist = {}
     $scope.createArtist = function() {

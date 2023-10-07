@@ -1,0 +1,158 @@
+.profile {
+    position: relative;
+}
+
+.bg-profile {
+    height: 400px;
+    object-fit: cover;
+}
+
+.name-artist {
+    position: absolute;
+    bottom: 10%;
+    left: 5%;
+    color: white;
+}
+
+.total-listener {
+    position: absolute;
+    bottom: 10%;
+    right: 5%;
+}
+
+.change-bg {
+    position: absolute;
+    top: 10%;
+    right: 5%;
+}
+
+.nav {
+    border: 0px;
+}
+
+.nav-link {
+    border: 0px !important;
+    color: black;
+}
+
+.nav-link:hover {
+    color: black;
+}
+
+.nav-item:hover {
+    border-radius: 10px;
+}
+
+.nav-link.active {
+    border-bottom: 3px solid green !important;
+}
+
+.modal-dialog {
+    min-width: 100% !important;
+}
+
+.tab {
+    display: none
+}
+
+button:hover {
+    opacity: 0.8
+}
+
+#prevBtn {
+    background-color: #bbbbbb
+}
+
+.step {
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbbbbb;
+    border: none;
+    border-radius: 50%;
+    display: inline-block;
+    opacity: 0.5
+}
+
+.step.active {
+    opacity: 1
+}
+
+.step.finish {
+    background-color: #4CAF50
+}
+
+.all-steps {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px
+}
+
+.thanks-message {
+    display: none
+}
+
+.container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.table-container {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.list-tag {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 1em 0 0 0;
+}
+
+/*=================List tag============== 
+=========================================*/
+.checkbox {
+    width: 140px;
+    height: 40px;
+    position: relative;
+    margin: 0.5em 0.5em;
+}
+
+.checkbox input {
+    position: absolute;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.box {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    background: white;
+    border: 2px solid #d1d1d1;
+    color: black;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    overflow: hidden;
+    transition: all 0.6s;
+}
+
+.checkbox input:checked~.box {
+    background: black;
+    border: 2px solid white;
+    color: white;
+}
