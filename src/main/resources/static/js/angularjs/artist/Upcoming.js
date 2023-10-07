@@ -1,6 +1,6 @@
 var app = angular.module('myApp', []);
 var host = 'http://localhost:8080/api';
-app.controller('myCtrl', function ($scope, $http) {
+app.controller('upComingCtrl', function ($scope, $http) {
     $('#opt').change(function () {
         if ($('#opt').val() === "single") {
             $('#writter').removeAttr('hidden');
@@ -13,37 +13,41 @@ app.controller('myCtrl', function ($scope, $http) {
     $scope.artist={};
     var writters = $('input[name="writter"]')
 
-    //tạo album
+    //create
     $scope.createAlbum = function () {
         var url = host + "/v1/album";
         var data = new FormData();
         data.append('coverImg', $scope.coverImg);
-        data.append('albumName', $scope.upcoming.albumName);
-        data.append('releaseDate', $scope.upcoming.releaseDate);
-        $http.post(host, item, {
+        data.append('albumName', $scope.upcoming.name);
+        data.append('releaseDate', new Date($scope.upcoming.releaseDate));
+        $http.post(url, data, {
             headers: { 'Content-Type': undefined },
             transformRequest: angular.identity
         }).then(resp => {
-
+            console.log('success')
         }).catch(error => {
 
         })
     }
 
+    //create single song
     $scope.createSong = function () {
         var url = host + "/v1/song";
         var data = new FormData();
         data.append('coverImg', $scope.coverImg);
-        data.append('songName', $scope.upcoming.albumName);
-        data.append('releaseDay', $scope.upcoming.releaseDate);
-        $http.post(host, item, {
+        data.append('songName', $scope.upcoming.name);
+        data.append('releaseDay', new Date($scope.upcoming.releaseDate));
+        $http.post(url, data, {
             headers: { 'Content-Type': undefined },
             transformRequest: angular.identity
         }).then(resp => {
-            writterInputs.each(function () {
-                $scope.findArist($(this).val());
-                $scope.createWritter(resp.data,$scope.artist);
-            });
+            $scope.createWritter(resp.data,$scope.artist);
+            if(writters.length >0){
+                writters.each(function () {
+                    $scope.findArist($(this).val());
+                    $scope.createWritter(resp.data,$scope.artist);
+                });
+            }
         }).catch(error => {
 
         })
@@ -51,14 +55,14 @@ app.controller('myCtrl', function ($scope, $http) {
 
 
     $scope.createWritter = function (songId, artistID) {
-        var url = host + "/v1/song";
+        var url = host + "/v1/writter";
         $scope.writter = {}
         $scope.writter.artistId = artistID;
         $scope.writter.songId = songId;
         var data = angular.copy($scope.writter);
-        $http.post(host, data, {
+        $http.post(url, data, {
         }).then(resp => {
-            
+            console.log('success')
         }).catch(error => {
 
         })

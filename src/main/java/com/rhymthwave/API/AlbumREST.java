@@ -23,7 +23,7 @@ import com.rhymthwave.entity.Album;
 import com.rhymthwave.entity.Image;
 
 @Controller
-@CrossOrigin("*")
+@CrossOrigin("http://127.0.0.1:5500")
 public class AlbumREST {
 	@Autowired
 	ArtistService artistSer;
@@ -56,8 +56,8 @@ public class AlbumREST {
 	
 	@PostMapping(value="/api/v1/album",consumes = { "multipart/form-data" })
 	public ResponseEntity<MessageResponse> createAlbum(@ModelAttribute Album album, @RequestParam("coverImg") MultipartFile coverImg){
-		if(coverImg.isEmpty()) {
-			Map<String, Object> respImg = cloudinary.Upload(coverImg, "CoverImage", album.getArtistId().getArtistName());
+		if(!coverImg.isEmpty()) {
+			Map<String, Object> respImg = cloudinary.Upload(coverImg, "CoverImage", "MCK");
 			Image cover = imgSer.getEntity((String) respImg.get("asset_id"), (String)respImg.get("url"),(Integer) respImg.get("width"),(Integer) respImg.get("height"));
 			crudImage.create(cover);
 			album.setImages(cover);

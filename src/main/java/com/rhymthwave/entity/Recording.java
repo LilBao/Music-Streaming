@@ -76,6 +76,10 @@ public class Recording implements Serializable {
 
 	@Column(name = "ISDELETED")
 	private boolean isDeleted;
+	
+	@Column(name = "EMAILCREATE")
+	private String emailCreate;
+
 
 	@ManyToOne
 	@JoinColumn(name = "SONGSID")

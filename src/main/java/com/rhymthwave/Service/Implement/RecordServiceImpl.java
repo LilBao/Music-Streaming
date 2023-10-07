@@ -55,5 +55,10 @@ public class RecordServiceImpl implements RecordService, CRUD<Recording, Integer
 	public List<Recording> findAll() {
 		return dao.findAll();
 	}
+
+	@Override
+	public List<Recording> findRecordByCreater(String email) {
+		return findRecordByCreater(email);
+	}
 	
 }

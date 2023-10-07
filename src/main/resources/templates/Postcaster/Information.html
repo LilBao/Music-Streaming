@@ -15,8 +15,8 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <style>
-  body{
-    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI4MCIgaGVpZ2h0PSI4MDAiIHZpZXdCb3g9IjAgMCAxMjgwIDgwMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Ik0xMy42MzUxIDQyMi4yNUwyMzkuODk2IDgzLjU3MDlMLTMyLjM1NDUgODcyTDExMzQuOTMgLTUwTDg2MS4xMzMgNzM5LjgwOEwxNTcxLjY1IDY5Ljk1NzhMMTMxNS43MiA4NTUuMzUxIiBzdHJva2U9IiMyODI4MjgiIHN0cm9rZS13aWR0aD0iMyIvPgo8L3N2Zz4K)!important;
+  body {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI4MCIgaGVpZ2h0PSI4MDAiIHZpZXdCb3g9IjAgMCAxMjgwIDgwMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Ik0xMy42MzUxIDQyMi4yNUwyMzkuODk2IDgzLjU3MDlMLTMyLjM1NDUgODcyTDExMzQuOTMgLTUwTDg2MS4xMzMgNzM5LjgwOEwxNTcxLjY1IDY5Ljk1NzhMMTMxNS43MiA4NTUuMzUxIiBzdHJva2U9IiMyODI4MjgiIHN0cm9rZS13aWR0aD0iMyIvPgo8L3N2Zz4K) !important;
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -26,6 +26,7 @@
     background: rgba(0, 0, 0, 0.9);
     color: white;
   }
+
   .tab {
     display: none
   }
@@ -94,17 +95,16 @@
           <span class="step"></span>
           <span class="step"></span>
           <span class="step"></span>
-          <span class="step"></span>
         </div>
 
         <div class="tab">
-          <h6>1/5</h6>
+          <h6>1/4</h6>
           <h1>Claim an podcaster profile</h1>
           <p>If you already have episode on Spotify, you can get access to stats.</p>
         </div>
 
         <div class="tab">
-          <h6>2/5</h6>
+          <h6>2/4</h6>
           <h1>Is this the right Spotify account?</h1>
           <p>You’ll use this to log in to Spotify for Artists.</p>
           <div class="my-5 d-flex flex-column align-items-center">
@@ -115,47 +115,40 @@
           </div>
         </div>
 
-        <div class="tab tab-3">
-          <h6>3/5</h6>
-          <h1>Claim an podcast name</h1>
-          <p>Only claim 1 profile at a time and wait until you get access before claiming another.</p>
-          <div class="d-flex">
-            <input type="text" class="form-control" placeholder="Podcast name">
+        <div class="tab">
+          <h6>3/4</h6>
+          <h1  class="text-center">Set up your podcast</h1>
+          <h6 class="text-center">Before we can distribute your podcast to additional listening platforms, you just need to fill in a few
+            things.
+            (You can always change these later.)</h6>
+          <div>
+            <div class="my-3">
+              <label for="">Podcast name</label>
+              <input class="form-control" type="text">
+            </div>
+            <div class="my-3">
+              <label for="">Podcast description</label>
+              <textarea class="form-control" name="" id="" cols="30" rows="10" placeholder="Bio"></textarea>
+            </div>
+            <div class="my-3">
+              <label for="">Podcast category</label>
+              <select class="form-control" name="" id="">
+                <option value=""></option>
+              </select>
+            </div>
+            <div class="my-3">
+              <label for="">Podcast language</label>
+              <select class="form-control" name="" id="">
+                <option value=""></option>
+              </select>
+            </div>
           </div>
         </div>
 
         <div class="tab">
-          <h6>4/5</h6>
-          <h1>Claim an information</h1>
-          <h6></h6>
-          <div class="mt-5">
-            <div>
-                <img src="" alt="">
-                <input type="file">
-            </div>
-            <div>
-                <img src="" alt="">
-                <input  type="file">
-            </div>
-            <div>
-                <textarea class="form-control" name="" id="" cols="30" rows="10" placeholder="Bio"></textarea>
-            </div>
-            <div>
-                <input class="form-control" type="date">
-            </div>
-            <div>
-                <select class="form-control" name="" id="">
-                    <option value=""></option>
-                </select>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="tab">
-            <h6>5/5</h6>
-            <h3>Thanks for your Donation!</h3> 
-            <span>Your donation has been entered! We will contact you shortly!</span>
+          <h6>4/4</h6>
+          <h3>Thanks for your Donation!</h3>
+          <span>Your donation has been entered! We will contact you shortly!</span>
         </div>
 
         <div class="my-4" id="nextprevious">
@@ -183,8 +176,11 @@
       } else {
         document.getElementById("prevBtn").style.display = "inline";
       }
-      if (n == (x.length - 1)) {
+      if (n == (x.length - 2)) {
         document.getElementById("nextBtn").innerHTML = "Submit";
+      }else if(n >= (x.length - 2)){
+        document.getElementById("nextBtn").remove();
+        document.getElementById("prevBtn").remove();
       } else {
         document.getElementById("nextBtn").innerHTML = "Next";
       }
