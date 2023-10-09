@@ -83,7 +83,7 @@ public class Recording implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "SONGSID")
-	private Song songId;
+	private Song song;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "recording")

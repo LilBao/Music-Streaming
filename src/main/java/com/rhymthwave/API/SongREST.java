@@ -55,7 +55,7 @@ public class SongREST {
 	
 	@PostMapping(value="/api/v1/song",consumes = { "multipart/form-data" })
 	public ResponseEntity<MessageResponse> createSong(@ModelAttribute Song song, @RequestParam("coverImg") MultipartFile coverImg){
-		if(coverImg.isEmpty()) {
+		if(!coverImg.isEmpty()) {
 			Map<String, Object> respImg = cloudinary.Upload(coverImg, "CoverImage", "MCK");
 			Image cover = imgSer.getEntity((String) respImg.get("asset_id"), (String)respImg.get("url"),(Integer) respImg.get("width"),(Integer) respImg.get("height"));
 			crudImage.create(cover);
@@ -63,5 +63,10 @@ public class SongREST {
 		}
 		//song.setWritters();
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudSong.create(song)));
+	}
+	
+	@GetMapping("/api/v1/song/up-coming")
+	public ResponseEntity<MessageResponse> songUpcoming(){
+		return ResponseEntity.ok(new MessageResponse(true,"success",songSer.findSongNotRecord()));
 	}
 }

@@ -1,5 +1,9 @@
 package com.rhymthwave.Service;
 
-public interface AlbumService {
+import java.util.List;
 
+import com.rhymthwave.entity.Album;
+
+public interface AlbumService {
+	List<Album> findAlbumNotRecord();
 }

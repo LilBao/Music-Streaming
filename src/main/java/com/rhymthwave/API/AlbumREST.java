@@ -1,7 +1,6 @@
 package com.rhymthwave.API;
 
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -64,6 +63,11 @@ public class AlbumREST {
 		}
 		album.setArtistId(artistSer.findByEmail("mck@gmail.com"));
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudAlbum.create(album)));
+	}
+	
+	@GetMapping("/api/v1/album/up-coming")
+	public ResponseEntity<MessageResponse> albumUpcoming(){
+		return ResponseEntity.ok(new MessageResponse(true,"success",albumSer.findAlbumNotRecord()));
 	}
 	
 }
