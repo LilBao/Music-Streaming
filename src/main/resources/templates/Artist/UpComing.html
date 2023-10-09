@@ -40,7 +40,7 @@
                         <option value="album">Album</option>
                     </select>
                 </div>
-                <div class="my-3" >
+                <div class="my-3">
                     <label for="">Release date</label>
                     <input ng-model="upcoming.releaseDate" class="form-control mb-3" type="datetime-local">
                 </div>
@@ -48,7 +48,7 @@
                     <label for="">Colaboration</label>
                     <input list="writters" class="form-control" name="writters" id="writter">
                 </div>
-                
+
                 <datalist class="" id="writters">
                     <option value="1">a</option>
                     <option value="2">b</option>
@@ -77,8 +77,6 @@
                     break;
                 }
             }
-          
-            console.log(GenreText)
             if (selectedOption) {
                 var tag = $('<div class="checkbox"> <input type="checkbox" name="writter" id="" />' +
                     '<div class="box bg-black text-white"><p>' + GenreText + '</p></div>' +

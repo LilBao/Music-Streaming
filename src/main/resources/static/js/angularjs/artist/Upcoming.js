@@ -41,13 +41,14 @@ app.controller('upComingCtrl', function ($scope, $http) {
             headers: { 'Content-Type': undefined },
             transformRequest: angular.identity
         }).then(resp => {
-            $scope.createWritter(resp.data,$scope.artist);
-            if(writters.length >0){
-                writters.each(function () {
-                    $scope.findArist($(this).val());
-                    $scope.createWritter(resp.data,$scope.artist);
-                });
-            }
+            // $scope.createWritter(resp.data,$scope.artist);
+            // if(writters.length >0){
+            //     writters.each(function () {
+            //         $scope.findArist($(this).val());
+            //         $scope.createWritter(resp.data,$scope.artist);
+            //     });
+            // }
+            console.log('success')
         }).catch(error => {
 
         })

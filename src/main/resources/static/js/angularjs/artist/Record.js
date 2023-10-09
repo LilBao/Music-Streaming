@@ -1,25 +1,37 @@
 var app = angular.module('myApp',[])
-var host = "";
+var host = "http://localhost:8080/api";
 app.controller('recordCtrl',function($scope,$http){
     $scope.record ={}
+
+    //Call API => create Record
     $('#create-record').click(function(){
-        var url = host + "/api/v1/record"
+        $scope.checkbox();
+        var url = host + "/v1/record"
         var data = new FormData();
         data.append('recordingName',$scope.record.name);
-        data.append('audioFileUrl',$scope.recordFile);
-        data.append('lyricsUrl',$scope.lyricsFile);
         data.append('studio',$scope.record.studio);
         data.append('produce',$scope.record.proceduce);
+        data.append('idMv',$scope.record.idMV);
+        data.append('mood',$scope.moods);
+        data.append('songStyle',$scope.styles);
+        data.append('culture',$scope.cultures);
+        data.append('instrument',$scope.instruments);
+        data.append('versions',$scope.record.version);
+        data.append('fileRecord',$scope.recordFile);
+        data.append('fileLyrics',$scope.lyricsFile);
         $http.post(url,data,{
             headers: { 'Content-Type': undefined }, 
             transformRequest: angular.identity
         }).then(resp => {
-
+            console.log("success")
         }).catch(error =>{
-
+            console.log(data.get('fileRecord'))
+            console.log(data.get('fileLyrics'))
         })
+
     })
     
+    //Get File Audio and File lyrics
     $scope.selectFile = function (id) {
         $('#' + id).change(function (event) {
             var file = event.target.files[0];
@@ -39,25 +51,31 @@ app.controller('recordCtrl',function($scope,$http){
                     reader.readAsDataURL(file);
                 });
             }
-            console.log(file)
         });
     };
 
-    $scope.listRecords=[]
-    $http.get(host+"authorities").then(resp => {
-        $scope.records = resp.data;
-    })
-   
-    $scope.indexOf = function(id){
-        return $scope.db.findIndex(item => item.id==id)
-    }
-
-    $scope.updateRole = function(id){
-        var index = $scope.indexOf(id);
-        if(index>=0){
-            $scope.db.authorities.splice(index,1);
-        }else{
-            $scope.db.authorities.push(resp.data);
-        }
+    //get Value checbox
+    $scope.checkbox = function(){
+        $scope.cultures="";
+        $scope.moods="";
+        $scope.styles="";
+        $scope.instruments="";
+        const selectedValues = [];
+        $('input[name="culture"]:checked').each(function() {
+            $scope.cultures+=" "+$(this).val();
+        });
+        $('input[name="mood"]:checked').each(function() {
+            $scope.moods+=" "+$(this).val();
+        });
+        $('input[name="style"]:checked').each(function() {
+            $scope.styles+=" "+$(this).val();
+        });
+        $('input[name="intrument"]:checked').each(function() {
+            $scope.instruments+=" "+$(this).val();
+        });
+        $('input[name="genre"]:checked').each(function() {
+            selectedValues.push($(this).val());
+        });
+        $scope.genre=selectedValues;
     }
 })

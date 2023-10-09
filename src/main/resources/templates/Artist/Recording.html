@@ -15,13 +15,67 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../../static/js/angularjs/artist/Record.js"></script>
+    
 </head>
+<style>
+    .list-tag {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        margin: 1em 0 0 0;
+    }
+
+    p {
+        margin: 0px !important;
+    }
+
+    .checkbox {
+        width: 140px;
+        height: 40px;
+        position: relative;
+        margin: 0.5em 0.5em;
+    }
+
+    .checkbox input {
+        position: absolute;
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        appearance: none;
+        -webkit-appearance: none;
+    }
+
+    .box {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 1;
+        background: white;
+        border: 2px solid #d1d1d1;
+        color: black;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        transition: all 0.6s;
+    }
+
+    .checkbox input:checked~.box {
+        background: black;
+        border: 2px solid white;
+        color: white;
+    }
+</style>
 
 <body>
     <div ng-app="myApp" ng-controller="recordCtrl" class="container">
         <div class="row">
             <div class="col-5">
-                <img class="img-thumbnail w-100 h-100" style="object-fit: cover;" src="https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg" alt="">
+                <img class="img-thumbnail w-100 h-100" style="object-fit: cover;"
+                    src="https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg"
+                    alt="">
             </div>
             <div class="col-7">
                 <div class=" my-3">
@@ -30,28 +84,294 @@
                 </div>
                 <div class=" my-3">
                     <label for="">File record</label>
-                    <input ng-click="selectFile('record')" class="form-control" type="file" id="record" placeholder="record">
+                    <input ng-click="selectFile('record')" class="form-control" type="file" id="record"
+                        placeholder="record">
                 </div>
                 <div class=" my-3">
                     <label for="">File lyrics</label>
-                    <input ng-click="selectFile('lyrics')" class="form-control" type="file" name="" id="lyrics" placeholder="Lyrics">
+                    <input ng-click="selectFile('lyrics')" class="form-control" type="file" name="" id="lyrics"
+                        placeholder="Lyrics">
                 </div>
                 <div class=" my-3">
                     <label for="">ID MV</label>
-                    <input ng-model="record.id" class="form-control" type="text" name="" id="" placeholder="id MV">
+                    <input ng-model="record.idMv" class="form-control" type="text" name="" id="" placeholder="id MV">
                 </div>
                 <div class="d-flex my-1 my-3">
-                    <input ng-model="record.proceduce" class="form-control me-2" type="text" name="" id="" placeholder="Proceduce">
-                    <input ng-model="record.studio" class="form-control " type="text" name="" id="" placeholder="Studio">
+                    <input ng-model="record.proceduce" class="form-control me-2" type="text" name="" id=""
+                        placeholder="Proceduce">
+                    <input ng-model="record.studio" class="form-control " type="text" name="" id=""
+                        placeholder="Studio">
                 </div>
-                <div>
-                    <button id="create-record" class="btn btn-primary">Create</button>
+            </div>
+            <div class="">
+                <div class="mt-4">
+                    <label for="genre">
+                        <h6>Choose up to 3 genre</h6>
+                    </label>
+                    <input list="genres" class="form-control" name="genres" id="genre">
+                    <datalist id="genres">
+                        <option value="Edge">
+                        <option value="Firefox">
+                        <option value="Chrome">
+                        <option value="Opera">
+                        <option value="Safari">
+                    </datalist>
+                    <!-- List genres -->
+                    <div id="list-genres" class="d-flex">
+                    </div>
+                </div>
+                <!-- List music cultures -->
+                <div class="mt-4">
+                    <h6>Choose up to 3 music cultures. (Optional)</h6>
+                    <div class="list-tag">
+                        <div class="checkbox">
+                            <input type="checkbox" name="culture" id="" />
+                            <div class="box">
+                                <p>Afican</p>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <input value="Afican" type="checkbox" name="culture" id="" />
+                            <div class="box">
+                                <p>Arabic</p>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" name="culture" id="" value="Asian"/>
+                            <div class="box">
+                                <p>Asian</p>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" name="culture" id="" />
+                            <div class="box">
+                                <p>Buddist</p>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" name="culture" id="" />
+                            <div class="box">
+                                <p>Celtic</p>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" name="culture" id="" />
+                            <div class="box">
+                                <p>Caribbean</p>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" name="culture" id="" />
+                            <div class="box">
+                                <p>Christian</p>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" name="culture" id="" />
+                            <div class="box">
+                                <p>None of these</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- List mood -->
+                <div class="mt-4">
+                    <h6>Choose up to 2 moods. (Optional)</h6>
+                    <div class="list-tag">
+                        <div class="checkbox">
+                            <input type="checkbox" name="mood" id="" value="Chill" />
+                            <div class="box">
+                                <p>Chill</p>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" name="mood" id="" />
+                            <div class="box">
+                                <p>Energetic</p>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" name="mood" id="" />
+                            <div class="box">
+                                <p>Happy</p>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" name="mood" id="" />
+                            <div class="box">
+                                <p>Fierce</p>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" name="mood" id="" />
+                            <div class="box">
+                                <p>Meditative</p>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" name="mood" id="" value="Romantic"/>
+                            <div class="box">
+                                <p>Romantic</p>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" name="mood" id="" />
+                            <div class="box">
+                                <p>Sad</p>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" name="mood" id="" />
+                            <div class="box">
+                                <p>None of these</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- List song styles -->
+                <div class="mt-4">
+                    <h6>Choose up to 2 song styles. (Optional)</h6>
+                    <div class="list-tag">
+                        <div class="checkbox">
+                            <input type="checkbox" name="style" id="" />
+                            <div class="box">
+                                <p>Acoustic</p>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" name="style" id="" />
+                            <div class="box">
+                                <p>Ballad</p>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" name="style" id="" />
+                            <div class="box">
+                                <p>Beats</p>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" name="style" id="" />
+                            <div class="box" name="style" id="">
+                                <p>Christmas</p>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" name="style" id="" />
+                            <div class="box">
+                                <p>Holiday</p>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" name="style" id="" />
+                            <div class="box">
+                                <p>Kids</p>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" name="style" id="" />
+                            <div class="box">
+                                <p>Traditional</p>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" name="style" id="" />
+                            <div class="box">
+                                <p>None of these</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- List instruments -->
+                <div class="mt-4">
+                    <h6>What instruments are on this song? (Optional)</h6>
+                    <div class="list-tag">
+                        <div class="checkbox">
+                            <input type="checkbox" name="intrument" id="" />
+                            <div class="box">
+                                <p>Accordian</p>
+                            </div>
+                        </div>
+
+                        <div class="checkbox">
+                            <input type="checkbox" name="intrument" id="" />
+                            <div class="box">
+                                <p>Banjo</p>
+                            </div>
+                        </div>
+
+                        <div class="checkbox">
+                            <input type="checkbox" name="intrument" id="" />
+                            <div class="box">
+                                <p>Buzuq</p>
+                            </div>
+                        </div>
+
+                        <div class="checkbox">
+                            <input type="checkbox" name="intrument" id="" />
+                            <div class="box">
+                                <p>Cello</p>
+                            </div>
+                        </div>
+
+                        <div class="checkbox">
+                            <input type="checkbox" name="intrument" id="" />
+                            <div class="box">
+                                <p>Clarinet</p>
+                            </div>
+                        </div>
+
+                        <div class="checkbox">
+                            <input type="checkbox" name="intrument" id="" />
+                            <div class="box">
+                                <p>Mbiria</p>
+                            </div>
+                        </div>
+
+                        <div class="checkbox">
+                            <input type="checkbox" name="intrument" id="" />
+                            <div class="box">
+                                <p>Kora</p>
+                            </div>
+                        </div>
+
+                        <div class="checkbox">
+                            <input type="checkbox" name="intrument" id="" />
+                            <div class="box">
+                                <p>None of these</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question mt-4">
+                    <div class="d-flex me-5">
+                        <div class="me-5">
+                            <h6>Is this a cover?</h6>
+                            <input ng-model="record.version" class="form-check-input" type="radio" value="Cover" name="version" id=""><span>Yes</span>
+                        </div>
+                        <div class="me-5">
+                            <h6>Is it a remix?</h6>
+                            <input ng-model="record.version" value="Remix" class="form-check-input" type="radio" name="version" id=""><span>Yes</span>
+                        </div>
+                        <div class="me-5">
+                            <h6>Is it an Official?</h6>
+                            <input ng-model="record.version" value="Official" class="form-check-input" type="radio" name="version" id=""><span>Yes</span>
+                        </div>
+                        <div>
+                            <h6>Is it an instrumental?</h6>
+                            <input ng-model="record.version" value="Instrumental" class="form-check-input" type="radio" name="version" id=""><span>Yes</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        
+        <button id="create-record">CHekc</button>
     </div>
-    
+    <script src="../../static/js/jscustom/Artist/record.js"></script>
 </body>
 
 </html>

@@ -5,20 +5,22 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.rhymthwave.DAO.AlbumDAO;
-import com.rhymthwave.Service.AlbumService;
+import com.rhymthwave.DAO.SongStyleDAO;
 import com.rhymthwave.Service.CRUD;
-import com.rhymthwave.entity.Album;
+import com.rhymthwave.entity.SongStyle;
+
+import jakarta.transaction.Transactional;
 
 @Service
-public class AlbumServiceImpl implements AlbumService, CRUD<Album, Integer> {
+public class SongStyleServiceImpl implements CRUD<SongStyle, Integer>{
 
 	@Autowired
-	AlbumDAO dao;
-
+	SongStyleDAO dao;
+	
 	@Override
-	public Album create(Album entity) {
-		if (entity != null) {
+	@Transactional
+	public SongStyle create(SongStyle entity) {
+		if(entity!=null) {
 			dao.save(entity);
 			return entity;
 		}
@@ -26,8 +28,9 @@ public class AlbumServiceImpl implements AlbumService, CRUD<Album, Integer> {
 	}
 
 	@Override
-	public Album update(Album entity) {
-		if (entity != null) {
+	@Transactional
+	public SongStyle update(SongStyle entity) {
+		if(entity!=null) {
 			dao.save(entity);
 			return entity;
 		}
@@ -35,30 +38,27 @@ public class AlbumServiceImpl implements AlbumService, CRUD<Album, Integer> {
 	}
 
 	@Override
+	@Transactional
 	public Boolean delete(Integer key) {
-		if (key instanceof Integer && key >= 0) {
+		if(key instanceof Integer && key>0) {
+			dao.deleteById(key);
 			return true;
 		}
 		return false;
 	}
 
 	@Override
-	public Album findOne(Integer key) {
-		if (key instanceof Integer && key >= 0) {
+	public SongStyle findOne(Integer key) {
+		if(key instanceof Integer && key>0) {
 			return dao.findById(key).get();
 		}
 		return null;
 	}
 
 	@Override
-	public List<Album> findAll() {
+	public List<SongStyle> findAll() {
 		return dao.findAll();
 	}
 
-	@Override
-	public List<Album> findAlbumNotRecord() {
-		return dao.getAlbumNotTrack();
-	}
 	
-
 }
