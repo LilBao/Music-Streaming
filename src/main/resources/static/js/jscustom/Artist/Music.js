@@ -11,6 +11,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
     $('#current-tab').innerText = currentTab + 1;
 });
 
+$('.btnPitch').click(function(){
+    console.log("skndjfhkdsj")
+})
 
 function showTab(n) {
     var x = document.getElementsByClassName("tab");
@@ -20,10 +23,15 @@ function showTab(n) {
     } else {
         document.getElementById("prevBtn").style.display = "inline";
     }
-    if (n == (x.length - 1)) {
+    if (n == (x.length - 2)) {
         document.getElementById("nextBtn").innerHTML = "Submit";
-    } else {
+        $("#nextBtn").addClass("submit");
+    }else if(n > (x.length - 2)){
+       $("#nextBtn").hide();
+       $("#prevBtn").hide();
+    }else {
         document.getElementById("nextBtn").innerHTML = "Next";
+        $("#nextBtn").removeClass("submit");
     }
     fixStepIndicator(n)
 }
@@ -35,7 +43,6 @@ function nextPrev(n) {
     if (currentTab >= x.length) {
         document.getElementById("nextprevious").style.display = "none";
         document.getElementById("all-steps").style.display = "none";
-        document.getElementById("register").style.display = "none";
         document.getElementById("text-message").style.display = "block";
     }
     showTab(currentTab);
@@ -46,7 +53,10 @@ function fixStepIndicator(n) {
     for (i = 0; i < x.length; i++) {
         x[i].className = x[i].className.replace("active", "");
     }
-    x[n].className += " active";
+    if(n>4)(
+        x[n].className += " active"
+    )
+   
 }
 
 //Tag Genre

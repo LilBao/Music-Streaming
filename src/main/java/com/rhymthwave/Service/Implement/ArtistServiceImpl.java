@@ -10,23 +10,28 @@ import com.rhymthwave.Service.ArtistService;
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.entity.Artist;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ArtistServiceImpl implements ArtistService, CRUD<Artist, Integer> {
 	@Autowired
 	ArtistDAO dao;
 
 	@Override
+	@Transactional
 	public Artist create(Artist entity) {
 		entity.setVerify(false);
 		return dao.save(entity);
 	}
 
 	@Override
+	@Transactional
 	public Artist update(Artist entity) {
 		return dao.save(entity);
 	}
 
 	@Override
+	@Transactional
 	public Boolean delete(Integer key) {
 		dao.deleteById(key);
 		return true;

@@ -4,11 +4,11 @@ app.controller('musicCtrl', function ($scope, $http) {
     $scope.listSongUpcoming = [];
     $scope.listAlbumUpcoming = [];
     $scope.listRecord = [];
-    $scope.listTrack = [];
     $scope.record = {};
     $scope.song = {};
     $scope.album = {};
     $scope.track = {};
+    $scope.listPitch = [];
     //Get list song has not record
     $http.get(host + "/v1/song/up-coming").then(resp => {
         $scope.listSongUpcoming = resp.data.data;
@@ -25,12 +25,15 @@ app.controller('musicCtrl', function ($scope, $http) {
 
     //Pitch record
     $scope.pitch = function (type, id) {
+        resetTabs();
         if (type === "song") {
-            $("input[name='pitch']").prop('type', 'radio');
-            console.log($("input[name='pitch']"))
+            $scope.type = "song";
             $scope.findListRecordNotSong();
+            $scope.findSong(id);
         } else {
+            $scope.type = "album";
             $scope.findListRecordSong();
+            $scope.findAlbum(id);
         }
     }
 
@@ -48,7 +51,7 @@ app.controller('musicCtrl', function ($scope, $http) {
     $scope.findSong = function (idSong) {
         var url = host + "/v1/song/" + idSong;
         $http.get(url).then(resp => {
-            $scope.song = resp.data;
+            $scope.song = resp.data.data;
         }).catch(error => {
 
         })
@@ -58,7 +61,7 @@ app.controller('musicCtrl', function ($scope, $http) {
     $scope.findRecord = function (idRecord) {
         var url = host + "/v1/record/" + idRecord;
         $http.get(url).then(resp => {
-            $scope.record = resp.data;
+            $scope.record = resp.data.data;
         }).catch(error => {
 
         })
@@ -83,15 +86,15 @@ app.controller('musicCtrl', function ($scope, $http) {
     }
 
 
-    // //find Album
-    // $scope.findAlbum=function(idAlbum){
-    //     var url = ;
-    //     $http.get(url).then(resp =>{
-    //         $scope.album=resp.data;
-    //     }).catch(error => {
+    //find Album
+    $scope.findAlbum = function (idAlbum) {
+        var url = host + "/v1/album/" + idAlbum;
+        $http.get(url).then(resp => {
+            $scope.album = resp.data.data;
+        }).catch(error => {
 
-    //     })
-    // }
+        })
+    }
 
     //Find list record has song
     $scope.findListRecordSong = function () {
@@ -104,6 +107,13 @@ app.controller('musicCtrl', function ($scope, $http) {
     }
 
     // //Push Record into List
+    $scope.checkPitchList = function () {
+        $('input[name="pitch"]:checked').each(function () {
+            $scope.record=$scope.findRecord($(this).val());
+            $scope.listPitch.push($scope.record);
+            console.log($scope.listPitch)
+        })
+    }
 
     //Create track
     $scope.createTrack = function (album) {
@@ -118,6 +128,28 @@ app.controller('musicCtrl', function ($scope, $http) {
                 console.log("loi")
             })
         })
+    }
+    
+    //Finish pitch
+    $('#nextBtn').mousedown(function(){
+        if ($('#nextBtn').hasClass('submit')) {
+            $('#nextBtn').click(function () {
+                $scope.checkPitchList();
+              
+                console.log($scope.listPitch)
+            });
 
+        }
+    })
+
+    function resetTabs() {
+        var x = document.getElementsByClassName("tab");
+        for (var i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        currentTab = 0;
+        showTab(currentTab);
+        $('#current-tab').innerText = currentTab + 1;
+        $("#nextBtn").show();
     }
 })
