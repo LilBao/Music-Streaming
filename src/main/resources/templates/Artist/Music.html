@@ -16,6 +16,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="../../static/js/angularjs/artist/Music.js"></script>
+    <script src="../../static/js/jscustom/Artist/Music.js"></script>
 </head>
 <body ng-app="myApp" ng-controller="musicCtrl">
     <section class="">
@@ -165,7 +166,7 @@
                                 <h6>{{x.songName}}</h6>
                             </td>
                             <td class="">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                <button type="button" ng-click="pitch('song',x.songId)" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#myModal">
                                     Pitch
                                 </button>
@@ -178,7 +179,7 @@
                                 <h6>{{x.albumName}}</h6>
                             </td>
                             <td class="">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                <button type="button" class="btn btn-primary" ng-click="pitch('album',x.albumId)" data-bs-toggle="modal"
                                     data-bs-target="#myModal">
                                     Pitch
                                 </button>
@@ -203,9 +204,153 @@
                 <div class="modal-body">
                     <div class="container mt-5 col-7">
                         <div class="row d-flex justify-content-center align-items-center">
-                            <div ng-include="'Pitch.html'"></div>
+                          <form id="regForm">
+                            <div class="all-steps my-0" id="all-steps" hidden>
+                              <span class="step"></span>
+                              <span class="step"></span>
+                              <span class="step"></span>
+                              <span class="step"></span>
+                            </div>
+                    
+                            <div class="tab tab-1">
+                              <div class="d-flex">
+                                <h6>1 of 5 - Song</h6>
+                              </div>
+                              <h1>Choose a song to pitch</h1>
+                              <p>We'll add this song to Release Radar if we get yout pitch at least a week before release</p>
+                              <div class="d-flex">
+                                <img style="height: 100px; width: 50px; object-fit: cover;" class="w-25" src="../../static/img/ab1.webp"
+                                  alt="">
+                                <div>
+                                  <h6>Tên album</h6>
+                                  <p>Album - Release 23 Oct 2023</p>
+                                </div>
+                              </div>
+                              <div class="table-container table-responsive">
+                                <table class="table table-hover table-bordered">
+                                  <thead>
+                                    <tr>
+                                      <th>#</th>
+                                      <th>Title</th>
+                                      <th>Duration</th>
+                                      <th></th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr ng-repeat="item in listRecord">
+                                      <td>{{$index}}</td>
+                                      <td>{{item.recordingName}}</td>
+                                      <td>{{item.duration}}</td>
+                                      <td><input type="checkbox" name="pitch" id=""></td>
+                                    </tr>
+                                    
+                                  </tbody>
+                                </table>
+                              </div>
+                    
+                            </div>
+                    
+                            <div class="tab tab-2">
+                              <div class="d-flex">
+                                <h6>2 of 5 - Location</h6>
+                              </div>
+                              <h1>Confirm where the artist is from</h1>
+                              <p>We only use this information to look for music made by people from specific parts of the world</p>
+                              <div class="my-5">
+                                <label for="hometown">
+                                  <h6>Hometown</h6>
+                                </label>
+                                <input list="hometowns" class="form-control" name="hometown" id="hometown">
+                                <datalist id="hometowns">
+                                  <option value="Edge">
+                                  <option value="Firefox">
+                                  <option value="Chrome">
+                                  <option value="Opera">
+                                  <option value="Safari">
+                                </datalist>
+                              </div>
+                    
+                    
+                            </div>
+                    
+                            <div class="tab tab-3">
+                              <div class="d-flex">
+                                <h6>3 of 4 - Description</h6>
+                              </div>
+                              <h1>Add a description</h1>
+                              <h6>Tell our team about the process of creating this song, as well as any plans to promote it</h6>
+                              <div class="mt-5">
+                                <h5>Description</h5>
+                                <textarea class="w-100 form-control" name="" id="" cols="30" rows="10"
+                                  placeholder="500 characters remaining"></textarea>
+                              </div>
+                    
+                            </div>
+                    
+                            <div class="tab tab-4">
+                              <div class="d-flex">
+                                <h6>4 of 4 - Review</h6>
+                              </div>
+                              <h1>Make sure everything looks goods</h1>
+                              <p>You can update your pitch up until release day. But changes made within a week of release won't be
+                                reflected on Release Radar</p>
+                    
+                              <div class="d-flex">
+                                <img style="height: 100px; width: 50px; object-fit: cover;" class="w-25" src="../../static/img/ab1.webp"
+                                  alt="">
+                                <div>
+                                  <h6>Tên album</h6>
+                                  <p>Album - Release 23 Oct 2023</p>
+                                </div>
+                              </div>
+                              <table class="table table-hover table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th>#</th>
+                                    <th>Title</th>
+                                    <th>Duration</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Doe</td>
+                                    <td>john@example.com</td>
+                                  </tr>
+                                  <tr>
+                                    <td>2</td>
+                                    <td>Moe</td>
+                                    <td>mary@example.com</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                              <div class="lgenre my-3">
+                                <span class="p-2 badge bg-success">Genre</span>
+                              </div>
+                              <div class="lgenre my-3">
+                                <span class="p-2 badge bg-success">Mood</span>
+                              </div>
+                              <div class="lgenre my-3">
+                                <span class="p-2 badge bg-success">Culture</span>
+                              </div>
+                              <div class="lgenre my-3">
+                                <span class="p-2 badge bg-success">Song style</span>
+                              </div>
+                              <div class="lgenre my-3">
+                                <span class="p-2 badge bg-success">Instruments</span>
+                              </div>
+                              <div>
+                                <textarea class="form-control" name="" id="" cols="30" rows="10"></textarea>
+                              </div>
+                            </div>
+                    
+                            <div class="thanks-message text-center" id="text-message"> <img src="https://i.imgur.com/O18mJ1K.png"
+                                width="100" class="mb-4">
+                              <h3>Thanks for your Donation!</h3> <span>Your donation has been entered! We will contact you shortly!</span>
+                            </div>
+                          </form>
                         </div>
-                    </div>
+                      </div>
                 </div>
 
                 <!-- Modal footer -->
@@ -223,84 +368,6 @@
             </div>
         </div>
     </div>
-    <script>
-        $(document).ready(function () {
-            $('#myTab a').click(function (e) {
-                e.preventDefault()
-                $(this).tab('show')
-            })
-            
-        })
-        var currentTab = 0;
-        document.addEventListener("DOMContentLoaded", function (event) {
-            showTab(currentTab);
-            $('#current-tab').innerText = currentTab + 1;
-        });
-
-
-        function showTab(n) {
-            var x = document.getElementsByClassName("tab");
-            x[n].style.display = "block";
-            if (n == 0) {
-                document.getElementById("prevBtn").style.display = "none";
-            } else {
-                document.getElementById("prevBtn").style.display = "inline";
-            }
-            if (n == (x.length - 1)) {
-                document.getElementById("nextBtn").innerHTML = "Submit";
-            } else {
-                document.getElementById("nextBtn").innerHTML = "Next";
-            }
-            fixStepIndicator(n)
-        }
-
-        function nextPrev(n) {
-            var x = document.getElementsByClassName("tab");
-            x[currentTab].style.display = "none";
-            currentTab = currentTab + n;
-            if (currentTab >= x.length) {
-                document.getElementById("nextprevious").style.display = "none";
-                document.getElementById("all-steps").style.display = "none";
-                document.getElementById("register").style.display = "none";
-                document.getElementById("text-message").style.display = "block";
-            }
-            showTab(currentTab);
-        }
-
-        function fixStepIndicator(n) {
-            var i, x = document.getElementsByClassName("step");
-            for (i = 0; i < x.length; i++) {
-                x[i].className = x[i].className.replace("active", "");
-            }
-            x[n].className += " active";
-        }
-
-        //Tag Genre
-        $('#genre').on('change', function () {
-            var selectedOption = $(this).val();
-            if (selectedOption) {
-                var tag = $('<div class="checkbox"> <input type="checkbox" name="genre" id="" />' +
-                    '<div class="box bg-black text-white"><p>' + selectedOption + '</p></div>' +
-                    '</div>');
-                tag.find('input[type="checkbox"]').val(selectedOption);
-                $('#list-genres').append(tag);
-                $(this).find('option[value="' + selectedOption + '"]').remove();
-            }
-            $('#genre').val("");
-        });
-
-        $('#list-genres').on('click', 'input[type="checkbox"]', function () {
-            var selectedGenre = $(this).val();
-            if (selectedGenre) {
-                $('#genre').append($('<option>', {
-                    value: selectedGenre,
-                    text: selectedGenre
-                }));
-                $(this).closest('.checkbox').remove();
-            }
-        });
-
-    </script>
 </body>
 
 </html>

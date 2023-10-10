@@ -67,7 +67,7 @@ public class AlbumREST {
 	
 	@GetMapping("/api/v1/album/up-coming")
 	public ResponseEntity<MessageResponse> albumUpcoming(){
-		return ResponseEntity.ok(new MessageResponse(true,"success",albumSer.findAlbumNotRecord()));
+		return ResponseEntity.ok(new MessageResponse(true,"success",albumSer.findAlbumNotRecord("mck@gmail.com")));
 	}
 	
 }

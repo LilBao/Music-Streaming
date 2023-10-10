@@ -5,15 +5,20 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.rhymthwave.DAO.AccountDAO;
 import com.rhymthwave.DAO.SongDAO;
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.Service.SongService;
+import com.rhymthwave.entity.Account;
 import com.rhymthwave.entity.Song;
 
 @Service
 public class SongServiceImpl implements SongService, CRUD<Song, Integer> {
 	@Autowired
 	SongDAO dao;
+	
+	@Autowired
+	AccountDAO accDao;
 
 	@Override
 	public Song create(Song entity) {
@@ -55,8 +60,9 @@ public class SongServiceImpl implements SongService, CRUD<Song, Integer> {
 	}
 
 	@Override
-	public List<Song> findSongNotRecord() {
-		return dao.getSongNotRecord();
+	public List<Song> findSongNotRecord(String email) {
+		Account account = accDao.findById(email).get();
+		return dao.getSongNotRecord(account.getArtists().getArtistId());
 	}
 	
 

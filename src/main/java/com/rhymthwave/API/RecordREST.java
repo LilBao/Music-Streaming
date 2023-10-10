@@ -49,6 +49,16 @@ public class RecordREST {
 	public ResponseEntity<MessageResponse> getOneRecord(@PathVariable("id") Integer id) {
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudRecord.findOne(id)));
 	}
+	
+	@GetMapping("/api/v1/my-record")
+	public ResponseEntity<MessageResponse> getMyRecord() {
+		return ResponseEntity.ok(new MessageResponse(true, "success", recordSer.findRecordByCreater("mck@gmail.com")));
+	}
+	
+	@GetMapping("/api/v1/my-record-not-raw")
+	public ResponseEntity<MessageResponse> getOneRecord() {
+		return ResponseEntity.ok(new MessageResponse(true, "success", recordSer.findRawRecordByCreater("mck@gmail.com")));
+	}
 
 	@PostMapping(value = "/api/v1/record", consumes = { "multipart/form-data" })
 	public ResponseEntity<MessageResponse> createRecord(@ModelAttribute Recording record,
