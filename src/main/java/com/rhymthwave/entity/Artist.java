@@ -72,7 +72,7 @@ public class Artist implements Serializable {
 	@JoinColumn(name = "BACKGROUDIMAGE")
 	private Image backgroundImage;
 
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "EMAIL")
 	private Account accounts;
 

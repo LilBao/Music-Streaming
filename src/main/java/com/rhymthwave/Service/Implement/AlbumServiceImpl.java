@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.rhymthwave.DAO.AccountDAO;
 import com.rhymthwave.DAO.AlbumDAO;
 import com.rhymthwave.Service.AlbumService;
 import com.rhymthwave.Service.CRUD;
+import com.rhymthwave.entity.Account;
 import com.rhymthwave.entity.Album;
 
 @Service
@@ -15,6 +17,9 @@ public class AlbumServiceImpl implements AlbumService, CRUD<Album, Integer> {
 
 	@Autowired
 	AlbumDAO dao;
+	
+	@Autowired
+	AccountDAO accDao;
 
 	@Override
 	public Album create(Album entity) {
@@ -56,8 +61,9 @@ public class AlbumServiceImpl implements AlbumService, CRUD<Album, Integer> {
 	}
 
 	@Override
-	public List<Album> findAlbumNotRecord() {
-		return dao.getAlbumNotTrack();
+	public List<Album> findAlbumNotRecord(String email) {
+		Account account = accDao.findById(email).get();
+		return dao.getAlbumNotTrack(account.getArtists().getArtistId());
 	}
 	
 

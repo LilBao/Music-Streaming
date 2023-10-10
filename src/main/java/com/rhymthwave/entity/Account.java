@@ -87,10 +87,10 @@ public class Account implements Serializable {
 	private List<Advertisement> advertisements;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "accounts")
-	private List<Podcast> podcasts;
+	@OneToOne(mappedBy = "accounts")
+	private Podcast podcasts;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "accounts")
-	private List<Artist> artists;
+	@OneToOne(mappedBy = "accounts")
+	private Artist artists;
 }

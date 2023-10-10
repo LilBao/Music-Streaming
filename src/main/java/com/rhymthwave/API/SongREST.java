@@ -67,6 +67,6 @@ public class SongREST {
 	
 	@GetMapping("/api/v1/song/up-coming")
 	public ResponseEntity<MessageResponse> songUpcoming(){
-		return ResponseEntity.ok(new MessageResponse(true,"success",songSer.findSongNotRecord()));
+		return ResponseEntity.ok(new MessageResponse(true,"success",songSer.findSongNotRecord("mck@gmail.com")));
 	}
 }
