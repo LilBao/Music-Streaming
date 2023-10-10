@@ -36,14 +36,4 @@ public class Author implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "EMAIL")
 	private Account accounts;
-
-//	@ManyToOne
-//	@JoinColumn(name = "ACOUNT_A")
-//	@JsonIgnore
-//	private Follow followerA;
-//
-//	@ManyToOne
-//	@JoinColumn(name = "ACOUNT_B")
-//	@JsonIgnore
-//	private Follow followerB;
 }

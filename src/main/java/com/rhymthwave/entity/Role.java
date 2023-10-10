@@ -39,5 +39,5 @@ public class Role implements Serializable {
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "role")
-	List<Author> authors;
+	private List<Author> authors;
 }

@@ -28,9 +28,8 @@ import lombok.NoArgsConstructor;
 public class UserType implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "USERTYPEID")
-	private long userTypeId;
+	private String userTypeId;
 
 	@Column(name = "STARTDATE")
 	private Date startDate;
