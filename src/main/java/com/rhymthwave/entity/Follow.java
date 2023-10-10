@@ -11,6 +11,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -33,11 +35,11 @@ public class Follow implements Serializable {
 	@Column(name = "FOLLOWDATE")
 	private Date followDate;
 
-//	@JsonIgnore
-//	@OneToMany(mappedBy = "followerA")
-//	private List<Author> authorsAccountA;
-//
-//	@JsonIgnore
-//	@OneToMany(mappedBy = "followerB")
-//	private List<Author> authorsAccountB;
+	@ManyToOne
+	@JoinColumn(name = "ACOUNT_A")
+	private Author authorsAccountA;
+
+	@ManyToOne
+	@JoinColumn(name = "ACOUNT_B")
+	private Author authorsAccountB;
 }
