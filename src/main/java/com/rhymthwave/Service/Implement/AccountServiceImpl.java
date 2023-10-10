@@ -17,7 +17,7 @@ import jakarta.transaction.Transactional;
 public class AccountServiceImpl implements AccountService, CRUD<Account, String> {
 
 	@Autowired
-	AccountDAO dao;
+	private AccountDAO dao;
 
 	@Override
 	public Account create(Account entity) {
@@ -26,7 +26,8 @@ public class AccountServiceImpl implements AccountService, CRUD<Account, String>
 
 	@Override
 	public Account update(Account entity) {
-		return null;
+		
+		return dao.save(entity);
 	}
 
 	@Override
@@ -36,24 +37,16 @@ public class AccountServiceImpl implements AccountService, CRUD<Account, String>
 	}
 
 	@Override
-	public Account findOne(String key) {
-		return dao.findById(key).get();
+	public Account findOne(String email) {
+		return dao.findByEmail(email);
 	}
 
 	@Override
 	public List<Account> findAll() {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.findAll();
 	}
 
-//	@Override
-//	@Transactional
-//	public UserDetails loadUserByEmail(String email) {
-//		Account account = dao.findById(email).get();
-//		if(account == null) {
-//			throw new UsernameNotFoundException(email);
-//		}
-//		return UserPrinciple.build(account);
-//	}
-	
+
+
 }

@@ -8,4 +8,5 @@ import com.rhymthwave.entity.Account;
 @Repository
 public interface AccountDAO extends JpaRepository<Account, String>{
 
+	Account findByEmail(String email);
 }
