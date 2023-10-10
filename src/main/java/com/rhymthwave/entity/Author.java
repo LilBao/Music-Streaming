@@ -2,6 +2,8 @@ package com.rhymthwave.entity;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,7 +27,7 @@ public class Author implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "AUTHORID")
-	private long authorId;
+	private Long authorId;
 
 	@ManyToOne
 	@JoinColumn(name = "IDROLE")
@@ -35,11 +37,13 @@ public class Author implements Serializable {
 	@JoinColumn(name = "EMAIL")
 	private Account accounts;
 
-	@ManyToOne
-	@JoinColumn(name = "ACOUNT_A")
-	private Follow followerA;
-
-	@ManyToOne
-	@JoinColumn(name = "ACOUNT_B")
-	private Follow followerB;
+//	@ManyToOne
+//	@JoinColumn(name = "ACOUNT_A")
+//	@JsonIgnore
+//	private Follow followerA;
+//
+//	@ManyToOne
+//	@JoinColumn(name = "ACOUNT_B")
+//	@JsonIgnore
+//	private Follow followerB;
 }

@@ -33,11 +33,11 @@ public class Follow implements Serializable {
 	@Column(name = "FOLLOWDATE")
 	private Date followDate;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "followerA")
-	private List<Author> authorsAccountA;
-
-	@JsonIgnore
-	@OneToMany(mappedBy = "followerB")
-	private List<Author> authorsAccountB;
+//	@JsonIgnore
+//	@OneToMany(mappedBy = "followerA")
+//	private List<Author> authorsAccountA;
+//
+//	@JsonIgnore
+//	@OneToMany(mappedBy = "followerB")
+//	private List<Author> authorsAccountB;
 }

@@ -4,9 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.rhymthwave.entity.TypeEnum.EROLE;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,7 +34,8 @@ public class Role implements Serializable {
 	private int roleId;
 
 	@Column(name = "NAMEROLE")
-	private String roleName;
+	@Enumerated(EnumType.STRING)
+	private EROLE role = EROLE.USER;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "role")
