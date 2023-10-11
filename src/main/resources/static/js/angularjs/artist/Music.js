@@ -4,7 +4,6 @@ app.controller('musicCtrl', function ($scope, $http) {
     $scope.listSongUpcoming = [];
     $scope.listAlbumUpcoming = [];
     $scope.listRecord = [];
-    $scope.listTrack = [];
     $scope.record = {};
     $scope.song = {};
     $scope.album = {};
@@ -25,12 +24,15 @@ app.controller('musicCtrl', function ($scope, $http) {
 
     //Pitch record
     $scope.pitch = function (type, id) {
+        resetTabs();
         if (type === "song") {
-            $("input[name='pitch']").prop('type', 'radio');
-            console.log($("input[name='pitch']"))
+            $scope.type = "song";
             $scope.findListRecordNotSong();
+            $scope.findSong(id);
         } else {
+            $scope.type = "album";
             $scope.findListRecordSong();
+            $scope.findAlbum(id);
         }
     }
 
@@ -48,7 +50,7 @@ app.controller('musicCtrl', function ($scope, $http) {
     $scope.findSong = function (idSong) {
         var url = host + "/v1/song/" + idSong;
         $http.get(url).then(resp => {
-            $scope.song = resp.data;
+            $scope.song = resp.data.data;
         }).catch(error => {
 
         })
@@ -58,7 +60,7 @@ app.controller('musicCtrl', function ($scope, $http) {
     $scope.findRecord = function (idRecord) {
         var url = host + "/v1/record/" + idRecord;
         $http.get(url).then(resp => {
-            $scope.record = resp.data;
+            $scope.record = resp.data.data;
         }).catch(error => {
 
         })
@@ -78,20 +80,26 @@ app.controller('musicCtrl', function ($scope, $http) {
         })
     }
     //update song
-    $scope.updateSongPitch = function () {
+    $scope.updateSongPitch = function (song,record) {
+        var url = host + "/v1/record";
+        record.song = song;
+        $http.post(url,record).then(resp => {
+            console.log("success");
+        }).catch(error => {
 
+        })
     }
 
 
-    // //find Album
-    // $scope.findAlbum=function(idAlbum){
-    //     var url = ;
-    //     $http.get(url).then(resp =>{
-    //         $scope.album=resp.data;
-    //     }).catch(error => {
+    //find Album
+    $scope.findAlbum = function (idAlbum) {
+        var url = host + "/v1/album/" + idAlbum;
+        $http.get(url).then(resp => {
+            $scope.album = resp.data.data;
+        }).catch(error => {
 
-    //     })
-    // }
+        })
+    }
 
     //Find list record has song
     $scope.findListRecordSong = function () {
@@ -103,21 +111,46 @@ app.controller('musicCtrl', function ($scope, $http) {
         })
     }
 
-    // //Push Record into List
-
     //Create track
-    $scope.createTrack = function (album) {
+    $scope.createTrack = function (album, record) {
         var url = host + "/v1/track";
         $scope.track.album = album;
-        $scope.listRecord.each(item => {
-            $scope.track.record = item;
-            var data = angular.copy($scope.track);
-            $http.post(url, data).then(resp => {
-                console.log("success")
-            }).catch(error => {
-                console.log("loi")
-            })
+        $scope.track.record = record;
+        var item = angular.copy($scope.track);
+        $http.post(url, item).then(resp => {
+            console.log("success")
+        }).catch(error => {
+            console.log("loi")
         })
+    }
+    //Finish pitch
+    $('#nextBtn').click(function () {
+        if ($('#nextBtn').hasClass('submit')) {
+            var data = {};
+            $('input[name="pitch"]:checked').each(function () {
+                var url = host + "/v1/record/" + $(this).val();
+                $http.get(url).then(resp => {
+                    data = (resp.data.data);
+                    if ($scope.type === "song") {
+                        $scope.updateSongPitch($scope.song,data)
+                    } else {
+                        $scope.createTrack($scope.album,data);
+                    }
+                }).catch(error => {
+                })
+            })
+        }
+    });
 
+    function resetTabs() {
+        var x = document.getElementsByClassName("tab");
+        for (var i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        currentTab = 0;
+        showTab(currentTab);
+        $('#current-tab').innerText = currentTab + 1;
+        $("#nextBtn").removeClass("submit");
+        $("#nextBtn").show();
     }
 })
