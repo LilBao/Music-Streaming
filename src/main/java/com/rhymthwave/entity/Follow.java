@@ -41,5 +41,6 @@ public class Follow implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "ACOUNT_B")
+
 	private Author authorsAccountB;
 }
