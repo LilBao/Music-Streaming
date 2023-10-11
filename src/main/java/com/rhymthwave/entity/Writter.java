@@ -29,9 +29,9 @@ public class Writter implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "ARTISTID")
-	private Artist artistId;
+	private Artist artist;
 
 	@ManyToOne
 	@JoinColumn(name = "SONGSID")
-	private Song songId;
+	private Song song;
 }

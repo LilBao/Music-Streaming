@@ -63,7 +63,7 @@ public class AlbumServiceImpl implements AlbumService, CRUD<Album, Integer> {
 	@Override
 	public List<Album> findAlbumNotRecord(String email) {
 		Account account = accDao.findById(email).get();
-		return dao.getAlbumNotTrack(account.getArtists().getArtistId());
+		return dao.getAlbumNotTrack(account.getArtist().getArtistId());
 	}
 	
 

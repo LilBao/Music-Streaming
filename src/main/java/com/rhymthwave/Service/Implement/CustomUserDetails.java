@@ -16,27 +16,24 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class CustomUserDetails implements UserDetails{
-	
+public class CustomUserDetails implements UserDetails {
+
 	private String email;
-	
+
 	private String password;
-	
+
 	private boolean isVerify;
-	
-	private List< GrantedAuthority> authorities;
- 
-	
-	
+
+	private List<GrantedAuthority> authorities;
+
 	public CustomUserDetails(Author user) {
-		
-		this.email = user.getAccounts().getEmail();
-		this.password = user.getAccounts().getPassword();
-		this.isVerify = user.getAccounts().isVerify();
-		this.authorities = Arrays.stream(user.getRole().getRole().name().split(",")).map(
-				SimpleGrantedAuthority::new).collect(Collectors.toList());
+
+		this.email = user.getAccount().getEmail();
+		this.password = user.getAccount().getPassword();
+		this.isVerify = user.getAccount().isVerify();
+		this.authorities = Arrays.stream(user.getRole().getRole().name().split(",")).map(SimpleGrantedAuthority::new)
+				.collect(Collectors.toList());
 	}
-	
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

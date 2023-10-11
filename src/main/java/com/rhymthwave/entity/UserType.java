@@ -45,7 +45,7 @@ public class UserType implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "ACCOUNTID")
-	private Account accounts;
+	private Account account;
 
 	@ManyToOne
 	@JoinColumn(name = "SUBCRIPTIONID")

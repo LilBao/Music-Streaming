@@ -61,7 +61,7 @@ public class AlbumREST {
 			crudImage.create(cover);
 			album.setImages(cover);
 		}
-		album.setArtistId(artistSer.findByEmail("mck@gmail.com"));
+		album.setArtist(artistSer.findByEmail("mck@gmail.com"));
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudAlbum.create(album)));
 	}
 	

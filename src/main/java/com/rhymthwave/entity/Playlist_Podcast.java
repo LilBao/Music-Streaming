@@ -33,14 +33,14 @@ public class Playlist_Podcast implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "PLAYLISTID")
-	private Playlist playlistId;
+	private Playlist playlist;
 
 	@ManyToOne
 	@JoinColumn(name = "EPISODESID")
-	private Episode episodeId;
+	private Episode episode;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "playlistPodcastId")
+	@OneToMany(mappedBy = "playlistPodcast")
 	private List<Access> accesses;
 
 }

@@ -67,5 +67,5 @@ public class Advertisement implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "ACCOUNTID")
-	private Account accounts;
+	private Account account;
 }

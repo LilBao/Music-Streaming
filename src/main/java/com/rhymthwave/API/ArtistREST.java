@@ -64,7 +64,7 @@ public class ArtistREST {
 		
 		artist.setBackgroundImage(imgBackground);
 		artist.setImagesProfile(imgAvatar);
-		artist.setAccounts(crudAccount.findOne("mck@gmail.com"));
+		artist.setAccount(crudAccount.findOne("mck@gmail.com"));
 		return ResponseEntity.ok(new MessageResponse(true, "succeess", crud.create(artist)));
 	}
 	
