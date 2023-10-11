@@ -163,7 +163,7 @@
                     <tbody>
                         <tr class="align-items-center" ng-repeat="x in listSongUpcoming">
                             <td class="d-flex align-items-center">
-                                <img class="w-25" src="{{x.images.url}}" alt="">
+                                <img class="w-25" src="{{x.image.url}}" alt="">
                                 <h6>{{x.songName}}</h6>
                             </td>
                             <td class="">
@@ -176,7 +176,7 @@
                         </tr>
                         <tr class="align-items-center" ng-repeat="x in listAlbumUpcoming">
                             <td class="d-flex align-items-center">
-                                <img class="w-25" src="{{x.images.url}}" alt="">
+                                <img class="w-25" src="{{x.image.url}}" alt="">
                                 <h6>{{x.albumName}}</h6>
                             </td>
                             <td class="">
@@ -223,7 +223,7 @@
                                     <div class="my-3">
                                         <div ng-if="type === 'song'" class="d-flex">
                                             <img style="height: 100px; width: 50px; object-fit: cover;" class="me-3 w-25"
-                                                src="{{song.images.url}}" alt="">
+                                                src="{{song.image.url}}" alt="">
                                             <div>
                                                 <h6>{{song.songName}}</h6>
                                                 <p>{{song.releaseDay | date:'dd/MM/yyyy, hh:mm:ss'}}</p>
@@ -231,7 +231,7 @@
                                         </div>
                                         <div ng-if="type === 'album'" class="d-flex">
                                             <img style="height: 100px; width: 50px; object-fit: cover;" class="me-3 w-25"
-                                                src="{{album.images.url}}" alt="">
+                                                src="{{album.image.url}}" alt="">
                                             <div>
                                                 <h6>{{album.albumName}}</h6>
                                                 <p>{{album.releaseDate | date:'dd/MM/yyyy, hh:mm:ss'}}</p>

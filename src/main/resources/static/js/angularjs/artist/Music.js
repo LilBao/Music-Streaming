@@ -115,7 +115,7 @@ app.controller('musicCtrl', function ($scope, $http) {
     $scope.createTrack = function (album, record) {
         var url = host + "/v1/track";
         $scope.track.album = album;
-        $scope.track.record = record;
+        $scope.track.recording = record;
         var item = angular.copy($scope.track);
         $http.post(url, item).then(resp => {
             console.log("success")
