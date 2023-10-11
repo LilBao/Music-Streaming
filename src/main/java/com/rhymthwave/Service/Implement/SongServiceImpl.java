@@ -62,7 +62,7 @@ public class SongServiceImpl implements SongService, CRUD<Song, Integer> {
 	@Override
 	public List<Song> findSongNotRecord(String email) {
 		Account account = accDao.findById(email).get();
-		return dao.getSongNotRecord(account.getArtists().getArtistId());
+		return dao.getSongNotRecord(account.getArtist().getArtistId());
 	}
 	
 

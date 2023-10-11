@@ -32,7 +32,7 @@ public class Track implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "ALBUMID")
-	private Album albumId;
+	private Album album;
 
 	@ManyToOne
 	@JoinColumn(name = "RECORDINGID")

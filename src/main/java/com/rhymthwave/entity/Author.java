@@ -37,6 +37,5 @@ public class Author implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "EMAIL")
-	private Account accounts;
-
+	private Account account;
 }

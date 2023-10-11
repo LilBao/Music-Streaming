@@ -63,9 +63,9 @@ public class Advertisement implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "BANNER")
-	private Image images;
+	private Image image;
 
 	@ManyToOne
 	@JoinColumn(name = "ACCOUNTID")
-	private Account accounts;
+	private Account account;
 }

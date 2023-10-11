@@ -9,6 +9,6 @@ import com.rhymthwave.entity.Artist;
 
 @Repository
 public interface ArtistDAO extends JpaRepository<Artist, Integer>{
-	@Query("Select o from Artist o where accounts.email = :email")
+	@Query("Select o from Artist o where account.email = :email")
 	Artist findByEmail(@Param("email") String email);
 }

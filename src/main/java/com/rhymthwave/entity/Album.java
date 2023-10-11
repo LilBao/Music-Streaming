@@ -43,16 +43,16 @@ public class Album implements Serializable {
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@OneToOne
 	@JoinColumn(name = "COVERIMAGE")
-	private Image images;
+	private Image image;
 
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "ARTISTID")
-	private Artist artistId;
+	private Artist artist;
 
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "albumId")
+	@OneToMany(mappedBy = "album")
 	private List<Track> tracks;
 
 }

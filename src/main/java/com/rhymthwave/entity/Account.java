@@ -64,33 +64,33 @@ public class Account implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "IMAGEID")
-	private Image images;
+	private Image image;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "accounts")
-	private List<Author> authors;
+	@OneToMany(mappedBy = "account")
+	private List<Author> author;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "accounts")
+	@OneToMany(mappedBy = "account")
 	private List<News> news;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "accounts")
-	private List<Monitor> monitors;
+	@OneToMany(mappedBy = "account")
+	private List<Monitor> monitor;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "accounts")
-	private List<UserType> userTypes;
+	@OneToMany(mappedBy = "account")
+	private List<UserType> userType;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "accounts")
-	private List<Advertisement> advertisements;
+	@OneToMany(mappedBy = "account")
+	private List<Advertisement> advertisement;
 
 	@JsonIgnore
-	@OneToOne(mappedBy = "accounts")
-	private Podcast podcasts;
+	@OneToOne(mappedBy = "account")
+	private Podcast podcast;
 
 	@JsonIgnore
-	@OneToOne(mappedBy = "accounts")
-	private Artist artists;
+	@OneToOne(mappedBy = "account")
+	private Artist artist;
 }

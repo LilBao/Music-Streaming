@@ -32,6 +32,9 @@ public class UserType implements Serializable {
 	@Column(name = "USERTYPEID")
 	private long userTypeId;
 
+	@Column(name = "NAMETYPE")
+	private String nameType;
+
 	@Column(name = "STARTDATE")
 	private Date startDate;
 
@@ -46,7 +49,7 @@ public class UserType implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "ACCOUNTID")
-	private Account accounts;
+	private Account account;
 
 	@ManyToOne
 	@JoinColumn(name = "SUBCRIPTIONID")

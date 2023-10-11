@@ -58,17 +58,17 @@ public class Episode implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "PODCASTID")
-	private Podcast podcastId;
+	private Podcast podcast;
 
 	@ManyToOne
 	@JoinColumn(name = "IMAGEEP")
-	private Image images;
+	private Image image;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "episodeId")
-	private List<Playlist_Podcast> playlist_Podcasts;
+	@OneToMany(mappedBy = "episode")
+	private List<Playlist_Podcast> playlistPodcast;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "episodeId")
+	@OneToMany(mappedBy = "episode")
 	private List<Report> reports;
 }

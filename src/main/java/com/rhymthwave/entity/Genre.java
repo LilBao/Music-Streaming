@@ -33,6 +33,6 @@ public class Genre implements Serializable {
 	private String nameGenre;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "genres")
+	@OneToMany(mappedBy = "genre")
 	private List<SongGenre> songGenres;
 }

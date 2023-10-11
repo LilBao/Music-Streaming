@@ -36,7 +36,7 @@ public class Report implements Serializable{
 
 	@ManyToOne
 	@JoinColumn(name = "ARTISTID")
-	private Artist artistId;
+	private Artist artist;
 
 	@ManyToOne
 	@JoinColumn(name = "RECORDINGID")
@@ -44,11 +44,11 @@ public class Report implements Serializable{
 
 	@ManyToOne
 	@JoinColumn(name = "POSTCASTID")
-	private Podcast podcastId;
+	private Podcast podcast;
 
 	@ManyToOne
 	@JoinColumn(name = "EPISODESID")
-	private Episode episodeId;
+	private Episode episode;
 
 	@ManyToOne
 	@JoinColumn(name = "USERTYPEID")

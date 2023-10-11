@@ -39,7 +39,7 @@ public class Song implements Serializable {
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@OneToOne
 	@JoinColumn(name = "IMAGEID")
-	private Image images;
+	private Image image;
 
 	@Column(name = "REALEASEDAY")
 	private Date releaseDay;
@@ -52,7 +52,7 @@ public class Song implements Serializable {
 	private List<Recording> recordings;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "songId")
+	@OneToMany(mappedBy = "song")
 	private List<Writter> writters;
 
 }
