@@ -64,7 +64,7 @@ public class Account implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "IMAGEID")
-	private Image images;
+	private Image image;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "account")
