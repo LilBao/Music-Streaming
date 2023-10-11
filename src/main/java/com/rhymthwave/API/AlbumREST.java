@@ -59,7 +59,7 @@ public class AlbumREST {
 			Map<String, Object> respImg = cloudinary.Upload(coverImg, "CoverImage", "MCK");
 			Image cover = imgSer.getEntity((String) respImg.get("asset_id"), (String)respImg.get("url"),(Integer) respImg.get("width"),(Integer) respImg.get("height"));
 			crudImage.create(cover);
-			album.setImages(cover);
+			album.setImage(cover);
 		}
 		album.setArtist(artistSer.findByEmail("mck@gmail.com"));
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudAlbum.create(album)));
