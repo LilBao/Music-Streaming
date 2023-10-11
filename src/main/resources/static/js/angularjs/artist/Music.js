@@ -8,7 +8,6 @@ app.controller('musicCtrl', function ($scope, $http) {
     $scope.song = {};
     $scope.album = {};
     $scope.track = {};
-    $scope.listPitch = [];
     //Get list song has not record
     $http.get(host + "/v1/song/up-coming").then(resp => {
         $scope.listSongUpcoming = resp.data.data;
@@ -81,8 +80,14 @@ app.controller('musicCtrl', function ($scope, $http) {
         })
     }
     //update song
-    $scope.updateSongPitch = function () {
+    $scope.updateSongPitch = function (song,record) {
+        var url = host + "/v1/record";
+        record.song = song;
+        $http.post(url,record).then(resp => {
+            console.log("success");
+        }).catch(error => {
 
+        })
     }
 
 
@@ -106,41 +111,36 @@ app.controller('musicCtrl', function ($scope, $http) {
         })
     }
 
-    // //Push Record into List
-    $scope.checkPitchList = function () {
-        $('input[name="pitch"]:checked').each(function () {
-            $scope.record=$scope.findRecord($(this).val());
-            $scope.listPitch.push($scope.record);
-            console.log($scope.listPitch)
-        })
-    }
-
     //Create track
-    $scope.createTrack = function (album) {
+    $scope.createTrack = function (album, record) {
         var url = host + "/v1/track";
         $scope.track.album = album;
-        $scope.listRecord.each(item => {
-            $scope.track.record = item;
-            var data = angular.copy($scope.track);
-            $http.post(url, data).then(resp => {
-                console.log("success")
-            }).catch(error => {
-                console.log("loi")
-            })
+        $scope.track.record = record;
+        var item = angular.copy($scope.track);
+        $http.post(url, item).then(resp => {
+            console.log("success")
+        }).catch(error => {
+            console.log("loi")
         })
     }
-    
     //Finish pitch
-    $('#nextBtn').mousedown(function(){
+    $('#nextBtn').click(function () {
         if ($('#nextBtn').hasClass('submit')) {
-            $('#nextBtn').click(function () {
-                $scope.checkPitchList();
-              
-                console.log($scope.listPitch)
-            });
-
+            var data = {};
+            $('input[name="pitch"]:checked').each(function () {
+                var url = host + "/v1/record/" + $(this).val();
+                $http.get(url).then(resp => {
+                    data = (resp.data.data);
+                    if ($scope.type === "song") {
+                        $scope.updateSongPitch($scope.song,data)
+                    } else {
+                        $scope.createTrack($scope.album,data);
+                    }
+                }).catch(error => {
+                })
+            })
         }
-    })
+    });
 
     function resetTabs() {
         var x = document.getElementsByClassName("tab");
@@ -150,6 +150,7 @@ app.controller('musicCtrl', function ($scope, $http) {
         currentTab = 0;
         showTab(currentTab);
         $('#current-tab').innerText = currentTab + 1;
+        $("#nextBtn").removeClass("submit");
         $("#nextBtn").show();
     }
 })

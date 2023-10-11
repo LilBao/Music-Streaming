@@ -10,6 +10,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -37,13 +39,4 @@ public class Author implements Serializable {
 	@JoinColumn(name = "EMAIL")
 	private Account accounts;
 
-//	@ManyToOne
-//	@JoinColumn(name = "ACOUNT_A")
-//	@JsonIgnore
-//	private Follow followerA;
-//
-//	@ManyToOne
-//	@JoinColumn(name = "ACOUNT_B")
-//	@JsonIgnore
-//	private Follow followerB;
 }
