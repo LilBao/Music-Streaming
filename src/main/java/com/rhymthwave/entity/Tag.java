@@ -33,6 +33,6 @@ public class Tag implements Serializable {
 	private String tagName;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "tagId")
+	@OneToMany(mappedBy = "tag")
 	private List<Podcast> podcasts;
 }

@@ -48,11 +48,11 @@ public class Album implements Serializable {
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "ARTISTID")
-	private Artist artistId;
+	private Artist artist;
 
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "albumId")
+	@OneToMany(mappedBy = "album")
 	private List<Track> tracks;
 
 }

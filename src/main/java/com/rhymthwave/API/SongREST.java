@@ -59,7 +59,7 @@ public class SongREST {
 			Map<String, Object> respImg = cloudinary.Upload(coverImg, "CoverImage", "MCK");
 			Image cover = imgSer.getEntity((String) respImg.get("asset_id"), (String)respImg.get("url"),(Integer) respImg.get("width"),(Integer) respImg.get("height"));
 			crudImage.create(cover);
-			song.setImages(cover);
+			song.setImage(cover);
 		}
 		//song.setWritters();
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudSong.create(song)));

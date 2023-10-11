@@ -74,17 +74,17 @@ public class Artist implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "EMAIL")
-	private Account accounts;
+	private Account account;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "artistId")
+	@OneToMany(mappedBy = "artist")
 	private List<Report> reports;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "artistId")
+	@OneToMany(mappedBy = "artist")
 	private List<Album> albums;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "artistId")
+	@OneToMany(mappedBy = "artist")
 	private List<Writter> writters;
 }

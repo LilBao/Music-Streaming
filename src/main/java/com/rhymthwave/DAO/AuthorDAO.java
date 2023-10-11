@@ -8,7 +8,7 @@ import com.rhymthwave.entity.Author;
 
 public interface AuthorDAO extends JpaRepository<Author, Long>{
 
-	@Query("SELECT a FROM Author a WHERE a.accounts.email = :email")
+	@Query("SELECT a FROM Author a WHERE a.account.email = :email")
 	Author findByEmailAccount(@Param("email") String email);
 	
 }

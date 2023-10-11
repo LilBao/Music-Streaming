@@ -12,6 +12,6 @@ import com.rhymthwave.entity.Track;
 @Repository
 public interface TrackDAO extends JpaRepository<Track, Integer>{
 	
-	@Query("Select o from Track o where albumId.albumId = :albumId")
+	@Query("Select o from Track o where album.albumId = :albumId")
 	List<Track> getTrackByAlbum(@Param("albumId") Integer albumId);
 }
