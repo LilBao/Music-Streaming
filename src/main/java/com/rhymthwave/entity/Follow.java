@@ -32,12 +32,12 @@ public class Follow implements Serializable {
 	@Column(name = "FOLLOWDATE")
 	private Date followDate;
 
+
 	@ManyToOne
 	@JoinColumn(name = "ACOUNT_A")
 	private Author authorsAccountA;
 
 	@ManyToOne
 	@JoinColumn(name = "ACOUNT_B")
-
 	private Author authorsAccountB;
 }
