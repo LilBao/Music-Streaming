@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.rhymthwave.entity.Account;
 import com.rhymthwave.entity.Author;
 
 import lombok.AllArgsConstructor;
@@ -16,27 +17,24 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class CustomUserDetails implements UserDetails{
-	
+public class CustomUserDetails implements UserDetails {
+
 	private String email;
-	
+
 	private String password;
-	
+
 	private boolean isVerify;
-	
-	private List< GrantedAuthority> authorities;
- 
-	
-	
-	public CustomUserDetails(Author user) {
-		
-		this.email = user.getAccounts().getEmail();
-		this.password = user.getAccounts().getPassword();
-		this.isVerify = user.getAccounts().isVerify();
-		this.authorities = Arrays.stream(user.getRole().getRole().name().split(",")).map(
-				SimpleGrantedAuthority::new).collect(Collectors.toList());
+
+	private Collection<? extends GrantedAuthority> authorities;
+
+	public CustomUserDetails(Account user) {
+		this.email = user.getEmail();
+		this.password = user.getPassword();
+		this.isVerify = user.isVerify();
+		this.authorities = user.getAuthors().stream()
+				.map(role -> new SimpleGrantedAuthority(role.getRole().getRole().name()))
+				.collect(Collectors.toList());
 	}
-	
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

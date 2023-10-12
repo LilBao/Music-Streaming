@@ -6,7 +6,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.rhymthwave.DAO.AccountDAO;
 import com.rhymthwave.DAO.AuthorDAO;
+import com.rhymthwave.entity.Account;
 import com.rhymthwave.entity.Author;
 
 @Service
@@ -15,13 +17,18 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Autowired
 	private AuthorDAO authorDAO;
 
+	@Autowired
+	private AccountDAO accountDAO;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		Author user = authorDAO.findByEmailAccount(username);
-		if(user != null) {
-			return new CustomUserDetails(user);
+		Account account = accountDAO.findByEmail(username);
+		System.out.println("account: "+account.getEmail());
+		//Author user = authorDAO.findByEmailAccount(username);
+		
+		if(account != null) {
+			return new CustomUserDetails(account);
 		}
 
         throw new UsernameNotFoundException("User not found with Email: " + username);

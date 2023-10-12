@@ -61,8 +61,8 @@ public class SecurityConfig {
 		return http.cors().and().csrf().disable()
 				.authorizeHttpRequests((authz) -> authz
 				//All
-				.requestMatchers(HttpMethod.GET,"/api/v1/users").permitAll()
-				.requestMatchers(HttpMethod.POST,"/api/v1/users/**").permitAll()
+				.requestMatchers(HttpMethod.GET,"/api/v1/users/**","/api/v1/category/mood/**").permitAll()
+				.requestMatchers(HttpMethod.POST,"/api/v1/users/**","/api/v1/category/**").permitAll()
 				.requestMatchers(HttpMethod.PUT).permitAll()
 				.requestMatchers(HttpMethod.DELETE).permitAll()
 				)
