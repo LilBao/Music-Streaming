@@ -17,33 +17,40 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.rhymthwave.DTO.MessageResponse;
+import com.rhymthwave.Service.ArtistService;
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.Service.CloudinaryService;
+import com.rhymthwave.Service.ImageService;
 import com.rhymthwave.Service.RecordService;
+import com.rhymthwave.Service.SongService;
+import com.rhymthwave.Utilities.GetHostByRequest;
+import com.rhymthwave.Utilities.Cookie.CookiesUntils;
 import com.rhymthwave.Utilities.JWT.JwtTokenCreate;
+import com.rhymthwave.entity.Account;
 import com.rhymthwave.entity.Image;
 import com.rhymthwave.entity.Recording;
 import com.rhymthwave.entity.Song;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.websocket.server.PathParam;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @CrossOrigin("*")
+@RequiredArgsConstructor
 public class RecordREST {
-	@Autowired
-	CRUD<Image, String> crudImg;
-
-	@Autowired
-	CRUD<Recording, Integer> crudRecord;
-
-	@Autowired
-	CloudinaryService cloudinary;
-
-	@Autowired
-	RecordService recordSer;
 	
-	@Autowired
-	JwtTokenCreate jwt;
+	private final CRUD<Image, String> crudImg;
+
+	private final CRUD<Recording, Integer> crudRecord;
+
+	private final CloudinaryService cloudinary;
+
+	private final RecordService recordSer;
+	
+	private final GetHostByRequest host;
+	
+	private final CRUD<Account, String> crudAccount;
 
 	@GetMapping("/api/v1/record")
 	public ResponseEntity<MessageResponse> getAllRecord() {
@@ -56,28 +63,31 @@ public class RecordREST {
 	}
 	
 	@GetMapping("/api/v1/my-record")
-	public ResponseEntity<MessageResponse> getMyRecord(@CookieValue("token") String token) {
-		String owner = jwt.getUserNameJWT(token);
+	public ResponseEntity<MessageResponse> getMyRecord(HttpServletRequest req) {
+		String owner =host.getEmailByRequest(req);
 		return ResponseEntity.ok(new MessageResponse(true, "success", recordSer.findRecordByCreater(owner)));
 	}
 	
 	@GetMapping("/api/v1/my-record-not-raw")
-	public ResponseEntity<MessageResponse> getOneRecord(@CookieValue("token") String token) {
-		String owner = jwt.getUserNameJWT(token);
+	public ResponseEntity<MessageResponse> getOneRecord(HttpServletRequest req) {
+		String owner =host.getEmailByRequest(req);
 		return ResponseEntity.ok(new MessageResponse(true, "success", recordSer.findRawRecordByCreater(owner)));
 	}
 
 	@PostMapping(value = "/api/v1/record", consumes = { "multipart/form-data" })
-	public ResponseEntity<MessageResponse> createRecord(@ModelAttribute Recording record,
+	public ResponseEntity<MessageResponse> createRecord(@ModelAttribute Recording record,HttpServletRequest req,
 			@PathParam("fileRecord") MultipartFile fileRecord, @PathParam("fileLyrics") MultipartFile fileLyrics) {
+		String owner =host.getEmailByRequest(req);
+		Account account = crudAccount.findOne(owner);
 		
-		Map<String, Object> respRecord = cloudinary.Upload(fileRecord, "Records", "MCK");
+		Map<String, Object> respRecord = cloudinary.Upload(fileRecord, "Records", account.getArtist().getArtistName());
 		if (fileLyrics.getSize() > 0) {
-			Map<String, Object> respLyrics = cloudinary.Upload(fileLyrics, "Lyrics", "MCK");
+			Map<String, Object> respLyrics = cloudinary.Upload(fileLyrics, "Lyrics", account.getArtist().getArtistName());
 			record.setLyricsUrl((String) respLyrics.get("url"));
 		}
+		
 		record.setAudioFileUrl((String) respRecord.get("url"));
-		record.setEmailCreate("mck@gmail.com");
+		record.setEmailCreate(owner);
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudRecord.create(record)));
 	}
 

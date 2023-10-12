@@ -20,7 +20,10 @@ app.controller('recordCtrl',function($scope,$http){
         data.append('fileRecord',$scope.recordFile);
         data.append('fileLyrics',$scope.lyricsFile);
         $http.post(url,data,{
-            headers: { 'Content-Type': undefined }, 
+            headers: { 
+                'Content-Type': undefined,
+                'Authorization': 'Bearer ' + getCookie('token') 
+            }, 
             transformRequest: angular.identity
         }).then(resp => {
             console.log("success")

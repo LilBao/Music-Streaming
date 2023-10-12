@@ -17,6 +17,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="../../static/js/angularjs/artist/Music.js"></script>
     <script src="../../static/js/jscustom/Artist/Music.js"></script>
+    <script src="../../static/js/Utiliez/CookiesUtil.js"></script>
 </head>
 
 <body ng-app="myApp" ng-controller="musicCtrl">
@@ -75,7 +76,7 @@
                             <tr class="align-items-center">
                                 <td>12,2023</td>
                                 <td class="d-flex align-items-center">
-                                    <img class="w-25" src="../../static/img/cs1.webp" alt="">
+                                    <img class="cover-image rounded-4" src="../../static/img/cs1.webp" alt="">
                                     <h6>Listeners</h6>
                                 </td>
                                 <td>12,2023</td>
@@ -84,7 +85,7 @@
                             <tr class="align-items-start">
                                 <td>12,2023</td>
                                 <td class="d-flex align-items-center">
-                                    <img class="w-25" src="../../static/img/cs1.webp" alt="">
+                                    <img class="cover-image rounded-4" src="../../static/img/cs1.webp" alt="">
                                     <h6>Listeners</h6>
                                 </td>
                                 <td>12,2023</td>
@@ -123,8 +124,8 @@
                                     <thead>
                                         <tr class="align-items-center">
                                             <th class="w-25">
-                                                <img style="height: 100px; width: 100px;"
-                                                    src="../../static/img/ab1.webp" alt="">
+                                                <img class="cover-image rounded-4" src="../../static/img/ab1.webp"
+                                                    alt="">
 
                                             </th>
                                             <th>14.5k</th>
@@ -163,7 +164,8 @@
                     <tbody>
                         <tr class="align-items-center" ng-repeat="x in listSongUpcoming">
                             <td class="d-flex align-items-center">
-                                <img class="w-25" src="{{x.image.url}}" alt="">
+                                <i class="bi bi-music-note"></i>
+                                <img class="cover-image rounded-4" src="{{x.image.url}}" alt="">
                                 <h6>{{x.songName}}</h6>
                             </td>
                             <td class="">
@@ -176,7 +178,8 @@
                         </tr>
                         <tr class="align-items-center" ng-repeat="x in listAlbumUpcoming">
                             <td class="d-flex align-items-center">
-                                <img class="w-25" src="{{x.image.url}}" alt="">
+                                <i class="bi bi-journal-album"></i>
+                                <img class="cover-image rounded-4" src="{{x.image.url}}" alt="">
                                 <h6>{{x.albumName}}</h6>
                             </td>
                             <td class="">
@@ -222,16 +225,14 @@
                                         release</p>
                                     <div class="my-3">
                                         <div ng-if="type === 'song'" class="d-flex">
-                                            <img style="height: 100px; width: 50px; object-fit: cover;" class="me-3 w-25"
-                                                src="{{song.image.url}}" alt="">
+                                            <img class="me-3 cover-image rounded-4" src="{{song.image.url}}" alt="">
                                             <div>
                                                 <h6>{{song.songName}}</h6>
                                                 <p>{{song.releaseDay | date:'dd/MM/yyyy, hh:mm:ss'}}</p>
                                             </div>
                                         </div>
                                         <div ng-if="type === 'album'" class="d-flex">
-                                            <img style="height: 100px; width: 50px; object-fit: cover;" class="me-3 w-25"
-                                                src="{{album.image.url}}" alt="">
+                                            <img class="me-3 cover-image rounded-4" src="{{album.image.url}}" alt="">
                                             <div>
                                                 <h6>{{album.albumName}}</h6>
                                                 <p>{{album.releaseDate | date:'dd/MM/yyyy, hh:mm:ss'}}</p>
@@ -253,7 +254,8 @@
                                                     <td>{{$index}}</td>
                                                     <td>{{item.recordingName}}</td>
                                                     <td>{{item.duration}}</td>
-                                                    <td><input type="checkbox" value="{{item.recordingId}}" name="pitch" id=""></td>
+                                                    <td><input type="checkbox" value="{{item.recordingId}}" name="pitch"
+                                                            id=""></td>
                                                 </tr>
 
                                             </tbody>
@@ -310,12 +312,20 @@
                                         release won't be
                                         reflected on Release Radar</p>
 
-                                    <div class="d-flex">
-                                        <img style="height: 100px; width: 50px; object-fit: cover;" class="w-25"
-                                            src="../../static/img/ab1.webp" alt="">
-                                        <div>
-                                            <h6>Tên album</h6>
-                                            <p>Album - Release 23 Oct 2023</p>
+                                    <div class="my-3">
+                                        <div ng-if="type === 'song'" class="d-flex">
+                                            <img class="me-3 cover-image rounded-4" src="{{song.image.url}}" alt="">
+                                            <div>
+                                                <h6>{{song.songName}}</h6>
+                                                <p>{{song.releaseDay | date:'dd/MM/yyyy, hh:mm:ss'}}</p>
+                                            </div>
+                                        </div>
+                                        <div ng-if="type === 'album'" class="d-flex">
+                                            <img class="me-3 cover-image rounded-4" src="{{album.image.url}}" alt="">
+                                            <div>
+                                                <h6>{{album.albumName}}</h6>
+                                                <p>{{album.releaseDate | date:'dd/MM/yyyy, hh:mm:ss'}}</p>
+                                            </div>
                                         </div>
                                     </div>
                                     <table class="table table-hover table-bordered">
@@ -327,41 +337,35 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Doe</td>
-                                                <td>john@example.com</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Moe</td>
-                                                <td>mary@example.com</td>
+                                            <tr ng-repeat="item in listRecordChecked">
+                                                <td>{{$index}}</td>
+                                                <td>{{item.recordingName}}</td>
+                                                <td>{{item.duration}}</td>
+                                                <td><input type="checkbox" value="{{item.recordingId}}" name="pitch"></td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <div class="lgenre my-3">
-                                        <span class="p-2 badge bg-success">Genre</span>
-                                    </div>
-                                    <div class="lgenre my-3">
-                                        <span class="p-2 badge bg-success">Mood</span>
-                                    </div>
-                                    <div class="lgenre my-3">
-                                        <span class="p-2 badge bg-success">Culture</span>
-                                    </div>
-                                    <div class="lgenre my-3">
-                                        <span class="p-2 badge bg-success">Song style</span>
-                                    </div>
-                                    <div class="lgenre my-3">
-                                        <span class="p-2 badge bg-success">Instruments</span>
-                                    </div>
                                     <div>
                                         <textarea class="form-control" name="" id="" cols="30" rows="10"></textarea>
                                     </div>
                                 </div>
 
-                                <div class="tab text-center" >
-                                    <h3>Thanks for your Donation!</h3> <span>Your donation has been entered! We will
-                                        contact you shortly!</span>
+                                <div class="tab text-center">
+                                    <h3>Everything Already</h3>
+                                    <div class="my-3">
+                                        <div ng-if="type === 'song'" class="d-flex">
+                                            <img class="me-3 cover-image rounded-4" src="{{song.image.url}}" alt="">
+                                            <div>
+                                                <h4>{{song.songName}}</h4>
+                                            </div>
+                                        </div>
+                                        <div ng-if="type === 'album'" class="d-flex">
+                                            <img class="me-3 cover-image rounded-4" src="{{album.image.url}}" alt="">
+                                            <div>
+                                                <h4>{{album.albumName}}</h4>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </form>
                         </div>

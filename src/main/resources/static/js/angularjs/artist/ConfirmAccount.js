@@ -17,7 +17,10 @@ app.controller('confirmCtrl', function ($scope, $http) {
         $http({
             method: 'POST',
             url: url,
-            headers: { 'Content-Type': undefined }, 
+            headers: { 
+                'Content-Type': undefined,
+                'Authorization': 'Bearer ' + getCookie('token')
+            }, 
             data: formData,
             transformRequest: angular.identity
         }).then(function(response) {

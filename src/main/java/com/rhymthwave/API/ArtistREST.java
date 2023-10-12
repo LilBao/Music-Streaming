@@ -17,32 +17,35 @@ import com.rhymthwave.Service.ArtistService;
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.Service.CloudinaryService;
 import com.rhymthwave.Service.ImageService;
+import com.rhymthwave.Service.RecordService;
+import com.rhymthwave.Utilities.GetHostByRequest;
 import com.rhymthwave.entity.Account;
 import com.rhymthwave.entity.Artist;
 import com.rhymthwave.entity.Image;
+import com.rhymthwave.entity.Recording;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.websocket.server.PathParam;
+import lombok.RequiredArgsConstructor;
 
 @RestController
-@CrossOrigin(origins = "http://127.0.0.1:5500")
+@CrossOrigin("*")
+@RequiredArgsConstructor
 public class ArtistREST {
-	@Autowired
-	CRUD<Artist, Integer> crud;
+
+	private final CRUD<Artist, Integer> crud;
+
+	private final CloudinaryService cloudinary;
+
+	private final CRUD<Image, String> crudImg;
+
+	private final ImageService imgSer;
+
+	private final CRUD<Account, String> crudAccount;
 	
-	@Autowired
-	CloudinaryService cloudinary;
+	private final ArtistService artistSer;
 	
-	@Autowired
-	CRUD<Image, String> crudImg;
-	
-	@Autowired
-	ImageService imgSer;
-	
-	@Autowired
-	CRUD<Account, String> crudAccount;
-	
-	@Autowired
-	ArtistService artistSer;
+	private final GetHostByRequest host;
 
 	@GetMapping("/api/v1/artist")
 	public ResponseEntity<MessageResponse> getAll() {
@@ -65,20 +68,24 @@ public class ArtistREST {
 	}
 	
 	@PostMapping(value="/api/v1/artist",consumes = { "multipart/form-data" })
-	public ResponseEntity<MessageResponse> creatArtist(@ModelAttribute Artist artist,
+	public ResponseEntity<MessageResponse> creatArtist(@ModelAttribute Artist artist,HttpServletRequest req,
 			@PathParam("avatar") MultipartFile avatar, @PathParam("background") MultipartFile background) {
-		Map<String,Object> respAvatar = cloudinary.UploadResizeImage(avatar,"Avatar",artist.getArtistName(),512,512);
-		Map<String,Object> respBg = cloudinary.UploadResizeImage(background,"Background",artist.getArtistName(),1500,500);
+		String owner =host.getEmailByRequest(req);
 		
-		Image imgAvatar = imgSer.getEntity((String)respAvatar.get("asset_id"), (String)respAvatar.get("url"), (Integer) respAvatar.get("width"), (Integer)respAvatar.get("height"));
-		Image imgBackground = imgSer.getEntity((String)respBg.get("asset_id"), (String)respBg.get("url"),(Integer) respBg.get("width"),(Integer) respBg.get("height"));
+		if(!avatar.isEmpty()) {
+			Map<String,Object> respAvatar = cloudinary.UploadResizeImage(avatar,"Avatar",artist.getArtistName(),512,512);
+			Image imgAvatar = imgSer.getEntity((String)respAvatar.get("asset_id"), (String)respAvatar.get("url"), (Integer) respAvatar.get("width"), (Integer)respAvatar.get("height"));
+			crudImg.create(imgAvatar);
+			artist.setImagesProfile(imgAvatar);
+		}
+		if(!background.isEmpty()) {
+			Map<String,Object> respBg = cloudinary.UploadResizeImage(background,"Background",artist.getArtistName(),1500,500);
+			Image imgBackground = imgSer.getEntity((String)respBg.get("asset_id"), (String)respBg.get("url"),(Integer) respBg.get("width"),(Integer) respBg.get("height"));
+			crudImg.create(imgBackground);
+			artist.setBackgroundImage(imgBackground);
+		}
 		
-		crudImg.create(imgAvatar);
-		crudImg.create(imgBackground);
-		
-		artist.setBackgroundImage(imgBackground);
-		artist.setImagesProfile(imgAvatar);
-		artist.setAccount(crudAccount.findOne("mck@gmail.com"));
+		artist.setAccount(crudAccount.findOne(owner));
 		return ResponseEntity.ok(new MessageResponse(true, "succeess", crud.create(artist)));
 	}
 	
