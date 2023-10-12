@@ -58,6 +58,7 @@ public class SecurityConfig {
 		return http.cors().and().csrf().disable()
 				.authorizeHttpRequests((authz) -> authz
 				//All
+
 				.requestMatchers(HttpMethod.GET,"/**").permitAll()
 				.requestMatchers(HttpMethod.POST,"/**").permitAll()
 				.requestMatchers(HttpMethod.PUT).permitAll()
