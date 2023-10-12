@@ -26,13 +26,13 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 			String path = parentFolder + "/" + childFolder;
 			Map<String, Object> params = new HashMap<>();
 			params.put("public_id", path + "/"+ file.getOriginalFilename());
+			params.put("resource_type", "auto");
 			Map<String, Object> result = cloudinary.uploader().upload(file.getBytes(), params);
 			return result;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
-
 	}
 
 	@Override

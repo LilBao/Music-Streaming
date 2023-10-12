@@ -1,7 +1,6 @@
 package com.rhymthwave.API;
 
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -60,10 +59,15 @@ public class AlbumREST {
 			Map<String, Object> respImg = cloudinary.Upload(coverImg, "CoverImage", "MCK");
 			Image cover = imgSer.getEntity((String) respImg.get("asset_id"), (String)respImg.get("url"),(Integer) respImg.get("width"),(Integer) respImg.get("height"));
 			crudImage.create(cover);
-			album.setImages(cover);
+			album.setImage(cover);
 		}
-		album.setArtistId(artistSer.findByEmail("mck@gmail.com"));
+		album.setArtist(artistSer.findByEmail("mck@gmail.com"));
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudAlbum.create(album)));
+	}
+	
+	@GetMapping("/api/v1/album/up-coming")
+	public ResponseEntity<MessageResponse> albumUpcoming(){
+		return ResponseEntity.ok(new MessageResponse(true,"success",albumSer.findAlbumNotRecord("mck@gmail.com")));
 	}
 	
 }

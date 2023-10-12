@@ -43,9 +43,9 @@ public class News implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "IMAGE")
-	private Image images;
+	private Image image;
 
 	@ManyToOne
 	@JoinColumn(name = "AUTHORID")
-	private Account accounts;
+	private Account account;
 }

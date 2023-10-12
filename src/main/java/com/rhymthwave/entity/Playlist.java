@@ -54,13 +54,13 @@ public class Playlist implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "IMAGE")
-	private Image images;
+	private Image image;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "playlistId")
+	@OneToMany(mappedBy = "playlist")
 	private List<PlaylistRecord> playlistRecords;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "playlistId")
-	private List<Playlist_Podcast> playlist_Podcasts;
+	@OneToMany(mappedBy = "playlist")
+	private List<Playlist_Podcast> playlistPodcast;
 }

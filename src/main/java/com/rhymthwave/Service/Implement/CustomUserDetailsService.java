@@ -24,8 +24,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
 		Account account = accountDAO.findByEmail(username);
-		System.out.println("account: "+account.getEmail());
-		//Author user = authorDAO.findByEmailAccount(username);
 		
 		if(account != null) {
 			return new CustomUserDetails(account);

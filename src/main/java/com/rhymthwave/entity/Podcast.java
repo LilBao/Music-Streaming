@@ -53,21 +53,21 @@ public class Podcast implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "IMGAGEID")
-	private Image images;
+	private Image image;
 
 	@ManyToOne
 	@JoinColumn(name = "CATEGORY")
-	private Tag tagId;
+	private Tag tag;
 
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "ACOUNTID")
-	private Account accounts;
+	private Account account;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "podcastId")
+	@OneToMany(mappedBy = "podcast")
 	private List<Episode> episodeos;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "podcastId")
+	@OneToMany(mappedBy = "podcast")
 	private List<Report> reports;
 }

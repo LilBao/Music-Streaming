@@ -95,8 +95,6 @@ public class LoginAPI {
 	
 	@GetMapping
 	public ResponseEntity<?> login() {
-
-		
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(new MessageResponse(true, "Error Login", accountService.findAll()));
 	}

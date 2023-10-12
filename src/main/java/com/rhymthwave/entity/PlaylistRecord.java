@@ -37,9 +37,9 @@ public class PlaylistRecord implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "PLAYLISTSID")
-	private Playlist playlistId;
+	private Playlist playlist;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "playlistRecordingId")
+	@OneToMany(mappedBy = "playlistRecord")
 	private List<Access> accesses;
 }

@@ -111,7 +111,8 @@ h1 {
 }
 .bl2-title2{
     text-align: center;
-    margin: 48px 0px;
+    margin-top: 48px;
+    margin-bottom: 24px;
 }
 /* ul=============================================== */
 ul {

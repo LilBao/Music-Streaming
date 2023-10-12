@@ -1,5 +1,9 @@
 package com.rhymthwave.Service;
 
-public interface SongService {
+import java.util.List;
 
+import com.rhymthwave.entity.Song;
+
+public interface SongService {
+	List<Song> findSongNotRecord(String email);
 }

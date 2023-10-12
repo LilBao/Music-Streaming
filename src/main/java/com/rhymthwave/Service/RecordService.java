@@ -6,4 +6,5 @@ import com.rhymthwave.entity.Recording;
 
 public interface RecordService {
 	List<Recording> findRecordByCreater(String email);
+	List<Recording> findRawRecordByCreater(String email);
 }

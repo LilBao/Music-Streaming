@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -39,16 +40,19 @@ public class Album implements Serializable {
 	@Column(name = "RELEASEDATE")
 	private Date releaseDate;
 
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@OneToOne
 	@JoinColumn(name = "COVERIMAGE")
-	private Image images;
-
-	@ManyToOne
-	@JoinColumn(name = "ARTISTID")
-	private Artist artistId;
+	private Image image;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "albumId")
+	@ManyToOne
+	@JoinColumn(name = "ARTISTID")
+	private Artist artist;
+
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "album")
 	private List<Track> tracks;
 
 }

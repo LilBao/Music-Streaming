@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,6 +20,7 @@ import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.Service.CloudinaryService;
 import com.rhymthwave.Service.ImageService;
 import com.rhymthwave.Service.SongService;
+import com.rhymthwave.Utilities.JWT.JwtTokenCreate;
 import com.rhymthwave.entity.Image;
 import com.rhymthwave.entity.Song;
 
@@ -43,6 +45,9 @@ public class SongREST {
 	@Autowired
 	CRUD<Image, String> crudImage;
 	
+	@Autowired
+	JwtTokenCreate jwt;
+	
 	@GetMapping("/api/v1/song")
 	public ResponseEntity<MessageResponse> getAllSong(){
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudSong.findAll()));
@@ -55,13 +60,19 @@ public class SongREST {
 	
 	@PostMapping(value="/api/v1/song",consumes = { "multipart/form-data" })
 	public ResponseEntity<MessageResponse> createSong(@ModelAttribute Song song, @RequestParam("coverImg") MultipartFile coverImg){
-		if(coverImg.isEmpty()) {
+		if(!coverImg.isEmpty()) {
 			Map<String, Object> respImg = cloudinary.Upload(coverImg, "CoverImage", "MCK");
 			Image cover = imgSer.getEntity((String) respImg.get("asset_id"), (String)respImg.get("url"),(Integer) respImg.get("width"),(Integer) respImg.get("height"));
 			crudImage.create(cover);
-			song.setImages(cover);
+			song.setImage(cover);
 		}
 		//song.setWritters();
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudSong.create(song)));
+	}
+	
+	@GetMapping("/api/v1/song/up-coming")
+	public ResponseEntity<MessageResponse> songUpcoming(@CookieValue("token") String token){
+		String owner = jwt.getUserNameJWT(token);
+		return ResponseEntity.ok(new MessageResponse(true,"success",songSer.findSongNotRecord(owner)));
 	}
 }

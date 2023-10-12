@@ -33,5 +33,5 @@ public class Monitor implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "ACCOUNT")
-	private Account accounts;
+	private Account account;
 }

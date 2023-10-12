@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.rhymthwave.DTO.MessageResponse;
+import com.rhymthwave.Service.ArtistService;
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.Service.CloudinaryService;
 import com.rhymthwave.Service.ImageService;
@@ -39,6 +40,9 @@ public class ArtistREST {
 	
 	@Autowired
 	CRUD<Account, String> crudAccount;
+	
+	@Autowired
+	ArtistService artistSer;
 
 	@GetMapping("/api/v1/artist")
 	public ResponseEntity<MessageResponse> getAll() {
@@ -49,7 +53,17 @@ public class ArtistREST {
 	public ResponseEntity<MessageResponse> getById(@PathVariable("id") Integer id) {
 		return ResponseEntity.ok(new MessageResponse(true, "succeess", crud.findOne(id)));
 	}
+	
+	@GetMapping("/api/v1/artist-verified")
+	public ResponseEntity<MessageResponse> getListArtistVerified() {
+		return ResponseEntity.ok(new MessageResponse(true, "succeess", artistSer.findIsVerify(true)));
+	}
 
+	@GetMapping("/api/v1/artist-none-verified")
+	public ResponseEntity<MessageResponse> getListArtistNoneVerified() {
+		return ResponseEntity.ok(new MessageResponse(true, "succeess", artistSer.findIsVerify(false)));
+	}
+	
 	@PostMapping(value="/api/v1/artist",consumes = { "multipart/form-data" })
 	public ResponseEntity<MessageResponse> creatArtist(@ModelAttribute Artist artist,
 			@PathParam("avatar") MultipartFile avatar, @PathParam("background") MultipartFile background) {
@@ -64,7 +78,7 @@ public class ArtistREST {
 		
 		artist.setBackgroundImage(imgBackground);
 		artist.setImagesProfile(imgAvatar);
-		artist.setAccounts(crudAccount.findOne("mck@gmail.com"));
+		artist.setAccount(crudAccount.findOne("mck@gmail.com"));
 		return ResponseEntity.ok(new MessageResponse(true, "succeess", crud.create(artist)));
 	}
 	

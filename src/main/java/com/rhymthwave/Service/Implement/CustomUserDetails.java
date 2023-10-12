@@ -1,8 +1,6 @@
 package com.rhymthwave.Service.Implement;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -10,7 +8,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.rhymthwave.entity.Account;
-import com.rhymthwave.entity.Author;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,10 +28,11 @@ public class CustomUserDetails implements UserDetails {
 		this.email = user.getEmail();
 		this.password = user.getPassword();
 		this.isVerify = user.isVerify();
-		this.authorities = user.getAuthors().stream()
-				.map(role -> new SimpleGrantedAuthority(role.getRole().getRole().name()))
+		this.authorities = user.getAuthor().stream().
+				map(role -> new SimpleGrantedAuthority(role.getRole().getRole().name()))
 				.collect(Collectors.toList());
 	}
+
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -29,7 +29,7 @@ public class Access implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "PLAYLIST_RECORDINGID")
-	private PlaylistRecord playlistRecordingId;
+	private PlaylistRecord playlistRecord;
 
 	@ManyToOne
 	@JoinColumn(name = "USERTYPEID")
@@ -37,6 +37,6 @@ public class Access implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "EPISODESID")
-	private Playlist_Podcast playlistPodcastId;
+	private Playlist_Podcast playlistPodcast;
 
 }

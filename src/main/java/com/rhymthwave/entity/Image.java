@@ -37,7 +37,7 @@ public class Image implements Serializable {
 	private Integer height;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "images")
+	@OneToMany(mappedBy = "image")
 	private List<Episode> episodes;
 
 }
