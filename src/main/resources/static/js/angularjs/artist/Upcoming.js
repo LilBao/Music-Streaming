@@ -10,8 +10,14 @@ app.controller('upComingCtrl', function ($scope, $http) {
     })
 
     $scope.upcoming = {};
-    $scope.artist={};
-    var writters = $('input[name="writter"]')
+    $scope.artist = {};
+    $scope.listArtist = []
+    //find List Artist
+    $http.get(host + "/v1/artist-verified").then(resp => {
+        $scope.listArtist = resp.data.data;
+    })
+
+
 
     //create
     $scope.createAlbum = function () {
@@ -41,25 +47,37 @@ app.controller('upComingCtrl', function ($scope, $http) {
             headers: { 'Content-Type': undefined },
             transformRequest: angular.identity
         }).then(resp => {
-            // $scope.createWritter(resp.data,$scope.artist);
-            // if(writters.length >0){
-            //     writters.each(function () {
-            //         $scope.findArist($(this).val());
-            //         $scope.createWritter(resp.data,$scope.artist);
-            //     });
-            // }
-            console.log('success')
+            var writters = $('input[name="writter"]:checked')
+            var song = resp.data.data;
+            //check xem có thêm người ft chung không
+            if (writters.length > 0) {
+                writters.each(function () {
+                    let artistID = $(this).val();
+                    let url = host + "/v1/artist/" + artistID;
+                    //create ft chung vào database
+                    $http.get(url).then(resp => {
+                        $scope.artist = resp.data.data;
+                        console.log();
+                        $scope.createWritter(song, $scope.artist)
+                    }).catch(error => {
+
+                    })
+
+                });
+                console.log('success')
+            }
+            
         }).catch(error => {
 
         })
     }
 
 
-    $scope.createWritter = function (songId, artistID) {
+    $scope.createWritter = function (song, artist) {
         var url = host + "/v1/writter";
         $scope.writter = {}
-        $scope.writter.artistId = artistID;
-        $scope.writter.songId = songId;
+        $scope.writter.artist = artist;
+        $scope.writter.song = song;
         var data = angular.copy($scope.writter);
         $http.post(url, data, {
         }).then(resp => {
@@ -69,8 +87,8 @@ app.controller('upComingCtrl', function ($scope, $http) {
         })
     }
 
-    $scope.findArist=function(id){
-        var url = host + "/v1/artist/"+id;
+    $scope.findArist = function (id) {
+        var url = host + "/v1/artist/" + id;
         $http.get(url).then(resp => {
             $scope.artist = resp.data;
         }).catch(error => {

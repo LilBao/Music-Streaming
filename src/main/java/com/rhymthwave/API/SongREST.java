@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,6 +20,7 @@ import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.Service.CloudinaryService;
 import com.rhymthwave.Service.ImageService;
 import com.rhymthwave.Service.SongService;
+import com.rhymthwave.Utilities.JWT.JwtTokenCreate;
 import com.rhymthwave.entity.Image;
 import com.rhymthwave.entity.Song;
 
@@ -43,6 +45,9 @@ public class SongREST {
 	@Autowired
 	CRUD<Image, String> crudImage;
 	
+	@Autowired
+	JwtTokenCreate jwt;
+	
 	@GetMapping("/api/v1/song")
 	public ResponseEntity<MessageResponse> getAllSong(){
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudSong.findAll()));
@@ -66,7 +71,8 @@ public class SongREST {
 	}
 	
 	@GetMapping("/api/v1/song/up-coming")
-	public ResponseEntity<MessageResponse> songUpcoming(){
-		return ResponseEntity.ok(new MessageResponse(true,"success",songSer.findSongNotRecord("mck@gmail.com")));
+	public ResponseEntity<MessageResponse> songUpcoming(@CookieValue("token") String token){
+		String owner = jwt.getUserNameJWT(token);
+		return ResponseEntity.ok(new MessageResponse(true,"success",songSer.findSongNotRecord(owner)));
 	}
 }

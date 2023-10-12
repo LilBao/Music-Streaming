@@ -52,4 +52,11 @@ public class ArtistServiceImpl implements ArtistService, CRUD<Artist, Integer> {
 		return dao.findByEmail(email);
 	}
 
+	@Override
+	public List<Artist> findIsVerify(Boolean verify) {
+		return dao.findAllIsVerify(verify);
+	}
+	
+	
+
 }

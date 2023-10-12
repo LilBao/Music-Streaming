@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,6 +20,7 @@ import com.rhymthwave.DTO.MessageResponse;
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.Service.CloudinaryService;
 import com.rhymthwave.Service.RecordService;
+import com.rhymthwave.Utilities.JWT.JwtTokenCreate;
 import com.rhymthwave.entity.Image;
 import com.rhymthwave.entity.Recording;
 import com.rhymthwave.entity.Song;
@@ -39,6 +41,9 @@ public class RecordREST {
 
 	@Autowired
 	RecordService recordSer;
+	
+	@Autowired
+	JwtTokenCreate jwt;
 
 	@GetMapping("/api/v1/record")
 	public ResponseEntity<MessageResponse> getAllRecord() {
@@ -51,13 +56,15 @@ public class RecordREST {
 	}
 	
 	@GetMapping("/api/v1/my-record")
-	public ResponseEntity<MessageResponse> getMyRecord() {
-		return ResponseEntity.ok(new MessageResponse(true, "success", recordSer.findRecordByCreater("mck@gmail.com")));
+	public ResponseEntity<MessageResponse> getMyRecord(@CookieValue("token") String token) {
+		String owner = jwt.getUserNameJWT(token);
+		return ResponseEntity.ok(new MessageResponse(true, "success", recordSer.findRecordByCreater(owner)));
 	}
 	
 	@GetMapping("/api/v1/my-record-not-raw")
-	public ResponseEntity<MessageResponse> getOneRecord() {
-		return ResponseEntity.ok(new MessageResponse(true, "success", recordSer.findRawRecordByCreater("mck@gmail.com")));
+	public ResponseEntity<MessageResponse> getOneRecord(@CookieValue("token") String token) {
+		String owner = jwt.getUserNameJWT(token);
+		return ResponseEntity.ok(new MessageResponse(true, "success", recordSer.findRawRecordByCreater(owner)));
 	}
 
 	@PostMapping(value = "/api/v1/record", consumes = { "multipart/form-data" })

@@ -63,6 +63,8 @@ public class JwtTokenCreate {
 		// Trả về Username
 		return claims.getSubject();
 	}
+	
+	
 	// Validate thông tin của JWT -> hết hạn, lỗi....
 	public boolean validateToken(String token) {
 		try {
