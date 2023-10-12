@@ -2,6 +2,7 @@ package com.rhymthwave.Service.Implement;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,28 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 			return null;
 		}
 	}
+	
+	@Override
+	public List<String> uploadMultipleFiles(MultipartFile[] files, String parentFolder, String childFolder) {
+		try {
+			cloudinary.api().createFolder(parentFolder, ObjectUtils.emptyMap());
+			cloudinary.api().createFolder(parentFolder + "/" + childFolder, ObjectUtils.emptyMap());
+			String path = parentFolder + "/" + childFolder;
+			List<String> uploadedUrls = new ArrayList<>();
+	        
+			for (MultipartFile file : files) {
+	        	Map<String, Object> params = new HashMap<>();
+				params.put("public_id", path + "/"+ file.getOriginalFilename());
+				
+	            Map<?, ?> result = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
+	            uploadedUrls.add((String) result.get("secure_url"));
+	        }
+			return uploadedUrls;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	@Override
 	public Boolean deleteFile(String publicID) {
@@ -73,5 +96,8 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 		String lrcContent = restTemplate.getForObject(lrcUrl, String.class);
 		return lrcContent;
 	}
+
+	
+	
 
 }

@@ -56,15 +56,15 @@ public class RecordREST {
 	}
 	
 	@GetMapping("/api/v1/my-record")
-	public ResponseEntity<MessageResponse> getMyRecord(@CookieValue("token") String token) {
-		String owner = jwt.getUserNameJWT(token);
-		return ResponseEntity.ok(new MessageResponse(true, "success", recordSer.findRecordByCreater(owner)));
+	public ResponseEntity<MessageResponse> getMyRecord() {
+		//String owner = jwt.getUserNameJWT(token); @CookieValue("token") String token
+		return ResponseEntity.ok(new MessageResponse(true, "success", recordSer.findRecordByCreater("obito@gmail.com")));
 	}
 	
 	@GetMapping("/api/v1/my-record-not-raw")
-	public ResponseEntity<MessageResponse> getOneRecord(@CookieValue("token") String token) {
-		String owner = jwt.getUserNameJWT(token);
-		return ResponseEntity.ok(new MessageResponse(true, "success", recordSer.findRawRecordByCreater(owner)));
+	public ResponseEntity<MessageResponse> getOneRecord() {
+		//String owner = jwt.getUserNameJWT(token); @CookieValue("token") String token
+		return ResponseEntity.ok(new MessageResponse(true, "success", recordSer.findRawRecordByCreater("obito@gmail.com")));
 	}
 
 	@PostMapping(value = "/api/v1/record", consumes = { "multipart/form-data" })

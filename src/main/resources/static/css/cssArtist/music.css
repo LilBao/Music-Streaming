@@ -156,3 +156,9 @@ button:hover {
     border: 2px solid white;
     color: white;
 }
+
+.cover-image{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}

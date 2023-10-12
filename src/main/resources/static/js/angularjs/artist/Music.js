@@ -80,10 +80,10 @@ app.controller('musicCtrl', function ($scope, $http) {
         })
     }
     //update song
-    $scope.updateSongPitch = function (song,record) {
+    $scope.updateSongPitch = function (song, record) {
         var url = host + "/v1/record";
         record.song = song;
-        $http.post(url,record).then(resp => {
+        $http.post(url, record).then(resp => {
             console.log("success");
         }).catch(error => {
 
@@ -132,9 +132,9 @@ app.controller('musicCtrl', function ($scope, $http) {
                 $http.get(url).then(resp => {
                     data = (resp.data.data);
                     if ($scope.type === "song") {
-                        $scope.updateSongPitch($scope.song,data)
+                        $scope.updateSongPitch($scope.song, data)
                     } else {
-                        $scope.createTrack($scope.album,data);
+                        $scope.createTrack($scope.album, data);
                     }
                 }).catch(error => {
                 })
@@ -153,4 +153,21 @@ app.controller('musicCtrl', function ($scope, $http) {
         $("#nextBtn").removeClass("submit");
         $("#nextBtn").show();
     }
+
+    $scope.listRecordChecked=[]
+    $('input[name="pitch"]').change(function () {
+        var checked = $(this).prop("checked");
+        var value = $(this).val();
+        if (checked && countC < 3) {
+            listRecordChecked.push(value);
+            countC++;
+        } else {
+            var index = listRecordChecked.indexOf(value);
+            if (index !== -1) {
+                listRecordChecked.splice(index, 1);
+            }
+            countC--;
+        }
+        console.log(listRecordChecked)
+    })
 })
