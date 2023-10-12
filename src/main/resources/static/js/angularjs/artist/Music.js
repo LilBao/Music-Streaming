@@ -9,14 +9,18 @@ app.controller('musicCtrl', function ($scope, $http) {
     $scope.album = {};
     $scope.track = {};
     //Get list song has not record
-    $http.get(host + "/v1/song/up-coming").then(resp => {
+    $http.get(host + "/v1/song/up-coming",{
+        headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+    }).then(resp => {
         $scope.listSongUpcoming = resp.data.data;
     }).catch(error = {
 
     })
 
     //Get list album has not track
-    $http.get(host + "/v1/album/up-coming").then(resp => {
+    $http.get(host + "/v1/album/up-coming",{
+        headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+    }).then(resp => {
         $scope.listAlbumUpcoming = resp.data.data;
     }).catch(error = {
 
@@ -39,7 +43,9 @@ app.controller('musicCtrl', function ($scope, $http) {
     //Find list record not song
     $scope.findListRecordNotSong = function () {
         var url = host + "/v1/my-record";
-        $http.get(url).then(resp => {
+        $http.get(url, {
+            headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+        }).then(resp => {
             $scope.listRecord = resp.data.data;
         }).catch(error => {
 
@@ -104,7 +110,9 @@ app.controller('musicCtrl', function ($scope, $http) {
     //Find list record has song
     $scope.findListRecordSong = function () {
         var url = host + "/v1/my-record-not-raw";
-        $http.get(url).then(resp => {
+        $http.get(url,{
+            headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+        }).then(resp => {
             $scope.listRecord = resp.data.data;
         }).catch(error => {
 

@@ -20,59 +20,77 @@ import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.Service.CloudinaryService;
 import com.rhymthwave.Service.ImageService;
 import com.rhymthwave.Service.SongService;
+import com.rhymthwave.Utilities.GetHostByRequest;
+import com.rhymthwave.Utilities.Cookie.CookiesUntils;
 import com.rhymthwave.Utilities.JWT.JwtTokenCreate;
+import com.rhymthwave.entity.Account;
 import com.rhymthwave.entity.Image;
 import com.rhymthwave.entity.Song;
+import com.rhymthwave.entity.Writter;
+
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @CrossOrigin("*")
+@RequiredArgsConstructor
 public class SongREST {
-	@Autowired
-	ArtistService artistSer;
+
+	private final ArtistService artistSer;
+
+	private final CRUD<Song, Integer> crudSong;
+
+	private final SongService songSer;
+
+	private final CloudinaryService cloudinary;
+
+	private final ImageService imgSer;
+
+	private final CRUD<Image, String> crudImage;
+
+	private final GetHostByRequest host;
+
+	private final CRUD<Account, String> crudAccount;
 	
-	@Autowired
-	CRUD<Song, Integer> crudSong;
-	
-	@Autowired
-	SongService songSer;
-	
-	@Autowired
-	CloudinaryService cloudinary;
-	
-	@Autowired
-	ImageService imgSer;
-	
-	@Autowired
-	CRUD<Image, String> crudImage;
-	
-	@Autowired
-	JwtTokenCreate jwt;
-	
+	private final CRUD<Writter, Integer> crudWritter;
+
 	@GetMapping("/api/v1/song")
-	public ResponseEntity<MessageResponse> getAllSong(){
+	public ResponseEntity<MessageResponse> getAllSong() {
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudSong.findAll()));
 	}
-	
+
 	@GetMapping("/api/v1/song/{id}")
-	public ResponseEntity<MessageResponse> getOneSong(@PathVariable("id") Integer id){
+	public ResponseEntity<MessageResponse> getOneSong(@PathVariable("id") Integer id) {
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudSong.findOne(id)));
 	}
-	
-	@PostMapping(value="/api/v1/song",consumes = { "multipart/form-data" })
-	public ResponseEntity<MessageResponse> createSong(@ModelAttribute Song song, @RequestParam("coverImg") MultipartFile coverImg){
-		if(!coverImg.isEmpty()) {
-			Map<String, Object> respImg = cloudinary.Upload(coverImg, "CoverImage", "Obito");
-			Image cover = imgSer.getEntity((String) respImg.get("asset_id"), (String)respImg.get("url"),(Integer) respImg.get("width"),(Integer) respImg.get("height"));
+
+	@PostMapping(value = "/api/v1/song", consumes = { "multipart/form-data" })
+	public ResponseEntity<MessageResponse> createSong(@ModelAttribute Song song, HttpServletRequest req,
+			@RequestParam("coverImg") MultipartFile coverImg) {
+		//owner
+		String owner =host.getEmailByRequest(req);
+		Account account = crudAccount.findOne(owner);
+		//create song
+		if (!coverImg.isEmpty()) {
+			Map<String, Object> respImg = cloudinary.Upload(coverImg, "CoverImage", account.getArtist().getArtistName());
+			Image cover = imgSer.getEntity((String) respImg.get("asset_id"), (String) respImg.get("url"),
+					(Integer) respImg.get("width"), (Integer) respImg.get("height"));
 			crudImage.create(cover);
 			song.setImage(cover);
 		}
-		//song.setWritters();
-		return ResponseEntity.ok(new MessageResponse(true,"success",crudSong.create(song)));
+		Song dataSong = crudSong.create(song);
+		//create writter
+		Writter writter = new Writter();
+		writter.setSong(dataSong);
+		writter.setArtist(account.getArtist());
+		crudWritter.create(writter);
+		
+		return ResponseEntity.ok(new MessageResponse(true, "success", dataSong));
 	}
-	
+
 	@GetMapping("/api/v1/song/up-coming")
-	public ResponseEntity<MessageResponse> songUpcoming(){
-		//String owner = jwt.getUserNameJWT(token); @CookieValue("token") String token
-		return ResponseEntity.ok(new MessageResponse(true,"success",songSer.findSongNotRecord("obito@gmail.com")));
+	public ResponseEntity<MessageResponse> songUpcoming(HttpServletRequest req) {
+		String owner = host.getEmailByRequest(req);
+		return ResponseEntity.ok(new MessageResponse(true, "success", songSer.findSongNotRecord(owner)));
 	}
 }
