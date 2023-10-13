@@ -1,7 +1,6 @@
 package com.rhymthwave.API;
 
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -40,8 +39,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RecordREST {
 	
-	private final CRUD<Image, String> crudImg;
-
 	private final CRUD<Recording, Integer> crudRecord;
 
 	private final CloudinaryService cloudinary;
@@ -81,7 +78,7 @@ public class RecordREST {
 		Account account = crudAccount.findOne(owner);
 		
 		Map<String, Object> respRecord = cloudinary.Upload(fileRecord, "Records", account.getArtist().getArtistName());
-		if (fileLyrics.getSize() > 0) {
+		if (fileLyrics != null) {
 			Map<String, Object> respLyrics = cloudinary.Upload(fileLyrics, "Lyrics", account.getArtist().getArtistName());
 			record.setLyricsUrl((String) respLyrics.get("url"));
 		}
@@ -94,5 +91,10 @@ public class RecordREST {
 	@PutMapping("/api/v1/record")
 	public ResponseEntity<MessageResponse> createUpcoming(@RequestBody Recording record) {
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudRecord.update(record)));
+	}
+	
+	@GetMapping("/api/v1/record-song/{songId}")
+	public ResponseEntity<MessageResponse> findListRecordBySong(@PathVariable("songId") Long songId){
+		return ResponseEntity.ok(new MessageResponse(true,"success",recordSer.findRecordBySong(songId)));
 	}
 }

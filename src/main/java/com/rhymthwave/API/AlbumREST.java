@@ -80,4 +80,10 @@ public class AlbumREST {
 		return ResponseEntity.ok(new MessageResponse(true,"success",albumSer.findAlbumNotRecord(owner)));
 	}
 	
+	@GetMapping("/api/v1/album-artist-released")
+	public ResponseEntity<MessageResponse> albumReleasedByArtist(HttpServletRequest req){
+		String owner = host.getEmailByRequest(req);
+		Account account = crudAccount.findOne(owner);
+		return ResponseEntity.ok(new MessageResponse(true,"success",albumSer.findAlbumReleasedByArtist(account.getArtist().getArtistId())));
+	}
 }

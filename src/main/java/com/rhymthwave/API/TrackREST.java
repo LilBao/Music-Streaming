@@ -39,8 +39,8 @@ public class TrackREST {
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudTrack.create(track)));
 	}
 	
-	@GetMapping("/api/v1/track/{album-id}")
+	@GetMapping("/api/v1/track-album/{album-id}")
 	public ResponseEntity<MessageResponse> getTrackByAlbum(@PathVariable("album-id") Integer albumId){
-		return ResponseEntity.ok(new MessageResponse());
+		return ResponseEntity.ok(new MessageResponse(true,"success",trackSer.getTrackByAlbum(albumId)));
 	}
 }

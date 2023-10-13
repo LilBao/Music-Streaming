@@ -60,8 +60,6 @@ app.controller('confirmCtrl', function ($scope, $http) {
             }
         });
     };
-
-
 })
 
 
