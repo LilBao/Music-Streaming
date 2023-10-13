@@ -11,14 +11,16 @@ app.controller('recordCtrl',function($scope,$http){
         data.append('recordingName',$scope.record.name);
         data.append('studio',$scope.record.studio);
         data.append('produce',$scope.record.proceduce);
-        data.append('idMv',$scope.record.idMV);
+        data.append('idMv',$scope.record.idMv);
         data.append('mood',$scope.moods);
         data.append('songStyle',$scope.styles);
         data.append('culture',$scope.cultures);
         data.append('instrument',$scope.instruments);
         data.append('versions',$scope.record.version);
         data.append('fileRecord',$scope.recordFile);
-        data.append('fileLyrics',$scope.lyricsFile);
+        if($scope.lyricsFile){
+            data.append('fileLyrics',$scope.lyricsFile);
+        }
         $http.post(url,data,{
             headers: { 
                 'Content-Type': undefined,

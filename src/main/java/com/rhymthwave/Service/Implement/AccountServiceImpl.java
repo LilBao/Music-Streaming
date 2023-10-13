@@ -3,7 +3,10 @@ package com.rhymthwave.Service.Implement;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.rhymthwave.DAO.AccountDAO;
@@ -47,6 +50,11 @@ public class AccountServiceImpl implements AccountService, CRUD<Account, String>
 		return dao.findAll();
 	}
 
-
-
+//	@Override
+//	public Page<Product> getByConditions(String namecate, Integer pageNo, Integer pageSize, String sortField,
+//			String sortDirection, Integer size, Float minPrice, Float maxPrice) {
+//		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+//		Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+//		return dao.getByConditions(namecate, minPrice, maxPrice, size, pageable);
+//	}
 }

@@ -150,6 +150,47 @@ app.controller('musicCtrl', function ($scope, $http) {
         }
     });
 
+    //Get list album released
+    $scope.listAlbumReleased =[];
+    $http.get(host+"/v1/album-artist-released",{
+        headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+    }).then(resp => {
+        $scope.listAlbumReleased = resp.data.data;
+    }).catch(error => {
+        console.log(error);
+    })
+
+    //Get list song released
+    $scope.listSongReleased =[];
+    $http.get(host+"/v1/song-artist-released",{
+        headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+    }).then(resp => {
+        $scope.listSongReleased = resp.data.data;
+    }).catch(error => {
+        console.log(error);
+    })
+
+    //Get detail album or song
+    $scope.listDetail=[];
+    $scope.detail = function(id,type){
+        if(type === 'album'){
+            $scope.findAlbum(id);
+            $scope.typeDetail="album"
+            let url = host +"/v1/track-album/"+id;
+            $http.get(url).then(resp => {
+                $scope.listDetail = resp.data.data;
+            })
+        }else{
+            $scope.findSong(id);
+            $scope.typeDetail="song"
+            let url = host +"/v1/record-song/"+id;
+            $http.get(url).then(resp=>{
+                $scope.listDetail = resp.data.data
+            })
+        }
+    }
+
+
     function resetTabs() {
         var x = document.getElementsByClassName("tab");
         for (var i = 0; i < x.length; i++) {
