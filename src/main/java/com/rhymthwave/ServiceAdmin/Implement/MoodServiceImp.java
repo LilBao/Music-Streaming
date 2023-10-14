@@ -44,6 +44,11 @@ public class MoodServiceImp implements IMoodService, CRUD<Mood, Integer> {
 	@Override
 	public Mood create(Mood entity) {
 		
+		if(moodDAO.findByMoodname(entity.getMoodname()) !=null) {
+			return null;
+		}
+		
+		
 		return moodDAO.save(entity);
 	}
 
@@ -70,7 +75,6 @@ public class MoodServiceImp implements IMoodService, CRUD<Mood, Integer> {
 	@Override
 	public Mood findOne(Integer key) {
 		Optional<Mood> mood = moodDAO.findById(key);
-		
 		if(mood.isEmpty()) {
 			return null;
 		}
