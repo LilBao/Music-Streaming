@@ -33,7 +33,7 @@ app.controller("instrumentController", function ($scope, $http, $cookies, apiURL
 		});
 	}
 
-	$scope.update = function(key) {
+	$scope.update = function() {
 		var item = angular.copy($scope.form);
 		var url = category +`/${$scope.form.instrumentId}`;
 		$http.put(apiURL + url, item, {
