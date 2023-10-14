@@ -3,6 +3,7 @@ package com.rhymthwave.API;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,5 +43,10 @@ public class TrackREST {
 	@GetMapping("/api/v1/track-album/{album-id}")
 	public ResponseEntity<MessageResponse> getTrackByAlbum(@PathVariable("album-id") Integer albumId){
 		return ResponseEntity.ok(new MessageResponse(true,"success",trackSer.getTrackByAlbum(albumId)));
+	}
+	
+	@DeleteMapping("/api/v1/track/{id}")
+	public ResponseEntity<MessageResponse> deleteTrack(@PathVariable("id") Integer id){
+		return ResponseEntity.ok(new MessageResponse(true, "success", crudTrack.delete(id)));
 	}
 }

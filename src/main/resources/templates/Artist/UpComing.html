@@ -50,7 +50,7 @@
                 </div>
 
                 <datalist class="w-100" id="writters">
-                    <option readonly="true" ng-repeat="item in listArtist" value="{{item.artistId}}">{{item.artistName}}
+                    <option class="option-writter" readonly="true" ng-repeat="item in listArtist" value="{{item.artistId}}">{{item.artistName}}
                     </option>
                 </datalist>
 
@@ -73,17 +73,17 @@
         $('#writter').on('change', function () {
             var selectedOption = $(this).val().trim();
             var datalist = document.getElementById('writters');
-            var options = datalist.getElementsByTagName('option');
-            var GenreText = "";
+            var options = datalist.getElementsByClassName('option-writter');
+            var writterText = "";
             for (var i = 0; i < options.length; i++) {
                 if (options[i].value == selectedOption) {
-                    GenreText = options[i].text;
+                    writterText = options[i].text;
                     break;
                 }
             }
             if (selectedOption && selectedOption != "") {
                 var tag = $('<div class="checkbox"> <input type="checkbox" checked name="writter" value=' + selectedOption + '/>' +
-                    '<div class="box bg-black text-white"><p>' + GenreText + '</p></div>' +
+                    '<div class="box bg-black text-white"><p>' + writterText + '</p></div>' +
                     '</div>');
                 tag.find('input[type="checkbox"]').val(selectedOption);
                 $('#list-writter').append(tag);
@@ -92,7 +92,7 @@
             $('#writter').val("");
         });
 
-        $('#list-writter').on('click', 'input[type="checkbox"]', function () {
+        $('#list-writter').on('click', 'input[name="writter"]', function () {
             var selectedWritter = $(this).val();
             var writterName = $(this).find('option:selected').text();
             if (selectedWritter) {

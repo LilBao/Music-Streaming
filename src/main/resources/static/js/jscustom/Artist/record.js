@@ -1,8 +1,17 @@
 $('#genre').on('change', function () {
-    var selectedOption = $(this).val();
-    if (selectedOption) {
-        var tag = $('<div class="checkbox"> <input type="checkbox" checked name="genre" id="" />' +
-            '<div class="box bg-black text-white"><p>' + selectedOption + '</p></div>' +
+    var selectedOption = $(this).val().trim();
+    var datalist = document.getElementById('genres');
+    var options = datalist.getElementsByClassName('option-genre');
+    var GenreText = "";
+    for (var i = 0; i < options.length; i++) {
+        if (options[i].value == selectedOption) {
+            GenreText = options[i].text;
+            break;
+        }
+    }
+    if (selectedOption && selectedOption != "") {
+        var tag = $('<div class="checkbox"> <input type="checkbox" checked name="genre" value='+selectedOption+'id="" />' +
+            '<div class="box bg-black text-white"><p>' + GenreText + '</p></div>' +
             '</div>');
         tag.find('input[name="genre"]').val(selectedOption);
         $('#list-genres').append(tag);
@@ -13,10 +22,11 @@ $('#genre').on('change', function () {
 
 $('#list-genres').on('click', 'input[name="genre"]', function () {
     var selectedGenre = $(this).val();
+    var genreName = $(this).find('option:selected').text();
     if (selectedGenre) {
         $('#genre').append($('<option>', {
             value: selectedGenre,
-            text: selectedGenre
+            text: genreName
         }));
         $(this).closest('.checkbox').remove();
     }
