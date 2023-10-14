@@ -1,26 +1,57 @@
 
-var category = "/instrument";
+var apiInstrument = "http://localhost:8080/api/v1/category/instrument";
 var cookieName = "token";
-app.controller("instrumentController", function ($scope, $http, $cookies, apiURL,$log) {
+app.controller("instrumentController", function ($scope, $http, $cookies,$log) {
 
 	$scope.form = {};
 	$scope.items = [];
+	$scope.page = [];
+	$scope.currentPage = 0;
 	$scope.reset = function () {
 		$scope.form = {};
 		$scope.key = null;
 	}
 
 	$scope.load_all = () => {
-		$http.get(apiURL + category).then(resp => {
+		$http.get(apiInstrument).then(resp => {
 			$scope.items = resp.data.data.content;
+			$scope.utilitiesPage.totalPages(resp.data.data.totalPages);
 		}).catch(error => {
 			console.log("Error", error)
 		});
 	}
 
+	$scope.goToPage = function (pageNumber) {
+		// Gửi yêu cầu đến máy chủ Spring Boot để lấy dữ liệu trang mới
+		$http.get(apiInstrument + "?page=" + pageNumber)
+			.then(resp =>{
+				$scope.items = resp.data.data.content;			
+				$scope.currentPage = pageNumber;	
+			}).catch(error => {
+				console.log("Error", error)
+			});
+	};
+
+	$scope.utilitiesPage = {
+
+		totalPages(totalPages) {
+			for (var i = 0; i <= totalPages - 1; i++) {
+				$scope.page.push(i);
+			}
+		},
+
+		firstPage(){
+			$scope.goToPage($scope.page[0]);
+		},
+		endPage(){
+			$scope.goToPage($scope.page[$scope.page.length - 1]);
+		}
+	}
+
+
 	$scope.create = function () {
 		var item = angular.copy($scope.form);
-		$http.post(apiURL + category, item, {
+		$http.post(apiInstrument, item, {
 			headers: {
 				'Authorization': 'Bearer ' + $cookies.get(cookieName)
 			}
@@ -36,7 +67,7 @@ app.controller("instrumentController", function ($scope, $http, $cookies, apiURL
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
 		var url = category +`/${$scope.form.instrumentId}`;
-		$http.put(apiURL + url, item, {
+		$http.put(apiInstrument + url, item, {
 			headers: {
 				'Authorization': 'Bearer ' + $cookies.get(cookieName)
 			}
@@ -50,7 +81,7 @@ app.controller("instrumentController", function ($scope, $http, $cookies, apiURL
 	}
 
 	$scope.delete = function(key) {
-		var url = apiURL+ category +`/${key}`;
+		var url = apiInstrument +`/${key}`;
 		$http.delete(url,{
 			headers: {
 				'Authorization': 'Bearer ' + $cookies.get(cookieName)
@@ -68,7 +99,7 @@ app.controller("instrumentController", function ($scope, $http, $cookies, apiURL
 
 
 	$scope.edit = function (key) {
-		let url = apiURL + category + "/" + key;
+		let url = apiInstrument  + "/" + key;
 		$http.get(url).then(resp => {
 			$scope.form = resp.data.data;
 			$scope.key = key;
