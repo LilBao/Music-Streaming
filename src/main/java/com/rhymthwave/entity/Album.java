@@ -39,14 +39,17 @@ public class Album implements Serializable {
 
 	@Column(name = "RELEASEDATE")
 	private Date releaseDate;
+	
+	@Column(name = "DESCRIPTIONS")
+	private String descriptions;
 
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@OneToOne
 	@JoinColumn(name = "COVERIMAGE")
 	private Image image;
 
-	@JsonIgnore
-	@ManyToOne
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@OneToOne
 	@JoinColumn(name = "ARTISTID")
 	private Artist artist;
 

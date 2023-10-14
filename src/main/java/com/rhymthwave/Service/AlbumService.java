@@ -6,4 +6,6 @@ import com.rhymthwave.entity.Album;
 
 public interface AlbumService {
 	List<Album> findAlbumNotRecord(String email);
+	
+	List<Album> findAlbumReleasedByArtist(Long artistId);
 }

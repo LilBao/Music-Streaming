@@ -27,7 +27,10 @@ app.controller('upComingCtrl', function ($scope, $http) {
         data.append('albumName', $scope.upcoming.name);
         data.append('releaseDate', new Date($scope.upcoming.releaseDate));
         $http.post(url, data, {
-            headers: { 'Content-Type': undefined },
+            headers: { 
+                'Content-Type': undefined,
+                'Authorization': 'Bearer ' + getCookie('token')
+            },
             transformRequest: angular.identity
         }).then(resp => {
             console.log('success')
@@ -44,7 +47,10 @@ app.controller('upComingCtrl', function ($scope, $http) {
         data.append('songName', $scope.upcoming.name);
         data.append('releaseDay', new Date($scope.upcoming.releaseDate));
         $http.post(url, data, {
-            headers: { 'Content-Type': undefined },
+            headers: { 
+                'Content-Type': undefined,
+                'Authorization': 'Bearer ' + getCookie('token')
+            },
             transformRequest: angular.identity
         }).then(resp => {
             var writters = $('input[name="writter"]:checked')

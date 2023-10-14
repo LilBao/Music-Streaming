@@ -65,6 +65,10 @@ public class AlbumServiceImpl implements AlbumService, CRUD<Album, Integer> {
 		Account account = accDao.findById(email).get();
 		return dao.getAlbumNotTrack(account.getArtist().getArtistId());
 	}
-	
 
+	@Override
+	public List<Album> findAlbumReleasedByArtist(Long artistId) {
+		List<Album> listAlbum = dao.getListAlbumReleasedByArtist(artistId);
+		return listAlbum;
+	}	
 }

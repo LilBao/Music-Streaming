@@ -2,8 +2,11 @@ package com.rhymthwave.entity;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,7 +34,7 @@ public class Writter implements Serializable {
 	@JoinColumn(name = "ARTISTID")
 	private Artist artist;
 
-	@ManyToOne
+	@ManyToOne()
 	@JoinColumn(name = "SONGSID")
 	private Song song;
 }

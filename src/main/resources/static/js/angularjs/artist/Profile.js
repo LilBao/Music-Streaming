@@ -1,25 +1,21 @@
-var app = angular.module('myApp', []);
+var app = angular.module('myApp',[]);
 var host = "http://localhost:8080/api";
-app.controller('confirmCtrl', function ($scope, $http) {
+app.controller('profileArtistCtrl',function($scope,$http){
+    $scope.artist = {};
     
-    $scope.artist ={};
-    $scope.account={};
-
-    $http.get(host+"/v1/confirm-account-artist",{
+    $http.get(host+"/v1/profile",{
         headers: { 'Authorization': 'Bearer ' + getCookie('token') }
     }).then(resp => {
-        $scope.account = resp.data.data;
+        $scope.artist=resp.data.data;
+        console.log($scope.artist)
+    }).catch(error => {
+        console.log("Not found artist profile")
     })
 
-    $scope.createArtist = function() {
-        
+    $scope.updateArtist = function() {
         var url = host + "/v1/artist";
         var formData = new FormData();
-        formData.append('artistName', $scope.artist.artistName); 
-        formData.append('fullName', $scope.artist.fullName);
-        formData.append('bio', $scope.artist.bio); 
-        formData.append('artist.dateOfBirth', $scope.artist.dateOfBirth); 
-        formData.append('placeOfBirth', $scope.artist.placeOfBirth); 
+        formData.append('artist', $scope.artist); 
         formData.append('avatar', $scope.avatarFile);
         formData.append('background', $scope.backgroundFile);
         $http({
@@ -32,18 +28,12 @@ app.controller('confirmCtrl', function ($scope, $http) {
             data: formData,
             transformRequest: angular.identity
         }).then(function(response) {
-            alert("Dang ky thanh cong");
+            alert("Update Successfully");
         }).catch(function(error) {
             console.log(error);
-            alert("Dang ky that bai");
+            alert("Update Failure");
         });
     }
-
-    $("#nextBtn").click(function () {
-        if ($("#nextBtn").hasClass("submit")) {
-            $scope.createArtist();
-        }
-    })
 
     $scope.selectFile = function (id) {
         $('#' + id).click();
@@ -69,6 +59,3 @@ app.controller('confirmCtrl', function ($scope, $http) {
         });
     };
 })
-
-
-
