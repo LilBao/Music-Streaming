@@ -1,42 +1,75 @@
 
-var category = "/mood";
+var apiMood = "http://localhost:8080/api/v1/category/mood";
 var cookieName = "token";
-app.controller("moodController", function ($scope, $http, $cookies, apiURL,$log) {
+app.controller("moodController", function ($scope, $http, $cookies, $log) {
 
 	$scope.form = {};
 	$scope.items = [];
+	$scope.page = [];
+	$scope.currentPage = 0;
 	$scope.reset = function () {
 		$scope.form = {};
 		$scope.key = null;
 	}
 
 	$scope.load_all = () => {
-		$http.get(apiURL + category).then(resp => {
+		$http.get(apiMood).then(resp => {
 			$scope.items = resp.data.data.content;
+			$scope.utilitiesPage.totalPages(resp.data.data.totalPages );
 		}).catch(error => {
 			console.log("Error", error)
 		});
+
 	}
+
+	$scope.goToPage = function (pageNumber) {
+		// Gửi yêu cầu đến máy chủ Spring Boot để lấy dữ liệu trang mới
+		$http.get(apiMood + "?page=" + pageNumber)
+			.then(resp =>{
+				$scope.items = resp.data.data.content;			
+				$scope.currentPage = pageNumber;	
+			}).catch(error => {
+				console.log("Error", error)
+			});
+	};
+
+	$scope.utilitiesPage = {
+
+		totalPages(totalPages) {
+			for (var i = 0; i <= totalPages - 1; i++) {
+				$scope.page.push(i);
+			}
+		},
+
+		firstPage(){
+			$scope.goToPage($scope.page[0]);
+		},
+		endPage(){
+			$scope.goToPage($scope.page[$scope.page.length - 1]);
+		}
+	}
+
+
 
 	$scope.create = function () {
 		var item = angular.copy($scope.form);
-		$http.post(apiURL + category, item, {
+		$http.post(apiMood, item, {
 			headers: {
 				'Authorization': 'Bearer ' + $cookies.get(cookieName)
 			}
 		}).then(resp => {
 			$scope.load_all();
 			$scope.reset();
-			
+
 		}).catch(error => {
 			console.log("Error", error)
 		});
 	}
 
-	$scope.update = function(key) {
+	$scope.update = function (key) {
 		var item = angular.copy($scope.form);
-		var url = category +`/${$scope.form.moodid}`;
-		$http.put(apiURL + category, item, {
+		var url = category + `/${$scope.form.moodid}`;
+		$http.put(apiMood, item, {
 			headers: {
 				'Authorization': 'Bearer ' + $cookies.get(cookieName)
 			}
@@ -49,9 +82,9 @@ app.controller("moodController", function ($scope, $http, $cookies, apiURL,$log)
 		});
 	}
 
-	$scope.delete = function(key) {
-		var url = apiURL+ category +`/${key}`;
-		$http.delete(url,{
+	$scope.delete = function (key) {
+		var url = apiMood + `/${key}`;
+		$http.delete(url, {
 			headers: {
 				'Authorization': 'Bearer ' + $cookies.get(cookieName)
 			}
@@ -60,7 +93,7 @@ app.controller("moodController", function ($scope, $http, $cookies, apiURL,$log)
 			$scope.items.splice(index, 1);
 			$scope.load_all();
 			$scope.reset();
-			
+
 		}).catch(error => {
 			console.log("Error", error)
 		});
@@ -68,7 +101,7 @@ app.controller("moodController", function ($scope, $http, $cookies, apiURL,$log)
 
 
 	$scope.edit = function (key) {
-		let url = apiURL + category + "/" + key;
+		let url = apiMood + "/" + key;
 		$http.get(url).then(resp => {
 			$scope.form = resp.data.data;
 			$scope.key = key;

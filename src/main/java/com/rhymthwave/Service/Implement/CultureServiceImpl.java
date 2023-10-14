@@ -2,20 +2,28 @@ package com.rhymthwave.Service.Implement;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.rhymthwave.DAO.CultureDAO;
 import com.rhymthwave.Service.CRUD;
+import com.rhymthwave.ServiceAdmin.ICultureService;
+import com.rhymthwave.Utilities.SortBy;
 import com.rhymthwave.entity.Culture;
 
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 
 @Service
-public class CultureServiceImpl implements CRUD<Culture, Integer>{
+@RequiredArgsConstructor
+public class CultureServiceImpl implements CRUD<Culture, Integer>,ICultureService{
 
-	@Autowired
-	CultureDAO dao;
+	private final CultureDAO dao;
+	
+	private final SortBy<String, String> sortService;
 	
 	@Override
 	@Transactional
@@ -58,6 +66,21 @@ public class CultureServiceImpl implements CRUD<Culture, Integer>{
 	@Override
 	public List<Culture> findAll() {
 		return dao.findAll();
+	}
+
+	@Override
+	public Page<Culture> getCulturePage(Integer page, String sortBy, String sortField) {
+
+		try {
+			Sort sort = sortService.sortBy(sortBy, sortField);
+
+			Pageable pageable = PageRequest.of(page, 6, sort);
+
+			Page<Culture> pageMood = dao.findAll(pageable);
+			return pageMood;
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	

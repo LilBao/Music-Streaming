@@ -31,4 +31,4 @@ app.config(function($routeProvider,$cookiesProvider) {
   });
 });
 
-app.constant("apiURL", "http://localhost:8080/api/v1/category"); 
+
