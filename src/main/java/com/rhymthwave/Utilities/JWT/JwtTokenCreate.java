@@ -36,7 +36,8 @@ public class JwtTokenCreate {
 		Date dateExpiration = new Date(now.getTime() + JWT_EXPIRATION); // thời gian hiện tại + 24h
 		// Trả về 1 Token
 		return Jwts.builder()
-				.setSubject(customUserDetails.getUsername()) // dữ
+				.setSubject(customUserDetails.getUsername())
+				.claim("role", customUserDetails.getAuthorities())// dữ
 				.setIssuedAt(now) // Ngày start
 				.setExpiration(dateExpiration) // Ngày end
 				.signWith(SignatureAlgorithm.HS512, JWT_SECRET) // Giải thuật mã hóa , key (Chữ ký )
@@ -50,6 +51,7 @@ public class JwtTokenCreate {
 		// Trả về 1 Token
 		return Jwts.builder()
 				.setSubject(customUserDetails.getUsername()) // dữ liệu
+				.claim("role", customUserDetails.getAuthorities())
 				.setIssuedAt(now) // Ngày start
 				.setExpiration(dateExpiration)
 				.signWith(SignatureAlgorithm.HS512, JWT_SECRET) // Giải thuật mã hóa , key (Chữ ký )
@@ -63,6 +65,8 @@ public class JwtTokenCreate {
 		// Trả về Username
 		return claims.getSubject();
 	}
+	
+	
 	// Validate thông tin của JWT -> hết hạn, lỗi....
 	public boolean validateToken(String token) {
 		try {

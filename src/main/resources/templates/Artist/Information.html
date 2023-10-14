@@ -15,6 +15,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
   <link rel="stylesheet" href="../../static/css/cssArtist/information.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="../../static/js/Utiliez/CookiesUtil.js"></script>
 </head>
 
 <body ng-app="myApp" ng-controller="confirmCtrl">
@@ -41,9 +42,9 @@
           <h1>Is this the right Spotify account?</h1>
           <p>You’ll use this to log in to Spotify for Artists.</p>
           <div class="my-5 d-flex flex-column align-items-center">
-            <img class="rounded-circle w-25" src="https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png"  alt="Cinque Terre">
-            <p>@gmail.com</p>
-            <p>Ng.VanBao</p>
+            <img class="rounded-circle w-25" ng-src="{{account.image == null ? 'https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png' : account.image.url}}"  alt="Cinque Terre">
+            <p>{{account.email}}</p>
+            <p>{{account.username}}</p>
             <a href="">Change account</a>
           </div>
         </div>

@@ -2,7 +2,15 @@ var app = angular.module('myApp', []);
 var host = "http://localhost:8080/api";
 app.controller('confirmCtrl', function ($scope, $http) {
     
-    $scope.artist = {}
+    $scope.artist ={};
+    $scope.account={};
+
+    $http.get(host+"/v1/confirm-account-artist",{
+        headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+    }).then(resp => {
+        $scope.account = resp.data.data;
+    })
+
     $scope.createArtist = function() {
         
         var url = host + "/v1/artist";
@@ -17,7 +25,10 @@ app.controller('confirmCtrl', function ($scope, $http) {
         $http({
             method: 'POST',
             url: url,
-            headers: { 'Content-Type': undefined }, 
+            headers: { 
+                'Content-Type': undefined,
+                'Authorization': 'Bearer ' + getCookie('token')
+            }, 
             data: formData,
             transformRequest: angular.identity
         }).then(function(response) {
@@ -57,8 +68,6 @@ app.controller('confirmCtrl', function ($scope, $http) {
             }
         });
     };
-
-
 })
 
 

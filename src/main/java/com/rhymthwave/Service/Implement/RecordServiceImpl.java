@@ -65,5 +65,12 @@ public class RecordServiceImpl implements RecordService, CRUD<Recording, Integer
 	public List<Recording> findRawRecordByCreater(String email) {
 		return dao.getListRawRecord(email);
 	}
+
+	@Override
+	public List<Recording> findRecordBySong(Long songId) {
+		List<Recording> listRecord = dao.getListRecordBySong(songId);
+		return listRecord;
+	}
+	
 	
 }

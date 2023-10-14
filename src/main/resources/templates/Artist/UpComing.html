@@ -16,8 +16,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../../static/js/angularjs/artist/Upcoming.js"></script>
+    <script src="../../static/js/Utiliez/CookiesUtil.js"></script>
 </head>
-
 <body ng-app="myApp" ng-controller="upComingCtrl">
     <div class="container">
         <div class="row">
@@ -46,16 +46,14 @@
                 </div>
                 <div>
                     <label for="">Colaboration</label>
-                    <input list="writters" class="form-control" name="writters" id="writter">
+                    <input autocomplete="off" list="writters" class="form-control" name="writters" id="writter">
                 </div>
 
-                <datalist class="" id="writters">
-                    <option value="1">a</option>
-                    <option value="2">b</option>
-                    <option value="3">b</option>
-                    <option value="4">c</option>
-                    <option value="6">s</option>
+                <datalist class="w-100" id="writters">
+                    <option class="option-writter" readonly="true" ng-repeat="item in listArtist" value="{{item.artistId}}">{{item.artistName}}
+                    </option>
                 </datalist>
+
                 <div id="list-writter" class="d-flex">
                 </div>
                 <div class="d-flex justify-content-end mt-3">
@@ -66,20 +64,26 @@
     </div>
     <script>
 
+        $('#writter').on('keypress', function (event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+            }
+        });
+
         $('#writter').on('change', function () {
-            var selectedOption = $(this).val();
+            var selectedOption = $(this).val().trim();
             var datalist = document.getElementById('writters');
-            var options = datalist.getElementsByTagName('option');
-            var GenreText = "";
+            var options = datalist.getElementsByClassName('option-writter');
+            var writterText = "";
             for (var i = 0; i < options.length; i++) {
                 if (options[i].value == selectedOption) {
-                    GenreText = options[i].text;
+                    writterText = options[i].text;
                     break;
                 }
             }
-            if (selectedOption) {
-                var tag = $('<div class="checkbox"> <input type="checkbox" name="writter" id="" />' +
-                    '<div class="box bg-black text-white"><p>' + GenreText + '</p></div>' +
+            if (selectedOption && selectedOption != "") {
+                var tag = $('<div class="checkbox"> <input type="checkbox" checked name="writter" value=' + selectedOption + '/>' +
+                    '<div class="box bg-black text-white"><p>' + writterText + '</p></div>' +
                     '</div>');
                 tag.find('input[type="checkbox"]').val(selectedOption);
                 $('#list-writter').append(tag);
@@ -88,13 +92,13 @@
             $('#writter').val("");
         });
 
-        $('#list-writter').on('click', 'input[type="checkbox"]', function () {
-            var selectedGenre = $(this).val();
-            var GenreText = $(this).find('option:selected').text();
-            if (selectedGenre) {
+        $('#list-writter').on('click', 'input[name="writter"]', function () {
+            var selectedWritter = $(this).val();
+            var writterName = $(this).find('option:selected').text();
+            if (selectedWritter) {
                 $('#writter').append($('<option>', {
-                    value: selectedGenre,
-                    text: selectedGenre
+                    value: selectedWritter,
+                    text: writterName
                 }));
                 $(this).closest('.checkbox').remove();
             }

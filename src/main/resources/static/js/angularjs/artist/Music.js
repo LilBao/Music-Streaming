@@ -4,20 +4,23 @@ app.controller('musicCtrl', function ($scope, $http) {
     $scope.listSongUpcoming = [];
     $scope.listAlbumUpcoming = [];
     $scope.listRecord = [];
-    $scope.listTrack = [];
     $scope.record = {};
     $scope.song = {};
     $scope.album = {};
     $scope.track = {};
     //Get list song has not record
-    $http.get(host + "/v1/song/up-coming").then(resp => {
+    $http.get(host + "/v1/song/up-coming", {
+        headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+    }).then(resp => {
         $scope.listSongUpcoming = resp.data.data;
     }).catch(error = {
 
     })
 
     //Get list album has not track
-    $http.get(host + "/v1/album/up-coming").then(resp => {
+    $http.get(host + "/v1/album/up-coming", {
+        headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+    }).then(resp => {
         $scope.listAlbumUpcoming = resp.data.data;
     }).catch(error = {
 
@@ -25,19 +28,24 @@ app.controller('musicCtrl', function ($scope, $http) {
 
     //Pitch record
     $scope.pitch = function (type, id) {
+        resetTabs();
         if (type === "song") {
-            $("input[name='pitch']").prop('type', 'radio');
-            console.log($("input[name='pitch']"))
+            $scope.type = "song";
             $scope.findListRecordNotSong();
+            $scope.findSong(id);
         } else {
+            $scope.type = "album";
             $scope.findListRecordSong();
+            $scope.findAlbum(id);
         }
     }
 
     //Find list record not song
     $scope.findListRecordNotSong = function () {
         var url = host + "/v1/my-record";
-        $http.get(url).then(resp => {
+        $http.get(url, {
+            headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+        }).then(resp => {
             $scope.listRecord = resp.data.data;
         }).catch(error => {
 
@@ -48,7 +56,7 @@ app.controller('musicCtrl', function ($scope, $http) {
     $scope.findSong = function (idSong) {
         var url = host + "/v1/song/" + idSong;
         $http.get(url).then(resp => {
-            $scope.song = resp.data;
+            $scope.song = resp.data.data;
         }).catch(error => {
 
         })
@@ -58,7 +66,7 @@ app.controller('musicCtrl', function ($scope, $http) {
     $scope.findRecord = function (idRecord) {
         var url = host + "/v1/record/" + idRecord;
         $http.get(url).then(resp => {
-            $scope.record = resp.data;
+            $scope.record = resp.data.data;
         }).catch(error => {
 
         })
@@ -78,46 +86,180 @@ app.controller('musicCtrl', function ($scope, $http) {
         })
     }
     //update song
-    $scope.updateSongPitch = function () {
+    $scope.updateSongPitch = function (song, record) {
+        var url = host + "/v1/record";
+        record.song = song;
+        $http.post(url, record).then(resp => {
+            console.log("success");
+        }).catch(error => {
 
+        })
     }
 
 
-    // //find Album
-    // $scope.findAlbum=function(idAlbum){
-    //     var url = ;
-    //     $http.get(url).then(resp =>{
-    //         $scope.album=resp.data;
-    //     }).catch(error => {
+    //find Album
+    $scope.findAlbum = function (idAlbum) {
+        var url = host + "/v1/album/" + idAlbum;
+        $http.get(url).then(resp => {
+            $scope.album = resp.data.data;
+        }).catch(error => {
 
-    //     })
-    // }
+        })
+    }
+
+    //find track by album
+    $scope.findTrackAlbum = function (id) {
+        let url = host + "/v1/track-album/" + id;
+        $http.get(url).then(resp => {
+            $scope.listDetail = resp.data.data;
+        })
+    }
 
     //Find list record has song
     $scope.findListRecordSong = function () {
         var url = host + "/v1/my-record-not-raw";
-        $http.get(url).then(resp => {
+        $http.get(url, {
+            headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+        }).then(resp => {
             $scope.listRecord = resp.data.data;
         }).catch(error => {
 
         })
     }
 
-    // //Push Record into List
-
     //Create track
-    $scope.createTrack = function (album) {
+    $scope.createTrack = function (album, record) {
         var url = host + "/v1/track";
         $scope.track.album = album;
-        $scope.listRecord.each(item => {
-            $scope.track.record = item;
-            var data = angular.copy($scope.track);
-            $http.post(url, data).then(resp => {
-                console.log("success")
-            }).catch(error => {
-                console.log("loi")
-            })
+        $scope.track.recording = record;
+        var item = angular.copy($scope.track);
+        $http.post(url, item).then(resp => {
+            console.log("success")
+        }).catch(error => {
+            console.log("loi")
         })
-
     }
+
+    //Finish pitch
+    $('#nextBtn').click(function () {
+        if ($('#nextBtn').hasClass('submit')) {
+            var data = {};
+            $('input[name="pitch"]:checked').each(function () {
+                var url = host + "/v1/record/" + $(this).val();
+                $http.get(url).then(resp => {
+                    data = (resp.data.data);
+                    if ($scope.type === "song") {
+                        $scope.updateSongPitch($scope.song, data)
+                    } else {
+                        $scope.createTrack($scope.album, data);
+                    }
+                }).catch(error => {
+                })
+            })
+        }
+    });
+
+    //Get list album released
+    $scope.listAlbumReleased = [];
+    $http.get(host + "/v1/album-artist-released", {
+        headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+    }).then(resp => {
+        $scope.listAlbumReleased = resp.data.data;
+    }).catch(error => {
+        console.log(error);
+    })
+
+    //Get list song released
+    $scope.listSongReleased = [];
+    $http.get(host + "/v1/song-artist-released", {
+        headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+    }).then(resp => {
+        $scope.listSongReleased = resp.data.data;
+    }).catch(error => {
+        console.log(error);
+    })
+
+    //Get detail album or song
+    $scope.listDetail = [];
+    $scope.detail = function (id, type) {
+        if (type === 'album') {
+            $scope.findAlbum(id);
+            $scope.typeDetail = "album"
+            let url = host + "/v1/track-album/" + id;
+            $http.get(url).then(resp => {
+                $scope.listDetail = resp.data.data;
+            })
+        } else {
+            $scope.findSong(id);
+            $scope.typeDetail = "song"
+            let url = host + "/v1/record-song/" + id;
+            $http.get(url).then(resp => {
+                $scope.listDetail = resp.data.data
+            })
+        }
+    }
+
+    //Confirm and remove record out album or song
+    $scope.removeRecord = function (id, type) {
+        if (type === 'song') {
+            let url = host + "/v1/record/" + id;
+            $http.get(url).then(resp => {
+                var data = resp.data.data;
+                data.song = null;
+                $scope.updateRecord(data);
+                let url = host + "/v1/record-song/" + data.songId;
+                $http.get(url).then(resp => {
+                    $scope.listDetail = resp.data.data
+                })
+            }).catch(error => {
+
+            })
+        } else {
+            let url = host + "/v1/track/" + id;
+            $http.delete(url).then(resp => {
+                $scope.findTrackAlbum(id);
+            }).catch(error => {
+
+            })
+        }
+    }
+
+    //Update record
+    $scope.updateRecord = function (data) {
+        let url = host + "/v1/record";
+        $http.put(url, data).then(resp => {
+            console.log("success")
+        })
+    }
+
+
+
+    function resetTabs() {
+        var x = document.getElementsByClassName("tab");
+        for (var i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        currentTab = 0;
+        showTab(currentTab);
+        $('#current-tab').innerText = currentTab + 1;
+        $("#nextBtn").removeClass("submit");
+        $("#nextBtn").show();
+    }
+
+    $scope.listRecordChecked = []
+    $('input[name="pitch"]').change(function () {
+        var checked = $(this).prop("checked");
+        var value = $(this).val();
+        if (checked && countC < 3) {
+            listRecordChecked.push(value);
+            countC++;
+        } else {
+            var index = listRecordChecked.indexOf(value);
+            if (index !== -1) {
+                listRecordChecked.splice(index, 1);
+            }
+            countC--;
+        }
+        console.log(listRecordChecked)
+    })
 })

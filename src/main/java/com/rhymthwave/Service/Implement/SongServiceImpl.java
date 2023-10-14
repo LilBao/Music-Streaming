@@ -64,6 +64,12 @@ public class SongServiceImpl implements SongService, CRUD<Song, Integer> {
 		Account account = accDao.findById(email).get();
 		return dao.getSongNotRecord(account.getArtist().getArtistId());
 	}
-	
 
+	@Override
+	public List<Song> findSongReleasedByArtist(Long artistId) {
+		List<Song> listSong = dao.getListSongReleasedByArtist(artistId);
+		return listSong;
+	}
+	
+	
 }

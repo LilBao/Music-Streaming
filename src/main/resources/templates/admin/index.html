@@ -17,7 +17,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-cookies.js"></script>
     <script src="../../static/js/jscustom/UI-Js-Admin/routing_admin.js"></script>
+    
+ 
 </head>
 
 <body ng-app="myApp">
@@ -211,11 +214,11 @@
                             <a href="#!ArtistProfile"><i class="bi bi-person-lines-fill"></i>ArtistProfile</a>
                         </li>
                         <li class="sub-menu">
-                            <a href=""><i class="bi bi-house-door-fill"></i>Nhac cu
+                            <a href=""><i class="bi bi-house-door-fill"></i>Category
                                 <div class="fa fa-caret-down right"></div>
                             </a>
                             <ul class="left-menu-dp">
-                                <li><a href="#!song"><i class="bi bi-music-note-beamed"></i>Song</a></li>
+                                <li><a href="#!Mood"><i class="bi bi-music-note-beamed"></i>Mood</a></li>
                                 <li><a href="#"><i class="bi bi-music-note-beamed"></i>Song</a></li>
                             </ul>
                         </li>
@@ -245,11 +248,11 @@
     <div ng-view></div>
         <!--  CONTENT END  -->
     <!-- js -->   
-    <script src="../../static/js/jscustom/UI-Js-Admin/chart.js"></script>
+    <script src="../../static/js/angularjs/BE-Admin/Category/mood.js"></script>
     <script src="../../static/js/jscustom/UI-Js-Admin/cdn.jsdelivr.net_npm_bootstrap@5.3.1_dist_js_bootstrap.bundle.min.js"></script>
     <script src="../../static/js/jscustom/UI-Js-Admin/code.jquery.com_jquery-3.7.1.min.js"></script>
     <script src="../../static/js/jscustom/UI-Js-Admin/admin.js"></script>
-    <script>
+    <!-- <script>
         var chrt = document.getElementById("chartId").getContext("2d");
         var chartId = new Chart(chrt, {
             type: 'pie',
@@ -302,7 +305,7 @@
                 }
             }
         });
-    </script>
+    </script> -->
 </body>
 
 </html>

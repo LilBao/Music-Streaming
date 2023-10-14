@@ -52,13 +52,12 @@ public class LoginAPI {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body(new MessageResponse(false, "Error Login", null));
 		}
-		
 		if (checkUserLogin == 1) {
 			Authentication authentication = authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(loginRequest.email(), loginRequest.password()));
-			if (authentication.isAuthenticated()) {
+			System.out.println(authentication);
 				SecurityContextHolder.getContext().setAuthentication(authentication);
-
+			
 				CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
 
 				Account user = accountService.findOne(customUserDetails.getEmail());
@@ -72,7 +71,7 @@ public class LoginAPI {
 				list.put("accessToken", jwt);
 				list.put("refreshToken", user.getRefreshToken());
 				return ResponseEntity.ok(new MessageResponse(true, "User Tokens", list));
-			} 
+			
 
 		}
 		
@@ -96,8 +95,6 @@ public class LoginAPI {
 	
 	@GetMapping
 	public ResponseEntity<?> login() {
-
-		
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(new MessageResponse(true, "Error Login", accountService.findAll()));
 	}

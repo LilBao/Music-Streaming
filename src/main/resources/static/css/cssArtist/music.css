@@ -48,7 +48,7 @@
 }
 
 .modal-dialog {
-    min-width: 100% !important;
+    min-width: 95% !important;
 }
 
 .tab {
@@ -109,6 +109,11 @@ button:hover {
     overflow-y: auto;
 }
 
+.table-detail-container {
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
 .list-tag {
     width: 100%;
     display: flex;
@@ -155,4 +160,40 @@ button:hover {
     background: black;
     border: 2px solid white;
     color: white;
+}
+
+.cover-image{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.realease-card{
+    border-radius: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+.card{
+    border: 0px;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+.card-img-top{
+    height: 200px!important;
+}
+.cover-realease{
+    position: relative;
+    object-fit: cover!important;    
+}
+.cover-realease:hover{
+    background-color: rgba(0, 0, 0, 0.5);;    
+}
+
+.total-song{
+    position: absolute;
+    color: white;
+    background-color: rgba(255, 255, 255, 0.5);;
 }
