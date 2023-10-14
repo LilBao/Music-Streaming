@@ -1,7 +1,7 @@
 
-var category = "/mood";
+var category = "/instrument";
 var cookieName = "token";
-app.controller("moodController", function ($scope, $http, $cookies, apiURL,$log) {
+app.controller("instrumentController", function ($scope, $http, $cookies, apiURL,$log) {
 
 	$scope.form = {};
 	$scope.items = [];
@@ -35,13 +35,13 @@ app.controller("moodController", function ($scope, $http, $cookies, apiURL,$log)
 
 	$scope.update = function(key) {
 		var item = angular.copy($scope.form);
-		var url = category +`/${$scope.form.moodid}`;
-		$http.put(apiURL + category, item, {
+		var url = category +`/${$scope.form.instrumentId}`;
+		$http.put(apiURL + url, item, {
 			headers: {
 				'Authorization': 'Bearer ' + $cookies.get(cookieName)
 			}
 		}).then(resp => {
-			var index = $scope.items.findIndex(item => item.id == $scope.form.id);
+			var index = $scope.items.findIndex(item => item.id == $scope.form.instrumentId);
 			$scope.items[index] = resp.data;
 			$scope.load_all();
 		}).catch(error => {
@@ -56,7 +56,7 @@ app.controller("moodController", function ($scope, $http, $cookies, apiURL,$log)
 				'Authorization': 'Bearer ' + $cookies.get(cookieName)
 			}
 		}).then(resp => {
-			var index = $scope.items.findIndex(item => item.moodid == key);
+			var index = $scope.items.findIndex(item => item.instrumentId == key);
 			$scope.items.splice(index, 1);
 			$scope.load_all();
 			$scope.reset();

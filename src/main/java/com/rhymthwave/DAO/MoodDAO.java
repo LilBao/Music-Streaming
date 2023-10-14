@@ -8,4 +8,6 @@ import com.rhymthwave.entity.Mood;
 @Repository
 public interface MoodDAO extends JpaRepository<Mood, Integer>{
 
+	Mood findByMoodname(String moodname);
+
 }

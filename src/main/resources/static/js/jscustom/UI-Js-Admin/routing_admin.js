@@ -1,6 +1,6 @@
 var app = angular.module("myApp", ["ngRoute","ngCookies"]);
 app.config(function($routeProvider,$cookiesProvider) {
-
+  
   $routeProvider
   .when("/", {
     templateUrl : "dashboard.html"
@@ -21,11 +21,13 @@ app.config(function($routeProvider,$cookiesProvider) {
     templateUrl : "Mood.html",
     controller: "moodController"
   })
-  .when("/ads", {
-    templateUrl : "ads.html"
+  .when("/instrument", {
+    templateUrl : "Instrument.html",
+    controller: "instrumentController"
   })
   .when("/statistical_managerment", {
     templateUrl : "statistical_managerment.html"
+   
   });
 });
 

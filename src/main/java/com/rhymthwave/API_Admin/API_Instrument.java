@@ -13,10 +13,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.rhymthwave.DTO.MessageResponse;
 import com.rhymthwave.Service.CRUD;
+import com.rhymthwave.ServiceAdmin.IInstrumentService;
 import com.rhymthwave.ServiceAdmin.IMoodService;
+import com.rhymthwave.Utilities.ImportEx;
+import com.rhymthwave.entity.Instrument;
 import com.rhymthwave.entity.Mood;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,58 +28,59 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/v1/category/mood")
+@RequestMapping("/api/v1/category/instrument")
 @RequiredArgsConstructor
-public class API_Mood {
+public class API_Instrument {
 
-	private final IMoodService iMoodService;
+	private final IInstrumentService iinstrumentService;
 
-	private final CRUD<Mood, Integer> crud;
+	private final CRUD<Instrument, Integer> crud;
+	
+	private final ImportEx importEx;
 	
 	@GetMapping
 	public ResponseEntity<?> getAllMood(
 			@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
 			@RequestParam(value = "sortBy", required = false, defaultValue = "asc") String sortBy,
-			@RequestParam(value = "sortfield", required = false, defaultValue = "moodid") String sortField) {
+			@RequestParam(value = "sortfield", required = false, defaultValue = "instrumentId") String sortField) {
 
-		Page<Mood> pageMood = iMoodService.getMoodPage(page, sortBy, sortField);
+		Page<Instrument> pageMood = iinstrumentService.getInstrumentPage(page, sortBy, sortField);
 		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", pageMood));
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> findOneMood(@PathVariable("id") Integer id) {
 
-		Mood mood = crud.findOne(id);
+		Instrument instrument = crud.findOne(id);
 
-		if (mood == null) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse(false, "Mood does exists", mood));
+		if (instrument == null) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse(false, "Mood does exists", instrument));
 		}
 
-		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", mood));
+		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", instrument));
 	}
 
 	@PostMapping()
-	public ResponseEntity<?> createMood(@RequestBody Mood moodRequest, final HttpServletRequest request) {
+	public ResponseEntity<?> createMood(@RequestBody Instrument instrumentDTO, final HttpServletRequest request) {
 
-		Mood mood = crud.create(moodRequest);
-		if (mood == null) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(false, "Mood exists", mood));
+		Instrument instrument = crud.create(instrumentDTO);
+		if (instrument == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(false, "Mood exists", instrument));
 		}
 		
-		return ResponseEntity.status(HttpStatus.CREATED).body(new MessageResponse(true, "Successfully", mood));
+		return ResponseEntity.status(HttpStatus.CREATED).body(new MessageResponse(true, "Successfully", instrument));
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> updateMood(@PathVariable("id") Integer id,  @RequestBody Mood moodRequest) {
+	public ResponseEntity<?> updateMood(@PathVariable("id") Integer id,  @RequestBody Instrument instrumentDTO) {
 		
-		Mood mood = crud.update(moodRequest);
+		Instrument instrument = crud.update(instrumentDTO);
 		
-		if (mood == null) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse(false, "Mood does exists", mood));
+		if (instrument == null) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse(false, "Mood does exists", instrument));
 		}
-		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", mood));
+		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", instrument));
 	}
-	
 	
 	
 	
@@ -91,5 +96,11 @@ public class API_Mood {
 		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", mood));
 	}
 	
+	
+	@GetMapping("/import")
+	public ResponseEntity<?> deleteMood(@RequestParam("excel") MultipartFile file) {
+		importEx.save(file);
+		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", "OK"));
+	}
 
 }
