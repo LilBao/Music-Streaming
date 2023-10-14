@@ -8,7 +8,5 @@ public interface IMoodService {
 
 	Page<Mood> getMoodPage(Integer page, String sortBy, String sortField);
 
-
-
 	
 }
