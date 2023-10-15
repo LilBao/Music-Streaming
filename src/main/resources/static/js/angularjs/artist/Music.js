@@ -9,6 +9,7 @@ app.controller('musicCtrl', function ($scope, $http) {
     $scope.song = {};
     $scope.album = {};
     $scope.track = {};
+    $scope.currentDate = new Date();
 
     //find artist by token email account
     $http.get(host + "/v1/profile", {
@@ -19,8 +20,8 @@ app.controller('musicCtrl', function ($scope, $http) {
         console.log(error)
     })
 
-    
-    $scope.updateArtist = function (data,avatar,background) {
+    //update arrtisst
+    $scope.updateArtist = function (data, avatar, background) {
         if (data != null) {
             let url = host + "/v1/artist";
             $http.put(url, data).then(resp => {
@@ -169,6 +170,29 @@ app.controller('musicCtrl', function ($scope, $http) {
             console.log("loi")
         })
     }
+    //list checkbox record kiểm tra
+    $scope.listRecordChecked = []
+    checkListRecord = function (checkbox) {
+        var id = Number(checkbox.value);
+        let url = host + "/v1/record/" + id;
+        $http.get(url).then(resp => {
+            if (checkbox.checked) {
+                $scope.listRecordChecked.push(resp.data.data);
+            } else {
+                var index = -1;
+                $scope.listRecordChecked.forEach((item, i) => {
+                    if (item.recordingId === id) {
+                        index = i;
+                    }
+                });
+                if (index !== -1) {
+                    $scope.listRecordChecked.splice(index, 1);
+                }
+            }
+        }).catch(error => {
+
+        })
+    }
 
     //Finish pitch (Hoàn thành việc pitch record vào song hoặc album)
     $('#nextBtn').click(function () {
@@ -193,7 +217,7 @@ app.controller('musicCtrl', function ($scope, $http) {
                 })
             })
             if ($scope.type === "song") {
-                $scope.updateSong(dataSong)
+                $scope.updateSong(dataSong);
             } else {
                 $scope.updateAlbum(dataAlbum);
             }
@@ -226,13 +250,15 @@ app.controller('musicCtrl', function ($scope, $http) {
     $scope.detail = function (id, type) {
         if (type === 'album') {
             $scope.findAlbum(id);
-            $scope.typeDetail = "album"
+            $scope.typeDetail = "album";
+            $scope.findListRecordSong();
             let url = host + "/v1/track-album/" + id;
             $http.get(url).then(resp => {
                 $scope.listDetail = resp.data.data;
             })
         } else {
             $scope.findSong(id);
+            $scope.findListRecordNotSong();
             $scope.typeDetail = "song"
             let url = host + "/v1/record-song/" + id;
             $http.get(url).then(resp => {
@@ -273,9 +299,105 @@ app.controller('musicCtrl', function ($scope, $http) {
             console.log("success")
         })
     }
+    //update cover image song
+    $scope.updateCoverImageSong = function (id) {
+        var formdata = new FormData();
+        formdata.append('coverImg', $scope.coverImg);
+        let url = host + "/v1/song-image" + id;
+        $http.put(url, formdata, {
+            headers: {
+                'Content-Type': undefined,
+                'Authorization': 'Bearer ' + getCookie('token')
+            },
+            transformRequest: angular.identity
+        }).then(resp => {
+
+        }).catch(error => {
+
+        })
+    }
+
+    //update cover image album
+    $scope.updateCoverImageAlbum = function (id) {
+        var formdata = new FormData();
+        formdata.append('coverImg', $scope.coverImg);
+        let url = host + "/v1/album-image/" + id;
+        $http.put(url, formdata, {
+            headers: {
+                'Content-Type': undefined,
+                'Authorization': 'Bearer ' + getCookie('token')
+            },
+            transformRequest: angular.identity
+        }).then(resp => {
+
+        }).catch(error => {
+
+        })
+    }
+
+    //update cover image
+    $scope.updateCoverImage = function (type) {
+        if (type === 'song') {
+            let song = angular.copy($scope.song);
+            $scope.updateCoverImageSong(song.songId);
+        } else {
+            let album = angular.copy($scope.album);
+            $scope.updateCoverImageAlbum(album.albumId);
+        }
+    }
+
+    //update song or album
+    $scope.updateReleaseDetail = function (type) {
+        if (type === 'song') {
+            let song = angular.copy($scope.song);
+            song.songName = $('#nameDetail').val();
+            song.releaseDay = $('#releaseDetail').val();
+            $scope.updateSong(song);
+            $scope.updateCoverImage(type);
+        } else {
+            let album = angular.copy($scope.album);
+            album.albumName = $('#nameDetail').val();
+            album.releaseDate = $('#releaseDetail').val();
+            $scope.updateAlbum(album);
+            $scope.updateCoverImage(type);
+        }
+    }
+
+    //logic update or not
+    $('#modified-release').click(function () {
+        var icon = $(this).find("i");
+        if ($('#modified-release').hasClass("save")) {
+            icon.removeClass("bi-check-lg");
+            icon.addClass("bi-pencil-fill");
+            $('#modified-release').removeClass("save");
+            $('#nameDetail').attr('readonly', true);
+            $('#releaseDetail').attr('readonly', true);
+            $('#addRecord').attr('hidden', true);
+            $scope.updateReleaseDetail($scope.typeDetail);
+        } else {
+            icon.removeClass("bi-pencil-fill");
+            icon.addClass("bi-check-lg");
+            $('#modified-release').addClass("save");
+            $('#nameDetail').removeAttr('readonly');
+            $('#releaseDetail').removeAttr('readonly');
+            $('#addRecord').removeAttr('hidden');
+            $('#coverImg').attr('ng-click', 'selectFile()');
+        }
+    })
+
+    //add song or album
+    $scope.addRecordToSongOrAlbum = function (type,item,record) {
+        if (type === 'album') {
+            $scope.updateSongPitch(item, record);
+            findListRecordSong();
+        } else {
+            $scope.createTrack(item,record);
+            findListRecordSong();
+        }
+    }
 
 
-
+    //JS
     function resetTabs() {
         var x = document.getElementsByClassName("tab");
         for (var i = 0; i < x.length; i++) {
@@ -288,33 +410,28 @@ app.controller('musicCtrl', function ($scope, $http) {
         $("#nextBtn").show();
     }
 
-    //list checkbox record kiểm tra
-    $scope.listRecordChecked = []
-    checkListRecord = function (checkbox) {
-        var id = Number(checkbox.value);
-        let url = host + "/v1/record/" + id;
-        $http.get(url).then(resp => {
-            if (checkbox.checked) {
-                $scope.listRecordChecked.push(resp.data.data);
-            } else {
-                var index = -1;
-                $scope.listRecordChecked.forEach((item, i) => {
-                    if (item.recordingId === id) {
-                        index = i;
-                    }
-                });
-                if (index !== -1) {
-                    $scope.listRecordChecked.splice(index, 1);
-                }
-            }
-        }).catch(error => {
-
-        })
-    }
-
     //description
     $('#description').on('change', function () {
         $('#result-description').text($(this).val());
-        $scope.descriptions=$(this).val();
+        $scope.descriptions = $(this).val();
     });
+
+    $scope.selectFile = function () {
+        $('#fileCoverImg').click();
+        $('#fileCoverImg').change(function (event) {
+            var file = event.target.files[0];
+            if (file) {
+                $scope.$apply(function () {
+                    $scope.coverImg = file;
+
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var imageDataUrl = e.target.result;
+                        $('#coverImg').attr('src', imageDataUrl);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+        });
+    };
 })

@@ -27,7 +27,6 @@ app.config(function($routeProvider,$cookiesProvider) {
   })
   .when("/statistical_managerment", {
     templateUrl : "statistical_managerment.html"
-   
   });
 });
 

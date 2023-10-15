@@ -15,6 +15,7 @@ app.config(function($routeProvider) {
     templateUrl : "Audience.html"
   })
   .when("/artist-profile", {
-    templateUrl : "Profile.html"
+    templateUrl : "Profile.html",
+    controller :"profileArtistCtrl"
   })
 });

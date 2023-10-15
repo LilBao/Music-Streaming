@@ -1,4 +1,3 @@
-var app = angular.module('myApp',[]);
 var host = "http://localhost:8080/api";
 app.controller('profileArtistCtrl',function($scope,$http){
     $scope.artist = {};
@@ -7,28 +6,25 @@ app.controller('profileArtistCtrl',function($scope,$http){
         headers: { 'Authorization': 'Bearer ' + getCookie('token') }
     }).then(resp => {
         $scope.artist=resp.data.data;
-        console.log($scope.artist)
     }).catch(error => {
         console.log("Not found artist profile")
     })
 
     $scope.updateArtist = function() {
-        var url = host + "/v1/artist";
+        var url = host + "/v1/artist-image";
         var formData = new FormData();
-        formData.append('artist', $scope.artist); 
         formData.append('avatar', $scope.avatarFile);
         formData.append('background', $scope.backgroundFile);
-        $http({
-            method: 'PUT',
-            url: url,
-            headers: { 
+        $http.put(url, formData, {
+            headers: {
                 'Content-Type': undefined,
                 'Authorization': 'Bearer ' + getCookie('token')
-            }, 
-            data: formData,
+            },
             transformRequest: angular.identity
         }).then(function(response) {
             alert("Update Successfully");
+            $scope.backgroundFile=null;
+            $scope.avatarFile=null;
         }).catch(function(error) {
             console.log(error);
             alert("Update Failure");
@@ -47,7 +43,6 @@ app.controller('profileArtistCtrl',function($scope,$http){
                     if (id === 'background') {
                         $scope.backgroundFile = file;
                     }
-
                     var reader = new FileReader();
                     reader.onload = function (e) {
                         var imageDataUrl = e.target.result;
@@ -56,6 +51,7 @@ app.controller('profileArtistCtrl',function($scope,$http){
                     reader.readAsDataURL(file);
                 });
             }
+            console.log(file)
         });
     };
 })

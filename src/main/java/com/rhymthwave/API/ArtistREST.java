@@ -97,6 +97,26 @@ public class ArtistREST {
 		return ResponseEntity.ok(new MessageResponse(true, "succeess", crud.update(artist)));
 	}
 	
+	@PostMapping(value="/api/v1/artist-image",consumes = { "multipart/form-data" })
+	public ResponseEntity<MessageResponse> updateImageArtist(HttpServletRequest req,
+			@PathParam("avatar") MultipartFile avatar, @PathParam("background") MultipartFile background) {
+		String owner =host.getEmailByRequest(req);
+		Artist artist =artistSer.findByEmail(owner);
+		if(avatar !=null) {
+			Map<String,Object> respAvatar = cloudinary.UploadResizeImage(avatar,"Avatar",artist.getArtistName(),512,512);
+			Image imgAvatar = imgSer.getEntity((String)respAvatar.get("asset_id"), (String)respAvatar.get("url"), (Integer) respAvatar.get("width"), (Integer)respAvatar.get("height"));
+			crudImg.create(imgAvatar);
+			artist.setImagesProfile(imgAvatar);
+		}
+		if(background !=null) {
+			Map<String,Object> respBg = cloudinary.UploadResizeImage(background,"Background",artist.getArtistName(),1500,500);
+			Image imgBackground = imgSer.getEntity((String)respBg.get("asset_id"), (String)respBg.get("url"),(Integer) respBg.get("width"),(Integer) respBg.get("height"));
+			crudImg.create(imgBackground);
+			artist.setBackgroundImage(imgBackground);
+		}
+		return ResponseEntity.ok(new MessageResponse(true, "succeess", crud.update(artist)));
+	}
+	
 	@GetMapping("/api/v1/profile")
 	public ResponseEntity<MessageResponse> findProfile(HttpServletRequest req){
 		String owner = host.getEmailByRequest(req);

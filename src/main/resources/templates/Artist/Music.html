@@ -112,7 +112,8 @@
                 <div class="d-flex">
                     <div id="album-release">
                         <div ng-repeat="item in listAlbumReleased">
-                            <a type="button"  ng-click="detail(item.albumId,'album')" data-bs-toggle="modal" data-bs-target="#detail">
+                            <a type="button" ng-click="detail(item.albumId,'album')" data-bs-toggle="modal"
+                                data-bs-target="#detail">
                                 <div class="card mx-4 my-2" style="width:250px">
                                     <img class="cover-release rounded-4 card-img-top" src="{{item.image.url}}" alt="">
                                     <div
@@ -130,7 +131,8 @@
                     </div>
                     <div id="song-release">
                         <div ng-repeat="item in listSongReleased">
-                            <a type="button" ng-click="detail(item.songId,'song')" data-bs-toggle="modal" data-bs-target="#detail">
+                            <a type="button" ng-click="detail(item.songId,'song')" data-bs-toggle="modal"
+                                data-bs-target="#detail">
                                 <div class="card mx-4 my-2" style="width:250px">
                                     <img class="cover-release rounded-4 card-img-top" src="{{item.image.url}}" alt="">
                                     <div
@@ -155,20 +157,67 @@
                                     <div class="row">
                                         <div class="col-4">
                                             <div class="card my-5 border rounded-4" style="min-height: 85vh;">
-                                                <div class="d-flex justify-content-center my-3 flex-column align-items-center">
-                                                    <img class="img-thumbnail"
+                                                <div class="d-flex justify-content-between">
+                                                    <div>
+                                                        <button hidden id="addRecord" class="btn" data-bs-toggle="collapse"
+                                                            data-bs-target="#add"><i class="bi bi-plus"></i></button>
+
+                                                    </div>
+                                                    <div>
+                                                        <button id="modified-release" class="btn"><i
+                                                                class="bi bi-pencil-fill"></i></button>
+                                                    </div>
+                                                </div>
+                                                <div id="add" class="collapse">
+                                                    <div class="dropdown w-100 d-flex justify-content-center">
+                                                        <button type="button" class="btn dropdown-toggle"
+                                                            data-bs-toggle="dropdown">
+                                                            Dropdown button
+                                                        </button>
+                                                        <ul class="dropdown-menu">
+                                                            <li ng-repeat="item in listRecord">
+                                                                <a ng-click="addRecordToSongOrAlbum(typeDetail,typeDetail==='album' ? album : song,item)" class="dropdown-item" href="#">
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div>
+                                                                            <img style="width: 50px; height: 50px; object-fit: cover;"
+                                                                                class="" src="{{item.song.image.url}}">
+                                                                        </div>
+                                                                        <div>
+                                                                            <p>{{item.recordingName}}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+
+                                                <div
+                                                    class="d-flex justify-content-center my-3 flex-column align-items-center">
+                                                    <img id="coverImage" class="img-thumbnail "
                                                         style="object-fit: cover; width: 300px; height: 200px;"
                                                         ng-src="{{typeDetail === 'album' ? album.image.url : song.image.url}}"
                                                         alt="">
+                                                    <input id="fileCoverImg" type="file" hidden>
                                                     <div>
-                                                        <h4>{{typeDetail === 'album' ? album.albumName : song.songName}}</h4>
-                                                        <h6>{{typeDetail === 'album' ? album.artist.artistName : 'fds'}}</h6>
+                                                        <input id="nameDetail" class="inputCss" type="text"
+                                                            value="{{typeDetail === 'album' ? album.albumName : song.songName}}"
+                                                            readonly>
+                                                        <h4>
+                                                        </h4>
+                                                        <h6>{{typeDetail === 'album' ? album.artist.artistName : 'fds'}}
+                                                        </h6>
                                                         <div class="d-flex">
                                                             <p>20 record</p>
                                                             <p>102222 listeners</p>
-                                                            <p>{{typeDetail === 'album' ? album.releaseDate : song.releaseDay | date:'dd/MM/yyyy, hh:mm:ss'}}</p>
                                                         </div>
-                                                        <p>{{typeDetail === 'album' ? album.description : song.description}}</p>
+                                                        <div>
+                                                            <input class="inputCss" type="text" id="releaseDetail"
+                                                                value="{{typeDetail === 'album' ? album.releaseDate :
+                                                            song.releaseDay | date:'dd/MM/yyyy, hh:mm:ss'}}" readonly>
+                                                        </div>
+                                                        <p>{{typeDetail === 'album' ? album.description :
+                                                            song.description}}</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -188,17 +237,21 @@
                                                                             ng-src="{{typeDetail === 'album' ? item.recording.song.image.url : item.song.image.url}}"
                                                                             alt="">
                                                                         <div>
-                                                                            <h6>{{typeDetail === 'album' ? item.recording.song.songName : item.recordingName}}</h6>
+                                                                            <h6>{{typeDetail === 'album' ?
+                                                                                item.recording.song.songName :
+                                                                                item.recordingName}}</h6>
                                                                             <span>123123 views</span>
                                                                         </div>
                                                                     </div>
                                                                     <div>
-                                                                        <button class="btn" ng-click="removeRecord(typeDetail === 'album' ? item.trackId : item.recordingId,typeDetail)"><i class="bi bi-x-lg"></i></button> 
+                                                                        <button class="btn"
+                                                                            ng-click="removeRecord(typeDetail === 'album' ? item.trackId : item.recordingId,typeDetail)"><i
+                                                                                class="bi bi-x-lg"></i></button>
                                                                     </div>
                                                                 </div>
                                                             </td>
                                                         </tr>
-                                                    </tbody> 
+                                                    </tbody>
                                                 </table>
                                             </div>
                                         </div>
@@ -317,8 +370,8 @@
                                                     <td>{{$index}}</td>
                                                     <td>{{item.recordingName}}</td>
                                                     <td>{{item.duration}}</td>
-                                                    <td><input type="checkbox" value="{{item.recordingId}}" onchange="checkListRecord(this)" name="pitch"
-                                                            id=""></td>
+                                                    <td><input type="checkbox" value="{{item.recordingId}}"
+                                                            onchange="checkListRecord(this)" name="pitch" id=""></td>
                                                 </tr>
 
                                             </tbody>
@@ -353,7 +406,8 @@
                                         promote it</h6>
                                     <div class="mt-5">
                                         <h5>Description <span>(Optional)</span></h5>
-                                        <textarea ng-model="descriptions" class="w-100 form-control" name="" id="description" cols="30" rows="10"
+                                        <textarea ng-model="descriptions" class="w-100 form-control" name=""
+                                            id="description" cols="30" rows="10"
                                             placeholder="500 characters remaining"></textarea>
                                     </div>
 
@@ -401,7 +455,8 @@
                                         </tbody>
                                     </table>
                                     <div>
-                                        <textarea readonly class="form-control" name="" id="result-description" cols="30" rows="10"></textarea>
+                                        <textarea readonly class="form-control" name="" id="result-description"
+                                            cols="30" rows="10"></textarea>
                                     </div>
                                 </div>
 

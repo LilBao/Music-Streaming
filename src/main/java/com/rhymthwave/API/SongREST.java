@@ -97,7 +97,7 @@ public class SongREST {
 		return ResponseEntity.ok(new MessageResponse(true, "success", dataSong));
 	}
 	
-	@PutMapping(value = "/api/v1/song/{id}", consumes = { "multipart/form-data" })
+	@PutMapping(value = "/api/v1/song-image/{id}", consumes = { "multipart/form-data" })
 	public ResponseEntity<MessageResponse> updateSongImage(@PathVariable Integer id, HttpServletRequest req,
 			@RequestParam("coverImg") MultipartFile coverImg) {
 		// owner
@@ -113,7 +113,7 @@ public class SongREST {
 			crudImage.create(cover);
 			song.setImage(cover);
 		}
-		Song dataSong = crudSong.create(song);
+		Song dataSong = crudSong.update(song);
 		return ResponseEntity.ok(new MessageResponse(true, "success", dataSong));
 	}
 

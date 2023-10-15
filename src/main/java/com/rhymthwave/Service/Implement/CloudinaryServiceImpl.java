@@ -28,6 +28,7 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 			Map<String, Object> params = new HashMap<>();
 			params.put("public_id", path + "/"+ file.getOriginalFilename());
 			params.put("resource_type", "auto");
+			params.put("overwrite", true);
 			Map<String, Object> result = cloudinary.uploader().upload(file.getBytes(), params);
 			return result;
 		} catch (Exception e) {
@@ -47,6 +48,7 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 			params.put("public_id", path + "/"+ file.getOriginalFilename());
 			params.put("width", Width);
 			params.put("height", Height);
+			params.put("overwrite", true);
 			Map<String, Object> result = cloudinary.uploader().upload(file.getBytes(), params);
 			return result;
 		} catch (Exception e) {

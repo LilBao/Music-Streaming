@@ -97,7 +97,7 @@ public class AlbumREST {
 			crudImage.create(cover);
 			album.setImage(cover);
 		}
-		return ResponseEntity.ok(new MessageResponse(true, "success", crudAlbum.create(album)));
+		return ResponseEntity.ok(new MessageResponse(true, "success", crudAlbum.update(album)));
 	}
 
 	@GetMapping("/api/v1/album/up-coming")
