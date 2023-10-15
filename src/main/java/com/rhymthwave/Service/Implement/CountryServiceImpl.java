@@ -1,5 +1,4 @@
 package com.rhymthwave.Service.Implement;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,19 +13,17 @@ import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.ServiceAdmin.ICountryService;
 import com.rhymthwave.Utilities.SortBy;
 import com.rhymthwave.entity.Country;
-import com.rhymthwave.entity.Genre;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@RequiredArgsConstructor
 public class CountryServiceImpl implements CRUD<Country, String>, ICountryService{
 
 	@Autowired
-	CountryDAO dao;
-	
-	private final SortBy<String, String> sortService;
+	private  CountryDAO dao;
+	@Autowired
+	private  SortBy<String, String> sortService;
 	
 	@Override
 	@Transactional

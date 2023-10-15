@@ -1,5 +1,7 @@
 package com.rhymthwave.API_Admin;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rhymthwave.DTO.MessageResponse;
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.ServiceAdmin.ICultureService;
+import com.rhymthwave.Utilities.ExcelExportService;
 import com.rhymthwave.entity.Culture;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -32,11 +36,13 @@ public class API_Culture {
 
 	private final CRUD<Culture, Integer> crud;
 	
+    private final ExcelExportService excelExportService;
+	
 	@GetMapping
 	public ResponseEntity<?> getAllSongType(
 			@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
 			@RequestParam(value = "sortBy", required = false, defaultValue = "asc") String sortBy,
-			@RequestParam(value = "sortfield", required = false, defaultValue = "moodid") String sortField) {
+			@RequestParam(value = "sortfield", required = false, defaultValue = "cultureId") String sortField) {
 
 		Page<Culture> pages = iCultureService.getCulturePage(page, sortBy, sortField);
 		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", pages));
@@ -91,4 +97,16 @@ public class API_Culture {
 		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", null));
 	}
 	
+	@GetMapping("/export-excel")
+    public ResponseEntity<?> exportToExcel(HttpServletResponse response) {
+        List<Culture> culture =  crud.findAll();
+        try {
+        	
+            excelExportService.exportToExcel(culture,response);
+            return  ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Export excel successfully",""));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(false, "Export excel Error",""));
+        }
+    }
 }
