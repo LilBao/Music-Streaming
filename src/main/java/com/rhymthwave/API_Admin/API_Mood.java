@@ -1,5 +1,7 @@
 package com.rhymthwave.API_Admin;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rhymthwave.DTO.MessageResponse;
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.ServiceAdmin.IMoodService;
+import com.rhymthwave.Utilities.ExcelExportService;
 import com.rhymthwave.entity.Mood;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -31,6 +35,9 @@ public class API_Mood {
 	private final IMoodService iMoodService;
 
 	private final CRUD<Mood, Integer> crud;
+	
+
+    private final ExcelExportService excelExportService;
 	
 	@GetMapping
 	public ResponseEntity<?> getAllMood(
@@ -91,5 +98,18 @@ public class API_Mood {
 		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", mood));
 	}
 	
+	
+	@GetMapping("/export-excel")
+    public ResponseEntity<?> exportToExcel(HttpServletResponse response) {
+        List<Mood> mood =  crud.findAll();
+        try {
+        	
+            excelExportService.exportToExcel(mood,response);
+            return  ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Export excel successfully",""));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(false, "Export excel Error",""));
+        }
+    }
 
 }

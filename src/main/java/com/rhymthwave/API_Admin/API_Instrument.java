@@ -1,5 +1,7 @@
 package com.rhymthwave.API_Admin;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +20,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.rhymthwave.DTO.MessageResponse;
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.ServiceAdmin.IInstrumentService;
+import com.rhymthwave.Utilities.ExcelExportService;
 import com.rhymthwave.Utilities.ImportEx;
 import com.rhymthwave.entity.Instrument;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -33,6 +37,8 @@ public class API_Instrument {
 	private final IInstrumentService iinstrumentService;
 
 	private final CRUD<Instrument, Integer> crud;
+	
+    private final ExcelExportService excelExportService;
 	
 	private final ImportEx importEx;
 	
@@ -93,6 +99,21 @@ public class API_Instrument {
 
 		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", mood));
 	}
+	
+	@GetMapping("/export-excel")
+    public ResponseEntity<?> exportToExcel(HttpServletResponse response) {
+        List<Instrument> Instrument =  crud.findAll();
+        try {
+        	
+            excelExportService.exportToExcel(Instrument,response);
+            return  ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Export excel successfully",""));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(false, "Export excel Error",""));
+        }
+    }
+	
+	
 	
 	
 	@GetMapping("/import")

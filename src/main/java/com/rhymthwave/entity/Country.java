@@ -23,5 +23,5 @@ public class Country implements Serializable {
 	private String id;
 
 	@Column(name = "NAMECOUNTRY")
-	private String namegenre;
+	private String nameCountry;
 }
