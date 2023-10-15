@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -51,7 +53,7 @@ public class SongREST {
 	private final GetHostByRequest host;
 
 	private final CRUD<Account, String> crudAccount;
-	
+
 	private final CRUD<Writter, Integer> crudWritter;
 
 	@GetMapping("/api/v1/song")
@@ -67,24 +69,51 @@ public class SongREST {
 	@PostMapping(value = "/api/v1/song", consumes = { "multipart/form-data" })
 	public ResponseEntity<MessageResponse> createSong(@ModelAttribute Song song, HttpServletRequest req,
 			@RequestParam("coverImg") MultipartFile coverImg) {
-		//owner
-		String owner =host.getEmailByRequest(req);
+		// owner
+		String owner = host.getEmailByRequest(req);
 		Account account = crudAccount.findOne(owner);
-		//create song
-		if (!coverImg.isEmpty()) {
-			Map<String, Object> respImg = cloudinary.Upload(coverImg, "CoverImage", account.getArtist().getArtistName());
+		// create song
+		if (coverImg != null) {
+			Map<String, Object> respImg = cloudinary.Upload(coverImg, "CoverImage",
+					account.getArtist().getArtistName());
 			Image cover = imgSer.getEntity((String) respImg.get("asset_id"), (String) respImg.get("url"),
 					(Integer) respImg.get("width"), (Integer) respImg.get("height"));
 			crudImage.create(cover);
 			song.setImage(cover);
 		}
 		Song dataSong = crudSong.create(song);
-		//create writter
+		// create writter
 		Writter writter = new Writter();
 		writter.setSong(dataSong);
 		writter.setArtist(account.getArtist());
 		crudWritter.create(writter);
-		
+
+		return ResponseEntity.ok(new MessageResponse(true, "success", dataSong));
+	}
+
+	@PutMapping(value = "/api/v1/song")
+	public ResponseEntity<MessageResponse> updateSong(@RequestBody Song song) {
+		Song dataSong = crudSong.update(song);
+		return ResponseEntity.ok(new MessageResponse(true, "success", dataSong));
+	}
+	
+	@PutMapping(value = "/api/v1/song/{id}", consumes = { "multipart/form-data" })
+	public ResponseEntity<MessageResponse> updateSongImage(@PathVariable Integer id, HttpServletRequest req,
+			@RequestParam("coverImg") MultipartFile coverImg) {
+		// owner
+		String owner = host.getEmailByRequest(req);
+		Account account = crudAccount.findOne(owner);
+		Song song = crudSong.findOne(id);
+		// create song
+		if (coverImg != null) {
+			Map<String, Object> respImg = cloudinary.Upload(coverImg, "CoverImage",
+					account.getArtist().getArtistName());
+			Image cover = imgSer.getEntity((String) respImg.get("asset_id"), (String) respImg.get("url"),
+					(Integer) respImg.get("width"), (Integer) respImg.get("height"));
+			crudImage.create(cover);
+			song.setImage(cover);
+		}
+		Song dataSong = crudSong.create(song);
 		return ResponseEntity.ok(new MessageResponse(true, "success", dataSong));
 	}
 
@@ -93,11 +122,12 @@ public class SongREST {
 		String owner = host.getEmailByRequest(req);
 		return ResponseEntity.ok(new MessageResponse(true, "success", songSer.findSongNotRecord(owner)));
 	}
-	
+
 	@GetMapping("/api/v1/song-artist-released")
-	public ResponseEntity<MessageResponse> albumReleasedByArtist(HttpServletRequest req){
+	public ResponseEntity<MessageResponse> albumReleasedByArtist(HttpServletRequest req) {
 		String owner = host.getEmailByRequest(req);
 		Account account = crudAccount.findOne(owner);
-		return ResponseEntity.ok(new MessageResponse(true,"success",songSer.findSongReleasedByArtist(account.getArtist().getArtistId())));
+		return ResponseEntity.ok(new MessageResponse(true, "success",
+				songSer.findSongReleasedByArtist(account.getArtist().getArtistId())));
 	}
 }

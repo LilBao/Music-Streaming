@@ -8,7 +8,8 @@ app.config(function($routeProvider) {
     templateUrl : "Home.html"
   })
   .when("/artist-music", {
-    templateUrl : "Music.html"
+    templateUrl : "Music.html",
+    //controller: "musicCtrl"
   })
   .when("/artist-audience", {
     templateUrl : "Audience.html"
@@ -16,5 +17,4 @@ app.config(function($routeProvider) {
   .when("/artist-profile", {
     templateUrl : "Profile.html"
   })
-
 });

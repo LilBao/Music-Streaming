@@ -19,7 +19,7 @@ app.controller('profileArtistCtrl',function($scope,$http){
         formData.append('avatar', $scope.avatarFile);
         formData.append('background', $scope.backgroundFile);
         $http({
-            method: 'POST',
+            method: 'PUT',
             url: url,
             headers: { 
                 'Content-Type': undefined,

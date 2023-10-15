@@ -3,7 +3,7 @@ $(document).ready(function () {
         e.preventDefault()
         $(this).tab('show')
     })
-}) 
+ 
     const ctx = $('#chartListener');
     const age = $('#age');
     const gender = $('#gender');
@@ -186,3 +186,4 @@ $(document).ready(function () {
         // Kết nối thanh thu phóng với biểu đồ
         zoom.target(map);
     });
+})

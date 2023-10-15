@@ -7,24 +7,29 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.rhymthwave.DAO.GenreDAO;
+import com.rhymthwave.DAO.MoodDAO;
 import com.rhymthwave.entity.Genre;
+import com.rhymthwave.entity.Mood;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class ImportEx {
 	
 	
-	@Autowired
-	GenreDAO dao;
+	private final GenreDAO dao;
 	
+	private final MoodDAO moodDao;
 	
 	@Autowired
 	Excel excel;
 	
 	public void save (MultipartFile multipartFile) {
 		try {
-			List<Genre> instruments = excel.convertExceltoInstrument(multipartFile.getInputStream());
+			List<Mood> instruments = excel.convertExceltoInstrument(multipartFile.getInputStream());
 				System.out.println(instruments.isEmpty());
-				dao.saveAll(instruments);
+				moodDao.saveAll(instruments);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

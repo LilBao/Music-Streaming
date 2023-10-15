@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -73,13 +75,13 @@ public class ArtistREST {
 			@PathParam("avatar") MultipartFile avatar, @PathParam("background") MultipartFile background) {
 		String owner =host.getEmailByRequest(req);
 		
-		if(!avatar.isEmpty()) {
+		if(avatar !=null) {
 			Map<String,Object> respAvatar = cloudinary.UploadResizeImage(avatar,"Avatar",artist.getArtistName(),512,512);
 			Image imgAvatar = imgSer.getEntity((String)respAvatar.get("asset_id"), (String)respAvatar.get("url"), (Integer) respAvatar.get("width"), (Integer)respAvatar.get("height"));
 			crudImg.create(imgAvatar);
 			artist.setImagesProfile(imgAvatar);
 		}
-		if(!background.isEmpty()) {
+		if(background !=null) {
 			Map<String,Object> respBg = cloudinary.UploadResizeImage(background,"Background",artist.getArtistName(),1500,500);
 			Image imgBackground = imgSer.getEntity((String)respBg.get("asset_id"), (String)respBg.get("url"),(Integer) respBg.get("width"),(Integer) respBg.get("height"));
 			crudImg.create(imgBackground);
@@ -90,21 +92,8 @@ public class ArtistREST {
 		return ResponseEntity.ok(new MessageResponse(true, "succeess", crud.create(artist)));
 	}
 	
-	@PutMapping(value="/api/v1/artist",consumes = { "multipart/form-data" })
-	public ResponseEntity<MessageResponse> updateProfile(@ModelAttribute Artist artist,HttpServletRequest req,
-						@PathParam("avatar") MultipartFile avatar, @PathParam("background") MultipartFile background){
-		if(!avatar.isEmpty()) {
-			Map<String,Object> respAvatar = cloudinary.UploadResizeImage(avatar,"Avatar",artist.getArtistName(),512,512);
-			Image imgAvatar = imgSer.getEntity((String)respAvatar.get("asset_id"), (String)respAvatar.get("url"), (Integer) respAvatar.get("width"), (Integer)respAvatar.get("height"));
-			crudImg.create(imgAvatar);
-			artist.setImagesProfile(imgAvatar);
-		}
-		if(!background.isEmpty()) {
-			Map<String,Object> respBg = cloudinary.UploadResizeImage(background,"Background",artist.getArtistName(),1500,500);
-			Image imgBackground = imgSer.getEntity((String)respBg.get("asset_id"), (String)respBg.get("url"),(Integer) respBg.get("width"),(Integer) respBg.get("height"));
-			crudImg.create(imgBackground);
-			artist.setBackgroundImage(imgBackground);
-		}
+	@PutMapping(value="/api/v1/artist")
+	public ResponseEntity<MessageResponse> updateProfile(@RequestBody Artist artist){
 		return ResponseEntity.ok(new MessageResponse(true, "succeess", crud.update(artist)));
 	}
 	

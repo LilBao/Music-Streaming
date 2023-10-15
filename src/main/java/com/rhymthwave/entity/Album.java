@@ -41,7 +41,7 @@ public class Album implements Serializable {
 	private Date releaseDate;
 	
 	@Column(name = "DESCRIPTIONS")
-	private String descriptions;
+	private String description;
 
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@OneToOne

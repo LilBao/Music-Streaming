@@ -57,28 +57,6 @@ function fixStepIndicator(n) {
     )
    
 }
+//change description
 
-//Tag Genre
-$('#genre').on('change', function () {
-    var selectedOption = $(this).val();
-    if (selectedOption) {
-        var tag = $('<div class="checkbox"> <input type="checkbox" name="genre" id="" />' +
-            '<div class="box bg-black text-white"><p>' + selectedOption + '</p></div>' +
-            '</div>');
-        tag.find('input[type="checkbox"]').val(selectedOption);
-        $('#list-genres').append(tag);
-        $(this).find('option[value="' + selectedOption + '"]').remove();
-    }
-    $('#genre').val("");
-});
 
-$('#list-genres').on('click', 'input[type="checkbox"]', function () {
-    var selectedGenre = $(this).val();
-    if (selectedGenre) {
-        $('#genre').append($('<option>', {
-            value: selectedGenre,
-            text: selectedGenre
-        }));
-        $(this).closest('.checkbox').remove();
-    }
-});
