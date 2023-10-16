@@ -12,7 +12,6 @@ app.controller('confirmCtrl', function ($scope, $http) {
     })
 
     $scope.createArtist = function() {
-        
         var url = host + "/v1/artist";
         var formData = new FormData();
         formData.append('artistName', $scope.artist.artistName); 

@@ -50,6 +50,9 @@ public class Podcast implements Serializable {
 
 	@Column(name = "VERIFY")
 	private boolean verify;
+	
+	@Column(name = "RATE")
+	private Integer rate;
 
 	@OneToOne
 	@JoinColumn(name = "IMGAGEID")

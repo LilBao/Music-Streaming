@@ -1,0 +1,67 @@
+
+.profile {
+    position: relative;
+}
+
+.bg-profile {
+    height: 400px;
+    object-fit: cover;
+}
+
+.name-artist {
+    position: absolute;
+    bottom: 0%;
+    left: 0%;
+    color: white;
+}
+
+.total-listener {
+    position: absolute;
+    bottom: 0%;
+    right: 2%;
+}
+
+.change-bg {
+    position: absolute;
+    top: 10%;
+    right: 5%;
+}
+
+.nav {
+    border: 0px;
+}
+
+.nav-link {
+    border: 0px !important;
+    color: black;
+}
+
+.nav-link:hover {
+    color: black;
+}
+
+.nav-item:hover {
+    border-radius: 10px;
+}
+
+.nav-link.active {
+    border-bottom: 3px solid green !important;
+}
+.avatar{
+    width: 150px;
+    height: 150px;
+    transition: opacity 0.3s;
+}
+.avatar:hover{
+    opacity: 0.7!important;
+}
+
+.select-image{
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
+}
+#bio:focus{
+    border: 0px!important;
+    outline: none!important;
+}

@@ -34,10 +34,10 @@ public class Follow implements Serializable {
 
 
 	@ManyToOne
-	@JoinColumn(name = "ACOUNT_A")
+	@JoinColumn(name = "ACCOUNT_A")
 	private Author authorsAccountA;
 
 	@ManyToOne
-	@JoinColumn(name = "ACOUNT_B")
+	@JoinColumn(name = "ACCOUNT_B")
 	private Author authorsAccountB;
 }

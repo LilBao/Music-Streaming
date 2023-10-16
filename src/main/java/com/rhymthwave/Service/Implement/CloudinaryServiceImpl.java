@@ -1,24 +1,28 @@
 package com.rhymthwave.Service.Implement;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cloudinary.Cloudinary;
+import com.cloudinary.Transformation;
 import com.cloudinary.utils.ObjectUtils;
 import com.rhymthwave.Service.CloudinaryService;
+
 
 @Service
 public class CloudinaryServiceImpl implements CloudinaryService {
 	@Autowired
 	Cloudinary cloudinary;
-	
+
 	@Override
 	public Map<String, Object> Upload(MultipartFile file, String parentFolder, String childFolder) {
 		try {
@@ -26,8 +30,9 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 			cloudinary.api().createFolder(parentFolder + "/" + childFolder, ObjectUtils.emptyMap());
 			String path = parentFolder + "/" + childFolder;
 			Map<String, Object> params = new HashMap<>();
-			params.put("public_id", path + "/"+ file.getOriginalFilename());
+			params.put("public_id", path + "/" + file.getOriginalFilename());
 			params.put("resource_type", "auto");
+			params.put("overwrite", true);
 			Map<String, Object> result = cloudinary.uploader().upload(file.getBytes(), params);
 			return result;
 		} catch (Exception e) {
@@ -43,10 +48,11 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 			cloudinary.api().createFolder(parentFolder, ObjectUtils.emptyMap());
 			cloudinary.api().createFolder(parentFolder + "/" + childFolder, ObjectUtils.emptyMap());
 			String path = parentFolder + "/" + childFolder;
+			Transformation transformation = new Transformation().width(Width).height(Height).crop("fit");
 			Map<String, Object> params = new HashMap<>();
-			params.put("public_id", path + "/"+ file.getOriginalFilename());
-			params.put("width", Width);
-			params.put("height", Height);
+			params.put("public_id", path + "/" + file.getOriginalFilename());
+			params.put("transformation", transformation);
+			params.put("overwrite", true);
 			Map<String, Object> result = cloudinary.uploader().upload(file.getBytes(), params);
 			return result;
 		} catch (Exception e) {
@@ -54,27 +60,34 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 			return null;
 		}
 	}
-	
+
 	@Override
-	public List<String> uploadMultipleFiles(MultipartFile[] files, String parentFolder, String childFolder) {
+	public Map<?, ?> uploadMultipleFiles(MultipartFile[] files, String parentFolder, String childFolder) {
 		try {
-			cloudinary.api().createFolder(parentFolder, ObjectUtils.emptyMap());
-			cloudinary.api().createFolder(parentFolder + "/" + childFolder, ObjectUtils.emptyMap());
-			String path = parentFolder + "/" + childFolder;
-			List<String> uploadedUrls = new ArrayList<>();
-	        
-			for (MultipartFile file : files) {
-	        	Map<String, Object> params = new HashMap<>();
-				params.put("public_id", path + "/"+ file.getOriginalFilename());
-				
-	            Map<?, ?> result = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
-	            uploadedUrls.add((String) result.get("secure_url"));
+	        cloudinary.api().createFolder(parentFolder, ObjectUtils.emptyMap());
+	        cloudinary.api().createFolder(parentFolder + "/" + childFolder, ObjectUtils.emptyMap());
+
+	        String path = parentFolder + "/" + childFolder;
+	        String[] uploadedUrls = new String[files.length];
+	        String[] uploadedPublicid = new String[files.length];
+
+	        for (int i = 0; i < files.length; i++) {
+	            Map<String, Object> params = new HashMap<>();
+	            params.put("public_id", path + "/" + files[i].getOriginalFilename());
+	            Map<?, ?> result = cloudinary.uploader().upload(files[i].getBytes(), ObjectUtils.emptyMap());
+	            uploadedUrls[i] = (String) result.get("url");
+	            uploadedPublicid[i] = (String) result.get("public_id");
 	        }
-			return uploadedUrls;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+
+	        Map<String, Object> response = new HashMap<>();
+	        response.put("uploadedUrls", uploadedUrls);
+	        response.put("uploadedPublicid", uploadedPublicid);
+
+	        return response;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return null;
+	    }
 	}
 
 	@Override
@@ -96,8 +109,5 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 		String lrcContent = restTemplate.getForObject(lrcUrl, String.class);
 		return lrcContent;
 	}
-
-	
-	
 
 }
