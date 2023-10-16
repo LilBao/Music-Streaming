@@ -48,7 +48,7 @@ public class Artist implements Serializable {
 	@Column(name = "BIO")
 	private String bio;
 
-	@Column(name = "IMAGEGALERRY")
+	@Column(name = "IMAGEGALLERY")
 	private String[] imagesGallery;
 	
 	@Column(name = "PUBLICIDIMAGEGALLERY")
