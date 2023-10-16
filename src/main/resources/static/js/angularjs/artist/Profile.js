@@ -12,25 +12,25 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
     })
 
     //update artist
-    $scope.updateArtist = function(data){
+    $scope.updateArtist = function (data) {
         let url = host + "/v1/artist";
-        $http.put(url,data).then(resp => {
-            console.log("success"+resp.data.data.bio)
+        $http.put(url, data).then(resp => {
+            console.log("success" + resp.data.data.bio)
         }).catch(error => {
             console.log("error")
         })
     }
 
     //Remove image - xóa ảnh đại diện hoặc hình nền
-    $scope.removeImage = function(type){
+    $scope.removeImage = function (type) {
         let url = host + "/v1/artist";
-        if(type = "avatar"){
+        if (type = "avatar") {
             $scope.artist.imagesProfile = null;
-        }else{
+        } else {
             $scope.artist.backgroundImage = null;
         }
         var data = angular.copy($scope.artist);
-        $http.put(url,data).then(resp => {
+        $http.put(url, data).then(resp => {
 
         }).catch(error => {
 
@@ -84,22 +84,22 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
     })
 
     //Type - phân loại vấn đề muốn xử lý về ảnh
-    $scope.processImage = function(type){
+    $scope.processImage = function (type) {
         $scope.typeModifiedPicture = type;
     }
 
     //Event remove image avatar - Xóa ảnh đại diện hiện tại
-    $('#remove-current-image').click(function(){
+    $('#remove-current-image').click(function () {
         $scope.removeImage('avatar');
     })
 
     //Event remove background - xóa hình nền hiện tại
-    $('#remove-current-background').click(function(){
+    $('#remove-current-background').click(function () {
         $scope.removeImage('background');
     })
 
     //Event update profile picture - update thay đổi hình đại diện của artist
-    $('#save-image').click(function(){
+    $('#save-image').click(function () {
         $scope.updateArtistImage();
     })
 
@@ -121,15 +121,34 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
         }
     })
 
-    $('#upload-galllery').click(function(){
-        $scope.selectMultipleFile('galllery')
+    //upload Image gallery
+    $scope.uploadGallery = function () {
+        let url = host + "/v1/artist-image";
+        var formData = new FormData();
+        for (var i = 0; i < $scope.listGallery.length; i++) {
+            formData.append('gallery', $scope.listGallery[i]);
+        }
+        $http.put(url,formData,{
+            headers: { 
+                'Content-Type': undefined,
+                'Authorization': 'Bearer ' + getCookie('token')
+            },  
+            transformRequest: angular.identity
+        }).then(resp=>{
+            console.log("success");
+        }).catch(error => {
+            console.log("error");
+        })
+    }
+
+    $('#upload-gallery').click(function () {
+        $scope.selectMultipleFile('gallery')
     })
     //Event Select file
     $scope.selectFile = function (id) {
         $('#' + id).click();
-        
         $('#' + id).change(function (event) {
-            var file =null;
+            var file = null;
             file = event.target.files[0];
             if (file) {
                 $scope.$apply(function () {
@@ -147,22 +166,19 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
                     reader.readAsDataURL(file);
                 });
             }
-            console.log(file)
         });
     };
 
-    
+
     $scope.selectMultipleFile = function (id) {
         $('#' + id).click();
         $('#' + id).change(function (event) {
-            $scope.listGallery = new Array();
-            for(var i = 0 ; i < event.target.files.length; i++){
+            $scope.listGallery = [];
+            for (var i = 0; i < event.target.files.length; i++) {
                 if (event.target.files[i]) {
                     $scope.listGallery.push(event.target.files[i]);
                 }
             }
-            console.log($scope.listGallery)
-        });
-        
+        })
     };
 })

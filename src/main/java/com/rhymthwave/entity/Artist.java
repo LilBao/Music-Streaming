@@ -49,7 +49,10 @@ public class Artist implements Serializable {
 	private String bio;
 
 	@Column(name = "IMAGEGALERRY")
-	private List<String> imagesGallery;
+	private String[] imagesGallery;
+	
+	@Column(name = "PUBLICIDIMAGEGALLERY")
+	private String[] publicIdImageGallery;
 
 	@Column(name = "SOCIALMEDIALINKS")
 	private String socialMediaLinks;

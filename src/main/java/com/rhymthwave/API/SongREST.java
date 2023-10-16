@@ -78,6 +78,7 @@ public class SongREST {
 					account.getArtist().getArtistName());
 			Image cover = imgSer.getEntity((String) respImg.get("asset_id"), (String) respImg.get("url"),
 					(Integer) respImg.get("width"), (Integer) respImg.get("height"));
+			cover.setPublicId((String) respImg.get("public_id"));
 			crudImage.create(cover);
 			song.setImage(cover);
 		}
@@ -110,6 +111,7 @@ public class SongREST {
 					account.getArtist().getArtistName());
 			Image cover = imgSer.getEntity((String) respImg.get("asset_id"), (String) respImg.get("url"),
 					(Integer) respImg.get("width"), (Integer) respImg.get("height"));
+			cover.setPublicId((String) respImg.get("public_id"));
 			crudImage.create(cover);
 			song.setImage(cover);
 		}

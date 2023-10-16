@@ -6,7 +6,7 @@
 
 </head>
 
-<body ng-controller="profileArtistCtrl">
+<body  ng-controller="profileArtistCtrl">
     <div class="profile">
         <img class="w-100 bg-profile background" data-bs-toggle="modal" data-bs-target="#detailImg"
             ng-click="processImage('see-background')"
@@ -19,17 +19,17 @@
         <div class="m-0 name-artist d-flex align-items-center">
             <div class="dropdown">
                 <button type="button" class="btn border-0" data-bs-toggle="dropdown">
-                    <img id="modified-avatar" class="border rounded-circle avatar"
+                    <img id="modified-avatar" class="img-thumbnail border rounded-circle avatar"
                         ng-src="{{artist.imagesProfile ==null ? 'https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png':artist.imagesProfile.url}}"
                         alt="">
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" class="btn" data-bs-toggle="modal" data-bs-target="#detailImg"
-                            ng-click="processImage('see-avatar')">See profile picture</a></li>
-                    <li><a class="dropdown-item" class="btn" data-bs-toggle="modal" data-bs-target="#detailImg"
-                            ng-click="processImage('select-avatar')">Select profile picture</a>
+                    <li><a class="py-2 dropdown-item" class="btn" data-bs-toggle="modal" data-bs-target="#detailImg"
+                            ng-click="processImage('see-avatar')"><i class="me-3 bi bi-person-square"></i>See profile picture</a></li>
+                    <li><a class="py-2 dropdown-item" class="btn" data-bs-toggle="modal" data-bs-target="#detailImg"
+                            ng-click="processImage('select-avatar')"><i class="me-3 bi bi-images"></i>Select profile picture</a>
                     </li>
-                    <li><a id="remove-current-image" class="dropdown-item">Revove current photo</a></li>
+                    <li><a id="remove-current-image" class="py-2 dropdown-item"><i class="me-3 bi bi-person-x-fill"></i>Revove current photo</a></li>
                 </ul>
             </div>
             <div class="mx-3">
@@ -43,7 +43,7 @@
         </div>
 
     </div>
-    <section class="container-fluid">
+    <section class="container-fluid mt-5">
         <div>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -159,8 +159,11 @@
                                 <h3>Image gallery</h3>
                                 <div>
                                     <img src="" alt="">
-                                    <button id="upload-galllery" class="btn border px-5"><h1 class="display-1">+</h1></button>
-                                    <input id="galllery" hidden type="file" multiple>
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <button id="upload-gallery" class="btn border px-5"><h1 class="display-1">+</h1></button>
+                                    <input id="gallery" hidden type="file" multiple>
+                                    <button ng-if=""  ng-click="uploadGallery()">Save</button>
                                 </div>
                             </div>
                             <div>

@@ -1,5 +1,4 @@
 
-
 .profile {
     position: relative;
 }
@@ -11,15 +10,15 @@
 
 .name-artist {
     position: absolute;
-    bottom: 10%;
-    left: 5%;
+    bottom: 0%;
+    left: 0%;
     color: white;
 }
 
 .total-listener {
     position: absolute;
-    bottom: 10%;
-    right: 5%;
+    bottom: 0%;
+    right: 2%;
 }
 
 .change-bg {
