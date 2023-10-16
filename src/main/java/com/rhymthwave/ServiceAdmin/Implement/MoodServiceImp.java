@@ -84,8 +84,8 @@ public class MoodServiceImp implements IMoodService, CRUD<Mood, Integer> {
 
 	@Override
 	public List<Mood> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return moodDAO.findAll();
 	}
 
 }

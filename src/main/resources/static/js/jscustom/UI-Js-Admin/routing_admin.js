@@ -18,16 +18,32 @@ app.config(function($routeProvider,$cookiesProvider) {
     templateUrl : "ArtistProfile.html"
   })
   .when("/Mood", {
-    templateUrl : "Mood.html",
+    templateUrl : "Categories/Mood.html",
     controller: "moodController"
   })
   .when("/instrument", {
-    templateUrl : "Instrument.html",
+    templateUrl : "Categories/Instrument.html",
     controller: "instrumentController"
+  })
+  .when("/country", {
+    templateUrl : "Categories/Country.html",
+    controller: "countryController"
+  })
+  .when("/song-style", {
+    templateUrl : "Categories/SongStyle.html",
+    controller: "songStyleController"
+  })
+  .when("/culture", {
+    templateUrl : "Categories/culture.html",
+    controller: "cultureController"
+  })
+  .when("/genre", {
+    templateUrl : "Categories/Genre.html",
+    controller: "genreController"
   })
   .when("/statistical_managerment", {
     templateUrl : "statistical_managerment.html"
   });
 });
 
-app.constant("apiURL", "http://localhost:8080/api/v1/category"); 
+
