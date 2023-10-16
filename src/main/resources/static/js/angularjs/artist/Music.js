@@ -387,12 +387,12 @@ app.controller('musicCtrl', function ($scope, $http) {
 
     //add song or album
     $scope.addRecordToSongOrAlbum = function (type,item,record) {
-        if (type === 'album') {
+        if (type === 'song') {
             $scope.updateSongPitch(item, record);
-            findListRecordSong();
+            $scope.findListRecordSong();
         } else {
             $scope.createTrack(item,record);
-            findListRecordSong();
+            $scope.findListRecordSong();
         }
     }
 

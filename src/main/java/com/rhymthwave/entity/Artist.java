@@ -48,9 +48,8 @@ public class Artist implements Serializable {
 	@Column(name = "BIO")
 	private String bio;
 
-	@OneToOne
-	@JoinColumn(name = "IMAGEGALERRY")
-	private Image imagesGallery;
+	@Column(name = "IMAGEGALERRY")
+	private List<String> imagesGallery;
 
 	@Column(name = "SOCIALMEDIALINKS")
 	private String socialMediaLinks;

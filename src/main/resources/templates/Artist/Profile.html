@@ -1,20 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
-    
+
 </head>
+
 <body ng-controller="profileArtistCtrl">
     <div class="profile">
-        <img class="w-100 bg-profile background" ng-src="{{artist.backgroundImage ==null ? 'https://res.cloudinary.com/div9ldpou/image/upload/v1696341682/Background/System/ilikeU_bgvlyy.png':artist.backgroundImage.url}}" alt="">
+        <img class="w-100 bg-profile background" data-bs-toggle="modal" data-bs-target="#detailImg"
+            ng-click="processImage('see-background')"
+            ng-src="{{artist.backgroundImage ==null ? 'https://res.cloudinary.com/div9ldpou/image/upload/v1696341682/Background/System/ilikeU_bgvlyy.png':artist.backgroundImage.url}}"
+            alt="">
         <div class="change-bg">
-            <button ng-click="selectFile('background')" class="btn "><i class="bi bi-pencil-fill text-white"></i></button>
+            <button class="btn" id="modified-background"><i class="bi bi-pencil-fill text-white"></i></button>
             <input id="background" type="file" hidden>
         </div>
         <div class="m-0 name-artist d-flex align-items-center">
-            <div>
-                <img ng-click="selectFile('avatar')" class="border rounded-circle avatar" ng-src="{{artist.imagesProfile ==null ? 'https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png':artist.imagesProfile.url}}" alt="">
-                <input id="avatar" type="file" hidden>
+            <div class="dropdown">
+                <button type="button" class="btn border-0" data-bs-toggle="dropdown">
+                    <img id="modified-avatar" class="border rounded-circle avatar"
+                        ng-src="{{artist.imagesProfile ==null ? 'https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png':artist.imagesProfile.url}}"
+                        alt="">
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" class="btn" data-bs-toggle="modal" data-bs-target="#detailImg"
+                            ng-click="processImage('see-avatar')">See profile picture</a></li>
+                    <li><a class="dropdown-item" class="btn" data-bs-toggle="modal" data-bs-target="#detailImg"
+                            ng-click="processImage('select-avatar')">Select profile picture</a>
+                    </li>
+                    <li><a id="remove-current-image" class="dropdown-item">Revove current photo</a></li>
+                </ul>
             </div>
             <div class="mx-3">
                 <h6 class="m-0 ">ARTIST</h6>
@@ -24,30 +40,23 @@
         <div class="total-listener text-white">
             <h6>Listeners</h6>
             <p>264489498</p>
-        </div> 
+        </div>
+
     </div>
     <section class="container-fluid">
         <div>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button
-                      class="tab-button-p nav-link active"
-                      onclick="openTabProfile(event, 'tab1-p')"
-                      role="tab"
-                      >Overview</button
-                    >
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <button
-                      class="tab-button-p nav-link"
-                      onclick="openTabProfile(event, 'tab2-p')"
-                      role="tab"
-                      >About</button
-                    >
-                  </li>               
+                    <button class="tab-button-p nav-link active" onclick="openTabProfile(event, 'tab1-p')"
+                        role="tab">Overview</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="tab-button-p nav-link" onclick="openTabProfile(event, 'tab2-p')"
+                        role="tab">About</button>
+                </li>
             </ul>
             <div class="tab-content" id="myTabContent">
-                <div class="tab-p tab-pane active" id="tab1-p" >
+                <div class="tab-p tab-pane active" id="tab1-p">
                     <div class="row">
                         <div class="col-7">
                             <div class="popular">
@@ -143,20 +152,25 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-p tab-pane" id="tab2-p" >
+                <div class="tab-p tab-pane" id="tab2-p">
                     <div class="row">
                         <div class="col-7">
                             <div>
                                 <h3>Image gallery</h3>
                                 <div>
                                     <img src="" alt="">
+                                    <button id="upload-galllery" class="btn border px-5"><h1 class="display-1">+</h1></button>
+                                    <input id="galllery" hidden type="file" multiple>
                                 </div>
                             </div>
                             <div>
-                                <h3>Bio</h3>
-                                <p>
-
-                                </p>
+                                <div class="d-flex justify-content-between">
+                                    <h3>Bio</h3>
+                                    <button class="btn" id="modified-bio"><i class="bi bi-pencil-fill text-black"></i></button>
+                                </div>
+                                <textarea id="bio" readonly ng-model="artist.bio" class="border-0 w-100 h-100" rows="20" name="" id="">
+                                    
+                                </textarea>
                             </div>
                         </div>
                         <div class="col-5">
@@ -172,7 +186,43 @@
             </div>
         </div>
     </section>
-    
+    <div class="modal" id="detailImg">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div ng-if="typeModifiedPicture === 'select-avatar'">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                </div>
+                <div class="modal-body d-flex justify-content-center">
+                    <div ng-if="typeModifiedPicture === 'see-avatar'">
+                        <img class="select-image"
+                            ng-src="{{artist.imagesProfile ==null ? 'https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png':artist.imagesProfile.url}}"
+                            alt="">
+                    </div>
+                    <div ng-if="typeModifiedPicture === 'see-background'">
+                        <img  class="w-100 "
+                            ng-src="{{artist.backgroundImage ==null ? 'https://res.cloudinary.com/div9ldpou/image/upload/v1696341682/Background/System/ilikeU_bgvlyy.png':artist.backgroundImage.url}}"
+                            alt="">
+                        
+                    </div>
+                    <div ng-if="typeModifiedPicture === 'select-avatar'">
+                        <img ng-click="selectFile('profile-picture')" class="select-image profile-picture"
+                            ng-src="{{artist.imagesProfile ==null ? 'https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png':artist.imagesProfile.url}}"
+                            alt="">
+                        <input id="profile-picture" type="file" hidden>
+                    </div>
+
+                </div>
+                <div ng-if="typeModifiedPicture === 'select-avatar' || typeModifiedPicture === 'see-background'">
+                    <div class="modal-footer">
+                        <button ng-if="typeModifiedPicture === 'select-avatar'" type="button" id="save-image" class="btn btn-danger" data-bs-dismiss="modal">Save</button>
+                        <button ng-if="typeModifiedPicture === 'see-background'" type="button" id="remove-current-background" class="btn btn-danger" data-bs-dismiss="modal">remove</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

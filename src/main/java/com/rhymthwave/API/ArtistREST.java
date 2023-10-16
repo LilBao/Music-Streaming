@@ -1,5 +1,6 @@
 package com.rhymthwave.API;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,7 +98,18 @@ public class ArtistREST {
 		return ResponseEntity.ok(new MessageResponse(true, "succeess", crud.update(artist)));
 	}
 	
-	@PostMapping(value="/api/v1/artist-image",consumes = { "multipart/form-data" })
+	@PutMapping(value="/api/v1/artist-gallery")
+	public ResponseEntity<MessageResponse> updateProfile(HttpServletRequest req,@PathParam("gallery") MultipartFile[] gallery){
+		String owner =host.getEmailByRequest(req);
+		Artist artist =artistSer.findByEmail(owner);
+		if(gallery !=null) {
+			List<String> respGallery = cloudinary.uploadMultipleFiles(gallery,"ImageGallery",artist.getArtistName());
+			artist.setImagesGallery(respGallery);
+		}
+		return ResponseEntity.ok(new MessageResponse(true, "succeess", crud.update(artist)));
+	}
+	
+	@PutMapping(value="/api/v1/artist-image",consumes = { "multipart/form-data" })
 	public ResponseEntity<MessageResponse> updateImageArtist(HttpServletRequest req,
 			@PathParam("avatar") MultipartFile avatar, @PathParam("background") MultipartFile background) {
 		String owner =host.getEmailByRequest(req);
