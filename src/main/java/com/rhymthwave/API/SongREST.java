@@ -128,8 +128,6 @@ public class SongREST {
 	@GetMapping("/api/v1/song-artist-released")
 	public ResponseEntity<MessageResponse> albumReleasedByArtist(HttpServletRequest req) {
 		String owner = host.getEmailByRequest(req);
-		Account account = crudAccount.findOne(owner);
-		return ResponseEntity.ok(new MessageResponse(true, "success",
-				songSer.findSongReleasedByArtist(account.getArtist().getArtistId())));
+		return ResponseEntity.ok(new MessageResponse(true, "success",songSer.findSongReleasedByArtist(owner)));
 	}
 }

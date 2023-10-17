@@ -79,7 +79,7 @@ public class ArtistREST {
 		String owner =host.getEmailByRequest(req);
 		
 		if(avatar !=null) {
-			Map<String,Object> respAvatar = cloudinary.UploadResizeImage(avatar,"Avatar",artist.getArtistName(),512,512);
+			Map<String,Object> respAvatar = cloudinary.UploadResizeImage(avatar,"ProfilePicture",artist.getArtistName(),512,512);
 			Image imgAvatar = imgSer.getEntity((String)respAvatar.get("asset_id"), (String)respAvatar.get("url"), (Integer) respAvatar.get("width"), (Integer)respAvatar.get("height"));
 			imgAvatar.setPublicId((String) respAvatar.get("public_id"));
 			crudImg.create(imgAvatar);
@@ -108,7 +108,7 @@ public class ArtistREST {
 		String owner =host.getEmailByRequest(req);
 		Artist artist =artistSer.findByEmail(owner);
 		if(avatar !=null) {
-			Map<String,Object> respAvatar = cloudinary.UploadResizeImage(avatar,"Avatar",artist.getArtistName(),512,512);
+			Map<String,Object> respAvatar = cloudinary.UploadResizeImage(avatar,"ProfilePicture",artist.getArtistName(),512,512);
 			Image imgAvatar = imgSer.getEntity((String)respAvatar.get("asset_id"), (String)respAvatar.get("url"), (Integer) respAvatar.get("width"), (Integer)respAvatar.get("height"));
 			imgAvatar.setPublicId((String) respAvatar.get("public_id"));
 			crudImg.create(imgAvatar);

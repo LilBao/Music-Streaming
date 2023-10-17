@@ -66,8 +66,8 @@ public class SongServiceImpl implements SongService, CRUD<Song, Integer> {
 	}
 
 	@Override
-	public List<Song> findSongReleasedByArtist(Long artistId) {
-		List<Song> listSong = dao.getListSongReleasedByArtist(artistId);
+	public List<Song> findSongReleasedByArtist(String emailCreate) {
+		List<Song> listSong = dao.getListSongReleasedByArtist(emailCreate);
 		return listSong;
 	}
 	

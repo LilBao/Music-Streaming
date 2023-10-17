@@ -32,6 +32,9 @@ public class Episode implements Serializable {
 	@Column(name = "EPISODESID")
 	private long episodeId;
 
+	@Column(name = "PUBLICIDFILE")
+	private String publicIdFile;
+	
 	@Column(name = "FILEURL")
 	private String fileUrl;
 

@@ -7,5 +7,5 @@ import com.rhymthwave.entity.Song;
 public interface SongService {
 	List<Song> findSongNotRecord(String email);
 	
-	List<Song> findSongReleasedByArtist(Long artistId);
+	List<Song> findSongReleasedByArtist(String artistId);
 }
