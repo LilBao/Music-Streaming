@@ -194,9 +194,9 @@
 
                                                 <div class="my-3 align-items-center">
                                                     <div class="d-flex justify-content-center">
-                                                        <img id="coverImage" class="img-thumbnail "
+                                                        <img ng-click="selectFile(typeDetail === 'album' ? album.albumId : song.songId)" id="coverImg-{{typeDetail === 'album' ? album.albumId : song.songId}}" class="img-thumbnail "
                                                         style="object-fit: cover; width: 300px; height: 200px;"
-                                                        ng-src="{{typeDetail === 'album' ? album.image.url : song.image.url}}"
+                                                        src="{{typeDetail === 'album' ? album.image.url : song.image.url}}"
                                                         alt="">
                                                         <input id="fileCoverImg" type="file" hidden>
                                                     </div>
@@ -218,8 +218,8 @@
                                                                 value="{{typeDetail === 'album' ? album.releaseDate :
                                                             song.releaseDay | date:'dd/MM/yyyy, hh:mm:ss'}}" readonly>
                                                         </div>
-                                                        <textarea class="inputCss w-100" type="text" ng-model="typeDetail === 'album' ? album.description :
-                                                        song.description"></textarea>
+                                                        <!-- <textarea class="inputCss w-100" type="text" ng-model="typeDetail === 'album' ? album.description :
+                                                        song.description"></textarea> -->
                                                     </div>
                                                 </div>
                                             </div>

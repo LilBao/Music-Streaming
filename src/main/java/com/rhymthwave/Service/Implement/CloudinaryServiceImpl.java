@@ -3,12 +3,9 @@ package com.rhymthwave.Service.Implement;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -66,14 +63,13 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 		try {
 	        cloudinary.api().createFolder(parentFolder, ObjectUtils.emptyMap());
 	        cloudinary.api().createFolder(parentFolder + "/" + childFolder, ObjectUtils.emptyMap());
-
 	        String path = parentFolder + "/" + childFolder;
 	        String[] uploadedUrls = new String[files.length];
 	        String[] uploadedPublicid = new String[files.length];
-
 	        for (int i = 0; i < files.length; i++) {
 	            Map<String, Object> params = new HashMap<>();
 	            params.put("public_id", path + "/" + files[i].getOriginalFilename());
+	            params.put("resource_type", "auto");
 	            Map<?, ?> result = cloudinary.uploader().upload(files[i].getBytes(), ObjectUtils.emptyMap());
 	            uploadedUrls[i] = (String) result.get("url");
 	            uploadedPublicid[i] = (String) result.get("public_id");

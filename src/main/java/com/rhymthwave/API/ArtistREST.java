@@ -142,7 +142,7 @@ public class ArtistREST {
 		    System.arraycopy(artist.getImagesGallery(), 0, newPublicId, publicIds.length, artist.getImagesGallery().length);
 			artist.setImagesGallery(newPublicId);
 			}else {
-				artist.setImagesGallery(publicIds);
+				artist.setPublicIdImageGallery(publicIds);
 			}
 		}
 		return ResponseEntity.ok(new MessageResponse(true, "succeess", crud.update(artist)));
