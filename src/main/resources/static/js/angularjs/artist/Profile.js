@@ -15,7 +15,7 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
     $scope.updateArtist = function (data) {
         let url = host + "/v1/artist";
         $http.put(url, data).then(resp => {
-            console.log("success" + resp.data.data.bio)
+            console.log("success")
         }).catch(error => {
             console.log("error")
         })
@@ -123,27 +123,25 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
 
     //upload Image gallery
     $scope.uploadGallery = function () {
-        let url = host + "/v1/artist-image";
-        var formData = new FormData();
-        for (var i = 0; i < $scope.listGallery.length; i++) {
-            formData.append('gallery', $scope.listGallery[i]);
+        if ($scope.listGallery.length>0) {
+            let url = host + "/v1/artist-image";
+            var formData = new FormData();
+            for (var i = 0; i < $scope.listGallery.length; i++) {
+                formData.append('gallery', $scope.listGallery[i]);
+            }
+            $http.put(url, formData, {
+                headers: {
+                    'Content-Type': undefined,
+                    'Authorization': 'Bearer ' + getCookie('token')
+                },
+                transformRequest: angular.identity
+            }).then(resp => {
+                console.log("success");
+            }).catch(error => {
+                console.log("error");
+            })
         }
-        $http.put(url,formData,{
-            headers: { 
-                'Content-Type': undefined,
-                'Authorization': 'Bearer ' + getCookie('token')
-            },  
-            transformRequest: angular.identity
-        }).then(resp=>{
-            console.log("success");
-        }).catch(error => {
-            console.log("error");
-        })
     }
-
-    $('#upload-gallery').click(function () {
-        $scope.selectMultipleFile('gallery')
-    })
     //Event Select file
     $scope.selectFile = function (id) {
         $('#' + id).click();
@@ -169,6 +167,9 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
         });
     };
 
+    $scope.ResetListFileGallery = function () {
+        $scope.listGallery = [];
+    }
 
     $scope.selectMultipleFile = function (id) {
         $('#' + id).click();

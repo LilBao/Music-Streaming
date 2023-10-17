@@ -46,7 +46,6 @@ public class AccountServiceImpl implements AccountService, CRUD<Account, String>
 
 	@Override
 	public List<Account> findAll() {
-		// TODO Auto-generated method stub
 		return dao.findAll();
 	}
 
