@@ -2,371 +2,503 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-  <!-- Latest compiled JavaScript -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-    crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="../../static/css/cssArtist/music.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-  <script src="../../static/js/angularjs/artist/Music.js"></script>
-  <script src="../../static/js/jscustom/Artist/Music.js"></script>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../../static/css/cssArtist/music.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="../../static/js/angularjs/artist/Music.js"></script>
+    <script src="../../static/js/jscustom/Artist/Music.js"></script>
+    <script src="../../static/js/Utiliez/CookiesUtil.js"></script>
 </head>
 
 <body ng-app="myApp" ng-controller="musicCtrl">
-  <section class="">
-    <h1>Music</h1>
-    <ul class="nav nav-tabs mb-3" id="ex1" role="tablist">
-      <li class="nav-item" role="presentation">
-        <button class="tab-button nav-link active" onclick="openTab(event, 'tab1')" role="tab">Songs</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="tab-button nav-link" onclick="openTab(event, 'tab2')">Releases</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="tab-button nav-link" onclick="openTab(event, 'tab3')">Playlists</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="tab-button nav-link" onclick="openTab(event, 'tab4')">Upcoming</button>
-      </li>
-    </ul>
-    <div class="tab-content" id="myTabContent">
-      <div class="tab tab-pane active" id="tab1">
-        <div class="d-flex justify-content-between">
-          <div class="input-group w-25">
-            <span class="input-group-text "><i class="bi bi-search"></i></span>
-            <input type="text" class=" form-control" placeholder="search">
-          </div>
-          <div class="dropdown">
-            <button type="button options" class="btn dropdown-toggle" data-bs-toggle="dropdown">
-              Last 24 hours
-            </button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Last 1 month</a></li>
-              <li><a class="dropdown-item" href="#">Last 6 months</a></li>
-              <li><a class="dropdown-item" href="#">Last 1 years</a></li>
-            </ul>
-          </div>
-        </div>
-        <div>
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>
-                  <h4>Your top songs</h4>
-                </th>
-                <th>Listeners</th>
-                <th>VIEWS</th>
-                <th><i class="bi bi-plus-circle"></i></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="align-items-center">
-                <td>12,2023</td>
-                <td class="d-flex align-items-center">
-                  <img class="w-25" src="../../static/img/cs1.webp" alt="">
-                  <h6>Listeners</h6>
-                </td>
-                <td>12,2023</td>
-                <td colspan="2">12,2023</td>
-              </tr>
-              <tr class="align-items-start">
-                <td>12,2023</td>
-                <td class="d-flex align-items-center">
-                  <img class="w-25" src="../../static/img/cs1.webp" alt="">
-                  <h6>Listeners</h6>
-                </td>
-                <td>12,2023</td>
-                <td>12,2023</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="tab tab-pane" id="tab2">
-        <div class="d-flex justify-content-end">
-          <div class="dropdown">
-            <button type="button options" class="btn dropdown-toggle" data-bs-toggle="dropdown">
-              Last 24 hours
-            </button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Last 1 month</a></li>
-              <li><a class="dropdown-item" href="#">Last 6 months</a></li>
-              <li><a class="dropdown-item" href="#">Last 1 years</a></li>
-            </ul>
-          </div>
-        </div>
-        <div>
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th>Releases</th>
-                <th>Listeners</th>
-                <th>First release</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="">
-                <table class="table table-hover">
-                  <thead>
-                    <tr class="align-items-center">
-                      <th class="w-25">
-                        <img style="height: 100px; width: 100px;" src="../../static/img/ab1.webp" alt="">
-
-                      </th>
-                      <th>14.5k</th>
-                      <th>2023</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <h6>Imagine</h6>
-                      </td>
-                      <td>14.5k</td>
-                      <td>4 Sep 2023</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="tab tab-pane" id="tab3">
-        Tab 3 content
-      </div>
-      <div class="tab tab-pane" id="tab4">
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th>
-                <h4>Realease</h4>
-              </th>
-              <th>Playlist pitch</th>
-              <th>realease day</th>
-              <th><i class="bi bi-plus-circle"></i></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="align-items-center" ng-repeat="x in listSongUpcoming">
-              <td class="d-flex align-items-center">
-                <img class="w-25" src="{{x.images.url}}" alt="">
-                <h6>{{x.songName}}</h6>
-              </td>
-              <td class="">
-                <button type="button" ng-click="pitch('song',x.songId)" class="btn btn-primary" data-bs-toggle="modal"
-                  data-bs-target="#myModal">
-                  Pitch
-                </button>
-              </td>
-              <td colspan="2">{{x.releaseDay | date:'dd/MM/yyyy, hh:mm:ss'}}</td>
-            </tr>
-            <tr class="align-items-center" ng-repeat="x in listAlbumUpcoming">
-              <td class="d-flex align-items-center">
-                <img class="w-25" src="{{x.images.url}}" alt="">
-                <h6>{{x.albumName}}</h6>
-              </td>
-              <td class="">
-                <button type="button" class="btn btn-primary" ng-click="pitch('album',x.albumId)" data-bs-toggle="modal"
-                  data-bs-target="#myModal">
-                  Pitch
-                </button>
-              </td>
-              <td colspan="2">{{x.releaseDate | date:'dd/MM/yyyy, hh:mm:ss'}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-  </section>
-  <!-- The Modal -->
-  <div class="modal" id="myModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-
-        <!-- Modal body -->
-        <div class="modal-body">
-          <div class="container mt-5 col-7">
-            <div class="row d-flex justify-content-center align-items-center">
-              <form id="regForm">
-                <div class="all-steps my-0" id="all-steps" hidden>
-                  <span class="step"></span>
-                  <span class="step"></span>
-                  <span class="step"></span>
-                  <span class="step"></span>
-                </div>
-
-                <div class="tab tab-1">
-                  <div class="d-flex">
-                    <h6>1 of 5 - Song</h6>
-                  </div>
-                  <h1>Choose a song to pitch</h1>
-                  <p>We'll add this song to Release Radar if we get yout pitch at least a week before release</p>
-                  <div class="d-flex">
-                    <img style="height: 100px; width: 50px; object-fit: cover;" class="w-25"
-                      src="../../static/img/ab1.webp" alt="">
-                    <div>
-                      <h6>Tên album</h6>
-                      <p>Album - Release 23 Oct 2023</p>
+    <section class="">
+        <h1>Music</h1>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item me-3 pb-3">
+                <a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1"
+                    aria-selected="true">Songs</a>
+            </li>
+            <li class="nav-item me-3 pb-3">
+                <a class="nav-link" id="tab1-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2"
+                    aria-selected="false">Releases</a>
+            </li>
+            <li class="nav-item me-3 pb-3">
+                <a class="nav-link" id="tab1-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3"
+                    aria-selected="false">Playlists</a>
+            </li>
+            <li class="nav-item me-3 pb-3">
+                <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab4" role="tab" aria-controls="tab4"
+                    aria-selected="false">Upcoming</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+                <div class="d-flex justify-content-between">
+                    <div class="input-group w-25">
+                        <span class="input-group-text "><i class="bi bi-search"></i></span>
+                        <input type="text" class=" form-control" placeholder="search">
                     </div>
-                  </div>
-                  <div class="table-container table-responsive">
-                    <table class="table table-hover table-bordered">
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>Title</th>
-                          <th>Duration</th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr ng-repeat="item in listRecord">
-                          <td>{{$index}}</td>
-                          <td>{{item.recordingName}}</td>
-                          <td>{{item.duration}}</td>
-                          <td><input type="checkbox" name="pitch" id=""></td>
-                        </tr>
-
-                      </tbody>
+                    <div class="dropdown">
+                        <button type="button options" class="btn dropdown-toggle" data-bs-toggle="dropdown">
+                            Last 24 hours
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Last 1 month</a></li>
+                            <li><a class="dropdown-item" href="#">Last 6 months</a></li>
+                            <li><a class="dropdown-item" href="#">Last 1 years</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>
+                                    <h4>Your top songs</h4>
+                                </th>
+                                <th>Listeners</th>
+                                <th>VIEWS</th>
+                                <th><i class="bi bi-plus-circle"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="align-items-center">
+                                <td>12,2023</td>
+                                <td class="d-flex align-items-center">
+                                    <img class="cover-image rounded-4" src="../../static/img/cs1.webp" alt="">
+                                    <h6>Listeners</h6>
+                                </td>
+                                <td>12,2023</td>
+                                <td colspan="2">12,2023</td>
+                            </tr>
+                            <tr class="align-items-start">
+                                <td>12,2023</td>
+                                <td class="d-flex align-items-center">
+                                    <img class="cover-image rounded-4" src="../../static/img/cs1.webp" alt="">
+                                    <h6>Listeners</h6>
+                                </td>
+                                <td>12,2023</td>
+                                <td>12,2023</td>
+                            </tr>
+                        </tbody>
                     </table>
-                  </div>
-
                 </div>
+            </div>
 
-                <div class="tab tab-2">
-                  <div class="d-flex">
-                    <h6>2 of 5 - Location</h6>
-                  </div>
-                  <h1>Confirm where the artist is from</h1>
-                  <p>We only use this information to look for music made by people from specific parts of the world</p>
-                  <div class="my-5">
-                    <label for="hometown">
-                      <h6>Hometown</h6>
-                    </label>
-                    <input list="hometowns" class="form-control" name="hometown" id="hometown">
-                    <datalist id="hometowns">
-                      <option value="Edge">
-                      <option value="Firefox">
-                      <option value="Chrome">
-                      <option value="Opera">
-                      <option value="Safari">
-                    </datalist>
-                  </div>
-
-
-                </div>
-
-                <div class="tab tab-3">
-                  <div class="d-flex">
-                    <h6>3 of 4 - Description</h6>
-                  </div>
-                  <h1>Add a description</h1>
-                  <h6>Tell our team about the process of creating this song, as well as any plans to promote it</h6>
-                  <div class="mt-5">
-                    <h5>Description</h5>
-                    <textarea class="w-100 form-control" name="" id="" cols="30" rows="10"
-                      placeholder="500 characters remaining"></textarea>
-                  </div>
-
-                </div>
-
-                <div class="tab tab-4">
-                  <div class="d-flex">
-                    <h6>4 of 4 - Review</h6>
-                  </div>
-                  <h1>Make sure everything looks goods</h1>
-                  <p>You can update your pitch up until release day. But changes made within a week of release won't be
-                    reflected on Release Radar</p>
-
-                  <div class="d-flex">
-                    <img style="height: 100px; width: 50px; object-fit: cover;" class="w-25"
-                      src="../../static/img/ab1.webp" alt="">
-                    <div>
-                      <h6>Tên album</h6>
-                      <p>Album - Release 23 Oct 2023</p>
+            <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+                <div class="d-flex justify-content-end">
+                    <div class="dropdown">
+                        <button type="button options" class="btn dropdown-toggle" data-bs-toggle="dropdown">
+                            Last 24 hours
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Last 1 month</a></li>
+                            <li><a class="dropdown-item" href="#">Last 6 months</a></li>
+                            <li><a class="dropdown-item" href="#">Last 1 years</a></li>
+                        </ul>
                     </div>
-                  </div>
-                  <table class="table table-hover table-bordered">
+                </div>
+                <div class="d-flex">
+                    <div id="album-release">
+                        <div ng-repeat="item in listAlbumReleased">
+                            <a type="button" ng-click="detail(item.albumId,'album')" data-bs-toggle="modal"
+                                data-bs-target="#detail">
+                                <div class="card mx-4 my-2" style="width:250px">
+                                    <img class="cover-release rounded-4 card-img-top" src="{{item.image.url}}" alt="">
+                                    <div
+                                        class="w-100 total-song rounded-top-4 d-flex align-items-center justify-content-between">
+                                        <i class="bi bi-music-note mx-2"></i>
+                                        <p class="py-0 my-0 mx-2">{{item.tracks.length}}</p>
+                                    </div>
+                                    <div class="card-body realease-card">
+                                        <h6 class="my-2 card-title">{{item.albumName}}</h6>
+                                        <p class="card-text py-0 ">{{item.artist.artistName}}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div id="song-release" class="d-flex">
+                        <div ng-repeat="item in listSongReleased">
+                            <a type="button" ng-click="detail(item.songId,'song')" data-bs-toggle="modal"
+                                data-bs-target="#detail">
+                                <div class="card mx-4 my-2" style="width:250px">
+                                    <img class="cover-release rounded-4 card-img-top" src="{{item.image.url}}" alt="">
+                                    <div
+                                        class="w-100 total-song rounded-top-4 d-flex align-items-center justify-content-between">
+                                        <i class="bi bi-music-note mx-2"></i>
+                                        <p class="py-0 my-0 mx-2">{{item.tracks.length}}</p>
+                                    </div>
+                                    <div class="card-body realease-card">
+                                        <h6 class="my-2 card-title">{{item.songName}}</h6>
+                                        <p class="card-text py-0 ">
+                                            {{item.artist.artistName}}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="modal" id="detail">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <!-- Modal body -->
+                                <div class="modal-body py-0">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="card my-5 border rounded-4" style="min-height: 85vh;">
+                                                <div class="d-flex justify-content-between">
+                                                    <div>
+                                                        <button hidden id="addRecord" class="btn" data-bs-toggle="collapse"
+                                                            data-bs-target="#add"><i class="bi bi-plus"></i></button>
+
+                                                    </div>
+                                                    <div > 
+                                                        <button id="modified-release" class="btn"><i
+                                                                class="bi bi-pencil-fill"></i></button>
+                                                    </div>
+                                                </div>
+                                                <div id="add" class="collapse">
+                                                    <div class="dropdown w-100 d-flex justify-content-center">
+                                                        <button type="button" class="btn dropdown-toggle"
+                                                            data-bs-toggle="dropdown">
+                                                            Dropdown button
+                                                        </button>
+                                                        <ul class="dropdown-menu">
+                                                            <li ng-repeat="item in listRecord">
+                                                                <a ng-click="addRecordToSongOrAlbum(typeDetail,typeDetail==='album' ? album : song,item)" class="dropdown-item" href="#">
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div>
+                                                                            <img style="width: 50px; height: 50px; object-fit: cover;"
+                                                                                class="" src="{{item.song.image.url}}">
+                                                                        </div>
+                                                                        <div>
+                                                                            <p>{{item.recordingName}}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+
+                                                <div class="my-3 align-items-center">
+                                                    <div class="d-flex justify-content-center">
+                                                        <img id="coverImage" class="img-thumbnail "
+                                                        style="object-fit: cover; width: 300px; height: 200px;"
+                                                        ng-src="{{typeDetail === 'album' ? album.image.url : song.image.url}}"
+                                                        alt="">
+                                                        <input id="fileCoverImg" type="file" hidden>
+                                                    </div>
+                                                    
+                                                    <div class="ms-5">
+                                                        <input id="nameDetail" class="inputCss" type="text"
+                                                            value="{{typeDetail === 'album' ? album.albumName : song.songName}}"
+                                                            readonly>
+                                                        <h4>
+                                                        </h4>
+                                                        <h6>{{typeDetail === 'album' ? album.artist.artistName : 'fds'}}
+                                                        </h6>
+                                                        <div class="d-flex justify-content-between">
+                                                            <p class="m-0 p-0">20 record</p>
+                                                            <p class="m-0 p-0">102222 listeners</p>
+                                                        </div>
+                                                        <div>
+                                                            <input class="inputCss" type="text" id="releaseDetail"
+                                                                value="{{typeDetail === 'album' ? album.releaseDate :
+                                                            song.releaseDay | date:'dd/MM/yyyy, hh:mm:ss'}}" readonly>
+                                                        </div>
+                                                        <textarea class="inputCss w-100" type="text" ng-model="typeDetail === 'album' ? album.description :
+                                                        song.description"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-8 mt-5">
+                                            <div class="table-detail-container table-responsive">
+                                                <table class="table table-hover">
+                                                    <tbody>
+                                                        <tr ng-repeat="item in listDetail">
+                                                            <td>
+                                                                <div
+                                                                    class="d-flex justify-content-between align-items-center">
+                                                                    <div class="d-flex align-items-center">
+                                                                        <p>{{$index + 1}}</p>
+                                                                        <img class=""
+                                                                            style="object-fit: cover; width: 50px; height: 50px;"
+                                                                            ng-src="{{typeDetail === 'album' ? item.recording.song.image.url : item.song.image.url}}"
+                                                                            alt="">
+                                                                        <div>
+                                                                            <h6>{{typeDetail === 'album' ?
+                                                                                item.recording.song.songName :
+                                                                                item.recordingName}}</h6>
+                                                                            <span>123123 views</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <button class="btn"
+                                                                            ng-click="removeRecord(typeDetail === 'album' ? item.trackId : item.recordingId,typeDetail)"><i
+                                                                                class="bi bi-x-lg"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
+            </div>
+            <div class="tab-pane fade" id="tab4" role="tabpanel" aria-labelledby="tab4-tab">
+                <table class="table table-hover">
                     <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Title</th>
-                        <th>Duration</th>
-                      </tr>
+                        <tr>
+                            <th>
+                                <h4>Realease</h4>
+                            </th>
+                            <th>Playlist pitch</th>
+                            <th>realease day</th>
+                            <th><i class="bi bi-plus-circle"></i></th>
+                        </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>Doe</td>
-                        <td>john@example.com</td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>Moe</td>
-                        <td>mary@example.com</td>
-                      </tr>
+                        <tr class="align-items-center" ng-repeat="x in listSongUpcoming">
+                            <td class="d-flex align-items-center">
+                                <i class="bi bi-music-note"></i>
+                                <img class="cover-image rounded-4" src="{{x.image.url}}" alt="">
+                                <h6>{{x.songName}}</h6>
+                            </td>
+                            <td class="">
+                                <button id="" type="button" ng-click="pitch('song',x.songId)" class="btn btn-primary"
+                                    data-bs-toggle="modal" data-bs-target="#myModal">
+                                    Pitch
+                                </button>
+                            </td>
+                            <td colspan="2">{{x.releaseDay | date:'dd/MM/yyyy, hh:mm:ss'}}</td>
+                        </tr>
+                        <tr class="align-items-center" ng-repeat="x in listAlbumUpcoming">
+                            <td class="d-flex align-items-center">
+                                <i class="bi bi-journal-album"></i>
+                                <img class="cover-image rounded-4" src="{{x.image.url}}" alt="">
+                                <h6>{{x.albumName}}</h6>
+                            </td>
+                            <td class="">
+                                <button type="button" class="btn btn-primary" ng-click="pitch('album',x.albumId)"
+                                    data-bs-toggle="modal" data-bs-target="#myModal">
+                                    Pitch
+                                </button>
+                            </td>
+                            <td colspan="2">{{x.releaseDate | date:'dd/MM/yyyy, hh:mm:ss'}}</td>
+                        </tr>
                     </tbody>
-                  </table>
-                  <div class="lgenre my-3">
-                    <span class="p-2 badge bg-success">Genre</span>
-                  </div>
-                  <div class="lgenre my-3">
-                    <span class="p-2 badge bg-success">Mood</span>
-                  </div>
-                  <div class="lgenre my-3">
-                    <span class="p-2 badge bg-success">Culture</span>
-                  </div>
-                  <div class="lgenre my-3">
-                    <span class="p-2 badge bg-success">Song style</span>
-                  </div>
-                  <div class="lgenre my-3">
-                    <span class="p-2 badge bg-success">Instruments</span>
-                  </div>
-                  <div>
-                    <textarea class="form-control" name="" id="" cols="30" rows="10"></textarea>
-                  </div>
-                </div>
-
-                <div class="thanks-message text-center" id="text-message"> <img src="https://i.imgur.com/O18mJ1K.png"
-                    width="100" class="mb-4">
-                  <h3>Thanks for your Donation!</h3> <span>Your donation has been entered! We will contact you
-                    shortly!</span>
-                </div>
-              </form>
+                </table>
             </div>
-          </div>
         </div>
+    </section>
+    <!-- The Modal -->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
 
-        <!-- Modal footer -->
-        <div id="nextprevious" class="modal-footer d-flex justify-content-between">
-          <div>
-            <button type="button" id="prevBtn"
-              class="float-start py-2 btn btn-dark rounded-pill bg-white text-black ms-5"
-              onclick="nextPrev(-1)">Previous</button>
-          </div>
-          <div>
-            <button type="button" id="nextBtn" class="float-end py-2 px-4 btn btn-success rounded-pill me-5"
-              onclick="nextPrev(1)">Next</button>
-          </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="container mt-5 col-7">
+                        <div class="row d-flex justify-content-center align-items-center">
+                            <form id="regForm">
+                                <div class="all-steps my-0" id="all-steps" hidden>
+                                    <span class="step"></span>
+                                    <span class="step"></span>
+                                    <span class="step"></span>
+                                    <span class="step"></span>
+                                </div>
+
+                                <div class="tab tab-1">
+                                    <div class="d-flex">
+                                        <h6>1 of 5 - Song</h6>
+                                    </div>
+                                    <h1>Choose a song to pitch</h1>
+                                    <p>We'll add this song to Release Radar if we get yout pitch at least a week before
+                                        release</p>
+                                    <div class="my-3">
+                                        <div ng-if="type === 'song'" class="d-flex">
+                                            <img class="me-3 cover-image rounded-4" src="{{song.image.url}}" alt="">
+                                            <div>
+                                                <h6>{{song.songName}}</h6>
+                                                <p>{{song.releaseDay | date:'dd/MM/yyyy, hh:mm:ss'}}</p>
+                                            </div>
+                                        </div>
+                                        <div ng-if="type === 'album'" class="d-flex">
+                                            <img class="me-3 cover-image rounded-4" src="{{album.image.url}}" alt="">
+                                            <div>
+                                                <h6>{{album.albumName}}</h6>
+                                                <p>{{album.releaseDate | date:'dd/MM/yyyy, hh:mm:ss'}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="table-container table-responsive">
+                                        <table class="table table-hover table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Title</th>
+                                                    <th>Duration</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="item in listRecord">
+                                                    <td>{{$index}}</td>
+                                                    <td>{{item.recordingName}}</td>
+                                                    <td>{{item.duration}}</td>
+                                                    <td><input type="checkbox" value="{{item.recordingId}}"
+                                                            onchange="checkListRecord(this)" name="pitch" id=""></td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+
+                                <div class="tab tab-2">
+                                    <div class="d-flex">
+                                        <h6>2 of 5 - Location</h6>
+                                    </div>
+                                    <h1>Confirm where the artist is from</h1>
+                                    <p>We only use this information to look for music made by people from specific parts
+                                        of the world</p>
+                                    <div class="my-5">
+                                        <label for="hometown">
+                                            <h6>Hometown <span>(Optional)</span></h6>
+                                        </label>
+                                        <input ng-model="artist.placeOfBirth" type="text" class="form-control">
+                                    </div>
+
+
+                                </div>
+
+                                <div class="tab tab-3">
+                                    <div class="d-flex">
+                                        <h6>3 of 4 - Description</h6>
+                                    </div>
+                                    <h1>Add a description</h1>
+                                    <h6>Tell our team about the process of creating this song, as well as any plans to
+                                        promote it</h6>
+                                    <div class="mt-5">
+                                        <h5>Description <span>(Optional)</span></h5>
+                                        <textarea ng-model="descriptions" class="w-100 form-control" name=""
+                                            id="description" cols="30" rows="10"
+                                            placeholder="500 characters remaining"></textarea>
+                                    </div>
+
+                                </div>
+
+                                <div class="tab tab-4">
+                                    <div class="d-flex">
+                                        <h6>4 of 4 - Review</h6>
+                                    </div>
+                                    <h1>Make sure everything looks goods</h1>
+                                    <p>You can update your pitch up until release day. But changes made within a week of
+                                        release won't be
+                                        reflected on Release Radar</p>
+
+                                    <div class="my-3">
+                                        <div ng-if="type === 'song'" class="d-flex">
+                                            <img class="me-3 cover-image rounded-4" src="{{song.image.url}}" alt="">
+                                            <div>
+                                                <h6>{{song.songName}}</h6>
+                                                <p>{{song.releaseDay | date:'dd/MM/yyyy, hh:mm:ss'}}</p>
+                                            </div>
+                                        </div>
+                                        <div ng-if="type === 'album'" class="d-flex">
+                                            <img class="me-3 cover-image rounded-4" src="{{album.image.url}}" alt="">
+                                            <div>
+                                                <h6>{{album.albumName}}</h6>
+                                                <p>{{album.releaseDate | date:'dd/MM/yyyy, hh:mm:ss'}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table class="table table-hover table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Title</th>
+                                                <th>Duration</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in listRecordChecked">
+                                                <td>{{$index}}</td>
+                                                <td>{{item.recordingName}}</td>
+                                                <td>{{item.duration}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div>
+                                        <textarea readonly class="form-control" name="" id="result-description"
+                                            cols="30" rows="10"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="tab text-center">
+                                    <h3>Everything Already</h3>
+                                    <div class="my-3">
+                                        <div ng-if="type === 'song'" class="d-flex">
+                                            <img class="me-3 cover-image rounded-4" src="{{song.image.url}}" alt="">
+                                            <div>
+                                                <h4>{{song.songName}}</h4>
+                                            </div>
+                                        </div>
+                                        <div ng-if="type === 'album'" class="d-flex">
+                                            <img class="me-3 cover-image rounded-4" src="{{album.image.url}}" alt="">
+                                            <div>
+                                                <h4>{{album.albumName}}</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div id="nextprevious" class="modal-footer d-flex justify-content-between">
+                    <div>
+                        <button type="button" id="prevBtn"
+                            class="float-start py-2 btn btn-dark rounded-pill bg-white text-black ms-5"
+                            onclick="nextPrev(-1)">Previous</button>
+                    </div>
+                    <div>
+                        <button type="button" id="nextBtn" class="float-end py-2 px-4 btn btn-success rounded-pill me-5"
+                            onclick="nextPrev(1)">Next</button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </body>
 
 </html>

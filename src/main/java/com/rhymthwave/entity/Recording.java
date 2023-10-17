@@ -37,10 +37,16 @@ public class Recording implements Serializable {
 
 	@Column(name = "AUDIOFILEURL")
 	private String audioFileUrl;
+	
+	@Column(name = "PUBLICIDAUDIOFILE")
+	private String publicIdAudio;
 
 	@Column(name = "LYRICSURL")
 	private String lyricsUrl;
 
+	@Column(name = "PUBLICIDLYRICS")
+	private String publicIdLyrics;
+	
 	@Column(name = "LIKES")
 	private long likes;
 

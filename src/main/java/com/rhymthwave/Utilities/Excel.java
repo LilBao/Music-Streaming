@@ -14,16 +14,18 @@ import org.springframework.stereotype.Service;
 
 import com.rhymthwave.entity.Culture;
 import com.rhymthwave.entity.Genre;
+import com.rhymthwave.entity.Mood;
 import com.rhymthwave.entity.SongStyle;
 
 @Service
 public class Excel {
-		public List<Genre>  convertExceltoInstrument(InputStream inputStream){
+		//23-25-28-40-46
+		public List<Mood>  convertExceltoInstrument(InputStream inputStream){
 			
-			List<Genre> list = new ArrayList<>();
+			List<Mood> list = new ArrayList<>();
 			try {
 				Workbook workbook = WorkbookFactory.create(inputStream);
-				Sheet sheet = workbook.getSheet("data4");
+				Sheet sheet = workbook.getSheet("Mood");
 			int rowNum = 0;
 			Iterator<Row> iterator = sheet.iterator();
 			while (iterator.hasNext()) {
@@ -35,16 +37,16 @@ public class Excel {
 				Iterator<Cell> cells = row.iterator();
 				
 				int cid = 0;
-				var instrument = new Genre();
+				var instrument = new Mood();
 				
 				while (cells.hasNext()) {
 					Cell cell = cells.next();
 					switch(cid) {
 						case 0:
-							instrument.setId((int) cell.getNumericCellValue());
+							instrument.setMoodid((int) cell.getNumericCellValue());
 							break;
 						case 1:
-							instrument.setNameGenre((cell.getStringCellValue())); 
+							instrument.setMoodname((cell.getStringCellValue())); 
 							break;
 						default:
 							break;

@@ -57,9 +57,8 @@ public class NewServiceImp implements NewService, CRUD<News, Integer>{
 		if(key instanceof Integer && key > 0) {
 			Optional<News> news = newDao.findById(key);
 			if(news.isPresent()) {
-				//newDao.delete(news.get());
-				System.out.println(CloudinaryServiceImpl.extractPublicIdFromUrl(news.get().getImage().getUrl()));
-				//cloudinaryService.deleteFile("http://res.cloudinary.com/div9ldpou/image/upload/v1697471738/ImageManager/Image%20News/asd.png.png");
+				newDao.delete(news.get());
+				cloudinaryService.deleteFile(news.get().getImage().getPublicId());
 				return true;
 			}else {
 				return false;
@@ -106,7 +105,7 @@ public class NewServiceImp implements NewService, CRUD<News, Integer>{
 		Image img = new Image();
 		img.setUrl(urlImage);
 		img.setAccessId(accessId);
-		img.setPublic_id(public_id);
+		img.setPublicId(public_id);
 		crudImage.create(img);
 		
 		
@@ -150,7 +149,7 @@ public class NewServiceImp implements NewService, CRUD<News, Integer>{
 		//	String accessId = (String) mapCloudinary.get("asset_id");
 			String public_id = (String) mapCloudinary.get("public_id");
 			img.setUrl(urlImage);
-			img.setPublic_id(public_id);
+			img.setPublicId(public_id);
 			crudImage.update(img);
 			
 			news.setImage(img);

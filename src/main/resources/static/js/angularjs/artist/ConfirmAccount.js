@@ -12,13 +12,12 @@ app.controller('confirmCtrl', function ($scope, $http) {
     })
 
     $scope.createArtist = function() {
-        
         var url = host + "/v1/artist";
         var formData = new FormData();
         formData.append('artistName', $scope.artist.artistName); 
         formData.append('fullName', $scope.artist.fullName);
         formData.append('bio', $scope.artist.bio); 
-        formData.append('artist.dateOfBirth', $scope.artist.dateOfBirth); 
+        formData.append('dateOfBirth', $scope.artist.dateOfBirth); 
         formData.append('placeOfBirth', $scope.artist.placeOfBirth); 
         formData.append('avatar', $scope.avatarFile);
         formData.append('background', $scope.backgroundFile);
@@ -32,16 +31,15 @@ app.controller('confirmCtrl', function ($scope, $http) {
             data: formData,
             transformRequest: angular.identity
         }).then(function(response) {
-            alert("Dang ky thanh cong");
+            console.log("success");
         }).catch(function(error) {
             console.log(error);
-            alert("Dang ky that bai");
         });
     }
 
     $("#nextBtn").click(function () {
         if ($("#nextBtn").hasClass("submit")) {
-            $scope.createArtist();
+                $scope.createArtist(); 
         }
     })
 

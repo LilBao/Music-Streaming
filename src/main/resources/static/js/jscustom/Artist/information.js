@@ -15,13 +15,13 @@ function showTab(n) {
     }
     if (n == (x.length - 2)) {
         document.getElementById("nextBtn").innerHTML = "Submit";
-        $("#nextBtn").addClass("submit");
     }else if(n > (x.length - 2)){
-        document.getElementById("nextBtn").remove();
+        $("#nextBtn").addClass("submit");
+        $("#nextBtn").hide();
         document.getElementById("prevBtn").remove();
     }else {
         document.getElementById("nextBtn").innerHTML = "Next";
-        $("#nextBtn").removeClass("submit");
+        
     }
     fixStepIndicator(n)
 }
