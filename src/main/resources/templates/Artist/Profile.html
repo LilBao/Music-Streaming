@@ -31,8 +31,10 @@
                             ng-click="processImage('select-avatar')"><i class="me-3 bi bi-images"></i>Select profile
                             picture</a>
                     </li>
-                    <li><a id="remove-current-image" class="py-2 dropdown-item"><i
-                                class="me-3 bi bi-person-x-fill"></i>Revove current photo</a></li>
+                    <li><a id="remove-current-image" class="py-2 dropdown-item">
+                            <i class="me-3 bi bi-person-x-fill"></i>Revove current photo
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div class="mx-3">
@@ -56,6 +58,10 @@
                 <li class="nav-item" role="presentation">
                     <button class="tab-button-p nav-link" onclick="openTabProfile(event, 'tab2-p')"
                         role="tab">About</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="tab-button-p nav-link" onclick="openTabProfile(event, 'tab3-p')"
+                        role="tab">Images</button>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
@@ -160,9 +166,11 @@
                         <div class="col-7">
                             <div>
                                 <h3>Image gallery</h3>
-                                <div class="d-flex flex-wrap" ng-if="artist.imagesGallery !=null">
-                                    <img class="image-gallery" ng-repeat="item in artist.imagesGallery" src="{{item}}"
-                                        alt="">
+                                <div class="d-flex flex-wrap">
+                                    <div ng-if="artist.imagesGallery !=null">
+                                        <img class="image-gallery" ng-dblclick="removeImageGallery(item)"
+                                            ng-repeat="item in artist.imagesGallery" src="{{item}}" alt="">
+                                    </div>
                                     <img src="" alt="">
                                     <div class="d-flex flex-column">
                                         <button ng-click="selectMultipleFile('gallery')" id="upload-gallery"
@@ -195,25 +203,68 @@
                         <div class="col-5">
                             <div class="d-flex justify-content-between">
                                 <h3>More infor</h3>
-                                <button class="btn" data-bs-toggle="collapse" data-bs-target="#social-media"><i class="bi bi-plus-circle"></i></button>
+                                <button id="modified-linkSocial" class="btn" data-bs-toggle="collapse"
+                                    data-bs-target="#social-media"><i class="bi bi-plus-circle"></i></button>
                             </div>
-                            
+
 
                             <div id="social-media" class="collapse mb-4">
-                                <input type="text" class="form-control w-100">
+                                <input type="text" id="socialLink" class="form-control w-100">
                             </div>
 
-                            <div class="d-flex flex-column" ng-if="artist.imagesGallery !=null">
+                            <div class="d-flex flex-column" ng-if="artist.socialMediaLinks !=null">
                                 <div ng-repeat="item in artist.socialMediaLinks" class="d-flex justify-content-between">
-                                    <a href=""><i class="bi bi-instagram"></i> Instagram</a>
-                                    <button class="btn"><i class="bi bi-x-lg"></i></button>
+                                    <a href="{{item}}" class="link-social">{{item}}</a>
+                                    <button ng-click="removeSocialLink(item)" class="btn"><i
+                                            class="bi bi-x-lg"></i></button>
                                 </div>
-                                
-                                <a href=""><i class="bi bi-twitter"></i> Twitter</a>
-                                <a href=""><i class="bi bi-facebook"></i> Facebook</a>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="tab-p tab-pane" id="tab3-p">
+                    <div id="accordion">
+                        <div class="card">
+                          <div class="card-header">
+                            <a class="btn" data-bs-toggle="collapse" href="#collapseOne">
+                                Avatar Pictures
+                            </a>
+                          </div>
+                          <div id="collapseOne" class="collapse show" data-bs-parent="#accordion">
+                            <div class="card-body">
+                                hình nè
+                            </div>
+                          </div>
+                        </div>
+                      
+                        <div class="card">
+                          <div class="card-header">
+                            <a class="collapsed btn" data-bs-toggle="collapse" href="#collapseTwo">
+                                Background pictures
+                            </a>
+                          </div>
+                          <div id="collapseTwo" class="collapse" data-bs-parent="#accordion">
+                            <div class="card-body">
+                                
+                            </div>
+                          </div>
+                        </div>
+                      
+                        <div class="card">
+                          <div class="card-header">
+                            <a class="collapsed btn" data-bs-toggle="collapse" href="#collapseThree">
+                                Images Gallery
+                            </a>
+                          </div>
+                          <div id="collapseThree" class="collapse" data-bs-parent="#accordion">
+                            <div class="card-body">
+                                
+                            </div>
+                          </div>
+                        </div>
+                      
+                      </div>
+                      
                 </div>
             </div>
         </div>
@@ -248,7 +299,7 @@
                 </div>
                 <div ng-if="typeModifiedPicture === 'select-avatar' || typeModifiedPicture === 'see-background'">
                     <div class="modal-footer">
-                        <button ng-if="typeModifiedPicture === 'select-avatar'" type="button" id="save-image"
+                        <button ng-if="typeModifiedPicture === 'select-avatar'" type="button" id="save-profile-picture"
                             class="btn btn-danger" data-bs-dismiss="modal">Save</button>
                         <button ng-if="typeModifiedPicture === 'see-background'" type="button"
                             id="remove-current-background" class="btn btn-danger"

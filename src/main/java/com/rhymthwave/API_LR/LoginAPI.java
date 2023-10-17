@@ -55,6 +55,7 @@ public class LoginAPI {
 		if (checkUserLogin == 1) {
 			Authentication authentication = authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(loginRequest.email(), loginRequest.password()));
+			System.out.println(authentication);
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 			
 				CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();

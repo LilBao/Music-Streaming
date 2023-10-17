@@ -9,7 +9,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,8 +29,9 @@ public class Image implements Serializable {
 	@Column(name = "URL")
 	private String url;
 	
-	@Column(name="PUBLICID")
+	@Column(name = "PUBLICID")
 	private String publicId;
+
 	
 	@Column(name = "WEIGHT")
 	private Integer weight;
