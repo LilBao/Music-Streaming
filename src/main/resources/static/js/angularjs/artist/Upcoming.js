@@ -70,9 +70,8 @@ app.controller('upComingCtrl', function ($scope, $http) {
                     })
 
                 });
-                console.log('success')
             }
-            
+            console.log('success')
         }).catch(error => {
 
         })

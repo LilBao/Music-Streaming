@@ -40,6 +40,7 @@ app.controller('recordCtrl', function ($scope, $http) {
                     console.log(error)
                 })
             })
+            console.log("success")
         }).catch(error => {
             console.log(data.get('fileRecord'))
             console.log(data.get('fileLyrics'))

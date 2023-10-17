@@ -303,7 +303,8 @@ app.controller('musicCtrl', function ($scope, $http) {
     $scope.updateCoverImageSong = function (id) {
         var formdata = new FormData();
         formdata.append('coverImg', $scope.coverImg);
-        let url = host + "/v1/song-image" + id;
+        if($scope.coverImg!==null){
+            let url = host + "/v1/song-image/" + id;
         $http.put(url, formdata, {
             headers: {
                 'Content-Type': undefined,
@@ -311,10 +312,12 @@ app.controller('musicCtrl', function ($scope, $http) {
             },
             transformRequest: angular.identity
         }).then(resp => {
-
+            console.log('success')
         }).catch(error => {
 
         })
+        }
+        
     }
 
     //update cover image album
@@ -396,6 +399,24 @@ app.controller('musicCtrl', function ($scope, $http) {
         }
     }
 
+    $scope.selectFile = function () {
+            $('#fileCoverImg').click();
+            $('#fileCoverImg').change(function (event) {
+                var file = event.target.files[0];
+                if (file) {
+                    $scope.$apply(function () {
+                        $scope.coverImg = file;
+
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            var imageDataUrl = e.target.result;
+                            $('#coverImg').attr('src', imageDataUrl);
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                }
+            });
+        };
 
     //JS
     function resetTabs() {
@@ -416,22 +437,9 @@ app.controller('musicCtrl', function ($scope, $http) {
         $scope.descriptions = $(this).val();
     });
 
-    $scope.selectFile = function () {
-        $('#fileCoverImg').click();
-        $('#fileCoverImg').change(function (event) {
-            var file = event.target.files[0];
-            if (file) {
-                $scope.$apply(function () {
-                    $scope.coverImg = file;
-
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        var imageDataUrl = e.target.result;
-                        $('#coverImg').attr('src', imageDataUrl);
-                    };
-                    reader.readAsDataURL(file);
-                });
-            }
-        });
-    };
+    if($scope.song.realeaseDay < $scope.currentDate){
+        $('#modified-release').hide();
+    }else{
+        $('#modified-release').show();
+    }                     
 })

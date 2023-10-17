@@ -1,5 +1,4 @@
 ﻿create database MusicStreaming
-
 use MusicStreaming
 
 CREATE TABLE IMAGES (
@@ -233,6 +232,7 @@ CREATE TABLE PODCAST (
 CREATE TABLE EPISODES (
 	EPISODESID BIGINT IDENTITY(1,1) PRIMARY KEY,
 	FILEURL NVARCHAR(MAX),
+	PUBLICIDFILE NVARCHAR(MAX),
 	EPISODESTITLE NVARCHAR(55),
 	DESCRIPTIONS NVARCHAR(55),
 	PUBLISHDATE DATE,
@@ -368,7 +368,7 @@ CREATE TABLE COUNTRY (
 );
 
 INSERT INTO  IMAGES 
-	VALUES ('Avatar/System/807831_rrsd2v.png','https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png',512,512)
+	VALUES ('Avatar/System/807831_rrsd2v.png','fsfs','https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png',512,512)
 
 
 INSERT INTO ACCOUNTS(EMAIL,PASSWORD,USENAME,BIRTHDAY,GENDER,COUNTRY,ISVERIFY,IMAGEID) 
