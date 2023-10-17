@@ -3,10 +3,7 @@ package com.rhymthwave.Service.Implement;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+
 import org.springframework.stereotype.Service;
 
 import com.rhymthwave.DAO.AccountDAO;
@@ -14,13 +11,14 @@ import com.rhymthwave.Service.AccountService;
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.entity.Account;
 
-import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+
 
 @Service
+@RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService, CRUD<Account, String> {
 
-	@Autowired
-	private AccountDAO dao;
+	private final AccountDAO dao;
 
 	@Override
 	public Account create(Account entity) {
@@ -41,7 +39,8 @@ public class AccountServiceImpl implements AccountService, CRUD<Account, String>
 
 	@Override
 	public Account findOne(String email) {
-		return dao.findByEmail(email);
+		
+		return dao.findById(email).get();
 	}
 
 	@Override

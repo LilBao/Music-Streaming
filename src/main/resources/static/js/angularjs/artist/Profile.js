@@ -88,18 +88,8 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
         $scope.typeModifiedPicture = type;
     }
 
-    //Event remove image avatar - Xóa ảnh đại diện hiện tại
-    $('#remove-current-image').click(function () {
-        $scope.removeImage('avatar');
-    })
-
-    //Event remove background - xóa hình nền hiện tại
-    $('#remove-current-background').click(function () {
-        $scope.removeImage('background');
-    })
-
     //Event update profile picture - update thay đổi hình đại diện của artist
-    $('#save-image').click(function () {
+    $('#save-profile-picture').click(function () {
         $scope.updateArtistImage();
     })
 
@@ -123,7 +113,7 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
 
     //upload Image gallery
     $scope.uploadGallery = function () {
-        if ($scope.listGallery.length>0) {
+        if ($scope.listGallery.length > 0) {
             let url = host + "/v1/artist-image";
             var formData = new FormData();
             for (var i = 0; i < $scope.listGallery.length; i++) {
@@ -142,6 +132,56 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
             })
         }
     }
+
+    //Remove Image gallery
+    $scope.removeImageGallery = function(url){
+        var index = $scope.artist.imagesGallery.findIndex(item => item === url);
+        $scope.artist.imagesGallery.splice(index,1);
+        $scope.artist.publicIdImageGallery.splice(index,1)
+        let data = angular.copy($scope.artist);
+        $scope.updateArtist(data);
+    }
+
+    //Event Addition social media link
+    $('#socialLink').keydown(function (event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            var newLink = $(this).val();
+            if (newLink.trim() !== '') {
+                if ($scope.artist.socialMediaLinks != null) {
+                    $scope.artist.socialMediaLinks.push(newLink);
+                } else {
+                    $scope.artist.socialMediaLinks = [newLink]
+                }
+                $(this).val('');
+                let data = angular.copy($scope.artist);
+                $scope.updateArtist(data);
+            }
+        }
+    });
+
+    //Remove social Media Link
+    $scope.removeSocialLink = function (url) {
+        var index = $scope.artist.socialMediaLinks.findIndex(item => item === url);
+        $scope.artist.socialMediaLinks.splice(index, 1);
+        var data = angular.copy($scope.artist);
+        $scope.updateArtist(data);
+    }
+
+    //Remove image background
+    $('#remove-current-background').click(function(){
+        $scope.artist.backgroundImage = null ;
+        var data = angular.copy($scope.artist);
+        $scope.updateArtist(data);
+    })
+
+    //Remove profile picture 
+    $('#remove-current-image').click(function(){
+        $scope.artist.imagesProfile = null ;
+        var data = angular.copy($scope.artist);
+        $scope.updateArtist(data);
+    })
+
     //Event Select file
     $scope.selectFile = function (id) {
         $('#' + id).click();
@@ -182,4 +222,44 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
             }
         })
     };
+
+    //JS
+    $('#modified-linkSocial').click(function () {
+        var icon = $(this).find("i");
+        var modifyLinkSocial = $('#modified-linkSocial').hasClass('collapsed');
+        if (modifyLinkSocial) {
+            icon.addClass('bi-plus-circle');
+            icon.removeClass('bi-dash-circle');
+        } else {
+            icon.addClass('bi-dash-circle');
+            icon.removeClass('bi-plus-circle');
+        }
+    });
+
+    $("a.link-social").each(function() {
+        var url = $(this).attr("href");
+        var icon = $(this).find("i");
+        if (url.includes("facebook.com")) {
+            icon.addClass("bi bi-facebook");
+        } 
+        else if (url.includes("instagram.com")) {
+            icon.addClass("bi bi-instagram");
+        } 
+        else if (url.includes("youtube.com")) {
+            icon.addClass("bi bi-youtube");
+        } 
+        else if (url.includes("spotify.com")) {
+            icon.addClass("bi bi-spotify");
+        } 
+        else if (url.includes("twitter.com")) {
+            icon.addClass("bi bi-twitter");
+        } 
+        else if (url.includes("apple.com")) {
+            icon.addClass("bi bi-music-note-beamed");
+        } 
+        else {
+            icon.addClass("bi-pencil-fill");
+        }
+    });
+    
 })
