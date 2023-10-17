@@ -416,7 +416,7 @@ h4.card-title.mb-0 {
 }
 
 
-/* =================== Start Blog ============== */
+/* =================== Start Create Blog ============== */
 .drop-container {
     position: relative;
     display: flex;
@@ -460,7 +460,8 @@ h4.card-title.mb-0 {
     color: #222;
 }
 
-/* =================== End Blog ============== */
+
+/* =================== End Create Blog ============== */
 
 
 /* =================== Start MANAGER Blog ============== */

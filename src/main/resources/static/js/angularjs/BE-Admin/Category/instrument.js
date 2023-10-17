@@ -1,5 +1,5 @@
 
-var apiInstrument = "http://localhost:8080/api/v1/category/instrument";
+var apiInstrument = "http://localhost:8080/api/v1/admin/category/instrument";
 var cookieName = "token";
 app.controller("instrumentController", function ($scope, $http, $cookies,$log) {
 

@@ -1,5 +1,5 @@
 
-var apiMood = "http://localhost:8080/api/v1/category/mood";
+var apiMood = "http://localhost:8080/api/v1/admin/category/mood";
 var cookieName = "token";
 app.controller("moodController", function ($scope, $http, $cookies, $log) {
 
@@ -28,7 +28,6 @@ app.controller("moodController", function ($scope, $http, $cookies, $log) {
 				var blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 				var url = URL.createObjectURL(blob);
 				var a = document.createElement('a');
-				console.log(a)
 				a.href = url;
 				a.download = 'mood.xlsx';
 				document.body.appendChild(a);
@@ -85,15 +84,16 @@ app.controller("moodController", function ($scope, $http, $cookies, $log) {
 
 	$scope.update = function (key) {
 		var item = angular.copy($scope.form);
-		var url = category + `/${$scope.form.moodid}`;
-		$http.put(apiMood, item, {
+		var url = apiMood + `/${$scope.form.moodid}`;
+		$http.put(url, item, {
 			headers: {
 				'Authorization': 'Bearer ' + $cookies.get(cookieName)
 			}
 		}).then(resp => {
-			var index = $scope.items.findIndex(item => item.id == $scope.form.id);
+			var index = $scope.items.findIndex(item => item.moodid == $scope.form.moodid);
 			$scope.items[index] = resp.data;
 			$scope.load_all();
+			$scope.reset();
 		}).catch(error => {
 			$log.error(error.data);
 		});

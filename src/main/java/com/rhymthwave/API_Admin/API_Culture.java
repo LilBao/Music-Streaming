@@ -28,7 +28,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/v1/category/culture")
+@RequestMapping("/api/v1/admin/category/culture")
 @RequiredArgsConstructor
 public class API_Culture {
 	

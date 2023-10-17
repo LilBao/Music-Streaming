@@ -20,8 +20,8 @@ public class GetHostByRequest {
 			String jwt = JwtAuthentitationFilter.getJwtFromRequest(request);
 			if (StringUtils.hasText(jwt) && JwtTokenCreate.validateToken(jwt)) {
 				// lay username from String jwt
-				String idUser = JwtTokenCreate.getUserNameJWT(jwt);
-				return idUser;
+				String email = JwtTokenCreate.getUserNameJWT(jwt);
+				return email;
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);

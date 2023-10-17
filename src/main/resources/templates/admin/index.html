@@ -31,14 +31,14 @@
  
 </head>
 
-<body ng-app="myApp">
-    <div class="main-wrapper">
+<body ng-app="myApp" >
+    <div class="main-wrapper" >
         <!-- NAVBAR -->
-        <div class="header-container fixed-top">
+        <div class="header-container fixed-top" ng-controller="navbarAdmin">
             <header class="header navbar navbar-expand-sm expand-header">
                 <div class="header-left d-flex">
                     <div class="logo">
-                        Brand
+                        Music-Streaming
                     </div>
                     <a href="" id="toggleSidebar" class="sidebarCollapse" data-placement="bottom">
                         <span class="fas fa-bars"></span>
@@ -118,14 +118,14 @@
                     </li>
                     <li class="nav-item dropdown user-profile-dropdown">
                         <a href="" class="nav-link user" id="Notify" data-bs-toggle="dropdown">
-                            <img src="../../static/img/profile.png" class="icon" alt="">
+                            <img ng-src="{{infoAdmin.image.url}}" class="icon" alt="">
                         </a>
                         <div class="dropdown-menu">
                             <div class="user-profile-section">
                                 <div class="media mx-auto">
-                                    <img src="../../static/img/profile.png" alt="" class="img-fluid mr-2">
+                                    <img src="{{infoAdmin.image.url}}" alt="" class="img-fluid mr-2">
                                     <div class="media-body">
-                                        <h5>Nguye Van A</h5>
+                                        <h5>{{infoAdmin.email}}</h5>
                                         <p>Admin</p>
                                     </div>
                                 </div>
@@ -167,7 +167,7 @@
                                 </a>
                                 <a href="" class="dropdown-item">
                                     <span class="fas fa-palette"></span>
-                                    Design Style
+                                  {{price}}
                                 </a>
 
                             </div>
@@ -176,6 +176,9 @@
                 </ul>
             </header>
         </div>
+
+
+
         <!-- NAVBAR END -->
         <!-- SIDEBAR START -->
         <div class="left-menu">
@@ -257,10 +260,11 @@
 
 
         <!-- CONTENT START  -->
-    <div ng-view></div>
+     <div ng-view></div>
         <!--  CONTENT END  -->
+    </div>
     <!-- js -->   
-  
+    <script src="../../static/js/angularjs/BE-Admin/Profile/profile.js"></script> 
     <script src="../../static/js/angularjs/BE-Admin/Category/mood.js"></script> 
     <script src="../../static/js/angularjs/BE-Admin/Category/instrument.js"></script>
     <script src="../../static/js/angularjs/BE-Admin/Category/country.js"></script>
@@ -269,6 +273,7 @@
     <script src="../../static/js/angularjs/BE-Admin/Category/genre.js"></script>
     <script src="../../static/js/jscustom/UI-Js-Admin/cdn.jsdelivr.net_npm_bootstrap@5.3.1_dist_js_bootstrap.bundle.min.js"></script>
     <script src="../../static/js/jscustom/UI-Js-Admin/code.jquery.com_jquery-3.7.1.min.js"></script>
+    <script src="../../static/js/jscustom/UI-Js-Admin/dirPagination.js"></script>
     <script src="../../static/js/jscustom/UI-Js-Admin/admin.js"></script>
     <!-- <script>
         var chrt = document.getElementById("chartId").getContext("2d");

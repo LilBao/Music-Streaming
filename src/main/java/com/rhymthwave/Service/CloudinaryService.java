@@ -11,4 +11,7 @@ public interface CloudinaryService {
 	List<String> uploadMultipleFiles(MultipartFile[] files, String parentFolder, String childFolder);
 	Boolean deleteFile (String publicID);
 	String readLrc(String lrcUrl);
+	List<String> getCloudinaryParentFolder();
+	List<String> getCloudinaryChildFolder(String ChildFolder);
+	
 }

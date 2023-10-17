@@ -1,6 +1,7 @@
 package com.rhymthwave.Service.Implement;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,11 @@ public class ImageServiceImpl implements ImageService, CRUD<Image, String>{
 
 	@Override
 	public Image findOne(String key) {
+		
+		Optional<Image> image = dao.findById(key);
+		if(image.isPresent()) {
+			return image.get();
+		}
 		return null;
 	}
 

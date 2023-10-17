@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cloudinary.Cloudinary;
+import com.cloudinary.api.ApiResponse;
 import com.cloudinary.utils.ObjectUtils;
 import com.rhymthwave.Service.CloudinaryService;
 
@@ -81,7 +84,7 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 	public Boolean deleteFile(String publicID) {
 		try {
 			Map<String, String> params = new HashMap<>();
-			params.put("public_id", publicID);
+			params.put("url", publicID);
 			cloudinary.uploader().destroy(publicID, params);
 			return true;
 		} catch (Exception e) {
@@ -98,6 +101,45 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 	}
 
 	
+	@Override
+	public List<String> getCloudinaryParentFolder() {
+        List<String> folderNames = new ArrayList<>();
+        try {
+            ApiResponse result = cloudinary.api().rootFolders(ObjectUtils.emptyMap());
+            List<Map> subFolders = (List<Map>) result.get("folders");
+            for (Map folder : subFolders) {
+                String folderName = (String) folder.get("name");
+                folderNames.add(folderName);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return folderNames;
+    }
 	
+	@Override
+	public List<String> getCloudinaryChildFolder(String ChildFolder) {
+        List<String> folderNames = new ArrayList<>();
+        try {
+            ApiResponse result = cloudinary.api().subFolders(ChildFolder ,ObjectUtils.emptyMap());
+            List<Map> subFolders = (List<Map>) result.get("folders");
+            for (Map folder : subFolders) {
+                String folderName = (String) folder.get("name");
+                folderNames.add(folderName);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return folderNames;
+    }
 
+
+	public static String extractPublicIdFromUrl(String cloudinaryUrl) {
+		Pattern pattern = Pattern.compile("/upload\\/(?:v\\d+\\/)?([^\\.]+)/");     
+        Matcher matcher = pattern.matcher(cloudinaryUrl); 
+        if (matcher.find()) {
+            return matcher.group(1);
+        }     
+        return null;
+    }
 }

@@ -1,4 +1,4 @@
-var app = angular.module("myApp", ["ngRoute","ngCookies"]);
+var app = angular.module("myApp", ["ngRoute","ngCookies","angularUtils.directives.dirPagination"]);
 app.config(function($routeProvider,$cookiesProvider) {
   
   $routeProvider
@@ -16,6 +16,9 @@ app.config(function($routeProvider,$cookiesProvider) {
   })
   .when("/ArtistProfile", {
     templateUrl : "ArtistProfile.html"
+  })
+  .when("/ads", {
+    templateUrl : "ads.html"
   })
   .when("/Mood", {
     templateUrl : "Categories/Mood.html",

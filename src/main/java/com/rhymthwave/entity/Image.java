@@ -30,6 +30,9 @@ public class Image implements Serializable {
 	@Column(name = "URL")
 	private String url;
 	
+	@Column(name = "PUBLIC_ID")
+	private String public_id;
+	
 	@Column(name = "WEIGHT")
 	private Integer weight;
 

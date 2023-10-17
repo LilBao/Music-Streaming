@@ -1,5 +1,5 @@
 
-var apiSongStyle = "http://localhost:8080/api/v1/category/song-style";
+var apiSongStyle = "http://localhost:8080/api/v1/admin/category/song-style";
 var cookieName = "token";
 app.controller("songStyleController", function ($scope, $http, $cookies,$log , $timeout) {
 

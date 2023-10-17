@@ -12,36 +12,37 @@
 
             <div ng-show="success" class="alert alert-success alert-dismissible fade show " role="alert">
                <div class="alert-ok">
-               <strong>Successfully!</strong> Create a Country
-               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" ng-click="closeAlert()"></button>
+                  <strong>Successfully!</strong> Create a Country
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                     ng-click="closeAlert()"></button>
+               </div>
             </div>
-         </div>
-            
-          <!-- END Alert  -->
-          
+
+            <!-- END Alert  -->
+
             <div class="cardperShadow shadow mb-4">
                <div class="card-header py-3">
                   <h6 class="m-0 font-weight-bold text-primary"> Create A Country
                   </h6>
-               </div>            
-               <div class="card-bodyPerShadow">        
+               </div>
+               <div class="card-bodyPerShadow">
 
                   <div class="mb-3 row">
                      <label class="col-sm-2 col-form-label">Id Country:</label>
                      <div class="col-sm-10">
-                        <input  ng-model="form.id" type="text" class="form-control">
+                        <input ng-model="form.id" type="text" class="form-control">
                      </div>
                   </div>
 
                   <div class="mb-3 row">
                      <label class="col-sm-2 col-form-label">Name Country:</label>
                      <div class="col-sm-10">
-                        <input  ng-model="form.nameCountry" type="text" class="form-control">
+                        <input ng-model="form.nameCountry" type="text" class="form-control">
                      </div>
                   </div>
 
-                  
-   
+
+
 
 
                   <div class="row">
@@ -51,59 +52,11 @@
                         <div class="event-createCountry">
                            <button class="btn btn-success" ng-click="create()">Save</button>
                            <button class="btn btn-info" ng-click="update()">Update</button>
-                           <button class="btn btn-danger"  ng-click="delete(form.id)">Delete</button>   
+                           <button class="btn btn-danger" ng-click="delete(form.id)">Delete</button>
                         </div>
 
-
-                        <div
-                              class="alert fade"
-                              id="alert-success"
-                              role="alert"
-                              data-mdb-color="success"
-                              data-mdb-position="top-right"
-                              data-mdb-stacking="true"
-                              data-mdb-width="535px"
-                              data-mdb-width="535px"
-                              data-mdb-append-to-body="true"
-                              data-mdb-hidden="true"
-                              data-mdb-autohide="true"
-                              data-mdb-delay="2000"
-                              >
-                              A simple success alert with
-                              <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
-                         </div>
-
-                         <script>
-                           const triggers = [
-                                          'primary',
-                                          'secondary',
-                                          'success',
-                                          'danger',
-                                          'warning',
-                                          'info',
-                                          'light',
-                                          'dark',
-                                          ];
-                                          const basicInstances = [
-                                          'alert-primary',
-                                          'alert-secondary',
-                                          'alert-success',
-                                          'alert-danger',
-                                          'alert-warning',
-                                          'alert-info',
-                                          'alert-light',
-                                          'alert-dark',
-                                          ];
-                           triggers.forEach((trigger, index) => {
-                              let basicInstance = mdb.Alert.getInstance(document.getElementById(basicInstances[index]));
-                              document.getElementById(trigger).addEventListener('click', () => {
-                                 basicInstance.show();
-                              });
-                              })
-                         </script>
-
                      </div>
-                     
+
                   </div>
 
                </div>
@@ -114,7 +67,7 @@
 
             <div class="cardperShadow shadow mb-4">
                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary"> Mood Table
+                  <h6 class="m-0 font-weight-bold text-primary"> Country Table
                   </h6>
                </div>
                <div class="card-bodyPerShadow">
@@ -125,7 +78,8 @@
                            <div class="col-sm-6 text-left"></div>
                            <div class="col-sm-6 text-right">
                               <div class="dt-buttons btn-group mb-2">
-                                 <button class="btn btn-secondary buttons-export" ng-click="exportToExcel()" type="button"><span>Excel</span>
+                                 <button class="btn btn-secondary buttons-export" ng-click="exportToExcel()"
+                                    type="button"><span>Excel</span>
                                  </button>
                                  <button class="btn btn-secondary buttons-export" type="button"><span>Print</span>
                                  </button>
@@ -133,7 +87,7 @@
                                  </button>
                                  <button class="btn btn-secondary buttons-export" type="button"><span>Excel</span>
                                  </button>
-                               
+
                               </div>
                            </div>
                         </div>
@@ -157,25 +111,34 @@
                                  </tfoot>
                                  <tbody>
 
-                                    <tr class="odd" ng-repeat=" country in itemCountries">
+                                    <tr class="odd" dir-paginate=" country in itemCountries | itemsPerPage: 6">
                                        <td class="sorting_1">{{country.id}}</td>
                                        <td>{{country.nameCountry}}</td>
-                                       <td><button class="btn btn-primary" ng-click="edit(country.id)">Edit</button></td>
+                                       <td><button class="btn btn-primary" ng-click="edit(country.id)">Edit</button>
+                                       </td>
                                     </tr>
-                                
-                                
+
+
                                  </tbody>
                               </table>
                            </div>
                         </div>
 
-                        <div class="row"> 
+                        <div class="row">
                            <div class="col-sm-12 col-md-5">
                               <!-- <div class="dataTables_info" id="DataTables_Table_0_info" role="status"
                                  aria-live="polite">Đang xem 1 đến 1 trong
                                  tổng số 1 mục</div> -->
+
                            </div>
                            <div class="col-sm-12 col-md-7">
+                              sad
+                              <dir-pagination-controls direction-links="true" boundary-links="true">
+                                 chia co gi
+                              </dir-pagination-controls>
+        
+
+                              <!-- 
                               <div class="pagination  d-flex justify-content-end align-content-center mb-3">
                                  <a href="" ng-click="utilitiesPage.firstPage()" >&laquo;</a>
 
@@ -183,7 +146,7 @@
                                     {{pageNo + 1}}
                                  </a>                           
                                  <a href="" ng-click="utilitiesPage.endPage()" >&raquo;</a>
-                              </div>
+                              </div> -->
 
                            </div>
                         </div>

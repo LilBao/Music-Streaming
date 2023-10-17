@@ -3,6 +3,7 @@ package com.rhymthwave.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -41,7 +42,7 @@ public class News implements Serializable {
 	@Column(name = "LASTMODIFIED")
 	private Date lastModified;
 
-	@OneToOne
+	@OneToOne( cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "IMAGE")
 	private Image image;
 
