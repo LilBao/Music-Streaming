@@ -34,7 +34,7 @@ public class ImageServiceImpl implements ImageService, CRUD<Image, String>{
 
 	@Override
 	public Image findOne(String key) {
-		return null;
+		return dao.findById(key).get();
 	}
 
 	@Override
