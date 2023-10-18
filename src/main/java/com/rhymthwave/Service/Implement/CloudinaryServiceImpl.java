@@ -1,9 +1,16 @@
 package com.rhymthwave.Service.Implement;
 
 
+import java.io.File;
+import java.net.http.HttpResponse;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -87,6 +94,19 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 	}
 
 	@Override
+	public List<Map> findListImageByFolder(String parentFolder, String childFolder) {	
+		try {
+	        String folderPath = parentFolder + "/" + childFolder;
+	        Map<String, Object> listParams = ObjectUtils.asMap("type", "upload", "prefix", folderPath);
+	        Map result = cloudinary.api().resources(listParams);
+	        return (List<Map>) result.get("resources");
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return Collections.emptyList();
+	    }
+	}
+
+	@Override
 	public Boolean deleteFile(String publicID) {
 		try {
 			Map<String, String> params = new HashMap<>();
@@ -105,5 +125,33 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 		String lrcContent = restTemplate.getForObject(lrcUrl, String.class);
 		return lrcContent;
 	}
+	
+	
+	@Override
+	public String downloadFile(String publicId,String format) {
+		try {
+			Map<String, Object> options = ObjectUtils.asMap("attachment", true);
+			String result = cloudinary.privateDownload(publicId, format, options);
+			
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	 private String getDownloadPath() {
+	        String os = System.getProperty("os.name").toLowerCase();
+	        String downloadPath = System.getProperty("user.home");
 
+	        if (os.contains("win")) {
+	            downloadPath += File.separator + "Downloads";
+	        } else if (os.contains("mac")) {
+	            downloadPath += File.separator + "Downloads";
+	        } else {
+	            downloadPath += File.separator + "Downloads";
+	        }
+
+	        return downloadPath;
+	    }
 }

@@ -1,6 +1,7 @@
 var host = "http://localhost:8080/api";
 app.controller('profileArtistCtrl', function ($scope, $http) {
     $scope.artist = {};
+    $scope.image = {};
 
     //Get information artist - lấy thông tin artist đăng nhập
     $http.get(host + "/v1/profile", {
@@ -15,25 +16,37 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
     $scope.updateArtist = function (data) {
         let url = host + "/v1/artist";
         $http.put(url, data).then(resp => {
+            $scope.artist = resp.data.data;
             console.log("success")
         }).catch(error => {
             console.log("error")
         })
     }
 
+    //find Image
+    $scope.findImage = function (id) {
+        let url = host + "/v1/image/" + id;
+        $http.get(url).then(resp => {
+            $scope.image = resp.data.data;
+        }).catch(error => {
+
+        })
+    }
+
     //Remove image - xóa ảnh đại diện hoặc hình nền
     $scope.removeImage = function (type) {
         let url = host + "/v1/artist";
-        if (type = "avatar") {
+        if (type === "avatar") {
             $scope.artist.imagesProfile = null;
         } else {
             $scope.artist.backgroundImage = null;
         }
         var data = angular.copy($scope.artist);
         $http.put(url, data).then(resp => {
-
+            $scope.artist = resp.data.data
+            console.log("success");
         }).catch(error => {
-
+            console.log("error");
         })
     }
 
@@ -51,8 +64,6 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
             transformRequest: angular.identity
         }).then(function (response) {
             console.log("Update Successfully");
-            $scope.backgroundFile = null;
-            $scope.avatarFile = null;
         }).catch(function (error) {
             console.log(error);
             console.log("Update Failure");
@@ -134,10 +145,10 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
     }
 
     //Remove Image gallery
-    $scope.removeImageGallery = function(url){
+    $scope.removeImageGallery = function (url) {
         var index = $scope.artist.imagesGallery.findIndex(item => item === url);
-        $scope.artist.imagesGallery.splice(index,1);
-        $scope.artist.publicIdImageGallery.splice(index,1)
+        $scope.artist.imagesGallery.splice(index, 1);
+        $scope.artist.publicIdImageGallery.splice(index, 1)
         let data = angular.copy($scope.artist);
         $scope.updateArtist(data);
     }
@@ -169,18 +180,89 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
     }
 
     //Remove image background
-    $('#remove-current-background').click(function(){
-        $scope.artist.backgroundImage = null ;
-        var data = angular.copy($scope.artist);
-        $scope.updateArtist(data);
+    $('#remove-current-background').click(function () {
+        $scope.removeImage('background');
     })
 
     //Remove profile picture 
-    $('#remove-current-image').click(function(){
-        $scope.artist.imagesProfile = null ;
-        var data = angular.copy($scope.artist);
-        $scope.updateArtist(data);
+    $('#remove-current-image').click(function () {
+        $scope.removeImage('avatar');
     })
+
+    //List cloudinary
+    $scope.listProfilePicture = []
+    $('#avatar-pictures').click(function () {
+        let url = host + "/v1/cloudinary/Avatar/" + $scope.artist.artistName;
+        $http.get(url).then(resp => {
+            if ($('#avatar-pictures').hasClass('collapsed')) {
+                $scope.listProfilePicture = [];
+            } else {
+                $scope.listProfilePicture = resp.data.data;
+            }
+        })
+    })
+
+    //All image cloudinary
+    $scope.listPicture = []
+    $scope.listTypePicture = function (type, idBtn) {
+        let url = host + "/v1/cloudinary/" + type + "/" + $scope.artist.artistName;
+        $http.get(url).then(resp => {
+            if ($('#' + idBtn).hasClass('collapsed')) {
+                $scope.listPicture = [];
+            } else {
+                $scope.listPicture = resp.data.data;
+            }
+        }).catch(error => {
+            console.log("error");
+        })
+    }
+
+    //Delete image in cloudinary
+    $scope.deleteImageCloudinary = function (publicId) {
+        let url = host + "/v1/cloudinary?public_id=" + publicId;
+        $http.delete(url).then(resp => {
+            console.log("success");
+            $scope.listTypePicture();
+        }).catch(error => {
+            console.log("error");
+        })
+    }
+
+    //Delete image
+    $scope.deleteImage = function (assetId, publicId) {
+        var url = host + "/v1/image/" + assetId;
+        $http.delete(url).then(resp => {
+            $scope.deleteImageCloudinary(publicId);
+            $scope.listTypePicture();
+        }).catch(error => {
+
+        })
+    }
+
+    //Download Image
+    $scope.downloadImage=function(urlFile){
+       
+    }
+
+    //recovery profile-picture
+    $scope.recoveryProfilePicture = function (assetId, type) {
+        console.log(assetId);
+        console.log(type);
+        var data = angular.copy($scope.artist);
+        let url = host + "/v1/image/" + assetId;
+        $http.get(url).then(resp => {
+            if (type === 'avatar') {
+                data.imagesProfile = resp.data.data;
+                $scope.updateArtist(data);
+            } else {
+                data.backgroundImage = resp.data.data;
+                $scope.updateArtist(data);
+            }
+        }).catch(error => {
+
+        })
+
+    }
 
     //Event Select file
     $scope.selectFile = function (id) {
@@ -208,9 +290,10 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
     };
 
     $scope.ResetListFileGallery = function () {
+        $("#savedelete").collapse("hide");
         $scope.listGallery = [];
     }
-
+   
     $scope.selectMultipleFile = function (id) {
         $('#' + id).click();
         $('#' + id).change(function (event) {
@@ -236,30 +319,30 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
         }
     });
 
-    $("a.link-social").each(function() {
+    $("a.link-social").each(function () {
         var url = $(this).attr("href");
         var icon = $(this).find("i");
         if (url.includes("facebook.com")) {
             icon.addClass("bi bi-facebook");
-        } 
+        }
         else if (url.includes("instagram.com")) {
             icon.addClass("bi bi-instagram");
-        } 
+        }
         else if (url.includes("youtube.com")) {
             icon.addClass("bi bi-youtube");
-        } 
+        }
         else if (url.includes("spotify.com")) {
             icon.addClass("bi bi-spotify");
-        } 
+        }
         else if (url.includes("twitter.com")) {
             icon.addClass("bi bi-twitter");
-        } 
+        }
         else if (url.includes("apple.com")) {
             icon.addClass("bi bi-music-note-beamed");
-        } 
+        }
         else {
             icon.addClass("bi-pencil-fill");
         }
     });
-    
+
 })
