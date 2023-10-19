@@ -11,8 +11,8 @@ import com.rhymthwave.entity.Song;
 
 @Repository
 public interface  SongDAO extends JpaRepository<Song, Integer>{
-	@Query(value="select s.* from SONGS s join WRITTER w on s.SONGSID = w.SONGSID "
-				+ "where w.ARTISTID= :idArtist and not exists (select 1 from recording r where r.songsid = s.songsid)",nativeQuery = true)
+	@Query(value="select s.* from SONGS s "
+				+ "where s.ARTISTCREATE= :idArtist and not exists (select 1 from recording r where r.songsid = s.songsid)",nativeQuery = true)
 	List<Song> getSongNotRecord(@Param("idArtist") Long idArtist);
 	
 	@Query(value="select SONGS.* from SONGS "

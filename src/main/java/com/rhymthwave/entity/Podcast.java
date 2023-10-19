@@ -62,13 +62,13 @@ public class Podcast implements Serializable {
 	@JoinColumn(name = "CATEGORY")
 	private Tag tag;
 
-	@OneToOne
-	@JoinColumn(name = "ACOUNTID")
+	@ManyToOne
+	@JoinColumn(name = "ACOUNTID") //ACCOUNTID
 	private Account account;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "podcast")
-	private List<Episode> episodeos;
+	private List<Episode> Episodes;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "podcast")

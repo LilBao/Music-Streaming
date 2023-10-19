@@ -130,7 +130,6 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 		try {
 			Map<String, Object> options = ObjectUtils.asMap("attachment", true);
 			String result = cloudinary.privateDownload(publicId, format, options);
-			
 			return result;
 		} catch (Exception e) {
 			e.printStackTrace();

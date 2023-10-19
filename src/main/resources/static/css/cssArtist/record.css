@@ -1,3 +1,10 @@
+.list-tag {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 1em 0 0 0;
+}
+
 p {
     margin: 0px !important;
 }
@@ -39,9 +46,4 @@ p {
     background: black;
     border: 2px solid white;
     color: white;
-}
-
-.coverImg{
-    height: 300px!important;
-    object-fit: cover!important;
 }
