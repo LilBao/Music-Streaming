@@ -12,11 +12,14 @@ app.controller('loginCtrl',function($scope,$http){
       // Hide captcha dialog
       document.getElementById("captchaDialog").style.display = "none";
 
+      
+
         var url = host+"/v1/users/login";
         var data = angular.copy($scope.loginRequest);
         $http.post(url,data).then(resp=>{
             setCookie("token",resp.data.data.accessToken);
         })
+      showStickyNotification('Login success','success',3000);
     })
     // $scope.loginRequest={};
     // $('#login').click(function(){
@@ -34,7 +37,7 @@ function showCaptchaDialog(event) {
     var password = document.getElementById("password").value;
     
     if (email === "" || password === "") {
-      alert("Please enter both email and password.");
+      showStickyNotification('Please enter both email and password.','danger',3000);
       return;
     }
 
