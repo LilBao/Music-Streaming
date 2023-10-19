@@ -1,6 +1,7 @@
 package com.rhymthwave.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,4 +25,17 @@ public class Country implements Serializable {
 
 	@Column(name = "NAMECOUNTRY")
 	private String nameCountry;
+	
+	@Column(name = "CREATEBY",length = 255)
+	private String createBy;
+	
+	@Column(name = "CREATEDATE")
+	private Date createDate;
+	
+	@Column(name = "MODIFIEDBY", length = 255)
+	private String modifiedBy;
+	
+	@Column(name = "MODIFIDATE")
+	private Date modifiDate;
+	
 }

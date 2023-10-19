@@ -63,7 +63,7 @@ public class Podcast implements Serializable {
 	private Tag tag;
 
 	@ManyToOne
-	@JoinColumn(name = "ACOUNTID") //ACCOUNTID
+	@JoinColumn(name = "ACCOUNTID") //ACCOUNTID
 	private Account account;
 
 	@JsonIgnore
