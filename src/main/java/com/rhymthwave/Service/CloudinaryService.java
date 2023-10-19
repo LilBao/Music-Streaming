@@ -22,4 +22,9 @@ public interface CloudinaryService {
 	Boolean deleteFile (String publicID);
 	
 	String readLrc(String lrcUrl);
+	
+	List<String> getCloudinaryParentFolder();
+	
+	List<String> getCloudinaryChildFolder(String ChildFolder);
+	
 }

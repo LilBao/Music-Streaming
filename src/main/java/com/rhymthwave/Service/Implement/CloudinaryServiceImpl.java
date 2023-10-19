@@ -2,15 +2,12 @@ package com.rhymthwave.Service.Implement;
 
 
 import java.io.File;
-import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -18,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.Transformation;
+import com.cloudinary.api.ApiResponse;
 import com.cloudinary.utils.ObjectUtils;
 import com.rhymthwave.Service.CloudinaryService;
 
@@ -139,6 +137,40 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 		return null;
 	}
 	
+	@Override
+	public List<String> getCloudinaryParentFolder() {
+        List<String> folderNames = new ArrayList<>();
+        try {
+            ApiResponse result = cloudinary.api().rootFolders(ObjectUtils.emptyMap());
+            List<Map> subFolders = (List<Map>) result.get("folders");
+            for (Map folder : subFolders) {
+                String folderName = (String) folder.get("name");
+                folderNames.add(folderName);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return folderNames;
+    }
+	
+	@Override
+	public List<String> getCloudinaryChildFolder(String ChildFolder) {
+        List<String> folderNames = new ArrayList<>();
+        try {
+            ApiResponse result = cloudinary.api().subFolders(ChildFolder ,ObjectUtils.emptyMap());
+            List<Map> subFolders = (List<Map>) result.get("folders");
+            for (Map folder : subFolders) {
+                String folderName = (String) folder.get("name");
+                folderNames.add(folderName);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return folderNames;
+    }
+
+
+
 	 private String getDownloadPath() {
 	        String os = System.getProperty("os.name").toLowerCase();
 	        String downloadPath = System.getProperty("user.home");

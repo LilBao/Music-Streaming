@@ -31,7 +31,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/v1/category/country")
+@RequestMapping("/api/v1/admin/category/country")
 @RequiredArgsConstructor
 public class API_Country {
 

@@ -2,15 +2,15 @@ package com.rhymthwave.Service.Implement;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
 
 import com.rhymthwave.DAO.AccountDAO;
 import com.rhymthwave.Service.AccountService;
 import com.rhymthwave.Service.CRUD;
+import com.rhymthwave.Utilities.GetHostByRequest;
 import com.rhymthwave.entity.Account;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 
@@ -20,6 +20,9 @@ public class AccountServiceImpl implements AccountService, CRUD<Account, String>
 
 	private final AccountDAO dao;
 
+	private final GetHostByRequest getHostByRequest;
+	
+	
 	@Override
 	public Account create(Account entity) {
 		return null;
@@ -48,11 +51,12 @@ public class AccountServiceImpl implements AccountService, CRUD<Account, String>
 		return dao.findAll();
 	}
 
-//	@Override
-//	public Page<Product> getByConditions(String namecate, Integer pageNo, Integer pageSize, String sortField,
-//			String sortDirection, Integer size, Float minPrice, Float maxPrice) {
-//		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
-//		Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
-//		return dao.getByConditions(namecate, minPrice, maxPrice, size, pageable);
-//	}
+	@Override
+	public Account findAdminByEmail(HttpServletRequest request) {
+		String email  = getHostByRequest.getEmailByRequest(request);
+		Account admin = findOne(email);
+		return admin;
+	}
+
+
 }

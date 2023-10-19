@@ -28,7 +28,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/v1/category/song-style")
+@RequestMapping("/api/v1/admin/category/song-style")
 @RequiredArgsConstructor
 public class API_SongType {
 	

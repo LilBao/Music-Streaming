@@ -1,5 +1,5 @@
 
-var aipCountry = "http://localhost:8080/api/v1/category/country";
+var aipCountry = "http://localhost:8080/api/v1/admin/category/country";
 var cookieName = "token";
 app.controller("countryController", function ($scope, $http, $cookies,$log , $timeout) {
 
