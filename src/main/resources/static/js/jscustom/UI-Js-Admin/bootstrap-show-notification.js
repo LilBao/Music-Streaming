@@ -28,9 +28,9 @@
         this.id = "id-" + Math.random().toString(36).substr(2)
         this.template =
             "<div class='" + cssClass + "' role='alert'>" + this.props.body +
-            // "   <button type='button' class='close' data-dismiss='alert' aria-label='close'>" +
-            // "       <span aria-hidden='true'>&times;</span>" +
-            // "   </button>" +
+            "   <button type='button' class='close' data-dismiss='alert' aria-label='close'>" +
+            "       <span aria-hidden='true'>&times;</span>" +
+            "   </button>" +
             "</div>"
         this.$container = $("#" + this.containerId)
         if (!this.$container.length) {
