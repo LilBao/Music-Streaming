@@ -20,7 +20,7 @@ app.controller('musicCtrl', function ($scope, $http) {
         console.log(error)
     })
 
-    //update arrtisst
+    //update arrtist
     $scope.updateArtist = function (data, avatar, background) {
         if (data != null) {
             let url = host + "/v1/artist";
@@ -31,7 +31,50 @@ app.controller('musicCtrl', function ($scope, $http) {
             })
         }
     }
+    //Get list record
+   
+    $scope.findListRecordArtist = function(){
+        let url = host + '/v1/record-artist';
+        $http.get(url,{
+            headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+        }).then(resp => {
+            $scope.listRecord = resp.data.data
+        }).catch(error => {
+            console.log(error)
+        })
+    }
 
+    $scope.findListRecordArtist();
+    $('#tab1-tab').click(function(){
+        $scope.findListRecordArtist();
+    })
+
+    //Get list record delete
+    $scope.listRecordeDelete = [];
+    $scope.findListRecordDelete = function(){
+        let url = host + '/v1/record-delete'
+        $http.get(url,{
+            headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+        }).then(resp => {
+            $scope.listRecordeDelete = resp.data.data
+        }).catch(error => {
+            console.log(error)
+        })
+    }
+    $('#tab5-tab').click(function(){
+        $scope.findListRecordDelete();
+    })
+
+    //Delete record
+    $scope.deleteRecord=function(id){
+        let url = host + '/v1/record/'+id;
+        $http.delete(url).then(resp => {
+            console.log("success");
+        }).catch(error => {
+            console.log(error);
+        })
+    }
+    
     //Get list song has not record (lấy những bài hát không có record)
     $http.get(host + "/v1/song/up-coming", {
         headers: { 'Authorization': 'Bearer ' + getCookie('token') }
@@ -431,6 +474,11 @@ app.controller('musicCtrl', function ($scope, $http) {
         $('#current-tab').innerText = currentTab + 1;
         $("#nextBtn").removeClass("submit");
         $("#nextBtn").show();
+    }
+
+    //transit tab upcoming
+    $scope.changeTab=function(){
+        $('#tab4-tab').click();
     }
 
     //description

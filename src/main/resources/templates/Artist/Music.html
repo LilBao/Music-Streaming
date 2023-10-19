@@ -13,32 +13,46 @@
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../../static/css/cssArtist/music.css">
+    <link rel="stylesheet" href="../../static/css/cssArtist/record.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="../../static/js/angularjs/artist/Music.js"></script>
     <script src="../../static/js/jscustom/Artist/Music.js"></script>
     <script src="../../static/js/Utiliez/CookiesUtil.js"></script>
+
+    <!-- Record -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../../static/js/angularjs/artist/Record.js"></script>
+
+    <!-- Upcoming -->
+    <script src="../../static/js/angularjs/artist/Upcoming.js"></script>
 </head>
 
 <body ng-app="myApp" ng-controller="musicCtrl">
+    
     <section class="">
         <h1>Music</h1>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item me-3 pb-3">
                 <a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1"
-                    aria-selected="true">Songs</a>
+                    aria-selected="true">Record</a>
             </li>
             <li class="nav-item me-3 pb-3">
-                <a class="nav-link" id="tab1-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2"
+                <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2"
                     aria-selected="false">Releases</a>
             </li>
             <li class="nav-item me-3 pb-3">
-                <a class="nav-link" id="tab1-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3"
+                <a class="nav-link" id="tab3-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3"
                     aria-selected="false">Playlists</a>
             </li>
             <li class="nav-item me-3 pb-3">
-                <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab4" role="tab" aria-controls="tab4"
+                <a class="nav-link" id="tab4-tab" data-toggle="tab" href="#tab4" role="tab" aria-controls="tab4"
                     aria-selected="false">Upcoming</a>
+            </li>
+            <li class="nav-item me-3 pb-3">
+                <a class="nav-link" id="tab5-tab" data-toggle="tab" href="#tab5" role="tab" aria-controls="tab5"
+                    aria-selected="false">Garbage</a>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
@@ -68,32 +82,39 @@
                                     <h4>Your top songs</h4>
                                 </th>
                                 <th>Listeners</th>
-                                <th>VIEWS</th>
-                                <th><i class="bi bi-plus-circle"></i></th>
+                                <th>Uploaded date </th>
+                                <th>
+                                    <button class="btn border-0" data-bs-toggle="modal" data-bs-target="#record">
+                                        <i class="bi bi-plus-circle"></i>
+                                    </button>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="align-items-center">
-                                <td>12,2023</td>
-                                <td class="d-flex align-items-center">
-                                    <img class="cover-image rounded-4" src="../../static/img/cs1.webp" alt="">
-                                    <h6>Listeners</h6>
+                            <tr ng-repeat="item in listRecord" class="align-items-start">
+                                <td>{{$index+1}} <i ng-if="item.song ==null" class="ms-1 bi bi-filetype-raw"></i></td>
+                                <td class="align-items-center">
+                                    {{item.recordingName}}
                                 </td>
-                                <td>12,2023</td>
-                                <td colspan="2">12,2023</td>
-                            </tr>
-                            <tr class="align-items-start">
-                                <td>12,2023</td>
-                                <td class="d-flex align-items-center">
-                                    <img class="cover-image rounded-4" src="../../static/img/cs1.webp" alt="">
-                                    <h6>Listeners</h6>
+                                <td class="align-items-center">12,2023</td>
+                                <td class="align-items-center">{{item.recordingdate | date:'dd/MM/yyyy'}}</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="p-0 btn border-0 align-items-center" data-bs-toggle="dropdown">
+                                            <i class="bi bi-three-dots-vertical"></i>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                          <li><a class="dropdown-item">Review</a></li>
+                                          <li><a  ng-show="item.song ==null" ng-click="changeTab()" class="dropdown-item">Pitch</a></li>
+                                          <li><a class="dropdown-item">Link 3</a></li>
+                                        </ul>
+                                    </div>
                                 </td>
-                                <td>12,2023</td>
-                                <td>12,2023</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+                 <div ng-include="'Recording.html'"></div>
             </div>
 
             <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
@@ -311,6 +332,9 @@
                     </tbody>
                 </table>
             </div>
+            <div class="tab-pane fade " id="tab5" role="tabpanel" aria-labelledby="tab5-tab">
+                
+            </div>
         </div>
     </section>
     <!-- The Modal -->
@@ -499,6 +523,7 @@
             </div>
         </div>
     </div>
+    <script src="../../static/js/jscustom/Artist/record.js"></script>
 </body>
 
 </html>

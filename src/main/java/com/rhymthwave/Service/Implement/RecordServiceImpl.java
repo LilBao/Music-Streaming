@@ -57,8 +57,8 @@ public class RecordServiceImpl implements RecordService, CRUD<Recording, Integer
 	}
 
 	@Override
-	public List<Recording> findRecordByCreater(String email) {
-		return dao.findByCreater(email);
+	public List<Recording> findListRecordNotRaw(String email) {
+		return dao.getListRecordNotRaw(email);
 	}
 
 	@Override
@@ -71,6 +71,17 @@ public class RecordServiceImpl implements RecordService, CRUD<Recording, Integer
 		List<Recording> listRecord = dao.getListRecordBySong(songId);
 		return listRecord;
 	}
-	
+
+	@Override
+	public List<Recording> findRecordByCreater(String email) {
+		List<Recording> listRecord = dao.getRecordByCreater(email);
+		return listRecord;
+	}
+
+	@Override
+	public List<Recording> findRecordDelete(String email) {
+		List<Recording> listRecord = dao.getRecordDelete(email);
+		return listRecord;
+	}
 	
 }

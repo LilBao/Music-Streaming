@@ -89,6 +89,7 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
         $('#close-modified-background').click(function () {
             icon.removeClass("bi-check-lg");
             icon.addClass("bi-pencil-fill");
+            $('.background').attr('src', $scope.artist.backgroundImage);
             $('#modified-background').removeClass("save");
             $('#close-modified-background').remove();
         })

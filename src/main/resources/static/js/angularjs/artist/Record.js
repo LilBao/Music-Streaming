@@ -1,4 +1,3 @@
-var app = angular.module('myApp', [])
 var host = "http://localhost:8080/api";
 app.controller('recordCtrl', function ($scope, $http) {
     $scope.record = {};
@@ -59,6 +58,14 @@ app.controller('recordCtrl', function ($scope, $http) {
         })
     }
 
+    $scope.updateFile = function(){
+        var url = host + "/v1/record";
+        var data = new FormData();
+        data.append('fileRecord', $scope.recordFile);
+        if ($scope.lyricsFile) {
+            data.append('fileLyrics', $scope.lyricsFile);
+        }
+    }
 
     //Get File Audio and File lyrics
     $scope.selectFile = function (id) {
