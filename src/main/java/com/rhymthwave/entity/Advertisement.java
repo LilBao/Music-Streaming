@@ -58,9 +58,24 @@ public class Advertisement implements Serializable {
 	@Column(name = "PRIORITY")
 	private int priority;
 
+	@Column(name = "AUDIOFILE",length = 2000)
+	private String audioFile;
+	
+	@Column(name = "PUBLICIDAUDIO",length = 2000)
+	private String  publicIdAudio;
+	
 	@Column(name = "TAG")
 	private String tag;
 
+	@Column(name = "CREATEDATE")
+	private Date createDate;
+	
+	@Column(name = "MODIFIEDBY", length = 255)
+	private String modifiedBy;
+	
+	@Column(name = "MODIFIDATE")
+	private Date modifiDate;
+	
 	@ManyToOne
 	@JoinColumn(name = "BANNER")
 	private Image image;

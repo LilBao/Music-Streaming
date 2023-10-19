@@ -242,7 +242,7 @@ CREATE TABLE PODCAST (
 	ACCOUNTID VARCHAR(255), /*ACCOUNTID*/
 	RATE BIGINT,
 
-	FOREIGN KEY (ACOUNTID) REFERENCES ACCOUNTS(EMAIL) ON DELETE NO ACTION ON UPDATE CASCADE,
+	FOREIGN KEY (ACCOUNTID) REFERENCES ACCOUNTS(EMAIL) ON DELETE NO ACTION ON UPDATE CASCADE,
 	FOREIGN KEY (IMGAGEID) REFERENCES IMAGES(ACCESSID)ON DELETE NO ACTION ,	
 	FOREIGN KEY (CATEGORY) REFERENCES TAGS(TAGID) ON DELETE NO ACTION ON UPDATE CASCADE,
 );
@@ -423,11 +423,11 @@ INSERT INTO  IMAGES
 
 INSERT INTO ACCOUNTS(EMAIL,PASSWORD,USENAME,BIRTHDAY,GENDER,COUNTRY,ISVERIFY,IMAGEID) 
 	VALUES ('mck@gmail.com','$2a$12$eX7AUZVUW.QC.6ZNxwXtUu0Qn03546/D58VH/oqnN3uhXF1044v.G','rpt.mckeyyyyy','2001/03/02',1,'VN',1,'Avatar/System/807831_rrsd2v.png')
-
 	
 INSERT INTO ACCOUNTS(EMAIL,PASSWORD,USENAME,BIRTHDAY,GENDER,COUNTRY,ISVERIFY,IMAGEID) 
 	VALUES ('jvke@gmail.com','$2a$12$eX7AUZVUW.QC.6ZNxwXtUu0Qn03546/D58VH/oqnN3uhXF1044v.G','jvkeeee','2001/03/03',1,'US',1,'Avatar/System/807831_rrsd2v.png')
 
+Truncate table ARTIST
 INSERT INTO ARTIST(ARTISTNAME,FULLNAME,DATEOFBIRTH,PLACEOFBIRTH,BIO,SOCIALMEDIALINKS,VERIFY,EMAIL) 
 			VALUES('MCK','Nghiêm Vũ Hoàng Long','2001/03/02', N'Hà Nội, Việt Nam','Hanoi born-and-raised. CDSL // RPT
 Nghiêm Vũ Hoàng Long, also known as MCK, is a rapper/singer-songwriter from Hanoi, Vietnam. His music career started in early 2018 as an independent singer/songwriter under the alias Ngơ. His debut single was the smashing hit "Tình Đắng Như Ly Cà Phê" featuring Nân, accumulating over 60 million streams across the DSPs since its upload, kick-starting one of the most successful debuts in the local independent scene.
