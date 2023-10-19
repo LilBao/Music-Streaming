@@ -301,41 +301,44 @@ app.controller('musicCtrl', function ($scope, $http) {
     }
     //update cover image song
     $scope.updateCoverImageSong = function (id) {
-        var formdata = new FormData();
-        formdata.append('coverImg', $scope.coverImg);
-        if($scope.coverImg!==null){
-            let url = host + "/v1/song-image/" + id;
-        $http.put(url, formdata, {
-            headers: {
-                'Content-Type': undefined,
-                'Authorization': 'Bearer ' + getCookie('token')
-            },
-            transformRequest: angular.identity
-        }).then(resp => {
-            console.log('success')
-        }).catch(error => {
+        if ($scope.coverImg != null) {
+            var formdata = new FormData();
+            formdata.append('coverImg', $scope.coverImg);
+            if ($scope.coverImg !== null) {
+                let url = host + "/v1/song-image/" + id;
+                $http.put(url, formdata, {
+                    headers: {
+                        'Content-Type': undefined,
+                        'Authorization': 'Bearer ' + getCookie('token')
+                    },
+                    transformRequest: angular.identity
+                }).then(resp => {
+                    console.log('success')
+                }).catch(error => {
 
-        })
+                })
+            }
         }
-        
     }
 
     //update cover image album
     $scope.updateCoverImageAlbum = function (id) {
-        var formdata = new FormData();
-        formdata.append('coverImg', $scope.coverImg);
-        let url = host + "/v1/album-image/" + id;
-        $http.put(url, formdata, {
-            headers: {
-                'Content-Type': undefined,
-                'Authorization': 'Bearer ' + getCookie('token')
-            },
-            transformRequest: angular.identity
-        }).then(resp => {
+        if ($scope.coverImg != null) {
+            var formdata = new FormData();
+            formdata.append('coverImg', $scope.coverImg);
+            let url = host + "/v1/album-image/" + id;
+            $http.put(url, formdata, {
+                headers: {
+                    'Content-Type': undefined,
+                    'Authorization': 'Bearer ' + getCookie('token')
+                },
+                transformRequest: angular.identity
+            }).then(resp => {
 
-        }).catch(error => {
+            }).catch(error => {
 
-        })
+            })
+        }
     }
 
     //update cover image
@@ -354,13 +357,13 @@ app.controller('musicCtrl', function ($scope, $http) {
         if (type === 'song') {
             let song = angular.copy($scope.song);
             song.songName = $('#nameDetail').val();
-            song.releaseDay = $('#releaseDetail').val();
+            song.releaseDay = new Date($('#releaseDetail').val());
             $scope.updateSong(song);
             $scope.updateCoverImage(type);
         } else {
             let album = angular.copy($scope.album);
             album.albumName = $('#nameDetail').val();
-            album.releaseDate = $('#releaseDetail').val();
+            album.releaseDate = new Date($('#releaseDetail').val());
             $scope.updateAlbum(album);
             $scope.updateCoverImage(type);
         }
@@ -389,34 +392,33 @@ app.controller('musicCtrl', function ($scope, $http) {
     })
 
     //add song or album
-    $scope.addRecordToSongOrAlbum = function (type,item,record) {
+    $scope.addRecordToSongOrAlbum = function (type, item, record) {
         if (type === 'song') {
             $scope.updateSongPitch(item, record);
             $scope.findListRecordSong();
         } else {
-            $scope.createTrack(item,record);
+            $scope.createTrack(item, record);
             $scope.findListRecordSong();
         }
     }
 
-    $scope.selectFile = function () {
-            $('#fileCoverImg').click();
-            $('#fileCoverImg').change(function (event) {
-                var file = event.target.files[0];
-                if (file) {
-                    $scope.$apply(function () {
-                        $scope.coverImg = file;
-
-                        var reader = new FileReader();
-                        reader.onload = function (e) {
-                            var imageDataUrl = e.target.result;
-                            $('#coverImg').attr('src', imageDataUrl);
-                        };
-                        reader.readAsDataURL(file);
-                    });
-                }
-            });
-        };
+    $scope.selectFile = function (id) {
+        $('#fileCoverImg').click();
+        $('#fileCoverImg').change(function (event) {
+            var file = event.target.files[0];
+            if (file) {
+                $scope.$apply(function () {
+                    $scope.coverImg = file;
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var imageDataUrl = e.target.result;
+                        $('#coverImg-' + id).attr('src', imageDataUrl);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+        });
+    };
 
     //JS
     function resetTabs() {
@@ -437,9 +439,9 @@ app.controller('musicCtrl', function ($scope, $http) {
         $scope.descriptions = $(this).val();
     });
 
-    if($scope.song.realeaseDay < $scope.currentDate){
+    if ($scope.song.realeaseDay < $scope.currentDate) {
         $('#modified-release').hide();
-    }else{
+    } else {
         $('#modified-release').show();
-    }                     
+    }
 })

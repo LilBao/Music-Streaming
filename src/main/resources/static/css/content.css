@@ -416,7 +416,7 @@ h4.card-title.mb-0 {
 }
 
 
-/* =================== Start Blog ============== */
+/* =================== Start Create Blog ============== */
 .drop-container {
     position: relative;
     display: flex;
@@ -425,7 +425,7 @@ h4.card-title.mb-0 {
     justify-content: center;
     align-items: center;
     height: 200px;
-    padding: 20px;
+    padding: 10px;
     border-radius: 10px;
     border: 2px dashed #555;
     color: #444;
@@ -459,8 +459,12 @@ h4.card-title.mb-0 {
 .drop-container.drag-active .drop-title {
     color: #222;
 }
+.font-select{
+    font-size: 15px;
+}
 
-/* =================== End Blog ============== */
+
+/* =================== End Create Blog ============== */
 
 
 /* =================== Start MANAGER Blog ============== */
@@ -512,9 +516,42 @@ h4.card-title.mb-0 {
 .edit-blog {
     position: relative;
 }
-
-.asd {
+.dots-edit{
     position: absolute;
+    top: 0px;
+    right: 0px;
+    font-size: 25px;
+    padding: 2px 3px;
+    margin-right: 5px;
+    margin-top: 2px;
+}
+.dots-edit:hover{
+    border-radius: 50%;
+    background: rgb(214, 214, 214);
+
+}
+
+
+.dots-edit a{
+   color: #1f1d1d;
+   
+}
+.dropdown-edit-font p{
+    font-size: 0.8rem;
+}
+
+.icon-pen-edit{
+    margin-right: 10px;
+    font-size: 1rem;
+}
+.dropdown-menu-dots{
+    z-index: var(--z-fixed);
+    max-width: 15rem;
+    min-width: 16rem;
+    padding: 0;
+    border-radius: 5px;
+    box-shadow: -1px 4px 20px 1px #dcdcdc85;
+
 }
 
 
@@ -715,3 +752,14 @@ td{
     padding: 5px 20px;
     margin-left: 1rem;
 }
+
+
+.image-number-display{
+    display: inline-block;
+    margin-top: 10px;
+    padding: 5px 16px;
+    border-radius: 50%;
+    background: #04AA6D;
+   font-size: 15px;
+}
+  /* ===================== END Quan ly giao dien ====================== */

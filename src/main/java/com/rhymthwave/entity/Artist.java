@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -55,7 +56,7 @@ public class Artist implements Serializable {
 	private String[] publicIdImageGallery;
 
 	@Column(name = "SOCIALMEDIALINKS")
-	private String socialMediaLinks;
+	private String[] socialMediaLinks;
 
 	@Column(name = "ACTIVE")
 	private String active;

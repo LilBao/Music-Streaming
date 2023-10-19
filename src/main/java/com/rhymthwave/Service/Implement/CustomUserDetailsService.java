@@ -23,8 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		Account account = accountDAO.findByEmail(username);
-		
+		Account account = accountDAO.findById(username).get();
 		if(account != null) {
 			return new CustomUserDetails(account);
 		}

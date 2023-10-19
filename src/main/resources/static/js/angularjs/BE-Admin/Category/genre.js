@@ -1,5 +1,5 @@
 
-var apiGenre = "http://localhost:8080/api/v1/category/genre";
+var apiGenre = "http://localhost:8080/api/v1/admin/category/genre";
 var cookieName = "token";
 app.controller("genreController", function ($scope, $http, $cookies,$log , $timeout) {
 

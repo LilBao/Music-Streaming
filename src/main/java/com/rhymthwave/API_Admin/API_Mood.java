@@ -28,7 +28,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/v1/category/mood")
+@RequestMapping("/api/v1/admin/category/mood")
 @RequiredArgsConstructor
 public class API_Mood {
 

@@ -107,6 +107,11 @@ public class AlbumREST {
 		String owner = host.getEmailByRequest(req);
 		return ResponseEntity.ok(new MessageResponse(true, "success", albumSer.findAlbumNotRecord(owner)));
 	}
+	
+	@GetMapping("/api/v1/account")
+	public ResponseEntity<MessageResponse> fdsfsd() {
+		return ResponseEntity.ok(new MessageResponse(true, "success", crudAccount.findAll()));
+	}
 
 	@GetMapping("/api/v1/album-artist-released")
 	public ResponseEntity<MessageResponse> albumReleasedByArtist(HttpServletRequest req) {
