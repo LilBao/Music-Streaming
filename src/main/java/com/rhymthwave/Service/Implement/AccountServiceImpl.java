@@ -13,6 +13,7 @@ import com.rhymthwave.entity.Account;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
+
 @Service
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService, CRUD<Account, String> {
@@ -41,12 +42,12 @@ public class AccountServiceImpl implements AccountService, CRUD<Account, String>
 
 	@Override
 	public Account findOne(String email) {
-		return dao.findByEmail(email);
+		
+		return dao.findById(email).get();
 	}
 
 	@Override
 	public List<Account> findAll() {
-		// TODO Auto-generated method stub
 		return dao.findAll();
 	}
 
