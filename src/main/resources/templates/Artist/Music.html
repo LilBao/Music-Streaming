@@ -13,11 +13,20 @@
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../../static/css/cssArtist/music.css">
+    <link rel="stylesheet" href="../../static/css/cssArtist/record.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="../../static/js/angularjs/artist/Music.js"></script>
     <script src="../../static/js/jscustom/Artist/Music.js"></script>
     <script src="../../static/js/Utiliez/CookiesUtil.js"></script>
+
+    <!-- Record -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../../static/js/angularjs/artist/Record.js"></script>
+
+    <!-- Upcoming -->
+    <script src="../../static/js/angularjs/artist/Upcoming.js"></script>
 </head>
 
 <body ng-app="myApp" ng-controller="musicCtrl">
@@ -74,7 +83,11 @@
                                 </th>
                                 <th>Listeners</th>
                                 <th>Uploaded date </th>
-                                <th><i class="bi bi-plus-circle"></i></th>
+                                <th>
+                                    <button class="btn border-0" data-bs-toggle="modal" data-bs-target="#record">
+                                        <i class="bi bi-plus-circle"></i>
+                                    </button>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -101,7 +114,7 @@
                         </tbody>
                     </table>
                 </div>
-                 <!-- <div ng-include="'Recording.html'"></div> -->
+                 <div ng-include="'Recording.html'"></div>
             </div>
 
             <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
@@ -510,6 +523,7 @@
             </div>
         </div>
     </div>
+    <script src="../../static/js/jscustom/Artist/record.js"></script>
 </body>
 
 </html>
