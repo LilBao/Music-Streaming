@@ -8,6 +8,17 @@
       <section class="dashboard-top-sec">
          <div class="container-fluid">
 
+                <!-- START Alert  -->
+
+                <div ng-show="success" class="alert alert-success alert-dismissible fade show " role="alert">
+                  <div class="alert-ok">
+                  <strong>Successfully!</strong> Create a Country
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" ng-click="closeAlert()"></button>
+               </div>
+            </div>
+               
+             <!-- END Alert  -->
+
             <div class="cardperShadow shadow mb-4">
                <div class="card-header py-3">
                   <h6 class="m-0 font-weight-bold text-primary"> Create The Mood

@@ -1,4 +1,4 @@
-var app = angular.module("myApp", ["ngRoute","ngCookies","angularUtils.directives.dirPagination"]);
+var app = angular.module("myApp", ["ngRoute","ngCookies","angularUtils.directives.dirPagination","ngMessages"]);
 app.config(function($routeProvider,$cookiesProvider) {
   
   $routeProvider
@@ -6,19 +6,24 @@ app.config(function($routeProvider,$cookiesProvider) {
     templateUrl : "dashboard.html"
   })
   .when("/Create_Blog", {
-    templateUrl : "Create_Blog.html"
+    templateUrl : "Create_Blog.html",
+    controller: "newController",
+    controllerAs: "eventCtl"
   })
   .when("/EditUser", {
     templateUrl : "EditUser.html"
   })
   .when("/ManagerBlog", {
-    templateUrl : "ManagerBlog.html"
+    templateUrl : "ManagerBlog.html",
+    controller: "managerBlogController"
+   
   })
   .when("/ArtistProfile", {
     templateUrl : "ArtistProfile.html"
   })
   .when("/ads", {
-    templateUrl : "ads.html"
+    templateUrl : "displaySlide.html",
+    controller: "displaySlideController"
   })
   .when("/Mood", {
     templateUrl : "Categories/Mood.html",

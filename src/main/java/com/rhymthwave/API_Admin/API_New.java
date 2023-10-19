@@ -12,16 +12,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.rhymthwave.DTO.MessageResponse;
 import com.rhymthwave.Request.DTO.NewDTO;
 import com.rhymthwave.Service.CRUD;
-import com.rhymthwave.Service.CloudinaryService;
 import com.rhymthwave.Service.NewService;
-import com.rhymthwave.Service.Implement.CloudinaryServiceImpl;
 import com.rhymthwave.entity.News;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,6 +32,7 @@ public class API_New {
 	private final NewService newService;
 	
 	private final CRUD<News, Integer> crud;
+	
 	
 	@PostMapping()
 	public ResponseEntity<?> createNew(@ModelAttribute NewDTO newDTO, final HttpServletRequest request){
@@ -83,6 +80,12 @@ public class API_New {
 		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", list));
 	}
 	
-
+	@GetMapping("/storage-for-image")
+	public ResponseEntity<?> storageForImage(){
+		
+		List<String > list = newService.getAllstorageForImage();
+		
+		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", list));
+	}
 
 }

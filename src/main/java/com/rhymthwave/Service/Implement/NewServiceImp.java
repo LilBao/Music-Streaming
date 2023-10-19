@@ -21,7 +21,7 @@ import com.rhymthwave.entity.News;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-
+import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class NewServiceImp implements NewService, CRUD<News, Integer>{
@@ -40,18 +40,19 @@ public class NewServiceImp implements NewService, CRUD<News, Integer>{
 	
 	private String FOLDER_CONTAINING_IMAGE_NEWS  = "ImageManager";
 	
+	@Transactional
 	@Override
 	public News create(News entity) {
 		
 		return newDao.save(entity);
 	}
-
+	@Transactional
 	@Override
 	public News update(News entity) {
 
 		return newDao.save(entity);
 	}
-
+	@Transactional
 	@Override
 	public Boolean delete(Integer key) {
 		if(key instanceof Integer && key > 0) {
@@ -162,10 +163,18 @@ public class NewServiceImp implements NewService, CRUD<News, Integer>{
 		return news;
 	}
 
+
+	@Override
+	public List<String> getAllstorageForImage() {
+	
+		return cloudinaryService.getCloudinaryChildFolder(FOLDER_CONTAINING_IMAGE_NEWS);
+	}
+	
 	public Date getTimeNow() {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(new Date().getTime());
 		return new Date(calendar.getTime().getTime());
 	}
+
 
 }
