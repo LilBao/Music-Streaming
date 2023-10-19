@@ -30,7 +30,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/v1/category/instrument")
+@RequestMapping("/api/v1/admin/category/instrument")
 @RequiredArgsConstructor
 public class API_Instrument {
 

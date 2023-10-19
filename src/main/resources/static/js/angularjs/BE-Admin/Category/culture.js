@@ -1,5 +1,5 @@
 
-var apiCulture = "http://localhost:8080/api/v1/category/culture";
+var apiCulture = "http://localhost:8080/api/v1/admin/category/culture";
 var cookieName = "token";
 app.controller("cultureController", function ($scope, $http, $cookies,$log , $timeout) {
 

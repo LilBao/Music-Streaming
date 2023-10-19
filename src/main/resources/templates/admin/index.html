@@ -18,27 +18,28 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-cookies.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.js"></script>
     <script src="../../static/js/jscustom/UI-Js-Admin/routing_admin.js"></script>
     <style>
-        .alert-success{
-            display:block;
-            position:absolute;
+        .alert-success {
+            display: block;
+            position: absolute;
             top: 50px;
             right: 12px;
             z-index: 999;
         }
     </style>
- 
+
 </head>
 
 <body ng-app="myApp">
     <div class="main-wrapper">
         <!-- NAVBAR -->
-        <div class="header-container fixed-top">
+        <div class="header-container fixed-top" ng-controller="navbarAdmin">
             <header class="header navbar navbar-expand-sm expand-header">
                 <div class="header-left d-flex">
                     <div class="logo">
-                        Brand
+                        Music-Streaming
                     </div>
                     <a href="" id="toggleSidebar" class="sidebarCollapse" data-placement="bottom">
                         <span class="fas fa-bars"></span>
@@ -118,14 +119,14 @@
                     </li>
                     <li class="nav-item dropdown user-profile-dropdown">
                         <a href="" class="nav-link user" id="Notify" data-bs-toggle="dropdown">
-                            <img src="../../static/img/profile.png" class="icon" alt="">
+                            <img ng-src="{{infoAdmin.image.url}}" class="icon" alt="">
                         </a>
                         <div class="dropdown-menu">
                             <div class="user-profile-section">
                                 <div class="media mx-auto">
-                                    <img src="../../static/img/profile.png" alt="" class="img-fluid mr-2">
+                                    <img ng-src="{{infoAdmin.image.url}}" alt="" class="img-fluid mr-2">
                                     <div class="media-body">
-                                        <h5>Nguye Van A</h5>
+                                        <h5>{{infoAdmin.email}}</h5>
                                         <p>Admin</p>
                                     </div>
                                 </div>
@@ -167,7 +168,7 @@
                                 </a>
                                 <a href="" class="dropdown-item">
                                     <span class="fas fa-palette"></span>
-                                    Design Style
+                                    {{price}}
                                 </a>
 
                             </div>
@@ -176,6 +177,9 @@
                 </ul>
             </header>
         </div>
+
+
+
         <!-- NAVBAR END -->
         <!-- SIDEBAR START -->
         <div class="left-menu">
@@ -192,7 +196,8 @@
                             <a href="#!EditUser"><i class="bi bi-people-fill"></i>Manager Account</a>
                         </li>
                         <li>
-                            <a href="#!statistical_managerment"><i class="bi bi-graph-up"></i>Statistical Managerment</a>
+                            <a href="#!statistical_managerment"><i class="bi bi-graph-up"></i>Statistical
+                                Managerment</a>
                         </li>
                         <li class="sub-menu">
                             <a href=""><i class="bi bi-body-text"></i>Manager Blog
@@ -202,22 +207,22 @@
                                 <li><a href="#!Create_Blog"><i class="bi bi-music-note-beamed"></i>Create Blog</a></li>
                                 <li><a href="#!ManagerBlog"><i class="bi bi-music-note-list"></i>List Blog</a></li>
                             </ul>
-                        </li>    
+                        </li>
                         <li>
-                            <a href="#!EditUser"><i class="bi bi-badge-ad"></i>Manager Ads</a>
-                        </li>  
+                            <a href="#!ads"><i class="bi bi-badge-ad"></i>Display Slide</a>
+                        </li>
                         <li>
                             <a href="#!EditUser"><i class="bi bi-bar-chart-fill"></i>Manager Theme</a>
-                        </li>    
+                        </li>
                         <li>
                             <a href="#!EditUser"><i class="bi bi-flag"></i>Manager Report</a>
-                        </li> 
+                        </li>
                         <li>
                             <a href="#!EditUser"><i class="bi bi-file-earmark-music"></i>Music Genre Management</a>
-                        </li> 
+                        </li>
                         <li>
                             <a href="#!EditUser"><i class="bi bi-person-gear"></i>Edit User</a>
-                        </li>                       
+                        </li>
                         <li>
                             <a href="#!ArtistProfile"><i class="bi bi-person-lines-fill"></i>ArtistProfile</a>
                         </li>
@@ -235,7 +240,8 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="#!statistical_managerment"><i class="bi bi-bar-chart-fill"></i>Statistical Managerment</a>
+                            <a href="#!statistical_managerment"><i class="bi bi-bar-chart-fill"></i>Statistical
+                                Managerment</a>
                         </li>
                         <li>
                             <a href="#"><i class="bi bi-file-music-fill"></i>bootstrap-icons</a>
@@ -257,18 +263,22 @@
 
 
         <!-- CONTENT START  -->
-    <div ng-view></div>
+        <div ng-view></div>
         <!--  CONTENT END  -->
-    <!-- js -->   
-  
-    <script src="../../static/js/angularjs/BE-Admin/Category/mood.js"></script> 
+    </div>
+    <!-- js -->
+    <script src="../../static/js/angularjs/BE-Admin/Profile/profile.js"></script>
+    <script src="../../static/js/angularjs/BE-Admin/Category/mood.js"></script>
     <script src="../../static/js/angularjs/BE-Admin/Category/instrument.js"></script>
     <script src="../../static/js/angularjs/BE-Admin/Category/country.js"></script>
     <script src="../../static/js/angularjs/BE-Admin/Category/songStyle.js"></script>
     <script src="../../static/js/angularjs/BE-Admin/Category/culture.js"></script>
     <script src="../../static/js/angularjs/BE-Admin/Category/genre.js"></script>
-    <script src="../../static/js/jscustom/UI-Js-Admin/cdn.jsdelivr.net_npm_bootstrap@5.3.1_dist_js_bootstrap.bundle.min.js"></script>
+    <script src="../../static/js/angularjs/BE-Admin/News/News.js"></script>
+    <script src="../../static/js/angularjs/BE-Admin/News/managerNews.js "></script>
+    <script   src="../../static/js/jscustom/UI-Js-Admin/cdn.jsdelivr.net_npm_bootstrap@5.3.1_dist_js_bootstrap.bundle.min.js"></script>
     <script src="../../static/js/jscustom/UI-Js-Admin/code.jquery.com_jquery-3.7.1.min.js"></script>
+    <script src="../../static/js/jscustom/UI-Js-Admin/dirPagination.js"></script>
     <script src="../../static/js/jscustom/UI-Js-Admin/admin.js"></script>
     <!-- <script>
         var chrt = document.getElementById("chartId").getContext("2d");
@@ -324,6 +334,9 @@
             }
         });
     </script> -->
+
+    
+    
 </body>
 
 </html>
