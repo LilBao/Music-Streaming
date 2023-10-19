@@ -366,7 +366,7 @@ CREATE TABLE SLIDE (
 );
 ALTER TABLE SLIDE
 ALTER COLUMN LISTIMAGE VARCHAR(300)
-
+alter table slide add  PUBLICID VARCHAR(MAX)
 
 
 CREATE TABLE COUNTRY (
@@ -390,6 +390,7 @@ INSERT INTO ARTIST(ARTISTNAME,FULLNAME,DATEOFBIRTH,PLACEOFBIRTH,BIO,SOCIALMEDIAL
 Nghiêm Vũ Hoàng Long, also known as MCK, is a rapper/singer-songwriter from Hanoi, Vietnam. His music career started in early 2018 as an independent singer/songwriter under the alias Ngơ. His debut single was the smashing hit "Tình Đắng Như Ly Cà Phê" featuring Nân, accumulating over 60 million streams across the DSPs since its upload, kick-starting one of the most successful debuts in the local independent scene.
 MCKs career took a turn in 2020 when he appeared as a contestant on the hit TV show "Rap Việt.. He has proven himself to be a force to be reckoned with in Vietnams hip-hop scene as one of the most prominent independent rappers. MCK further solidified his position in the industry by winning the WeChoice Awards for Most Promising Hip-hop Act in 2020.
 In recent years, he has become a household name and an unstoppable force on the local chart, especially with the release of his debut album "99%." The album was immediately received with critical acclaim by the media and fans alike, with the single "Chìm Sâu" being the most streamed song on Spotify Việt Nam in 2022, and the rest of the album dominating Billboard Vietnams charts with 5 tracks in the top 10','https://www.instagram.com/rpt.mckeyyyyy/',1,'mck@gmail.com')
+
 
 
 INSERT INTO SLIDE VALUES('ARTIST','http://res.cloudinary.com/div9ldpou/image/upload/v1697612547/ImageManager/Image%20News/admin-Dashboard.png.png')
