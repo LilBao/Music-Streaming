@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -62,7 +63,7 @@ public class RecordREST {
 	@GetMapping("/api/v1/my-record")
 	public ResponseEntity<MessageResponse> getMyRecord(HttpServletRequest req) {
 		String owner =host.getEmailByRequest(req);
-		return ResponseEntity.ok(new MessageResponse(true, "success", recordSer.findRecordByCreater(owner)));
+		return ResponseEntity.ok(new MessageResponse(true, "success", recordSer.findListRecordNotRaw(owner)));
 	}
 	
 	@GetMapping("/api/v1/my-record-not-raw")
@@ -95,8 +96,25 @@ public class RecordREST {
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudRecord.update(record)));
 	}
 	
+	@DeleteMapping("/api/v1/record/{id}")
+	public ResponseEntity<MessageResponse> deleteRecord(@PathVariable("id") Integer id) {
+		return ResponseEntity.ok(new MessageResponse(true, "success", crudRecord.delete(id)));
+	}
+	
 	@GetMapping("/api/v1/record-song/{songId}")
 	public ResponseEntity<MessageResponse> findListRecordBySong(@PathVariable("songId") Long songId){
 		return ResponseEntity.ok(new MessageResponse(true,"success",recordSer.findRecordBySong(songId)));
+	}
+	
+	@GetMapping("/api/v1/record-artist")
+	public ResponseEntity<MessageResponse> findListRecordByArtist(HttpServletRequest req){
+		String owner =host.getEmailByRequest(req);
+		return ResponseEntity.ok(new MessageResponse(true,"success",recordSer.findRecordByCreater(owner)));
+	}
+	
+	@GetMapping("/api/v1/record-delete")
+	public ResponseEntity<MessageResponse> findListRecordDelete(HttpServletRequest req){
+		String owner =host.getEmailByRequest(req);
+		return ResponseEntity.ok(new MessageResponse(true,"success",recordSer.findRecordByCreater(owner)));
 	}
 }

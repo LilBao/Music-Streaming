@@ -21,24 +21,29 @@
 </head>
 
 <body ng-app="myApp" ng-controller="musicCtrl">
+    
     <section class="">
         <h1>Music</h1>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item me-3 pb-3">
                 <a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1"
-                    aria-selected="true">Songs</a>
+                    aria-selected="true">Record</a>
             </li>
             <li class="nav-item me-3 pb-3">
-                <a class="nav-link" id="tab1-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2"
+                <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2"
                     aria-selected="false">Releases</a>
             </li>
             <li class="nav-item me-3 pb-3">
-                <a class="nav-link" id="tab1-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3"
+                <a class="nav-link" id="tab3-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3"
                     aria-selected="false">Playlists</a>
             </li>
             <li class="nav-item me-3 pb-3">
-                <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab4" role="tab" aria-controls="tab4"
+                <a class="nav-link" id="tab4-tab" data-toggle="tab" href="#tab4" role="tab" aria-controls="tab4"
                     aria-selected="false">Upcoming</a>
+            </li>
+            <li class="nav-item me-3 pb-3">
+                <a class="nav-link" id="tab5-tab" data-toggle="tab" href="#tab5" role="tab" aria-controls="tab5"
+                    aria-selected="false">Garbage</a>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
@@ -68,32 +73,35 @@
                                     <h4>Your top songs</h4>
                                 </th>
                                 <th>Listeners</th>
-                                <th>VIEWS</th>
+                                <th>Uploaded date </th>
                                 <th><i class="bi bi-plus-circle"></i></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="align-items-center">
-                                <td>12,2023</td>
-                                <td class="d-flex align-items-center">
-                                    <img class="cover-image rounded-4" src="../../static/img/cs1.webp" alt="">
-                                    <h6>Listeners</h6>
+                            <tr ng-repeat="item in listRecord" class="align-items-start">
+                                <td>{{$index+1}} <i ng-if="item.song ==null" class="ms-1 bi bi-filetype-raw"></i></td>
+                                <td class="align-items-center">
+                                    {{item.recordingName}}
                                 </td>
-                                <td>12,2023</td>
-                                <td colspan="2">12,2023</td>
-                            </tr>
-                            <tr class="align-items-start">
-                                <td>12,2023</td>
-                                <td class="d-flex align-items-center">
-                                    <img class="cover-image rounded-4" src="../../static/img/cs1.webp" alt="">
-                                    <h6>Listeners</h6>
+                                <td class="align-items-center">12,2023</td>
+                                <td class="align-items-center">{{item.recordingdate | date:'dd/MM/yyyy'}}</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="p-0 btn border-0 align-items-center" data-bs-toggle="dropdown">
+                                            <i class="bi bi-three-dots-vertical"></i>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                          <li><a class="dropdown-item">Review</a></li>
+                                          <li><a  ng-show="item.song ==null" ng-click="changeTab()" class="dropdown-item">Pitch</a></li>
+                                          <li><a class="dropdown-item">Link 3</a></li>
+                                        </ul>
+                                    </div>
                                 </td>
-                                <td>12,2023</td>
-                                <td>12,2023</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+                 <!-- <div ng-include="'Recording.html'"></div> -->
             </div>
 
             <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
@@ -310,6 +318,9 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="tab-pane fade " id="tab5" role="tabpanel" aria-labelledby="tab5-tab">
+                
             </div>
         </div>
     </section>

@@ -4,8 +4,10 @@ app.controller('upComingCtrl', function ($scope, $http) {
     $('#opt').change(function () {
         if ($('#opt').val() === "single") {
             $('#writter').removeAttr('hidden');
+            $('#label-collab').removeAttr('hidden');
         } else {
             $('#writter').attr('hidden', 'hidden');
+            $('#label-collab').attr('hidden', 'hidden');
         }
     })
 

@@ -50,6 +50,9 @@ public class Song implements Serializable {
 	
 	@Column(name = "DESCRIPTIONS")
 	private String description;
+	
+	@Column(name = "ARTISTCREATE")
+	private Long artistId;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "song")

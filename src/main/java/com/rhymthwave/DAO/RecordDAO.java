@@ -12,11 +12,17 @@ import com.rhymthwave.entity.Recording;
 @Repository
 public interface RecordDAO extends JpaRepository<Recording, Integer>{
 	@Query("Select o from Recording o where o.song is null and o.emailCreate = :creater")
-	List<Recording> findByCreater(@Param("creater") String creater);
+	List<Recording> getListRecordNotRaw(@Param("creater") String creater);
 	
 	@Query("select o from Recording o where o.song is not null and o.emailCreate =:creater")
 	List<Recording> getListRawRecord(@Param("creater") String creater);
 	
 	@Query("select o from Recording o where o.song.songId = :songId")
 	List<Recording> getListRecordBySong(@Param("songId") Long songId);
+	
+	@Query("Select o from Recording o where o.emailCreate = :creater")
+	List<Recording> getRecordByCreater(@Param("creater") String creater);
+	
+	@Query("Select o from Recording o where o.isDeleted = true and o.emailCreate = :creater")
+	List<Recording> getRecordDelete(@Param("creater") String creater);
 }

@@ -22,7 +22,7 @@
     <div class="container">
         <div class="row">
             <div class="col-4">
-                <img ng-click="selectFile('coverImg')" class="img-thumbnail w-100 coverImg h-100"
+                <img ng-click="selectFile('coverImg')" class="img-thumbnail w-100 coverImg"
                     src="https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg"
                     alt="">
                 <input id="coverImg" hidden type="file">
@@ -45,7 +45,7 @@
                     <input ng-model="upcoming.releaseDate" class="form-control mb-3" type="datetime-local">
                 </div>
                 <div>
-                    <label for="">Colaboration</label>
+                    <label id="label-collab" for="">Colaboration</label>
                     <input autocomplete="off" list="writters" class="form-control" name="writters" id="writter">
                 </div>
 
@@ -63,7 +63,6 @@
         </div>
     </div>
     <script src="../../static/js/jscustom/Artist/upcoming.js"></script>
-
 </body>
 
 </html>
