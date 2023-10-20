@@ -17,8 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rhymthwave.DTO.MessageResponse;
-import com.rhymthwave.Service.CRUD;
-import com.rhymthwave.ServiceAdmin.IMoodService;
+import com.rhymthwave.ServiceAdmin.IMoodServiceAdmin;
 import com.rhymthwave.Utilities.ExcelExportService;
 import com.rhymthwave.entity.Mood;
 
@@ -32,11 +31,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class API_Mood {
 
-	private final IMoodService iMoodService;
-
-	private final CRUD<Mood, Integer> crud;
+	private final IMoodServiceAdmin iMoodService;
 	
-
     private final ExcelExportService excelExportService;
 	
 	@GetMapping
@@ -52,7 +48,7 @@ public class API_Mood {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> findOneMood(@PathVariable("id") Integer id) {
 
-		Mood mood = crud.findOne(id);
+		Mood mood = iMoodService.findById(id);
 
 		if (mood == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse(false, "Mood does exists", mood));
@@ -64,7 +60,7 @@ public class API_Mood {
 	@PostMapping()
 	public ResponseEntity<?> createMood(@RequestBody Mood moodRequest, final HttpServletRequest request) {
 
-		Mood mood = crud.create(moodRequest);
+		Mood mood = iMoodService.create(moodRequest,request);
 		if (mood == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(false, "Mood exists", mood));
 		}
@@ -73,9 +69,9 @@ public class API_Mood {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> updateMood(@PathVariable("id") Integer id,  @RequestBody Mood moodRequest) {
+	public ResponseEntity<?> updateMood(@PathVariable("id") Integer id,  @RequestBody Mood moodRequest, final HttpServletRequest request) {
 		
-		Mood mood = crud.update(moodRequest);
+		Mood mood = iMoodService.update(moodRequest,request);
 		
 		if (mood == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse(false, "Mood does exists", mood));
@@ -89,7 +85,7 @@ public class API_Mood {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteMood(@PathVariable("id") Integer id) {
 		
-		boolean mood = crud.delete(id);
+		boolean mood = iMoodService.delete(id);
 		
 		if (mood == false) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse(false, "Mood does exists", mood));
@@ -101,7 +97,7 @@ public class API_Mood {
 	
 	@GetMapping("/export-excel")
     public ResponseEntity<?> exportToExcel(HttpServletResponse response) {
-        List<Mood> mood =  crud.findAll();
+        List<Mood> mood =  iMoodService.findAllMood();
         try {
         	
             excelExportService.exportToExcel(mood,response);
