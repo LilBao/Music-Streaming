@@ -13,7 +13,7 @@ import com.rhymthwave.entity.Account;
 import com.rhymthwave.entity.Album;
 
 @Service
-public class AlbumServiceImpl implements AlbumService, CRUD<Album, Integer> {
+public class AlbumServiceImpl implements AlbumService, CRUD<Album, Long> {
 
 	@Autowired
 	AlbumDAO dao;
@@ -40,16 +40,16 @@ public class AlbumServiceImpl implements AlbumService, CRUD<Album, Integer> {
 	}
 
 	@Override
-	public Boolean delete(Integer key) {
-		if (key instanceof Integer && key >= 0) {
+	public Boolean delete(Long key) {
+		if (key instanceof Long && key >= 0) {
 			return true;
 		}
 		return false;
 	}
 
 	@Override
-	public Album findOne(Integer key) {
-		if (key instanceof Integer && key >= 0) {
+	public Album findOne(Long key) {
+		if (key instanceof Long && key >= 0) {
 			return dao.findById(key).get();
 		}
 		return null;

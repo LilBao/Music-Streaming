@@ -13,7 +13,7 @@ import com.rhymthwave.entity.Writter;
 import jakarta.transaction.Transactional;
 
 @Service
-public class WritterServiceImpl implements WritterService,CRUD<Writter, Integer>{
+public class WritterServiceImpl implements WritterService,CRUD<Writter, Long>{
 	
 	@Autowired
 	WritterDAO dao;
@@ -36,8 +36,8 @@ public class WritterServiceImpl implements WritterService,CRUD<Writter, Integer>
 	}
 
 	@Override
-	public Boolean delete(Integer key) {
-		if(key instanceof Integer && key != null) {
+	public Boolean delete(Long key) {
+		if(key instanceof Long && key != null) {
 			dao.deleteById(key);
 			return true;
 		}
@@ -45,8 +45,8 @@ public class WritterServiceImpl implements WritterService,CRUD<Writter, Integer>
 	}
 
 	@Override
-	public Writter findOne(Integer key) {
-		if(key instanceof Integer && key != null) {
+	public Writter findOne(Long key) {
+		if(key instanceof Long && key != null) {
 			return dao.findById(key).get();
 		}
 		return null;
@@ -56,5 +56,11 @@ public class WritterServiceImpl implements WritterService,CRUD<Writter, Integer>
 	public List<Writter> findAll() {
 		return dao.findAll();
 	}
+
+	@Override
+	public List<Writter> getFindWritterSong(Long id) {
+		return dao.getFindWritterSong(id);
+	}
+	
 	
 }

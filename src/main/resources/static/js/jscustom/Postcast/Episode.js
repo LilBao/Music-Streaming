@@ -2,6 +2,12 @@ const dropContainer = document.querySelector('.drop-container');
 const dropMessage = document.querySelector('.drop-message');
 const fileInput = document.getElementById('fileInput');
 const audioPlayer = document.getElementById('audioPlayer');
+const library = document.querySelector('.library');
+const libraryFile = document.getElementById('library-file');
+
+library.addEventListener('click', function(){
+    libraryFile.click()
+});
 
 dropContainer.addEventListener('click', (e) => {
     fileInput.click()
@@ -33,3 +39,13 @@ fileInput.addEventListener('change', () => {
     audioPlayer.hidden = false;
     dropMessage.textContent = `Uploaded: ${file.name}`;
 });
+
+libraryFile.addEventListener('change', () =>{
+    const file = libraryFile.files[0];
+    audioPlayer.src = URL.createObjectURL(file);
+    audioPlayer.hidden= false;
+    dropMessage.textContent = `Uploaded: ${file.name}`;
+})
+
+
+
