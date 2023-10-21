@@ -160,4 +160,12 @@ public class ArtistREST {
 		String owner = host.getEmailByRequest(req);
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudAccount.findOne(owner)));
 	}
+	
+	@GetMapping("/api/v1/search-artist/{artistName}")
+	public ResponseEntity<MessageResponse> findListArtistName(HttpServletRequest req, @PathVariable("artistName") String artistName){
+		String owner = host.getEmailByRequest(req);
+		Artist artist = artistSer.findByEmail(owner);
+		List<Artist> list = artistSer.findAllArtistNameisVerify(artist.getArtistId(), "%"+artistName+"%");
+		return ResponseEntity.ok(new MessageResponse(true,"success",list));
+	}
 }

@@ -3,9 +3,11 @@ package com.rhymthwave.API;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,7 +42,7 @@ public class SongREST {
 
 	private final ArtistService artistSer;
 
-	private final CRUD<Song, Integer> crudSong;
+	private final CRUD<Song, Long> crudSong;
 
 	private final SongService songSer;
 
@@ -54,7 +56,7 @@ public class SongREST {
 
 	private final CRUD<Account, String> crudAccount;
 
-	private final CRUD<Writter, Integer> crudWritter;
+	private final CRUD<Writter, Long> crudWritter;
 
 	@GetMapping("/api/v1/song")
 	public ResponseEntity<MessageResponse> getAllSong() {
@@ -62,7 +64,7 @@ public class SongREST {
 	}
 
 	@GetMapping("/api/v1/song/{id}")
-	public ResponseEntity<MessageResponse> getOneSong(@PathVariable("id") Integer id) {
+	public ResponseEntity<MessageResponse> getOneSong(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudSong.findOne(id)));
 	}
 
@@ -82,6 +84,7 @@ public class SongREST {
 			crudImage.create(cover);
 			song.setImage(cover);
 		}
+		song.setArtistCreate(account.getArtist().getArtistId());
 		Song dataSong = crudSong.create(song);
 		// create writter
 		Writter writter = new Writter();
@@ -99,7 +102,7 @@ public class SongREST {
 	}
 	
 	@PutMapping(value = "/api/v1/song-image/{id}", consumes = { "multipart/form-data" })
-	public ResponseEntity<MessageResponse> updateSongImage(@PathVariable Integer id, HttpServletRequest req,
+	public ResponseEntity<MessageResponse> updateSongImage(@PathVariable Long id, HttpServletRequest req,
 			@RequestParam("coverImg") MultipartFile coverImg) {
 		// owner
 		String owner = host.getEmailByRequest(req);
@@ -119,6 +122,11 @@ public class SongREST {
 		return ResponseEntity.ok(new MessageResponse(true, "success", dataSong));
 	}
 
+	@DeleteMapping("/api/v1/song/{id}")
+	public ResponseEntity<MessageResponse> songUpcoming(@PathVariable("id") Long id) {
+		return ResponseEntity.ok(new MessageResponse(true, "success", crudSong.delete(id)));
+	}
+	
 	@GetMapping("/api/v1/song/up-coming")
 	public ResponseEntity<MessageResponse> songUpcoming(HttpServletRequest req) {
 		String owner = host.getEmailByRequest(req);

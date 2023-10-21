@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.rhymthwave.DAO.SongGenreDAO;
 import com.rhymthwave.Service.CRUD;
+import com.rhymthwave.Service.SongGenreService;
 import com.rhymthwave.entity.SongGenre;
 
 import jakarta.annotation.Nonnull;
@@ -15,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class SongGenreServiceImpl implements CRUD<SongGenre, Long> {
+public class SongGenreServiceImpl implements SongGenreService, CRUD<SongGenre, Long> {
 
 	private final SongGenreDAO dao;
 
@@ -62,4 +63,10 @@ public class SongGenreServiceImpl implements CRUD<SongGenre, Long> {
 		return dao.findAll();
 	}
 
+	@Override
+	public List<SongGenre> findListSongGenreByRecord(Long id) {
+		return dao.findSongGenreByRecord(id);
+	}
+
+	
 }

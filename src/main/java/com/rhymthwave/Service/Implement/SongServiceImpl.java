@@ -13,7 +13,7 @@ import com.rhymthwave.entity.Account;
 import com.rhymthwave.entity.Song;
 
 @Service
-public class SongServiceImpl implements SongService, CRUD<Song, Integer> {
+public class SongServiceImpl implements SongService, CRUD<Song, Long> {
 	@Autowired
 	SongDAO dao;
 	
@@ -39,16 +39,16 @@ public class SongServiceImpl implements SongService, CRUD<Song, Integer> {
 	}
 
 	@Override
-	public Boolean delete(Integer key) {
-		if (key instanceof Integer && key >= 0) {
+	public Boolean delete(Long key) {
+		if (key instanceof Long && key >= 0) {
 			return true;
 		}
 		return false;
 	}
 
 	@Override
-	public Song findOne(Integer key) {
-		if (key instanceof Integer && key >= 0) {
+	public Song findOne(Long key) {
+		if (key instanceof Long && key >= 0) {
 			return dao.findById(key).get();
 		}
 		return null;

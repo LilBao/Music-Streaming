@@ -28,7 +28,7 @@ public class Writter implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "WRITTERID")
-	private int writterId;
+	private Long writterId;
 
 	@ManyToOne
 	@JoinColumn(name = "ARTISTID")

@@ -4,11 +4,22 @@ app.controller('musicCtrl', function ($scope, $http) {
     $scope.listSongUpcoming = [];
     $scope.listAlbumUpcoming = [];
     $scope.listRecord = [];
+    $scope.listArtist=[];
     $scope.artist = {};
     $scope.record = {};
     $scope.song = {};
     $scope.album = {};
+    $scope.songWritter=[];
+    $scope.writter={};
     $scope.track = {};
+    $scope.songGenreRecord = [];
+    $scope.songGenre = {};
+    $scope.genre = [];
+    $scope.mood = [];
+    $scope.songStyle = [];
+    $scope.instrument = [];
+    $scope.culture = [];
+    $scope.garbageRecord = [];
     $scope.currentDate = new Date();
 
     //find artist by token email account
@@ -32,10 +43,10 @@ app.controller('musicCtrl', function ($scope, $http) {
         }
     }
     //Get list record
-   
-    $scope.findListRecordArtist = function(){
+
+    $scope.findListRecordArtist = function () {
         let url = host + '/v1/record-artist';
-        $http.get(url,{
+        $http.get(url, {
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
             $scope.listRecord = resp.data.data
@@ -45,15 +56,15 @@ app.controller('musicCtrl', function ($scope, $http) {
     }
 
     $scope.findListRecordArtist();
-    $('#tab1-tab').click(function(){
+    $('#tab1-tab').click(function () {
         $scope.findListRecordArtist();
     })
 
     //Get list record delete
     $scope.listRecordeDelete = [];
-    $scope.findListRecordDelete = function(){
+    $scope.findListRecordDelete = function () {
         let url = host + '/v1/record-delete'
-        $http.get(url,{
+        $http.get(url, {
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
             $scope.listRecordeDelete = resp.data.data
@@ -61,20 +72,51 @@ app.controller('musicCtrl', function ($scope, $http) {
             console.log(error)
         })
     }
-    $('#tab5-tab').click(function(){
+    $('#tab5-tab').click(function () {
         $scope.findListRecordDelete();
     })
 
-    //Delete record
-    $scope.deleteRecord=function(id){
-        let url = host + '/v1/record/'+id;
-        $http.delete(url).then(resp => {
-            console.log("success");
+    //Find song writter
+    $scope.findListSongWritter = function (idSong) {
+        let url = host + '/v1/writter-song/' + idSong;
+        $http.get(url).then(resp => {
+            $scope.songWritter = resp.data.data;
         }).catch(error => {
             console.log(error);
         })
     }
-    
+
+    //Join the song
+    $scope.JoinSongWritter = function (artist) {
+        let url = host + '/v1/writter';
+        let song = angular.copy($scope.song);
+        let data = angular.copy($scope.writter);
+        data.artist=artist;
+        data.song=song;
+        $http.post(url,data).then(resp => {
+            $scope.findListSongWritter(song.songId);
+        }).catch(error => {
+            console.log(error);
+        })
+    }
+
+    //delele writter
+    $scope.deleteWritter=function(idWritter){
+        let url = host + '/v1/writter/'+idWritter;
+        $http.delete(url).then(resp =>{
+            $scope.findListSongWritter($scope.song.songId)
+        }).catch(error => {
+
+        })
+    }
+    //Out song
+    $scope.outSong=function(idSong,idArtist){
+        var writter = $scope.songWritter.find(function(item){
+            return item.song.songId === idSong && item.artist.artistId === idArtist
+        })
+        $scope.deleteWritter(writter.writterId);
+    }
+
     //Get list song has not record (lấy những bài hát không có record)
     $http.get(host + "/v1/song/up-coming", {
         headers: { 'Authorization': 'Bearer ' + getCookie('token') }
@@ -139,6 +181,16 @@ app.controller('musicCtrl', function ($scope, $http) {
         })
     }
 
+    //Delete song 
+    $scope.deleteSong=function(id){
+        let url = host + "/v1/song/"+id
+        $http.delete(url).then(resp => {
+            console.log("update song successfully")
+        }).catch(error => {
+
+        })
+    }
+
     //find record (Tìm record theo id record)
     $scope.findRecord = function (idRecord) {
         var url = host + "/v1/record/" + idRecord;
@@ -147,6 +199,11 @@ app.controller('musicCtrl', function ($scope, $http) {
         }).catch(error => {
 
         })
+    }
+
+    //Reset record
+    $scope.resetRecord = function () {
+        $scope.record = {};
     }
 
     //update song (Cập nhật những record được pitch vào song)
@@ -166,6 +223,16 @@ app.controller('musicCtrl', function ($scope, $http) {
         var url = host + "/v1/album/" + idAlbum;
         $http.get(url).then(resp => {
             $scope.album = resp.data.data;
+        }).catch(error => {
+
+        })
+    }
+
+    //Delete Album 
+    $scope.deleteAlbum= function(idAlbum){
+        let url = host + "/v1/album/"+idAlbum
+        $http.delete(url).then(resp => {
+            console.log("update song successfully")
         }).catch(error => {
 
         })
@@ -302,6 +369,7 @@ app.controller('musicCtrl', function ($scope, $http) {
         } else {
             $scope.findSong(id);
             $scope.findListRecordNotSong();
+            $scope.findListSongWritter(id);
             $scope.typeDetail = "song"
             let url = host + "/v1/record-song/" + id;
             $http.get(url).then(resp => {
@@ -401,12 +469,14 @@ app.controller('musicCtrl', function ($scope, $http) {
             let song = angular.copy($scope.song);
             song.songName = $('#nameDetail').val();
             song.releaseDay = new Date($('#releaseDetail').val());
+            song.description = $('descriptionDetail').val();
             $scope.updateSong(song);
             $scope.updateCoverImage(type);
         } else {
             let album = angular.copy($scope.album);
             album.albumName = $('#nameDetail').val();
             album.releaseDate = new Date($('#releaseDetail').val());
+            album.description = $('descriptionDetail').val();
             $scope.updateAlbum(album);
             $scope.updateCoverImage(type);
         }
@@ -420,16 +490,20 @@ app.controller('musicCtrl', function ($scope, $http) {
             icon.addClass("bi-pencil-fill");
             $('#modified-release').removeClass("save");
             $('#nameDetail').attr('readonly', true);
+            $('#descriptionDetail').attr('readonly', true);
             $('#releaseDetail').attr('readonly', true);
             $('#addRecord').attr('hidden', true);
+            $scope.updateCoverImage($scope.typeDetail);
             $scope.updateReleaseDetail($scope.typeDetail);
         } else {
             icon.removeClass("bi-pencil-fill");
             icon.addClass("bi-check-lg");
             $('#modified-release').addClass("save");
             $('#nameDetail').removeAttr('readonly');
+            $('#descriptionDetail').removeAttr('readonly');
             $('#releaseDetail').removeAttr('readonly');
             $('#addRecord').removeAttr('hidden');
+
             $('#coverImg').attr('ng-click', 'selectFile()');
         }
     })
@@ -444,6 +518,72 @@ app.controller('musicCtrl', function ($scope, $http) {
             $scope.findListRecordSong();
         }
     }
+
+    //list sub table
+    $scope.getListGenre = function () {
+        let url = host + "/v1/genre";
+        $http.get(url).then(resp => {
+            $scope.genre = resp.data.data;
+        })
+    }
+
+    $scope.getListMood = function () {
+        let url = host + "/v1/mood";
+        $http.get(url).then(resp => {
+            $scope.mood = resp.data.data;
+        })
+    }
+    $scope.getListInstrument = function () {
+        let url = host + "/v1/instrument";
+        $http.get(url).then(resp => {
+            $scope.instrument = resp.data.data;
+        })
+    }
+    $scope.getListSongStyle = function () {
+        let url = host + "/v1/song-style";
+        $http.get(url).then(resp => {
+            $scope.songStyle = resp.data.data;
+        })
+    }
+    $scope.getListCulture = function () {
+        let url = host + "/v1/culture";
+        $http.get(url).then(resp => {
+            $scope.culture = resp.data.data;
+        })
+    }
+
+    $scope.findSongGenreByRecord = function (id) {
+        var url = host + "/v1/song-genre-record/" + id;
+        $http.get(url).then(resp => {
+            $scope.songGenreRecord = resp.data.data;
+        }).catch(error => {
+
+        })
+    }
+
+    $scope.getRecordDetail = function (id) {
+        $scope.findSongGenreByRecord(id);
+        $scope.findRecord(id);
+        $scope.getListGenre();
+        $scope.getListMood();
+        $scope.getListInstrument();
+        $scope.getListSongStyle();
+        $scope.getListCulture();
+    }
+
+    $scope.getListRecordRemoved = function () {
+        let url = host + "/v1/record-delete";
+        $http.get(url, {
+            headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+        }).then(resp => {
+            $scope.garbageRecord = resp.data.data;
+        }).catch(error => {
+
+        })
+    }
+    $('#tab5-tab').click(function () {
+        $scope.getListRecordRemoved();
+    })
 
     $scope.selectFile = function (id) {
         $('#fileCoverImg').click();
@@ -463,6 +603,220 @@ app.controller('musicCtrl', function ($scope, $http) {
         });
     };
 
+    $scope.changeFileRecord = function (id) {
+        $('#' + id).change(function (event) {
+            var file = event.target.files[0];
+            if (file) {
+                $scope.$apply(function () {
+                    if (id == 'change-record') {
+                        $scope.recordFile = file;
+                    }
+                    if (id == 'change-lyrics') {
+                        $scope.lyricsFile = file;
+                    }
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var recordDataUrl = URL.createObjectURL(file);;
+                        $('.audio-record').attr('src', recordDataUrl);
+                    };
+                    reader.readAsDataURL(file);
+                })
+            }
+        });
+    };
+
+    $scope.updateFileRecordOrLyrics = function () {
+        var url = host + "/v1/record-file/" + $scope.record.recordingId;
+        var data = new FormData();
+        if ($scope.recordFile) {
+            data.append('fileRecord', $scope.recordFile);
+        }
+
+        if ($scope.lyricsFile) {
+            data.append('fileLyrics', $scope.lyricsFile);
+        }
+        $http.put(url, data, {
+            headers: {
+                'Content-Type': undefined,
+                'Authorization': 'Bearer ' + getCookie('token')
+            },
+            transformRequest: angular.identity
+        }).then(resp => {
+            $scope.record = resp.data.data;
+
+        }).catch(error => {
+
+        })
+    }
+
+    //Save RecordGenre
+    $scope.saveRecordGenre = function (record, genre) {
+        let url = host + "/v1/song-genre";
+        let data = angular.copy($scope.songGenre);
+        data.recording = record;
+        data.genre = genre;
+        $http.post(url, data).then(resp => {
+
+        }).catch(error => {
+
+        })
+    }
+    //Record detail
+    $scope.SaveRecord = function () {
+        $scope.updateFileRecordOrLyrics();
+        let data = angular.copy($scope.record)
+        $scope.updateRecord(data);
+    }
+
+    //Move recording to garbage
+    $scope.MoveRecordToGarbage = function () {
+        let data = angular.copy($scope.record);
+        data.deleted = true;
+        $scope.updateRecord(data);
+        $scope.findListRecordArtist();
+    }
+
+    //Recovery recording 
+    $scope.RecoveryRecord = function (id) {
+        var url = host + "/v1/record/" + id;
+        $http.get(url).then(resp => {
+            let data = resp.data.data;
+            data.deleted = false;
+            $scope.updateRecord(data);
+            $scope.getListRecordRemoved();
+        }).catch(error => {
+
+        })
+    }
+
+    //Destroy recording
+    $http.DestroyRecord = function (id, publicId) {
+        let url = host + "/v1/record/" + id;
+        $http.delete(url).then(resp => {
+            $scope.deleteImageCloudinary(publicId);
+            $scope.getListRecordRemoved();
+        }).catch(error => {
+
+        })
+    }
+
+    //Delete in cloudinary
+    $scope.deleteImageCloudinary = function (publicId) {
+        let url = host + "/v1/cloudinary?public_id=" + publicId;
+        $http.delete(url).then(resp => {
+            console.log("success");
+            $scope.listTypePicture();
+        }).catch(error => {
+            console.log("error");
+        })
+    }
+
+    //Tag
+    $scope.tmpCulture = "";
+    $scope.tmpMood = "";
+    $scope.tmpSongStyle = "";
+    $scope.tmpInstrument = "";
+    $scope.addTag = function (tag, value) {
+        if (tag === 'culture') {
+            if ($scope.record.culture.split(' ').length <= 3 && !$scope.record.culture.includes(value)) {
+                $scope.record.culture += " " + value.trim();
+            }
+        } else if (tag === 'mood') {
+            if ($scope.record.mood.split(' ').length <= 3 && !$scope.record.mood.includes(value)) {
+                $scope.record.mood += " " + value.trim();
+            }
+
+        } else if (tag === 'songStyle') {
+            if ($scope.record.songStyle.split(' ').length <= 3 && !$scope.record.songStyle.includes(value)) {
+                $scope.record.songStyle += " " + value.trim();
+            }
+
+        } else {
+            if (!$scope.record.instrument.includes(value)) {
+                $scope.record.instrument += " " + value.trim();
+                console.log($scope.record.instrument)
+            }
+        }
+    }
+
+    $scope.removeTag = function (type, event) {
+        var tag = event.target.textContent;
+        if (type === 'culture') {
+            $scope.record.culture = $scope.record.culture.replace(tag, '');
+        } else if (type === 'mood') {
+            $scope.record.mood = $scope.record.mood.replace(tag, '');
+        } else if (type === 'songStyle') {
+            $scope.record.songStyle = $scope.record.songStyle.replace(tag, '');
+        } else {
+            $scope.record.instrument = $scope.record.instrument.replace(tag, '');
+        }
+
+    }
+
+    //update status Record Genre
+    $scope.createRecordGenre = function (record,genre) {
+        let url = host + "/v1/song-genre";
+        var data = angular.copy($scope.songGenre);
+        data.recording = record;
+        data.genre = genre;
+        $http.post(url,data).then(resp => {
+            $scope.findSongGenreByRecord(data.recording.recordingId);
+        }).catch(error => {
+            console.log(error);
+        })
+    }
+
+    $scope.updateRecordGenre = function (value) {
+        var index = $scope.songGenreRecord.findIndex(item => item.genre.id === value);
+        if ($scope.songGenreRecord.length < 3 && index === -1) {
+            let url = host + "/v1/genre/" + value;
+            $http.get(url).then(resp => {
+                let record = angular.copy($scope.record);
+                let genre = resp.data.data;
+                $scope.createRecordGenre(record,genre);
+            }).catch(error => {
+                console.log(error);
+            })
+        }
+    }
+
+    $scope.deleteRecordGenre = function (id) {
+            let url = host + "/v1/song-genre/" + id;
+            $http.delete(url).then(resp => {
+                $scope.findSongGenreByRecord($scope.record.recordingId);
+            }).catch(error => {
+                console.log(error);
+            })
+    }
+
+    //remove status record genre
+    $scope.removeRecordGenre = function (event) {
+        let genreName = event.target.textContent;
+        var foundItem = $scope.songGenreRecord.find(function (item) {
+            return item.genre.nameGenre === genreName;
+        });
+        $scope.deleteRecordGenre(foundItem.id);
+    }
+
+    //Search artist
+    $scope.searchArtist = function(name){
+        let url = host+"/v1/search-artist/"+name;
+        $http.get(url,{
+            headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+        }).then(resp => {
+            $scope.listArtist = resp.data.data;
+        })
+    }
+
+    //Event search
+    $scope.search = ""
+    $('#search-artist').on('input',function(){
+        $scope.search = $(this).val().trim();
+        if($scope.search.length >0){
+            $scope.searchArtist($scope.search);
+        }
+    })
+
     //JS
     function resetTabs() {
         var x = document.getElementsByClassName("tab");
@@ -477,7 +831,7 @@ app.controller('musicCtrl', function ($scope, $http) {
     }
 
     //transit tab upcoming
-    $scope.changeTab=function(){
+    $scope.changeTab = function () {
         $('#tab4-tab').click();
     }
 
@@ -491,5 +845,9 @@ app.controller('musicCtrl', function ($scope, $http) {
         $('#modified-release').hide();
     } else {
         $('#modified-release').show();
+    }
+
+    $scope.closeDetail=function(){
+        $('.audio-record').attr('src', "");
     }
 })
