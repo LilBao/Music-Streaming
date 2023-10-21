@@ -22,26 +22,25 @@
                               <div class="row">
                                  <div class="col-md-9">
                                     <label>Giao dien phan nao:</label>
-                                    <select class="form-select form-select-display "
-                                       aria-label="Default select example">
-                                       <option selected>Giao dien</option>
-                                       <option value="1">One</option>
-                                       <option value="2">Two</option>
-                                       <option value="3">Three</option>
+                                    <select class="form-select form-select-display ">
+                                     
+                                     
+                                       <option ng-repeat="item in SlidePosition" ng-value="item">{{item}}</option>
+                                       
                                     </select>
                                  </div>
                                  <div class="col-sm-3">
                                     <div class="row">
                                        <div class="col-6">
                                           <div class="button-edit">
-                                             <button class="btn btn-danger button-size"> Edit </button>
+                                             <button class="btn btn-danger button-size"> Save </button>
                                            
                                           </div>
                                        </div>
                                        <div class="col-6">
                                           <div class="button-edit">
                                            
-                                             <button class="btn btn-success button-size"> Save </button>
+                                             <button class="btn btn-success button-size"> Add </button>
                                           </div>
                                        </div>
                                     </div>
@@ -58,7 +57,7 @@
                         <div class="iq-card iq-card-block iq-card-stretch iq-card-height  mb-0">
                            <div class="iq-card-header text-center">
                               <div class="iq-header-title">
-                                 <h4 class="card-title mb-0 ">Image Slide Display + tên Giao diện</h4>
+                                 <h4 class="card-title mb-0 ">Home Image slideshow</h4>
                               </div>
                            </div>
                            <div class="iq-card-body ">
@@ -68,7 +67,7 @@
                                     <div class="edit-blog">
 
                                        <a href="#">
-                                          <img src="../Admin/img/bannerBog.png" class="card-img-top" alt="...">
+                                          <img src="../../static/img/bannerBog.png" class="card-img-top" alt="...">
                                        </a>
 
                                        <div class="dots-edit ">
@@ -99,84 +98,28 @@
                                     </div>
                                  </div>
 
+                                    
                                  <div class="col-md-4 col-sm-6 mb-3">
-                                    <div class="edit-blog">
-
-                                       <a href="#">
-                                          <img src="../Admin/img/bannerBog.png" class="card-img-top" alt="...">
-                                       </a>
-
-                                       <div class="dots-edit ">
-                                          <a href data-bs-toggle="dropdown" id="Notify" class="nav-link"> <i
-                                                class="bi bi-three-dots"></i></a>
-                                          <div class="dropdown-menu" style="min-width: 5rem;">
-                                             <div class="dp-main-menu">
-
-                                                <a href="#" class="dropdown-item message-item mt-1">
-                                                   <i class="bi bi-pen icon-pen-edit"></i>
-                                                   <div class="note-info-desmis">
-                                                      <div class="dropdown-edit-font">
-                                                         <p class="note-name">Edit</p>
-
-                                                      </div>
-
-                                                   </div>
-                                                </a>
-                                             </div>
+                                    <div class="edit-blog addSlideImage" id="test" ng-click="cl()">
+                                      
+                                       <input hidden="true" id="file" type="file" style="font-size: 10px;"/>
+                                          <div class="iconAddSlideImage"  >
+                                             
+                                             <i class="bi bi-plus-circle-dotted" id="addImage"></i>
+                                              
                                           </div>
-                                       </div>
 
                                     </div>
-                                    <div class=" text-center">
-                                       <div class="image-number-display">
-                                          1
-                                       </div>
-                                    </div>
+                                    
                                  </div>
-
-                                 <div class="col-md-4 col-sm-6 mb-3">
-                                    <div class="edit-blog">
-
-                                       <a href="#">
-                                          <img src="../Admin/img/bannerBog.png" class="card-img-top" alt="...">
-                                       </a>
-
-                                       <div class="dots-edit ">
-                                          <a href data-bs-toggle="dropdown" id="Notify" class="nav-link"> <i
-                                                class="bi bi-three-dots"></i></a>
-                                          <div class="dropdown-menu" style="min-width: 5rem;">
-                                             <div class="dp-main-menu">
-
-                                                <a href="#" class="dropdown-item message-item mt-1">
-                                                   <i class="bi bi-pen icon-pen-edit"></i>
-                                                   <div class="note-info-desmis">
-                                                      <div class="dropdown-edit-font">
-                                                         <p class="note-name">Edit</p>
-
-                                                      </div>
-
-                                                   </div>
-                                                </a>
-                                             </div>
-                                          </div>
-                                       </div>
-
-                                    </div>
-                                    <div class=" text-center">
-                                       <div class="image-number-display">
-                                          1
-                                       </div>
-                                    </div>
-                                 </div>
+      
                               </div>
-
+                              
 
                            </div>
                         </div>
 
                      </div>
-
-
                   </div>
                </div>
             </div>

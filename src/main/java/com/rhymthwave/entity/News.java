@@ -42,6 +42,16 @@ public class News implements Serializable {
 	@Column(name = "LASTMODIFIED")
 	private Date lastModified;
 
+	@Column(name = "CREATEDATE")
+	private Date createDate;
+	
+	@Column(name = "MODIFIEDBY", length = 255)
+	private String modifiedBy;
+	
+	@Column(name = "MODIFIDATE")
+	private Date modifiDate;
+	
+	
 	@OneToOne( cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "IMAGE")
 	private Image image;

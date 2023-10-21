@@ -21,7 +21,7 @@ app.config(function($routeProvider,$cookiesProvider) {
   .when("/ArtistProfile", {
     templateUrl : "ArtistProfile.html"
   })
-  .when("/ads", {
+  .when("/display-slide", {
     templateUrl : "displaySlide.html",
     controller: "displaySlideController"
   })
