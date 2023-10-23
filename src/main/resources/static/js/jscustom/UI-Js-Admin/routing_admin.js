@@ -10,6 +10,10 @@ app.config(function($routeProvider,$cookiesProvider) {
     controller: "newController",
     controllerAs: "eventCtl"
   })
+  .when("/account", {
+    templateUrl : "tableAccount.html",
+    controller: "tableAccountController"
+  })
   .when("/EditUser", {
     templateUrl : "EditUser.html"
   })

@@ -66,8 +66,8 @@ app.controller("instrumentController", function ($scope, $http, $cookies,$log) {
 
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
-		var url = category +`/${$scope.form.instrumentId}`;
-		$http.put(apiInstrument + url, item, {
+		var url = apiInstrument +`/${$scope.form.instrumentId}`;
+		$http.put(url, item, {
 			headers: {
 				'Authorization': 'Bearer ' + $cookies.get(cookieName)
 			}

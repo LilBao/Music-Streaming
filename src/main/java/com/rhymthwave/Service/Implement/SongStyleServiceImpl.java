@@ -9,7 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import com.rhymthwave.DAO.SongStyleDAO;
 import com.rhymthwave.Service.CRUD;
-import com.rhymthwave.ServiceAdmin.ISongTypeService;
+import com.rhymthwave.ServiceAdmin.ISongTypeServiceAdmin;
 import com.rhymthwave.Utilities.SortBy;
 import com.rhymthwave.entity.SongStyle;
 import jakarta.transaction.Transactional;
@@ -17,11 +17,10 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class SongStyleServiceImpl implements CRUD<SongStyle, Integer>,ISongTypeService{
+public class SongStyleServiceImpl implements CRUD<SongStyle, Integer>{
 
 	private final SongStyleDAO dao;
 	
-	private final SortBy<String, String > sortService;
 	
 	@Override
 	@Transactional
@@ -64,22 +63,6 @@ public class SongStyleServiceImpl implements CRUD<SongStyle, Integer>,ISongTypeS
 	@Override
 	public List<SongStyle> findAll() {
 		return dao.findAll();
-	}
-
-	@Override
-	public Page<SongStyle> getSongTypePage(Integer page, String sortBy, String sortField) {
-
-		try {
-			Sort sort = sortService.sortBy(sortBy, sortField);
-
-			Pageable pageable = PageRequest.of(page, 6, sort);
-
-			Page<SongStyle> pageMood = dao.findAll(pageable);
-			return pageMood;
-		} catch (Exception e) {
-			return null;
-		}
-
 	}
 
 

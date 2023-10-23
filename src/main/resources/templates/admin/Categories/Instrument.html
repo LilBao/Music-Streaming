@@ -76,6 +76,10 @@
 
                                        <th scope="col" style="width: 145.333px;">Id</th>
                                        <th scope="col" style="width: 218.333px;">Country</th>
+                                       <th scope="col" style="width: 218.333px;">Create By</th>
+                                       <th scope="col" style="width: 218.333px;">Create Date</th>
+                                       <th scope="col" style="width: 218.333px;">Modified By</th>
+                                       <th scope="col" style="width: 218.333px;">Modified Date</th>
                                        <th scope="col" style="width: 218.333px;">action</th>
                                     </tr>
                                  </thead>
@@ -83,14 +87,22 @@
                                     <tr>
                                        <th scope="col" rowspan="1" colspan="1">Id</th>
                                        <th scope="col" rowspan="1" colspan="1">Country</th>
+                                       <th scope="col" style="width: 218.333px;">Create By</th>
+                                       <th scope="col" style="width: 218.333px;">Create Date</th>
+                                       <th scope="col" style="width: 218.333px;">Modified By</th>
+                                       <th scope="col" style="width: 218.333px;">Modified Date</th>
                                        <th scope="col" style="width: 218.333px;">action</th>
                                     </tr>
                                  </tfoot>
                                  <tbody>
 
-                                    <tr class="odd" ng-repeat=" instrument in items | orderBy:'instrument.instrumentName':false">
+                                    <tr class="odd" ng-repeat=" instrument in items">
                                        <td class="sorting_1">{{instrument.instrumentId}}</td>
                                        <td>{{instrument.instrumentName}}</td>
+                                       <td>{{instrument.createBy}}</td>
+                                       <td>{{instrument.createDate | date:'dd-MM-yyyy HH:mm:ss '}}</td>
+                                       <td>{{instrument.modifiedBy ? instrument.modifiedBy : "Null" }}</td>
+                                       <td>{{instrument.modifiDate ? instrument.modifiDate : "Null" | date:'dd-MM-yyyy HH:mm:ss '}}</td>
                                        <td><button class="btn btn-primary" ng-click="edit(instrument.instrumentId)">Edit</button></td>
                                     </tr>
                                 

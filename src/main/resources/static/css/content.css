@@ -771,15 +771,80 @@ td {
 }
 
 .addSlideImage {
-    height:170px;
+    height: 170px;
     cursor: pointer;
     border: 2px dashed rgb(123, 123, 123);
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.iconAddSlideImage{
-    font-size: 90px; color: rgb(123, 123, 123); 
+
+.iconAddSlideImage {
+    font-size: 90px;
+    color: rgb(123, 123, 123);
 }
 
 /* ===================== END Quan ly giao dien ====================== */
+
+
+/* ===================== START  TABLE ACCOUNT  ===================== */
+/* css input search */
+#custom-search-input {
+
+    border: solid 1px #c9c8c8;
+    border-radius: 6px;
+    background-color: #fff;
+    max-width: 300px;
+
+
+}
+
+#custom-search-input input {
+    border: 0;
+    box-shadow: none;
+
+}
+
+#custom-search-input button {
+    margin: 2px 0 0 0;
+    background: none;
+    box-shadow: none;
+    border: 0;
+    color: #7e7e7e;
+    padding: 0 8px 0 10px;
+    border-left: solid 1px #ccc;
+}
+
+#custom-search-input button:hover {
+    border: 0;
+    box-shadow: none;
+    border-left: solid 1px #a0a0a0;
+}
+
+#custom-search-input .bi-search {
+    font-size: 23px;
+}
+
+/* css input search */
+
+/* image in table tab */
+.cha {
+    width: 40px;
+    height: 40px;
+    border-radius: 3px;
+    overflow: hidden;
+    
+}
+
+.image-table-user-tabs {
+    width: 40px;
+    height: 40px;
+    filter: none;
+    object-fit: cover;
+}
+.threee-dots-table{
+    font-size: 15px;
+    color: #111;
+}
+
+/* ===================== END  TABLE ACCOUNT  ===================== */

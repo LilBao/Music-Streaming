@@ -1,46 +1,23 @@
-package com.rhymthwave.ServiceAdmin.Implement;
+package com.rhymthwave.Service.Implement;
 
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.rhymthwave.DAO.MoodDAO;
 import com.rhymthwave.Service.CRUD;
-import com.rhymthwave.ServiceAdmin.IMoodService;
-import com.rhymthwave.Utilities.ISort;
 import com.rhymthwave.entity.Mood;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
-public class MoodServiceImp implements IMoodService, CRUD<Mood, Integer> {
+@RequiredArgsConstructor
+public class MoodServiceImpl implements CRUD<Mood, Integer>{
 
-	@Autowired
-	private MoodDAO moodDAO;
-
-	@Autowired
-	private ISort<String, String> sortService;
-
-	@Override
-	public Page<Mood> getMoodPage(Integer page, String sortBy, String sortField) {
-
-		try {
-			Sort sort = sortService.sortBy(sortBy, sortField);
-
-			Pageable pageable = PageRequest.of(page, 6, sort);
-
-			Page<Mood> pageMood = moodDAO.findAll(pageable);
-			return pageMood;
-		} catch (Exception e) {
-			return null;
-		}
-
-	}
-
+	
+	private final MoodDAO moodDAO;
+	
 	@Override
 	public Mood create(Mood entity) {
 		

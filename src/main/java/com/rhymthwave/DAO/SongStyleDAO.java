@@ -8,4 +8,5 @@ import com.rhymthwave.entity.SongStyle;
 @Repository
 public interface SongStyleDAO extends JpaRepository<SongStyle, Integer>{
 
+  SongStyle findBySongStyleName(String songStyleName);
 }

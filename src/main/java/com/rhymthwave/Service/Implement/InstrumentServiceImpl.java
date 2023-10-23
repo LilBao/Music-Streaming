@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.rhymthwave.DAO.InstrumentDAO;
 import com.rhymthwave.Service.CRUD;
-import com.rhymthwave.ServiceAdmin.IInstrumentService;
+import com.rhymthwave.ServiceAdmin.IInstrumentServiceAdmin;
 import com.rhymthwave.Utilities.ISort;
 import com.rhymthwave.entity.Instrument;
 import com.rhymthwave.entity.Mood;
@@ -20,12 +20,11 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class InstrumentServiceImpl implements CRUD<Instrument, Integer>, IInstrumentService{
+public class InstrumentServiceImpl implements CRUD<Instrument, Integer>{
 	
 
 	private final InstrumentDAO dao;
 	
-	private final ISort<String, String> sortService;
 
 	@Override
 	public Instrument create(Instrument entity) {
@@ -67,19 +66,4 @@ public class InstrumentServiceImpl implements CRUD<Instrument, Integer>, IInstru
 		return dao.findAll();
 	}
 
-	@Override
-	public Page<Instrument> getInstrumentPage(Integer page, String sortBy, String sortField) {
-
-		try {
-			Sort sort = sortService.sortBy(sortBy, sortField);
-
-			Pageable pageable = PageRequest.of(page, 6, sort);
-
-			Page<Instrument> pageMood = dao.findAll(pageable);
-			return pageMood;
-		} catch (Exception e) {
-			return null;
-		}
-		
-	}
 }

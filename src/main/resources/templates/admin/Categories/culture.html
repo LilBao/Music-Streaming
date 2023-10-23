@@ -89,6 +89,10 @@
 
                                        <th scope="col" style="width: 145.333px;">Id</th>
                                        <th scope="col" style="width: 218.333px;">Culture</th>
+                                       <th scope="col" style="width: 218.333px;">Create By</th>
+                                       <th scope="col" style="width: 218.333px;">Create Date</th>
+                                       <th scope="col" style="width: 218.333px;">Modified By</th>
+                                       <th scope="col" style="width: 218.333px;">Modified Date</th>
                                        <th scope="col" style="width: 218.333px;">Action</th>
                                     </tr>
                                  </thead>
@@ -96,6 +100,10 @@
                                     <tr>
                                        <th scope="col" rowspan="1" colspan="1">Id</th>
                                        <th scope="col" rowspan="1" colspan="1">Culture</th>
+                                       <th scope="col" style="width: 218.333px;">Create By</th>
+                                       <th scope="col" style="width: 218.333px;">Create Date</th>
+                                       <th scope="col" style="width: 218.333px;">Modified By</th>
+                                       <th scope="col" style="width: 218.333px;">Modified Date</th>
                                        <th scope="col" style="width: 218.333px;">Action</th>
                                     </tr>
                                  </tfoot>
@@ -104,6 +112,10 @@
                                     <tr class="odd" ng-repeat=" culture in items">
                                        <td class="sorting_1">{{culture.cultureId}}</td>
                                        <td>{{culture.cultureName}}</td>
+                                       <td>{{culture.createBy}}</td>
+                                       <td>{{culture.createDate | date:'dd-MM-yyyy HH:mm:ss '}}</td>
+                                       <td>{{culture.modifiedBy ? culture.modifiedBy : "Null" }}</td>
+                                       <td>{{culture.modifiDate ? culture.modifiDate : "Null" | date:'dd-MM-yyyy HH:mm:ss '}}</td>
                                        <td><button class="btn btn-primary" ng-click="edit(culture.cultureId)">Edit</button></td>
                                     </tr>
                                 
