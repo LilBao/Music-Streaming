@@ -1,75 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <!-- Latest compiled JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-        crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<style>
-    .recording {
-        background-color: purple;
-    }
-
-    .library {
-        background-color: pink;
-    }
-
-    .drop-container {
-        border: 2px dashed #ccc;
-        padding: 20px;
-        cursor: pointer;
-        border-radius: 5px;
-        height: 200px;
-    }
-
-    .drop-message {
-        font-size: 16px;
-        color: #666;
-    }
-
-    .audio-container {
-        margin-top: 20px;
-    }
-</style>
-
-<body>
-    <div class="container">
+<body ng-controller="dashboardCtrl">
+    <div class="container mt-4">
         <div class="row">
             <div class="col-7">
                 <h3 class="my-3">Create your episode</h3>
-                <div class="recording rounded-3 d-flex justify-content-between py-5 my-2 text-white shadow ">
-                    <div class="ms-3">
-                        <i class="bi bi-mic-fill"></i><span>Record</span>
-                    </div>
-                    <div class="me-3">
-                        <span>Capture audio right from your browser</span>
+                <div class="recording rounded-3 my-2 shadow ">
+                    <button id="start-record" class="w-100 btn py-5">
+                        <div class="d-flex border-0 text-white justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <i class="display-6 bi bi-mic-fill me-1"></i><span class="h6">Record</span>
+                            </div>
+                            <div class="me-3">
+                                <span class="h6">Capture audio right from your browser</span>
+                            </div>
+                        </div>
+                    </button>
+                    <div id="control-record" class="d-flex py-5 justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <h6 class="text-white m-0" id="time-record"></h6>
+                        </div>
+                        <div>
+                            <button id="pause-record" class="btn border-0 py-0" disabled><i
+                                    class="display-6 text-white bi bi-pause-circle"></i></button>
+                            <button id="stop-record" class="btn border-0 py-0" disabled><i
+                                    class="display-6 text-white bi-stop-circle"></i></button>
+                            <button id="resume-record" class="btn border-0 py-0" disabled><i
+                                    class="display-6 text-white bi bi-play-circle"></i></button>
+                        </div>
                     </div>
                 </div>
-                <div class="library rounded-3 d-flex justify-content-between py-5 my-2 text-white shadow ">
-                    <div class="ms-3">
-                        <i class="bi bi-folder-fill"></i>
-                        <span>library</span>
+                <div
+                    class="library rounded-3 d-flex justify-content-between py-5 my-2 align-items-center text-white shadow ">
+                    <div class="ms-3 d-flex align-items-center">
+                        <i class="display-6 bi bi-folder-fill me-1"></i>
+                        <span class="h6">library</span>
                     </div>
-                    <div class="me-3">
+                    <div class="me-3 h6">
                         Reuse your previously uploaded audio
                     </div>
                     <input id="library-file" hidden type="file">
                 </div>
+
             </div>
             <div class="col-5">
-                <button class="btn w-100 rounded-pill bg-black my-3 py-2 text-white">Save episode</button>
-
+                <a href="#!episode-infor" id="save-episode-record"
+                    class="btn w-100 rounded-pill bg-black my-3 py-2 text-white">Save episode</a>
                 <div class="drop-container d-flex justify-content-between align-items-center">
-                    <div class="drop-message" >
+                    <div class="drop-message">
                         Drag & Drop an audio file here
                     </div>
                     <input type="file" id="fileInput" hidden>
@@ -77,12 +53,9 @@
                 <div class="audio-container">
                     <audio class="w-100" controls id="audioPlayer" hidden>
                         Your browser does not support the audio element.
-                    </audio >
+                    </audio>
                 </div>
             </div>
         </div>
     </div>
-    <script src="../../static/js/jscustom/Postcast/Episode.js"></script>
 </body>
-
-</html>
