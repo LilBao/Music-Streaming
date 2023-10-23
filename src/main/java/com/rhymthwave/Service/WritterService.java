@@ -1,5 +1,10 @@
 package com.rhymthwave.Service;
 
-public interface WritterService {
+import java.util.List;
 
+import com.rhymthwave.entity.Writter;
+
+public interface WritterService {
+	
+	List<Writter> getFindWritterSong(Long id );
 }

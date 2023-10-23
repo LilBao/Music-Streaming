@@ -32,7 +32,7 @@ public class Song implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "SONGSID")
-	private int songId;
+	private Long songId;
 
 	@Column(name = "SONGNAME")
 	private String songName;
@@ -52,7 +52,7 @@ public class Song implements Serializable {
 	private String description;
 	
 	@Column(name = "ARTISTCREATE")
-	private Long artistId;
+	private Long artistCreate;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "song")

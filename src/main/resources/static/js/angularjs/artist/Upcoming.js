@@ -1,5 +1,3 @@
-var app = angular.module('myApp', []);
-var host = 'http://localhost:8080/api';
 app.controller('upComingCtrl', function ($scope, $http) {
     $('#opt').change(function () {
         if ($('#opt').val() === "single") {
@@ -13,13 +11,21 @@ app.controller('upComingCtrl', function ($scope, $http) {
 
     $scope.upcoming = {};
     $scope.artist = {};
-    $scope.listArtist = []
+    $scope.listArtist = [];
+
+    //artist
+    $http.get(host + "/v1/profile", {
+        headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+    }).then(resp => {
+        $scope.artist = resp.data.data;
+    }).catch(error => {
+        console.log("Not found artist profile")
+    })
+
     //find List Artist
     $http.get(host + "/v1/artist-verified").then(resp => {
         $scope.listArtist = resp.data.data;
     })
-
-
 
     //create
     $scope.createAlbum = function () {
@@ -28,6 +34,7 @@ app.controller('upComingCtrl', function ($scope, $http) {
         data.append('coverImg', $scope.coverImg);
         data.append('albumName', $scope.upcoming.name);
         data.append('releaseDate', new Date($scope.upcoming.releaseDate));
+        data.append('artistId', $scope.artist.artistId);
         $http.post(url, data, {
             headers: { 
                 'Content-Type': undefined,

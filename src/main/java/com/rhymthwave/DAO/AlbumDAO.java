@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.rhymthwave.entity.Album;
 
 @Repository
-public interface AlbumDAO extends JpaRepository<Album, Integer>{
+public interface AlbumDAO extends JpaRepository<Album, Long>{
 	@Query(value="SELECT a.* FROM ALBUM a join artist on a.ARTISTID = ARTIST.ARTISTID "
 				+ "WHERE a.ARTISTID= :artistId and NOT EXISTS (SELECT 1 FROM TRACK t WHERE t.TRACKID = a.ALBUMID)", nativeQuery = true)
 	List<Album> getAlbumNotTrack(@Param("artistId") Long artistId);

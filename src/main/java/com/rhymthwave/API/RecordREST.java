@@ -27,6 +27,7 @@ import com.rhymthwave.Utilities.GetHostByRequest;
 import com.rhymthwave.Utilities.Cookie.CookiesUntils;
 import com.rhymthwave.Utilities.JWT.JwtTokenCreate;
 import com.rhymthwave.entity.Account;
+import com.rhymthwave.entity.Artist;
 import com.rhymthwave.entity.Image;
 import com.rhymthwave.entity.Recording;
 import com.rhymthwave.entity.Song;
@@ -49,6 +50,8 @@ public class RecordREST {
 	private final GetHostByRequest host;
 	
 	private final CRUD<Account, String> crudAccount;
+	
+	private final ArtistService artistSer;
 
 	@GetMapping("/api/v1/record")
 	public ResponseEntity<MessageResponse> getAllRecord() {
@@ -77,7 +80,6 @@ public class RecordREST {
 			@PathParam("fileRecord") MultipartFile fileRecord, @PathParam("fileLyrics") MultipartFile fileLyrics) {
 		String owner =host.getEmailByRequest(req);
 		Account account = crudAccount.findOne(owner);
-		
 		Map<String, Object> respRecord = cloudinary.Upload(fileRecord, "Records", account.getArtist().getArtistName());
 		if (fileLyrics != null) {
 			Map<String, Object> respLyrics = cloudinary.Upload(fileLyrics, "Lyrics", account.getArtist().getArtistName());
@@ -89,6 +91,27 @@ public class RecordREST {
 		record.setPublicIdAudio((String) respRecord.get("public_id"));
 		record.setEmailCreate(owner);
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudRecord.create(record)));
+	}
+	
+	@PutMapping(value = "/api/v1/record-file/{id}", consumes = { "multipart/form-data" })
+	public ResponseEntity<MessageResponse> updateRecordFile(@PathVariable("id") Integer id,HttpServletRequest req,
+			@PathParam("fileRecord") MultipartFile fileRecord, @PathParam("fileLyrics") MultipartFile fileLyrics) {
+		String owner =host.getEmailByRequest(req);
+		Artist artist =artistSer.findByEmail(owner);
+		Recording record = crudRecord.findOne(id);
+		if(fileRecord != null) {
+			Map<String, Object> respRecord = cloudinary.Upload(fileRecord, "Records", artist.getArtistName());
+			record.setAudioFileUrl((String) respRecord.get("url"));
+			record.setPublicIdAudio((String) respRecord.get("public_id"));
+		}
+		
+		if (fileLyrics != null) {
+			Map<String, Object> respLyrics = cloudinary.Upload(fileLyrics, "Lyrics", artist.getArtistName());
+			record.setLyricsUrl((String) respLyrics.get("url"));
+			record.setPublicIdLyrics((String) respLyrics.get("public_id"));
+		}
+		
+		return ResponseEntity.ok(new MessageResponse(true, "success", crudRecord.update(record)));
 	}
 
 	@PutMapping("/api/v1/record")
@@ -115,6 +138,6 @@ public class RecordREST {
 	@GetMapping("/api/v1/record-delete")
 	public ResponseEntity<MessageResponse> findListRecordDelete(HttpServletRequest req){
 		String owner =host.getEmailByRequest(req);
-		return ResponseEntity.ok(new MessageResponse(true,"success",recordSer.findRecordByCreater(owner)));
+		return ResponseEntity.ok(new MessageResponse(true,"success",recordSer.findRecordDelete(owner)));
 	}
 }

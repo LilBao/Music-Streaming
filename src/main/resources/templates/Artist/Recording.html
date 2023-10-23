@@ -1,5 +1,5 @@
-<body>
-    <div class="modal" id="record">
+<body >
+    <div ng-controller="recordCtrl" class="modal" id="record">
         <div class="modal-dialog">
             <div class="modal-content">
     
@@ -8,7 +8,7 @@
                 </div>
     
                 <div class="modal-body">
-                    <div ng-controller="recordCtrl" class="container">
+                    <div  class="container">
                         <div class="row">
                             <div class="col-5">
                                 <img class="img-thumbnail cover-image w-100 h-100" style="object-fit: cover;"
@@ -23,14 +23,11 @@
                                 </div>
                                 <div class=" my-3">
                                     <label for="">File record</label>
-                                    <input ng-click="selectFile('record')" class="form-control" type="file" id="record"
-                                        placeholder="record">
-                                    <audio class="w-100" src=""></audio>
+                                    <input ng-click="selectFileRecord('records')" class="form-control" type="file" id="records" >
                                 </div>
                                 <div class=" my-3">
                                     <label for="">File lyrics</label>
-                                    <input ng-click="selectFile('lyrics')" class="form-control" type="file" name=""
-                                        id="lyrics" placeholder="Lyrics">
+                                    <input ng-click="selectFileRecord('lyrics')" class="form-control" type="file" id="lyrics" >
                                 </div>
                                 <div class=" my-3">
                                     <label for="">ID MV</label>
@@ -51,10 +48,7 @@
                                     </label>
                                     <input list="genres" class="form-control" name="genres" id="genre">
                                     <datalist id="genres">
-                                        <option class="option-genre" value="Edge">Edge</option>
-                                        <option class="option-genre" value="1">g</option>
-                                        <option class="option-genre" value="2">y</option>
-                                        <option class="option-genre" value="3">t</option>
+                                        <option ng-repeat="item in genres" class="option-genre" value="{{item.id}}">{{item.nameGenre}}</option>
                                     </datalist>
                                     <!-- List genres -->
                                     <div id="list-genres" class="d-flex">
@@ -64,52 +58,10 @@
                                 <div class="mt-4">
                                     <h6>Choose up to 3 music cultures. (Optional)</h6>
                                     <div class="list-tag">
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="culture" id="" />
+                                        <div ng-repeat="item in cultures track by $index" class="checkbox">
+                                            <input type="checkbox" value="{{item.cultureName}}" name="culture" id="" />
                                             <div class="box">
-                                                <p>Afican</p>
-                                            </div>
-                                        </div>
-                                        <div class="checkbox">
-                                            <input value="Afican" type="checkbox" name="culture" id="" />
-                                            <div class="box">
-                                                <p>Arabic</p>
-                                            </div>
-                                        </div>
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="culture" id="" value="Asian" />
-                                            <div class="box">
-                                                <p>Asian</p>
-                                            </div>
-                                        </div>
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="culture" id="" />
-                                            <div class="box">
-                                                <p>Buddist</p>
-                                            </div>
-                                        </div>
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="culture" id="" />
-                                            <div class="box">
-                                                <p>Celtic</p>
-                                            </div>
-                                        </div>
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="culture" id="" />
-                                            <div class="box">
-                                                <p>Caribbean</p>
-                                            </div>
-                                        </div>
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="culture" id="" />
-                                            <div class="box">
-                                                <p>Christian</p>
-                                            </div>
-                                        </div>
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="culture" id="" />
-                                            <div class="box">
-                                                <p>None of these</p>
+                                                <p>{{item.cultureName}}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -117,54 +69,12 @@
     
                                 <!-- List mood -->
                                 <div class="mt-4">
-                                    <h6>Choose up to 2 moods. (Optional)</h6>
+                                    <h6>Choose up to 3 moods. (Optional)</h6>
                                     <div class="list-tag">
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="mood" id="" value="Chill" />
+                                        <div ng-repeat="item in moods  track by $index" class="checkbox">
+                                            <input type="checkbox" name="mood" id="" value="{{item.moodname}}" />
                                             <div class="box">
-                                                <p>Chill</p>
-                                            </div>
-                                        </div>
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="mood" id="" />
-                                            <div class="box">
-                                                <p>Energetic</p>
-                                            </div>
-                                        </div>
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="mood" id="" />
-                                            <div class="box">
-                                                <p>Happy</p>
-                                            </div>
-                                        </div>
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="mood" id="" />
-                                            <div class="box">
-                                                <p>Fierce</p>
-                                            </div>
-                                        </div>
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="mood" id="" />
-                                            <div class="box">
-                                                <p>Meditative</p>
-                                            </div>
-                                        </div>
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="mood" id="" value="Romantic" />
-                                            <div class="box">
-                                                <p>Romantic</p>
-                                            </div>
-                                        </div>
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="mood" id="" />
-                                            <div class="box">
-                                                <p>Sad</p>
-                                            </div>
-                                        </div>
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="mood" id="" />
-                                            <div class="box">
-                                                <p>None of these</p>
+                                                <p>{{item.moodname}}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -172,56 +82,14 @@
     
                                 <!-- List song styles -->
                                 <div class="mt-4">
-                                    <h6>Choose up to 2 song styles. (Optional)</h6>
+                                    <h6>Choose up to 3 song styles. (Optional)</h6>
                                     <div class="list-tag">
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="style" id="" />
+                                        <div ng-repeat="item in songStyles track by $index" class="checkbox">
+                                            <input type="checkbox" name="style" id="" value="{{item.songStyleName}}"/>
                                             <div class="box">
-                                                <p>Acoustic</p>
+                                                <p>{{item.songStyleName}}</p>
                                             </div>
-                                        </div>
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="style" id="" />
-                                            <div class="box">
-                                                <p>Ballad</p>
-                                            </div>
-                                        </div>
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="style" id="" />
-                                            <div class="box">
-                                                <p>Beats</p>
-                                            </div>
-                                        </div>
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="style" id="" />
-                                            <div class="box" name="style" id="">
-                                                <p>Christmas</p>
-                                            </div>
-                                        </div>
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="style" id="" />
-                                            <div class="box">
-                                                <p>Holiday</p>
-                                            </div>
-                                        </div>
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="style" id="" />
-                                            <div class="box">
-                                                <p>Kids</p>
-                                            </div>
-                                        </div>
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="style" id="" />
-                                            <div class="box">
-                                                <p>Traditional</p>
-                                            </div>
-                                        </div>
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="style" id="" />
-                                            <div class="box">
-                                                <p>None of these</p>
-                                            </div>
-                                        </div>
+                                        </div>                        
                                     </div>
                                 </div>
     
@@ -229,59 +97,10 @@
                                 <div class="mt-4">
                                     <h6>What instruments are on this song? (Optional)</h6>
                                     <div class="list-tag">
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="intrument" id="" />
+                                        <div ng-repeat="item in instruments track by $index" class="checkbox">
+                                            <input type="checkbox" name="intrument" id="" value="{{item.instrumentName}}"/>
                                             <div class="box">
-                                                <p>Accordian</p>
-                                            </div>
-                                        </div>
-    
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="intrument" id="" />
-                                            <div class="box">
-                                                <p>Banjo</p>
-                                            </div>
-                                        </div>
-    
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="intrument" id="" />
-                                            <div class="box">
-                                                <p>Buzuq</p>
-                                            </div>
-                                        </div>
-    
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="intrument" id="" />
-                                            <div class="box">
-                                                <p>Cello</p>
-                                            </div>
-                                        </div>
-    
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="intrument" id="" />
-                                            <div class="box">
-                                                <p>Clarinet</p>
-                                            </div>
-                                        </div>
-    
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="intrument" id="" />
-                                            <div class="box">
-                                                <p>Mbiria</p>
-                                            </div>
-                                        </div>
-    
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="intrument" id="" />
-                                            <div class="box">
-                                                <p>Kora</p>
-                                            </div>
-                                        </div>
-    
-                                        <div class="checkbox">
-                                            <input type="checkbox" name="intrument" id="" />
-                                            <div class="box">
-                                                <p>None of these</p>
+                                                <p>{{item.instrumentName}}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -324,4 +143,5 @@
             </div>
         </div>
     </div>
+    <script src="../../static/js/jscustom/Artist/record.js"></script>
 </body>
