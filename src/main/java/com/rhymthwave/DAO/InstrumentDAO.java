@@ -8,4 +8,5 @@ import com.rhymthwave.entity.Instrument;
 @Repository
 public interface InstrumentDAO extends JpaRepository<Instrument, Integer>{
 
+	Instrument findByInstrumentName(String instrumentName);
 }

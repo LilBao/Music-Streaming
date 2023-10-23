@@ -75,13 +75,13 @@ app.controller("songStyleController", function ($scope, $http, $cookies,$log , $
 
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
-		var url = apiSongStyle +`/${$scope.form.id}`;
+		var url = apiSongStyle +`/${$scope.form.songStyleId}`;
 		$http.put( url, item, {
 			headers: {
 				'Authorization': 'Bearer ' + $cookies.get(cookieName)
 			}
 		}).then(resp => {
-			var index = $scope.itemCountries.findIndex(item => item.id == $scope.form.id);
+			var index = $scope.itemCountries.findIndex(item => item.songStyleId == $scope.form.songStyleId);
 			$scope.itemCountries[index] = resp.data;
 			$scope.load_all();
 			$scope.success = true

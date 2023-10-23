@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.rhymthwave.DAO.NewsDAO;
 import com.rhymthwave.Request.DTO.NewDTO;
@@ -21,7 +21,6 @@ import com.rhymthwave.entity.News;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class NewServiceImp implements NewService, CRUD<News, Integer>{
@@ -118,6 +117,7 @@ public class NewServiceImp implements NewService, CRUD<News, Integer>{
 		news.setPublishDate(getTimeNow());
 		news.setLastModified(getTimeNow());
 		news.setImage(img);
+		news.setCreateDate(getTimeNow());
 		create(news);
 		
 		return news;
@@ -141,6 +141,8 @@ public class NewServiceImp implements NewService, CRUD<News, Integer>{
 			news.setTitle(newDTO.title());
 			news.setContent(newDTO.content());
 			news.setLastModified(getTimeNow());
+			news.setModifiDate(getTimeNow());
+			news.setModifiedBy(email);
 			System.out.println(news.getImage().getAccessId());
 			update(news);
 		}else {
@@ -157,6 +159,8 @@ public class NewServiceImp implements NewService, CRUD<News, Integer>{
 			news.setTitle(newDTO.title());
 			news.setContent(newDTO.content());
 			news.setLastModified(getTimeNow());
+			news.setModifiDate(getTimeNow());
+			news.setModifiedBy(email);
 			update(news);
 		}
 		

@@ -1,6 +1,7 @@
 package com.rhymthwave.Service.Implement;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -43,7 +44,12 @@ public class AccountServiceImpl implements AccountService, CRUD<Account, String>
 	@Override
 	public Account findOne(String email) {
 		
-		return dao.findById(email).get();
+		Optional<Account> account = dao.findById(email);
+		if(account.isEmpty()) {
+			return null;
+		}
+		
+		return account.get();
 	}
 
 	@Override

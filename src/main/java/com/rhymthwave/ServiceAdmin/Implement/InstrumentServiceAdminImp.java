@@ -11,11 +11,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.rhymthwave.DAO.MoodDAO;
+import com.rhymthwave.DAO.InstrumentDAO;
 import com.rhymthwave.Service.AccountService;
-import com.rhymthwave.ServiceAdmin.IMoodServiceAdmin;
+import com.rhymthwave.ServiceAdmin.IInstrumentServiceAdmin;
 import com.rhymthwave.Utilities.ISort;
 import com.rhymthwave.entity.Account;
+import com.rhymthwave.entity.Instrument;
 import com.rhymthwave.entity.Mood;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,23 +24,23 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class MoodServiceAdminImp implements IMoodServiceAdmin {
+public class InstrumentServiceAdminImp implements IInstrumentServiceAdmin {
 
-	private final MoodDAO moodDAO;
+	private final InstrumentDAO instrumentDAO;
 
 	private final ISort<String, String> sortService;
 
 	private final AccountService accountService;
 
 	@Override
-	public Page<Mood> getMoodPage(Integer page, String sortBy, String sortField) {
+	public Page<Instrument> getInstrumentPage(Integer page, String sortBy, String sortField) {
 
 		try {
 			Sort sort = sortService.sortBy(sortBy, sortField);
 
 			Pageable pageable = PageRequest.of(page, 6, sort);
 
-			Page<Mood> pageMood = moodDAO.findAll(pageable);
+			Page<Instrument> pageMood = instrumentDAO.findAll(pageable);
 			return pageMood;
 		} catch (Exception e) {
 			return null;
@@ -48,64 +49,64 @@ public class MoodServiceAdminImp implements IMoodServiceAdmin {
 	}
 
 	@Override
-	public Mood create(Mood entity, HttpServletRequest request) {
+	public Instrument create(Instrument entity, HttpServletRequest request) {
 
 		Account account = accountService.findAdminByEmail(request);
-		System.out.println("email: " + account.getEmail());
-		if (moodDAO.findByMoodname(entity.getMoodname()) != null) {
+		System.out.println("email: "+account.getEmail());
+		if (instrumentDAO.findByInstrumentName(entity.getInstrumentName()) != null) {
 			return null;
-		} else if (account == null || account.equals("") || account.equals(null)) {
+		} 
+		else if (account == null || account.equals("") || account.equals(null)) {
 			return null;
 		}
 		entity.setCreateBy(account.getEmail());
 		entity.setCreateDate(getTimeNow());
 
-		return moodDAO.save(entity);
+		return instrumentDAO.save(entity);
 	}
 
 	@Override
-	public Mood update(Mood entity, HttpServletRequest request) {
+	public Instrument update(Instrument entity, HttpServletRequest request) {
 
 		Account account = accountService.findAdminByEmail(request);
 
-		Optional<Mood> mood = moodDAO.findById(entity.getMoodid());
+		Optional<Instrument> Instrument = instrumentDAO.findById(entity.getInstrumentId());
 
-		if (mood.isEmpty()) {
+		if (Instrument.isEmpty()) {
+			return null;
+		} else if (account == null) {
 			return null;
 		}
-		else if (account == null) {
-			return null;
-		}
-
+		
 		entity.setModifiedBy(account.getEmail());
 		entity.setModifiDate(getTimeNow());
-		return moodDAO.save(entity);
+		return instrumentDAO.save(entity);
 	}
 
 	@Override
 	public boolean delete(Integer key) {
-		Mood mood = findById(key);
-		if (mood == null) {
+		Instrument Instrument = findById(key);
+		if (Instrument == null) {
 			return false;
 		}
-		moodDAO.delete(mood);
+		instrumentDAO.delete(Instrument);
 		return true;
 	}
 
 	@Override
-	public Mood findById(Integer key) {
-		Optional<Mood> mood = moodDAO.findById(key);
-		if (mood.isEmpty()) {
+	public Instrument findById(Integer key) {
+		Optional<Instrument> Instrument = instrumentDAO.findById(key);
+		if (Instrument.isEmpty()) {
 			return null;
 		}
 
-		return mood.get();
+		return Instrument.get();
 	}
 
 	@Override
-	public List<Mood> findAllMood() {
+	public List<Instrument> findAllInstrument() {
 
-		return moodDAO.findAll();
+		return instrumentDAO.findAll();
 	}
 
 	public Date getTimeNow() {

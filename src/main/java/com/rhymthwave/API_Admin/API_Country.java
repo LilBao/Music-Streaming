@@ -23,6 +23,7 @@ import com.rhymthwave.entity.Country;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -60,7 +61,7 @@ public class API_Country {
 	}
 
 	@PostMapping()
-	public ResponseEntity<?> createMood(@RequestBody Country countryRequest, final HttpServletRequest request) {
+	public ResponseEntity<?> createMood( @RequestBody @Valid Country countryRequest, final HttpServletRequest request) {
 
 		Country country = countryServiceAdmin.create(countryRequest,request);
 		if (country == null) {
