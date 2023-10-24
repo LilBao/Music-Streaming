@@ -81,7 +81,7 @@ app.controller("cultureController", function ($scope, $http, $cookies,$log , $ti
 				'Authorization': 'Bearer ' + $cookies.get(cookieName)
 			}
 		}).then(resp => {
-			var index = $scope.items.findIndex(item => item.id == $scope.form.cultureId);
+			var index = $scope.items.findIndex(item => item.cultureId == $scope.form.cultureId);
 			$scope.items[index] = resp.data;
 			$scope.load_all();
 			$scope.success = true

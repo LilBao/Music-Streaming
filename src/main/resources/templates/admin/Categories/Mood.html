@@ -85,14 +85,22 @@
 
                                        <th scope="col" style="width: 145.333px;">Id</th>
                                        <th scope="col" style="width: 218.333px;">Mood</th>
-                                       <th scope="col" style="width: 218.333px;">action</th>
+                                       <th scope="col" style="width: 218.333px;">Create By</th>
+                                       <th scope="col" style="width: 218.333px;">Create Date</th>
+                                       <th scope="col" style="width: 218.333px;">Modified By</th>
+                                       <th scope="col" style="width: 218.333px;">Modified Date</th>
+                                       <th scope="col" style="width: 218.333px;">Action</th>
                                     </tr>
                                  </thead>
                                  <tfoot>
                                     <tr>
-                                       <th scope="col" rowspan="1" colspan="1">Id</th>
-                                       <th scope="col" rowspan="1" colspan="1">Mood</th>
-                                       <th scope="col" style="width: 218.333px;">action</th>
+                                       <th scope="col" style="width: 145.333px;">Id</th>
+                                       <th scope="col" style="width: 218.333px;">Mood</th>
+                                       <th scope="col" style="width: 218.333px;">Create By</th>
+                                       <th scope="col" style="width: 218.333px;">Create Date</th>
+                                       <th scope="col" style="width: 218.333px;">Modified By</th>
+                                       <th scope="col" style="width: 218.333px;">Modified Date</th>
+                                       <th scope="col" style="width: 218.333px;">Action</th>
                                     </tr>
                                  </tfoot>
                                  <tbody>
@@ -100,6 +108,10 @@
                                     <tr class="odd" ng-repeat=" mood in items">
                                        <td class="sorting_1">{{mood.moodid}}</td>
                                        <td>{{mood.moodname}}</td>
+                                       <td>{{mood.createBy}}</td>
+                                       <td>{{mood.createDate  | date:'dd-MM-yyyy HH:mm:ss '}}</td>
+                                       <td>{{mood.modifiedBy ? mood.modifiedBy : "Null" }}</td>
+                                       <td>{{mood.modifiDate ? mood.modifiDate : "Null" | date:'dd-MM-yyyy HH:mm:ss '}}</td>
                                        <td><button class="btn btn-primary" ng-click="edit(mood.moodid)">Edit</button></td>
                                     </tr>
                                 

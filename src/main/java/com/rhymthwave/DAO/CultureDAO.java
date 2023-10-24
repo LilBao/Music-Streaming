@@ -8,4 +8,5 @@ import com.rhymthwave.entity.Culture;
 @Repository
 public interface CultureDAO extends JpaRepository<Culture, Integer>{
 
+	Culture findByCultureName(String cultureName);
 }

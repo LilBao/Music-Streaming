@@ -48,10 +48,12 @@ public class UserType implements Serializable {
 	private int paymentStatus;
 
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name = "ACCOUNTID")
 	private Account account;
 
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name = "SUBCRIPTIONID")
 	private Subscription subscription;
 

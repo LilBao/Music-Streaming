@@ -2,6 +2,8 @@ package com.rhymthwave.entity;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,14 +30,17 @@ public class Access implements Serializable {
 	private int accessId;
 
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name = "PLAYLIST_RECORDINGID")
 	private PlaylistRecord playlistRecord;
 
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name = "USERTYPEID")
 	private UserType usertype;
 
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name = "EPISODESID")
 	private Playlist_Podcast playlistPodcast;
 

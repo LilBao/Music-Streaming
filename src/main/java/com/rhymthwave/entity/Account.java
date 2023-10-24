@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -79,7 +80,6 @@ public class Account implements Serializable {
 	@OneToMany(mappedBy = "account")
 	private List<Monitor> monitor;
 
-	@JsonIgnore
 	@OneToMany(mappedBy = "account")
 	private List<UserType> userType;
 

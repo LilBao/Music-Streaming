@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.rhymthwave.DAO.CultureDAO;
 import com.rhymthwave.Service.CRUD;
-import com.rhymthwave.ServiceAdmin.ICultureService;
+import com.rhymthwave.ServiceAdmin.ICultureServiceAdmin;
 import com.rhymthwave.Utilities.SortBy;
 import com.rhymthwave.entity.Culture;
 
@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class CultureServiceImpl implements CRUD<Culture, Integer>,ICultureService{
+public class CultureServiceImpl implements CRUD<Culture, Integer>{
 
 	private final CultureDAO dao;
 	
@@ -68,20 +68,6 @@ public class CultureServiceImpl implements CRUD<Culture, Integer>,ICultureServic
 		return dao.findAll();
 	}
 
-	@Override
-	public Page<Culture> getCulturePage(Integer page, String sortBy, String sortField) {
-
-		try {
-			Sort sort = sortService.sortBy(sortBy, sortField);
-
-			Pageable pageable = PageRequest.of(page, 6, sort);
-
-			Page<Culture> pageMood = dao.findAll(pageable);
-			return pageMood;
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
+	
 	
 }

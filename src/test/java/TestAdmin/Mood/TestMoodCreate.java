@@ -8,12 +8,12 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.rhymthwave.DAO.MoodDAO;
-import com.rhymthwave.ServiceAdmin.Implement.MoodServiceImp;
+import com.rhymthwave.ServiceAdmin.Implement.MoodServiceAdminImp;
 
 public class TestMoodCreate {
 
 	@InjectMocks
-	private MoodServiceImp moodServiceImp;
+	private MoodServiceAdminImp moodServiceImp;
 
 	@Mock
 	private MoodDAO moodDAO;

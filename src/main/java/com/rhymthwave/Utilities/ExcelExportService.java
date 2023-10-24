@@ -2,6 +2,9 @@ package com.rhymthwave.Utilities;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.Row;
@@ -49,7 +52,10 @@ public class ExcelExportService {
                             row.createCell(colNum).setCellValue((String) value);
                         } else if (value instanceof Integer) {
                             row.createCell(colNum).setCellValue((Integer) value);
-                        } // Thêm kiểu dữ liệu khác nếu cần
+                        }else if (value instanceof Date) {
+                            row.createCell(colNum).setCellValue((Date) value);
+                        }
+                        // Thêm kiểu dữ liệu khác nếu cần
                     }
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
