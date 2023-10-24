@@ -1,120 +1,131 @@
-body{
-    background-color: rgb(20,32,60);
-}
-.bg-dark-custom {
+body {
     background-color: rgb(0, 0, 0);
-}
-.navbar-dark .navbar-nav .nav-link {
-    font-weight: bold;
-    color: white;
-}
-.dropdown-item{
-    font-weight: bold;
-}
-.option-list ul {
-    list-style-type: none;
-    padding: 0;
-}
 
-.option-list li {
-    margin-bottom: 10px;
-}
-
-.option-list a {
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-}
-
-.content-display {
-    background-color: #f0f0f0;
-    padding: 20px;
-    min-height: 200px;
-    border: 1px solid #ccc;
-}
-.optionlist{
-    background-color: rgb(0, 0, 0);
-}
-/* Nền đen cho danh sách tùy chọn */
-.optionlist .option-list {
-    background-color: #000;
-    color: #fff; /* Màu chữ trắng */
-    padding: 10px; /* Khoảng cách giữa các tùy chọn */
-}
-
-/* Màu nền và màu chữ cho các tùy chọn */
-.optionlist .list-group-item {
-    background-color: #000;
-    border: none; /* Loại bỏ đường viền */
-    padding: 5px 0; /* Khoảng cách giữa các tùy chọn */
-}
-
-/* Màu chữ cho các tùy chọn */
-.optionlist .list-group-item a {
-    color: #fff; /* Màu chữ trắng cho tùy chọn */
-}
-
-/* Màu nền và đường kẻ ngăn cách giữa các tùy chọn */
-.optionlist .list-group-item:not(:last-child) {
-    border-bottom: 1px solid rgb(114,114,114); /* Đường kẻ ngăn cách màu trắng */
-}
-
-/* Màu hover khi di chuột vào tùy chọn */
-.optionlist .list-group-item:hover {
-    background-color: #333; /* Màu nền khi hover */
-}
-.user-avatar {
-    flex: 1; /* Mở rộng hình ảnh đại diện để lấp đầy toàn bộ không gian còn lại */
-    text-align: center; /* Căn giữa hình ảnh đại diện người dùng */
-}
-
-.user-avatar img {
-    width: 75px; /* Độ rộng hình ảnh */
-    height: 75px; /* Chiều cao hình ảnh */
-    border-radius: 50%; /* Làm cho hình ảnh tròn */
-}
-.content-display{
-    background-color: white;
-}
-.content-data{
-    min-height: 800px;
-}
-.title-option{
-    font-weight: bold;
-}
-.premium {
-    position: relative; /* Đặt vị trí của div cha là relative */
-}
-
-.text-overlay {
-    position: absolute; /* Đặt vị trí của div con là absolute để có thể di chuyển tự do trên ảnh */
-    top: 50%; /* Đặt vị trí theo chiều dọc (50% là giữa) */
-    left: 35%; /* Đặt vị trí theo chiều ngang (50% là giữa) */
-    transform: translate(-50%, -50%); /* Dịch chuyển div con lên và sang trái để đặt giữa ảnh */
-    font-size: 24px; /* Kích thước chữ */
-    color: white; /* Màu chữ */
-    background-color: rgba(0, 0, 0, 0.5); /* Màu nền của văn bản (có thể sử dụng rgba để đặt màu nền với độ trong suốt) */
-    padding: 10px; /* Khoảng cách giữa văn bản và viền */
-}
-@media screen and (max-width: 1000px) and (max-height: 1000px) {
-    .premium {
-      display: none; /* Ẩn thẻ div khi kích thước màn hình nhỏ hơn 1000x1000 pixel */
+    .bg-dark-custom {
+        background-color: rgb(0, 0, 0);
     }
-  }
 
-  /* CSS */
-.container.premium {
+    .navbar-dark .navbar-nav .nav-link {
+        font-weight: bold;
+        color: white;
+    }
+
+    .plan {
+        background-color: rgb(26, 26, 26);
+        color: white;
+        border-radius: 6px;
+    }
+
+    .pre {
+        background: linear-gradient(219.47deg, rgb(59, 58, 123) 6.36%, rgb(122, 22, 98) 91.17%);
+        border-radius: 6px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: white;
+    }
+
+    .pre i {
+        margin-bottom: 5px;
+        /* Điều chỉnh khoảng cách giữa biểu tượng và văn bản */
+    }
+
+    .logo {
+        float: right;
+    }
+
+    .btn {
+        float: right;
+        bottom: 20px;
+        border: 1px solid var(--essential-subdued, #878787);
+        justify-content: center;
+        border-radius: 500px;
+    }
+
+    .text {
+        color: rgb(179, 179, 179);
+        font-family: var(--font-family, CircularSpTitle, CircularSpTitle-Tall, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, var(--fallback-fonts, sans-serif));
+        ;
+    }
+}
+
+.account {
+    background-color: rgb(26, 26, 26);
+    color: white;
+    border-radius: 6px;
+}
+
+.chose {
+    display: flex;
+    align-items: center;
+    /* Căn giữa theo chiều dọc */
     position: relative;
 }
 
-.img-wrapper {
-    width: 100%;
-    overflow: hidden; /* Đảm bảo ảnh không tràn ra ngoài container */
+.in {
+    position: absolute;
+    right: 10px;
 }
 
-.background-img {
-    width: 100%;
-    height: auto;
-    display: block;
+.logo-conten {
+    display: inline-block;
+    vertical-align: middle;
 }
 
+.conten-text {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.list-chose .chose:hover {
+    background-color: rgb(0, 0, 0);
+}
+.text-chose{
+    color: white;
+}
+.btn-back {
+    background-color: #f2f2f2; /* Màu nền trắng nhạt */
+    border: none; /* Loại bỏ viền */
+    border-radius: 50%; /* Đặt border-radius thành 50% để làm thành hình tròn */
+    width: 40px; /* Điều chỉnh kích thước nút tùy ý */
+    height: 40px; /* Điều chỉnh kích thước nút tùy ý */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    outline: none; /* Loại bỏ đường viền khi nút được focus */
+    transition: background-color 0.3s; /* Hiệu ứng chuyển đổi màu nền */
+  }
+  
+  .btn-back:hover {
+    background-color: #ccc; /* Màu nền trắng nhạt khi hover */
+  }
+/* Chọn tất cả các ô nhập trong form */
+form input {
+    background-color: black; /* Nền đen */
+    border: 2px solid #333; /* Viền màu sắm */
+    color: white; /* Chữ màu trắng */
+}
+
+
+/* Tùy chỉnh nền của select */
+form select {
+    background-color: black; /* Nền đen */
+    border: 2px solid #333; /* Viền màu sắm */
+    color: white; /* Chữ màu trắng */
+}
+
+/* Tùy chỉnh nền của button */
+form button {
+    background-color: black; /* Nền đen */
+    border: 2px solid #333; /* Viền màu sắm */
+    color: white; /* Chữ màu trắng */
+}
+
+/* Để làm cho label màu trắng, bạn có thể thêm đoạn CSS sau */
+form label {
+    color: white; /* Chữ màu trắng */
+}
+  
