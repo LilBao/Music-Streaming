@@ -1,61 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <!-- Latest compiled JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-        crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="../../static/css/cssArtist/music.css">
-    <link rel="stylesheet" href="../../static/css/cssArtist/record.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-    <script src="../../static/js/angularjs/artist/Music.js"></script>
-    <script src="../../static/js/jscustom/Artist/Music.js"></script>
-    <script src="../../static/js/Utiliez/CookiesUtil.js"></script>
-
-    <!-- Record -->
-    <script src="../../static/js/angularjs/artist/Record.js"></script>
-    <script src="../../static/js/jscustom/Artist/record.js"></script>
-    <!-- Upcoming -->
-    <script src="../../static/js/angularjs/artist/Upcoming.js"></script>
-
-</head>
-
-<body ng-app="myApp" ng-controller="musicCtrl">
-
-    <section class="">
+<body ng-controller="musicCtrl">
+    <section>
         <h1>Music</h1>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item me-3 pb-3">
-                <a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1"
-                    aria-selected="true">Record</a>
+                <button class="tab-button-p nav-link active" id="click-tab-1" role="tab"
+                    onclick="openTabProfile(event, 'tab1-p')">Record</button>
             </li>
             <li class="nav-item me-3 pb-3">
-                <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2"
-                    aria-selected="false">Releases</a>
+                <button class="tab-button-p nav-link" id="click-tab-2" role="tab"
+                    onclick="openTabProfile(event, 'tab2-p')">Releases</button>
             </li>
             <li class="nav-item me-3 pb-3">
-                <a class="nav-link" id="tab3-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3"
-                    aria-selected="false">Playlists</a>
+                <button class="tab-button-p nav-link" id="click-tab-3" role="tab"
+                    onclick="openTabProfile(event, 'tab3-p')">Playlists</button>
             </li>
             <li class="nav-item me-3 pb-3">
-                <a class="nav-link" id="tab4-tab" data-toggle="tab" href="#tab4" role="tab" aria-controls="tab4"
-                    aria-selected="false">Upcoming</a>
+                <button class="tab-button-p nav-link" id="click-tab-4" role="tab"
+                    onclick="openTabProfile(event, 'tab4-p')">Upcoming</button>
             </li>
             <li class="nav-item me-3 pb-3">
-                <a class="nav-link" id="tab5-tab" data-toggle="tab" href="#tab5" role="tab" aria-controls="tab5"
-                    aria-selected="false">Garbage</a>
+                <button class="tab-button-p nav-link" id="click-tab-5" role="tab"
+                    onclick="openTabProfile(event, 'tab5-p')">Garbage</button>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+            <div class="tab-p tab-pane active " id="tab1-p">
                 <div class="d-flex justify-content-between">
                     <div class="input-group w-25">
                         <span class="input-group-text "><i class="bi bi-search"></i></span>
@@ -124,8 +93,7 @@
                 <div ng-include="'Recording.html'"></div>
                 <div ng-include="'RecordDetail.html'"></div>
             </div>
-
-            <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+            <div class="tab-p tab-pane" id="tab2-p">
                 <div class="d-flex justify-content-end">
                     <div class="dropdown">
                         <button type="button options" class="btn dropdown-toggle" data-bs-toggle="dropdown">
@@ -295,10 +263,11 @@
                                                         <div>
                                                             <input class="inputCss" type="text" id="releaseDetail"
                                                                 value="{{typeDetail === 'album' ? album.releaseDate :
-                                                            song.releaseDay | date:'dd/MM/yyyy, hh:mm:ss'}}" readonly>
+                                                            song.releaseDay | date:'dd/MM/yyyy, hh:mm a'}}" readonly>
                                                         </div>
                                                         <textarea readonly rows="10" id="descriptionDetail"
-                                                            class="inputCss w-100" type="text"></textarea>
+                                                            class="inputCss w-100" type="text">{{typeDetail === 'album' ? album.description :
+                                                            song.description}}</textarea>
                                                     </div>
                                                     <div class="d-flex justify-content-between">
                                                         <button class="btn">Elimidate Song</button>
@@ -351,9 +320,9 @@
                 </div>
 
             </div>
-            <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
+            <div class="tab-p tab-pane" id="tab3-p">
             </div>
-            <div class="tab-pane fade" id="tab4" role="tabpanel" aria-labelledby="tab4-tab">
+            <div class="tab-p tab-pane" id="tab4-p">
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -402,7 +371,7 @@
                 </table>
                 <div ng-include="'Upcoming.html'"></div>
             </div>
-            <div class="tab-pane fade " id="tab5" role="tabpanel" aria-labelledby="tab5-tab">
+            <div class="tab-p tab-pane" id="tab5-p">
                 <div class="d-flex justify-content-between">
                     <div class="input-group w-25">
                         <span class="input-group-text "><i class="bi bi-search"></i></span>
@@ -661,7 +630,4 @@
             </div>
         </div>
     </div>
-
 </body>
-
-</html>

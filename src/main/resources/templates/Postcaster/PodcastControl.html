@@ -14,35 +14,49 @@
     <link rel="stylesheet" href="../../static/css/cssPobcast/Home.css">
     <link rel="stylesheet" href="../../static/css/cssPobcast/Dashboard.css">
     <link rel="stylesheet" href="../../static//css/cssPobcast/Episode.css">
-    
+    <link rel="stylesheet" href="../../static//css/cssPobcast/nav.css">
+    <link rel="stylesheet" href="../../static//css/cssPobcast/profile.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../../static/js/angularjs/pobcast/Routing.js"></script>
-    <script src="../../static/js/Utiliez/CookiesUtil.js"></script>
+    
 
-    <script src="../../static/js/angularjs/pobcast/home.js"></script>
-
-    <script src="../../static/js/angularjs/pobcast/Dashboard.js"></script>
-    <script src="../../static/js/angularjs/pobcast/Episode.js"></script>
 </head>
-
-<body ng-app="myApp" >
+<body ng-app="myApp">
     <nav class="navbar navbar-expand-lg bg-black text-white">
         <div class="container-fluid">
             <button class="navbar-toggler navbar-light buttonCss" type="button" data-bs-toggle="offcanvas"
                 data-bs-target="#offcanvasExample" aria-controls=" offcanvasExample">
                 <span class="navbar-toggler-icon" style="color: snow;"></span>
             </button>
-                <button class="btn">
-                    <img src="../../static/img/ab1.webp" alt="" class="rounded-circle" height="22" alt="Portrait of a Woman" loading="lazy">
+            <div class="dropdown">
+                <button class="dropdown-item" data-bs-toggle="dropdown">
+                    <img src="../../static/img/ab1.webp" alt="" class="rounded-circle" height="22"
+                        alt="Portrait of a Woman" loading="lazy">
                     <span class="text-white">Lilbaor</span>
-                </button>  
+                </button>
+                <ul class="dropdown-menu">
+                    <li class="switch dropdown-item">
+                        <div>
+                            <a class="dropbtn btn border-0 ps-0">
+                                <i class="bi bi-arrow-left-right"></i> Pobcast
+                            </a>
+                            <div class="dropdown-content">
+                                <a class="dropdown-item p-2">podcast 1</a>
+                            </div> 
+                        </div>
+                    </li>
+                    <li><a class="dropdown-item p-3" href="#"><i class="bi bi-arrow-left-right"></i> Rthyme Wave</a></li>
+                    <li><a class="dropdown-item p-3" href="#">Log out</a></li>
+                </ul>
+            </div>
             <!-- offcanvas -->
-            <div class=" offcanvas offcanvas-start" tabindex="-1"
-                id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class=" offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+                aria-labelledby="offcanvasExampleLabel">
                 <div class="offcanvas-header">
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
                         aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
@@ -51,13 +65,13 @@
                             <a class="nav-link text-white" href="#!home">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#!dashboard">Analytics</a>
+                            <a class="nav-link text-white" href="#!analytics">Analytics</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" href="#!episode">Episodes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#!home">Profile</a>
+                            <a class="nav-link text-white" href="#!overview">Profile</a>
                         </li>
                     </ul>
                 </div>
@@ -67,8 +81,15 @@
             </div>
     </nav>
     <main ng-view>
-        
+
     </main>
+
+    <script src="../../static/js/Utiliez/CookiesUtil.js"></script>
+
+    <script src="../../static/js/angularjs/pobcast/home.js"></script>
+
+    <script src="../../static/js/angularjs/pobcast/Dashboard.js"></script>
+    <script src="../../static/js/angularjs/pobcast/Episode.js"></script>
 </body>
 
 </html>

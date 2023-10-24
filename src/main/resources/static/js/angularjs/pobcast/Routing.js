@@ -7,6 +7,15 @@ app.config(function($routeProvider) {
     .when("/home", {
         templateUrl : "HomePobcast.html"
     })
+    .when("/analytics", {
+        templateUrl : "HomePobcast.html"
+    })
+    .when("/episodes", {
+        templateUrl : "HomePobcast.html"
+    })
+    .when("/overview", {
+        templateUrl : "Profile.html"
+    })
     .when("/new-episode", {
         templateUrl : "dashboard.html",
         controller :"dashboardCtrl"

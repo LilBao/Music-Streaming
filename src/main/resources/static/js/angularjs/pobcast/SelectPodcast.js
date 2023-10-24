@@ -50,7 +50,7 @@ app.controller('selectPodcastCtrl', function($scope,$http){
             },
             transformRequest: angular.identity
         }).then(resp => {
-            $scope.listPodcast = resp.data.data;
+            $scope.podcast = resp.data.data;
             $scope.findMyListPodcast();
             showStickyNotification('Create successfully\n Let discover','success',3000)
         }).catch(error =>{

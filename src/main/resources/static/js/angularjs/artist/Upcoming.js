@@ -42,7 +42,7 @@ app.controller('upComingCtrl', function ($scope, $http) {
             },
             transformRequest: angular.identity
         }).then(resp => {
-            console.log('success')
+            $scope.upcoming = {};
         }).catch(error => {
 
         })
@@ -64,6 +64,7 @@ app.controller('upComingCtrl', function ($scope, $http) {
         }).then(resp => {
             var writters = $('input[name="writter"]:checked')
             var song = resp.data.data;
+            $scope.upcoming = {};
             //check xem có thêm người ft chung không
             if (writters.length > 0) {
                 writters.each(function () {

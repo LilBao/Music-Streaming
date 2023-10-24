@@ -1,14 +1,9 @@
-$(document).ready(function () {
-    $('#myTab a').click(function (e) {
-        e.preventDefault()
-        $(this).tab('show')
-    })
-})
 var currentTab = 0;
 document.addEventListener("DOMContentLoaded", function (event) {
     showTab(currentTab);
     $('#current-tab').innerText = currentTab + 1;
 });
+
 
 function showTab(n) {
     var x = document.getElementsByClassName("tab");
@@ -20,12 +15,13 @@ function showTab(n) {
     }
     if (n == (x.length - 2)) {
         document.getElementById("nextBtn").innerHTML = "Submit";
-    } else if (n > (x.length - 2)) {
+    }else if(n > (x.length - 2)){
         $("#nextBtn").addClass("submit");
         $("#nextBtn").hide();
-        $("#prevBtn").hide();
-    } else {
+        document.getElementById("prevBtn").remove();
+    }else {
         document.getElementById("nextBtn").innerHTML = "Next";
+        
     }
     fixStepIndicator(n)
 }
@@ -37,6 +33,7 @@ function nextPrev(n) {
     if (currentTab >= x.length) {
         document.getElementById("nextprevious").style.display = "none";
         document.getElementById("all-steps").style.display = "none";
+        document.getElementById("register").style.display = "none";
         document.getElementById("text-message").style.display = "block";
     }
     showTab(currentTab);
@@ -47,11 +44,5 @@ function fixStepIndicator(n) {
     for (i = 0; i < x.length; i++) {
         x[i].className = x[i].className.replace("active", "");
     }
-    if (n > 4) (
-        x[n].className += " active"
-    )
-
+    x[n].className += " active";
 }
-
-
-

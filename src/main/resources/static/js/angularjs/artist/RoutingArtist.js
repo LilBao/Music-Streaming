@@ -2,14 +2,14 @@ var app = angular.module("myApp", ["ngRoute"]);
 app.config(function($routeProvider) {
   $routeProvider
   .when("/", {
-    templateUrl : "HomePobcast.html"
+    templateUrl : "Home.html"
   })
   .when("/artist-home", {
     templateUrl : "Home.html"
   })
   .when("/artist-music", {
     templateUrl : "Music.html",
-    //controller: "musicCtrl"
+    controller: "musicCtrl"
   })
   .when("/artist-audience", {
     templateUrl : "Audience.html"
