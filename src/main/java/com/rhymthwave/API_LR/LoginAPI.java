@@ -28,7 +28,7 @@ import com.rhymthwave.entity.Account;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping(value = "/api/v1/users")
+@RequestMapping(value = "/api/v1/accounts")
 public class LoginAPI {
 
 	@Autowired
@@ -91,6 +91,11 @@ public class LoginAPI {
 		
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 				.body(new MessageResponse(false, "Error Login", null));
+	}
+	
+	@GetMapping("/loginGG")
+	public ResponseEntity<String> hello(){
+		return ResponseEntity.ok("Hello");
 	}
 	
 	@GetMapping
