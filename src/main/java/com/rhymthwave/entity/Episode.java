@@ -48,17 +48,20 @@ public class Episode implements Serializable {
 	private Date publishDate;
 
 	@Column(name = "SESSIONNUMBER")
-	private String sessionNumber;
+	private Integer sessionNumber;
 
 	@Column(name = "EPNUMBER")
-	private String episodeNumber;
+	private Integer episodeNumber;
 
 	@Column(name = "EPTYPE")
-	private boolean episodeType;
+	private String episodeType;
 
 	@Column(name = "CONTENT")
 	private String content;
 
+	@Column(name = "ISPUBLIC")
+	private boolean isPublic;
+	
 	@ManyToOne
 	@JoinColumn(name = "PODCASTID")
 	private Podcast podcast;

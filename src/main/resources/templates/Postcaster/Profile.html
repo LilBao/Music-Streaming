@@ -1,49 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <!-- Latest compiled JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-        crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<style>
-    input {
-        border: 0px !important;
-    }
-
-    textarea {
-        border: 0px !important;
-        overflow-y: hidden;
-        resize: none;
-    }
-
-    p {
-        padding: 0px;
-        margin: 0px;
-    }
-
-    .form-control:focus {
-        border-color: inherit;
-        box-shadow: none;
-    }
-
-    .podcast-name {
-        font-weight: bold;
-        font-size: xx-large;
-    }
-    a{
-        text-decoration: none;
-    }
-</style>
-
 <body>
     <div class="container col-7">
         <div class="row">
@@ -147,46 +101,6 @@
             </div>
         </div>
     </div>
-    <script>
-        const show = $('#show');
-        const modify = $('#modify');
-        const playPobcast = $('#play-pobcast');
-        var childrenModify = modify.children();
-        var childrenPlay = playPobcast.children();
-        $('#show').click(function () {
-            if (show.hasClass('showless')) {
-                this.innerHTML = 'show more';
-                $('#about').attr('rows', '3');
-                show.removeClass('showless');
-            } else {
-                this.innerHTML = 'show less';
-                $('#about').attr('rows', '10');
-                show.addClass("showless");
-            }
-        })
+    <script src="../../static/js/jscustom/Podcast/profile.js"></script>
 
-        modify.click(function () {
-            if (childrenModify.hasClass('bi-pencil-fill')) {
-                $('.form-control').removeAttr('readonly');
-                childrenModify.removeClass('bi-pencil-fill');
-                childrenModify.addClass('bi-check-lg');
-            } else {
-                $('.form-control').attr('readonly', true);
-                childrenModify.removeClass('bi-check-lg');
-                childrenModify.addClass('bi-pencil-fill');
-            }
-        })
-
-        playPobcast.click(function () {
-            if (childrenPlay.hasClass('bi-play-circle-fill')) {
-                childrenPlay.removeClass('bi-play-circle-fill');
-                childrenPlay.addClass('bi-pause-circle-fill');
-            } else {
-                childrenPlay.removeClass('bi-pause-circle-fill');
-                childrenPlay.addClass('bi-play-circle-fill');
-            }
-        })
-    </script>
 </body>
-
-</html>

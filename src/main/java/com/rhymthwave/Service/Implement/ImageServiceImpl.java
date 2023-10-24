@@ -1,6 +1,7 @@
 package com.rhymthwave.Service.Implement;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,12 +51,13 @@ public class ImageServiceImpl implements ImageService, CRUD<Image, String>{
 	}
 
 	@Override
-	public Image getEntity(String assetid, String url, Integer weight, Integer height) {
+	public Image getEntity(Map<?,?> respImg) {
 		Image image = new Image();
-		image.setAccessId(assetid);
-		image.setUrl(url);
-		image.setWeight(weight);
-		image.setHeight(height);
+		image.setAccessId((String) respImg.get("asset_id"));
+		image.setUrl((String) respImg.get("url"));
+		image.setPublicId((String) respImg.get("public_id"));
+		image.setWeight((Integer) respImg.get("weight"));
+		image.setHeight((Integer) respImg.get("height"));
 		return image;
 	}
 	

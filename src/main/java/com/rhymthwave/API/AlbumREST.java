@@ -71,9 +71,7 @@ public class AlbumREST {
 		if (coverImg != null) {
 			Map<String, Object> respImg = cloudinary.Upload(coverImg, "CoverImage",
 					account.getArtist().getArtistName());
-			Image cover = imgSer.getEntity((String) respImg.get("asset_id"), (String) respImg.get("url"),
-					(Integer) respImg.get("width"), (Integer) respImg.get("height"));
-			cover.setPublicId((String) respImg.get("public_id"));
+			Image cover = imgSer.getEntity(respImg);
 			crudImage.create(cover);
 			album.setImage(cover);
 		}
@@ -92,11 +90,8 @@ public class AlbumREST {
 		Account account = crudAccount.findOne(owner);
 		Album album = crudAlbum.findOne(id);
 		if (coverImg != null) {
-			Map<String, Object> respImg = cloudinary.Upload(coverImg, "CoverImage",
-					account.getArtist().getArtistName());
-			Image cover = imgSer.getEntity((String) respImg.get("asset_id"), (String) respImg.get("url"),
-					(Integer) respImg.get("width"), (Integer) respImg.get("height"));
-			cover.setPublicId((String) respImg.get("public_id"));
+			Map<String, Object> respImg = cloudinary.Upload(coverImg, "CoverImage",account.getArtist().getArtistName());
+			Image cover = imgSer.getEntity(respImg);
 			crudImage.create(cover);
 			album.setImage(cover);
 		}

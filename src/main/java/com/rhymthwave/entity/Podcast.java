@@ -47,9 +47,6 @@ public class Podcast implements Serializable {
 
 	@Column(name = "LANGUAGE")
 	private String language;
-
-	@Column(name = "VERIFY")
-	private boolean verify;
 	
 	@Column(name = "RATE")
 	private Integer rate;
@@ -63,7 +60,7 @@ public class Podcast implements Serializable {
 	private Tag tag;
 
 	@ManyToOne
-	@JoinColumn(name = "ACCOUNTID") //ACCOUNTID
+	@JoinColumn(name = "ACCOUNTID")
 	private Account account;
 
 	@JsonIgnore

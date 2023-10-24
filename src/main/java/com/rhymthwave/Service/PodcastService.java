@@ -1,5 +1,9 @@
 package com.rhymthwave.Service;
 
-public interface PodcastService {
+import java.util.List;
 
+import com.rhymthwave.entity.Podcast;
+
+public interface PodcastService {
+	List<Podcast> findMyPodcast(String email);
 }
