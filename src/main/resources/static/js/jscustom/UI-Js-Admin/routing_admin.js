@@ -53,8 +53,12 @@ app.config(function($routeProvider,$cookiesProvider) {
     templateUrl : "Categories/Genre.html",
     controller: "genreController"
   })
+  .when("/manage_report", {
+    templateUrl : "ManageReport.html",
+  })
   .when("/statistical_managerment", {
-    templateUrl : "statistical_managerment.html"
+    templateUrl : "statistical_managerment.html",
+    controller: "ChartController"
   });
 });
 
