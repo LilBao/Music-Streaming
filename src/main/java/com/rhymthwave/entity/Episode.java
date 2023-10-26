@@ -5,9 +5,11 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -62,12 +64,20 @@ public class Episode implements Serializable {
 	@Column(name = "ISPUBLIC")
 	private boolean isPublic;
 	
-	@ManyToOne
+	@Column(name = "ISDELETED")
+	private boolean isDelete;
+	
+	@Column(name = "LIKES")
+	private Long likes;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PODCASTID")
+	@JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
 	private Podcast podcast;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IMAGEEP")
+	@JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
 	private Image image;
 
 	@JsonIgnore

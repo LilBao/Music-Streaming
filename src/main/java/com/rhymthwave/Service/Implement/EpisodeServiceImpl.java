@@ -69,9 +69,12 @@ public class EpisodeServiceImpl implements EpisodeService, CRUD<Episode, Long>{
 	}
 
 	@Override
-	public List<Episode> findAllEpisodeByPodcast(Long podcastId) {
-		return dao.findAllEpisodeByPodcast(podcastId);
+	public List<Episode> findAllEpisodeByPodcast(Long podcastId, Boolean status) {
+		return dao.findAllEpisodeByPodcast(podcastId,status);
 	}
 
-	
+	@Override
+	public Episode findLatestEpisodeByPodcast(Long podcastId) {
+		return dao.findLatestByPodcast(podcastId);
+	}	
 }
