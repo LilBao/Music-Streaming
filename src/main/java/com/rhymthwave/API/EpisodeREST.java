@@ -4,11 +4,13 @@ import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -48,10 +50,20 @@ public class EpisodeREST {
 	public ResponseEntity<MessageResponse> findAllEpisode() {
 		return ResponseEntity.ok(new MessageResponse(true, "successs", crudEpisode.findAll()));
 	}
+	
+	@GetMapping("/api/v1/episode/{id}")
+	public ResponseEntity<MessageResponse> findEpisode(@PathVariable("id") Long id ) {
+		return ResponseEntity.ok(new MessageResponse(true, "successs", crudEpisode.findOne(id)));
+	}
 
 	@GetMapping("/api/v1/podcast-episode/{podcastId}")
 	public ResponseEntity<MessageResponse> findAllEpisodeByPodcast(@PathVariable("podcastId") Long podcastId) {
-		return ResponseEntity.ok(new MessageResponse(true, "successs", episodeSer.findAllEpisodeByPodcast(podcastId)));
+		return ResponseEntity.ok(new MessageResponse(true, "successs", episodeSer.findAllEpisodeByPodcast(podcastId,false)));
+	}
+	
+	@GetMapping("/api/v1/podcast-episode-deleted/{podcastId}")
+	public ResponseEntity<MessageResponse> findAllEpisodeByPodcastDeleted(@PathVariable("podcastId") Long podcastId) {
+		return ResponseEntity.ok(new MessageResponse(true, "successs", episodeSer.findAllEpisodeByPodcast(podcastId,true)));
 	}
 
 	@PostMapping(value = "/api/v1/episode", consumes = { "multipart/form-data" })
@@ -60,7 +72,7 @@ public class EpisodeREST {
 		String owner = host.getEmailByRequest(req);
 		Account account = crudAccount.findOne(owner);
 		if (coverImg != null && fileAudio !=null) {
-			Map<?, ?> respAudio = cloudinarySer.Upload(coverImg, "EpisodeImage", account.getUsername());
+			Map<?, ?> respAudio = cloudinarySer.Upload(fileAudio, "EpisodeRecord", account.getUsername());
 			Map<?, ?> respImg = cloudinarySer.UploadResizeImage(coverImg, "EpisodeImage", account.getUsername(), 350,350);
 			Image image = imgSer.getEntity(respImg);
 			episode = episodeSer.snapEpisode(episode, respAudio, crudImage.create(image));
@@ -68,18 +80,42 @@ public class EpisodeREST {
 		return ResponseEntity.ok(new MessageResponse(true, "successs", crudEpisode.create(episode)));
 	}
 
-	@PutMapping(value = "/api/v1/episode", consumes = { "multipart/form-data" })
-	public ResponseEntity<MessageResponse> updateEpisode(@ModelAttribute Episode episode, HttpServletRequest req,
+	@PutMapping(value = "/api/v1/episode-file/{id}", consumes = { "multipart/form-data" })
+	public ResponseEntity<MessageResponse> updateFileEpisode(@PathVariable("id") Long id,HttpServletRequest req,
 			@PathParam("fileAudio") MultipartFile fileAudio, @PathParam("coverImg") MultipartFile coverImg) {
 		String owner = host.getEmailByRequest(req);
 		Account account = crudAccount.findOne(owner);
-		if (coverImg != null && fileAudio !=null) {
-			Map<?, ?> respAudio = cloudinarySer.Upload(coverImg, "EpisodeImage", account.getUsername());
+		Episode episode= crudEpisode.findOne(id); 
+		Image image = episode.getImage();
+		if(coverImg != null) {
 			Map<?, ?> respImg = cloudinarySer.UploadResizeImage(coverImg, "EpisodeImage", account.getUsername(), 350,350);
-			Image image = imgSer.getEntity(respImg);
-			episode = episodeSer.snapEpisode(episode, respAudio, crudImage.create(image));
+			image = imgSer.getEntity(respImg);
+			crudImage.create(image);
 		}
-		
-		return ResponseEntity.ok(new MessageResponse(true, "successs", crudEpisode.create(episode)));
+		if (fileAudio !=null) {
+			Map<?, ?> respAudio = cloudinarySer.Upload(fileAudio, "EpisodeRecord", account.getUsername());
+			episode = episodeSer.snapEpisode(episode, respAudio,image);
+		}
+		return ResponseEntity.ok(new MessageResponse(true, "successs", crudEpisode.update(episode)));
 	}
+	
+	@PutMapping(value = "/api/v1/episode")
+	public ResponseEntity<MessageResponse> updateEpisode(@RequestBody Episode episode) {
+		return ResponseEntity.ok(new MessageResponse(true, "successs", crudEpisode.update(episode)));
+	}
+
+	@DeleteMapping(value = "/api/v1/episode/{id}")
+	public ResponseEntity<MessageResponse> updateEpisode(@PathVariable("id") Long id) {
+		Episode episode= crudEpisode.findOne(id);
+		cloudinarySer.deleteFile(episode.getPublicIdFile());
+		cloudinarySer.deleteFile(episode.getImage().getPublicId());
+		return ResponseEntity.ok(new MessageResponse(true, "successs", crudEpisode.delete(id)));
+	}
+	
+	@GetMapping("/api/v1/latest-episode-podcast/{id}")
+	public ResponseEntity<MessageResponse> findLatestEpisodeByPodcast(@PathVariable("id") Long id){
+		return ResponseEntity.ok(new MessageResponse(true,"success",episodeSer.findLatestEpisodeByPodcast(id)));
+	}
+	
+	
 }

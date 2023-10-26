@@ -1,8 +1,8 @@
-input {
+.input-profile {
     border: 0px !important;
 }
 
-textarea {
+.textarea-profile {
     border: 0px !important;
     overflow-y: hidden;
     resize: none;

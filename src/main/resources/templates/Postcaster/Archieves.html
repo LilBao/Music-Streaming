@@ -1,0 +1,46 @@
+<body ng-controller="myArchiveCtrl">
+    <div class="container">
+        <h3>Archive episode deleted</h3>
+        <div class="row mt-5">
+            <div class="col-3" ng-repeat="item in listEpisodeDeleted">
+                <div class="card">
+                    <img class="card-img-top w-100 h-100"  src="{{item.image.url}}" alt="Card image">
+                    <div class="card-body">
+                        <audio class="w-100" controls src="{{item.fileUrl}}"></audio>
+                        <h6 class="card-title">{{item.episodeTitle}}</h6>
+                        <div class="d-flex justify-content-between mt-4">
+                            <button ng-click="recoveryEpisode(item.episodeId)" class="rounded-pill btn border-dark bg-dark text-white">Recover</button>
+                            <button class="rounded-pill btn border-dark bg-dark text-white" data-bs-toggle="modal" data-bs-target="#destroy-episode-{{item.episodeId}}">Delete</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal" id="destroy-episode-{{item.episodeId}}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+            
+                            <div class="modal-header">
+                                <h4 class="modal-title">Confirm</h4>
+                                <button id="finish-destroy-episode" type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+            
+                            <div class="modal-body">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <img class="w-25 h-100" style="object-fit: cover;" src="{{item.image.url}}" alt="">
+                                    <h6>{{item.episodeTitle}}</h6>
+                                </div>
+                            </div>
+            
+                            <div class="modal-footer">
+                                <button ng-click="destroyEpisode(item.episodeId)" id="confirm-destroy-episode" type="button" class="btn btn-danger">Yes</button>
+                            </div>
+            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div> 
+    </div>
+
+    
+</body>

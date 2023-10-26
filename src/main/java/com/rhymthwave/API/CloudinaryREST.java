@@ -37,4 +37,8 @@ public class CloudinaryREST {
 		return ResponseEntity.ok(new MessageResponse(true,"success",cloudinarSer.downloadFile(public_id,"jpg")));
 	}
 
+	@GetMapping("/api/v1/cloudinary/read-lyrics")
+	public ResponseEntity<MessageResponse> readLyrics(@RequestParam("url") String url){
+		return ResponseEntity.ok(new MessageResponse(true,"success",cloudinarSer.readLrc(url)));
+	}
 }

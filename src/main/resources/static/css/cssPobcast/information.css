@@ -72,8 +72,3 @@ button:hover {
     background-color: transparent !important;
     color: white !important;
 }
-.img-podcast {
-    height: 250px;
-    width: 250px;
-    object-fit: cover;
-  }
