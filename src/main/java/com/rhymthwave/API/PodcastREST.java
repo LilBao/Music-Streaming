@@ -105,6 +105,8 @@ public class PodcastREST {
 	
 	@DeleteMapping(value="/api/v1/podcast/{id}")
 	public ResponseEntity<MessageResponse> deletePodcast(@PathVariable("id") Long id){
+		Podcast podcast = crudPobcast.findOne(id);
+		cloudinarySer.deleteFile(podcast.getImage().getPublicId());
 		return ResponseEntity.ok(new MessageResponse(true, "successs", crudPobcast.delete(id)));
 	}
 }
