@@ -18,7 +18,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="../../static/css/style.css">
-    <script src="../../static/js/angularjs/index.js"></script>
+    <script src="../../static/js/angularjs/user/index.js"></script>
 </head>
 
 <body ng-app="myApp">
@@ -161,7 +161,8 @@
                 </div>
                 <div class="time-line w-100 d-flex align-items-center flex-fill">
                     <span class="current-time">current time</span>
-                    <input class="duration-bar w-75" type="range" min="0" max="100" name="" id="">
+                    <input id="duration-audio" class="duration-bar w-75" type="range" min="0" max="100" name="" id="">
+                    <audio id="audio" src=""></audio>
                     <div class="line-first"></div>
                     <div class="line-current"></div>
                     <div class="circle"></div>
@@ -218,10 +219,6 @@
             playlist.style = 'overflow-y: hidden;'
         }
 
-        // isPlaying: false,
-        // isRandom: false,
-        // isRepeat: false,
-        // isMute: false,
         app.controller('SearchController', ['$scope', '$location', function($scope, $location) {
             // Watch for changes in the input field
             $scope.$watch('searchInput', function(newVal) {

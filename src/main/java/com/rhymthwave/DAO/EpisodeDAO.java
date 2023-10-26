@@ -11,6 +11,9 @@ import com.rhymthwave.entity.Episode;
 
 @Repository
 public interface EpisodeDAO extends JpaRepository<Episode, Long>{
-	@Query("select o from Episode o where o.podcast.podcastId = :podcastId")
-	List<Episode> findAllEpisodeByPodcast(@Param("podcastId") Long podcastId);
+	@Query("select o from Episode o where o.podcast.podcastId = :podcastId and o.isDelete = :status")
+	List<Episode> findAllEpisodeByPodcast(@Param("podcastId") Long podcastId,@Param("status") Boolean status);
+	
+	@Query(value="SELECT TOP 1 * FROM EPISODES WHERE PUBLISHDATE < GETDATE() AND ISPUBLIC= 1 AND ISDELETED = 0 AND PODCASTID = :podcastId ORDER BY PUBLISHDATE DESC",nativeQuery = true)
+	Episode findLatestByPodcast(@Param("podcastId") Long podcastId);
 }

@@ -11,10 +11,16 @@ app.config(function($routeProvider) {
         templateUrl : "HomePobcast.html"
     })
     .when("/episodes", {
-        templateUrl : "HomePobcast.html"
+        templateUrl : "Episode.html",
+        controller : "episodeCtrl"
     })
-    .when("/overview", {
-        templateUrl : "Profile.html"
+    .when("/archives", {
+        templateUrl : "Archieves.html",
+        controller : "myArchiveCtrl"
+    })
+    .when("/podcast-settings", {
+        templateUrl : "SettingPodcast.html",
+        controller : "myPodcastCtrl"
     })
     .when("/new-episode", {
         templateUrl : "dashboard.html",

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -51,6 +52,9 @@ public class Podcast implements Serializable {
 	@Column(name = "RATE")
 	private Integer rate;
 
+	@Column(name = "AUTHORNAME")
+	private String authorName;
+	
 	@OneToOne
 	@JoinColumn(name = "IMGAGEID")
 	private Image image;
