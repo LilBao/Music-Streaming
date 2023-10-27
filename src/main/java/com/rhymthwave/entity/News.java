@@ -45,6 +45,9 @@ public class News implements Serializable {
 	@Column(name = "CREATEDATE")
 	private Date createDate;
 	
+	@Column(name = "CREATEFOR")
+	private String createFor;
+	
 	@Column(name = "MODIFIEDBY", length = 255)
 	private String modifiedBy;
 	
