@@ -63,7 +63,7 @@
                                                 image:</label>
                                              <select name="ImageLocation" class="form-select font-select"
                                                 ng-model="form.ImageLocation" required>
-                                                <option ng-repeat="items in items" ng-value="items">{{items}}</option>
+                                                <option ng-repeat="items in items track by $index" ng-value="items">{{items}}</option>
                                              </select>
                                              <!-- VALIDATION FORM -->
                                              <div
