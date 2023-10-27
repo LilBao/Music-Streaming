@@ -1,16 +1,15 @@
-var app = angular.module("myApp", []);
 var host = "http://localhost:8080/api";
 app.controller('musicCtrl', function ($scope, $http) {
     $scope.listSongUpcoming = [];
     $scope.listAlbumUpcoming = [];
     $scope.listRecord = [];
-    $scope.listArtist=[];
+    $scope.listArtist = [];
     $scope.artist = {};
     $scope.record = {};
     $scope.song = {};
     $scope.album = {};
-    $scope.songWritter=[];
-    $scope.writter={};
+    $scope.songWritter = [];
+    $scope.writter = {};
     $scope.track = {};
     $scope.songGenreRecord = [];
     $scope.songGenre = {};
@@ -60,22 +59,6 @@ app.controller('musicCtrl', function ($scope, $http) {
         $scope.findListRecordArtist();
     })
 
-    //Get list record delete
-    $scope.listRecordeDelete = [];
-    $scope.findListRecordDelete = function () {
-        let url = host + '/v1/record-delete'
-        $http.get(url, {
-            headers: { 'Authorization': 'Bearer ' + getCookie('token') }
-        }).then(resp => {
-            $scope.listRecordeDelete = resp.data.data
-        }).catch(error => {
-            console.log(error)
-        })
-    }
-    $('#tab5-tab').click(function () {
-        $scope.findListRecordDelete();
-    })
-
     //Find song writter
     $scope.findListSongWritter = function (idSong) {
         let url = host + '/v1/writter-song/' + idSong;
@@ -91,9 +74,9 @@ app.controller('musicCtrl', function ($scope, $http) {
         let url = host + '/v1/writter';
         let song = angular.copy($scope.song);
         let data = angular.copy($scope.writter);
-        data.artist=artist;
-        data.song=song;
-        $http.post(url,data).then(resp => {
+        data.artist = artist;
+        data.song = song;
+        $http.post(url, data).then(resp => {
             $scope.findListSongWritter(song.songId);
         }).catch(error => {
             console.log(error);
@@ -101,38 +84,45 @@ app.controller('musicCtrl', function ($scope, $http) {
     }
 
     //delele writter
-    $scope.deleteWritter=function(idWritter){
-        let url = host + '/v1/writter/'+idWritter;
-        $http.delete(url).then(resp =>{
+    $scope.deleteWritter = function (idWritter) {
+        let url = host + '/v1/writter/' + idWritter;
+        $http.delete(url).then(resp => {
             $scope.findListSongWritter($scope.song.songId)
         }).catch(error => {
 
         })
     }
     //Out song
-    $scope.outSong=function(idSong,idArtist){
-        var writter = $scope.songWritter.find(function(item){
+    $scope.outSong = function (idSong, idArtist) {
+        var writter = $scope.songWritter.find(function (item) {
             return item.song.songId === idSong && item.artist.artistId === idArtist
         })
         $scope.deleteWritter(writter.writterId);
     }
 
     //Get list song has not record (lấy những bài hát không có record)
-    $http.get(host + "/v1/song/up-coming", {
-        headers: { 'Authorization': 'Bearer ' + getCookie('token') }
-    }).then(resp => {
-        $scope.listSongUpcoming = resp.data.data;
-    }).catch(error = {
+    $scope.findListSongUpcoming = function () {
+        $http.get(host + "/v1/song/up-coming", {
+            headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+        }).then(resp => {
+            $scope.listSongUpcoming = resp.data.data;
+        }).catch(error = {
 
-    })
-
+        })
+    } 
     //Get list album has not track (lấy những album chưa có track nào)
-    $http.get(host + "/v1/album/up-coming", {
-        headers: { 'Authorization': 'Bearer ' + getCookie('token') }
-    }).then(resp => {
-        $scope.listAlbumUpcoming = resp.data.data;
-    }).catch(error = {
+    $scope.findListAlbumUpcoming = function () {
+        $http.get(host + "/v1/album/up-coming", {
+            headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+        }).then(resp => {
+            $scope.listAlbumUpcoming = resp.data.data;
+        }).catch(error = {
 
+        })
+    }
+    $('#click-tab-4').click(function () {
+        $scope.findListSongUpcoming();
+        $scope.findListAlbumUpcoming();
     })
 
     //Pitch record (Sự kiện để phân biệt đang muốn pitch record hay là album)
@@ -182,8 +172,8 @@ app.controller('musicCtrl', function ($scope, $http) {
     }
 
     //Delete song 
-    $scope.deleteSong=function(id){
-        let url = host + "/v1/song/"+id
+    $scope.deleteSong = function (id) {
+        let url = host + "/v1/song/" + id
         $http.delete(url).then(resp => {
             console.log("update song successfully")
         }).catch(error => {
@@ -211,12 +201,11 @@ app.controller('musicCtrl', function ($scope, $http) {
         var url = host + "/v1/record";
         record.song = song;
         $http.put(url, record).then(resp => {
-            console.log("success");
+            $scope.findListSongUpcoming();
         }).catch(error => {
 
         })
     }
-
 
     //find Album (Tìm album theo id album)
     $scope.findAlbum = function (idAlbum) {
@@ -229,8 +218,8 @@ app.controller('musicCtrl', function ($scope, $http) {
     }
 
     //Delete Album 
-    $scope.deleteAlbum= function(idAlbum){
-        let url = host + "/v1/album/"+idAlbum
+    $scope.deleteAlbum = function (idAlbum) {
+        let url = host + "/v1/album/" + idAlbum
         $http.delete(url).then(resp => {
             console.log("update song successfully")
         }).catch(error => {
@@ -319,7 +308,7 @@ app.controller('musicCtrl', function ($scope, $http) {
                 $http.get(url).then(resp => {
                     data = (resp.data.data);
                     if ($scope.type === "song") {
-                        $scope.updateSongPitch(dataSong, data)
+                        $scope.updateSongPitch(dataSong, data);
                     } else {
                         $scope.createTrack(dataAlbum, data);
                     }
@@ -469,14 +458,14 @@ app.controller('musicCtrl', function ($scope, $http) {
             let song = angular.copy($scope.song);
             song.songName = $('#nameDetail').val();
             song.releaseDay = new Date($('#releaseDetail').val());
-            song.description = $('descriptionDetail').val();
+            song.description = $('#descriptionDetail').val();
             $scope.updateSong(song);
             $scope.updateCoverImage(type);
         } else {
             let album = angular.copy($scope.album);
             album.albumName = $('#nameDetail').val();
             album.releaseDate = new Date($('#releaseDetail').val());
-            album.description = $('descriptionDetail').val();
+            album.description = $('#descriptionDetail').val();
             $scope.updateAlbum(album);
             $scope.updateCoverImage(type);
         }
@@ -581,7 +570,8 @@ app.controller('musicCtrl', function ($scope, $http) {
 
         })
     }
-    $('#tab5-tab').click(function () {
+
+    $('#click-tab-5').click(function () {
         $scope.getListRecordRemoved();
     })
 
@@ -754,12 +744,12 @@ app.controller('musicCtrl', function ($scope, $http) {
     }
 
     //update status Record Genre
-    $scope.createRecordGenre = function (record,genre) {
+    $scope.createRecordGenre = function (record, genre) {
         let url = host + "/v1/song-genre";
         var data = angular.copy($scope.songGenre);
         data.recording = record;
         data.genre = genre;
-        $http.post(url,data).then(resp => {
+        $http.post(url, data).then(resp => {
             $scope.findSongGenreByRecord(data.recording.recordingId);
         }).catch(error => {
             console.log(error);
@@ -773,7 +763,7 @@ app.controller('musicCtrl', function ($scope, $http) {
             $http.get(url).then(resp => {
                 let record = angular.copy($scope.record);
                 let genre = resp.data.data;
-                $scope.createRecordGenre(record,genre);
+                $scope.createRecordGenre(record, genre);
             }).catch(error => {
                 console.log(error);
             })
@@ -781,12 +771,12 @@ app.controller('musicCtrl', function ($scope, $http) {
     }
 
     $scope.deleteRecordGenre = function (id) {
-            let url = host + "/v1/song-genre/" + id;
-            $http.delete(url).then(resp => {
-                $scope.findSongGenreByRecord($scope.record.recordingId);
-            }).catch(error => {
-                console.log(error);
-            })
+        let url = host + "/v1/song-genre/" + id;
+        $http.delete(url).then(resp => {
+            $scope.findSongGenreByRecord($scope.record.recordingId);
+        }).catch(error => {
+            console.log(error);
+        })
     }
 
     //remove status record genre
@@ -799,9 +789,9 @@ app.controller('musicCtrl', function ($scope, $http) {
     }
 
     //Search artist
-    $scope.searchArtist = function(name){
-        let url = host+"/v1/search-artist/"+name;
-        $http.get(url,{
+    $scope.searchArtist = function (name) {
+        let url = host + "/v1/search-artist/" + name;
+        $http.get(url, {
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
             $scope.listArtist = resp.data.data;
@@ -810,9 +800,9 @@ app.controller('musicCtrl', function ($scope, $http) {
 
     //Event search
     $scope.search = ""
-    $('#search-artist').on('input',function(){
+    $('#search-artist').on('input', function () {
         $scope.search = $(this).val().trim();
-        if($scope.search.length >0){
+        if ($scope.search.length > 0) {
             $scope.searchArtist($scope.search);
         }
     })
@@ -832,7 +822,7 @@ app.controller('musicCtrl', function ($scope, $http) {
 
     //transit tab upcoming
     $scope.changeTab = function () {
-        $('#tab4-tab').click();
+        $('#click-tab-4').click();
     }
 
     //description
@@ -847,7 +837,7 @@ app.controller('musicCtrl', function ($scope, $http) {
         $('#modified-release').show();
     }
 
-    $scope.closeDetail=function(){
+    $scope.closeDetail = function () {
         $('.audio-record').attr('src', "");
     }
 })

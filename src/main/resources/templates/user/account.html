@@ -13,6 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../../static/css/accountcss.css">
 </head>
@@ -54,295 +55,264 @@
         </div>
     </div>
 </nav>
-<div class="container-fuild premium">
-    <div class="img-wrapper">
-        <img class="background-img" src="../../static/img/bg.png" alt="">
-    </div>
-    <div class="text-overlay">
-        <p style="font-size: 30px;font-weight: bold;">Sắp kết thúc: 3 tháng dùng gói Premium với giá 0₫</p>
-        <p style="font-size: 20px;">Đừng bỏ lỡ cơ hội nghe nhạc không quảng cáo, không cần kết nối mạng và nhiều lợi ích
-            khác. Hủy bất cứ lúc
-            nào.</p>
-        <p style="font-size: 20px;">Ưu đãi kết thúc sau 7ngày: 6giờ: 37phút</p>
-        <button type="button" class="btn btn-dark btn-rounded mt-2 mb-2 " data-mdb-ripple-color="dark"
-            style="border-radius: 10px;">Dùng thử 3 tháng 0đ</button>
-        <p style="font-size: 12px;">Chỉ áp dụng cho gói Individual. Sau đó là 59,000₫/tháng. Có áp dụng các điều khoản
-            và điều kiện. Chỉ dành cho
-            những người chưa dùng thử gói Premium. Ưu đãi kết thúc vào 12/09/2023.</p>
-    </div>
-</div>
 
-<div class="container ">
-    <div class="row ">
-        <div class="col-sm-3 p-0 optionlist">
-            <div class="option-list">
-                <div class="user-avatar mb-3">
-                    <img src="../../static/img/dz.png" alt="User Avatar">
+<div class="menu">
+    <div class="container mt-5 mb-5">
+        <div class="row">
+            <div class="col-sm-8 plan me-5 ms-3" data-page="page-0">
+                <div class="frist mb-5">
+                    <div class="logo mt-2">
+                        <img src="../../static/img/logo.png" alt="" width="117">
+                    </div>
+                    <p>Your plan</p>
+                    <h2 class="text mb-5">Rhymthwave Free</h2>
+                    <button type="button" class="btn btn-outline-secondary mb-3 mt-5">Explore plans</button>
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item py-3"><a href="#" data-option="option1"><i class="bi bi-person-vcard"></i>
-                            Tổng quan về tài khoản</a></li>
-                    <li class="list-group-item py-3"><a href="#" data-option="option2"><i class="bi bi-pencil"></i> Chỉnh sửa
-                            hồ sơ</a></li>
-                    <li class="list-group-item py-3"> <a href="#" data-option="option3"><i class="bi bi-lock"></i> Phương
-                            thức đăng nhập</a></li>
-                    <li class="list-group-item py-3"><a href="#" data-option="option4"><i class="bi bi-lock"></i> Đổi mật
-                            khẩu</a></li>
-                    <li class="list-group-item py-3"><a href="#" data-option="option5"><i class="bi bi-bell"></i> Cài đặt
-                            thông báo</a></li>
-                    <li class="list-group-item py-3"><a href="#" data-option="option6"><i class="bi bi-lock"></i> Cài đặt
-                            quyền riêng tư</a></li>
-                    <li class="list-group-item py-3"><a href="#" data-option="option7"><i class="bi bi-credit-card"></i> Thẻ
-                            thanh toán đã lưu</a></li>
-                    <li class="list-group-item py-3"><a href="#" data-option="option8"><i class="bi bi-arrow-clockwise"></i>
-                            Khôi phục danh sách phát</a></li>
-                    <li class="list-group-item py-3"><a href="#" data-option="option9"><i class="bi bi-clock"></i> Biên
-                            nhận</a></li>
-                    <li class="list-group-item py-3"><a href="#" data-option="option10"><i class="bi bi-grid-fill"></i> Ứng
-                            dụng</a></li>
-                    <li class="list-group-item py-3"><a href="#" data-option="option11"><i
-                                class="bi bi-music-player-fill"></i> Đổi</a></li>
-                </ul>
+
+            </div>
+            <div class="col-sm-3 pre" data-page="page-0">
+                <i class="fas fa-gem"></i>
+                <p>Join Premium</p>
             </div>
         </div>
-        <div class="col-sm-9 p-0">
-            <div class="content-display">
-                <!-- Biểu mẫu cho Tùy chọn 1 -->
-                <div id="option1-form" class="content-data" style="display: none;">
-                    <h1 class="title-option">Tổng quan về tài khoản</h1>
-                    <!-- Đây là nơi để bạn thiết kế biểu mẫu cho Tùy chọn 1 -->
-                    <div class="file-acc mt-5">
-                        <h3>Hồ sơ</h3>
-                        <ul class="list-group list-group-flush mt-3">
-                            <li class="list-group-item">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        Tên người dùng
-                                    </div>
-                                    <div class="col-sm-6">
-                                        Nguyễn Đăng khoa
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        Email
-                                    </div>
-                                    <div class="col-sm-6">
-                                        nguyenkhoalolm@gmail.com
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        Ngày sinh
-                                    </div>
-                                    <div class="col-sm-6">
-                                        1 tháng 2, 2003
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        Quốc gia hoặc khu vực
-                                    </div>
-                                    <div class="col-sm-6">
-                                        Việt Nam
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item mt-3">
-                                <button type="button" class="btn btn-outline-dark btn-rounded"
-                                    data-mdb-ripple-color="dark" style="border-radius: 10px;">Chỉnh sửa hồ sơ</button>
-                            </li>
-                        </ul>
+
+        <div class="account mt-5">
+            <div class="title ms-3 mt-3">
+                <h4>Account</h4>
+            </div>
+
+            <div class="list-chose" data-page="page-0">
+                <div class="chose">
+                    <div class="logo-conten ms-3 "><i class="bi bi-globe-central-south-asia"></i></div>
+                    <div class="conten-text ms-3 mt-3">
+                        <p>Manege your plan</p>
                     </div>
-                    <div class="package mt-5">
-                        <h3>Gói của bạn</h3>
-                        <div class="card shadow border-2 mt-3">
-                            <div class="card-header">
-                                <h1 class=" mt-5 mb-5">Rhymthwave Free</h1>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title"><i class="bi bi-check-lg"></i> 1 tài khoản free</h5>
-                                <p class="card-text"><a class=" text-dark" href="#">Tìm hiểu thêm về gói của bạn</a></p>
-                                <hr>
-                                <h3>Miễn phí</h3>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-outline-dark btn-rounded mt-4 "
-                            data-mdb-ripple-color="dark" style="border-radius: 10px;">Dùng Premium</button>
+                    <div class="in"><i class="bi bi-chevron-right"></i></div>
+                </div>
+            </div>
+            <div class="list-chose" data-page="page-1">
+                <div class="chose">
+                    <div class="logo-conten ms-3 "><i class="bi bi-brush-fill"></i></div>
+                    <div class="conten-text ms-3 mt-3">
+                        <p>Edit profile</p>
                     </div>
-                    <div class="logout mt-5">
-                        <h3>Đăng xuất ở mọi nơi</h3>
-                        <div class="text mt-3">
-                            <p>Thao tác này sẽ giúp bạn đăng xuất trên tất cả thiết bị di động, máy tính bảng, trình
-                                phát trên web và ứng dụng cho máy tính mà bạn đã đăng nhập. Đối với thiết bị của đối tác
-                                (ví dụ: loa, máy chơi trò chơi và TV), hãy chuyển đến phần Ứng dụng trong trang tài
-                                khoản của bạn rồi chọn XÓA QUYỀN TRUY CẬP.</p>
-                        </div>
-                        <div class="border p-1">
-                            <p>Lưu ý: Bạn có thể phải chờ 1 giờ để thấy bạn đã đăng xuất khỏi trình phát trên web.</p>
-                        </div>
-                        <button type="button" class="btn btn-outline-dark btn-rounded mt-4 mb-5 "
-                            data-mdb-ripple-color="dark" style="border-radius: 10px;">Đăng xuất ở mọi nơi</button>
+                    <div class="in"><i class="bi bi-chevron-right"></i></div>
+                </div>
+            </div>
+            <div class="list-chose" data-page="page-2">
+                <div class="chose">
+                    <div class="logo-conten ms-3 "><i class="bi bi-arrow-repeat"></i></div>
+                    <div class="conten-text ms-3 mt-3">
+                        <p>Recover playlists</p>
                     </div>
+                    <div class="in"><i class="bi bi-chevron-right"></i></div>
                 </div>
+            </div>
+        </div>
 
-                <!-- Biểu mẫu cho Tùy chọn 2 -->
-                <div id="option2-form" class="content-data" style="display: none;">
-                    <h1 class="title-option">Chỉnh sửa hồ sơ</h1>
-                    <!-- Đây là nơi để bạn thiết kế biểu mẫu cho Tùy chọn 2 -->
-                    <div class="container mt-5">
-                        <h2>Biểu mẫu đăng ký</h2>
-                        <form>
-                            <!-- Email -->
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" placeholder="Nhập email của bạn">
-                            </div>
+        <div class="account mt-5">
+            <div class="title ms-3 mt-3">
+                <h4>Payment</h4>
+            </div>
 
-                            <!-- Mật khẩu -->
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Mật khẩu</label>
-                                <input type="password" class="form-control" id="password" placeholder="Nhập mật khẩu">
-                            </div>
-
-                            <!-- Giới tính -->
-                            <div class="mb-3">
-                                <label for="gender" class="form-label">Giới tính</label>
-                                <select class="form-select" id="gender">
-                                    <option value="male">Nam</option>
-                                    <option value="female">Nữ</option>
-                                    <option value="neutral">Giới tính trung lập</option>
-                                    <option value="unspecified">Không muốn nêu cụ thể</option>
-                                </select>
-                            </div>
-
-                            <!-- Ngày sinh -->
-                            <label class="form-label">Ngày Sinh</label>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <input type="number" class="form-control" id="day" placeholder="Ngày" min="1"
-                                        max="31">
-                                </div>
-                                <div class="col-sm-4">
-                                    <input type="number" class="form-control" id="month" placeholder="Tháng" min="1"
-                                        max="12">
-                                </div>
-                                <div class="col-sm-4">
-                                    <input type="number" class="form-control" id="year" placeholder="Năm" min="1900"
-                                        max="2099">
-                                </div>
-                            </div>
-
-                            <!-- Quốc tịch -->
-                            <div class="mb-3 mt-2">
-                                <label for="nationality" class="form-label">Quốc tịch</label>
-                                <select class="form-select" id="nationality">
-                                    <option value="vn">Việt Nam</option>
-                                    <option value="us">United States</option>
-                                    <option value="uk">United Kingdom</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <div class="btn-group-toggle" data-toggle="buttons">
-                                    <label class="btn ">
-                                        <input type="checkbox"> Chia sẻ dữ liệu đăng ký của tôi với các nhà cung cấp nội
-                                        dung Rhymthwave cho mục đích tiếp thị.
-                                    </label>
-                                </div>
-                            </div>
-                            <hr>
-                            <!-- Nút Đăng ký -->
-                            <button type="button" class="btn btn-outline-dark btn-rounded mt-4 mb-5 me-3"
-                                data-mdb-ripple-color="dark" style="border-radius: 10px;">Hủy</button>
-                            <button type="button" class="btn btn-success mt-4 mb-5 " data-mdb-ripple-color="dark"
-                                style="border-radius: 10px;">Lưu hồ sơ</button>
-                        </form>
+            <div class="list-chose" data-page="page-3">
+                <div class="chose">
+                    <div class="logo-conten ms-3 "><i class="bi bi-file-earmark-music"></i></div>
+                    <div class="conten-text ms-3 mt-3">
+                        <p>Order history</p>
                     </div>
+                    <div class="in"><i class="bi bi-chevron-right"></i></div>
                 </div>
-
-                <!-- Biểu mẫu cho Tùy chọn 3 -->
-                <div id="option3-form" class="content-data" style="display: none;">
-                    <h2>Biểu mẫu cho Tùy chọn 3</h2>
-                    <!-- Đây là nơi để bạn thiết kế biểu mẫu cho Tùy chọn 3 -->
-                </div>
-                <div id="option4-form" class="content-data" style="display: none;">
-                    <h1 class="title-option">Đổi mật khẩu</h1>
-                    <!-- Đây là nơi để bạn thiết kế biểu mẫu cho Tùy chọn 4 -->
-                    <div class="container mt-5">
-                        <form>
-                            <!-- Mật khẩu hiện tại -->
-                            <div class="mb-3">
-                                <label for="currentPassword" class="form-label">Mật khẩu hiện tại</label>
-                                <input type="password" class="form-control" id="currentPassword"
-                                    placeholder="Nhập mật khẩu hiện tại">
-                            </div>
-
-                            <!-- Mật khẩu mới -->
-                            <div class="mb-3">
-                                <label for="newPassword" class="form-label">Mật khẩu mới</label>
-                                <input type="password" class="form-control" id="newPassword"
-                                    placeholder="Nhập mật khẩu mới">
-                            </div>
-
-                            <!-- Xác nhận mật khẩu mới -->
-                            <div class="mb-3">
-                                <label for="confirmNewPassword" class="form-label">Xác nhận mật khẩu mới</label>
-                                <input type="password" class="form-control" id="confirmNewPassword"
-                                    placeholder="Xác nhận mật khẩu mới">
-                            </div>
-
-                            <button type="button" class="btn btn-outline-dark btn-rounded mt-4 mb-5 me-3"
-                                data-mdb-ripple-color="dark" style="border-radius: 10px;">Hủy</button>
-                            <button type="button" class="btn btn-success mt-4 mb-5 " data-mdb-ripple-color="dark"
-                                style="border-radius: 10px;">Cài đặt mật khẩu mới</button>
-                        </form>
+            </div>
+            <div class="list-chose" data-page="page-4">
+                <div class="chose">
+                    <div class="logo-conten ms-3 "><i class="bi bi-credit-card-fill"></i></div>
+                    <div class="conten-text ms-3 mt-3">
+                        <p>Saved payment cards</p>
                     </div>
+                    <div class="in"><i class="bi bi-chevron-right"></i></div>
                 </div>
+            </div>
+            <div class="list-chose" data-page="page-5">
+                <div class="chose">
+                    <div class="logo-conten ms-3 "><i class="bi bi-tag-fill"></i></div>
+                    <div class="conten-text ms-3 mt-3">
+                        <p>Redeem your code</p>
+                    </div>
+                    <div class="in"><i class="bi bi-chevron-right"></i></div>
+                </div>
+            </div>
+        </div>
 
-                <div id="option5-form" class="content-data" style="display: none;">
-                    <h2>Biểu mẫu cho Tùy chọn 5</h2>
-                    <!-- Đây là nơi để bạn thiết kế biểu mẫu cho Tùy chọn 5 -->
-                </div>
+        <div class="account mt-5">
+            <div class="title ms-3 mt-3">
+                <h4>Security and privacy</h4>
+            </div>
 
-                <div id="option6-form" class="content-data" style="display: none;">
-                    <h2>Biểu mẫu cho Tùy chọn 6</h2>
-                    <!-- Đây là nơi để bạn thiết kế biểu mẫu cho Tùy chọn 6 -->
+            <div class="list-chose" data-page="page-6">
+                <div class="chose">
+                    <div class="logo-conten ms-3 "><i class="bi bi-file-lock-fill"></i></div>
+                    <div class="conten-text ms-3 mt-3">
+                        <p>Change password</p>
+                    </div>
+                    <div class="in"><i class="bi bi-chevron-right"></i></div>
                 </div>
-
-                <div id="option7-form" class="content-data" style="display: none;">
-                    <h2>Biểu mẫu cho Tùy chọn 7</h2>
-                    <!-- Đây là nơi để bạn thiết kế biểu mẫu cho Tùy chọn 7 -->
+            </div>
+            <div class="list-chose" data-page="page-7">
+                <div class="chose">
+                    <div class="logo-conten ms-3 "><i class="bi bi-app"></i></div>
+                    <div class="conten-text ms-3 mt-3">
+                        <p>Manage Apps</p>
+                    </div>
+                    <div class="in"><i class="bi bi-chevron-right"></i></div>
                 </div>
-
-                <div id="option8-form" class="content-data" style="display: none;">
-                    <h2>Biểu mẫu cho Tùy chọn 8</h2>
-                    <!-- Đây là nơi để bạn thiết kế biểu mẫu cho Tùy chọn 8 -->
+            </div>
+            <div class="list-chose" data-page="page-8">
+                <div class="chose">
+                    <div class="logo-conten ms-3 "><i class="bi bi-box-arrow-right"></i></div>
+                    <div class="conten-text ms-3 mt-3">
+                        <p>Sign out everywhere</p>
+                    </div>
+                    <div class="in"><i class="bi bi-chevron-right"></i></div>
                 </div>
-                <div id="option9-form" class="content-data" style="display: none;">
-                    <h2>Biểu mẫu cho Tùy chọn 9</h2>
-                    <!-- Đây là nơi để bạn thiết kế biểu mẫu cho Tùy chọn 9 -->
-                </div>
-
-                <div id="option10-form" class="content-data" style="display: none;">
-                    <h2>Biểu mẫu cho Tùy chọn 10</h2>
-                    <!-- Đây là nơi để bạn thiết kế biểu mẫu cho Tùy chọn 10 -->
-                </div>
-                <div id="option11-form" class="content-data" style="display: none;">
-                    <h2>Biểu mẫu cho Tùy chọn 11</h2>
-                    <!-- Đây là nơi để bạn thiết kế biểu mẫu cho Tùy chọn 11 -->
-                </div>
-
-
             </div>
         </div>
     </div>
+
 </div>
+
+
+<!-- Giao diện riêng lẻ cho từng mục -->
+<div class="page" id="page-0">
+    <div class="container manegeplan mt-5 mb-5">
+        <button class="btn-back" onclick="goBack()"><i class="bi bi-chevron-left"></i></button>
+        <h1 class="text-chose mt-5 mb-5">Manage your plan</h1>
+        <div class="package mt-5">
+            <div class="card shadow border-2 mt-3">
+                <div class="card-header">
+                    <h1 class=" mt-5 mb-5">Rhymthwave Free</h1>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-check-lg"></i>1 Free account</h5>
+                    <p class="card-text"><a class=" text-dark" href="#">Learn more about your plan</a></p>
+                    <hr>
+                    <h3>Free</h3>
+                </div>
+            </div>
+            <button type="button" class="btn-outline-dark btn-rounded mt-4 " data-mdb-ripple-color="dark"
+                style="border-radius: 10px;">Join Premium</button>
+        </div>
+    </div>
+
+    <!-- Thêm nội dung và thành phần HTML khác cho trang Manage Plan tại đây -->
+
+</div>
+
+<div class="page" id="page-1">
+    <div class="container edit-profile mt-5 mb-5">
+        <button class="btn-back" onclick="goBack()"><i class="bi bi-chevron-left"></i></button>
+        <h1 class="text-chose mt-5 mb-5">Edit profile</h1>
+        <form>
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input class="form-control" id="username">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password">
+            </div>
+            <div class="mb-3">
+                <label for="gender" class="form-label">Gender</label>
+                <select class="form-select" id="gender">
+                    <option value="nam">Male</option>
+                    <option value="nu">Female</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="birthdate" class="form-label">Date of birth</label>
+                <input type="date" class="form-control" id="birthdate">
+            </div>
+            <div class="mb-3">
+                <label for="country" class="form-label">Country or region</label>
+                <input type="text" class="form-control" id="country" placeholder="Nhập quốc gia">
+            </div>
+
+            <button type="submit" class="btn btn-outline-dark ms-3" style="color: white;">Save profile</button>
+            <button type="submit" class="btn btn-outline-dark" style="color: white;">Cancel</button>
+        </form>
+    </div>
+
+    <!-- Thêm nội dung và thành phần HTML khác cho trang Manage Plan tại đây -->
+
+</div>
+
+<div class="page" id="page-2">
+    <h1>Trang quản lý gói dịch vụ</h1>
+    <!-- Thêm nội dung và thành phần HTML khác cho trang Manage Plan tại đây -->
+    <button onclick="goBack()"><i class="bi bi-chevron-left"></i></button>
+</div>
+
+<div class="page" id="page-3">
+    <h1>Trang quản lý gói dịch vụ</h1>
+    <!-- Thêm nội dung và thành phần HTML khác cho trang Manage Plan tại đây -->
+    <button onclick="goBack()"><i class="bi bi-chevron-left"></i></button>
+</div>
+
+<div class="page" id="page-4">
+    <h1>Trang quản lý gói dịch vụ</h1>
+    <!-- Thêm nội dung và thành phần HTML khác cho trang Manage Plan tại đây -->
+    <button onclick="goBack()"><i class="bi bi-chevron-left"></i></button>
+</div>
+
+<div class="page" id="page-5">
+    <h1>Trang quản lý gói dịch vụ</h1>
+    <!-- Thêm nội dung và thành phần HTML khác cho trang Manage Plan tại đây -->
+    <button onclick="goBack()"><i class="bi bi-chevron-left"></i></button>
+</div>
+
+<div class="page" id="page-6">
+    <div class="container change-pass mt-5 mb-5">
+        <button class="btn-back" onclick="goBack()"><i class="bi bi-chevron-left"></i></button>
+        <h1 class="text-chose mt-5 mb-5">Change your password</h1>
+        <form>
+            <div class="mb-3">
+                <label for="currentPassword" class="form-label">Current Password</label>
+                <input type="password" class="form-control" id="currentPassword">
+            </div>
+            <div class="mb-3">
+                <label for="newPassword" class="form-label">New Password</label>
+                <input type="password" class="form-control" id="newPassword">
+            </div>
+            <div class="mb-3">
+                <label for="repeatPassword" class="form-label">Repeat New Password</label>
+                <input type="password" class="form-control" id="repeatPassword">
+            </div>
+            <button type="submit" class="btn btn-outline-dark ms-3" style="color: white;">Set new password</button>
+            <button type="submit" class="btn btn-outline-dark" style="color: white;">Cancel</button>
+        </form>
+
+    </div>
+</div>
+
+<div class="page" id="page-7">
+    <h1>Trang quản lý gói dịch vụ</h1>
+    <!-- Thêm nội dung và thành phần HTML khác cho trang Manage Plan tại đây -->
+    <button onclick="goBack()"><i class="bi bi-chevron-left"></i></button>
+</div>
+<div class="page" id="page-8">
+    <div class="container signout mt-5 mb-5">
+        <button class="btn-back" onclick="goBack()"><i class="bi bi-chevron-left"></i></button>
+        <h1 class="text-chose mt-5 mb-5">Sign out everywhere</h1>
+    </div>
+</div>
+
+
+
+
 <!-- Footer -->
 <footer class="text-center text-lg-start bg-dark-custom text-white">
     <!-- Section: Social media -->
@@ -381,9 +351,9 @@
                 <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                     <!-- Content -->
                     <h6 class="text-uppercase fw-bold mb-4">
-                        <img src="img/logo.png" alt="" width="117">
+                        <img src="../../static/img/logo.png" alt="" width="117">
                     </h6>
-                    
+
                 </div>
                 <!-- Grid column -->
 
@@ -391,7 +361,7 @@
                 <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
                     <!-- Links -->
                     <h6 class="text-uppercase fw-bold mb-4">
-                      Công ty
+                        Công ty
                     </h6>
                     <p>
                         <a href="#!" class="text-reset text-decoration-none">Giới thiệu</a>
@@ -402,7 +372,7 @@
                     <p>
                         <a href="#!" class="text-reset text-decoration-none">For the Record</a>
                     </p>
-                
+
                 </div>
                 <!-- Grid column -->
 
@@ -428,7 +398,7 @@
                         <a href="#!" class="text-reset text-decoration-none ">Nhà cung cấp</a>
                     </p>
                 </div>
-                
+
                 <!-- Grid column -->
 
                 <!-- Grid column -->
@@ -453,52 +423,44 @@
     <!-- Section: Links  -->
 </footer>
 <!-- Footer -->
+
+
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Lấy phần "premium" cần ẩn/phục hiện
-        const premiumSection = document.querySelector(".premium");
-        // Lấy tất cả các liên kết tùy chọn
-        const optionLinks = document.querySelectorAll(".optionlist .list-group-item a");
+    // Ẩn tất cả các trang giao diện riêng lẻ khi trang được tải lên
+    document.querySelectorAll('.page').forEach(page => {
+        page.style.display = 'none';
+    });
 
-        // Lấy vùng hiển thị biểu mẫu
-        const formDisplay = document.querySelector(".content-display");
+    // Hiển thị trang danh sách ban đầu
+    document.querySelector('.menu').style.display = 'block';
 
-        // Mặc định hiển thị biểu mẫu cho option1
-        displayForm("option1");
-
-        // Xử lý sự kiện khi người dùng chọn một tùy chọn
-        optionLinks.forEach(function (optionLink) {
-            optionLink.addEventListener("click", function (e) {
-                e.preventDefault();
-                const selectedOption = optionLink.getAttribute("data-option");
-                displayForm(selectedOption);
-                premiumSection.style.display = "none";
-            });
+    // Hàm quay lại
+    function goBack() {
+        // Ẩn tất cả các trang giao diện riêng lẻ
+        document.querySelectorAll('.page').forEach(page => {
+            page.style.display = 'none';
         });
 
-        // Hàm hiển thị biểu mẫu tương ứng
-        function displayForm(option) {
-            // Ẩn tất cả các biểu mẫu
-            const allForms = document.querySelectorAll(".content-display > div");
-            allForms.forEach(function (div) {
-                div.style.display = "none";
+        // Hiển thị trang danh sách
+        document.querySelector('.menu').style.display = 'block';
+    }
+
+    // Xử lý sự kiện khi một mục trong danh sách được click
+    const listItems = document.querySelectorAll('.list-chose');
+    listItems.forEach((item) => {
+        item.addEventListener('click', () => {
+            // Ẩn tất cả các trang giao diện
+            document.querySelectorAll('.page').forEach(page => {
+                page.style.display = 'none';
             });
 
-            // Hiển thị biểu mẫu tương ứng với tùy chọn đã chọn
-            const selectedForm = document.getElementById(option + "-form");
-            if (selectedForm) {
-                selectedForm.style.display = "block";
-            }
-
-            // Loại bỏ lớp 'active' khỏi tất cả các tùy chọn
-            optionLinks.forEach(function (link) {
-                link.parentElement.classList.remove("active");
-            });
-
-            // Đánh dấu tùy chọn đã chọn bằng cách thêm lớp 'active'
-            optionLink = document.querySelector(`[data-option="${option}"]`);
-            optionLink.parentElement.classList.add("active");
-        }
+            // Hiển thị trang giao diện tương ứng
+            document.querySelector('.menu').style.display = 'none';
+            const pageId = item.getAttribute('data-page');
+            document.getElementById(pageId).style.display = 'block';
+        });
     });
 </script>
+
+
 </html>

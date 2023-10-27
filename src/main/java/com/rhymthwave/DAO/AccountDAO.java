@@ -16,5 +16,8 @@ public interface AccountDAO extends JpaRepository<Account, String>{
 	@Query("SELECT au.account FROM Author au WHERE au.role.role = :role")
 	Page<Account> findAllAccountRole(Pageable pageable, @Param("role") EROLE role);
 	
+	Account findByEmail(String email);
+
+	Account findByVerificationCode(String verificationCode);
 	
 }

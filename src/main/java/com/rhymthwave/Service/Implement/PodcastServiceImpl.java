@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.rhymthwave.DAO.PobcastDAO;
+import com.rhymthwave.DAO.PodcastDAO;
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.Service.PodcastService;
 import com.rhymthwave.entity.Podcast;
@@ -13,15 +13,17 @@ import com.rhymthwave.entity.Podcast;
 import jakarta.transaction.Transactional;
 
 @Service
-public class PobcastServiceImpl implements PodcastService,CRUD<Podcast,Long>{
+public class PodcastServiceImpl implements PodcastService,CRUD<Podcast,Long>{
 
 	@Autowired
-	PobcastDAO dao;
+	PodcastDAO dao;
 	
 	@Override
 	@Transactional
 	public Podcast create(Podcast entity) {
 		if(entity!=null) {
+			entity.setRate(0);
+			
 			dao.save(entity);
 			return entity;
 		}
@@ -56,6 +58,11 @@ public class PobcastServiceImpl implements PodcastService,CRUD<Podcast,Long>{
 	@Override
 	public List<Podcast> findAll() {
 		return dao.findAll();
+	}
+
+	@Override
+	public List<Podcast> findMyPodcast(String email) {
+		return dao.findMyPobcast(email);
 	}
 	
 }

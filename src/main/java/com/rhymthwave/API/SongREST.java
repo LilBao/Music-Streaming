@@ -76,11 +76,8 @@ public class SongREST {
 		Account account = crudAccount.findOne(owner);
 		// create song
 		if (coverImg != null) {
-			Map<String, Object> respImg = cloudinary.Upload(coverImg, "CoverImage",
-					account.getArtist().getArtistName());
-			Image cover = imgSer.getEntity((String) respImg.get("asset_id"), (String) respImg.get("url"),
-					(Integer) respImg.get("width"), (Integer) respImg.get("height"));
-			cover.setPublicId((String) respImg.get("public_id"));
+			Map<String, Object> respImg = cloudinary.Upload(coverImg, "CoverImage",account.getArtist().getArtistName());
+			Image cover = imgSer.getEntity(respImg);
 			crudImage.create(cover);
 			song.setImage(cover);
 		}
@@ -110,11 +107,8 @@ public class SongREST {
 		Song song = crudSong.findOne(id);
 		// create song
 		if (coverImg != null) {
-			Map<String, Object> respImg = cloudinary.Upload(coverImg, "CoverImage",
-					account.getArtist().getArtistName());
-			Image cover = imgSer.getEntity((String) respImg.get("asset_id"), (String) respImg.get("url"),
-					(Integer) respImg.get("width"), (Integer) respImg.get("height"));
-			cover.setPublicId((String) respImg.get("public_id"));
+			Map<String, Object> respImg = cloudinary.Upload(coverImg, "CoverImage",account.getArtist().getArtistName());
+			Image cover = imgSer.getEntity(respImg);
 			crudImage.create(cover);
 			song.setImage(cover);
 		}

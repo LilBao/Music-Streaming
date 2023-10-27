@@ -11,6 +11,19 @@ app.controller('confirmCtrl', function ($scope, $http) {
         $scope.account = resp.data.data;
     })
 
+    $scope.sendMail = function(){
+        let url = host + "/v1/email-request-artist"
+        $http.post(url,{
+            headers: { 
+                'Authorization': 'Bearer ' + getCookie('token')
+            }
+        }).then(resp => {
+            showStickyNotification('Successfull. Check your email', 'success', 3000)
+        }).catch(err => {
+
+        })
+    }
+
     $scope.createArtist = function() {
         var url = host + "/v1/artist";
         var formData = new FormData();
@@ -21,6 +34,7 @@ app.controller('confirmCtrl', function ($scope, $http) {
         formData.append('placeOfBirth', $scope.artist.placeOfBirth); 
         formData.append('avatar', $scope.avatarFile);
         formData.append('background', $scope.backgroundFile);
+        formData.append('bio', $scope.artist.bio); 
         $http({
             method: 'POST',
             url: url,
@@ -31,7 +45,7 @@ app.controller('confirmCtrl', function ($scope, $http) {
             data: formData,
             transformRequest: angular.identity
         }).then(function(response) {
-            console.log("success");
+            $scope.sendMail();
         }).catch(function(error) {
             console.log(error);
         });
@@ -39,7 +53,7 @@ app.controller('confirmCtrl', function ($scope, $http) {
 
     $("#nextBtn").click(function () {
         if ($("#nextBtn").hasClass("submit")) {
-                $scope.createArtist(); 
+            $scope.createArtist(); 
         }
     })
 

@@ -47,7 +47,8 @@ $(document).ready(function(){
     var countC = 0;
     var countM = 0;
     var countS = 0;
-    $('input[name="culture"]').on('change', function () {
+    $('input[name="culture"]:checked').on('change', function () {
+        console.log(countC)
         if (this.checked) {
             if (countC < 3) {
                 countC++;
@@ -58,7 +59,7 @@ $(document).ready(function(){
             countC--;
         }
     });
-    $('input[name="mood"]').on('change', function () {
+    $('input[name="mood"]:checked').on('change', function () {
         if (this.checked) {
             if (countM < 3) {
                 countM++;
@@ -69,7 +70,7 @@ $(document).ready(function(){
             countM--;
         }
     });
-    $('input[name="style"]').on('change', function () {
+    $('input[name="style"]:checked').on('change', function () {
         if (this.checked) {
             if (countS < 3) {
                 countS++;
@@ -80,7 +81,6 @@ $(document).ready(function(){
             countS--;
         }
     });
-    
 })
 
 

@@ -3,7 +3,6 @@ $(document).ready(function () {
         e.preventDefault()
         $(this).tab('show')
     })
-
 })
 var currentTab = 0;
 document.addEventListener("DOMContentLoaded", function (event) {
