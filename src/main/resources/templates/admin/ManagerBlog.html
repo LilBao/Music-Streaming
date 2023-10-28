@@ -51,6 +51,10 @@
                                        </div>
                                        <div class="card-body">
                                           <div class="d-flex">
+                                             <div class="img-person-manager">
+                                                <img ng-src="{{ post.account}}" alt="Post Image">
+                                             </div>
+
                                              <div class="title-manager-blog ms-2 mt-0">
                                                 <a href="#" class="title-manager-blog">
                                                    <h4>{{ post.title }}</h4>
@@ -60,7 +64,15 @@
                                        </div>
                                        <div class="card-footer">
                                           <small class="text-body-secondary">
-                                             <p>{{ post.content }}</p>
+                                             <div class="row">
+                                                <div class="col-12">
+                                                   <p>{{post.email}}</p>
+                                                </div>
+                                                <div class="row">
+                                                   <div class="col-6"><p>{{post.modifiedby}}</p></div>
+                                                   <div class="col-6"><p>{{post.modifidate}}</p></div>                                                                                               
+                                                </div>
+                                             </div>
                                           </small>
                                        </div>
                                     </div>

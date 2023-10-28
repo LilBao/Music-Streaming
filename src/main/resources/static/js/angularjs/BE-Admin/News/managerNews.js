@@ -27,9 +27,12 @@ app.controller("managerBlogController", function ($scope, $http, $cookies, $log,
         $scope.posts = $scope.items.data.map(function (news) {
             return {
                 title: news.title,
-                content: news.content,
+                email: news.account.email,
+                modifiedby: news.modifiedBy,
+                modifidate: news.modifiDate,
                 image: news.image.url,
-                publishDate: news.publishDate
+                publishDate: news.publishDate,
+                account: news.account.image.url 
             };
         });
         // console.log($scope.posts)
