@@ -32,7 +32,7 @@ app.controller("managerBlogController", function ($scope, $http, $cookies, $log,
                 publishDate: news.publishDate
             };
         });
-        // console.log($scope.posts)
+      //  console.log($scope.posts)
      
         
         // Function hiển thị nội dung theo dòng thời gian
