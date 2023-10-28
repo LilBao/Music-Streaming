@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.management.RuntimeErrorException;
+
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +17,7 @@ import com.rhymthwave.Request.DTO.NewDTO;
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.Service.CloudinaryService;
 import com.rhymthwave.Service.NewService;
+import com.rhymthwave.ServiceAdmin.INotification;
 import com.rhymthwave.Utilities.GetHostByRequest;
 import com.rhymthwave.entity.Account;
 import com.rhymthwave.entity.Image;
@@ -35,14 +39,14 @@ public class NewServiceImp implements NewService, CRUD<News, Integer>{
 	
 	private final CloudinaryService cloudinaryService;
 	
-	
+	@Qualifier("sendNotificationOfNews")
+	private final INotification<NewDTO> notification;
 	
 	private String FOLDER_CONTAINING_IMAGE_NEWS  = "ImageManager";
 	
 	@Transactional
 	@Override
 	public News create(News entity) {
-		
 		return newDao.save(entity);
 	}
 	@Transactional
@@ -88,6 +92,7 @@ public class NewServiceImp implements NewService, CRUD<News, Integer>{
 		return newDao.findAll();
 	}
 
+	@Transactional
 	@Override
 	public News saveNews(NewDTO newDTO,HttpServletRequest request) {
 		
@@ -96,31 +101,40 @@ public class NewServiceImp implements NewService, CRUD<News, Integer>{
 			return null;
 		}
 		
-		Account account = crudAccount.findOne(email);
-		Map<String, Object> mapCloudinary = cloudinaryService.Upload(newDTO.img(),FOLDER_CONTAINING_IMAGE_NEWS , newDTO.ImageLocation());
-		String urlImage = (String) mapCloudinary.get("url");
-		String accessId = (String) mapCloudinary.get("asset_id");
-		String public_id = (String) mapCloudinary.get("public_id");
-		// save image
-		Image img = new Image();
-		img.setUrl(urlImage);
-		img.setAccessId(accessId);
-		img.setPublicId(public_id);
-		crudImage.create(img);
-		
-		
-		// save news
-		News news = new News();
-		news.setTitle(newDTO.title());
-		news.setContent(newDTO.content());
-		news.setAccount(account);
-		news.setPublishDate(getTimeNow());
-		news.setLastModified(getTimeNow());
-		news.setImage(img);
-		news.setCreateDate(getTimeNow());
-		create(news);
-		
-		return news;
+		try {
+			Account account = crudAccount.findOne(email);
+			Map<String, Object> mapCloudinary = cloudinaryService.Upload(newDTO.img(),FOLDER_CONTAINING_IMAGE_NEWS , newDTO.ImageLocation());
+			String urlImage = (String) mapCloudinary.get("url");
+			String accessId = (String) mapCloudinary.get("asset_id");
+			String public_id = (String) mapCloudinary.get("public_id");
+			// save image
+			Image img = new Image();
+			img.setUrl(urlImage);
+			img.setAccessId(accessId);
+			img.setPublicId(public_id);
+			crudImage.create(img);
+			
+			// save news
+			News news = new News();
+			news.setTitle(newDTO.title());
+			news.setContent(newDTO.content());
+			news.setAccount(account);
+			news.setPublishDate(getTimeNow());
+			news.setLastModified(getTimeNow());
+			news.setImage(img);
+			news.setCreateDate(getTimeNow());
+			news.setCreateFor(newDTO.role());
+			news.setModifiDate(getTimeNow());
+			news.setModifiedBy(email);
+			create(news);
+			
+			notification.sendNotification(newDTO,urlImage);
+			
+			return news;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
 	}
 	
 
@@ -143,13 +157,11 @@ public class NewServiceImp implements NewService, CRUD<News, Integer>{
 			news.setLastModified(getTimeNow());
 			news.setModifiDate(getTimeNow());
 			news.setModifiedBy(email);
-			System.out.println(news.getImage().getAccessId());
 			update(news);
 		}else {
 			Image img = crudImage.findOne(news.getImage().getAccessId());
 			Map<String, Object> mapCloudinary = cloudinaryService.Upload(newDTO.img(),FOLDER_CONTAINING_IMAGE_NEWS , newDTO.ImageLocation());
 			String urlImage = (String) mapCloudinary.get("url");
-		//	String accessId = (String) mapCloudinary.get("asset_id");
 			String public_id = (String) mapCloudinary.get("public_id");
 			img.setUrl(urlImage);
 			img.setPublicId(public_id);
@@ -179,6 +191,7 @@ public class NewServiceImp implements NewService, CRUD<News, Integer>{
 		calendar.setTimeInMillis(new Date().getTime());
 		return new Date(calendar.getTime().getTime());
 	}
+
 
 
 }
