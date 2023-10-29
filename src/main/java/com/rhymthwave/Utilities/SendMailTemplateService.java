@@ -61,8 +61,6 @@ public class SendMailTemplateService{
         	context.setVariable("type", "Pobcaster");
         }else {
         	context.setVariable("content", "is your email address, you’ll be received from us. Please follow your email to receive latest notifications.");
-        	context.setVariable("address", "");
-        	context.setVariable("address", address);
         	context.setVariable("type", "Artist");
         }
 		return templateEngine.process(templateName, context);
