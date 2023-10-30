@@ -35,7 +35,7 @@ app.controller("managerBlogController", function ($scope, $http, $cookies, $log,
                 account: news.account.image.url 
             };
         });
-        // console.log($scope.posts)
+      //  console.log($scope.posts)
      
         
         // Function hiển thị nội dung theo dòng thời gian
