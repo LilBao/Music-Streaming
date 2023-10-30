@@ -478,7 +478,8 @@ h4.card-title.mb-0 {
 .img-person-manager img {
     border-radius: 50%;
     height: 1.6rem;
-    width: 1.3rem;
+    width: 1.4rem;
+    border: 1px solid #cac9c9;
     object-fit: fill;
 }
 
@@ -559,7 +560,21 @@ h4.card-title.mb-0 {
 
 }
 
-
+/* modal-header-delete */
+.modal-header-delete{
+    border-bottom: none !important;
+}
+.icon-close-bodyModal{
+    font-size: 70px;
+    color: rgb(255, 70, 70);
+    font-weight: 200;
+    text-align: center;
+}
+.btn-event-deleteModal{
+    text-align: center;
+    justify-content:center !important;
+    border-top: none !important;
+}
 /* =================== End MANAGER Blog ============== */
 
 
@@ -702,9 +717,9 @@ td {
 }
 
 
-.pagination {
+/* .pagination {
     display: inline-block;
-}
+} */
 
 .pagination a {
     color: black;
@@ -727,16 +742,9 @@ td {
     background-color: #ddd;
 }
 
-/* .pagination a:first-child {
-    border-radius: 5px;
-    border-bottom-left-radius: 5px;
-  }
-  
-  .pagination a:last-child {
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-  } */
-
+.dir-pagination-controls li.active .ng-binding {
+    background-color:#4CAF50;
+}
 
 
 /* ===================== Quan ly giao dien ====================== */

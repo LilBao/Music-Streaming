@@ -16,8 +16,9 @@ app.controller("countryController", function ($scope, $http, $cookies,$log , $ti
 
 	$scope.load_all = () => {
 		$http.get(aipCountry).then(resp => {
-			$scope.itemCountries = resp.data.data.content;
-			$scope.utilitiesPage.totalPages(resp.data.data.totalPages);
+			$scope.itemCountries = resp.data.data;
+		//	$scope.utilitiesPage.totalPages(resp.data.data.totalPages);
+		
 		}).catch(error => {
 			console.log("Error", error)
 		});

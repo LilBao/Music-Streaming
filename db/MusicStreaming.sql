@@ -201,7 +201,7 @@ CREATE TABLE ADVERTISEMENT (
 CREATE TABLE NEWS (
 	IDNEWS BIGINT IDENTITY(1,1) PRIMARY KEY,
 	TITLE NVARCHAR(255),
-	CONTENT NVARCHAR(255),
+	CONTENT ntext,
 	IMAGE NVARCHAR(100),
 	PUBLISHDATE DATE,
 	LASTMODIFIED DATETIME,
@@ -215,7 +215,10 @@ CREATE TABLE NEWS (
 	FOREIGN KEY (IMAGE) REFERENCES IMAGES(ACCESSID) ON DELETE NO ACTION,
 );
 
-alter table news add CREATEFOR VARCHAR(20)
+alter table news drop column CONTENT 
+alter table news add  CONTENT ntext ;
+ALTER TABLE news  ALTER COLUMN 
+ 
 
 CREATE TABLE TAGS (
 	TAGID BIGINT IDENTITY(1,1) PRIMARY KEY,
@@ -454,5 +457,38 @@ INSERT INTO USERTYPE  VALUES ('BASIC','2023-10-21','2024-10-21','OK',2,'mck@gmai
 INSERT INTO USERTYPE  VALUES ('BASIC','2023-10-21','2024-10-21','OK',3,'nhien@gmail.com',1)
 							
 							
+if OBJECT_ID('sp_filter') is not null
+	drop proc sp_filter
+go 
+CREATE PROCEDURE sp_filter
+  @month int = NULL,
+  @year int = NULL
+ 
+AS
+BEGIN
+  -- Không có giá trị @year hoặc @month
+  IF @year IS NULL AND @month IS NULL
+  BEGIN
+    SELECT * FROM NEWS
+  END
+  -- Chỉ có giá trị @year
+  ELSE IF @year IS NOT NULL AND @month IS NULL
+  BEGIN
+    SELECT * FROM NEWS WHERE YEAR(CREATEDATE) = @year
+  END
+  -- Chỉ có giá trị @month
+  ELSE IF @year IS NULL AND @month IS NOT NULL
+  BEGIN
+    SELECT  * FROM NEWS   inner join IMAGES ON NEWS.[IMAGE] = IMAGES.ACCESSID 
+						    inner join ACCOUNTS on ACCOUNTS.EMAIL = NEWS.[AUTHORID]
+							where MONTH(CREATEDATE) = @month
+  END
+  -- Cả hai tham số @year và @month đều có giá trị
+  ELSE
+  BEGIN
+    SELECT * FROM NEWS WHERE YEAR(CREATEDATE) = @year AND MONTH(CREATEDATE) = @month
+  END
+END
 
+exec sp_filter  12
 

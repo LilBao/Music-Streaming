@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.management.RuntimeErrorException;
-
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -151,7 +149,7 @@ public class NewServiceImp implements NewService, CRUD<News, Integer>{
 			return null;
 		}
 		
-		if(newDTO.img().isEmpty()) {
+		if( newDTO.img() == null|| newDTO.img().isEmpty()) {
 			news.setTitle(newDTO.title());
 			news.setContent(newDTO.content());
 			news.setLastModified(getTimeNow());
@@ -190,6 +188,16 @@ public class NewServiceImp implements NewService, CRUD<News, Integer>{
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(new Date().getTime());
 		return new Date(calendar.getTime().getTime());
+	}
+	@Override
+	public List<Integer> getAllYear() {
+		
+		return  newDao.getAllYearInDB();
+	}
+	@Override
+	public List<News> findNewsByYearAndMonth(Integer year, Integer month) {
+	
+		return newDao.findNewsByYearAndMonth(year, month);
 	}
 
 

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.rhymthwave.DAO.CountryDAO;
 import com.rhymthwave.DTO.MessageResponse;
 import com.rhymthwave.ServiceAdmin.ICountryServiceAdmin;
 import com.rhymthwave.Utilities.ExcelExportService;
@@ -34,6 +35,7 @@ public class API_Country {
 
 	private final ICountryServiceAdmin countryServiceAdmin;
 
+	private final CountryDAO countryDAO;
 
 	private final ExcelExportService excelExportService;
 	
@@ -44,7 +46,8 @@ public class API_Country {
 			@RequestParam(value = "sortfield", required = false, defaultValue = "id") String sortField) {
 
 		Page<Country> pages = countryServiceAdmin.getCountryPage(page, sortBy, sortField);
-		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", pages));
+		
+		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", countryDAO.findAll()));
 	}
 
 	@GetMapping("/{id}")

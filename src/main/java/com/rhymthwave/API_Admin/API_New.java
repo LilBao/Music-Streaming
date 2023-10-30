@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rhymthwave.DTO.MessageResponse;
@@ -48,8 +50,9 @@ public class API_New {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> updateNews(@PathVariable("id") Integer idNews,@ModelAttribute NewDTO newDTO, final HttpServletRequest request){
+	public ResponseEntity<?> updateNews(@PathVariable("id") Integer idNews,@RequestBody NewDTO newDTO, final HttpServletRequest request){
 	
+
 		News news = newService.updateNews(idNews,newDTO,request);
 		
 		if(news == null) {
@@ -66,7 +69,7 @@ public class API_New {
 		boolean status = crud.delete(idNews);
 		
 		if(status == false) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(status, "Successfully", status));
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(status, "Fail", status));
 
 		}
 		
@@ -74,11 +77,27 @@ public class API_New {
 	}
 	
 	@GetMapping()
-	public ResponseEntity<?> getAllNews(){
-		
-		List<News> list = crud.findAll();
+	public ResponseEntity<?> getAllNews(@RequestParam(value = "month", required = false) Integer month,
+										@RequestParam(value="year", required = false) Integer year){
+		List<News> list = newService.findNewsByYearAndMonth(year, month);
 		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", list));
 	}
+	
+	@GetMapping("{id}")
+	public ResponseEntity<?> getOneNews(@PathVariable("id") Integer idNew){
+		News news = crud.findOne(idNew);
+		if(news != null) {
+			return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", news));
+		}
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse(false, "News not found", news));
+	}
+	
+	@GetMapping("/getyear")
+	public ResponseEntity<?> getOneYear(){
+		
+		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "List year in db", newService.getAllYear()));
+	}
+	
 	
 	@GetMapping("/storage-for-image")
 	public ResponseEntity<?> storageForImage(){
