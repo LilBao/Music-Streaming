@@ -111,7 +111,7 @@
                                  </tfoot>
                                  <tbody>
 
-                                    <tr class="odd" dir-paginate=" country in itemCountries | itemsPerPage: 6 ">
+                                    <tr class="odd" ng-repeat=" country in itemCountries">
                                        <td class="sorting_1">{{country.id}}</td>
                                        <td>{{country.nameCountry}}</td>
                                        <td><button class="btn btn-primary" ng-click="edit(country.id)">Edit</button>
@@ -133,8 +133,17 @@
                            </div>
                            <div class="col-sm-12 col-md-7">
                           
-                              <dir-pagination-controls class="dir-pagination-controls"></dir-pagination-controls>
+
                               
+                              <div class="pagination  d-flex justify-content-end align-content-center mb-3">
+                                 <a href="" ng-click="utilitiesPage.firstPage()" >&laquo;</a>
+
+                                 <a href=""  ng-repeat="pageNo in page" ng-click="goToPage(pageNo)" ng-class="{ 'active': currentPage === pageNo }">
+                                    {{pageNo + 1}}
+                                 </a>                           
+                                 <a href="" ng-click="utilitiesPage.endPage()" >&raquo;</a>
+                              </div> 
+
                            </div>
                         </div>
                      </div>

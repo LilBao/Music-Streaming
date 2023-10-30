@@ -1,4 +1,4 @@
-var app = angular.module("myApp", ["ngRoute","ngCookies","ngMessages","angularUtils.directives.dirPagination"]);
+var app = angular.module("myApp", ["ngRoute","ngCookies","ngMessages"]);
 app.config(function($routeProvider,$cookiesProvider) {
   
   $routeProvider
