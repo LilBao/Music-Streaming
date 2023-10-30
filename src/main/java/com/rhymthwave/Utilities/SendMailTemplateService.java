@@ -54,7 +54,6 @@ public class SendMailTemplateService {
 	// For artist and podcaster
 	public String getContentForConfirm(String owner, String templateName, String type, String address) {
 		final Context context = new Context();
-<<<<<<< HEAD
 		context.setVariable("owner", owner);
 		if (type.equalsIgnoreCase("podcast")) {
 			context.setVariable("content",
@@ -84,15 +83,6 @@ public class SendMailTemplateService {
 		context.setVariable("content", content);
 		context.setVariable("img", urlImg);
 
-        context.setVariable("owner", owner);
-        if(type.equalsIgnoreCase("podcast")) {
-        	context.setVariable("content", "is your email address, you’ll be able to publish episodes and distribute your podcast.");
-        	context.setVariable("address", address);
-        	context.setVariable("type", "Pobcaster");
-        }else {
-        	context.setVariable("content", "is your email address, you’ll be received from us. Please follow your email to receive latest notifications.");
-        	context.setVariable("type", "Artist");
-        }
 		return templateEngine.process(templateName, context);
 	}
 
