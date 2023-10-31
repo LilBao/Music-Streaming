@@ -109,7 +109,7 @@ app.controller('musicCtrl', function ($scope, $http) {
         }).catch(error = {
 
         })
-    }
+    } 
     //Get list album has not track (lấy những album chưa có track nào)
     $scope.findListAlbumUpcoming = function () {
         $http.get(host + "/v1/album/up-coming", {
@@ -840,56 +840,4 @@ app.controller('musicCtrl', function ($scope, $http) {
     $scope.closeDetail = function () {
         $('.audio-record').attr('src', "");
     }
-
-    //Generate lyrics
-    var lyricsContainer = document.getElementById('lyricsContainer');
-    var audioLyrics = document.getElementById('audio-lyrics');
-    var fileAudio = document.getElementById('fileAudio');
-    var btnGenerate = document.getElementById('btn-generate');
-    var sentence;
-    lyricsContainer.addEventListener('input', function () {
-        sentence = lyricsContainer.value.split('\n');
-    })
-
-    fileAudio.addEventListener('change', function (event) {
-        var file = event.target.files[0];
-        audioLyrics.src = URL.createObjectURL(file);
-    })
-
-    function timeLyrics(currentTime) {
-        const hours = Math.floor(currentTime / 3600);
-        const minutes = Math.floor((currentTime % 3600) / 60);
-        const seconds = (currentTime % 60).toFixed(2);;
-
-        const hoursStr = hours > 0 ? (hours < 10 ? "0" + hours : hours) : "";
-        const minutesStr = minutes < 10 ? "0" + minutes : minutes;
-        const secondsStr = seconds < 10 ? "0" + seconds : seconds;
-
-        if (hours > 0) {
-            return `[${hoursStr}:${minutesStr}:${secondsStr}]`;
-        } else {
-            return `[${minutesStr}:${secondsStr}]`;
-        }
-    }
-    var line = 0;
-    var lyrics = "Made by Rthyme Wave\n";
-    btnGenerate.addEventListener('click', function () {
-        if (sentence[line].trim() == "" || sentence[line].trim() == NaN) {
-            line++;
-        }
-
-        lyrics += timeLyrics(audioLyrics.currentTime) + sentence[line].trim() + "\n";
-        line++;
-
-        if (line === sentence.length - 1) {
-            const blob = new Blob([lyrics], { type: "text/plain" });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = audioLyrics.src.split('/').pop() + ".lrc";
-            a.click();
-            URL.revokeObjectURL(url);
-            line = 0;
-        }
-    })
 })
