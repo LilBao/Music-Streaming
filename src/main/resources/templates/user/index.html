@@ -18,7 +18,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="../../static/css/style.css">
-    <script src="../../static/js/angularjs/index.js"></script>
+    <script src="../../static/js/angularjs/user/index.js"></script>
 </head>
 
 <body ng-app="myApp">
@@ -146,22 +146,23 @@
             </div>
             <div class="col-md-6 col-9 player-controls-center d-flex flex-column align-items-center">
                 <div class="controls-bar d-flex align-items-center">
-                    <button class="btn py-0 shuffle button-control-music" data-bs-hover="tooltip"
+                    <button class="btn border-0 py-0 shuffle button-control-music" data-bs-hover="tooltip"
                         title="Bật phát ngẫu nhiên!"><i class="bi bi-shuffle"></i></button>
 
-                    <button class="btn py-0 prev button-control-music"><i class="bi bi-skip-start-circle"></i></button>
+                    <button class="btn border-0 py-0 prev button-control-music"><i class="bi bi-skip-start-circle"></i></button>
 
-                    <button class="btn py-0 resume button-control-music-play"><i class="bi bi-play-circle"></i></button>
+                    <button class="btn border-0 py-0 resume button-control-music-play"><i class="bi bi-play-circle"></i></button>
                     <!-- <i class="bi bi-pause-circle"></i> -->
 
-                    <button class="btn py-0 next button-control-music"><i class="bi bi-skip-end-circle"></i></button>
+                    <button class="btn border-0 py-0 next button-control-music"><i class="bi bi-skip-end-circle"></i></button>
 
-                    <button class="btn py-0 repeat button-control-music"><i class="bi bi-repeat"></i></button>
+                    <button class="btn border-0 py-0 repeat button-control-music"><i class="bi bi-repeat"></i></button>
                     <!-- <i class="bi bi-repeat-1"></i> -->
                 </div>
                 <div class="time-line w-100 d-flex align-items-center flex-fill">
                     <span class="current-time">current time</span>
-                    <input class="duration-bar w-75" type="range" min="0" max="100" name="" id="">
+                    <input id="duration-audio" class="duration-bar w-75" type="range" min="0" max="100" name="" id="">
+                    <audio id="audio" src=""></audio>
                     <div class="line-first"></div>
                     <div class="line-current"></div>
                     <div class="circle"></div>
@@ -169,7 +170,7 @@
                 </div>
             </div>
             <div class="col-md-3 d-none d-md-block player-controls-right d-flex align-items-center">
-                <button class="btn"  data-bs-toggle="modal" data-bs-target="#MV">MV</button>
+                <button class="btn text-white"  data-bs-toggle="modal" data-bs-target="#MV">MV</button>
                 <button class="btn button-control"><i class="bi bi-pip"></i></button>
                 <button class="btn button-control"><i class="bi bi-mic"></i></button>
                 <button class="btn button-control"><i class="bi bi-volume-up"></i></button>
@@ -193,7 +194,7 @@
     </div>
 
     <!-- Modal trình chiếu MV -->
-    <div class="modal " id="MV">
+    <div class="modal fade" id="MV">
         <div class="popup modal-dialog">
             <div class="popup-message  modal-content"  style="background-color: transparent;">
                 <div class="modal-body p-0">
@@ -218,10 +219,6 @@
             playlist.style = 'overflow-y: hidden;'
         }
 
-        // isPlaying: false,
-        // isRandom: false,
-        // isRepeat: false,
-        // isMute: false,
         app.controller('SearchController', ['$scope', '$location', function($scope, $location) {
             // Watch for changes in the input field
             $scope.$watch('searchInput', function(newVal) {

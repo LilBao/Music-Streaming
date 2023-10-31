@@ -27,11 +27,10 @@ public class Follow implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "FOLLOWERID")
-	private int followerId;
+	private Long followerId;
 
 	@Column(name = "FOLLOWDATE")
 	private Date followDate;
-
 
 	@ManyToOne
 	@JoinColumn(name = "ACCOUNT_A")

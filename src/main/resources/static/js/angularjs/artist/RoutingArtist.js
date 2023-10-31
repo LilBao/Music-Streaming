@@ -9,7 +9,7 @@ app.config(function($routeProvider) {
   })
   .when("/artist-music", {
     templateUrl : "Music.html",
-    //controller: "musicCtrl"
+    controller: "musicCtrl"
   })
   .when("/artist-audience", {
     templateUrl : "Audience.html"

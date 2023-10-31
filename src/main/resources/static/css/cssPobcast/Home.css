@@ -1,0 +1,35 @@
+a{
+    text-decoration: none!important;
+}
+p{
+    margin: 0px;
+}
+.image-small{
+    height: 80px;
+    width: 80px;
+    object-fit: cover;
+}
+.image-cover{
+    height: 300px;
+    object-fit: cover;
+}
+
+.image-slide{
+    height: 200px;
+    object-fit: cover;
+}
+
+.image-new{
+    height: 250px;
+    object-fit: cover;
+}
+.p-bold{
+    font-weight: bold;
+}
+.p-opacity{
+    opacity: 0.5;
+}
+.p-small-bold{
+    font-size: small;
+    font-weight: bold;
+}

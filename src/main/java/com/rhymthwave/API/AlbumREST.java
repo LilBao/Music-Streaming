@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,7 +40,7 @@ public class AlbumREST {
 
 	private final AlbumService albumSer;
 
-	private final CRUD<Album, Integer> crudAlbum;
+	private final CRUD<Album, Long> crudAlbum;
 
 	private final CloudinaryService cloudinary;
 
@@ -57,7 +58,7 @@ public class AlbumREST {
 	}
 
 	@GetMapping("/api/v1/album/{id}")
-	public ResponseEntity<MessageResponse> getAllAlbumByID(@PathVariable("id") Integer id) {
+	public ResponseEntity<MessageResponse> getAllAlbumByID(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudAlbum.findOne(id)));
 	}
 
@@ -70,9 +71,7 @@ public class AlbumREST {
 		if (coverImg != null) {
 			Map<String, Object> respImg = cloudinary.Upload(coverImg, "CoverImage",
 					account.getArtist().getArtistName());
-			Image cover = imgSer.getEntity((String) respImg.get("asset_id"), (String) respImg.get("url"),
-					(Integer) respImg.get("width"), (Integer) respImg.get("height"));
-			cover.setPublicId((String) respImg.get("public_id"));
+			Image cover = imgSer.getEntity(respImg);
 			crudImage.create(cover);
 			album.setImage(cover);
 		}
@@ -86,16 +85,13 @@ public class AlbumREST {
 	}
 	
 	@PutMapping(value = "/api/v1/album-image/{id}", consumes = { "multipart/form-data" })
-	public ResponseEntity<MessageResponse> updateAlbumImage(@PathVariable("id") Integer id,HttpServletRequest req,@RequestParam("coverImg") MultipartFile coverImg) {
+	public ResponseEntity<MessageResponse> updateAlbumImage(@PathVariable("id") Long id,HttpServletRequest req,@RequestParam("coverImg") MultipartFile coverImg) {
 		String owner = host.getEmailByRequest(req);
 		Account account = crudAccount.findOne(owner);
 		Album album = crudAlbum.findOne(id);
 		if (coverImg != null) {
-			Map<String, Object> respImg = cloudinary.Upload(coverImg, "CoverImage",
-					account.getArtist().getArtistName());
-			Image cover = imgSer.getEntity((String) respImg.get("asset_id"), (String) respImg.get("url"),
-					(Integer) respImg.get("width"), (Integer) respImg.get("height"));
-			cover.setPublicId((String) respImg.get("public_id"));
+			Map<String, Object> respImg = cloudinary.Upload(coverImg, "CoverImage",account.getArtist().getArtistName());
+			Image cover = imgSer.getEntity(respImg);
 			crudImage.create(cover);
 			album.setImage(cover);
 		}
@@ -108,9 +104,9 @@ public class AlbumREST {
 		return ResponseEntity.ok(new MessageResponse(true, "success", albumSer.findAlbumNotRecord(owner)));
 	}
 	
-	@GetMapping("/api/v1/account")
-	public ResponseEntity<MessageResponse> fdsfsd() {
-		return ResponseEntity.ok(new MessageResponse(true, "success", crudAccount.findAll()));
+	@DeleteMapping("/api/v1/album/{id}")
+	public ResponseEntity<MessageResponse> deleteAlbum(@PathVariable("id") Long id) {
+		return ResponseEntity.ok(new MessageResponse(true, "success", crudAlbum.delete(id)));
 	}
 
 	@GetMapping("/api/v1/album-artist-released")

@@ -478,7 +478,8 @@ h4.card-title.mb-0 {
 .img-person-manager img {
     border-radius: 50%;
     height: 1.6rem;
-    width: 1.3rem;
+    width: 1.4rem;
+    border: 1px solid #cac9c9;
     object-fit: fill;
 }
 
@@ -559,7 +560,21 @@ h4.card-title.mb-0 {
 
 }
 
-
+/* modal-header-delete */
+.modal-header-delete{
+    border-bottom: none !important;
+}
+.icon-close-bodyModal{
+    font-size: 70px;
+    color: rgb(255, 70, 70);
+    font-weight: 200;
+    text-align: center;
+}
+.btn-event-deleteModal{
+    text-align: center;
+    justify-content:center !important;
+    border-top: none !important;
+}
 /* =================== End MANAGER Blog ============== */
 
 
@@ -702,9 +717,9 @@ td {
 }
 
 
-.pagination {
+/* .pagination {
     display: inline-block;
-}
+} */
 
 .pagination a {
     color: black;
@@ -727,16 +742,9 @@ td {
     background-color: #ddd;
 }
 
-/* .pagination a:first-child {
-    border-radius: 5px;
-    border-bottom-left-radius: 5px;
-  }
-  
-  .pagination a:last-child {
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-  } */
-
+.dir-pagination-controls li.active .ng-binding {
+    background-color:#4CAF50;
+}
 
 
 /* ===================== Quan ly giao dien ====================== */
@@ -771,15 +779,174 @@ td {
 }
 
 .addSlideImage {
-    height:170px;
+    height: 170px;
     cursor: pointer;
     border: 2px dashed rgb(123, 123, 123);
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.iconAddSlideImage{
-    font-size: 90px; color: rgb(123, 123, 123); 
+
+.iconAddSlideImage {
+    font-size: 90px;
+    color: rgb(123, 123, 123);
 }
 
 /* ===================== END Quan ly giao dien ====================== */
+
+
+/* ===================== START  TABLE ACCOUNT  ===================== */
+/* css input search */
+#custom-search-input {
+
+    border: solid 1px #c9c8c8;
+    border-radius: 6px;
+    background-color: #fff;
+    max-width: 300px;
+
+
+}
+
+#custom-search-input input {
+    border: 0;
+    box-shadow: none;
+
+}
+
+#custom-search-input button {
+    margin: 2px 0 0 0;
+    background: none;
+    box-shadow: none;
+    border: 0;
+    color: #7e7e7e;
+    padding: 0 8px 0 10px;
+    border-left: solid 1px #ccc;
+}
+
+#custom-search-input button:hover {
+    border: 0;
+    box-shadow: none;
+    border-left: solid 1px #a0a0a0;
+}
+
+#custom-search-input .bi-search {
+    font-size: 23px;
+}
+
+/* css input search */
+
+/* image in table tab */
+.cha {
+    width: 40px;
+    height: 40px;
+    border-radius: 3px;
+    overflow: hidden;
+    
+}
+
+.image-table-user-tabs {
+    width: 40px;
+    height: 40px;
+    filter: none;
+    object-fit: cover;
+}
+.threee-dots-table{
+    font-size: 15px;
+    color: #111;
+}
+
+/* Start Madal Profile User */
+.emp-profile{
+    padding: 3%;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    border-radius: 0.5rem;
+    background: #fff;
+}
+.profile-img{
+    text-align: center;
+}
+.profile-img img{
+    width: 70%;
+    height: 100%;
+}
+.profile-img .file {
+    position: relative;
+    overflow: hidden;
+    margin-top: -20%;
+    width: 70%;
+    border: none;
+    border-radius: 0;
+    font-size: 15px;
+    background: #212529b8;
+}
+.profile-img .file input {
+    position: absolute;
+    opacity: 0;
+    right: 0;
+    top: 0;
+}
+.profile-head h5{
+    color: #333;
+}
+.profile-head h6{
+    color: #0062cc;
+}
+.profile-edit-btn{
+    border: none;
+    border-radius: 1.5rem;
+    width: 70%;
+    padding: 2%;
+    font-weight: 600;
+    color: #6c757d;
+    cursor: pointer;
+}
+.proile-rating{
+    font-size: 14px;
+    color: #818182;
+    margin-top: 5%;
+}
+.proile-rating span{
+    color: #495057;
+    font-size: 12px;
+    font-weight: 600;
+}
+.profile-head .nav-tabs{
+    margin-bottom:5%;
+}
+.profile-head .nav-tabs .nav-link{
+    font-weight:600;
+    border: none;
+}
+.profile-head .nav-tabs .nav-link.active{
+    border: none;
+    border-bottom:2px solid #0062cc;
+}
+.profile-work{
+    padding: 14%;
+    margin-top: -15%;
+}
+.profile-work p{
+    font-size: 12px;
+    color: #818182;
+    font-weight: 600;
+    margin-top: 10%;
+}
+.profile-work a{
+    text-decoration: none;
+    color: #495057;
+    font-weight: 600;
+    font-size: 14px;
+}
+.profile-work ul{
+    list-style: none;
+}
+.profile-tab label{
+    font-weight: 600;
+}
+.profile-tab p{
+    font-weight: 600;
+    color: #0062cc;
+}
+/* End Madal Urofile User */
+/* ===================== END  TABLE ACCOUNT  ===================== */

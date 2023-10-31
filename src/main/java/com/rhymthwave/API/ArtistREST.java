@@ -80,15 +80,13 @@ public class ArtistREST {
 		
 		if(avatar !=null) {
 			Map<String,Object> respAvatar = cloudinary.UploadResizeImage(avatar,"ProfilePicture",artist.getArtistName(),512,512);
-			Image imgAvatar = imgSer.getEntity((String)respAvatar.get("asset_id"), (String)respAvatar.get("url"), (Integer) respAvatar.get("width"), (Integer)respAvatar.get("height"));
-			imgAvatar.setPublicId((String) respAvatar.get("public_id"));
+			Image imgAvatar = imgSer.getEntity(respAvatar);
 			crudImg.create(imgAvatar);
 			artist.setImagesProfile(imgAvatar);
 		}
 		if(background !=null) {
 			Map<String,Object> respBg = cloudinary.UploadResizeImage(background,"Background",artist.getArtistName(),1500,500);
-			Image imgBackground = imgSer.getEntity((String)respBg.get("asset_id"), (String)respBg.get("url"),(Integer) respBg.get("width"),(Integer) respBg.get("height"));
-			imgBackground.setPublicId((String) respBg.get("public_id"));
+			Image imgBackground = imgSer.getEntity(respBg);
 			crudImg.create(imgBackground);
 			artist.setBackgroundImage(imgBackground);
 		}
@@ -109,15 +107,13 @@ public class ArtistREST {
 		Artist artist =artistSer.findByEmail(owner);
 		if(avatar !=null) {
 			Map<String,Object> respAvatar = cloudinary.UploadResizeImage(avatar,"ProfilePicture",artist.getArtistName(),512,512);
-			Image imgAvatar = imgSer.getEntity((String)respAvatar.get("asset_id"), (String)respAvatar.get("url"), (Integer) respAvatar.get("width"), (Integer)respAvatar.get("height"));
-			imgAvatar.setPublicId((String) respAvatar.get("public_id"));
+			Image imgAvatar = imgSer.getEntity(respAvatar);
 			crudImg.create(imgAvatar);
 			artist.setImagesProfile(imgAvatar);
 		}
 		if(background !=null) {
 			Map<String,Object> respBg = cloudinary.UploadResizeImage(background,"Background",artist.getArtistName(),1500,500);
-			Image imgBackground = imgSer.getEntity((String)respBg.get("asset_id"), (String)respBg.get("url"),(Integer) respBg.get("width"),(Integer) respBg.get("height"));
-			imgBackground.setPublicId((String) respBg.get("public_id"));
+			Image imgBackground = imgSer.getEntity(respBg);
 			crudImg.create(imgBackground);
 			artist.setBackgroundImage(imgBackground);
 		}
@@ -159,5 +155,13 @@ public class ArtistREST {
 	public ResponseEntity<MessageResponse> findAccount(HttpServletRequest req){
 		String owner = host.getEmailByRequest(req);
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudAccount.findOne(owner)));
+	}
+	
+	@GetMapping("/api/v1/search-artist/{artistName}")
+	public ResponseEntity<MessageResponse> findListArtistName(HttpServletRequest req, @PathVariable("artistName") String artistName){
+		String owner = host.getEmailByRequest(req);
+		Artist artist = artistSer.findByEmail(owner);
+		List<Artist> list = artistSer.findAllArtistNameisVerify(artist.getArtistId(), "%"+artistName+"%");
+		return ResponseEntity.ok(new MessageResponse(true,"success",list));
 	}
 }

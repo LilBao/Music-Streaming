@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+   <!-- CONTENT START  -->
+   <div class="content-wrapper">
+
+      <section class="dashboard-top-sec">
+         <div class="container-fluid">
+
+            <!-- START Alert  -->
+
+            <div ng-show="success" class="alert alert-success alert-dismissible fade show " role="alert">
+               <div class="alert-ok">
+                  <strong>Successfully!</strong> Create a Country
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                     ng-click="closeAlert()"></button>
+               </div>
+            </div>
+
+            <!-- END Alert  -->
+
+
+
+
+            <div class="cardperShadow shadow mb-4">
+               <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary"> Account
+                  </h6>
+               </div>
+               <div class="card-bodyPerShadow">
+
+                  <div id="dataTable_wrapper">
+                     <div class="row">
+
+                        <ul class="nav nav-pills mb-3 ms-2" id="pills-tab" role="tablist">
+                           <li class="nav-item" role="presentation">
+                              <button class="nav-link active" id="pills-user-tab" ng-click="load_all_User('USER')"
+                                 data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab"
+                                 aria-controls="pills-home" aria-selected="true">User</button>
+                           </li>
+                           <li class="nav-item" role="presentation">
+                              <button class="nav-link" id="pills-artist-tab" ng-click="load_all_User('ARTIST')"
+                                 data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab"
+                                 aria-controls="pills-profile" aria-selected="false">Artist</button>
+                           </li>
+                           <li class="nav-item" role="presentation">
+                              <button class="nav-link" id="pills-podcast-tab" ng-click="load_all_User('PODCAST')"
+                                 data-bs-toggle="pill" data-bs-target="#pills-podcast" type="button" role="tab"
+                                 aria-controls="pills-podcast" aria-selected="false">Podcast</button>
+                           </li>
+                           <li class="nav-item" role="presentation">
+                              <button class="nav-link" id="pills-staff-tab" ng-click="load_all_User('STAFF')"
+                                 data-bs-toggle="pill" data-bs-target="#pills-staff" type="button" role="tab"
+                                 aria-controls="pills-staff" aria-selected="false">Staff</button>
+                           </li>
+                        </ul>
+                        <div class="tab-content" style="display: block;" id="pills-tabContent">
+                           <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                              aria-labelledby="pills-user-tab" tabindex="0">
+                              <div class="row">
+                                 <div class="col-sm-6 text-left">
+                                    <div id="custom-search-input" class="mb-2 mt-0">
+                                       <div class="input-group col-md-12">
+                                          <input type="text" ng-model="searchText" class="form-control form-control-sm"   placeholder="search" />
+                                           
+                                          <span class="input-group-btn">
+                                             <button class="btn btn-info btn-lg" type="button">
+                                                <i class="bi bi-search"></i>
+                                             </button>
+                                          </span>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-sm-6 text-right">
+                                    <div class="dt-buttons btn-group mb-2">
+                                       <button class="btn btn-secondary buttons-export" ng-click="exportToExcel()"
+                                          type="button"><span>Excel</span>
+                                       </button>
+                                       <button class="btn btn-secondary buttons-export" type="button"><span>Print</span>
+                                       </button>
+                                       <button class="btn btn-secondary buttons-export" type="button"><span>Excel</span>
+                                       </button>
+                                       <button class="btn btn-secondary buttons-export" type="button"><span>Excel</span>
+                                       </button>
+
+                                    </div>
+                                 </div>
+                              </div>
+
+                              <div class="row">
+                                 <div class="col-sm-12">
+                                    <div class="table-responsive">
+                                       <table class="table ">
+                                          <thead class="table-light">
+                                             <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Image</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Gender</th>
+                                                <th scope="col">User Type</th>
+                                                <th scope="col" class="threee-dots-table"><i
+                                                      class="bi bi-three-dots-vertical"></i></th>
+                                             </tr>
+                                          </thead>
+                                          <tbody>
+
+                                             <tr ng-repeat="user in items | filter:searchText" >
+                                                <th scope="row">{{$index + 1}}</th>
+
+                                                <td>
+                                                   <div class="cha">
+                                                      <a href=""> <img
+                                                            ng-src="{{user.image.url ?  user.image.url : 'https://res.cloudinary.com/div9ldpou/image/upload/v1697882865/ProfilePicture/User%20null/user-null.png' }}"
+                                                            alt="" class="image-table-user-tabs"></a>
+
+                                                   </div>
+                                                </td>
+                                                <td>{{user.email}}</td>
+                                                <td>{{user.gender ? 'Male' : 'Female'}}</td>
+                                                <td>
+                                                   <span ng-repeat="userType in user.userType"
+                                                      ng-class="{'badge text-bg-info mx-1': userType.nameType === 'BASIC', 'badge text-bg-warning mx-1': userType.nameType === 'PREMIUM'}">{{userType.nameType}}</span>
+
+                                                </td>
+                                                <td>
+                                                   <div class="dropdown">
+                                                      <a class="dropdown-toggle threee-dots-table" type="button"
+                                                         data-bs-toggle="dropdown" aria-expanded="false">
+                                                         <i class="bi bi-three-dots-vertical"></i>
+                                                      </a>
+                                                      <ul class="dropdown-menu">
+                                                         <li><button class="dropdown-item" ng-click="profileById(user.email)"
+                                                            type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal">Profile</button>
+                                                         </li>
+                                                         <li><button class="dropdown-item" type="button">Look Account</button></li>
+                                                           
+                                                         <li><button class="dropdown-item" type="button">Delete</button>
+                                                         </li>
+                                                      </ul>
+                                                   </div>
+                                                </td>
+                                             </tr>
+
+
+
+                                          </tbody>
+                                          <tfoot>
+                                             <th scope="col">#</th>
+                                             <th scope="col">Image</th>
+                                             <th scope="col">Email</th>
+                                             <th scope="col">Gender</th>
+                                             <th scope="col">User Type</th>
+                                             <th scope="col" class="threee-dots-table"><i
+                                                   class="bi bi-three-dots-vertical"></i></th>
+                                          </tfoot>
+                                       </table>
+                                    </div>
+                                 </div>
+                              </div>
+
+
+                           </div>
+                           <div class="tab-pane fade" id="pills-profile" role="tabpanel"
+                              aria-labelledby="pills-artist-tab" tabindex="0">
+                              <div class="row">
+                                 <div class="col-sm-6 text-left">
+                                    <div id="custom-search-input" class="mb-2 mt-0">
+                                       <div class="input-group col-md-12">
+                                          <input type="text" class="form-control form-control-sm"
+                                             placeholder="search" />
+                                          <span class="input-group-btn">
+                                             <button class="btn btn-info btn-lg" type="button">
+                                                <i class="bi bi-search"></i>
+                                             </button>
+                                          </span>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-sm-6 text-right">
+                                    <div class="dt-buttons btn-group mb-2">
+                                       <button class="btn btn-secondary buttons-export" ng-click="exportToExcel()"
+                                          type="button"><span>Excel</span>
+                                       </button>
+                                       <button class="btn btn-secondary buttons-export" type="button"><span>Print</span>
+                                       </button>
+                                       <button class="btn btn-secondary buttons-export" type="button"><span>Excel</span>
+                                       </button>
+                                       <button class="btn btn-secondary buttons-export" type="button"><span>Excel</span>
+                                       </button>
+
+                                    </div>
+                                 </div>
+                              </div>
+
+                              <div class="row">
+                                 <div class="col-sm-12">
+                                    <div class="table-responsive">
+                                       <table class="table ">
+                                          <thead class="table-light">
+                                             <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Image</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Gender</th>
+                                                <th scope="col">User Type</th>
+                                                <th scope="col" class="threee-dots-table"><i
+                                                      class="bi bi-three-dots-vertical"></i></th>
+                                             </tr>
+                                          </thead>
+                                          <tbody>
+
+                                             <tr ng-repeat="user in items">
+                                                <th scope="row">{{$index + 1}}</th>
+
+                                                <td>
+                                                   <div class="cha">
+                                                      <a href=""> <img
+                                                            ng-src="{{user.image.url ?  user.image.url : 'https://res.cloudinary.com/div9ldpou/image/upload/v1697882865/ProfilePicture/User%20null/user-null.png' }}"
+                                                            alt="" class="image-table-user-tabs"></a>
+
+                                                   </div>
+                                                </td>
+                                                <td>{{user.email}}</td>
+                                                <td>{{user.gender ? 'Male' : 'Female'}}</td>
+                                                <td>
+                                                   <span ng-repeat="userType in user.userType"
+                                                      ng-class="{'badge text-bg-info mx-1': userType.nameType === 'BASIC', 'badge text-bg-warning mx-1': userType.nameType === 'PREMIUM'}">{{userType.nameType}}</span>
+
+                                                </td>
+                                                <td>
+                                                   <div class="dropdown">
+                                                      <a class="dropdown-toggle threee-dots-table" type="button"
+                                                         data-bs-toggle="dropdown" aria-expanded="false">
+                                                         <i class="bi bi-three-dots-vertical"></i>
+                                                      </a>
+                                                      <ul class="dropdown-menu">
+                                                         <li><button class="dropdown-item" type="button">Detail</button>
+                                                         </li>
+                                                         <li><button class="dropdown-item" type="button">Look
+                                                               Account</button></li>
+                                                         <li><button class="dropdown-item" type="button">Delete</button>
+                                                         </li>
+                                                      </ul>
+                                                   </div>
+                                                </td>
+                                             </tr>
+
+
+
+                                          </tbody>
+                                          <tfoot>
+                                             <th scope="col">#</th>
+                                             <th scope="col">Image</th>
+                                             <th scope="col">Email</th>
+                                             <th scope="col">Gender</th>
+                                             <th scope="col">User Type</th>
+                                             <th scope="col" class="threee-dots-table"><i
+                                                   class="bi bi-three-dots-vertical"></i></th>
+                                          </tfoot>
+                                       </table>
+                                    </div>
+                                 </div>
+                              </div>
+
+
+                           </div>
+                           <div class="tab-pane fade" id="pills-podcast" role="tabpanel"
+                              aria-labelledby="pills-podcast-tab" tabindex="0">
+                              <div class="row">
+                                 <div class="col-sm-6 text-left">
+                                    <div id="custom-search-input" class="mb-2 mt-0">
+                                       <div class="input-group col-md-12">
+                                          <input type="text" class="form-control form-control-sm"
+                                             placeholder="search" />
+                                          <span class="input-group-btn">
+                                             <button class="btn btn-info btn-lg" type="button">
+                                                <i class="bi bi-search"></i>
+                                             </button>
+                                          </span>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-sm-6 text-right">
+                                    <div class="dt-buttons btn-group mb-2">
+                                       <button class="btn btn-secondary buttons-export" ng-click="exportToExcel()"
+                                          type="button"><span>Excel</span>
+                                       </button>
+                                       <button class="btn btn-secondary buttons-export" type="button"><span>Print</span>
+                                       </button>
+                                       <button class="btn btn-secondary buttons-export" type="button"><span>Excel</span>
+                                       </button>
+                                       <button class="btn btn-secondary buttons-export" type="button"><span>Excel</span>
+                                       </button>
+
+                                    </div>
+                                 </div>
+                              </div>
+
+                              <div class="row">
+                                 <div class="col-sm-12">
+                                    <div class="table-responsive">
+                                       <table class="table ">
+                                          <thead class="table-light">
+                                             <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Image</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Gender</th>
+                                                <th scope="col">User Type</th>
+                                                <th scope="col" class="threee-dots-table"><i
+                                                      class="bi bi-three-dots-vertical"></i></th>
+                                             </tr>
+                                          </thead>
+                                          <tbody>
+
+                                             <tr ng-repeat="user in items">
+                                                <th scope="row">{{$index + 1}}</th>
+
+                                                <td>
+                                                   <div class="cha">
+                                                      <a href=""> <img
+                                                            ng-src="{{user.image.url ?  user.image.url : 'https://res.cloudinary.com/div9ldpou/image/upload/v1697882865/ProfilePicture/User%20null/user-null.png' }}"
+                                                            alt="" class="image-table-user-tabs"></a>
+
+                                                   </div>
+                                                </td>
+                                                <td>{{user.email}}</td>
+                                                <td>{{user.gender ? 'Male' : 'Female'}}</td>
+                                                <td>
+                                                   <span ng-repeat="userType in user.userType"
+                                                      ng-class="{'badge text-bg-info mx-1': userType.nameType === 'BASIC', 'badge text-bg-warning mx-1': userType.nameType === 'PREMIUM'}">{{userType.nameType}}</span>
+
+                                                </td>
+                                                <td>
+                                                   <div class="dropdown">
+                                                      <a class="dropdown-toggle threee-dots-table" type="button"
+                                                         data-bs-toggle="dropdown" aria-expanded="false">
+                                                         <i class="bi bi-three-dots-vertical"></i>
+                                                      </a>
+                                                      <ul class="dropdown-menu">
+                                                         <li><button class="dropdown-item" type="button">Detail</button>
+                                                         </li>
+                                                         <li><button class="dropdown-item" type="button">Look
+                                                               Account</button></li>
+                                                         <li><button class="dropdown-item" type="button">Delete</button>
+                                                         </li>
+                                                      </ul>
+                                                   </div>
+                                                </td>
+                                             </tr>
+
+
+
+                                          </tbody>
+                                          <tfoot>
+                                             <th scope="col">#</th>
+                                             <th scope="col">Image</th>
+                                             <th scope="col">Email</th>
+                                             <th scope="col">Gender</th>
+                                             <th scope="col">User Type</th>
+                                             <th scope="col" class="threee-dots-table"><i
+                                                   class="bi bi-three-dots-vertical"></i></th>
+                                          </tfoot>
+                                       </table>
+                                    </div>
+                                 </div>
+                              </div>
+
+
+                           </div>
+                           <div class="tab-pane fade" id="pills-staff" role="tabpanel" aria-labelledby="pills-staff-tab"
+                              tabindex="0">
+                              <div class="row">
+                                 <div class="col-sm-6 text-left">
+                                    <div id="custom-search-input" class="mb-2 mt-0">
+                                       <div class="input-group col-md-12">
+                                          <input type="text" class="form-control form-control-sm"
+                                             placeholder="search" />
+                                          <span class="input-group-btn">
+                                             <button class="btn btn-info btn-lg" type="button">
+                                                <i class="bi bi-search"></i>
+                                             </button>
+                                          </span>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-sm-6 text-right">
+                                    <div class="dt-buttons btn-group mb-2">
+                                       <button class="btn btn-secondary buttons-export" ng-click="exportToExcel()"
+                                          type="button"><span>Excel</span>
+                                       </button>
+                                       <button class="btn btn-secondary buttons-export" type="button"><span>Print</span>
+                                       </button>
+                                       <button class="btn btn-secondary buttons-export" type="button"><span>Excel</span>
+                                       </button>
+                                       <button class="btn btn-secondary buttons-export" type="button"><span>Excel</span>
+                                       </button>
+
+                                    </div>
+                                 </div>
+                              </div>
+
+                              <div class="row">
+                                 <div class="col-sm-12">
+                                    <div class="table-responsive">
+                                       <table class="table ">
+                                          <thead class="table-light">
+                                             <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Image</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Gender</th>
+                                                <th scope="col">User Type</th>
+                                                <th scope="col" class="threee-dots-table"><i
+                                                      class="bi bi-three-dots-vertical"></i></th>
+                                             </tr>
+                                          </thead>
+                                          <tbody>
+
+                                             <tr ng-repeat="user in items">
+                                                <th scope="row">{{$index + 1}}</th>
+
+                                                <td>
+                                                   <div class="cha">
+                                                      <a href=""> <img
+                                                            ng-src="{{user.image.url ?  user.image.url : 'https://res.cloudinary.com/div9ldpou/image/upload/v1697882865/ProfilePicture/User%20null/user-null.png' }}"
+                                                            alt="" class="image-table-user-tabs"></a>
+
+                                                   </div>
+                                                </td>
+                                                <td>{{user.email}}</td>
+                                                <td>{{user.gender ? 'Male' : 'Female'}}</td>
+                                                <td>
+                                                   <span ng-repeat="userType in user.userType"
+                                                      ng-class="{'badge text-bg-info mx-1': userType.nameType === 'BASIC', 'badge text-bg-warning mx-1': userType.nameType === 'PREMIUM'}">{{userType.nameType}}</span>
+
+                                                </td>
+                                                <td>
+                                                   <div class="dropdown">
+                                                      <a class="dropdown-toggle threee-dots-table" type="button"
+                                                         data-bs-toggle="dropdown" aria-expanded="false">
+                                                         <i class="bi bi-three-dots-vertical"></i>
+                                                      </a>
+                                                      <ul class="dropdown-menu">
+                                                         <li><button class="dropdown-item" type="button">Detail</button>
+                                                         </li>
+                                                         <li><button class="dropdown-item" type="button">Look
+                                                               Account</button></li>
+                                                         <li><button class="dropdown-item" type="button">Delete</button>
+                                                         </li>
+                                                      </ul>
+                                                   </div>
+                                                </td>
+                                             </tr>
+
+
+
+                                          </tbody>
+                                          <tfoot>
+                                             <th scope="col">#</th>
+                                             <th scope="col">Image</th>
+                                             <th scope="col">Email</th>
+                                             <th scope="col">Gender</th>
+                                             <th scope="col">User Type</th>
+                                             <th scope="col" class="threee-dots-table"><i
+                                                   class="bi bi-three-dots-vertical"></i></th>
+                                          </tfoot>
+                                       </table>
+                                    </div>
+                                 </div>
+                              </div>
+
+
+
+                           </div>
+                        </div>
+
+
+
+
+                        <!-- pagination -->
+
+                        <!-- Pagination -->
+
+                        <div class="row">
+                           <div class="col-sm-12 col-md-5">
+                              <!-- <div class="dataTables_info" id="DataTables_Table_0_info" role="status"
+                                    aria-live="polite">Đang xem 1 đến 1 trong
+                                    tổng số 1 mục</div> -->
+
+                           </div>
+                           <div class="col-sm-12 col-md-7">
+
+
+
+                              <div class="pagination  d-flex justify-content-end align-content-center mb-3">
+                                 <a href="" ng-click="utilitiesPage.firstPage()">&laquo;</a>
+
+                                 <a href="" ng-repeat="pageNo in page" ng-click="goToPage(pageNo)"
+                                    ng-class="{ 'active': currentPage === pageNo }">
+                                    {{pageNo + 1}}
+                                 </a>
+                                 <a href="" ng-click="utilitiesPage.endPage()">&raquo;</a>
+                              </div>
+
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+              
+
+                  <!-- Modal Profile -->
+                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+
+                     <div class="modal-dialog modal-dialog-centered  modal-lg">
+                        <div class="modal-content">
+                           <div class="modal-header">
+                              <h1 class="modal-title fs-5 " id="exampleModalLabel"  >Profile By  {{formUser.username}} </h1>
+                              <button type="button" class="btn-close " data-bs-dismiss="modal"
+                                 aria-label="Close"></button>
+                           </div>
+                           <div class="modal-body">
+                                 <div class="container-fluid">
+                                    <div class="row">
+                                       <div class="col-md-4">
+                                           <div class="profile-img">
+                                               <img ng-src="{{formUser.image.url}}" alt=""/>
+                                               <div class="file btn btn-lg btn-primary">
+                                                    Photo
+                                                   <input type="file" name="file"/>
+                                               </div>
+                                           </div>
+                                       </div>
+                                       <div class="col-md-6">
+                                           <div class="profile-head">
+                                                       <h5>
+                                                          {{formUser.username}}
+                                                       </h5>
+                                                       <h6>
+                                                         {{formUser.email}}
+                                                       </h6>
+                                                       <p class="proile-rating" >User Type :  <span ng-repeat="userType in formUser.userType"
+                                                         ng-class="{'badge text-bg-info mx-1': userType.nameType === 'BASIC', 'badge text-bg-warning mx-1': userType.nameType === 'PREMIUM'}">{{userType.nameType}}</span>
+                                                      </p>
+                                               <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                   <li class="nav-item">
+                                                       <a class="nav-link active" id="home-tab" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true">Profile</a>
+                                                   </li>
+                                                   <li class="nav-item">
+                                                       <a class="nav-link" id="profile-tab" data-toggle="tab" role="tab" aria-controls="profile" aria-selected="false">Other</a>
+                                                   </li>
+                                               </ul>
+                                           </div>
+                                       </div>
+                                       <!-- <div class="col-md-2">
+                                           <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+                                       </div> -->
+                                   </div>
+                                   <div class="row">
+                                       <div class="col-md-4">
+                                           <div class="profile-work">
+                                              
+                                               <p>Recent activities</p>
+                                               <a href="">Wishlist</a><br/>
+                                               <a href="">Report</a> <br/>
+                                               <a href="">Follow</a><br/>
+                                               <a href="">Following</a><br/>
+                                             
+                                           </div>
+                                       </div>
+                                       <div class="col-md-8">
+                                           <div class="tab-content profile-tab" id="myTabContent">
+                                               <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                                          
+                                                           <div class="row">
+                                                               <div class="col-md-6">
+                                                                   <label>Name</label>
+                                                               </div>
+                                                               <div class="col-md-6">
+                                                                   <p>  {{formUser.username}}</p>
+                                                               </div>
+                                                           </div>
+                                                           <div class="row">
+                                                               <div class="col-md-6">
+                                                                   <label>Email</label>
+                                                               </div>
+                                                               <div class="col-md-6">
+                                                                   <p>  {{formUser.email}}</p>
+                                                               </div>
+                                                           </div>
+                                                           <div class="row">
+                                                               <div class="col-md-6">
+                                                                   <label>Birthday</label>
+                                                               </div>
+                                                               <div class="col-md-6">
+                                                                   <p> {{formUser.birthday | date:'dd-MM-yyyy'}}  </p>
+                                                               </div>
+                                                           </div>
+                                                           <div class="row">
+                                                               <div class="col-md-6">
+                                                                   <label>Country</label>
+                                                               </div>
+                                                               <div class="col-md-6">
+                                                                   <p>{{formUser.country}}</p>
+                                                               </div>
+                                                           </div>
+
+                                                           <div class="row">
+                                                               <div class="col-md-6">
+                                                                  <label>Gender</label>
+                                                               </div>
+                                                               <div class="col-md-6">
+                                                                  <p>{{formUser.gender === 0 ?   "Female" :"Male"}}</p>
+                                                               </div>
+                                                           </div>
+
+                                                          
+                                               </div>
+                                               <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                                           <div class="row">
+                                                               <div class="col-md-6">
+                                                                   <label>Experience</label>
+                                                               </div>
+                                                               <div class="col-md-6">
+                                                                   <p>Expert</p>
+                                                               </div>
+                                                           </div>
+                                                           <div class="row">
+                                                               <div class="col-md-6">
+                                                                   <label>Hourly Rate</label>
+                                                               </div>
+                                                               <div class="col-md-6">
+                                                                   <p>10$/hr</p>
+                                                               </div>
+                                                           </div>
+                                                           <div class="row">
+                                                               <div class="col-md-6">
+                                                                   <label>Total Projects</label>
+                                                               </div>
+                                                               <div class="col-md-6">
+                                                                   <p>230</p>
+                                                               </div>
+                                                           </div>
+                                                           <div class="row">
+                                                               <div class="col-md-6">
+                                                                   <label>English Level</label>
+                                                               </div>
+                                                               <div class="col-md-6">
+                                                                   <p>Expert</p>
+                                                               </div>
+                                                           </div>
+                                                           <div class="row">
+                                                               <div class="col-md-6">
+                                                                   <label>Availability</label>
+                                                               </div>
+                                                               <div class="col-md-6">
+                                                                   <p>6 months</p>
+                                                               </div>
+                                                           </div>
+                                                   <div class="row">
+                                                       <div class="col-md-12">
+                                                           <label>Your Bio</label><br/>
+                                                           <p>Your detail description</p>
+                                                       </div>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                                 </div>
+
+                           </div>
+                           <div class="modal-footer">
+                              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+
+                  
+
+
+               </div>
+            </div>
+      </section>
+   </div>
+   <!--  CONTENT END  -->
+   </div>
+   </div>
+
+</body>
+
+</html>

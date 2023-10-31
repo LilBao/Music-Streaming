@@ -18,8 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rhymthwave.DTO.MessageResponse;
-import com.rhymthwave.Service.CRUD;
-import com.rhymthwave.ServiceAdmin.ICultureService;
+import com.rhymthwave.ServiceAdmin.ICultureServiceAdmin;
 import com.rhymthwave.Utilities.ExcelExportService;
 import com.rhymthwave.entity.Culture;
 
@@ -33,10 +32,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class API_Culture {
 	
-	private final ICultureService iCultureService;
+	private final ICultureServiceAdmin cultureServiceAdmin;
 
-	private final CRUD<Culture, Integer> crud;
-	
     private final ExcelExportService excelExportService;
 	
 	@GetMapping
@@ -45,14 +42,14 @@ public class API_Culture {
 			@RequestParam(value = "sortBy", required = false, defaultValue = "asc") String sortBy,
 			@RequestParam(value = "sortfield", required = false, defaultValue = "cultureId") String sortField) {
 
-		Page<Culture> pages = iCultureService.getCulturePage(page, sortBy, sortField);
+		Page<Culture> pages = cultureServiceAdmin.getCulturePage(page, sortBy, sortField);
 		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", pages));
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> findOneMood(@PathVariable("id") Integer id) {
 
-		Culture culture = crud.findOne(id);
+		Culture culture = cultureServiceAdmin.findById(id);
 
 		if (culture == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse(false, "Mood does exists", culture));
@@ -64,7 +61,7 @@ public class API_Culture {
 	@PostMapping()
 	public ResponseEntity<?> createMood(@RequestBody Culture cultureRequest, final HttpServletRequest request) {
 
-		Culture culture = crud.create(cultureRequest);
+		Culture culture = cultureServiceAdmin.create(cultureRequest,request);
 		if (culture == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(false, "Mood exists", culture));
 		}
@@ -73,9 +70,9 @@ public class API_Culture {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> updateMood(@PathVariable("id") Integer id,  @RequestBody Culture cultureRequest) {
+	public ResponseEntity<?> updateMood(@PathVariable("id") Integer id,  @RequestBody Culture cultureRequest, final HttpServletRequest request) {
 		
-		Culture culture = crud.update(cultureRequest);
+		Culture culture = cultureServiceAdmin.update(cultureRequest,request);
 		
 		if (culture == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse(false, "Mood does exists", culture));
@@ -89,7 +86,7 @@ public class API_Culture {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteMood(@PathVariable("id") Integer id) {
 		
-		boolean culture = crud.delete(id);
+		boolean culture = cultureServiceAdmin.delete(id);
 		
 		if (culture == false) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse(false, "Mood does exists", null));
@@ -100,7 +97,7 @@ public class API_Culture {
 	
 	@GetMapping("/export-excel")
     public ResponseEntity<?> exportToExcel(HttpServletResponse response) {
-        List<Culture> culture =  crud.findAll();
+        List<Culture> culture =  cultureServiceAdmin.findAllCulture();
         try {
         	
             excelExportService.exportToExcel(culture,response);

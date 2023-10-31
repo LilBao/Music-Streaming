@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.rhymthwave.entity.Song;
 
 @Repository
-public interface  SongDAO extends JpaRepository<Song, Integer>{
+public interface  SongDAO extends JpaRepository<Song, Long>{
 	@Query(value="select s.* from SONGS s "
 				+ "where s.ARTISTCREATE= :idArtist and not exists (select 1 from recording r where r.songsid = s.songsid)",nativeQuery = true)
 	List<Song> getSongNotRecord(@Param("idArtist") Long idArtist);

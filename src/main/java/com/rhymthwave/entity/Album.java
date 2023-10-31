@@ -32,7 +32,7 @@ public class Album implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ALBUMID")
-	private long albumId;
+	private Long albumId;
 
 	@Column(name = "ALBUMNAME")
 	private String albumName;

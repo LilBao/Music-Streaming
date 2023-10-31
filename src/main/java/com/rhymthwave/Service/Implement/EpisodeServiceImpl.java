@@ -1,6 +1,7 @@
 package com.rhymthwave.Service.Implement;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import com.rhymthwave.DAO.EpisodeDAO;
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.Service.EpisodeService;
 import com.rhymthwave.entity.Episode;
+import com.rhymthwave.entity.Image;
 
 import jakarta.transaction.Transactional;
 
@@ -55,5 +57,24 @@ public class EpisodeServiceImpl implements EpisodeService, CRUD<Episode, Long>{
 	public List<Episode> findAll() {
 		return dao.findAll();
 	}
-	
+
+	@Override
+	public Episode snapEpisode(Episode episode, Map<?, ?> recordAudio, Image coverImg) {
+		String url = (String) recordAudio.get("url");
+		String publicID = (String) recordAudio.get("public_id");
+		episode.setFileUrl(url);
+		episode.setPublicIdFile(publicID);
+		episode.setImage(coverImg);
+		return episode;
+	}
+
+	@Override
+	public List<Episode> findAllEpisodeByPodcast(Long podcastId, Boolean status) {
+		return dao.findAllEpisodeByPodcast(podcastId,status);
+	}
+
+	@Override
+	public Episode findLatestEpisodeByPodcast(Long podcastId) {
+		return dao.findLatestByPodcast(podcastId);
+	}	
 }

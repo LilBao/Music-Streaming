@@ -1,62 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <!-- Latest compiled JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-        crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="../../static/css/cssArtist/music.css">
-    <link rel="stylesheet" href="../../static/css/cssArtist/record.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-    <script src="../../static/js/angularjs/artist/Music.js"></script>
-    <script src="../../static/js/jscustom/Artist/Music.js"></script>
-    <script src="../../static/js/Utiliez/CookiesUtil.js"></script>
-
-    <!-- Record -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../../static/js/angularjs/artist/Record.js"></script>
-
-    <!-- Upcoming -->
-    <script src="../../static/js/angularjs/artist/Upcoming.js"></script>
-</head>
-
-<body ng-app="myApp" ng-controller="musicCtrl">
-    
-    <section class="">
+<body ng-controller="musicCtrl">
+    <section>
         <h1>Music</h1>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item me-3 pb-3">
-                <a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1"
-                    aria-selected="true">Record</a>
+                <button class="tab-button-p nav-link active" id="click-tab-1" role="tab"
+                    onclick="openTabProfile(event, 'tab1-p')">Record</button>
             </li>
             <li class="nav-item me-3 pb-3">
-                <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2"
-                    aria-selected="false">Releases</a>
+                <button class="tab-button-p nav-link" id="click-tab-2" role="tab"
+                    onclick="openTabProfile(event, 'tab2-p')">Releases</button>
             </li>
             <li class="nav-item me-3 pb-3">
-                <a class="nav-link" id="tab3-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3"
-                    aria-selected="false">Playlists</a>
+                <button class="tab-button-p nav-link" id="click-tab-3" role="tab"
+                    onclick="openTabProfile(event, 'tab3-p')">Playlists</button>
             </li>
             <li class="nav-item me-3 pb-3">
-                <a class="nav-link" id="tab4-tab" data-toggle="tab" href="#tab4" role="tab" aria-controls="tab4"
-                    aria-selected="false">Upcoming</a>
+                <button class="tab-button-p nav-link" id="click-tab-4" role="tab"
+                    onclick="openTabProfile(event, 'tab4-p')">Upcoming</button>
             </li>
             <li class="nav-item me-3 pb-3">
-                <a class="nav-link" id="tab5-tab" data-toggle="tab" href="#tab5" role="tab" aria-controls="tab5"
-                    aria-selected="false">Garbage</a>
+                <button class="tab-button-p nav-link" id="click-tab-5" role="tab"
+                    onclick="openTabProfile(event, 'tab5-p')">Garbage</button>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+            <div class="tab-p tab-pane active " id="tab1-p">
                 <div class="d-flex justify-content-between">
                     <div class="input-group w-25">
                         <span class="input-group-text "><i class="bi bi-search"></i></span>
@@ -79,12 +47,13 @@
                             <tr>
                                 <th>#</th>
                                 <th>
-                                    <h4>Your top songs</h4>
+                                    Name Record
                                 </th>
                                 <th>Listeners</th>
                                 <th>Uploaded date </th>
                                 <th>
-                                    <button class="btn border-0" data-bs-toggle="modal" data-bs-target="#record">
+                                    <button ng-click="resetRecord()" class="btn border-0 p-0" data-bs-toggle="modal"
+                                        data-bs-target="#record">
                                         <i class="bi bi-plus-circle"></i>
                                     </button>
                                 </th>
@@ -92,7 +61,10 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="item in listRecord" class="align-items-start">
-                                <td>{{$index+1}} <i ng-if="item.song ==null" class="ms-1 bi bi-filetype-raw"></i></td>
+                                <td>{{$index+1}}
+                                    <i ng-if="item.song ==null" class="ms-1 bi bi-filetype-raw"></i>
+                                    <i ng-if="item.song !=null" class="ms-1 bi bi-file-music"></i>
+                                </td>
                                 <td class="align-items-center">
                                     {{item.recordingName}}
                                 </td>
@@ -104,9 +76,13 @@
                                             <i class="bi bi-three-dots-vertical"></i>
                                         </button>
                                         <ul class="dropdown-menu">
-                                          <li><a class="dropdown-item">Review</a></li>
-                                          <li><a  ng-show="item.song ==null" ng-click="changeTab()" class="dropdown-item">Pitch</a></li>
-                                          <li><a class="dropdown-item">Link 3</a></li>
+                                            <li>
+                                                <a ng-click="getRecordDetail(item.recordingId)" data-bs-toggle="modal"
+                                                    data-bs-target="#recordDetail" class="dropdown-item">Review</a>
+                                            </li>
+                                            <li><a ng-show="item.song ==null" ng-click="changeTab()"
+                                                    class="dropdown-item">Pitch</a></li>
+                                            <li><a class="dropdown-item">Link 3</a></li>
                                         </ul>
                                     </div>
                                 </td>
@@ -114,10 +90,10 @@
                         </tbody>
                     </table>
                 </div>
-                 <div ng-include="'Recording.html'"></div>
+                <div ng-include="'Recording.html'"></div>
+                <div ng-include="'RecordDetail.html'"></div>
             </div>
-
-            <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+            <div class="tab-p tab-pane" id="tab2-p">
                 <div class="d-flex justify-content-end">
                     <div class="dropdown">
                         <button type="button options" class="btn dropdown-toggle" data-bs-toggle="dropdown">
@@ -163,7 +139,7 @@
                                     </div>
                                     <div class="card-body realease-card">
                                         <h6 class="my-2 card-title">{{item.songName}}</h6>
-                                        <p class="card-text py-0 ">
+                                        <p class="card-text py-0">
                                             {{item.artist.artistName}}</p>
                                     </div>
                                 </div>
@@ -180,56 +156,106 @@
                                             <div class="card my-5 border rounded-4" style="min-height: 85vh;">
                                                 <div class="d-flex justify-content-between">
                                                     <div>
-                                                        <button hidden id="addRecord" class="btn" data-bs-toggle="collapse"
-                                                            data-bs-target="#add"><i class="bi bi-plus"></i></button>
+                                                        <button hidden id="addRecord" class="btn"
+                                                            data-bs-toggle="collapse" data-bs-target="#add"><i
+                                                                class="bi bi-plus"></i></button>
 
                                                     </div>
-                                                    <div > 
+                                                    <div>
                                                         <button id="modified-release" class="btn"><i
                                                                 class="bi bi-pencil-fill"></i></button>
                                                     </div>
                                                 </div>
                                                 <div id="add" class="collapse">
-                                                    <div class="dropdown w-100 d-flex justify-content-center">
-                                                        <button type="button" class="btn dropdown-toggle"
-                                                            data-bs-toggle="dropdown">
-                                                            Dropdown button
-                                                        </button>
-                                                        <ul class="dropdown-menu">
-                                                            <li ng-repeat="item in listRecord">
-                                                                <a ng-click="addRecordToSongOrAlbum(typeDetail,typeDetail==='album' ? album : song,item)" class="dropdown-item" href="#">
+                                                    <div class="d-flex justify-content-between">
+                                                        <div class="dropdown w-100">
+                                                            <button type="button"
+                                                                class="text-center btn dropdown-toggle"
+                                                                data-bs-toggle="dropdown">
+                                                                Add more record
+                                                            </button>
+                                                            <ul class="dropdown-menu">
+                                                                <li ng-repeat="item in listRecord">
+                                                                    <a ng-click="addRecordToSongOrAlbum(typeDetail,typeDetail==='album' ? album : song,item)"
+                                                                        class="dropdown-item" href="#">
+                                                                        <div class="d-flex align-items-center">
+                                                                            <div>
+                                                                                <img style="width: 50px; height: 50px; object-fit: cover;"
+                                                                                    class="" src="{{song.image.url}}">
+                                                                            </div>
+                                                                            <div>
+                                                                                <p>{{item.recordingName}}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <div ng-show="typeDetail === 'song'" class="dropdown w-100">
+                                                            <div>
+                                                                <input type="text" class="form-control "
+                                                                    id="search-artist" placeholder="Search Artist">
+                                                            </div>
+                                                            <div ng-show="search.length >0" class="menu-artist mt-2">
+                                                                <div ng-click="JoinSongWritter(item)"
+                                                                    ng-repeat="item in listArtist | limitTo: 5">
                                                                     <div class="d-flex align-items-center">
                                                                         <div>
                                                                             <img style="width: 50px; height: 50px; object-fit: cover;"
-                                                                                class="" src="{{item.song.image.url}}">
+                                                                                class=""
+                                                                                ng-src="{{item.imagesProfile.url == null ? 'https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png':item.imagesProfile.url}}">
                                                                         </div>
                                                                         <div>
-                                                                            <p>{{item.recordingName}}</p>
+                                                                            <p>{{item.artistName}}</p>
                                                                         </div>
                                                                     </div>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
+
                                                 </div>
 
                                                 <div class="my-3 align-items-center">
                                                     <div class="d-flex justify-content-center">
-                                                        <img ng-click="selectFile(typeDetail === 'album' ? album.albumId : song.songId)" id="coverImg-{{typeDetail === 'album' ? album.albumId : song.songId}}" class="img-thumbnail "
-                                                        style="object-fit: cover; width: 300px; height: 200px;"
-                                                        src="{{typeDetail === 'album' ? album.image.url : song.image.url}}"
-                                                        alt="">
+                                                        <img ng-click="selectFile(typeDetail === 'album' ? album.albumId : song.songId)"
+                                                            id="coverImg-{{typeDetail === 'album' ? album.albumId : song.songId}}"
+                                                            class="img-thumbnail "
+                                                            style="object-fit: cover; width: 300px; height: 200px;"
+                                                            src="{{typeDetail === 'album' ? album.image.url : song.image.url}}"
+                                                            alt="">
                                                         <input id="fileCoverImg" type="file" hidden>
                                                     </div>
-                                                    
+
                                                     <div class="ms-5">
                                                         <input id="nameDetail" class="inputCss" type="text"
                                                             value="{{typeDetail === 'album' ? album.albumName : song.songName}}"
                                                             readonly>
                                                         <h4>
                                                         </h4>
-                                                        <h6>{{typeDetail === 'album' ? album.artist.artistName : 'fds'}}
+                                                        <h6 ng-if="typeDetail === 'album'">{{album.artist.artistName}}
                                                         </h6>
+                                                        <div ng-if="typeDetail === 'song'" class="d-flex">
+                                                            <h6 ng-repeat="item in songWritter" class="me-1">
+                                                                {{item.artist.artistName}}</h6>
+                                                            <button ng-show="artist.artistId === song.artistCreate"
+                                                                class="btn border-0 py-0" data-bs-toggle="collapse"
+                                                                data-bs-target="#demo"><i
+                                                                    class="bi bi-person-fill-x"></i></button>
+                                                        </div>
+                                                        <div id="demo" class="collapse">
+                                                            <div ng-repeat="item in songWritter"
+                                                                ng-if="item.artist.artistId !== song.artistCreate">
+                                                                <div class="d-flex justify-content-between">
+                                                                    <p class="p-0">{{item.artist.artistName}}</p>
+                                                                    <button ng-click="deleteWritter(item.writterId)"
+                                                                        class="btn border-0">
+                                                                        <i class="bi bi-x-lg"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                         <div class="d-flex justify-content-between">
                                                             <p class="m-0 p-0">20 record</p>
                                                             <p class="m-0 p-0">102222 listeners</p>
@@ -237,10 +263,18 @@
                                                         <div>
                                                             <input class="inputCss" type="text" id="releaseDetail"
                                                                 value="{{typeDetail === 'album' ? album.releaseDate :
-                                                            song.releaseDay | date:'dd/MM/yyyy, hh:mm:ss'}}" readonly>
+                                                            song.releaseDay | date:'dd/MM/yyyy, hh:mm a'}}" readonly>
                                                         </div>
-                                                        <!-- <textarea class="inputCss w-100" type="text" ng-model="typeDetail === 'album' ? album.description :
-                                                        song.description"></textarea> -->
+                                                        <textarea readonly rows="10" id="descriptionDetail"
+                                                            class="inputCss w-100" type="text">{{typeDetail === 'album' ? album.description :
+                                                            song.description}}</textarea>
+                                                    </div>
+                                                    <div class="d-flex justify-content-between">
+                                                        <button class="btn">Elimidate Song</button>
+                                                        <button ng-show="artist.artistId !== song.artistCreate"
+                                                            class="btn"
+                                                            ng-click="outSong(song.songId,artist.artistId)">Out
+                                                            Song</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -286,9 +320,9 @@
                 </div>
 
             </div>
-            <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
+            <div class="tab-p tab-pane" id="tab3-p">
             </div>
-            <div class="tab-pane fade" id="tab4" role="tabpanel" aria-labelledby="tab4-tab">
+            <div class="tab-p tab-pane" id="tab4-p">
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -297,7 +331,11 @@
                             </th>
                             <th>Playlist pitch</th>
                             <th>realease day</th>
-                            <th><i class="bi bi-plus-circle"></i></th>
+                            <th>
+                                <button class="btn border-0" data-bs-toggle="modal" data-bs-target="#upcoming">
+                                    <i class="bi bi-plus-circle"></i>
+                                </button>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -331,9 +369,78 @@
                         </tr>
                     </tbody>
                 </table>
+                <div ng-include="'Upcoming.html'"></div>
             </div>
-            <div class="tab-pane fade " id="tab5" role="tabpanel" aria-labelledby="tab5-tab">
-                
+            <div class="tab-p tab-pane" id="tab5-p">
+                <div class="d-flex justify-content-between">
+                    <div class="input-group w-25">
+                        <span class="input-group-text "><i class="bi bi-search"></i></span>
+                        <input type="text" class=" form-control" placeholder="search">
+                    </div>
+                    <div class="dropdown">
+                        <button type="button options" class="btn dropdown-toggle" data-bs-toggle="dropdown">
+                            Last 24 hours
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Last 1 month</a></li>
+                            <li><a class="dropdown-item" href="#">Last 6 months</a></li>
+                            <li><a class="dropdown-item" href="#">Last 1 years</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>
+                                    Name Record
+                                </th>
+                                <th>Listeners</th>
+                                <th>Version</th>
+                                <th>Audio</th>
+                                <th>Uploaded date </th>
+                                <th>
+                                    <button ng-click="resetRecord()" class="btn border-0 p-0" data-bs-toggle="modal"
+                                        data-bs-target="#record">
+                                        <i class="bi bi-plus-circle"></i>
+                                    </button>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in garbageRecord" class="align-items-start">
+                                <td>{{$index+1}}
+                                    <i class="ms-1 bi bi-filetype-raw"></i>
+                                </td>
+                                <td class="align-items-center">
+                                    {{item.recordingName}}
+                                </td>
+                                <td class="align-items-center">12,2023</td>
+                                <td class="align-items-center">{{item.versions}}</td>
+                                <td class="align-items-center">
+                                    <audio controls src="{{item.audioFileUrl}}"></audio>
+                                </td>
+                                <td class="align-items-center">{{item.recordingdate | date:'dd/MM/yyyy'}}</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="p-0 btn border-0 align-items-center" data-bs-toggle="dropdown">
+                                            <i class="bi bi-three-dots-vertical"></i>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a ng-click="DestroyRecord(item.recordingId,item.publicIdAudio)"
+                                                    class="dropdown-item">Elimidate</a>
+                                            </li>
+                                            <li><a ng-click="RecoveryRecord(item.recordingId)"
+                                                    class="dropdown-item">Recover</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </section>
@@ -523,7 +630,4 @@
             </div>
         </div>
     </div>
-    <script src="../../static/js/jscustom/Artist/record.js"></script>
 </body>
-
-</html>

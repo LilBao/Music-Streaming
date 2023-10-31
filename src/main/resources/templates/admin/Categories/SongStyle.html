@@ -89,6 +89,10 @@
 
                                        <th scope="col" style="width: 145.333px;">Id</th>
                                        <th scope="col" style="width: 218.333px;">Song Style</th>
+                                       <th scope="col" style="width: 218.333px;">Create By</th>
+                                       <th scope="col" style="width: 218.333px;">Create Date</th>
+                                       <th scope="col" style="width: 218.333px;">Modified By</th>
+                                       <th scope="col" style="width: 218.333px;">Modified Date</th>
                                        <th scope="col" style="width: 218.333px;">Action</th>
                                     </tr>
                                  </thead>
@@ -96,6 +100,10 @@
                                     <tr>
                                        <th scope="col" rowspan="1" colspan="1">Id</th>
                                        <th scope="col" rowspan="1" colspan="1">Song Style</th>
+                                       <th scope="col" style="width: 218.333px;">Create By</th>
+                                       <th scope="col" style="width: 218.333px;">Create Date</th>
+                                       <th scope="col" style="width: 218.333px;">Modified By</th>
+                                       <th scope="col" style="width: 218.333px;">Modified Date</th>
                                        <th scope="col" style="width: 218.333px;">Action</th>
                                     </tr>
                                  </tfoot>
@@ -104,6 +112,10 @@
                                     <tr class="odd" ng-repeat=" songStyle in itemCountries">
                                        <td class="sorting_1">{{songStyle.songStyleId}}</td>
                                        <td>{{songStyle.songStyleName}}</td>
+                                       <td>{{songStyle.createBy}}</td>
+                                       <td>{{songStyle.createDate | date:'dd-MM-yyyy HH:mm:ss '}}</td>
+                                       <td>{{songStyle.modifiedBy ? songStyle.modifiedBy : "Null" }}</td>
+                                       <td>{{songStyle.modifiDate ? songStyle.modifiDate : "Null" | date:'dd-MM-yyyy HH:mm:ss '}}</td>
                                        <td><button class="btn btn-primary" ng-click="edit(songStyle.songStyleId)">Edit</button></td>
                                     </tr>
                                 

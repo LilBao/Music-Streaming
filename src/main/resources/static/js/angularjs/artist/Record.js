@@ -1,10 +1,13 @@
-var host = "http://localhost:8080/api";
 app.controller('recordCtrl', function ($scope, $http) {
     $scope.record = {};
     $scope.genre = {};
     $scope.songGenre = {};
     //Call API => create Record
     $('#create-record').click(function () {
+        $scope.createRecord() 
+    })
+
+    $scope.createRecord = function(){
         $scope.checkbox();
         var url = host + "/v1/record";
         var data = new FormData();
@@ -28,13 +31,13 @@ app.controller('recordCtrl', function ($scope, $http) {
             },
             transformRequest: angular.identity
         }).then(resp => {
-            let song = resp.data.data;
+            var song = resp.data.data;
             $('input[name="genre"]:checked').each(function () {
                 let genreId = $(this).val();
                 var url = host + "/v1/genre/" + genreId;
                 $http.get(url).then(resp => {
                     let genre = resp.data.data;
-                    $scope.createSongGenre(song,genre);
+                    $scope.createSongGenre(song, genre);
                 }).catch(error => {
                     console.log(error)
                 })
@@ -44,21 +47,21 @@ app.controller('recordCtrl', function ($scope, $http) {
             console.log(data.get('fileRecord'))
             console.log(data.get('fileLyrics'))
         })
-    })
+    }
 
-    $scope.createSongGenre = function (song,genre) {
-        $scope.songGenre.song = song;
+    $scope.createSongGenre = function (song, genre) {
+        $scope.songGenre.recording = song;
         $scope.songGenre.genre = genre;
         var data = angular.copy($scope.songGenre);
-        let url = host +"/v1/song-genre";
-        $http.post(url,data).then(resp => {
+        let url = host + "/v1/song-genre";
+        $http.post(url, data).then(resp => {
             console.log("success")
         }).catch(error => {
             console.log(error)
         })
     }
 
-    $scope.updateFile = function(){
+    $scope.updateFile = function () {
         var url = host + "/v1/record";
         var data = new FormData();
         data.append('fileRecord', $scope.recordFile);
@@ -68,27 +71,67 @@ app.controller('recordCtrl', function ($scope, $http) {
     }
 
     //Get File Audio and File lyrics
-    $scope.selectFile = function (id) {
+    $scope.selectFileRecord = function (id) {
         $('#' + id).change(function (event) {
             var file = event.target.files[0];
             if (file) {
                 $scope.$apply(function () {
-                    if (id === 'record') {
+                    if (id == 'records') {
                         $scope.recordFile = file;
                     }
-                    if (id === 'lyrics') {
+                    if (id == 'lyrics') {
                         $scope.lyricsFile = file;
                     }
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        var imageDataUrl = e.target.result;
-                        $('.' + id).attr('src', imageDataUrl);
-                    };
-                    reader.readAsDataURL(file);
                 });
             }
         });
     };
+
+    $scope.genres = [];
+    $scope.moods = [];
+    $scope.songStyles = [];
+    $scope.instruments = [];
+    $scope.cultures = [];
+    $scope.getListGenre = function () {
+        let url = host + "/v1/genre";
+        $http.get(url).then(resp => {
+            $scope.genres = resp.data.data;
+        })
+    }
+
+    $scope.getListMood = function () {
+        let url = host + "/v1/mood";
+        $http.get(url).then(resp => {
+            $scope.moods = resp.data.data;
+        })
+    }
+
+    $scope.getListInstrument = function () {
+        let url = host + "/v1/instrument";
+        $http.get(url).then(resp => {
+            $scope.instruments = resp.data.data;
+        })
+    }
+
+    $scope.getListSongStyle = function () {
+        let url = host + "/v1/song-style";
+        $http.get(url).then(resp => {
+            $scope.songStyles = resp.data.data;
+        })
+    }
+
+    $scope.getListCulture = function () {
+        let url = host + "/v1/culture";
+        $http.get(url).then(resp => {
+            $scope.cultures = resp.data.data;
+        })
+    }
+
+    $scope.getListGenre();
+    $scope.getListMood();
+    $scope.getListInstrument();
+    $scope.getListSongStyle();
+    $scope.getListCulture();
 
     //get Value checbox
     $scope.checkbox = function () {
@@ -114,4 +157,87 @@ app.controller('recordCtrl', function ($scope, $http) {
         });
         $scope.genre = selectedValues;
     }
+    
+    $('#genre').on('keypress', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+        }
+    });
+    $('#genre').on('change', function () {
+        var selectedOption = $(this).val().trim();
+        var datalist = document.getElementById('genres');
+        var options = datalist.getElementsByClassName('option-genre');
+        var GenreText = "";
+        for (var i = 0; i < options.length; i++) {
+            if (options[i].value == selectedOption) {
+                GenreText = options[i].text;
+                break;
+            }
+        }
+        if (selectedOption && selectedOption != "") {
+            var tag = $('<div class="checkbox"> <input type="checkbox" checked name="genre" value='+selectedOption+'id="" />' +
+                '<div class="box bg-black text-white"><p>' + GenreText + '</p></div>' +
+                '</div>');
+            tag.find('input[name="genre"]').val(selectedOption);
+            $('#list-genres').append(tag);
+            $(this).find('option[value="' + selectedOption + '"]').remove();
+        }
+        $('#genre').val("");
+    });
+    
+    $('#list-genres').on('click', 'input[name="genre"]', function () {
+        var selectedGenre = $(this).val();
+        var genreName = $(this).find('option:selected').text();
+        if (selectedGenre) {
+            $('#genre').append($('<option>', {
+                value: selectedGenre,
+                text: genreName
+            }));
+            $(this).closest('.checkbox').remove();
+        }
+    });
+
+    $('#genre').change(function(){
+        if(document.getElementsByTagName('genre').length > 3){
+            $('#genre').attr('readonly',true);
+        }
+    })
+    
+    var countC = 0;
+    var countM = 0;
+    var countS = 0;
+    $('input[name="culture"]').on('change', function () {
+        console.log("fsdfds")
+        if (this.checked) {
+            if (countC < 3) {
+                countC++;
+            } else {
+                this.checked = false;
+            }
+        } else {
+            countC--;
+        }
+    });
+    $('input[name="mood"]').on('change', function () {
+        if (this.checked) {
+            if (countM < 3) {
+                countM++;
+            } else {
+                this.checked = false;
+            }
+        } else {
+            countM--;
+        }
+    });
+    $('input[name="style"]').on('change', function () {
+        if (this.checked) {
+            if (countS < 3) {
+                countS++;
+            } else {
+                this.checked = false;
+            }
+        } else {
+            countS--;
+        }
+    });
 })

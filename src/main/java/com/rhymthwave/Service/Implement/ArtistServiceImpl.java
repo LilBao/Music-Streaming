@@ -57,6 +57,9 @@ public class ArtistServiceImpl implements ArtistService, CRUD<Artist, Integer> {
 		return dao.findAllIsVerify(verify);
 	}
 	
-	
+	@Override
+	public List<Artist> findAllArtistNameisVerify(Long id,String artistName) {
+		return dao.findAllArtistVerify(id,artistName);
+	}
 
 }

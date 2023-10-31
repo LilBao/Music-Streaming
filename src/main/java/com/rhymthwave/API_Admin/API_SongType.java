@@ -17,8 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rhymthwave.DTO.MessageResponse;
-import com.rhymthwave.Service.CRUD;
-import com.rhymthwave.ServiceAdmin.ISongTypeService;
+import com.rhymthwave.ServiceAdmin.ISongTypeServiceAdmin;
 import com.rhymthwave.Utilities.ExcelExportService;
 import com.rhymthwave.entity.SongStyle;
 
@@ -32,9 +31,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class API_SongType {
 	
-	private final ISongTypeService iSongTypeService;
+	private final ISongTypeServiceAdmin iSongTypeServiceAdmin;
 
-	private final CRUD<SongStyle, Integer> crud;
 	
     private final ExcelExportService excelExportService;
 	
@@ -44,14 +42,14 @@ public class API_SongType {
 			@RequestParam(value = "sortBy", required = false, defaultValue = "asc") String sortBy,
 			@RequestParam(value = "sortfield", required = false, defaultValue = "songStyleId") String sortField) {
 
-		Page<SongStyle> pages = iSongTypeService.getSongTypePage(page, sortBy, sortField);
+		Page<SongStyle> pages = iSongTypeServiceAdmin.getSongTypePage(page, sortBy, sortField);
 		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", pages));
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> findOneMood(@PathVariable("id") Integer id) {
 
-		SongStyle songType = crud.findOne(id);
+		SongStyle songType = iSongTypeServiceAdmin.findById(id);
 
 		if (songType == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse(false, "Mood does exists", songType));
@@ -63,7 +61,7 @@ public class API_SongType {
 	@PostMapping()
 	public ResponseEntity<?> createMood(@RequestBody SongStyle songTypeRequest, final HttpServletRequest request) {
 
-		SongStyle songType = crud.create(songTypeRequest);
+		SongStyle songType = iSongTypeServiceAdmin.create(songTypeRequest,request);
 		if (songType == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(false, "Mood exists", songType));
 		}
@@ -72,9 +70,9 @@ public class API_SongType {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> updateMood(@PathVariable("id") Integer id,  @RequestBody SongStyle songTypeRequest) {
+	public ResponseEntity<?> updateMood(@PathVariable("id") Integer id,  @RequestBody SongStyle songTypeRequest, final HttpServletRequest request) {
 		
-		SongStyle songType = crud.update(songTypeRequest);
+		SongStyle songType = iSongTypeServiceAdmin.update(songTypeRequest,request);
 		
 		if (songType == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse(false, "Mood does exists", songType));
@@ -88,7 +86,7 @@ public class API_SongType {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteMood(@PathVariable("id") Integer id) {
 		
-		boolean songType = crud.delete(id);
+		boolean songType = iSongTypeServiceAdmin.delete(id);
 		
 		if (songType == false) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse(false, "Mood does exists", songType));
@@ -100,7 +98,7 @@ public class API_SongType {
 	
 	@GetMapping("/export-excel")
     public ResponseEntity<?> exportToExcel(HttpServletResponse response) {
-        List<SongStyle> SongStyle =  crud.findAll();
+        List<SongStyle> SongStyle =  iSongTypeServiceAdmin.findAllSongStyle();
         try {
         	
             excelExportService.exportToExcel(SongStyle,response);
