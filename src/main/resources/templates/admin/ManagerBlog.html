@@ -86,7 +86,7 @@
                                     <div id="card-managerBlog" class="card" style="width: 18rem;">
                                        <div class="edit-blog">
                                           <a href="">
-                                             <img ng-src="{{ post.image }}" alt="Post Image" class="card-img-top">
+                                             <img ng-src="{{ post.image }}" alt="Post Image" class="card-img-top ">
                                           </a>
                                           <div class="dots-edit ">
                                              <a href data-bs-toggle="dropdown" id="Notify" class="nav-link"> <i
@@ -266,7 +266,7 @@
                      </div>
                      <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success" data-bs-dismiss="modal" ng-click="update(form.newsId)">Save</button>
+                        <button type="button" class="btn btn-success" ng-click="update(form.newsId)" data-bs-dismiss="modal" >Save</button>
                      </div>
                   </div>
                </div>

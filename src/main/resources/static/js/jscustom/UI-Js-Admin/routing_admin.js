@@ -62,5 +62,3 @@ app.config(function($routeProvider,$cookiesProvider) {
     controller: "ChartController"
   });
 });
-
-

@@ -90,8 +90,8 @@ public class NewServiceImp implements NewService, CRUD<News, Integer>{
 		return newDao.findAll();
 	}
 
-	@Transactional
 	@Override
+	@Transactional
 	public News saveNews(NewDTO newDTO,HttpServletRequest request) {
 		
 		String email = getHostByRequest.getEmailByRequest(request);
@@ -110,6 +110,7 @@ public class NewServiceImp implements NewService, CRUD<News, Integer>{
 			img.setUrl(urlImage);
 			img.setAccessId(accessId);
 			img.setPublicId(public_id);
+	
 			crudImage.create(img);
 			
 			// save news

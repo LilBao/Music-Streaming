@@ -483,6 +483,13 @@ h4.card-title.mb-0 {
     object-fit: fill;
 }
 
+.card-img-top {
+
+   min-width: 18rem;
+   max-width: 18rem;
+   min-height: 170px;
+   max-height: 170px;
+}
 .card-img-top:hover {
 
     opacity: 0.8;
@@ -950,4 +957,3 @@ td {
 }
 /* End Madal Urofile User */
 /* ===================== END  TABLE ACCOUNT  ===================== */
-

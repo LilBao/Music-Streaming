@@ -16,6 +16,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,22 +33,23 @@ public class Playlist implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "PLAYLISTID")
-	private long playlistId;
+	private Long playlistId;
 
 	@Column(name = "PLAYLISTNAME")
 	private String playlistName;
 
 	@Column(name = "QUANTITY")
-	private int quantity;
+	private Integer quantity;
 
 	@Column(name = "ISPUBLIC")
-	private boolean isPublic;
+	private Boolean isPublic = true;
 
 	@Column(name = "STATUS")
 	private String status;
 
 	@Column(name = "CREATDATE")
-	private Date createDate;
+	@Temporal(TemporalType.DATE)
+	private Date createDate = new Date();
 
 	@ManyToOne
 	@JoinColumn(name = "USERTYPEID")
