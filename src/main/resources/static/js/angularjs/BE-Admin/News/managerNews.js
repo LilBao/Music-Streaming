@@ -50,7 +50,7 @@ app.controller("managerBlogController", function ($scope, $http, $cookies) {
                     image: news.image.url,
                     publishDate: news.publishDate,
                     createDate: news.createDate,
-                //    account: news.account.image.url
+                  account: news.account.image.url
                 };
             });
             //  console.log($scope.posts)

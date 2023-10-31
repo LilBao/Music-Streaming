@@ -92,7 +92,7 @@ app.controller("moodController", function ($scope, $http, $cookies, $log, $timeo
     }
 
 
-	$scope.update = function () {
+	$scope.update = function (key) {
 		var item = angular.copy($scope.form);
 		var url = apiMood + `/${$scope.form.moodid}`;
 		$http.put(url, item, {

@@ -105,7 +105,7 @@
                                  </tfoot>
                                  <tbody>
 
-                                    <tr class="odd" ng-repeat=" mood in items ">
+                                    <tr class="odd" ng-repeat=" mood in items track by $index">
                                        <td class="sorting_1">{{mood.moodid}}</td>
                                        <td>{{mood.moodname}}</td>
                                        <td>{{mood.createBy}}</td>

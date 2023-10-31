@@ -58,9 +58,8 @@ app.controller("instrumentController", function ($scope, $http, $cookies,$log) {
 		}).then(resp => {
 			$scope.load_all();
 			$scope.reset();
-			showStickyNotification("Successfully", "success", 2000);
+			
 		}).catch(error => {
-			showStickyNotification(error.data.message, "danger", 2000);
 			console.log("Error", error)
 		});
 	}
@@ -76,11 +75,7 @@ app.controller("instrumentController", function ($scope, $http, $cookies,$log) {
 			var index = $scope.items.findIndex(item => item.id == $scope.form.instrumentId);
 			$scope.items[index] = resp.data;
 			$scope.load_all();
-			showStickyNotification("Successfully", "success", 2000);
-
 		}).catch(error => {
-			showStickyNotification(error.data.message, "danger", 2000);
-
 			$log.error(error.data);
 		});
 	}
@@ -96,11 +91,8 @@ app.controller("instrumentController", function ($scope, $http, $cookies,$log) {
 			$scope.items.splice(index, 1);
 			$scope.load_all();
 			$scope.reset();
-			showStickyNotification("Successfully", "success", 2000);
-
+			
 		}).catch(error => {
-			showStickyNotification(error.data.message, "danger", 2000);
-
 			console.log("Error", error)
 		});
 	}

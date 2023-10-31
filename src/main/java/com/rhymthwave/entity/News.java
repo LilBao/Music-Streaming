@@ -38,7 +38,6 @@ import lombok.NoArgsConstructor;
 		parameters = { @StoredProcedureParameter(name="month", type = Integer.class),
 					  @StoredProcedureParameter(name="year", type = Integer.class)})
 })
-
 public class News implements Serializable {
 
 	@Id

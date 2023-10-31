@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rhymthwave.DTO.MessageResponse;
@@ -21,7 +20,8 @@ import com.rhymthwave.Request.DTO.NewDTO;
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.Service.NewService;
 import com.rhymthwave.entity.News;
-
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
@@ -36,6 +36,15 @@ public class API_New {
 	private final CRUD<News, Integer> crud;
 	
 	
+	
+	
+	@Operation(description = "Create a news",
+			summary = "Create a news",
+			responses = {
+						@ApiResponse(description = "Success",responseCode = "201"  ),
+						@ApiResponse(description = "Account not found",responseCode = "404"  )
+					    }
+			)
 	@PostMapping()
 	public ResponseEntity<?> createNew(@ModelAttribute NewDTO newDTO, final HttpServletRequest request){
 		
@@ -49,10 +58,16 @@ public class API_New {
 		return ResponseEntity.status(HttpStatus.CREATED).body(new MessageResponse(true, "Successfully", news));
 	}
 	
+	@Operation(description = "update a news",
+			summary = "update a news",
+			responses = {
+						@ApiResponse(description = "Success",responseCode = "200"  ),
+						@ApiResponse(description = "New with id not found",responseCode = "404"  )
+					    }
+			)
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateNews(@PathVariable("id") Integer idNews,@RequestBody NewDTO newDTO, final HttpServletRequest request){
 	
-
 		News news = newService.updateNews(idNews,newDTO,request);
 		
 		if(news == null) {
@@ -63,13 +78,20 @@ public class API_New {
 		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", news));
 	}
 	
+	@Operation(description = "delete a news",
+			summary = "delete",
+			responses = {
+						@ApiResponse(description = "Success",responseCode = "200"  ),
+						@ApiResponse(description = "Delete fail",responseCode = "400"  )
+					    }
+			)
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteNews(@PathVariable("id") Integer idNews){
 		
 		boolean status = crud.delete(idNews);
 		
 		if(status == false) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(status, "Fail", status));
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(status, "Delete fail", status));
 
 		}
 		
@@ -77,27 +99,11 @@ public class API_New {
 	}
 	
 	@GetMapping()
-	public ResponseEntity<?> getAllNews(@RequestParam(value = "month", required = false) Integer month,
-										@RequestParam(value="year", required = false) Integer year){
-		List<News> list = newService.findNewsByYearAndMonth(year, month);
+	public ResponseEntity<?> getAllNews(){
+		
+		List<News> list = crud.findAll();
 		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", list));
 	}
-	
-	@GetMapping("{id}")
-	public ResponseEntity<?> getOneNews(@PathVariable("id") Integer idNew){
-		News news = crud.findOne(idNew);
-		if(news != null) {
-			return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", news));
-		}
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse(false, "News not found", news));
-	}
-	
-	@GetMapping("/getyear")
-	public ResponseEntity<?> getOneYear(){
-		
-		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "List year in db", newService.getAllYear()));
-	}
-	
 	
 	@GetMapping("/storage-for-image")
 	public ResponseEntity<?> storageForImage(){
