@@ -10,7 +10,6 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
-import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class SendMailTemplateService{
@@ -65,5 +64,15 @@ public class SendMailTemplateService{
         }
 		return templateEngine.process(templateName, context);
 	}
+    
+ // Send template email  For Role
+ 	public String getContentForNews(String title, String templateName, String content, String urlImg) {
+ 		final Context context = new Context();
+ 		context.setVariable("title", title);
+ 		context.setVariable("content", content);
+ 		context.setVariable("img", urlImg);
+
+ 		return templateEngine.process(templateName, context);
+ 	}
 
 }

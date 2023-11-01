@@ -25,7 +25,7 @@ public class AccountServiceAdminImp implements IAccountServiceAdmin{
 	private final SortBy<String, String> sortService;
 	
 	@Override
-	public Page<Account> findAllAccount(Integer page, String sortBy, String sortField, String role) {
+	public Page<Account> findAllAccount(Integer page, String sortBy, String sortField, EROLE role) {
 		
 
 		try {

@@ -2,6 +2,8 @@ package com.rhymthwave.Request.DTO;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public record NewDTO(String title, String content, String ImageLocation, MultipartFile img) {
+import com.rhymthwave.entity.TypeEnum.EROLE;
+
+public record NewDTO(String title, String content,String summary,EROLE role, String ImageLocation, MultipartFile img) {
 
 }
