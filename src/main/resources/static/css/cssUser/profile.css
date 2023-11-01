@@ -17,9 +17,9 @@ body {
     /* Điều chỉnh khoảng cách bên trong in4-card */
     top: 60%;
     /* Đưa in4-card lên giữa theo chiều dọc */
-    left: 40px;
+    left: 0%;
     /* Điều chỉnh khoảng cách bên trái in4-card */
-    transform: translateY(-50%);
+    transform: translateY(-20%);
     /* Dịch in4-card lên trên để căn giữa */
 }
 
@@ -33,7 +33,7 @@ body {
 }
 
 .in4-text {
-    margin-left: 50px;
+    margin-left: 20px;
     /* Điều chỉnh khoảng cách từ hình ảnh đến văn bản bên phải */
     align-items: center;
     color: white;

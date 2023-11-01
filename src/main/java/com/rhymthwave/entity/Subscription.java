@@ -28,22 +28,34 @@ public class Subscription implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "SUBCRIPTIONID")
-	private long subscriptionId;
+	private Integer subscriptionId;
 	
 	@Column(name = "SUBCRIPTIONTYPE")
-	private int subscriptionType;
+	private String subscriptionType;
 	
 	@Column(name = "PRICE")
-	private float price;
+	private Float price;
 	
 	@Column(name = "DESCRIPTION")
 	private String description;
+	
+	@Column(name = "PRDSTRIPEID")
+	private String prdStripeId;
+	
+	@Column(name = "PRDPAYPALID")
+	private String prdPaypalId;
 	
 	@Column(name = "CREATEDATE")
 	private Date createDate;
 	
 	@Column(name = "DURATION")
-	private int duration;
+	private Integer duration;
+	
+	@Column(name = "PLAYLISTALLOW")
+	private Integer playlistAllow;
+	
+	@Column(name = "NIP")
+	private Integer nip;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "subscription")

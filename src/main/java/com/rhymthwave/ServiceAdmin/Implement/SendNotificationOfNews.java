@@ -36,16 +36,17 @@ public class SendNotificationOfNews implements INotification<NewDTO> {
 	public void sendNotification(NewDTO noti,String urlImg) {
 
 		List<Account> listAccounts = accountDAO.findAllAccountRole(noti.role());
-			for (Account account : listAccounts) {
-				log.info(">>>>>>>>> Email: {} accout with role: {}",account.getEmail(),noti.role());
-				Email email = new Email();
-				email.setFrom("ngonhien3103@gmail.com");
-				email.setTo(account.getEmail());
-				email.setSubject(noti.title().toUpperCase());
-				email.setBody(sendMailTemplateSer.getContentForNews(noti.title(), "templateNews", noti.content(),
-						urlImg));
-				log.info(">>>>>>>>> Email dang hoat dong");
-				mailService.enqueue(email);
-			}
+		for (Account account : listAccounts) {
+			log.info(">>>>>>>>> Email: {} accout with role: {}",account.getEmail(),noti.role());
+			Email email = new Email();
+			email.setFrom("ngonhien3103@gmail.com");
+			email.setTo(account.getEmail());
+			email.setSubject(noti.title().toUpperCase());
+			email.setBody(sendMailTemplateSer.getContentForNews(noti.title(), "templateNews", noti.content(),
+					urlImg));
+			log.info(">>>>>>>>> Email dang hoat dong");
+			mailService.enqueue(email);
+		}
+
 	}
 }

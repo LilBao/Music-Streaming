@@ -10,7 +10,6 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
-import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class SendMailTemplateService {
@@ -85,5 +84,6 @@ public class SendMailTemplateService {
 
 		return templateEngine.process(templateName, context);
 	}
+    
 
 }

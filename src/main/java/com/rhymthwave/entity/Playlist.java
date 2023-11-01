@@ -16,6 +16,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -42,11 +44,13 @@ public class Playlist implements Serializable {
 	@Column(name = "ISPUBLIC")
 	private boolean isPublic;
 
-	@Column(name = "STATUS")
-	private String status;
+	@Column(name = "DESCRIPTION")
+	private String description;
 
-	@Column(name = "CREATDATE")
-	private Date createDate;
+	@Column(name = "CREATEDATE")
+	@Temporal(TemporalType.DATE)
+	private Date createDate = new Date();
+
 
 	@ManyToOne
 	@JoinColumn(name = "USERTYPEID")

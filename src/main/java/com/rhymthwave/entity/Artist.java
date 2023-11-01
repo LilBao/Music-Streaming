@@ -64,7 +64,7 @@ public class Artist implements Serializable {
 	private String active;
 
 	@Column(name = "VERIFY")
-	private boolean isVerify;
+	private Boolean isVerify;
 
 	@Column(name = "DATESTARTED")
 	private Date dateStarted;

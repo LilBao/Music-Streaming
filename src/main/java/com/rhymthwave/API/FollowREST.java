@@ -26,10 +26,17 @@ public class FollowREST {
 	private final FollowService followSer;
 	
 	private final AuthorService authorSer;
-	
+		
 	private final CRUD<Follow, Long> crudFollow;
-	
+		
 	private final GetHostByRequest host;
+	
+	@GetMapping("/api/v1/my-list-follow")
+	public ResponseEntity<MessageResponse> following(HttpServletRequest req){
+		String main = host.getEmailByRequest(req);
+		Author accountA = authorSer.findAuthor(1, main);
+		return ResponseEntity.ok(new MessageResponse(true,"success",followSer.findMyListFollow(accountA)));
+	}
 	
 	@PostMapping("/api/v1/follow")
 	public ResponseEntity<MessageResponse> following(HttpServletRequest req, @RequestParam("email") String target, @RequestParam("type") Integer type){

@@ -65,6 +65,12 @@
               <input class="form-check-input" type="checkbox" role="switch" checked>
               <label class="form-check-label" for="flexSwitchCheckDefault">Remember me</label>
             </div>
+            <div ng-if="successMessage" class="success-message">
+              {{ successMessage }}
+          </div>
+          <div ng-if="errorMessage" class="error-message">
+              {{ errorMessage }}
+          </div>
             <div class="bl-btn-login">
               <button onclick="showCaptchaDialog(event)" type="submit" class="btn-login btn">Log in</button>
             </div>

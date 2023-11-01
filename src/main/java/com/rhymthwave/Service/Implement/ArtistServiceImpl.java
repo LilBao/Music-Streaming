@@ -21,7 +21,7 @@ public class ArtistServiceImpl implements ArtistService, CRUD<Artist, Integer> {
 	@Override
 	@Transactional
 	public Artist create(Artist entity) {
-		entity.setVerify(false);
+		entity.setIsVerify(false);
 		return dao.save(entity);
 	}
 

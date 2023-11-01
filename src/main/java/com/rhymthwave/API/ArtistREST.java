@@ -150,6 +150,11 @@ public class ArtistREST {
 		return ResponseEntity.ok(new MessageResponse(true,"success",artistSer.findByEmail(owner)));
 	}
 	
+	@GetMapping("/api/v1/find-artist/{email}")
+	public ResponseEntity<MessageResponse> findArtist(@PathVariable("email") String email){
+		return ResponseEntity.ok(new MessageResponse(true,"success",artistSer.findByEmail(email)));
+	}
+	
 	
 	@GetMapping("/api/v1/confirm-account-artist")
 	public ResponseEntity<MessageResponse> findAccount(HttpServletRequest req){

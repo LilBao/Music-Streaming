@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.rhymthwave.entity.Account;
 import com.rhymthwave.entity.TypeEnum.EROLE;
 
+
 @Repository
 public interface AccountDAO extends JpaRepository<Account, String>{
 
