@@ -1,20 +1,8 @@
 var app = angular.module('myApp',[]);
 var host = "http://localhost:8080/api";
 app.controller('loginCtrl',function($scope,$http){    
-    $scope.loginRequest={};
-    $scope.successMessage = '';
-    $scope.errorMessage = '';
-    $('#login').click(function(){
-
-        var url = host+"/v1/accounts/login";
-        var data = angular.copy($scope.loginRequest);
-        $http.post(url, data).then(function (resp) {
-            setCookie("token", resp.data.data.accessToken);
-            $scope.successMessage = 'Logged in successfully';
-        }).catch(function (error) {
-            $scope.errorMessage = 'Login failed: ' + error.data.message;
-        });
-
+  $scope.loginRequest={};
+  $('#login').click(function(){
       var response = grecaptcha.getResponse();
       if (response.length === 0) {
         alert("Please complete the captcha.");
@@ -26,7 +14,7 @@ app.controller('loginCtrl',function($scope,$http){
 
       
 
-        var url = host+"/v1/users/login";
+        var url = host+"/v1/accounts/login";
         var data = angular.copy($scope.loginRequest);
         $http.post(url,data).then(resp=>{
             setCookie("token",resp.data.data.accessToken);
@@ -42,7 +30,7 @@ app.controller('loginCtrl',function($scope,$http){
     //         setCookie("token",resp.data.data.accessToken);
     //     })
     // })
-})
+  })
 function showCaptchaDialog(event) {
     event.preventDefault(); // Prevent form submission
     
