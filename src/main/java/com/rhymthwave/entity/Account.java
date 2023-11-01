@@ -31,10 +31,10 @@ public class Account implements Serializable {
 	@Column(name = "EMAIL")
 	private String email;
 
-	@Column(name = "PASSWORD")
+	@Column(name = "PASSWORD",columnDefinition = "varchar(500)")
 	private String password;
 
-	@Column(name = "USENAME")
+	@Column(name = "USENAME",columnDefinition = "nvarchar(55)")
 	private String username;
 
 	@Column(name = "BIRTHDAY")
@@ -43,13 +43,13 @@ public class Account implements Serializable {
 	@Column(name = "GENDER")
 	private int gender;
 
-	@Column(name = "COUNTRY",columnDefinition = "nvarchar", length = 30)
+	@Column(name = "COUNTRY",columnDefinition = "nvarchar(55)")
 	private String country;
 
 	@Column(name = "ISVERIFY")
 	private boolean isVerify;
 
-	@Column(name = "VERIFYCATIONCODE")
+	@Column(name = "VERIFYCATIONCODE",columnDefinition = "varchar(250)")
 	private String verificationCode;
 
 	@Column(name = "VERIFYCATIONCODEEXPIRES")
@@ -61,7 +61,7 @@ public class Account implements Serializable {
 	@Column(name = "ISBLOCKED")
 	private boolean isBlocked;
 
-	@Column(name = "REFRESHTOKEN")
+	@Column(name = "REFRESHTOKEN",columnDefinition = "varchar(6000)")
 	private String refreshToken;
 
 	@OneToOne

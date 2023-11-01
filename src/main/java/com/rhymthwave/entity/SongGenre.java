@@ -25,13 +25,13 @@ public class SongGenre implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	private Long id;
+	private Integer id;
 
 	@ManyToOne
 	@JoinColumn(name = "IDGENRE")
 	private Genre genre;
 
 	@ManyToOne
-	@JoinColumn(name = "IDRECORD")
+	@JoinColumn(name = "RECORDINGID")
 	private Recording recording;
 }

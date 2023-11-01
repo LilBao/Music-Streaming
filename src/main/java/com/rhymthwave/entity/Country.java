@@ -23,16 +23,16 @@ public class Country implements Serializable {
 	@Column(name = "ID")
 	private String id;
 
-	@Column(name = "NAMECOUNTRY")
+	@Column(name = "NAMECOUNTRY",columnDefinition = "varchar(30)")
 	private String nameCountry;
 	
-	@Column(name = "CREATEBY",length = 255)
+	@Column(name = "CREATEBY",columnDefinition = "nvarchar(255)")
 	private String createBy;
 	
 	@Column(name = "CREATEDATE")
 	private Date createDate;
 	
-	@Column(name = "MODIFIEDBY", length = 255)
+	@Column(name = "MODIFIEDBY",columnDefinition = "nvarchar(255)")
 	private String modifiedBy;
 	
 	@Column(name = "MODIFIDATE")

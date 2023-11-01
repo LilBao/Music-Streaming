@@ -31,9 +31,9 @@ public class Role implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "IDROLE")
-	private int roleId;
+	private Integer roleId;
 
-	@Column(name = "NAMEROLE")
+	@Column(name = "NAMEROLE",columnDefinition = "varchar(35)")
 	@Enumerated(EnumType.STRING)
 	private EROLE role = EROLE.USER;
 

@@ -33,34 +33,34 @@ public class Artist implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ARTISTID", length = 5000)
-	private long artistId;
+	@Column(name = "ARTISTID")
+	private Long artistId;
 
-	@Column(name = "ARTISTNAME", length = 5000)
+	@Column(name = "ARTISTNAME",columnDefinition = "nvarchar(55)")
 	private String artistName;
 
-	@Column(name = "DATEOFBIRTH", length = 5000)
+	@Column(name = "DATEOFBIRTH")
 	private Date dateOfBirth;
 
-	@Column(name = "FULLNAME", length = 5000)
+	@Column(name = "FULLNAME",columnDefinition = "nvarchar(55)")
 	private String fullName;
 
-	@Column(name = "PLACEOFBIRTH", length = 5000)
+	@Column(name = "PLACEOFBIRTH",columnDefinition = "nvarchar(55)")
 	private String placeOfBirth;
 
-	@Column(name = "BIO")
+	@Column(name = "BIO",columnDefinition = "nvarchar(max)")
 	private String bio;
 
-	@Column(name = "IMAGEGALLERY",columnDefinition = "varchar(5000)")
+	@Column(name = "IMAGEGALLERY",columnDefinition = "varchar(max)")
 	private String[] imagesGallery;
 	
-	@Column(name = "PUBLICIDIMAGEGALLERY" , length = 5000 ,columnDefinition = "varchar(5000)")
+	@Column(name = "PUBLICIDIMAGEGALLERY",columnDefinition = "varchar(max)")
 	private String[] publicIdImageGallery;
 
-	@Column(name = "SOCIALMEDIALINKS", length = 5000,columnDefinition = "varchar")
+	@Column(name = "SOCIALMEDIALINKS",columnDefinition = "varchar(max)")
 	private String[] socialMediaLinks;
 
-	@Column(name = "ACTIVE")
+	@Column(name = "ACTIVE",columnDefinition = "nvarchar(55)")
 	private String active;
 
 	@Column(name = "VERIFY")

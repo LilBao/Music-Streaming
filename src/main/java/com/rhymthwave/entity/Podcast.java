@@ -5,8 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,52 +26,52 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "PODCAST")
+@Table(name = "PODCASTS")
 public class Podcast implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "PODCASTID")
-	private long podcastId;
+	private Integer podcastId;
 
-	@Column(name = "PODCASTNAME")
+	@Column(name = "PODCASTNAME",columnDefinition = "nvarchar(55)")
 	private String podcastName;
 
-	@Column(name = "BIO")
+	@Column(name = "BIO",columnDefinition = "nvarchar(max)")
 	private String bio;
 
-	@Column(name = "SOCIALMEDIALINK")
+	@Column(name = "SOCIALMEDIALINK",columnDefinition = "varchar(max)")
 	private String socialMediaLink;
 
 	@Column(name = "RELEASEDATE")
 	private Date releaseDate;
 
-	@Column(name = "LANGUAGE")
+	@Column(name = "LANGUAGE",columnDefinition = "nvarchar(55)")
 	private String language;
 	
 	@Column(name = "RATE")
 	private Integer rate;
 
-	@Column(name = "AUTHORNAME")
+	@Column(name = "AUTHORNAME",columnDefinition = "nvarchar(100)")
 	private String authorName;
 	
 	@OneToOne
-	@JoinColumn(name = "IMGAGEID")
+	@JoinColumn(name = "ACCESSID")
 	private Image image;
 
 	@ManyToOne
-	@JoinColumn(name = "CATEGORY")
+	@JoinColumn(name = "TAGID")
 	private Tag tag;
 
 	@ManyToOne
-	@JoinColumn(name = "ACCOUNTID")
+	@JoinColumn(name = "EMAIL")
 	private Account account;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "podcast")
+	@OneToMany(mappedBy = "podcast",cascade = CascadeType.ALL)
 	private List<Episode> Episodes;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "podcast")
+	@OneToMany(mappedBy = "podcastId",cascade = CascadeType.ALL)
 	private List<Report> reports;
 }

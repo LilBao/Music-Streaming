@@ -33,10 +33,10 @@ public class Subscription implements Serializable {
 	@Column(name = "SUBCRIPTIONTYPE")
 	private String subscriptionType;
 	
-	@Column(name = "PRICE")
+	@Column(name = "PRICE",columnDefinition = "Float")
 	private Float price;
 	
-	@Column(name = "DESCRIPTION")
+	@Column(name = "DESCRIPTION",columnDefinition = "nvarchar(max)")
 	private String description;
 	
 	@Column(name = "PRDSTRIPEID")
@@ -61,3 +61,4 @@ public class Subscription implements Serializable {
 	@OneToMany(mappedBy = "subscription")
 	private List<UserType> userTypes;
 }
+

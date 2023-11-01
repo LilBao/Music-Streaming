@@ -24,18 +24,18 @@ public class SongStyle implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "SONG_STYLEID")
-	private int songStyleId;
+	private Integer songStyleId;
 
-	@Column(name = "SONG_STYLENAME")
+	@Column(name = "SONG_STYLENAME",columnDefinition = "nvarchar(55)")
 	private String songStyleName;
 	
-	@Column(name = "CREATEBY",length = 255)
+	@Column(name = "CREATEBY",columnDefinition = "nvarchar(255)")
 	private String createBy;
 	
 	@Column(name = "CREATEDATE")
 	private Date createDate;
 	
-	@Column(name = "MODIFIEDBY", length = 255)
+	@Column(name = "MODIFIEDBY",columnDefinition = "nvarchar(255)")
 	private String modifiedBy;
 	
 	@Column(name = "MODIFIDATE")

@@ -32,15 +32,15 @@ public class Album implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ALBUMID")
-	private Long albumId;
+	private Integer albumId;
 
-	@Column(name = "ALBUMNAME")
+	@Column(name = "ALBUMNAME",columnDefinition = "nvarchar(55)")
 	private String albumName;
 
 	@Column(name = "RELEASEDATE")
 	private Date releaseDate;
 	
-	@Column(name = "DESCRIPTIONS")
+	@Column(name = "DESCRIPTIONS",columnDefinition = "nvarchar(max)")
 	private String description;
 
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
