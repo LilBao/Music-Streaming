@@ -2,6 +2,7 @@ package com.rhymthwave.entity;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,6 +29,7 @@ public class Author implements Serializable {
 	@Column(name = "AUTHORID")
 	private Long authorId;
 
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@ManyToOne
 	@JoinColumn(name = "IDROLE")
 	private Role role;

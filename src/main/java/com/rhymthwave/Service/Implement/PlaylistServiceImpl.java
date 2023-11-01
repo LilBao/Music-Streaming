@@ -9,6 +9,7 @@ import com.rhymthwave.DAO.PlaylistDAO;
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.Service.PlaylistService;
 import com.rhymthwave.entity.Playlist;
+import com.rhymthwave.entity.UserType;
 
 import jakarta.transaction.Transactional;
 
@@ -22,6 +23,8 @@ public class PlaylistServiceImpl implements PlaylistService, CRUD<Playlist, Long
 	@Transactional
 	public Playlist create(Playlist entity) {
 		Playlist playlist = entity;
+		playlist.setQuantity(0);
+		playlist.setPlaylistName("My Playlist");
 		return dao.save(playlist);
 	}
 
@@ -50,8 +53,8 @@ public class PlaylistServiceImpl implements PlaylistService, CRUD<Playlist, Long
 	}
 
 	@Override
-	public List<Playlist> findMyPlaylist(String email) {
-		return dao.findMyPlaylist(email);
+	public List<Playlist> findMyPlaylist(UserType usertype) {
+		return dao.findByUsertype(usertype);
 	}
 	
 	

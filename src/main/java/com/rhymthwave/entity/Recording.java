@@ -47,11 +47,8 @@ public class Recording implements Serializable {
 	@Column(name = "PUBLICIDLYRICS")
 	private String publicIdLyrics;
 	
-	@Column(name = "LIKES")
-	private long likes;
-
-	@Column(name = "DURATION")
-	private int duration;
+	@Column(name = "LISTENED")
+	private Long listened;
 
 	@Column(name = "SONGSTYLE")
 	private String songStyle;
@@ -81,7 +78,7 @@ public class Recording implements Serializable {
 	private Date recordingdate = new Date();
 
 	@Column(name = "ISDELETED")
-	private boolean isDeleted;
+	private Boolean isDeleted;
 	
 	@Column(name = "EMAILCREATE")
 	private String emailCreate;

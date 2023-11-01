@@ -1,5 +1,72 @@
-app.controller('myCtrl', function () {
+var host = "http://localhost:8080/api/";
+app.controller('myCtrl', function ($scope, $http) {
     $('#myModal').modal('show');
+    $scope.account = {};
+    $scope.playlist = {};
+    $scope.listPlaylist = [];
+    $scope.listFollow = [];
+
+    $scope.Owner = function () {
+        let url = host + "v1/account";
+        $http.get(url, {
+            headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+        }).then(resp => {
+            $scope.account = resp.data.data;
+            $scope.account.userType.forEach(e => {
+                $scope.findMyPlaylist(e.userTypeId)
+            });
+            $scope.findMyListFollow();
+        })
+    }
+
+    $scope.findMyPlaylist = function (userTypeId) {
+        let url = host + "v1/my-playlist/" + userTypeId;
+        $http.get(url).then(resp => {
+            $scope.listPlaylist.push(...resp.data.data);
+        })
+    }
+
+    $scope.findMyListFollow = function () {
+        let url = host + "v1/my-list-follow";
+        $http.get(url,{
+            headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+        }).then(resp => {
+            $scope.listFollow.push(...resp.data.data);
+        })
+    }
+
+    $scope.createPlaylist = function () {
+        let url = host + "v1/playlist";
+        let data = angular.copy(playlist);
+        $http.post(url, data, {
+            headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+        }).then(resp => {
+            if (resp.success === true) {
+                showStickyNotification('Create playlist success', 'success', 2000);
+            } else {
+                showStickyNotification(resp.data.data, 'warning', 2000);
+            }
+
+        }).catch(err => {
+            showStickyNotification("Create playlist fail", 'danger', 3000);
+            console.log(err);
+        })
+    }
+
+    $scope.deletePlaylist = function(idPlaylist){
+        let url = host + "v1/playlist/"+idPlaylist;
+        $http.delete(url).then(resp => {
+            showStickyNotification("Delete playlist success", 'success', 3000);
+        }).catch(err => {
+            showStickyNotification("Delete playlist fail", 'danger', 3000);
+        })
+    }
+
+    document.getElementById('create-playlist').addEventListener('click', function () {
+        $scope.createPlaylist();
+    })
+
+
     //Playlist
     var playlistChild = document.getElementsByClassName('playlist-child');
     var playlist = document.getElementsByClassName('playlist');
@@ -34,17 +101,22 @@ app.controller('myCtrl', function () {
         }
         //thay đổi lyrics
         const currentTime = audio.currentTime;
-        const listItems = lyricsContainer.getElementsByTagName("li");
-        for (const li of listItems) {
-            const time = parseFloat(li.getAttribute("data-time"));
-            if (!isNaN(time) && currentTime >= time) {
-                li.style.fontWeight = "bold";
-                li.style.color = "red";
-            } else {
-                li.style.fontWeight = "normal"; // Bỏ đánh dấm in đậm
-                li.style.color = "white"; // Reset màu chữ
+        try {
+            const listItems = lyricsContainer.getElementsByTagName("li");
+            for (const li of listItems) {
+                const time = parseFloat(li.getAttribute("data-time"));
+                if (!isNaN(time) && currentTime >= time) {
+                    li.style.fontWeight = "bold";
+                    li.style.color = "red";
+                } else {
+                    li.style.fontWeight = "normal"; // Bỏ đánh dấm in đậm
+                    li.style.color = "white"; // Reset màu chữ
+                }
             }
+        } catch (error) {
+
         }
+
     }
     //thanh duration thay đổi
     duration.addEventListener('change', function () {
@@ -91,19 +163,16 @@ app.controller('myCtrl', function () {
     //loop
     var isRepeat = false;
     loop.addEventListener('click', function () {
-        if (loop.classList.contains('repeat')) {
-            loop.innerText = "Loop";
+        let icon = loop.children;
+        if (loop.classList.contains('loop')) {
+            icon.style.color="green"
             loop.classList.remove("repeat");
             loop.classList.add("loop");
             audio.loop = true;
-        } else if (loop.classList.contains('loop')) {
-            loop.innerText = "..."
-            loop.classList.remove("loop");
-
         } else {
-            loop.classList.add("repeat");
-            loop.innerText = "Repeat";
-
+            icon.style.color="white"
+            loop.classList.remove("loop");
+            audio.loop = false;
         }
     })
 
@@ -111,8 +180,8 @@ app.controller('myCtrl', function () {
     //download
     download.addEventListener('click', function () {
         var audioLink = document.createElement("a");
-        audioLink.href = audio.getAttribute('src'); 
-        audioLink.download = "file.mp3"; 
+        audioLink.href = audio.getAttribute('src');
+        audioLink.download = "file.mp3";
         audioLink.click();
     })
 
@@ -133,4 +202,6 @@ app.controller('myCtrl', function () {
     }
 
     audio.load();
+    $scope.Owner();
+    
 })

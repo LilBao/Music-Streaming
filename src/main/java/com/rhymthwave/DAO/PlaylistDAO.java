@@ -8,9 +8,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.rhymthwave.entity.Playlist;
+import com.rhymthwave.entity.UserType;
 
 @Repository
-public interface PlaylistDAO extends JpaRepository<Playlist, Long>{
-	@Query("select o from Playlist o where o.usertype.account = :email")
-	List<Playlist> findMyPlaylist(@Param("email") String email);
+public interface PlaylistDAO extends JpaRepository<Playlist, Long>{	
+	List<Playlist> findByUsertype(UserType usertype);
 }

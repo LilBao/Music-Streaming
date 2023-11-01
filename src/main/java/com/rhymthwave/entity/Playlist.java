@@ -44,10 +44,10 @@ public class Playlist implements Serializable {
 	@Column(name = "ISPUBLIC")
 	private Boolean isPublic = true;
 
-	@Column(name = "STATUS")
-	private String status;
+	@Column(name = "DESCRIPTION")
+	private String description;
 
-	@Column(name = "CREATDATE")
+	@Column(name = "CREATEDATE")
 	@Temporal(TemporalType.DATE)
 	private Date createDate = new Date();
 

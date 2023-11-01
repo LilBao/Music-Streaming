@@ -660,8 +660,9 @@ app.controller('musicCtrl', function ($scope, $http) {
 
     //Move recording to garbage
     $scope.MoveRecordToGarbage = function () {
-        let data = angular.copy($scope.record);
-        data.deleted = true;
+        var data = angular.copy($scope.record);
+        data.isDeleted = true;
+        console.log(data)
         $scope.updateRecord(data);
         $scope.findListRecordArtist();
     }
@@ -671,7 +672,7 @@ app.controller('musicCtrl', function ($scope, $http) {
         var url = host + "/v1/record/" + id;
         $http.get(url).then(resp => {
             let data = resp.data.data;
-            data.deleted = false;
+            data.isDeleted = false;
             $scope.updateRecord(data);
             $scope.getListRecordRemoved();
         }).catch(error => {

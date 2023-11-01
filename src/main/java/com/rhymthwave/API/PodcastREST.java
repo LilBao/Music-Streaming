@@ -64,11 +64,6 @@ public class PodcastREST {
 		return ResponseEntity.ok(new MessageResponse(true, "successs", podcastSer.findMyPodcast(owner)));
 	}
 	
-	@GetMapping("/api/v1/account")
-	public ResponseEntity<MessageResponse> getAccount(){
-		return ResponseEntity.ok(new MessageResponse(true, "successs", crudAccount.findOne("jvke@gmail.com")));
-	}
-
 	@PostMapping(value = "/api/v1/podcast", consumes = { "multipart/form-data" })
 	public ResponseEntity<MessageResponse> createPobcast(@ModelAttribute Podcast podcast, HttpServletRequest req,
 														@PathParam("coverImg") MultipartFile coverImg) {

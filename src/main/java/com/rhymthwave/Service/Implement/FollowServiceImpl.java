@@ -19,18 +19,6 @@ public class FollowServiceImpl implements CRUD<Follow, Long>, FollowService{
 	
 	@Autowired
 	FollowDAO dao;
-	
-	@Override
-	public Follow snapFollow(Follow follow,Author accountA, Author accountB) {
-		follow.setAuthorsAccountA(accountA);
-		follow.setAuthorsAccountB(accountB);
-		return follow;
-	}
-	
-	@Override
-	public Follow findFollowByAccount(Author accountA, Author accountB) {
-		return dao.findFollowByAccount(accountA, accountB);
-	}
 
 	@Override
 	@Transactional
@@ -66,4 +54,22 @@ public class FollowServiceImpl implements CRUD<Follow, Long>, FollowService{
 		return null;
 	}
 	
+	@Override
+	public Follow snapFollow(Follow follow,Author accountA, Author accountB) {
+		follow.setAuthorsAccountA(accountA);
+		follow.setAuthorsAccountB(accountB);
+		return follow;
+	}
+	
+	@Override
+	public Follow findFollowByAccount(Author accountA, Author accountB) {
+		return dao.findFollowByAccount(accountA, accountB);
+	}
+	
+	
+
+	@Override
+	public List<Follow> findMyListFollow(Author accountA) {
+		return dao.findByAuthorsAccountA(accountA);
+	}
 }

@@ -25,11 +25,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
     <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" href="../../static/css/toasts.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
+
     <script src="../../static/js/angularjs/user/index.js"></script>
 </head>
 
@@ -54,7 +55,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card card-content shadow">
+                    <div class="card card-content shadow ">
                         <div class="card-body">
                             <div class="table-responsive">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -65,7 +66,7 @@
                                             <i class="bi bi-plus-circle"></i>
                                         </button>
                                         <ul class="dropdown-menu drop-playlist ">
-                                            <li><a class="dropdown-item" href="#"><i
+                                            <li><a class="dropdown-item" id="create-playlist"><i
                                                         class="bi bi-music-note-beamed"></i> Create a new Playlist</a>
                                             </li>
                                             <li><a class="dropdown-item" href="#"><i class="bi bi-folder2-open"></i>
@@ -74,41 +75,23 @@
                                     </div>
                                 </div>
                                 <div class="playlist">
-                                    <li>
-                                        <a class="list-group-item playlist-child py-3 m-2" th:href="@{|/admin-coupon|}">
-                                            <i class="mx-2 bi bi-ticket-perforated-fill"></i> Voucher
-                                        </a>
+                                    <li ng-repeat="item in listFollow">
+                                        <div class="d-flex align-items-center">
+                                            <img class="m-2 rounded-2 thumbnail-playlist" src="{{item.authorsAccountB.account.image !==null ? 'item.authorsAccountB.account.image':'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}" alt="">
+                                            <div>
+                                                <p class="p-0 m-0">{{item.authorsAccountB.role.role === 'PODCAST' ? item.authorsAccountB.account.username : item.authorsAccountB.account.artist.artistName}}</p>
+                                                <span>{{item.authorsAccountB.role.role}}</span>
+                                            </div>
+                                        </div>
                                     </li>
-                                    <li>
-                                        <a class="list-group-item playlist-child py-3 m-2" th:href="@{|/admin-orders|}">
-                                            <i class="mx-2 bi bi-bag-heart-fill"></i> Order
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="list-group-item playlist-child py-3 m-2"
-                                            th:href="@{|/admin-statistic|}">
-                                            <i class="mx-2 bi bi-bar-chart-line-fill"></i> Statistics
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="list-group-item playlist-child py-3 m-2" th:href="@{|/admin-coupon|}">
-                                            <i class="mx-2 bi bi-ticket-perforated-fill"></i> Voucher
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="list-group-item playlist-child py-3 m-2" th:href="@{|/admin-coupon|}">
-                                            <i class="mx-2 bi bi-ticket-perforated-fill"></i> Voucher
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="list-group-item playlist-child py-3 m-2" th:href="@{|/admin-coupon|}">
-                                            <i class="mx-2 bi bi-ticket-perforated-fill"></i> Voucher
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="list-group-item playlist-child py-3 m-2" th:href="@{|/admin-coupon|}">
-                                            <i class="mx-2 bi bi-ticket-perforated-fill"></i> Voucher
-                                        </a>
+                                    <li ng-repeat="item in listPlaylist">
+                                        <div class="d-flex align-items-center">
+                                            <img class="m-2 rounded-2 thumbnail-playlist" src="{{item.image !==null ? 'item.image.url':'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}" alt="">
+                                            <div>
+                                                <p class="p-0 m-0">{{item.playlistName}}</p>
+                                                <span>{{item.quantity}}</span>
+                                            </div>
+                                        </div>
                                     </li>
                                 </div>
                             </div>
@@ -177,13 +160,12 @@
 
                     <button id="loop" class="btn border-0 py-0 button-control-music"><i
                             class="bi bi-repeat"></i></button>
-                    <!-- <i class="bi bi-repeat-1"></i> -->
                 </div>
                 <div class="time-line w-100 d-flex align-items-center flex-fill">
                     <span style="font-size: x-small;" id="current-time">00:00</span>
                     <input id="duration-audio" class="duration-bar w-100" type="range" min="0" step="0.1" name="" id="">
                     <audio id="audio"
-                        src="https://res.cloudinary.com/div9ldpou/video/upload/v1698121884/Records/MCK/Nghe%20nh%C6%B0%20t%C3%ACnh%20y%C3%AAu%20-%20MCK%20remixx%20prod.%20By%20Kewtiie.mp3.mp3"></audio>                    
+                        src="https://res.cloudinary.com/div9ldpou/video/upload/v1698121884/Records/MCK/Nghe%20nh%C6%B0%20t%C3%ACnh%20y%C3%AAu%20-%20MCK%20remixx%20prod.%20By%20Kewtiie.mp3.mp3"></audio>
                     <div class="line-first"></div>
                     <div class="line-current"></div>
                     <div class="circle"></div>
@@ -194,13 +176,13 @@
                 <div class="d-flex align-items-center">
                     <button class="btn text-white" data-bs-toggle="modal" data-bs-target="#MV">MV</button>
                     <button id="download" class="btn button-control"><i class="bi bi-download"></i></button>
-                    <a href="#!queue"  class="btn button-control"><i class="bi bi-hdd-stack"></i></a>
+                    <a href="#!queue" class="btn button-control"><i class="bi bi-hdd-stack"></i></a>
                     <a href="#!karaoke" id="karaoke" class="btn button-control"><i class="bi bi-mic"></i></a>
 
                     <button id="mute" class="btn button-control"><i id="icon-mute" class="bi bi-volume-up"></i></button>
                     <input id="volumeAudio" class="" type="range" min="0" max="1" step="0.1" name="" id="">
                 </div>
-                
+
             </div>
         </div>
     </footer>
@@ -233,6 +215,9 @@
             </div>
         </div>
     </div>
+    <script src="../../static/js/Utiliez/CookiesUtil.js"></script>
+    <script src="../../static/js/jscustom/UI-Js-Admin/bootstrap-show-notification.js"></script>
+    <script src="../../static/js/jscustom/toasts.js"></script>
     <script src="../../static/js/angularjs/user/myCtrl.js"></script>
     <script src="../../static/js/angularjs/user/Karaoke.js"></script>
     <script src="../../static/js/angularjs/user/Queue.js"></script>
