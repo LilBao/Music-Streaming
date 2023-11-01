@@ -215,9 +215,6 @@ CREATE TABLE NEWS (
 	FOREIGN KEY (IMAGE) REFERENCES IMAGES(ACCESSID) ON DELETE NO ACTION,
 );
 
-alter table news drop column CONTENT 
-alter table news add  CONTENT ntext ;
-ALTER TABLE news  ALTER COLUMN 
  
 
 CREATE TABLE TAGS (
@@ -652,9 +649,8 @@ VALUES
 ('PODCAST');
 
 INSERT INTO  IMAGES 
-	VALUES ('Avatar/System/807831_rrsd2v.png','https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png','https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png',512,512)
-<<<<<<< HEAD
-=======
+	VALUES ('Avatar/System/807831_rrsd2v.png',512,'https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png','https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png',512)
+
 
 
 INSERT INTO ACCOUNTS(EMAIL,PASSWORD,USENAME,BIRTHDAY,GENDER,COUNTRY,ISVERIFY,IMAGEID) 
@@ -726,4 +722,4 @@ BEGIN
 END
 
 exec sp_filter  12
->>>>>>> c204dabebfa349c2154e3333055aecabbfd59ffe
+

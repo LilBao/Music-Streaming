@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.annotations.Nationalized;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -34,7 +36,7 @@ public class Artist implements Serializable {
 	@Column(name = "ARTISTID")
 	private long artistId;
 
-	@Column(name = "ARTISTNAME")
+	@Column(name = "ARTISTNAME",columnDefinition = "nvarchar")
 	private String artistName;
 
 	@Column(name = "DATEOFBIRTH")

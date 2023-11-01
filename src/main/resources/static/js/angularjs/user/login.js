@@ -36,7 +36,7 @@ app.controller('loginCtrl', function ($scope, $http) {
 
 
   })
-})
+
 
 function showCaptchaDialog(event) {
   event.preventDefault(); // Prevent form submission

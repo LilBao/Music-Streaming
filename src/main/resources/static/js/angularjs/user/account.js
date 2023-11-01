@@ -1,23 +1,18 @@
-var app = angular.module('myApp',[]);
-var host = "http://localhost:8080/api";
-app.controller('accountCtrl',function($scope,$http){   
-    $scope.email = ""; // Khai báo một biến để lưu email
-
-    $scope.AccountByEmail = function () {
-        var email = $scope.email;
-
-        // Gửi yêu cầu GET đến API Spring Boot
-        $http.get(host + '/' + email)
-            .then(function (response) {
-                // Xử lý dữ liệu trả về từ API ở đây
-                $scope.account = response.data;
-                console.log("Dữ liệu nhận được:", $scope.account);
-                // Hiển thị thông tin tài khoản hoặc thông báo lỗi
-            })
-            .catch(function (error) {
-                // Xử lý khi có lỗi trong quá trình gửi yêu cầu
-                console.log("Có lỗi xảy ra trong quá trình gửi yêu cầu.");
-                // Hiển thị thông báo lỗi cho người dùng
-            });
-    };
- });
+var app = angular.module('myApp', ['ngCookies']);
+app.controller('accountCtrl', function($scope, $cookies) {
+    // Kiểm tra xem cookie có tồn tại hay không
+    if ($cookies.get('userInfo')) {
+      // Lấy thông tin từ cookie
+      var userInfo = JSON.parse($cookies.get('userInfo'));
+  
+      // Gán thông tin từ cookie vào biến $scope để hiển thị trên giao diện
+      $scope.username = userInfo.username;
+      $scope.email = userInfo.email;
+      // Các thông tin khác tương tự
+  
+      // Các tác vụ khác bạn muốn thực hiện với thông tin tài khoản
+    } else {
+      // Xử lý trường hợp cookie không tồn tại hoặc không có thông tin tài khoản
+      console.log('Không có thông tin tài khoản trong cookie.');
+    }
+  });

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.rhymthwave.DTO.MessageResponse;
 import com.rhymthwave.Service.Implement.AccountServiceImpl;
 import com.rhymthwave.entity.Account;
 
@@ -22,14 +23,4 @@ public class AccountREST {
 	@Autowired
 	private AccountServiceImpl accountService;
 	
-	
-	@GetMapping("/{email}")
-    public ResponseEntity<Account> getAccountByEmail(@PathVariable  String email) {
-        Account acc = accountService.findOne(email);
-        if (acc != null) {
-            return ResponseEntity.ok(acc);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
 }
