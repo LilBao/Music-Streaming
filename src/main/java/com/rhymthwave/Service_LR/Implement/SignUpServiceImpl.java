@@ -1,8 +1,6 @@
 package com.rhymthwave.Service_LR.Implement;
 
-import java.util.Calendar;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +18,9 @@ import com.rhymthwave.Service_LR.ISignUpService;
 import com.rhymthwave.entity.Account;
 import com.rhymthwave.entity.Author;
 import com.rhymthwave.entity.Role;
+import com.rhymthwave.entity.UserType;
 import com.rhymthwave.entity.TypeEnum.EROLE;
+import com.rhymthwave.entity.TypeEnum.EUserType;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,6 +30,7 @@ public class SignUpServiceImpl implements ISignUpService {
 
 	private final AccountDAO dao;
 
+	
 	private final RoleDAO roleDAO;
 	
 	@Autowired
@@ -37,7 +38,7 @@ public class SignUpServiceImpl implements ISignUpService {
 
 	@Autowired
 	private AuthorDAO authorDAO;
-	
+
 //	@Autowired
 //	private VerificationTokenRepository tokenRepository;
 
