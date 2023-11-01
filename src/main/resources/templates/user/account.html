@@ -16,12 +16,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../../static/css/accountcss.css">
-    <script src="../../static/js/angularjs/user/account.js"></script>
 </head>
 
 <body>
 
-</body ng-app="myApp" ng-controller="accountCtrl">
+</body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark-custom">
     <div class="container">
         <a class="navbar-brand" href="#">
@@ -79,7 +78,7 @@
 
         <div class="account mt-5">
             <div class="title ms-3 mt-3">
-                <h4>Account </h4>
+                <h4>Account</h4>
             </div>
 
             <div class="list-chose" data-page="page-0">
@@ -213,21 +212,21 @@
     <div class="container edit-profile mt-5 mb-5">
         <button class="btn-back" onclick="goBack()"><i class="bi bi-chevron-left"></i></button>
         <h1 class="text-chose mt-5 mb-5">Edit profile</h1>
-        <form ng-submit="AccountByEmail()" >
+        <form>
             <div class="mb-3">
                 <label class="form-label">Username</label>
-                <input class="form-control" id="username" ng-model="account.username">
+                <input class="form-control" id="username">
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" ng-model="account.email">
+                <input type="email" class="form-control" id="email">
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" ng-model="account.password">
+                <input type="password" class="form-control" id="password">
             </div>
             <div class="mb-3">
-                <label for="gender" class="form-label" >Gender</label>
+                <label for="gender" class="form-label">Gender</label>
                 <select class="form-select" id="gender">
                     <option value="nam">Male</option>
                     <option value="nu">Female</option>
@@ -235,11 +234,11 @@
             </div>
             <div class="mb-3">
                 <label for="birthdate" class="form-label">Date of birth</label>
-                <input type="date" class="form-control" id="birthdate" ng-model="account.birthdate">
+                <input type="date" class="form-control" id="birthdate">
             </div>
             <div class="mb-3">
                 <label for="country" class="form-label">Country or region</label>
-                <input type="text" class="form-control" id="country" placeholder="Nhập quốc gia" ng-model="account.country">
+                <input type="text" class="form-control" id="country" placeholder="Nhập quốc gia">
             </div>
 
             <button type="submit" class="btn btn-outline-dark ms-3" style="color: white;">Save profile</button>

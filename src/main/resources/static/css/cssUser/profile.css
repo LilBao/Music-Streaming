@@ -17,15 +17,9 @@ body {
     /* Điều chỉnh khoảng cách bên trong in4-card */
     top: 60%;
     /* Đưa in4-card lên giữa theo chiều dọc */
-<<<<<<< HEAD
     left: 0%;
     /* Điều chỉnh khoảng cách bên trái in4-card */
     transform: translateY(-20%);
-=======
-    left: 40px;
-    /* Điều chỉnh khoảng cách bên trái in4-card */
-    transform: translateY(-50%);
->>>>>>> 6c92e74f14778147251c0bdcb4dea561310bc6da
     /* Dịch in4-card lên trên để căn giữa */
 }
 
@@ -39,11 +33,7 @@ body {
 }
 
 .in4-text {
-<<<<<<< HEAD
     margin-left: 20px;
-=======
-    margin-left: 50px;
->>>>>>> 6c92e74f14778147251c0bdcb4dea561310bc6da
     /* Điều chỉnh khoảng cách từ hình ảnh đến văn bản bên phải */
     align-items: center;
     color: white;

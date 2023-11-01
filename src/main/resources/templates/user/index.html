@@ -14,7 +14,6 @@
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-<<<<<<< HEAD
     <link rel="stylesheet" href="../../static/css/style.css">
     <link rel="stylesheet" href="../../static/css/search-detail.css" />
 
@@ -32,16 +31,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-=======
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="../../static/css/style.css">
->>>>>>> 6c92e74f14778147251c0bdcb4dea561310bc6da
     <script src="../../static/js/angularjs/user/index.js"></script>
 </head>
 
-<body ng-app="myApp">
+<body ng-app="myApp" ng-controller="myCtrl">
     <div class="content d-flex">
         <div class="sidebar container-fluid">
             <div class="row">
@@ -68,7 +61,8 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h5>Your Library</h5>
                                     <div class="dropdown">
-                                        <button type="button" class="btn button-control" data-bs-toggle="dropdown">
+                                        <button type="button " class="btn border-0 button-control"
+                                            data-bs-toggle="dropdown">
                                             <i class="bi bi-plus-circle"></i>
                                         </button>
                                         <ul class="dropdown-menu drop-playlist ">
@@ -107,7 +101,7 @@
             </div>
         </div>
         <main class="bl-body p-1" ng-view>
-            
+
         </main>
     </div>
     <footer class="player-controls col-12 fixed-bottom">
@@ -130,7 +124,7 @@
                                     title="Thêm vào yêu thích!"><i class="bi bi-heart"></i></button></span>
                         </div>
                         <div class="level-item d-none d-md-block">
-                            
+
                             <div class="dropdown">
                                 <button type="button" class="btn button-control" data-bs-toggle="dropdown">
                                     <i class="bi bi-three-dots"></i>
@@ -151,13 +145,18 @@
                     <button class="btn border-0 py-0 shuffle button-control-music" data-bs-hover="tooltip"
                         title="Bật phát ngẫu nhiên!"><i class="bi bi-shuffle"></i></button>
 
-                    <button class="btn border-0 py-0 prev button-control-music"><i class="bi bi-skip-start-circle"></i></button>
+                    <button class="btn border-0 py-0 prev button-control-music"><i
+                            class="bi bi-skip-start-circle"></i></button>
 
-                    <button class="btn border-0 py-0 resume button-control-music-play"><i class="bi bi-play-circle"></i></button>
-                    <!-- <i class="bi bi-pause-circle"></i> -->
+                    <button id="play" class="btn border-0 py-0 button-control-music-play">
+                        <i class="bi bi-play-circle"></i>
+                    </button>
+                    <button id="resume" hidden class="btn border-0 py-0 button-control-music-play">
+                        <i class="bi bi-pause-circle"></i>
+                    </button>
 
-                    <button class="btn border-0 py-0 next button-control-music"><i class="bi bi-skip-end-circle"></i></button>
-
+                    <button class="btn border-0 py-0 next button-control-music"><i
+                            class="bi bi-skip-end-circle"></i></button>
 
                     <button id="loop" class="btn border-0 py-0 button-control-music"><i
                             class="bi bi-repeat"></i></button>
@@ -170,10 +169,9 @@
                     <div class="line-first"></div>
                     <div class="line-current"></div>
                     <div class="circle"></div>
-                    <span class="duration">duration</span>
+                    <span style="font-size: x-small;" id="total-time">duration</span>
                 </div>
             </div>
-
             <div class="col-md-3 d-none d-md-block player-controls-right ">
                 <div class="d-flex align-items-center">
                     <button class="btn text-white" data-bs-toggle="modal" data-bs-target="#MV">MV</button>
@@ -184,6 +182,7 @@
                     <button id="mute" class="btn button-control"><i id="icon-mute" class="bi bi-volume-up"></i></button>
                     <input id="volumeAudio" class="" type="range" min="0" max="1" step="0.1" name="" id="">
                 </div>
+
             </div>
         </div>
     </footer>
@@ -205,17 +204,17 @@
     <!-- Modal trình chiếu MV -->
     <div class="modal fade" id="MV">
         <div class="popup modal-dialog">
-            <div class="popup-message  modal-content"  style="background-color: transparent;">
+            <div class="popup-message  modal-content" style="background-color: transparent;">
                 <div class="modal-body p-0">
-                    <iframe class="w-100" height="600" src="https://www.youtube.com/embed/U0Vr1zotKIo?si=1psE6T1thDFwY7vY"
-                        title="YouTube video player" frameborder="0"
+                    <iframe class="w-100" height="600"
+                        src="https://www.youtube.com/embed/U0Vr1zotKIo?si=1psE6T1thDFwY7vY" title="YouTube video player"
+                        frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowfullscreen></iframe>
                 </div>
             </div>
         </div>
     </div>
-
     <script src="../../static/js/Utiliez/CookiesUtil.js"></script>
     <script src="../../static/js/jscustom/UI-Js-Admin/bootstrap-show-notification.js"></script>
     <script src="../../static/js/jscustom/toasts.js"></script>
@@ -223,7 +222,6 @@
     <script src="../../static/js/angularjs/user/Karaoke.js"></script>
     <script src="../../static/js/angularjs/user/Queue.js"></script>
     <script src="../../static/js/angularjs/user/search.js"></script>
-
 </body>
 
 </html>

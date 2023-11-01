@@ -92,7 +92,7 @@ app.controller("moodController", function ($scope, $http, $cookies, $log, $timeo
     }
 
 
-	$scope.update = function () {
+	$scope.update = function (key) {
 		var item = angular.copy($scope.form);
 		var url = apiMood + `/${$scope.form.moodid}`;
 		$http.put(url, item, {
@@ -104,9 +104,7 @@ app.controller("moodController", function ($scope, $http, $cookies, $log, $timeo
 			$scope.items[index] = resp.data;
 			$scope.load_all();
 			$scope.reset();
-			showStickyNotification("successful", "success", 2000);
 		}).catch(error => {
-			showStickyNotification("Fail", "danger", 2000);
 			$log.error(error.data);
 		});
 	}
