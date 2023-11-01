@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,6 +48,11 @@ public class PodcastREST {
 
 	private final GetHostByRequest host;
 
+	@GetMapping("/api/v1/podcast/{id}")
+	public ResponseEntity<MessageResponse> findPobcast(@PathVariable("id") Long id) {
+		return ResponseEntity.ok(new MessageResponse(true, "successs", crudPobcast.findOne(id)));
+	}
+	
 	@GetMapping("/api/v1/podcast")
 	public ResponseEntity<MessageResponse> findAllPobcast() {
 		return ResponseEntity.ok(new MessageResponse(true, "successs", crudPobcast.findAll()));
@@ -56,6 +62,11 @@ public class PodcastREST {
 	public ResponseEntity<MessageResponse> findMyPobcast(HttpServletRequest req) {
 		String owner = host.getEmailByRequest(req);
 		return ResponseEntity.ok(new MessageResponse(true, "successs", podcastSer.findMyPodcast(owner)));
+	}
+	
+	@GetMapping("/api/v1/account")
+	public ResponseEntity<MessageResponse> getAccount(){
+		return ResponseEntity.ok(new MessageResponse(true, "successs", crudAccount.findOne("jvke@gmail.com")));
 	}
 
 	@PostMapping(value = "/api/v1/podcast", consumes = { "multipart/form-data" })
@@ -68,11 +79,12 @@ public class PodcastREST {
 			Image image = imageSer.getEntity(respImage);
 			podcast.setImage(crudImage.create(image));
 		}
+		podcast.setAuthorName(account.getUsername());
 		podcast.setAccount(account);
 		return ResponseEntity.ok(new MessageResponse(true, "successs", crudPobcast.create(podcast)));
 	}
 
-	@PutMapping(value="/api/v1/podcast",consumes = { "multipart/form-data" })
+	@PutMapping(value="/api/v1/podcast")
 	public ResponseEntity<MessageResponse> updateImage(@RequestBody Podcast podcast){
 		return ResponseEntity.ok(new MessageResponse(true, "successs", crudPobcast.update(podcast)));
 	}
@@ -90,5 +102,11 @@ public class PodcastREST {
 		}
 		return ResponseEntity.ok(new MessageResponse(true, "successs", crudPobcast.update(podcast)));
 	}
-
+	
+	@DeleteMapping(value="/api/v1/podcast/{id}")
+	public ResponseEntity<MessageResponse> deletePodcast(@PathVariable("id") Long id){
+		Podcast podcast = crudPobcast.findOne(id);
+		cloudinarySer.deleteFile(podcast.getImage().getPublicId());
+		return ResponseEntity.ok(new MessageResponse(true, "successs", crudPobcast.delete(id)));
+	}
 }

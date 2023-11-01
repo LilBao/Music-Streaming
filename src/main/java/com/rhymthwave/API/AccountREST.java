@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rhymthwave.Service.Implement.AccountServiceImpl;
 import com.rhymthwave.entity.Account;
 
+import lombok.RequiredArgsConstructor;
+
 
 @RestController
 @CrossOrigin("*")

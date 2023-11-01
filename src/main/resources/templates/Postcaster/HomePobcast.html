@@ -44,20 +44,22 @@
                 <a class="float-end text-black">Show more</a>
             </div>
             <div class="col-5">
-                <h6>Latest episode</h6>
-                <div class="shadow-sm p-4 d-flex flex-row justify-content-around bg-white card">
-                    <div>
-                        <p>Plays</p>
-                        <h4>105</h4>
-                        <span>Name of the episode here</span>
+                <div ng-if="episodeLatest !==null" >
+                    <h6>Latest episode</h6>
+                    <div class="shadow-sm p-4 d-flex flex-row justify-content-around bg-white card">
+                        <div>
+                            <p>Plays</p>
+                            <h4>105</h4>
+                            <span>{{episodeLatest.episodeTitle}}</span>
+                        </div>
+                        <div>
+                            <img class="image-small rounded-2"
+                                src="{{episodeLatest.image.url}}"
+                                alt="">
+                        </div>
                     </div>
-                    <div>
-                        <img class="image-small"
-                            src="https://media.istockphoto.com/id/1222357475/vi/vec-to/bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-xem-tr%C6%B0%E1%BB%9Bc-h%C3%ACnh-%E1%BA%A3nh-gi%E1%BB%AF-ch%E1%BB%97-h%C3%ACnh-%E1%BA%A3nh-cho-trang-web-ho%E1%BA%B7c-thi%E1%BA%BFt-k%E1%BA%BF-ui-ux-minh-h%E1%BB%8Da.jpg?s=612x612&w=0&k=20&c=85Mb60buhPvbdQd2CaKEXn6YJyhKqd_QZ0nIh_2OtqM="
-                            alt="">
-                    </div>
+                    <a class="float-end text-black">Show more</a>
                 </div>
-                <a class="float-end text-black">Show more</a>
             </div>
         </div>
         <div class="row mt-5">

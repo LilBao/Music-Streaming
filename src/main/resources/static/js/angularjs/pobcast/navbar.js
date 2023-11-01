@@ -13,12 +13,11 @@ app.controller('navbarController',function($scope,$http){
         })
     }
 
-    $scope.swtitchPodcast = function(){
-        let url = host + "/v1/my-podcast";
-        $http.get(url,{
-            headers: { 'Authorization': 'Bearer ' + getCookie('token') }
-        }).then(resp => {
-            $scope.listPodcast = resp.data.data;
+    $scope.swtitchPodcast = function(id){
+        let url = host + "/v1/podcast/"+id;
+        $http.get(url).then(resp => {
+            localStorage.setItem('podcast',JSON.parse(resp.data.data));
+            window.location.href = "./PodcastControl.html#!/home" 
         }).catch(error =>{
             console.log(error);
         })

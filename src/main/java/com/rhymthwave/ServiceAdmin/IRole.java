@@ -7,4 +7,6 @@ import com.rhymthwave.entity.Role;
 public interface IRole {
 
 	List<Role> findAllRole();
+	
+	List<Role> findAllByRoleNotIn();
 }

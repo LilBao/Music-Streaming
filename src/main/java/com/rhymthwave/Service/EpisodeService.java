@@ -9,5 +9,7 @@ import com.rhymthwave.entity.Image;
 public interface EpisodeService{
 	Episode snapEpisode(Episode episode,Map<?,?> recordAudio, Image coverImg);
 	
-	List<Episode> findAllEpisodeByPodcast(Long podcastId);
+	List<Episode> findAllEpisodeByPodcast(Long podcastId, Boolean status);
+	
+	Episode findLatestEpisodeByPodcast(Long podcastId);
 }
