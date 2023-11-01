@@ -8,7 +8,10 @@ import com.rhymthwave.entity.TypeEnum.EROLE;
 
 public interface IAccountServiceAdmin {
 
-	Page<Account> findAllAccount(Integer page,  String sortBy, String sortField, EROLE role);
+	Page<Account> findAllAccountByRole(Integer page,  String sortBy, String sortField, EROLE role);
+
+	Account findById(String idUser);
+
 	
 	
 }

@@ -3,8 +3,6 @@ var host = "http://localhost:8080/api";
 
 app.controller('changepasswordCtrl', function ($scope, $http) {
     $scope.changeRequest = {};
-    $scope.successMessage = '';
-    $scope.errorMessage = '';
 
     $scope.changePassword = function () {
         var url = host + "/v1/accounts/changepassword";

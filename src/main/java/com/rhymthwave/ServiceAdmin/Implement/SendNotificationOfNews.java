@@ -47,5 +47,6 @@ public class SendNotificationOfNews implements INotification<NewDTO> {
 			log.info(">>>>>>>>> Email dang hoat dong");
 			mailService.enqueue(email);
 		}
+
 	}
 }

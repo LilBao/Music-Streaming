@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.annotations.Nationalized;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -49,13 +51,13 @@ public class Artist implements Serializable {
 	@Column(name = "BIO")
 	private String bio;
 
-	@Column(name = "IMAGEGALLERY")
+	@Column(name = "IMAGEGALLERY",columnDefinition = "nvarchar")
 	private String[] imagesGallery;
 	
-	@Column(name = "PUBLICIDIMAGEGALLERY")
+	@Column(name = "PUBLICIDIMAGEGALLERY",columnDefinition = "nvarchar")
 	private String[] publicIdImageGallery;
 
-	@Column(name = "SOCIALMEDIALINKS")
+	@Column(name = "SOCIALMEDIALINKS",columnDefinition = "nvarchar")
 	private String[] socialMediaLinks;
 
 	@Column(name = "ACTIVE")

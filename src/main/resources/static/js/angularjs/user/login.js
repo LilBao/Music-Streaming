@@ -1,5 +1,6 @@
 var app = angular.module('myApp', []);
 var host = "http://localhost:8080/api";
+
 app.controller('loginCtrl', function ($scope, $http) {
   $scope.loginRequest = {};
   $('#login').click(function () {
@@ -22,9 +23,12 @@ app.controller('loginCtrl', function ($scope, $http) {
       showStickyNotification('Login fail', 'danger', 3000);
     });
 
+  })
+
 
   })
-})
+
+
 function showCaptchaDialog(event) {
   event.preventDefault(); // Prevent form submission
 

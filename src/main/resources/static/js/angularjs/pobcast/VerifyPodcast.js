@@ -4,13 +4,6 @@ app.controller('verifyCtrl', function ($scope, $http) {
     $scope.listTag = [];
     $scope.listCountries = [];
     $scope.podcast = {};
-    $scope.account={};
-
-    $http.get(host+"/v1/confirm-account-artist",{
-        headers: { 'Authorization': 'Bearer ' + getCookie('token') }
-    }).then(resp => {
-        $scope.account = resp.data.data;
-    })
 
     $scope.findListTag = function () {
         let url = host + "/v1/tag";
@@ -31,7 +24,7 @@ app.controller('verifyCtrl', function ($scope, $http) {
     }
 
     $scope.sendMailConfirm = function () {
-        let url = host + "/v1/email-confirm-podcast"
+        let url = host + "/v1/email-confirm-podcast";
         $http.post(url, {
             headers: {
                 'Authorization': 'Bearer ' + getCookie('token')

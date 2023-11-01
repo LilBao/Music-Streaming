@@ -32,10 +32,17 @@ public class API_MangerAccount {
 			@RequestParam(value = "sortfield", required = false, defaultValue = "email") String sortField,
 			@RequestParam(value = "role", required = false, defaultValue = "USER") EROLE role) {
 
-		Page<Account> pages = accountServiceAdmin.findAllAccount(page, sortBy, sortField,role);
+		
+		Page<Account> pages = accountServiceAdmin.findAllAccountByRole(page, sortBy, sortField,role);
 		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", pages));
 	}
-
+	
+	@GetMapping("/{idUser}")
+	public ResponseEntity<?> getOneUser(@PathVariable("idUser") String idUser) {
+		Account account = accountServiceAdmin.findById(idUser);
+		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", account));
+	}
+	
 
 
 }

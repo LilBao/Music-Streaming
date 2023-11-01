@@ -14,4 +14,8 @@ public interface NewService {
 	News updateNews(Integer idNews, NewDTO newDTO, HttpServletRequest request);
 	
 	List<String> getAllstorageForImage();
+	
+	List<Integer> getAllYear();
+	
+	List<News> findNewsByYearAndMonth(Integer year, Integer  month);
 }

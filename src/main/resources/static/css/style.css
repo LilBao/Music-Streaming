@@ -5,7 +5,6 @@ body {
     overflow-y: hidden !important;
     overflow-x: hidden !important;
     background-color: rgb(23, 15, 35);
-    /* background: rgba(0, 0, 0, 0.9); */
 }
 #line-chart {
     min-height: 500px;
@@ -36,7 +35,7 @@ body {
     border-radius: 20px;
 }
 .content {
-    min-height: 88vh;
+    min-height: 90vh;
     position: relative;
 }
 
@@ -491,12 +490,4 @@ footer {
     height: 90px;
     background-color: #121212;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-li {
-    list-style: none; 
-}
-
-.line-lyrics:hover{
-    color: red;
 }

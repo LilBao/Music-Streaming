@@ -29,7 +29,7 @@ public class API_Role {
 	@GetMapping()
 	public ResponseEntity<?> getAllRole() {
 
-		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", iRole.findAllRole()));
+		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", iRole.findAllByRoleNotIn()));
 	}
 	
 

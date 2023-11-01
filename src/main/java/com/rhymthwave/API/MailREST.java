@@ -1,11 +1,9 @@
 package com.rhymthwave.API;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rhymthwave.DTO.MessageResponse;
 import com.rhymthwave.Service.EmailService;
 import com.rhymthwave.Utilities.GetHostByRequest;
 import com.rhymthwave.Utilities.SendMailTemplateService;
@@ -26,26 +24,23 @@ public class MailREST {
 	private final GetHostByRequest host;
 	
 	@PostMapping("/api/v1/email-confirm-podcast")
-	public ResponseEntity<MessageResponse> sendMail(HttpServletRequest req) {
+	public void sendMail(HttpServletRequest req) {
 		String owner = host.getEmailByRequest(req);
 		Email mail = new Email();
-		mail.setFrom("lilbaozxje@gmail.com");
 		mail.setTo(owner);
 		mail.setSubject("RTHYMEWAVE: CONFIRM YOUR EMAIL");
-		mail.setBody(sendMailTemplateSer.getContentForConfirm(owner, "templateMail", "podcast", applicationUrl(req,"/confirm-email-podcaster/"+owner)));
+		mail.setBody(sendMailTemplateSer.getContentForConfirm(owner, "templateMail", "podcast", applicationUrl(req,"/confirm-email-podcaster")));
 		mailService.enqueue(mail);
-		return ResponseEntity.ok(new MessageResponse(true, "succeess", mail));
 	}
 	
 	@PostMapping("/api/v1/email-request-artist")
-	public ResponseEntity<MessageResponse> sendMailRequestArtist(HttpServletRequest req) {
+	public void sendMailRequestArtist(HttpServletRequest req) {
 		String owner = host.getEmailByRequest(req);
 		Email mail = new Email();
 		mail.setTo(owner);
 		mail.setSubject("RTHYMEWAVE: CONFIRM YOUR REQUEST");
 		mail.setBody(sendMailTemplateSer.getContentForConfirm(owner, "templateMail", "podcast", applicationUrl(req,"/request-email-artist")));
 		mailService.enqueue(mail);
-		return ResponseEntity.ok(new MessageResponse(true, "succeess", mail));
 	}
 	
 	private String applicationUrl(HttpServletRequest request, String path) {

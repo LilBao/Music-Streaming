@@ -33,16 +33,16 @@ public class Playlist implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "PLAYLISTID")
-	private Long playlistId;
+	private long playlistId;
 
 	@Column(name = "PLAYLISTNAME")
 	private String playlistName;
 
 	@Column(name = "QUANTITY")
-	private Integer quantity;
+	private int quantity;
 
 	@Column(name = "ISPUBLIC")
-	private Boolean isPublic = true;
+	private boolean isPublic;
 
 	@Column(name = "DESCRIPTION")
 	private String description;
@@ -50,6 +50,7 @@ public class Playlist implements Serializable {
 	@Column(name = "CREATEDATE")
 	@Temporal(TemporalType.DATE)
 	private Date createDate = new Date();
+
 
 	@ManyToOne
 	@JoinColumn(name = "USERTYPEID")
