@@ -22,10 +22,6 @@
                 <button class="tab-button-p nav-link" id="click-tab-5" role="tab"
                     onclick="openTabProfile(event, 'tab5-p')">Garbage</button>
             </li>
-            <li class="nav-item me-3 pb-3">
-                <button class="tab-button-p nav-link" id="click-tab-5" role="tab"
-                    onclick="openTabProfile(event, 'tab6-p')">Generate lyrics</button>
-            </li>
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-p tab-pane active " id="tab1-p">
@@ -86,6 +82,7 @@
                                             </li>
                                             <li><a ng-show="item.song ==null" ng-click="changeTab()"
                                                     class="dropdown-item">Pitch</a></li>
+                                            <li><a class="dropdown-item">Link 3</a></li>
                                         </ul>
                                     </div>
                                 </td>
@@ -109,8 +106,8 @@
                         </ul>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-3" id="album-release">
+                <div class="d-flex">
+                    <div id="album-release">
                         <div ng-repeat="item in listAlbumReleased">
                             <a type="button" ng-click="detail(item.albumId,'album')" data-bs-toggle="modal"
                                 data-bs-target="#detail">
@@ -129,8 +126,8 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-3" id="song-release" ng-repeat="item in listSongReleased">
-                        <div>
+                    <div id="song-release" class="d-flex">
+                        <div ng-repeat="item in listSongReleased">
                             <a type="button" ng-click="detail(item.songId,'song')" data-bs-toggle="modal"
                                 data-bs-target="#detail">
                                 <div class="card mx-4 my-2" style="width:250px">
@@ -445,21 +442,6 @@
                     </table>
                 </div>
             </div>
-            <div class="tab-p tab-pane" id="tab6-p">
-                <div class="row">
-                    <div class="col-5">
-                        <textarea class="w-100" name="" id="lyricsContainer" rows="20"></textarea>
-                    </div>
-                    <div class="col-7">
-                        <audio class="w-100" controls id="audio-lyrics" src=""></audio>
-                        <div class="d-flex justify-content-between">
-                            <input type="file" id="fileAudio">
-                            <button class="btn btn-primary rounded-pill" id="btn-generate">Generate</button>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
     <!-- The Modal -->
@@ -648,5 +630,4 @@
             </div>
         </div>
     </div>
-   
 </body>

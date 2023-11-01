@@ -1,5 +1,6 @@
+var app = angular.module('myApp',[]);
 var host = "http://localhost:8080/api";
-app.controller('navCtrl',function($scope,$http){
+app.controller('navbarController',function($scope,$http){
     $scope.listPodcast = [];
     $scope.findMyListPodcast = function(){
         let url = host + "/v1/my-podcast";
@@ -12,13 +13,13 @@ app.controller('navCtrl',function($scope,$http){
         })
     }
 
-    $scope.switchPodcast = function(id){
+    $scope.swtitchPodcast = function(id){
         let url = host + "/v1/podcast/"+id;
         $http.get(url).then(resp => {
-            localStorage.setItem('podcast',JSON.stringify(resp.data.data));
-            location.reload();
+            localStorage.setItem('podcast',JSON.parse(resp.data.data));
+            window.location.href = "./PodcastControl.html#!/home" 
         }).catch(error =>{
+            console.log(error);
         })
     }
-    $scope.findMyListPodcast();
 })

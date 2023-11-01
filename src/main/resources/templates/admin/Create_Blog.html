@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<meta charset="UTF-8">
 <body>
    <!-- CONTENT START  -->
    <div class="content-wrapper">
@@ -72,7 +72,8 @@
                                              <label for="formGroupExampleInput" class="form-label mb-0">Create For:</label>
                                            
                                              <select name="ImageLocation" class="form-select font-select"
-                                                ng-model="formRole.role" required>
+                                                ng-model="formRole.role"  required>
+                                                <option value="">Select</option>
                                                 <option ng-repeat="itemsRole in itemsRole " ng-value="itemsRole">{{itemsRole.role}}</option>
                                              </select>
                                              <!-- VALIDATION FORM -->
@@ -89,6 +90,7 @@
                                                 image:</label>
                                              <select name="ImageLocation" class="form-select font-select"
                                                 ng-model="form.ImageLocation" required>
+                                                <option value="">Choose where to save</option>
                                                 <option ng-repeat="items in items track by $index" ng-value="items">{{items}}</option>
                                              </select>
                                              <!-- VALIDATION FORM -->

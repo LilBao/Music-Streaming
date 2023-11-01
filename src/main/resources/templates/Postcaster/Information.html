@@ -21,9 +21,6 @@
   <script src="../../static/js/Utiliez/CookiesUtil.js"></script>
 
 
-  <link rel="stylesheet" href="../../static/css/toasts.css">
-  <script src="../../static/js/jscustom/UI-Js-Admin/bootstrap-show-notification.js"></script>
-  <script src="../../static/js/jscustom/toasts.js"></script>
 </head>
 
 <body ng-app="myApp" ng-controller="verifyCtrl">
@@ -48,9 +45,11 @@
           <h1>Is this the right Spotify account?</h1>
           <p>You’ll use this to log in to Spotify for Artists.</p>
           <div class="my-5 d-flex flex-column align-items-center">
-            <img class="rounded-circle w-25" ng-src="{{account.image == null ? 'https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png' : account.image.url}}"  alt="Cinque Terre">
-            <p>{{account.email}}</p>
-            <p>{{account.username}}</p>
+            <img class="rounded-circle w-25"
+              ng-src="{{account.image == null ? 'https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png' : account.image.url}}"
+              alt="Cinque Terre">
+            <p>@gmail.com</p>
+            <p>Ng.VanBao</p>
             <a href="">Change account</a>
           </div>
         </div>
@@ -64,7 +63,7 @@
             (You can always change these later.)</h6>
           <div class="row">
             <div class="col-5">
-              <img ng-click="selectImg('podcast-img')" class="podcast-img w-100 img-podcast"
+              <img ng-click="selectImg('podcast-img')" class="podcast-img img-podcast"
                 src="https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png"
                 alt="">
               <input id="podcast-img" type="file" hidden required>

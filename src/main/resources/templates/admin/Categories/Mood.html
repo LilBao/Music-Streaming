@@ -131,7 +131,7 @@
                               <div class="pagination  d-flex justify-content-end align-content-center mb-3">
                                  <a href="" ng-click="utilitiesPage.firstPage()" >&laquo;</a>
 
-                                 <a href=""  ng-repeat="pageNo in page track by $index" ng-click="goToPage(pageNo)" ng-class="{ 'active': currentPage === pageNo }">
+                                 <a href=""  ng-repeat="pageNo in page " ng-click="goToPage(pageNo)" ng-class="{ 'active': currentPage === pageNo }">
                                     {{pageNo + 1}}
                                  </a>                           
                                  <a href="" ng-click="utilitiesPage.endPage()" >&raquo;</a>

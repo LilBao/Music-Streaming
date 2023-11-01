@@ -1,4 +1,4 @@
-var app = angular.module("myApp", ["ngRoute","ngCookies","ngMessages"]);
+var app = angular.module("myApp", ["ngRoute","ngCookies","ngMessages","angularUtils.directives.dirPagination"]);
 app.config(function($routeProvider,$cookiesProvider) {
   
   $routeProvider
@@ -62,5 +62,3 @@ app.config(function($routeProvider,$cookiesProvider) {
     controller: "ChartController"
   });
 });
-
-

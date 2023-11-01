@@ -201,7 +201,7 @@ CREATE TABLE ADVERTISEMENT (
 CREATE TABLE NEWS (
 	IDNEWS BIGINT IDENTITY(1,1) PRIMARY KEY,
 	TITLE NVARCHAR(255),
-	CONTENT NVARCHAR(255),
+	CONTENT ntext,
 	IMAGE NVARCHAR(100),
 	PUBLISHDATE DATE,
 	LASTMODIFIED DATETIME,
@@ -215,7 +215,7 @@ CREATE TABLE NEWS (
 	FOREIGN KEY (IMAGE) REFERENCES IMAGES(ACCESSID) ON DELETE NO ACTION,
 );
 
-alter table news add CREATEFOR VARCHAR(20)
+ 
 
 CREATE TABLE TAGS (
 	TAGID BIGINT IDENTITY(1,1) PRIMARY KEY,
@@ -649,4 +649,77 @@ VALUES
 ('PODCAST');
 
 INSERT INTO  IMAGES 
-	VALUES ('Avatar/System/807831_rrsd2v.png','https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png','https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png',512,512)
+	VALUES ('Avatar/System/807831_rrsd2v.png',512,'https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png','https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png',512)
+
+
+
+INSERT INTO ACCOUNTS(EMAIL,PASSWORD,USENAME,BIRTHDAY,GENDER,COUNTRY,ISVERIFY,IMAGEID) 
+	VALUES ('mck@gmail.com','$2a$12$eX7AUZVUW.QC.6ZNxwXtUu0Qn03546/D58VH/oqnN3uhXF1044v.G','rpt.mckeyyyyy','2001/03/02',1,'VN',1,'Avatar/System/807831_rrsd2v.png')
+	
+INSERT INTO ACCOUNTS(EMAIL,PASSWORD,USENAME,BIRTHDAY,GENDER,COUNTRY,ISVERIFY,IMAGEID) 
+	VALUES ('jvke@gmail.com','$2a$12$eX7AUZVUW.QC.6ZNxwXtUu0Qn03546/D58VH/oqnN3uhXF1044v.G','jvkeeee','2001/03/03',1,'US',1,'Avatar/System/807831_rrsd2v.png')
+
+INSERT INTO ACCOUNTS(EMAIL,PASSWORD,USENAME,BIRTHDAY,GENDER,COUNTRY,ISVERIFY,IMAGEID) 
+	VALUES ('nhien@gmail.com','$2a$12$eX7AUZVUW.QC.6ZNxwXtUu0Qn03546/D58VH/oqnN3uhXF1044v.G','nhien','2001/03/03',1,'US',1,'Avatar/System/807831_rrsd2v.png')
+
+Truncate table ARTIST
+INSERT INTO ARTIST(ARTISTNAME,FULLNAME,DATEOFBIRTH,PLACEOFBIRTH,BIO,SOCIALMEDIALINKS,VERIFY,EMAIL) 
+			VALUES('MCK','Nghiêm Vũ Hoàng Long','2001/03/02', N'Hà Nội, Việt Nam','Hanoi born-and-raised. CDSL // RPT
+Nghiêm Vũ Hoàng Long, also known as MCK, is a rapper/singer-songwriter from Hanoi, Vietnam. His music career started in early 2018 as an independent singer/songwriter under the alias Ngơ. His debut single was the smashing hit "Tình Đắng Như Ly Cà Phê" featuring Nân, accumulating over 60 million streams across the DSPs since its upload, kick-starting one of the most successful debuts in the local independent scene.
+MCKs career took a turn in 2020 when he appeared as a contestant on the hit TV show "Rap Việt.. He has proven himself to be a force to be reckoned with in Vietnams hip-hop scene as one of the most prominent independent rappers. MCK further solidified his position in the industry by winning the WeChoice Awards for Most Promising Hip-hop Act in 2020.
+In recent years, he has become a household name and an unstoppable force on the local chart, especially with the release of his debut album "99%." The album was immediately received with critical acclaim by the media and fans alike, with the single "Chìm Sâu" being the most streamed song on Spotify Việt Nam in 2022, and the rest of the album dominating Billboard Vietnams charts with 5 tracks in the top 10','https://www.instagram.com/rpt.mckeyyyyy/',1,'mck@gmail.com')
+
+
+
+INSERT INTO SLIDE VALUES('ARTIST','http://res.cloudinary.com/div9ldpou/image/upload/v1697612547/ImageManager/Image%20News/admin-Dashboard.png.png')
+
+INSERT INTO [ROLE] VALUES('STAFF'),('MANAGER'),('ARTIST'),('USER'),('PODCAST')
+
+INSERT INTO AUTHOR VALUES(4,'jvke@gmail.com')
+INSERT INTO AUTHOR VALUES(3,'mck@gmail.com')
+INSERT INTO AUTHOR VALUES(4,'nhien@gmail.com')
+
+INSERT INTO SUBCRIPTIONS VALUES(1,123.123,'BASIC usage package', '2023-10-21',1)
+INSERT INTO SUBCRIPTIONS VALUES(2,678.678,'PREMIUM usage package', '2023-10-21',1)
+
+INSERT INTO USERTYPE  VALUES ('BASIC','2023-10-21','2024-10-21','OK',1,'jvke@gmail.com',1),
+							 ('PREMIUM','2023-10-21','2024-10-21','OK',1,'jvke@gmail.com',1)
+INSERT INTO USERTYPE  VALUES ('BASIC','2023-10-21','2024-10-21','OK',2,'mck@gmail.com',1)
+INSERT INTO USERTYPE  VALUES ('BASIC','2023-10-21','2024-10-21','OK',3,'nhien@gmail.com',1)
+							
+							
+if OBJECT_ID('sp_filter') is not null
+	drop proc sp_filter
+go 
+CREATE PROCEDURE sp_filter
+  @month int = NULL,
+  @year int = NULL
+ 
+AS
+BEGIN
+  -- Không có giá trị @year hoặc @month
+  IF @year IS NULL AND @month IS NULL
+  BEGIN
+    SELECT * FROM NEWS
+  END
+  -- Chỉ có giá trị @year
+  ELSE IF @year IS NOT NULL AND @month IS NULL
+  BEGIN
+    SELECT * FROM NEWS WHERE YEAR(CREATEDATE) = @year
+  END
+  -- Chỉ có giá trị @month
+  ELSE IF @year IS NULL AND @month IS NOT NULL
+  BEGIN
+    SELECT  * FROM NEWS   inner join IMAGES ON NEWS.[IMAGE] = IMAGES.ACCESSID 
+						    inner join ACCOUNTS on ACCOUNTS.EMAIL = NEWS.[AUTHORID]
+							where MONTH(CREATEDATE) = @month
+  END
+  -- Cả hai tham số @year và @month đều có giá trị
+  ELSE
+  BEGIN
+    SELECT * FROM NEWS WHERE YEAR(CREATEDATE) = @year AND MONTH(CREATEDATE) = @month
+  END
+END
+
+exec sp_filter  12
+
