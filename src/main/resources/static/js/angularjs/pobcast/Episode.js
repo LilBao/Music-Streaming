@@ -2,16 +2,18 @@ var host = "http://localhost:8080/api";
 app.controller('episodeInforCtrl', function ($scope, $http,FileService) {
     $scope.podcast = JSON.parse(localStorage.getItem('podcast'));
     var fileAudio = FileService.getFile();
-    if(fileAudio ===null){
-        window.location.href = "/templates/Postcaster/NavPodcast.html#!/new-episode" 
+     $scope.audioFile = fileAudio;
+    if(fileAudio === null){
+        window.location.href = "./PodcastControl.html#!/new-episode" 
+    }else{  
+        $('#audioFile').attr('src', URL.createObjectURL(fileAudio)) ;
     }
-    $('#audioFile').attr('src', URL.createObjectURL(fileAudio)) ;
     
     $scope.createEpisode = function(){
         let url = host + "/v1/episode";
         var data = new FormData();
         data.append('coverImg',$scope.coverImg);
-        data.append('fileAudio',fileAudio);
+        data.append('fileAudio',$scope.audioFile);
         data.append('episodeTitle',$scope.episode.episodeTitle);
         data.append('description',$scope.episode.description);
         data.append('publishDate',$scope.episode.publishDate);

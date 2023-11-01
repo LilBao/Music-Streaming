@@ -11,10 +11,6 @@
             <div class="col-12 col-md-12 col-lg-12">
 
 
-               <!-- Alert Messages -->
-               <div ng-include="'./ng-Utilities/messages_alert.html'"></div>
-               <!-- Alert Messages -->
-             
                <div class="row">
                   <div class="col-md-12">
                      <div class="iq-card iq-card-block iq-card-stretch iq-card-height  mb-0">
@@ -43,6 +39,20 @@
                                              </div>
 
                                           </div>
+
+                                          <div class="mb-2">
+                                             <label for="formGroupExampleInput" class="form-label mb-0">Summary:</label>
+                                             <input type="text" name="title" class="form-control" ng-model="form.summary"
+                                                required ng-minlength="3" ng-maxlength="350">
+
+                                             <!-- VALIDATION FORM -->
+                                             <div ng-messages="validate.title.$dirty && validate.title.$error ">
+                                                    <div ng-messages-include="../admin/ng-Utilities/messages_error.html">
+                                                </div>
+                                             </div>
+
+                                          </div>
+
                                           <label for="formGroupExampleInput" class="form-label mb-0">Content:</label>
                                           <div class="form-floating mb-2 ">
                                              <textarea name="content" ng-model="form.content" class="form-control"
@@ -59,11 +69,27 @@
                                           </div>
 
                                           <div class="mb-3">
+                                             <label for="formGroupExampleInput" class="form-label mb-0">Create For:</label>
+                                           
+                                             <select name="ImageLocation" class="form-select font-select"
+                                                ng-model="formRole.role" required>
+                                                <option ng-repeat="itemsRole in itemsRole " ng-value="itemsRole">{{itemsRole.role}}</option>
+                                             </select>
+                                             <!-- VALIDATION FORM -->
+                                             <div
+                                                ng-messages="validate.ImageLocation.$touched && validate.ImageLocation.$error ">
+                                                <div ng-messages-include="../admin/ng-Utilities/messages_error.html">
+                                                </div>
+                                             </div>
+                                          </div>
+
+
+                                          <div class="mb-3">
                                              <label for="formGroupExampleInput" class="form-label mb-0">Save
                                                 image:</label>
                                              <select name="ImageLocation" class="form-select font-select"
                                                 ng-model="form.ImageLocation" required>
-                                                <option ng-repeat="items in items" ng-value="items">{{items}}</option>
+                                                <option ng-repeat="items in items track by $index" ng-value="items">{{items}}</option>
                                              </select>
                                              <!-- VALIDATION FORM -->
                                              <div

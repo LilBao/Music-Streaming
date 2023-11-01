@@ -3,9 +3,13 @@ package com.rhymthwave.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.rhymthwave.entity.TypeEnum.EROLE;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -44,6 +48,10 @@ public class News implements Serializable {
 
 	@Column(name = "CREATEDATE")
 	private Date createDate;
+	
+	@Column(name = "CREATEFOR")
+	@Enumerated(EnumType.STRING)
+	private EROLE createFor;
 	
 	@Column(name = "MODIFIEDBY", length = 255)
 	private String modifiedBy;

@@ -13,7 +13,6 @@ import com.rhymthwave.entity.Author;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-	
 
 	@Autowired
 	private AccountDAO accountDAO;

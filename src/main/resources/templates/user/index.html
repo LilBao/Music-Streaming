@@ -14,14 +14,26 @@
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" href="../../static/css/search-detail.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <link rel="stylesheet" href="../../static/css/style.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="../../static/css/style.css">
-    <script src="../../static/js/angularjs/index.js"></script>
+    
+    <script src="../../static/js/angularjs/user/index.js"></script>
 </head>
 
-<body ng-app="myApp">
+<body ng-app="myApp" ng-controller="myCtrl">
     <div class="content d-flex">
         <div class="sidebar container-fluid">
             <div class="row">
@@ -48,7 +60,8 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h5>Your Library</h5>
                                     <div class="dropdown">
-                                        <button type="button" class="btn button-control" data-bs-toggle="dropdown">
+                                        <button type="button " class="btn border-0 button-control"
+                                            data-bs-toggle="dropdown">
                                             <i class="bi bi-plus-circle"></i>
                                         </button>
                                         <ul class="dropdown-menu drop-playlist ">
@@ -105,7 +118,7 @@
             </div>
         </div>
         <main class="bl-body p-1" ng-view>
-            
+
         </main>
     </div>
     <footer class="player-controls col-12 fixed-bottom">
@@ -128,7 +141,7 @@
                                     title="Thêm vào yêu thích!"><i class="bi bi-heart"></i></button></span>
                         </div>
                         <div class="level-item d-none d-md-block">
-                            
+
                             <div class="dropdown">
                                 <button type="button" class="btn button-control" data-bs-toggle="dropdown">
                                     <i class="bi bi-three-dots"></i>
@@ -146,34 +159,48 @@
             </div>
             <div class="col-md-6 col-9 player-controls-center d-flex flex-column align-items-center">
                 <div class="controls-bar d-flex align-items-center">
-                    <button class="btn py-0 shuffle button-control-music" data-bs-hover="tooltip"
+                    <button class="btn border-0 py-0 shuffle button-control-music" data-bs-hover="tooltip"
                         title="Bật phát ngẫu nhiên!"><i class="bi bi-shuffle"></i></button>
 
-                    <button class="btn py-0 prev button-control-music"><i class="bi bi-skip-start-circle"></i></button>
+                    <button class="btn border-0 py-0 prev button-control-music"><i
+                            class="bi bi-skip-start-circle"></i></button>
 
-                    <button class="btn py-0 resume button-control-music-play"><i class="bi bi-play-circle"></i></button>
-                    <!-- <i class="bi bi-pause-circle"></i> -->
+                    <button id="play" class="btn border-0 py-0 button-control-music-play">
+                        <i class="bi bi-play-circle"></i>
+                    </button>
+                    <button id="resume" hidden class="btn border-0 py-0 button-control-music-play">
+                        <i class="bi bi-pause-circle"></i>
+                    </button>
 
-                    <button class="btn py-0 next button-control-music"><i class="bi bi-skip-end-circle"></i></button>
+                    <button class="btn border-0 py-0 next button-control-music"><i
+                            class="bi bi-skip-end-circle"></i></button>
 
-                    <button class="btn py-0 repeat button-control-music"><i class="bi bi-repeat"></i></button>
+                    <button id="loop" class="btn border-0 py-0 button-control-music"><i
+                            class="bi bi-repeat"></i></button>
                     <!-- <i class="bi bi-repeat-1"></i> -->
                 </div>
                 <div class="time-line w-100 d-flex align-items-center flex-fill">
-                    <span class="current-time">current time</span>
-                    <input class="duration-bar w-75" type="range" min="0" max="100" name="" id="">
+                    <span style="font-size: x-small;" id="current-time">00:00</span>
+                    <input id="duration-audio" class="duration-bar w-100" type="range" min="0" step="0.1" name="" id="">
+                    <audio id="audio"
+                        src="https://res.cloudinary.com/div9ldpou/video/upload/v1698121884/Records/MCK/Nghe%20nh%C6%B0%20t%C3%ACnh%20y%C3%AAu%20-%20MCK%20remixx%20prod.%20By%20Kewtiie.mp3.mp3"></audio>                    
                     <div class="line-first"></div>
                     <div class="line-current"></div>
                     <div class="circle"></div>
-                    <span class="duration">duration</span>
+                    <span style="font-size: x-small;" id="total-time">duration</span>
                 </div>
             </div>
-            <div class="col-md-3 d-none d-md-block player-controls-right d-flex align-items-center">
-                <button class="btn"  data-bs-toggle="modal" data-bs-target="#MV">MV</button>
-                <button class="btn button-control"><i class="bi bi-pip"></i></button>
-                <button class="btn button-control"><i class="bi bi-mic"></i></button>
-                <button class="btn button-control"><i class="bi bi-volume-up"></i></button>
-                <input class="" type="range" min="0" max="100" name="" id="">
+            <div class="col-md-3 d-none d-md-block player-controls-right ">
+                <div class="d-flex align-items-center">
+                    <button class="btn text-white" data-bs-toggle="modal" data-bs-target="#MV">MV</button>
+                    <button id="download" class="btn button-control"><i class="bi bi-download"></i></button>
+                    <a href="#!queue"  class="btn button-control"><i class="bi bi-hdd-stack"></i></a>
+                    <a href="#!karaoke" id="karaoke" class="btn button-control"><i class="bi bi-mic"></i></a>
+
+                    <button id="mute" class="btn button-control"><i id="icon-mute" class="bi bi-volume-up"></i></button>
+                    <input id="volumeAudio" class="" type="range" min="0" max="1" step="0.1" name="" id="">
+                </div>
+                
             </div>
         </div>
     </footer>
@@ -193,48 +220,23 @@
     </div>
 
     <!-- Modal trình chiếu MV -->
-    <div class="modal " id="MV">
+    <div class="modal fade" id="MV">
         <div class="popup modal-dialog">
-            <div class="popup-message  modal-content"  style="background-color: transparent;">
+            <div class="popup-message  modal-content" style="background-color: transparent;">
                 <div class="modal-body p-0">
-                    <iframe class="w-100" height="600" src="https://www.youtube.com/embed/U0Vr1zotKIo?si=1psE6T1thDFwY7vY"
-                        title="YouTube video player" frameborder="0"
+                    <iframe class="w-100" height="600"
+                        src="https://www.youtube.com/embed/U0Vr1zotKIo?si=1psE6T1thDFwY7vY" title="YouTube video player"
+                        frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowfullscreen></iframe>
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        $(document).ready(function () {
-            $('#myModal').modal('show');
-        });
-
-        //Playlist
-        var playlistChild = document.getElementsByClassName('playlist-child');
-        var playlist = document.getElementsByClassName('playlist');
-        if (playlistChild.length > 4) {
-            playlist.style = 'overflow-y: hidden;'
-        }
-
-        // isPlaying: false,
-        // isRandom: false,
-        // isRepeat: false,
-        // isMute: false,
-        app.controller('SearchController', ['$scope', '$location', function($scope, $location) {
-            // Watch for changes in the input field
-            $scope.$watch('searchInput', function(newVal) {
-              // Check if the input value meets your criteria
-              if (newVal && newVal.length > 0) {
-                // If the input is not empty, navigate to the desired route (search-detail)
-                $location.path('/search-detail');
-              }
-            });
-          }]);  
-          
-    </script>
-
+    <script src="../../static/js/angularjs/user/myCtrl.js"></script>
+    <script src="../../static/js/angularjs/user/Karaoke.js"></script>
+    <script src="../../static/js/angularjs/user/Queue.js"></script>
+    <script src="../../static/js/angularjs/user/search.js"></script>
 </body>
 
 </html>

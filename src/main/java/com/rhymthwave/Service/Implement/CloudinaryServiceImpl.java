@@ -1,7 +1,11 @@
 package com.rhymthwave.Service.Implement;
 
-
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -9,8 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cloudinary.Cloudinary;
@@ -18,7 +22,6 @@ import com.cloudinary.Transformation;
 import com.cloudinary.api.ApiResponse;
 import com.cloudinary.utils.ObjectUtils;
 import com.rhymthwave.Service.CloudinaryService;
-
 
 @Service
 public class CloudinaryServiceImpl implements CloudinaryService {
@@ -66,42 +69,42 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 	@Override
 	public Map<?, ?> uploadMultipleFiles(MultipartFile[] files, String parentFolder, String childFolder) {
 		try {
-	        cloudinary.api().createFolder(parentFolder, ObjectUtils.emptyMap());
-	        cloudinary.api().createFolder(parentFolder + "/" + childFolder, ObjectUtils.emptyMap());
-	        String path = parentFolder + "/" + childFolder;
-	        String[] uploadedUrls = new String[files.length];
-	        String[] uploadedPublicid = new String[files.length];
-	        for (int i = 0; i < files.length; i++) {
-	            Map<String, Object> params = new HashMap<>();
-	            params.put("public_id", path + "/" + files[i].getOriginalFilename());
-	            params.put("resource_type", "auto");
-	            Map<?, ?> result = cloudinary.uploader().upload(files[i].getBytes(), ObjectUtils.emptyMap());
-	            uploadedUrls[i] = (String) result.get("url");
-	            uploadedPublicid[i] = (String) result.get("public_id");
-	        }
+			cloudinary.api().createFolder(parentFolder, ObjectUtils.emptyMap());
+			cloudinary.api().createFolder(parentFolder + "/" + childFolder, ObjectUtils.emptyMap());
+			String path = parentFolder + "/" + childFolder;
+			String[] uploadedUrls = new String[files.length];
+			String[] uploadedPublicid = new String[files.length];
+			for (int i = 0; i < files.length; i++) {
+				Map<String, Object> params = new HashMap<>();
+				params.put("public_id", path + "/" + files[i].getOriginalFilename());
+				params.put("resource_type", "auto");
+				Map<?, ?> result = cloudinary.uploader().upload(files[i].getBytes(), ObjectUtils.emptyMap());
+				uploadedUrls[i] = (String) result.get("url");
+				uploadedPublicid[i] = (String) result.get("public_id");
+			}
 
-	        Map<String, Object> response = new HashMap<>();
-	        response.put("uploadedUrls", uploadedUrls);
-	        response.put("uploadedPublicid", uploadedPublicid);
+			Map<String, Object> response = new HashMap<>();
+			response.put("uploadedUrls", uploadedUrls);
+			response.put("uploadedPublicid", uploadedPublicid);
 
-	        return response;
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return null;
-	    }
+			return response;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
-	public List<Map> findListImageByFolder(String parentFolder, String childFolder) {	
+	public List<Map> findListImageByFolder(String parentFolder, String childFolder) {
 		try {
-	        String folderPath = parentFolder + "/" + childFolder;
-	        Map<String, Object> listParams = ObjectUtils.asMap("type", "upload", "prefix", folderPath);
-	        Map result = cloudinary.api().resources(listParams);
-	        return (List<Map>) result.get("resources");
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return Collections.emptyList();
-	    }
+			String folderPath = parentFolder + "/" + childFolder;
+			Map<String, Object> listParams = ObjectUtils.asMap("type", "upload", "prefix", folderPath);
+			Map result = cloudinary.api().resources(listParams);
+			return (List<Map>) result.get("resources");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Collections.emptyList();
+		}
 	}
 
 	@Override
@@ -119,14 +122,35 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 
 	@Override
 	public String readLrc(String lrcUrl) {
-		RestTemplate restTemplate = new RestTemplate();
-		String lrcContent = restTemplate.getForObject(lrcUrl, String.class);
-		return lrcContent;
+		try {
+			URL url = new URL(lrcUrl);
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestMethod("GET");
+			int responseCode = connection.getResponseCode();
+			if (responseCode == HttpURLConnection.HTTP_OK) {
+				BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+				String inputLine;
+				StringBuilder content = new StringBuilder();
+				while ((inputLine = reader.readLine()) != null) {
+					content.append(inputLine);
+					//duy trì ký tự xuống dòng
+					content.append(System.lineSeparator());
+				}
+				reader.close();
+				String fileContent = content.toString();
+				return fileContent;
+			} else {
+				System.out.println("Failed to retrieve the file. Response code: " + responseCode);
+			}
+			connection.disconnect();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return lrcUrl;
 	}
-	
-	
+
 	@Override
-	public String downloadFile(String publicId,String format) {
+	public String downloadFile(String publicId, String format) {
 		try {
 			Map<String, Object> options = ObjectUtils.asMap("attachment", true);
 			String result = cloudinary.privateDownload(publicId, format, options);
@@ -136,53 +160,51 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public List<String> getCloudinaryParentFolder() {
-        List<String> folderNames = new ArrayList<>();
-        try {
-            ApiResponse result = cloudinary.api().rootFolders(ObjectUtils.emptyMap());
-            List<Map> subFolders = (List<Map>) result.get("folders");
-            for (Map folder : subFolders) {
-                String folderName = (String) folder.get("name");
-                folderNames.add(folderName);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return folderNames;
-    }
-	
+		List<String> folderNames = new ArrayList<>();
+		try {
+			ApiResponse result = cloudinary.api().rootFolders(ObjectUtils.emptyMap());
+			List<Map> subFolders = (List<Map>) result.get("folders");
+			for (Map folder : subFolders) {
+				String folderName = (String) folder.get("name");
+				folderNames.add(folderName);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return folderNames;
+	}
+
 	@Override
 	public List<String> getCloudinaryChildFolder(String ChildFolder) {
-        List<String> folderNames = new ArrayList<>();
-        try {
-            ApiResponse result = cloudinary.api().subFolders(ChildFolder ,ObjectUtils.emptyMap());
-            List<Map> subFolders = (List<Map>) result.get("folders");
-            for (Map folder : subFolders) {
-                String folderName = (String) folder.get("name");
-                folderNames.add(folderName);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return folderNames;
-    }
+		List<String> folderNames = new ArrayList<>();
+		try {
+			ApiResponse result = cloudinary.api().subFolders(ChildFolder, ObjectUtils.emptyMap());
+			List<Map> subFolders = (List<Map>) result.get("folders");
+			for (Map folder : subFolders) {
+				String folderName = (String) folder.get("name");
+				folderNames.add(folderName);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return folderNames;
+	}
 
+	private String getDownloadPath() {
+		String os = System.getProperty("os.name").toLowerCase();
+		String downloadPath = System.getProperty("user.home");
 
+		if (os.contains("win")) {
+			downloadPath += File.separator + "Downloads";
+		} else if (os.contains("mac")) {
+			downloadPath += File.separator + "Downloads";
+		} else {
+			downloadPath += File.separator + "Downloads";
+		}
 
-	 private String getDownloadPath() {
-	        String os = System.getProperty("os.name").toLowerCase();
-	        String downloadPath = System.getProperty("user.home");
-
-	        if (os.contains("win")) {
-	            downloadPath += File.separator + "Downloads";
-	        } else if (os.contains("mac")) {
-	            downloadPath += File.separator + "Downloads";
-	        } else {
-	            downloadPath += File.separator + "Downloads";
-	        }
-
-	        return downloadPath;
-	    }
+		return downloadPath;
+	}
 }

@@ -15,17 +15,16 @@
     <link rel="stylesheet" href="../../static/css/cssPobcast/Dashboard.css">
     <link rel="stylesheet" href="../../static//css/cssPobcast/Episode.css">
     <link rel="stylesheet" href="../../static//css/cssPobcast/nav.css">
-    <link rel="stylesheet" href="../../static//css/cssPobcast/profile.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../../static/js/angularjs/pobcast/Routing.js"></script>
-    
+    <link rel="stylesheet" href="../../static/css/toasts.css">
 
 </head>
 <body ng-app="myApp">
-    <nav class="navbar navbar-expand-lg bg-black text-white">
+    <nav ng-controller="navCtrl" class="navbar navbar-expand-lg bg-black text-white">
         <div class="container-fluid">
             <button class="navbar-toggler navbar-light buttonCss" type="button" data-bs-toggle="offcanvas"
                 data-bs-target="#offcanvasExample" aria-controls=" offcanvasExample">
@@ -44,11 +43,13 @@
                                 <i class="bi bi-arrow-left-right"></i> Pobcast
                             </a>
                             <div class="dropdown-content">
-                                <a class="dropdown-item p-2">podcast 1</a>
+                                <a ng-repeat="item in listPodcast" ng-click="switchPodcast(item.podcastId)" class="dropdown-item p-2">{{item.podcastName}}</a>
                             </div> 
                         </div>
                     </li>
-                    <li><a class="dropdown-item p-3" href="#"><i class="bi bi-arrow-left-right"></i> Rthyme Wave</a></li>
+                    <li><a class="dropdown-item p-3" href="#!archives">Archive</a></li>
+                    <li><a class="dropdown-item p-3" href="#!podcast-settings">Podcast Settings</a></li>
+                    <li><a class="dropdown-item p-3" href="#"><i class="bi bi-arrow-left-right"></i>Rthyme Wave</a></li>
                     <li><a class="dropdown-item p-3" href="#">Log out</a></li>
                 </ul>
             </div>
@@ -68,11 +69,11 @@
                             <a class="nav-link text-white" href="#!analytics">Analytics</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#!episode">Episodes</a>
+                            <a class="nav-link text-white" href="#!episodes">Episodes</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="#!overview">Profile</a>
-                        </li>
+                        <!-- <li class="nav-item">
+                            <a class="nav-link text-white" href="#!interact">Interact</a>
+                        </li> -->
                     </ul>
                 </div>
             </div>
@@ -83,13 +84,26 @@
     <main ng-view>
 
     </main>
-
     <script src="../../static/js/Utiliez/CookiesUtil.js"></script>
+    
+    <script src="../../static/js/jscustom/UI-Js-Admin/bootstrap-show-notification.js"></script>
+
+    <script src="../../static/js/jscustom/toasts.js"></script>
+
+    <script src="../../static/js/angularjs/pobcast/Dashboard.js"></script>
 
     <script src="../../static/js/angularjs/pobcast/home.js"></script>
 
-    <script src="../../static/js/angularjs/pobcast/Dashboard.js"></script>
+    <script src="../../static/js/angularjs/pobcast/EpisodeDashboar.js"></script>
+    
     <script src="../../static/js/angularjs/pobcast/Episode.js"></script>
+
+    <script src="../../static/js/angularjs/pobcast/SettingPodcast.js"></script>
+
+    <script src="../../static/js/angularjs/pobcast/Archives.js"></script>
+
+    <script src="../../static/js/angularjs/pobcast/navbar.js"></script>
+    
 </body>
 
 </html>
