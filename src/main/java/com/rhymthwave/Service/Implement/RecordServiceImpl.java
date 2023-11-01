@@ -19,7 +19,6 @@ public class RecordServiceImpl implements RecordService, CRUD<Recording, Integer
 	@Override
 	public Recording create(Recording entity) {
 		if (entity != null) {
-			entity.setLikes(0);
 			dao.save(entity);
 			return entity;
 		}

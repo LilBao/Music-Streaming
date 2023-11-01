@@ -1,11 +1,11 @@
-var app = angular.module("myApp", ["ngRoute","ngCookies","ngMessages","angularUtils.directives.dirPagination"]);
+var app = angular.module("myApp", ["ngRoute","ngCookies","angularUtils.directives.dirPagination","ngMessages"]);
 app.config(function($routeProvider,$cookiesProvider) {
   
   $routeProvider
   .when("/", {
     templateUrl : "dashboard.html"
   })
-  .when("/create-news", {
+  .when("/Create_Blog", {
     templateUrl : "Create_Blog.html",
     controller: "newController",
     controllerAs: "eventCtl"
@@ -14,7 +14,7 @@ app.config(function($routeProvider,$cookiesProvider) {
     templateUrl : "tableAccount.html",
     controller: "tableAccountController"
   })
-  .when("/edit-user", {
+  .when("/EditUser", {
     templateUrl : "EditUser.html"
   })
   .when("/ManagerBlog", {
@@ -22,15 +22,14 @@ app.config(function($routeProvider,$cookiesProvider) {
     controller: "managerBlogController"
    
   })
-  .when("/artist-profile/:id", {
-    templateUrl : "ArtistProfile.html",
-    controller: "profileAccountController"
+  .when("/ArtistProfile", {
+    templateUrl : "ArtistProfile.html"
   })
   .when("/display-slide", {
     templateUrl : "displaySlide.html",
     controller: "displaySlideController"
   })
-  .when("/mood", {
+  .when("/Mood", {
     templateUrl : "Categories/Mood.html",
     controller: "moodController"
   })
@@ -54,7 +53,7 @@ app.config(function($routeProvider,$cookiesProvider) {
     templateUrl : "Categories/Genre.html",
     controller: "genreController"
   })
-  .when("/manage-report", {
+  .when("/manage_report", {
     templateUrl : "ManageReport.html",
   })
   .when("/statistical_managerment", {
@@ -62,3 +61,5 @@ app.config(function($routeProvider,$cookiesProvider) {
     controller: "ChartController"
   });
 });
+
+

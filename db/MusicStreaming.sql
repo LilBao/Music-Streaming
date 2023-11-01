@@ -52,8 +52,12 @@ CREATE TABLE FOLLOWER (
 
 CREATE TABLE SUBCRIPTIONS (
 	SUBCRIPTIONID BIGINT IDENTITY(1,1) PRIMARY KEY,
-	SUBCRIPTIONTYPE INT,
+	SUBCRIPTIONTYPE VARCHAR(100),
 	PRICE FLOAT,
+	PRDSTRIPEID VARCHAR(500),
+	PRDPAYPALID VARCHAR(500),
+	PLAYLISTALLOW INT,/*quantity playlist*/
+	NIP INT, /*Number in playlist*/
 	DESCRIPTION NVARCHAR(500),
 	CREATEDATE DATE,
 	DURATION INT,
@@ -128,8 +132,7 @@ CREATE TABLE RECORDING (
 	PUBLICIDAUDIOFILE VARCHAR(MAX),
 	LYRICSURL NVARCHAR(MAX),
 	PUBLICIDLYRICS VARCHAR(MAX),
-	LIKES BIGINT,
-	DURATION INT,
+	LISTENED BIGINT,
 	SONGSTYLE NVARCHAR(55),
 	MOOD NVARCHAR(55),
 	CULTURE NVARCHAR(55),
@@ -215,9 +218,6 @@ CREATE TABLE NEWS (
 	FOREIGN KEY (IMAGE) REFERENCES IMAGES(ACCESSID) ON DELETE NO ACTION,
 );
 
-alter table news drop column CONTENT 
-alter table news add  CONTENT ntext ;
-ALTER TABLE news  ALTER COLUMN 
  
 
 CREATE TABLE TAGS (
@@ -417,9 +417,243 @@ CREATE TABLE COUNTRY (
 	MODIFIEDBY NVARCHAR(255),
 	MODIFIDATE DATETIME,
 );
+						
+
+
+INSERT INTO COUNTRY (ID, NAMECOUNTRY, CREATEBY, CREATEDATE, MODIFIEDBY, MODIFIDATE)
+VALUES 
+('VN', 'Vietnam', 'Admin', '2023-10-25 08:00:00', 'Editor', '2023-10-25 09:30:00'),
+('US', 'USA', 'Admin', '2023-10-25 08:15:00', 'Editor', '2023-10-25 09:45:00'),
+('CA', 'Canada', 'Admin', '2023-10-25 08:30:00', 'Editor', '2023-10-25 10:00:00');
+
+
+INSERT INTO SLIDE (POSITION, LISTIMAGE, CREATEBY, CREATEDATE, MODIFIEDBY, MODIFIDATE)
+VALUES 
+('Slide 1', 'image1.jpg', 'Admin', '2023-10-25 08:00:00', 'Editor', '2023-10-25 09:30:00'),
+('Slide 2', 'image2.jpg', 'Admin', '2023-10-25 08:15:00', 'Editor', '2023-10-25 09:45:00'),
+('Slide 3', 'image3.jpg', 'Admin', '2023-10-25 08:30:00', 'Editor', '2023-10-25 10:00:00');
+
+
+INSERT INTO NOTIFICATION (TITILE, CONTENT, CREATEBY, CREATEDATE, MODIFIEDBY, MODIFIDATE)
+VALUES 
+('Thông báo 1', 'Nội dung thông báo 1', 'Admin', '2023-10-25 08:00:00', 'Editor', '2023-10-25 09:30:00'),
+('Thông báo 2', 'Nội dung thông báo 2', 'Admin', '2023-10-25 08:15:00', 'Editor', '2023-10-25 09:45:00'),
+('Thông báo 3', 'Nội dung thông báo 3', 'Admin', '2023-10-25 08:30:00', 'Editor', '2023-10-25 10:00:00');
+
+
+INSERT INTO CULTURE (CULTURENAME, CREATEBY, CREATEDATE, MODIFIEDBY, MODIFIDATE)
+VALUES 
+('Culture 1', 'Admin', '2023-10-25 08:00:00', 'Editor', '2023-10-25 09:30:00'),
+('Culture 2', 'Admin', '2023-10-25 08:15:00', 'Editor', '2023-10-25 09:45:00'),
+('Culture 3', 'Admin', '2023-10-25 08:30:00', 'Editor', '2023-10-25 10:00:00');
+
+
+INSERT INTO INSTRUMENT (INSTRUMENTNAME, CREATEBY, CREATEDATE, MODIFIEDBY, MODIFIDATE)
+VALUES 
+('Instrument 1', 'Admin', '2023-10-25 08:00:00', 'Editor', '2023-10-25 09:30:00'),
+('Instrument 2', 'Admin', '2023-10-25 08:15:00', 'Editor', '2023-10-25 09:45:00'),
+('Instrument 3', 'Admin', '2023-10-25 08:30:00', 'Editor', '2023-10-25 10:00:00');
+
+
+INSERT INTO MOOD (MOODNAME, CREATEBY, CREATEDATE, MODIFIEDBY, MODIFIDATE)
+VALUES 
+('Happy', 'Admin', '2023-10-25 08:00:00', 'Editor', '2023-10-25 09:30:00'),
+('Sad', 'Admin', '2023-10-25 08:15:00', 'Editor', '2023-10-25 09:45:00'),
+('Angry', 'Admin', '2023-10-25 08:30:00', 'Editor', '2023-10-25 10:00:00');
+
+
+INSERT INTO SONG_STYLE (SONG_STYLENAME, CREATEBY, CREATEDATE, MODIFIEDBY, MODIFIDATE)
+VALUES 
+('Pop', 'Admin', '2023-10-25 08:00:00', 'Editor', '2023-10-25 09:30:00'),
+('Rock', 'Admin', '2023-10-25 08:15:00', 'Editor', '2023-10-25 09:45:00'),
+('Hip-Hop', 'Admin', '2023-10-25 08:30:00', 'Editor', '2023-10-25 10:00:00');
+
+
+INSERT INTO ACCESS (PLAYLIST_RECORDINGID, USERTYPEID, EPISODESID)
+VALUES 
+(1, 1, 1),
+(2, 2, 2),
+(3, 3, 3);
+
+
+INSERT INTO TRACK (ALBUMID, RECORDINGID, TRACKNUMBER)
+VALUES 
+(1, 1, 1),
+(1, 2, 2),
+(2, 3, 1);
+
+
+INSERT INTO ALBUM (ALBUMNAME, RELEASEDATE, COVERIMAGE, ARTISTID, DESCRIPTIONS)
+VALUES 
+('Album 1', '2023-10-25 08:00:00', 'Avatar/System/807831_rrsd2v.png', 3, 'Mô tả album 1'),
+('Album 2', '2023-10-25 08:15:00', 'Avatar/System/807831_rrsd2v.png', 4, 'Mô tả album 2'),
+('Album 3', '2023-10-25 08:30:00', 'Avatar/System/807831_rrsd2v.png', 3, 'Mô tả album 3');
+
+
+INSERT INTO PLAYLIST_RECORDING (RECORDINGID, PLAYLISTSID)
+VALUES 
+(1, 1),
+(2, 2),
+(3, 3);
+
+
+INSERT INTO PLAYLIST_PODCAST (PLAYLISTID, EPISODESID)
+VALUES 
+(1, 1),
+(2, 2),
+(3, 3);
+
+
+INSERT INTO REPORT (USERTYPEID, REPORTDATE, DESCRIPTION, ARTISTID, RECORDINGID, POSTCASTID, EPISODESID)
+VALUES 
+(1, '2023-10-25', 'Mô tả báo cáo 1', 3, 1, NULL, 1),
+(2, '2023-10-26', 'Mô tả báo cáo 2', 4, 2, NULL, 2),
+(3, '2023-10-27', 'Mô tả báo cáo 3', 3, 3, NULL, 1);
+
+
+INSERT INTO PLAYLISTS (PLAYLISTNAME, QUANTITY, ISPUBLIC, STATUS, CREATDATE, USERTYPEID, IMAGE)
+VALUES 
+('Playlist 1', 10, 1, 'Active', '2023-10-25', 1, 'Avatar/System/807831_rrsd2v.png'),
+('Playlist 2', 15, 0, 'Inactive', '2023-10-26', 2, 'Avatar/System/807831_rrsd2v.png'),
+('Playlist 3', 20, 1, 'Active', '2023-10-27', 3, 'Avatar/System/807831_rrsd2v.png');
+
+
+INSERT INTO EPISODES (FILEURL, PUBLICIDFILE, EPISODESTITLE, DESCRIPTIONS, PUBLISHDATE, SESSIONNUMBER, EPNUMBER, EPTYPE, CONTENT, ISPUBLIC, PODCASTID, IMAGEEP)
+VALUES 
+('fileurl1', 'publicfile1', 'Episode 1', 'Description 1', '2023-10-25', 1, 1, 'Type 1', 'Content 1', 1, 1, 'Avatar/System/807831_rrsd2v.png'),
+('fileurl2', 'publicfile2', 'Episode 2', 'Description 2', '2023-10-26', 2, 2, 'Type 2', 'Content 2', 1, 2, 'Avatar/System/807831_rrsd2v.png'),
+('fileurl3', 'publicfile3', 'Episode 3', 'Description 3', '2023-10-27', 3, 3, 'Type 3', 'Content 3', 0, 3, 'Avatar/System/807831_rrsd2v.png');
+
+
+INSERT INTO PODCAST (PODCASTNAME, BIO, SOCIALMEDIALINK, RELEASEDATE, LANGUAGE, IMGAGEID, CATEGORY, ACCOUNTID, RATE)
+VALUES 
+('Podcast 1', 'Bio 1', 'Social Media 1', '2023-10-25', 'Language 1', 'Avatar/System/807831_rrsd2v.png', 1, 'jvke@gmail.com', 5),
+('Podcast 2', 'Bio 2', 'Social Media 2', '2023-10-26', 'Language 2', 'Avatar/System/807831_rrsd2v.png', 2, 'mck@gmail.com', 4),
+('Podcast 3', 'Bio 3', 'Social Media 3', '2023-10-27', 'Language 3', 'Avatar/System/807831_rrsd2v.png', 3, 'khoandps24828@fpt.edu.vn', 3);
+
+
+INSERT INTO TAGS (NAMETAG, CREATEBY, CREATEDATE, MODIFIEDBY, MODIFIDATE)
+VALUES 
+('Tag 1', 'User 1', '2023-10-25 08:00:00', 'User 1', '2023-10-25 08:00:00'),
+('Tag 2', 'User 2', '2023-10-26 09:00:00', 'User 2', '2023-10-26 09:00:00'),
+('Tag 3', 'User 3', '2023-10-27 10:00:00', 'User 3', '2023-10-27 10:00:00');
+
+
+INSERT INTO NEWS (TITLE, CONTENT, IMAGE, PUBLISHDATE, LASTMODIFIED, AUTHORID, CREATEDATE, MODIFIEDBY, MODIFIDATE)
+VALUES 
+('News 1', 'Content 1', 'Avatar/System/807831_rrsd2v.png', '2023-10-25', '2023-10-25 08:00:00', 'jvke@gmail.com', '2023-10-25 08:00:00', 'User 1', '2023-10-25 08:00:00'),
+('News 2', 'Content 2', 'Avatar/System/807831_rrsd2v.png', '2023-10-26', '2023-10-26 09:00:00', 'mck@gmail.com', '2023-10-26 09:00:00', 'User 2', '2023-10-26 09:00:00'),
+('News 3', 'Content 3', 'Avatar/System/807831_rrsd2v.png', '2023-10-27', '2023-10-27 10:00:00', 'khoandps24828@fpt.edu.vn', '2023-10-27 10:00:00', 'User 3', '2023-10-27 10:00:00');
+
+
+INSERT INTO ADVERTISEMENT (TITLE, CONTENT, URL, STARTDATE, ENDDATE, BUDGET, STATUS, TARGETAUDIENCE, CLICKED, TAG, PRIORITY, BANNER, ACCOUNTID, AUDIOFILE, PUBLICIDAUDIO, CREATEDATE, MODIFIEDBY, MODIFIDATE)
+VALUES 
+('Ad 1', 'Content 1', 'url1', '2023-10-25', '2023-10-26', 100.0, 'Active', 'Audience 1', 100, 'Tag 1', 1, 'Avatar/System/807831_rrsd2v.png', 'jvke@gmail.com', 'audio1', 'publicaudio1', '2023-10-25 08:00:00', 'User 1', '2023-10-25 08:00:00'),
+('Ad 2', 'Content 2', 'url2', '2023-10-26', '2023-10-27', 150.0, 'Inactive', 'Audience 2', 200, 'Tag 2', 2, 'Avatar/System/807831_rrsd2v.png', 'mck@gmail.com', 'audio2', 'publicaudio2', '2023-10-26 09:00:00', 'User 2', '2023-10-26 09:00:00'),
+('Ad 3', 'Content 3', 'url3', '2023-10-27', '2023-10-28', 200.0, 'Active', 'Audience 3', 300, 'Tag 3', 3, 'Avatar/System/807831_rrsd2v.png', 'khoandps24828@fpt.edu.vn', 'audio3', 'publicaudio3', '2023-10-27 10:00:00', 'User 3', '2023-10-27 10:00:00');
+
+
+INSERT INTO WISHLIST (ADDDATE, USERTYPEID, RECORDINGID)
+VALUES 
+('2023-10-25', 1, 1),
+('2023-10-26', 2, 2),
+('2023-10-27', 3, 3);
+
+
+INSERT INTO SONGGENRE (IDGENRE, IDRECORD)
+VALUES 
+(1, 1),
+(2, 2),
+(3, 3);
+
+
+INSERT INTO MONITOR (ACCOUNT, RECORDINGID)
+VALUES 
+('jvke@gmail.com', 1),
+('mck@gmail.com', 2),
+('khoandps24828@fpt.edu.vn', 3);
+
+
+INSERT INTO RECORDING (RECORDINGIDNAME, AUDIOFILEURL, PUBLICIDAUDIOFILE, LYRICSURL, PUBLICIDLYRICS, LIKES, DURATION, SONGSTYLE, MOOD, CULTURE, INSTRUMENT, VERSIONS, STUDIO, IDMV, PRODUCE, RECORDINGDATE, ISDELETED, SONGSID, EMAILCREATE)
+VALUES 
+('Recording 1', 'audiofile1.mp3', 'publicaudiofile1', 'lyrics1.txt', 'publiclyrics1', 100, 240, 'Style 1', 'Mood 1', 'Culture 1', 'Instrument 1', 'Version 1', 'Studio 1', 'MV001', 'Producer 1', '2023-10-25', 0, 1, 'user1@example.com'),
+('Recording 2', 'audiofile2.mp3', 'publicaudiofile2', 'lyrics2.txt', 'publiclyrics2', 150, 180, 'Style 2', 'Mood 2', 'Culture 2', 'Instrument 2', 'Version 2', 'Studio 2', 'MV002', 'Producer 2', '2023-10-26', 0, 2, 'user2@example.com'),
+('Recording 3', 'audiofile3.mp3', 'publicaudiofile3', 'lyrics3.txt', 'publiclyrics3', 200, 210, 'Style 3', 'Mood 3', 'Culture 3', 'Instrument 3', 'Version 3', 'Studio 3', 'MV003', 'Producer 3', '2023-10-27', 1, 3, 'user3@example.com');
+
+
+INSERT INTO GENRE (NAMEGENRE)
+VALUES 
+('Genre 1'),
+('Genre 2'),
+('Genre 3');
+
+
+INSERT INTO WRITTER (ARTISTID, SONGSID)
+VALUES 
+(3, 1),
+(4, 2),
+(3, 3);
+
+
+INSERT INTO SONGS (SONGNAME, IMAGEID, REALEASEDAY, ISDELETED, DESCRIPTIONS, ARTISTCREATE)
+VALUES 
+('Song 1', 'Avatar/System/807831_rrsd2v.png', '2023-10-25', 0, 'Description 1', 1),
+('Song 2', 'Avatar/System/807831_rrsd2v.png', '2023-10-26', 0, 'Description 2', 2),
+('Song 3', 'Avatar/System/807831_rrsd2v.png', '2023-10-27', 1, 'Description 3', 3);
+
+
+INSERT INTO ARTIST (ARTISTNAME, DATEOFBIRTH, FULLNAME, PLACEOFBIRTH, BIO, IMAGEGALLERY, PUBLICIDIMAGEGALLERY, SOCIALMEDIALINKS, ACTIVE, DATESTARTED, VERIFY, PROFILEIMAGE, BACKGROUDIMAGE, EMAIL)
+VALUES 
+('mck', '1990-01-01', 'rptmck', 'Place 1', 'Bio 1', 'gallery1.jpg', 'publicgallery1', 'Social Links 1', 'Active', '2023-10-25', 1, 'Avatar/System/807831_rrsd2v.png', 'Avatar/System/807831_rrsd2v.png', 'mck@gmail.com'),
+('jvke', '1995-05-05', 'Sigjvke', 'Place 2', 'Bio 2', 'gallery2.jpg', 'publicgallery2', 'Social Links 2', 'Active', '2023-10-26', 1, 'Avatar/System/807831_rrsd2v.png', 'Avatar/System/807831_rrsd2v.png', 'jvke@gmail.com');
+
+
+INSERT INTO USERTYPE (NAMETYPE, STARTDATE, ENDDATE, STATUS, PAYMENTSTATUS, ACCOUNTID, SUBCRIPTIONID)
+VALUES 
+('PREMIUM', '2023-10-25', '2023-11-25', 'Active', 1, 'jvke@gmail.com', 1),
+('BASIC', '2023-10-26', '2023-11-26', 'Inactive', 0, 'mck@gmail.com', 2),
+('PREMIUM', '2023-10-27', '2023-11-27', 'Active', 1, 'khoandps24828@fpt.edu.vn', 3);
+
+
+INSERT INTO SUBCRIPTIONS (SUBCRIPTIONTYPE, PRICE, DESCRIPTION, CREATEDATE, DURATION)
+VALUES 
+(1, 9.99, 'Subscription 1', '2023-10-25', 30),
+(2, 19.99, 'Subscription 2', '2023-10-26', 90),
+(3, 29.99, 'Subscription 3', '2023-10-27', 365);
+
+
+INSERT INTO FOLLOWER (FOLLOWDATE, ACCOUNT_A, ACCOUNT_B)
+VALUES 
+('2023-10-25', 1, 2),
+('2023-10-26', 1, 3),
+('2023-10-27', 2, 3);
+
+
+INSERT INTO AUTHOR (IDROLE, EMAIL)
+VALUES 
+(1, 'jvke@gmail.com'),
+(2, 'mck@gmail.com'),
+(3, 'khoandps24828@fpt.edu.vn');
+
+
+INSERT INTO ACCOUNTS (EMAIL,PASSWORD,USENAME,BIRTHDAY,GENDER,COUNTRY,ISVERIFY,IMAGEID)
+VALUES 
+('jvke@gmail.com', '$2a$12$eX7AUZVUW.QC.6ZNxwXtUu0Qn03546/D58VH/oqnN3uhXF1044v.G', 'jvkeeee', '2001-03-03', 1, 'US', 1, 'Avatar/System/807831_rrsd2v.png'),
+('mck@gmail.com', '$2a$12$eX7AUZVUW.QC.6ZNxwXtUu0Qn03546/D58VH/oqnN3uhXF1044v.G', 'prt.mck', '1995-05-05', 2, 'VN', 1, 'Avatar/System/807831_rrsd2v.png'),
+('khoandps24828@fpt.edu.vn', '$2a$12$eX7AUZVUW.QC.6ZNxwXtUu0Qn03546/D58VH/oqnN3uhXF1044v.G', 'khoa', '2000-10-10', 1, 'CA', 0, 'Avatar/System/807831_rrsd2v.png');
+
+
+INSERT INTO ROLE (NAMEROLE)
+VALUES 
+('STAFF'),
+('MANAGER'),
+('ARTIST'),
+('USER'),
+('PODCAST');
 
 INSERT INTO  IMAGES 
-	VALUES ('Avatar/System/807831_rrsd2v.png','https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png','https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png',512,512)
+	VALUES ('Avatar/System/807831_rrsd2v.png',512,'https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png','https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png',512)
+
 
 
 INSERT INTO ACCOUNTS(EMAIL,PASSWORD,USENAME,BIRTHDAY,GENDER,COUNTRY,ISVERIFY,IMAGEID) 
@@ -491,3 +725,4 @@ BEGIN
 END
 
 exec sp_filter  12
+

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rhymthwave.DTO.MessageResponse;
 import com.rhymthwave.ServiceAdmin.IAccountServiceAdmin;
 import com.rhymthwave.entity.Account;
-import com.rhymthwave.entity.Author;
 import com.rhymthwave.entity.TypeEnum.EROLE;
 
 import lombok.RequiredArgsConstructor;
@@ -30,8 +29,10 @@ public class API_MangerAccount {
 	public ResponseEntity<?> getAllUser(
 			@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
 			@RequestParam(value = "sortBy", required = false, defaultValue = "asc") String sortBy,
-			@RequestParam(value = "sortfield", required = false, defaultValue = "account.email") String sortField,
+			@RequestParam(value = "sortfield", required = false, defaultValue = "email") String sortField,
 			@RequestParam(value = "role", required = false, defaultValue = "USER") EROLE role) {
+
+		
 		Page<Account> pages = accountServiceAdmin.findAllAccountByRole(page, sortBy, sortField,role);
 		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", pages));
 	}
@@ -42,5 +43,6 @@ public class API_MangerAccount {
 		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", account));
 	}
 	
+
 
 }

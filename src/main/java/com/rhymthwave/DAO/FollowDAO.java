@@ -7,10 +7,15 @@ import org.springframework.stereotype.Repository;
 
 import com.rhymthwave.entity.Author;
 import com.rhymthwave.entity.Follow;
+import java.util.List;
+
 
 @Repository
 public interface FollowDAO extends JpaRepository<Follow, Long>{
 	
 	@Query("select o from Follow o where o.authorsAccountA = :accountA and o.authorsAccountB = :accountB")
 	Follow findFollowByAccount(@Param("accountA") Author accountA, @Param("accountA") Author accountB);
+	
+	List<Follow> findByAuthorsAccountA(Author authorsAccountA);
+	
 }

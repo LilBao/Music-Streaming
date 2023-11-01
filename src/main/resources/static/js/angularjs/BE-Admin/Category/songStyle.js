@@ -61,15 +61,17 @@ app.controller("songStyleController", function ($scope, $http, $cookies,$log , $
 			$scope.load_all();
 			$scope.reset();
 			$scope.success = true
-			showStickyNotification("Successfully", "success", 2000);
-
+			$timeout( function(){
+				$scope.closeAlert();
+			}, 2000 );
 		}).catch(error => {
-			showStickyNotification(error.data.message, "success", 2000);
-
+			console.log("Error", error)
 		});
 	}
 
-
+	$scope.closeAlert = function(){
+        $scope.success = false;
+    }
 
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
@@ -83,11 +85,11 @@ app.controller("songStyleController", function ($scope, $http, $cookies,$log , $
 			$scope.itemCountries[index] = resp.data;
 			$scope.load_all();
 			$scope.success = true
-			showStickyNotification("Successfully", "success", 2000);
-
+			$timeout( function(){
+				$scope.closeAlert();
+			}, 2000 );
 		}).catch(error => {
-			showStickyNotification(error.data.message, "success", 2000);
-
+			$log.error(error.data);
 		});
 	}
 
@@ -103,11 +105,11 @@ app.controller("songStyleController", function ($scope, $http, $cookies,$log , $
 			$scope.load_all();
 			$scope.reset();
 			$scope.success = true
-			showStickyNotification("Successfully", "success", 2000);
-
+			$timeout( function(){
+				$scope.closeAlert();
+			}, 2000 );
 		}).catch(error => {
-			showStickyNotification(error.data.message, "success", 2000);
-
+			console.log("Error", error);
 		});
 	}
 
@@ -118,8 +120,7 @@ app.controller("songStyleController", function ($scope, $http, $cookies,$log , $
 			$scope.form = resp.data.data;
 			$scope.key = key;
 		}).catch(error => {
-			showStickyNotification(error.data.message, "success", 2000);
-
+			console.log("Error", error)
 		});
 	}
 
