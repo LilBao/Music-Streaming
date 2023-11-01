@@ -36,7 +36,7 @@ public class Artist implements Serializable {
 	@Column(name = "ARTISTID")
 	private long artistId;
 
-	@Column(name = "ARTISTNAME",columnDefinition = "nvarchar")
+	@Column(name = "ARTISTNAME")
 	private String artistName;
 
 	@Column(name = "DATEOFBIRTH")
@@ -51,13 +51,13 @@ public class Artist implements Serializable {
 	@Column(name = "BIO")
 	private String bio;
 
-	@Column(name = "IMAGEGALLERY")
+	@Column(name = "IMAGEGALLERY",columnDefinition = "nvarchar")
 	private String[] imagesGallery;
 	
-	@Column(name = "PUBLICIDIMAGEGALLERY")
+	@Column(name = "PUBLICIDIMAGEGALLERY",columnDefinition = "nvarchar")
 	private String[] publicIdImageGallery;
 
-	@Column(name = "SOCIALMEDIALINKS")
+	@Column(name = "SOCIALMEDIALINKS",columnDefinition = "nvarchar")
 	private String[] socialMediaLinks;
 
 	@Column(name = "ACTIVE")
