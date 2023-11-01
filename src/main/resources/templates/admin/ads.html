@@ -21,62 +21,59 @@
                         <div class="iq-card iq-card-block iq-card-stretch iq-card-height  mb-0">
                            <div class="iq-card-header text-center">
                               <div class="iq-header-title">
-                                 <h4 class="card-title mb-0 ">Home Image slideshow</h4>
+                                 <h4 class="card-title mb-0 ">ADS</h4>
                               </div>
                            </div>
                            <div class="iq-card-body ">
 
                               <div class="row">
-                                 <div class="col-md-4 col-sm-6 mb-3">
-                                    <div class="edit-blog">
-
-                                       <a href="#">
-                                          <img src="../../static/img/bannerBog.png" class="card-img-top" alt="...">
-                                       </a>
-
-                                       <div class="dots-edit ">
-                                          <a href data-bs-toggle="dropdown" id="Notify" class="nav-link"> <i
-                                                class="bi bi-three-dots"></i></a>
-                                          <div class="dropdown-menu" style="min-width: 5rem;">
-                                             <div class="dp-main-menu">
-
-                                                <a href="#" class="dropdown-item message-item mt-1">
-                                                   <i class="bi bi-pen icon-pen-edit"></i>
-                                                   <div class="note-info-desmis">
-                                                      <div class="dropdown-edit-font">
-                                                         <p class="note-name">Edit</p>
-
-                                                      </div>
-
-                                                   </div>
-                                                </a>
-                                             </div>
-                                          </div>
-                                       </div>
-
+                             <div>
+                              <style>.custab{
+                                 border: 1px solid #ccc;
+                                 padding: 5px;
+                                 margin: 5% 0;
+                                 box-shadow: 3px 3px 2px #ccc;
+                                 transition: 0.5s;
+                                 }
+                             .custab:hover{
+                                 box-shadow: 3px 3px 0px transparent;
+                                 transition: 0.5s;
+                                 }</style>
+                             </div>
+                           
+                                 <div class="container">
+                                    <div class="row col-md-offset-2 custyle">
+                                    <table class="table table-striped custab">
+                                    <thead>
+                                    <a href="#" class="btn btn-primary btn-xs pull-right"><b>+</b> Add new categories</a>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Title</th>
+                                            <th>Parent ID</th>
+                                            <th class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>News</td>
+                                                <td>News Cate</td>
+                                                <td class="text-center"><a class='btn btn-info btn-xs' href="#"><span class="bi bi-pencil-square"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="bi bi-trash3"></span> Del</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>Products</td>
+                                                <td>Main Products</td>
+                                                <td class="text-center"><a class='btn btn-info btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>Blogs</td>
+                                                <td>Parent Blogs</td>
+                                                <td class="text-center"><a class='btn btn-info btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
+                                            </tr>
+                                    </table>
                                     </div>
-                                    <div class=" text-center">
-                                       <div class="image-number-display">
-                                          1
-                                       </div>
-                                    </div>
-                                 </div>
-
-                                    
-                                 <div class="col-md-4 col-sm-6 mb-3">
-                                    <div class="edit-blog addSlideImage" id="test" ng-click="cl()">
-                                      
-                                       <input hidden="true" id="file" type="file" style="font-size: 10px;"/>
-                                          <div class="iconAddSlideImage"  >
-                                             
-                                             <i class="bi bi-plus-circle-dotted" id="addImage"></i>
-                                              
-                                          </div>
-
-                                    </div>
-                                    
-                                 </div>
-      
+                                </div>
                               </div>
                               
 

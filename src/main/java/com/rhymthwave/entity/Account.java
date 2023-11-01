@@ -43,7 +43,7 @@ public class Account implements Serializable {
 	@Column(name = "GENDER")
 	private int gender;
 
-	@Column(name = "COUNTRY")
+	@Column(name = "COUNTRY",columnDefinition = "nvarchar", length = 30)
 	private String country;
 
 	@Column(name = "ISVERIFY")

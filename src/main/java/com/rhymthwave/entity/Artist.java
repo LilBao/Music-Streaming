@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.annotations.Nationalized;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -31,31 +33,31 @@ public class Artist implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ARTISTID")
+	@Column(name = "ARTISTID", length = 5000)
 	private long artistId;
 
-	@Column(name = "ARTISTNAME")
+	@Column(name = "ARTISTNAME", length = 5000)
 	private String artistName;
 
-	@Column(name = "DATEOFBIRTH")
+	@Column(name = "DATEOFBIRTH", length = 5000)
 	private Date dateOfBirth;
 
-	@Column(name = "FULLNAME")
+	@Column(name = "FULLNAME", length = 5000)
 	private String fullName;
 
-	@Column(name = "PLACEOFBIRTH")
+	@Column(name = "PLACEOFBIRTH", length = 5000)
 	private String placeOfBirth;
 
 	@Column(name = "BIO")
 	private String bio;
 
-	@Column(name = "IMAGEGALLERY")
+	@Column(name = "IMAGEGALLERY",columnDefinition = "varchar(5000)")
 	private String[] imagesGallery;
 	
-	@Column(name = "PUBLICIDIMAGEGALLERY")
+	@Column(name = "PUBLICIDIMAGEGALLERY" , length = 5000 ,columnDefinition = "varchar(5000)")
 	private String[] publicIdImageGallery;
 
-	@Column(name = "SOCIALMEDIALINKS")
+	@Column(name = "SOCIALMEDIALINKS", length = 5000,columnDefinition = "varchar")
 	private String[] socialMediaLinks;
 
 	@Column(name = "ACTIVE")
