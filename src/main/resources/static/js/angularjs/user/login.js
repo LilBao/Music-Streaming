@@ -24,8 +24,20 @@ app.controller('loginCtrl', function ($scope, $http) {
     });
 
 
+    // $scope.loginRequest={};
+    // $('#login').click(function(){
+    //     var url = host+"/v1/users/login";
+    //     var data = angular.copy($scope.loginRequest);
+    //     $http.post(url,data).then(resp=>{
+    //         setCookie("token",resp.data.data.accessToken);
+    //     })
+    // })
+  })
+
+
   })
 })
+
 function showCaptchaDialog(event) {
   event.preventDefault(); // Prevent form submission
 
