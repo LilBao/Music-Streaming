@@ -17,45 +17,45 @@ app.controller("tableAccountController", function ($scope, $http, $cookies, $log
 
 	$scope.load_all_User = (role) => {
 		$http.get(apiAccount,{params:{role}}).then(resp => {
-			$scope.items = resp.data.data.content;
-			$scope.utilitiesPage.totalPages(resp.data.data.totalPages);
+			$scope.items = resp.data.data;
+		//	$scope.utilitiesPage.totalPages(resp.data.data.totalPages);
 			$scope.author  = role;
 		}).catch(error => {
 			console.log("Error", error)
 		});
 	}
 
-	$scope.goToPage = function (pageNumber) {
+	// $scope.goToPage = function (pageNumber) {
 
-		$http.get(apiAccount, 
-			{
-			params: { page: pageNumber, role : $scope.author}
-		    }
-		)
-			.then(resp => {
-				$scope.items = resp.data.data.content;
-				$scope.currentPage = pageNumber;
-			}).catch(error => {
-				console.log("Error", error)
-			});
-	};
+	// 	$http.get(apiAccount, 
+	// 		{
+	// 		params: { page: pageNumber, role : $scope.author}
+	// 	    }
+	// 	)
+	// 		.then(resp => {
+	// 			$scope.items = resp.data.data.content;
+	// 			$scope.currentPage = pageNumber;
+	// 		}).catch(error => {
+	// 			console.log("Error", error)
+	// 		});
+	// };
 
-	$scope.utilitiesPage = {
+	// $scope.utilitiesPage = {
 
-		totalPages(totalPages) {
-			$scope.page.length = 0;
-			for (var i = 0; i <= totalPages - 1 ; i++) {
-				$scope.page.push(i);
-			}
-		},
+	// 	totalPages(totalPages) {
+	// 		$scope.page.length = 0;
+	// 		for (var i = 0; i <= totalPages - 1 ; i++) {
+	// 			$scope.page.push(i);
+	// 		}
+	// 	},
 
-		firstPage() {
-			$scope.goToPage($scope.page[0]);
-		},
-		endPage() {
-			$scope.goToPage($scope.page[$scope.page.length - 1]);
-		}
-	}
+	// 	firstPage() {
+	// 		$scope.goToPage($scope.page[0]);
+	// 	},
+	// 	endPage() {
+	// 		$scope.goToPage($scope.page[$scope.page.length - 1]);
+	// 	}
+	// }
 
 	$scope.profileById = (idUser) =>{
 		$http.get(apiAccount+ `/${idUser}` ).then(resp => {
