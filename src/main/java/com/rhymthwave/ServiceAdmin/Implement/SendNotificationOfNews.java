@@ -42,7 +42,7 @@ public class SendNotificationOfNews implements INotification<NewDTO> {
 			email.setFrom("ngonhien3103@gmail.com");
 			email.setTo(account.getEmail());
 			email.setSubject(noti.title().toUpperCase());
-			email.setBody(sendMailTemplateSer.getContentForNews(noti.title(), "templateNews", noti.content(),
+			email.setBody(sendMailTemplateSer.getContentForNews(noti.title(), "templateNews", noti.summary(),
 					urlImg));
 			log.info(">>>>>>>>> Email dang hoat dong");
 			mailService.enqueue(email);
