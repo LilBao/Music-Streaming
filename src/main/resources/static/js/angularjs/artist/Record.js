@@ -42,10 +42,9 @@ app.controller('recordCtrl', function ($scope, $http) {
                     console.log(error)
                 })
             })
-            console.log("success")
+            showStickyNotification('Create record success', 'success', 3000);
         }).catch(error => {
-            console.log(data.get('fileRecord'))
-            console.log(data.get('fileLyrics'))
+            showStickyNotification('Create record fail', 'danger', 3000);
         })
     }
 

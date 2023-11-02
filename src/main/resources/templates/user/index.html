@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -30,7 +30,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <script src="../../static/js/angularjs/user/index.js"></script>
     <link rel="stylesheet" href="../../static/css/cssUser/profile.css" />
 </head>
@@ -143,10 +142,10 @@
             </div>
             <div class="col-md-6 col-9 player-controls-center d-flex flex-column align-items-center">
                 <div class="controls-bar d-flex align-items-center">
-                    <button class="btn border-0 py-0 shuffle button-control-music" data-bs-hover="tooltip"
+                    <button id="shuffle" class="btn border-0 py-0 button-control-music" data-bs-hover="tooltip"
                         title="Bật phát ngẫu nhiên!"><i class="bi bi-shuffle"></i></button>
 
-                    <button class="btn border-0 py-0 prev button-control-music"><i
+                    <button id="prev" class="btn border-0 py-0 button-control-music"><i
                             class="bi bi-skip-start-circle"></i></button>
 
                     <button id="play" class="btn border-0 py-0 button-control-music-play">
@@ -156,7 +155,7 @@
                         <i class="bi bi-pause-circle"></i>
                     </button>
 
-                    <button class="btn border-0 py-0 next button-control-music"><i
+                    <button id="next" class="btn border-0 py-0 button-control-music"><i
                             class="bi bi-skip-end-circle"></i></button>
 
                     <button id="loop" class="btn border-0 py-0 button-control-music"><i
@@ -165,8 +164,7 @@
                 <div class="time-line w-100 d-flex align-items-center flex-fill">
                     <span style="font-size: x-small;" id="current-time">00:00</span>
                     <input id="duration-audio" class="duration-bar w-100" type="range" min="0" step="0.1" name="" id="">
-                    <audio id="audio"
-                        src="https://res.cloudinary.com/div9ldpou/video/upload/v1698121884/Records/MCK/Nghe%20nh%C6%B0%20t%C3%ACnh%20y%C3%AAu%20-%20MCK%20remixx%20prod.%20By%20Kewtiie.mp3.mp3"></audio>
+                    <audio id="audio" src=""></audio>
                     <div class="line-first"></div>
                     <div class="line-current"></div>
                     <div class="circle"></div>
@@ -216,6 +214,7 @@
             </div>
         </div>
     </div>
+    <script src="../../static/js/angularjs/user/index.js"></script>
     <script src="../../static/js/Utiliez/CookiesUtil.js"></script>
     <script src="../../static/js/jscustom/UI-Js-Admin/bootstrap-show-notification.js"></script>
     <script src="../../static/js/jscustom/toasts.js"></script>

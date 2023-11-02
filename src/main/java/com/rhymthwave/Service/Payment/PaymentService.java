@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public interface PaymentService {
 	Payment	vnpay(Integer total,String email,Integer subscriptionId);
 	
-	Payment createPaypal(BigDecimal fee,Long subscription, String email,HttpServletRequest req, String pathReturn, String pathCancel);
+	Payment createPaypal(BigDecimal fee,Integer subscription, String email,HttpServletRequest req, String pathReturn, String pathCancel);
 	CompletedOrder paypal(String token);
 	
 	StripeTokenDTO createCardStripe(StripeTokenDTO stripe);

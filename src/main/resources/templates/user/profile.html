@@ -16,9 +16,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../../static/css/cssUser/profile.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="../../static/js/Utiliez/CookiesUtil.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../../static/js/angularjs/user/profile.js"></script>
 </head>
 
-<body>
+<body ng-app="myApp" ng-controller="profileCtrl">
     <div class="container-fluid">
         <div class="background-in4">
             <img src="../../static/img/bg.png" class="w-100" alt="">
@@ -26,12 +30,13 @@
                 <img src="../../static/img/dz.png" alt="">
                 <div class="in4-text">
                     <p>Profile</p>
-                    <p class="in4-name">Nguyễn Khoa</p>
+                    <p class="in4-name">{{profile.username}}</p>
                     <p>11 Public Playlist - 4,607 Followers</p>
                 </div>
             </div>
             <div class="flow">
-                <button class="pr-btn me-5 ms-3 mb-3"> Follow</button>
+                <button class="btn border-1 me-5 ms-3 mb-3" id="btn-follow"> Follow</button>
+                <button class="btn border-1 me-5 ms-3 mb-3" ng-click="unfollow()" id="btn-unfollow"> UnFollow</button>
                 <div class="in"><i class="bi bi-three-dots"></i></div>
             </div>
         </div>

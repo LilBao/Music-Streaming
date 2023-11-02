@@ -2,7 +2,8 @@ var app = angular.module("myApp", ["ngRoute"]);
 app.config(function ($routeProvider) {
     $routeProvider
         .when("/", {
-            templateUrl: "discover.html"
+            templateUrl: "discover.html",
+            //controller: "myCtrl"
         })
         .when("/main", {
             templateUrl: "discover.html"
@@ -47,18 +48,34 @@ app.service('queueService', function() {
 app.service('audioService', function() {
     var audioSrc;
     var lyricsSrc;
+    var listPlay = [];
+    var current;
     return {
         setAudio: function(src) {
-            audioSrc = scr
+            audioSrc = src
         },
         getAudio: function() {
             return audioSrc;
         },
+
         setLyricsSrc: function(lyricSrc){
             lyricsSrc=lyricSrc;
         },
         getLyricsSrc: function(){
-            return lyricsSrc
+            return lyricsSrc;
+        },
+
+        setListPlay: function(list){
+            listPlay = list;
+        },
+        getListPlay: function(){
+            return listPlay;
+        },
+        setCurrentSong: function(index){
+            current = index;
+        },
+        getCurrentSong: function(){
+            return current;
         }
     };
 });
