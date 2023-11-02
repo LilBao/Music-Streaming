@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "PODCASTS")
+@Table(name = "PODCAST")
 public class Podcast implements Serializable {
 
 	@Id

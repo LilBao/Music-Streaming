@@ -65,22 +65,16 @@
               <input class="form-check-input" type="checkbox" role="switch" checked>
               <label class="form-check-label" for="flexSwitchCheckDefault">Remember me</label>
             </div>
-            <div ng-if="successMessage" class="success-message">
-              {{ successMessage }}
-          </div>
-          <div ng-if="errorMessage" class="error-message">
-              {{ errorMessage }}
-          </div>
             <div class="bl-btn-login">
               <button onclick="showCaptchaDialog(event)" type="submit" class="btn-login btn">Log in</button>
             </div>
           </form>
           <div class="bl-fogot ">
-            <a href="http://127.0.0.1:5500/Music-Streaming/src/main/resources/templates/user/fogotpassword.html" ng-click="navigateToForgotPassword()">Forgot your password</a>
+            <a href="./fogotpassword.html">Forgot your password</a>
           </div>
           <hr class="bl-hr">
           <div class="bl-sign-up">
-            <p>Don't have account? <a href="">Sign up for Rhymthwave</a></p>
+            <p>Don't have account? <a href="./signup.html">Sign up for Rhymthwave</a></p>
 
           </div>
         </div>
