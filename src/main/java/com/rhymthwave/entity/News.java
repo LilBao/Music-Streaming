@@ -93,6 +93,6 @@ public class News implements Serializable {
 	private Image image;
 
 	@ManyToOne
-	@JoinColumn(name = "AUTHORID")
+	@JoinColumn(name = "EMAIL")
 	private Account account;
 }

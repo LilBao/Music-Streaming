@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "NOTIFICATION ")
+@Table(name = "NOTIFICATION")
 public class Notification implements Serializable {
 
 	@Id

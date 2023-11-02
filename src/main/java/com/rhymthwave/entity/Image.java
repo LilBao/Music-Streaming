@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 public class Image implements Serializable {
 
 	@Id
-	@Column(name = "ACCESSID")
+	@Column(name = "ACCESSID",columnDefinition = "varchar()", nullable = false)
 	private String accessId;
 
 	@Column(name = "URL",columnDefinition = "varchar(max)")

@@ -28,7 +28,7 @@ import lombok.NoArgsConstructor;
 public class Account implements Serializable {
 
 	@Id
-	@Column(name = "EMAIL")
+	@Column(name = "EMAIL",columnDefinition = "varchar(250)",nullable = false)
 	private String email;
 
 	@Column(name = "PASSWORD",columnDefinition = "varchar(500)")
@@ -61,7 +61,7 @@ public class Account implements Serializable {
 	@Column(name = "ISBLOCKED")
 	private boolean isBlocked;
 
-	@Column(name = "REFRESHTOKEN",columnDefinition = "varchar(6000)")
+	@Column(name = "REFRESHTOKEN",columnDefinition = "varchar(max)")
 	private String refreshToken;
 
 	@OneToOne
