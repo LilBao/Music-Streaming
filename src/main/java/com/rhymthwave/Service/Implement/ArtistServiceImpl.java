@@ -1,6 +1,7 @@
 package com.rhymthwave.Service.Implement;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,14 @@ public class ArtistServiceImpl implements ArtistService, CRUD<Artist, Integer> {
 
 	@Override
 	public Artist findOne(Integer key) {
-		return dao.findById(key).get();
+		
+		Optional<Artist> artist = dao.findById(key);
+		
+		if(artist.isEmpty()) {
+			return null;
+		}
+		
+		return artist.get();
 	}
 
 	@Override

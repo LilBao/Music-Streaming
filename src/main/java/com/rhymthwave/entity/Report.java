@@ -26,12 +26,12 @@ public class Report implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "REPORTID")
-	private int reportId;
+	private Integer reportId;
 
 	@Column(name = "REPORTDATE")
 	private Date reportDate;
 
-	@Column(name = "DESCRIPTION")
+	@Column(name = "DESCRIPTION",columnDefinition = "nvarchar(55)")
 	private String description;
 
 	@ManyToOne
@@ -43,8 +43,8 @@ public class Report implements Serializable{
 	private Recording recording;
 
 	@ManyToOne
-	@JoinColumn(name = "POSTCASTID")
-	private Podcast podcast;
+	@JoinColumn(name = "PODCASTID")
+	private Podcast podcastId;
 
 	@ManyToOne
 	@JoinColumn(name = "EPISODESID")

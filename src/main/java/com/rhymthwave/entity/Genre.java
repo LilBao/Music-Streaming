@@ -29,7 +29,7 @@ public class Genre implements Serializable {
 	@Column(name = "ID")
 	private Integer id;
 
-	@Column(name = "NAMEGENRE")
+	@Column(name = "NAMEGENRE",columnDefinition = "varchar(30)")
 	private String nameGenre;
 
 	@JsonIgnore

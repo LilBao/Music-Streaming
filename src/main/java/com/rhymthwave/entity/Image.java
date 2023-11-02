@@ -26,10 +26,10 @@ public class Image implements Serializable {
 	@Column(name = "ACCESSID")
 	private String accessId;
 
-	@Column(name = "URL")
+	@Column(name = "URL",columnDefinition = "varchar(max)")
 	private String url;
 	
-	@Column(name = "PUBLICID")
+	@Column(name = "PUBLICID",columnDefinition = "varchar(max)")
 	private String publicId;
 
 	

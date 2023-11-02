@@ -25,7 +25,7 @@ public class Monitor implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "INSTRUMENTID")
-	private long instrumentId;
+	private Integer instrumentId;
 
 	@ManyToOne
 	@JoinColumn(name = "RECORDINGID")
