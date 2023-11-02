@@ -56,11 +56,9 @@ public class FollowREST {
 	@DeleteMapping("/api/v1/follow")
 	public ResponseEntity<MessageResponse> cancelFollow(HttpServletRequest req, @RequestParam("email") String email,@RequestParam("type") Integer type){
 		String main = host.getEmailByRequest(req);
-		//System.out.println(author);
 		Author accountA = authorSer.findAuthor(1, main);
 		Author accountB = authorSer.findAuthor(type, email);
 		Follow follow = followSer.findFollowByAccount(accountA, accountB);
-		
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudFollow.delete(follow.getFollowerId())));
 	}
 }

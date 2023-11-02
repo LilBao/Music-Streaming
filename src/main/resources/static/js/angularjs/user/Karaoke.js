@@ -1,11 +1,12 @@
 var host ="http://localhost:8080/api/"
 app.controller('karaokeCtrl', function ($http,audioService) {
-    audioService.setLyricsSrc("https://res.cloudinary.com/div9ldpou/raw/upload/v1698121887/Lyrics/MCK/Nghe%20nh%C6%B0%20t%C3%ACnh%20y%C3%AAu%20-%20MCK%20remixx%20prod.%20By%20Kewtiie.lrc");
-    var lyricsSrc = audioService.getLyricsSrc().trim();
     lyrics = "";
-    getLyrics(lyricsSrc);
-    function getLyrics(lyricsSrc){
-        var url = host + "v1/cloudinary/read-lyrics?url="+lyricsSrc;
+    if(audioService.getLyricsSrc() !==undefined){
+        getLyrics();
+    }
+    
+    function getLyrics(){
+        var url = host + "v1/cloudinary/read-lyrics?url="+String(audioService.getLyricsSrc());
         $http.get(url).then(resp => {
             lyrics = resp.data.data;
             var lyricsContainer = document.getElementById('lyricsContainer');
