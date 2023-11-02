@@ -27,7 +27,7 @@ public class Access implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ACCESSID")
-	private int accessId;
+	private Integer accessId;
 
 	@ManyToOne
 	@JsonIgnore

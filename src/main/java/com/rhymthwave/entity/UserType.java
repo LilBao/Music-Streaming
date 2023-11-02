@@ -30,9 +30,9 @@ public class UserType implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "USERTYPEID")
-	private Long userTypeId;
+	private Integer userTypeId;
 
-	@Column(name = "NAMETYPE")
+	@Column(name = "NAMETYPE",columnDefinition = "varchar(20)")
 	private String nameType;
 
 	@Column(name = "STARTDATE")
@@ -41,7 +41,7 @@ public class UserType implements Serializable {
 	@Column(name = "ENDDATE")
 	private Date endDate;
 
-	@Column(name = "STATUS")
+	@Column(name = "STATUS",columnDefinition = "nvarchar(55)")
 	private String status;
 
 	@Column(name = "PAYMENTSTATUS")

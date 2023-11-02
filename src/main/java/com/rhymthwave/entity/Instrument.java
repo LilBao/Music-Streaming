@@ -24,18 +24,18 @@ public class Instrument implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "INSTRUMENTID")
-	private int instrumentId;
+	private Integer instrumentId;
 
-	@Column(name = "INSTRUMENTNAME")
+	@Column(name = "INSTRUMENTNAME",columnDefinition ="nvarchar(255)")
 	private String instrumentName;
 	
-	@Column(name = "CREATEBY",length = 255)
+	@Column(name = "CREATEBY",columnDefinition = "nvarchar(255)")
 	private String createBy;
 	
 	@Column(name = "CREATEDATE")
 	private Date createDate;
 	
-	@Column(name = "MODIFIEDBY", length = 255)
+	@Column(name = "MODIFIEDBY",columnDefinition = "nvarchar(255)")
 	private String modifiedBy;
 	
 	@Column(name = "MODIFIDATE")

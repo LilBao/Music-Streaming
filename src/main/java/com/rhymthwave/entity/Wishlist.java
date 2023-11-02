@@ -26,7 +26,7 @@ public class Wishlist implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "WISHLISTID")
-	private int wishlistId;
+	private Integer wishlistId;
 
 	@Column(name = "ADDDATE")
 	private Date addDate;
