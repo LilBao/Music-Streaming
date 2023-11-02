@@ -123,7 +123,7 @@ public class ArtistREST {
 			String[] urls = (String[]) respGallery.get("uploadedUrls");
 			String[] publicIds= (String[]) respGallery.get("uploadedPublicid");
 			
-			if(artist.getImagesGallery()!=null) {
+			if(artist.getImagesGallery()!=null && urls != null) {
 			String[] newUrls = new String[artist.getImagesGallery().length+urls.length];
 			System.arraycopy(urls, 0, newUrls, 0, urls.length);
 		    System.arraycopy(artist.getImagesGallery(), 0, newUrls, urls.length, artist.getImagesGallery().length);
@@ -132,11 +132,11 @@ public class ArtistREST {
 				artist.setImagesGallery(urls);
 			}
 
-			if(artist.getPublicIdImageGallery()!=null) {
+			if(artist.getPublicIdImageGallery()!=null && publicIds != null) {
 			String[] newPublicId = new String[artist.getImagesGallery().length+publicIds.length];
 			System.arraycopy(publicIds, 0, newPublicId, 0, publicIds.length);
 		    System.arraycopy(artist.getImagesGallery(), 0, newPublicId, publicIds.length, artist.getImagesGallery().length);
-			artist.setImagesGallery(newPublicId);
+			artist.setPublicIdImageGallery(newPublicId);
 			}else {
 				artist.setPublicIdImageGallery(publicIds);
 			}

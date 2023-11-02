@@ -73,7 +73,6 @@ app.controller('upComingCtrl', function ($scope, $http) {
                     //create ft chung vào database
                     $http.get(url).then(resp => {
                         $scope.artist = resp.data.data;
-                        console.log();
                         $scope.createWritter(song, $scope.artist)
                     }).catch(error => {
 
@@ -81,9 +80,9 @@ app.controller('upComingCtrl', function ($scope, $http) {
 
                 });
             }
-            console.log('success')
+            showStickyNotification('Create upcoming success', 'success', 3000);
         }).catch(error => {
-
+            showStickyNotification('Create upcoming fail', 'danger', 3000);
         })
     }
 

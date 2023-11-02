@@ -76,11 +76,11 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 			String[] uploadedPublicid = new String[files.length];
 			for (int i = 0; i < files.length; i++) {
 				Map<String, Object> params = new HashMap<>();
-				params.put("public_id", path + "/" + files[i].getOriginalFilename());
+				params.put("public_id", (path + "/" + files[i].getOriginalFilename()));
 				params.put("resource_type", "auto");
-				Map<?, ?> result = cloudinary.uploader().upload(files[i].getBytes(), ObjectUtils.emptyMap());
-				uploadedUrls[i] = (String) result.get("url");
-				uploadedPublicid[i] = (String) result.get("public_id");
+				Map<?, ?> result = cloudinary.uploader().upload(files[i].getBytes(), params);
+				uploadedUrls[i] = String.valueOf(result.get("url"));
+				uploadedPublicid[i] =String.valueOf(result.get("public_id"));
 			}
 
 			Map<String, Object> response = new HashMap<>();

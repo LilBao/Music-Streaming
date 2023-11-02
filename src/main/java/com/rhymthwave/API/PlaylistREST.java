@@ -73,8 +73,7 @@ public class PlaylistREST {
 	public ResponseEntity<MessageResponse> createPlaylist(@RequestBody Playlist playlist, HttpServletRequest req) {
 		String owner = host.getEmailByRequest(req);
 		Account account = crudAccount.findOne(owner);
-		if (account.getUserType().get(0).getPlaylists().toArray().length < subSer.getSubByName("BASIC")
-				.getPlaylistAllow()) {
+		if (account.getUserType().get(0).getPlaylists().toArray().length < subSer.getSubByName("BASIC").getPlaylistAllow()) {
 			playlist.setUsertype(account.getUserType().get(0));
 			return ResponseEntity.ok(new MessageResponse(true, "success", crudPlaylist.create(playlist)));
 		} else {
