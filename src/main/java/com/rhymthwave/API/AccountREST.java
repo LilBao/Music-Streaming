@@ -3,6 +3,7 @@ package com.rhymthwave.API;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,10 +19,10 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping(value = "/api/v1/accounts")
 @RequiredArgsConstructor
 public class AccountREST {
 	private final CRUD<Account,String> crudAccount;
+	
 	private final AccountServiceImpl accountService;
 	
 	private final GetHostByRequest host;
@@ -32,5 +33,8 @@ public class AccountREST {
 		return ResponseEntity.ok(new MessageResponse(true, "success",crudAccount.findOne(owner)));
 	}
 
-
+	@GetMapping("/api/v1/account/{id}")
+	public ResponseEntity<MessageResponse> findAccount(@PathVariable("id") String id){
+		return ResponseEntity.ok(new MessageResponse(true, "success",crudAccount.findOne(id)));
+	}
 }

@@ -4,22 +4,26 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
     $scope.image = {};
 
     //Get information artist - lấy thông tin artist đăng nhập
-    $http.get(host + "/v1/profile", {
-        headers: { 'Authorization': 'Bearer ' + getCookie('token') }
-    }).then(resp => {
-        $scope.artist = resp.data.data;
-    }).catch(error => {
-        console.log("Not found artist profile")
-    })
+    
+    $scope.me = function(){
+        $http.get(host + "/v1/profile", {
+            headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+        }).then(resp => {
+            $scope.artist = resp.data.data;
+        }).catch(error => {
+            console.log("Not found artist profile")
+        })
+    }
+    $scope.me();
 
     //update artist
     $scope.updateArtist = function (data) {
         let url = host + "/v1/artist";
         $http.put(url, data).then(resp => {
             $scope.artist = resp.data.data;
-            console.log("success")
+            showStickyNotification('Update profile success', 'success', 3000);
         }).catch(error => {
-            console.log("error")
+            showStickyNotification('Update profile fail', 'danger', 3000);
         })
     }
 
@@ -44,9 +48,9 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
         var data = angular.copy($scope.artist);
         $http.put(url, data).then(resp => {
             $scope.artist = resp.data.data
-            console.log("success");
+            showStickyNotification('Remove profile picture success', 'success', 3000);
         }).catch(error => {
-            console.log("error");
+            showStickyNotification('Remove profile picture fail', 'danger', 3000);
         })
     }
 
@@ -63,10 +67,10 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
             },
             transformRequest: angular.identity
         }).then(function (response) {
-            console.log("Update Successfully");
+            showStickyNotification('Update image success', 'success', 3000);
         }).catch(function (error) {
             console.log(error);
-            console.log("Update Failure");
+            showStickyNotification('Update image fail', 'danger', 3000);
         });
     }
 
@@ -138,9 +142,10 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
                 },
                 transformRequest: angular.identity
             }).then(resp => {
-                console.log("success");
+                $scope.me();
+                showStickyNotification('Update gallery successfully','success',3000)
             }).catch(error => {
-                console.log("error");
+                showStickyNotification('Update gallery fail','danger',3000)
             })
         }
     }
@@ -222,10 +227,10 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
     $scope.deleteImageCloudinary = function (publicId) {
         let url = host + "/v1/cloudinary?public_id=" + publicId;
         $http.delete(url).then(resp => {
-            console.log("success");
+            showStickyNotification('Delete picture success', 'success', 3000);
             $scope.listTypePicture();
         }).catch(error => {
-            console.log("error");
+            showStickyNotification('Delete picture fail', 'danger', 3000);
         })
     }
 
@@ -247,8 +252,6 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
 
     //recovery profile-picture
     $scope.recoveryProfilePicture = function (assetId, type) {
-        console.log(assetId);
-        console.log(type);
         var data = angular.copy($scope.artist);
         let url = host + "/v1/image/" + assetId;
         $http.get(url).then(resp => {
@@ -259,8 +262,9 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
                 data.backgroundImage = resp.data.data;
                 $scope.updateArtist(data);
             }
+            showStickyNotification('Recover image success', 'success', 3000);
         }).catch(error => {
-
+            showStickyNotification('Recover image fail', 'danger', 3000);
         })
 
     }
