@@ -56,6 +56,9 @@ public class Recording implements Serializable {
 	@Column(name = "SONGSTYLE",columnDefinition = "nvarchar(55)")
 	private String songStyle;
 
+	@Column(name = "LISTENED")
+	private Long listened;
+	
 	@Column(name = "MOOD",columnDefinition = "nvarchar(55)")
 	private String mood;
 

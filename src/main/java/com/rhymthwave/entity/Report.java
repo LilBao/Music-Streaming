@@ -43,8 +43,8 @@ public class Report implements Serializable{
 	private Recording recording;
 
 	@ManyToOne
-	@JoinColumn(name = "PODCASTID")
-	private Podcast podcastId;
+	@JoinColumn(name = "POSTCASTID")
+	private Podcast podcast;
 
 	@ManyToOne
 	@JoinColumn(name = "EPISODESID")

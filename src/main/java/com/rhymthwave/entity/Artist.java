@@ -51,13 +51,13 @@ public class Artist implements Serializable {
 	@Column(name = "BIO",columnDefinition = "nvarchar(max)")
 	private String bio;
 
-	@Column(name = "IMAGEGALLERY",columnDefinition = "varchar(max)")
+	@Column(name = "IMAGEGALLERY",columnDefinition = "nvarchar(max)")
 	private String[] imagesGallery;
 	
-	@Column(name = "PUBLICIDIMAGEGALLERY",columnDefinition = "varchar(max)")
+	@Column(name = "PUBLICIDIMAGEGALLERY",columnDefinition = "nvarchar(max)")
 	private String[] publicIdImageGallery;
 
-	@Column(name = "SOCIALMEDIALINKS",columnDefinition = "varchar(max)")
+	@Column(name = "SOCIALMEDIALINKS",columnDefinition = "nvarchar(max)")
 	private String[] socialMediaLinks;
 
 	@Column(name = "ACTIVE",columnDefinition = "nvarchar(55)")

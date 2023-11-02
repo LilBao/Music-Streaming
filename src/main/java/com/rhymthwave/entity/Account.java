@@ -61,16 +61,12 @@ public class Account implements Serializable {
 	@Column(name = "ISBLOCKED")
 	private boolean isBlocked;
 
-	@Column(name = "REFRESHTOKEN",columnDefinition = "varchar(6000)")
+	@Column(name = "REFRESHTOKEN",columnDefinition = "varchar(max)")
 	private String refreshToken;
 
 	@OneToOne
 	@JoinColumn(name = "IMAGEID")
 	private Image image;
-
-	@JsonIgnore
-	@OneToMany(mappedBy = "account",fetch = FetchType.EAGER)
-	private List<Author> author;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "account")
@@ -94,4 +90,8 @@ public class Account implements Serializable {
 	@JsonIgnore
 	@OneToOne(mappedBy = "account")
 	private Artist artist;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "account",fetch = FetchType.EAGER)
+	private List<Author> author;
 }

@@ -57,6 +57,9 @@ public class UserType implements Serializable {
 	@JoinColumn(name = "SUBCRIPTIONID")
 	private Subscription subscription;
 
+	@JsonIgnore
+	@OneToMany(mappedBy = "usertype")
+	private List<Wishlist> wishlists;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "usertype")
@@ -69,8 +72,5 @@ public class UserType implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "usertype")
 	private List<Playlist> playlists;
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "usertype")
-	private List<Wishlist> wishlists;
+
 }
