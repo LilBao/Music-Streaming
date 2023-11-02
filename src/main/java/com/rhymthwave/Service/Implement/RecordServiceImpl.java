@@ -11,7 +11,7 @@ import com.rhymthwave.Service.RecordService;
 import com.rhymthwave.entity.Recording;
 
 @Service
-public class RecordServiceImpl implements RecordService, CRUD<Recording, Integer>{
+public class RecordServiceImpl implements RecordService, CRUD<Recording, Long>{
 
 	@Autowired
 	RecordDAO dao;
@@ -35,16 +35,16 @@ public class RecordServiceImpl implements RecordService, CRUD<Recording, Integer
 	}
 
 	@Override
-	public Boolean delete(Integer key) {
-		if (key instanceof Integer && key >= 0) {
+	public Boolean delete(Long key) {
+		if (key instanceof Long && key >= 0) {
 			return true;
 		}
 		return false;
 	}
 
 	@Override
-	public Recording findOne(Integer key) {
-		if (key instanceof Integer && key >= 0) {
+	public Recording findOne(Long key) {
+		if (key instanceof Long && key >= 0) {
 			return dao.findById(key).get();
 		}
 		return null;

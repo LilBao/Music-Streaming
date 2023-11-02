@@ -30,7 +30,7 @@ public class Recording implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "RECORDINGID")
-	private long recordingId;
+	private Long recordingId;
 
 	@Column(name = "RECORDINGIDNAME")
 	private String recordingName;

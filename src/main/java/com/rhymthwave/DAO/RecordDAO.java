@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.rhymthwave.entity.Recording;
 
 @Repository
-public interface RecordDAO extends JpaRepository<Recording, Integer>{
+public interface RecordDAO extends JpaRepository<Recording, Long>{
 	@Query("Select o from Recording o where o.song is null and o.emailCreate = :creater")
 	List<Recording> getListRecordNotRaw(@Param("creater") String creater);
 	

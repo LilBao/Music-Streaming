@@ -41,7 +41,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RecordREST {
 	
-	private final CRUD<Recording, Integer> crudRecord;
+	private final CRUD<Recording, Long> crudRecord;
 
 	private final CloudinaryService cloudinary;
 
@@ -59,7 +59,7 @@ public class RecordREST {
 	}
 
 	@GetMapping("/api/v1/record/{id}")
-	public ResponseEntity<MessageResponse> getOneRecord(@PathVariable("id") Integer id) {
+	public ResponseEntity<MessageResponse> getOneRecord(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudRecord.findOne(id)));
 	}
 	
@@ -94,7 +94,7 @@ public class RecordREST {
 	}
 	
 	@PutMapping(value = "/api/v1/record-file/{id}", consumes = { "multipart/form-data" })
-	public ResponseEntity<MessageResponse> updateRecordFile(@PathVariable("id") Integer id,HttpServletRequest req,
+	public ResponseEntity<MessageResponse> updateRecordFile(@PathVariable("id") Long id,HttpServletRequest req,
 			@PathParam("fileRecord") MultipartFile fileRecord, @PathParam("fileLyrics") MultipartFile fileLyrics) {
 		String owner =host.getEmailByRequest(req);
 		Artist artist =artistSer.findByEmail(owner);
@@ -120,7 +120,7 @@ public class RecordREST {
 	}
 	
 	@DeleteMapping("/api/v1/record/{id}")
-	public ResponseEntity<MessageResponse> deleteRecord(@PathVariable("id") Integer id) {
+	public ResponseEntity<MessageResponse> deleteRecord(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudRecord.delete(id)));
 	}
 	
