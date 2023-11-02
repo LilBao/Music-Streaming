@@ -30,7 +30,7 @@ import lombok.NoArgsConstructor;
 public class Podcast implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "PODCASTID")
 	private Integer podcastId;
 

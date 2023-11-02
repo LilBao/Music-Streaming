@@ -50,7 +50,7 @@ app.controller("managerBlogController", function ($scope, $http, $cookies) {
                     image: news.image.url,
                     publishDate: news.publishDate,
                     createDate: news.createDate,
-                    account: news.account.image.url
+                   account: news.account.image.url
                 };
             });
             //  console.log($scope.posts)
@@ -81,7 +81,7 @@ app.controller("managerBlogController", function ($scope, $http, $cookies) {
     $scope.update = function (idNews) {
         var item = angular.copy($scope.form);
 		var url = apiNew +`/${idNews}`;
-        console.log(item)
+       
 		$http.put( url, item, {
 			headers: {
 				'Authorization': 'Bearer ' + $cookies.get(cookieName)
@@ -100,6 +100,7 @@ app.controller("managerBlogController", function ($scope, $http, $cookies) {
     
 	$scope.delete = function (key) {
 		var url = apiNew + `/${key}`;
+
 		$http.delete(url, {
 			headers: {
 				'Authorization': 'Bearer ' + $cookies.get(cookieName)
@@ -136,7 +137,7 @@ app.controller("managerBlogController", function ($scope, $http, $cookies) {
     $scope.findAllYear = function () {
         $http.get(apiNew + "/getyear").then(resp => {
             $scope.year = resp.data.data;
-
+         
         }).catch(error => {
 
         });
