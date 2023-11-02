@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "PODCASTS")
+@Table(name = "PODCAST")
 public class Podcast implements Serializable {
 
 	@Id
@@ -56,22 +56,22 @@ public class Podcast implements Serializable {
 	private String authorName;
 	
 	@OneToOne
-	@JoinColumn(name = "ACCESSID")
+	@JoinColumn(name = "IMGAGEID")
 	private Image image;
 
 	@ManyToOne
-	@JoinColumn(name = "TAGID")
+	@JoinColumn(name = "CATEGORY")
 	private Tag tag;
 
 	@ManyToOne
-	@JoinColumn(name = "EMAIL")
+	@JoinColumn(name = "ACCOUNTID")
 	private Account account;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "podcast",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "podcast")
 	private List<Episode> Episodes;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "podcastId",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "podcast")
 	private List<Report> reports;
 }

@@ -28,7 +28,7 @@ import lombok.NoArgsConstructor;
 public class Account implements Serializable {
 
 	@Id
-	@Column(name = "EMAIL",columnDefinition = "varchar(250)",nullable = false)
+	@Column(name = "EMAIL")
 	private String email;
 
 	@Column(name = "PASSWORD",columnDefinition = "varchar(500)")
@@ -69,10 +69,6 @@ public class Account implements Serializable {
 	private Image image;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "account",fetch = FetchType.EAGER)
-	private List<Author> author;
-
-	@JsonIgnore
 	@OneToMany(mappedBy = "account")
 	private List<News> news;
 
@@ -94,4 +90,8 @@ public class Account implements Serializable {
 	@JsonIgnore
 	@OneToOne(mappedBy = "account")
 	private Artist artist;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "account",fetch = FetchType.EAGER)
+	private List<Author> author;
 }

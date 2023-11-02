@@ -32,6 +32,6 @@ public class SongGenre implements Serializable {
 	private Genre genre;
 
 	@ManyToOne
-	@JoinColumn(name = "RECORDINGID")
+	@JoinColumn(name = "IDRECORD")
 	private Recording recording;
 }
