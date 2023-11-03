@@ -53,6 +53,7 @@ app.controller('myPodcastCtrl',function($scope,$http){
             transformRequest: angular.identity
         }).then(resp => {
             $scope.coverImg = null;
+            localStorage.setItem('podcast',JSON.stringify(resp.data.data));
         }).catch(error =>{
 
         })
@@ -64,11 +65,10 @@ app.controller('myPodcastCtrl',function($scope,$http){
         data.socialMediaLink = $scope.socials.join(" ");
         $http.put(url,data).then(resp => {
             if($scope.coverImg!==null){
-                $scope.updateImage(data.podcastId);
-            }
-            $scope.podcast= resp.data.data;
-            localStorage.setItem('podcast',JSON.stringify(resp.data.data));
-            showStickyNotification('Update Successfully', 'success', 3000);
+                $scope.updateImage(resp.data.data.podcastId);
+                showStickyNotification('Update Successfully', 'success', 3000);
+            }      
+            
         }).catch(error => {
 
         })
@@ -84,8 +84,8 @@ app.controller('myPodcastCtrl',function($scope,$http){
             var file = event.target.files[0];
             if(file){
                 $scope.coverImg = file;
+                console.log($scope.coverImg)
                 $scope.$apply(function () {
-                    $scope.coverImg = file;
                     var reader = new FileReader();
                     reader.onload = function (e) {
                         var imageDataUrl = e.target.result;

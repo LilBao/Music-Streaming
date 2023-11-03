@@ -37,7 +37,7 @@ public class PaymentServiceImpl implements PaymentService{
 	
 
 	@Override
-	public Payment createPaypal(BigDecimal fee,Long subscription, String email ,HttpServletRequest req, String pathReturn, String pathCancel) {
+	public Payment createPaypal(BigDecimal fee,Integer subscription, String email ,HttpServletRequest req, String pathReturn, String pathCancel) {
 		return paypalSer.createPayment(fee,subscription,email ,req, pathReturn, pathCancel);
 	}
 

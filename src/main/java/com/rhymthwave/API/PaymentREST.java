@@ -40,7 +40,7 @@ public class PaymentREST {
 	
 	
 	@PostMapping("/api/v1/payment-paypal")
-	public ResponseEntity<Payment> createPaymetnPaypal(@RequestParam("total") BigDecimal total,@RequestParam("subscriptionId") Long subscription,HttpServletRequest req,String pathReturn, String pathCancel){
+	public ResponseEntity<Payment> createPaymetnPaypal(@RequestParam("total") BigDecimal total,@RequestParam("subscriptionId") Integer subscription,HttpServletRequest req,String pathReturn, String pathCancel){
 		pathReturn = "/complete-payment-paypal";
 		pathCancel = "/";
 		String email = host.getEmailByRequest(req);

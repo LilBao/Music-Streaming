@@ -1,10 +1,11 @@
 var host = "http://localhost:8080/api/";
-app.controller('myCtrl', function ($scope, $http) {
+app.controller('myCtrl', function ($scope, $http, audioService) {
     $('#myModal').modal('show');
     $scope.account = {};
     $scope.playlist = {};
     $scope.listPlaylist = [];
     $scope.listFollow = [];
+    $scope.record = {};
 
     $scope.Owner = function () {
         let url = host + "v1/account";
@@ -28,7 +29,7 @@ app.controller('myCtrl', function ($scope, $http) {
 
     $scope.findMyListFollow = function () {
         let url = host + "v1/my-list-follow";
-        $http.get(url,{
+        $http.get(url, {
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
             $scope.listFollow.push(...resp.data.data);
@@ -53,8 +54,8 @@ app.controller('myCtrl', function ($scope, $http) {
         })
     }
 
-    $scope.deletePlaylist = function(idPlaylist){
-        let url = host + "v1/playlist/"+idPlaylist;
+    $scope.deletePlaylist = function (idPlaylist) {
+        let url = host + "v1/playlist/" + idPlaylist;
         $http.delete(url).then(resp => {
             showStickyNotification("Delete playlist success", 'success', 3000);
         }).catch(err => {
@@ -65,7 +66,6 @@ app.controller('myCtrl', function ($scope, $http) {
     document.getElementById('create-playlist').addEventListener('click', function () {
         $scope.createPlaylist();
     })
-
 
     //Playlist
     var playlistChild = document.getElementsByClassName('playlist-child');
@@ -84,7 +84,27 @@ app.controller('myCtrl', function ($scope, $http) {
     var download = document.getElementById('download');
     var currentTimes = document.getElementById('current-time');
     var totalTime = document.getElementById('total-time');
+    var next = document.getElementById('next');
+    var prev = document.getElementById('prev');
+    var shuffle = document.getElementById('shuffle');
     volumeAudio.value = audio.volume;
+
+    $scope.selectSong = function (item, list, index) {
+        audioService.setAudio(item.audioFileUrl);
+        audioService.setLyricsSrc(item.lyricsUrl);
+        audioService.setListPlay(list);
+        audioService.setCurrentSong(index);
+        audio.src = audioService.getAudio();
+        if (resume.hidden === false && play.hidden === true) {
+            audio.play();
+        } else {
+            audio.pause();
+        }
+    }
+
+    if (audioService.getAudio() !== null) {
+        audio.src = audioService.getAudio();
+    }
 
     audio.onloadedmetadata = function () {
         totalTime.innerText = time(audio.duration);
@@ -116,8 +136,31 @@ app.controller('myCtrl', function ($scope, $http) {
         } catch (error) {
 
         }
-
     }
+
+    //end 
+    audio.addEventListener("ended", function () {
+        if (isShuffle === true) {
+            let source = audioService.getListPlay()[Math.floor(Math.random()* (audioService.getListPlay().length))];
+            audio.src = source.audioFileUrl;
+            if (resume.hidden === false && play.hidden === true) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+        } else {
+            let index = audioService.getCurrentSong() + 1;
+            audioService.setCurrentSong(index);
+            let source = audioService.getListPlay()[index];
+            audio.src = source.audioFileUrl;
+            if (resume.hidden === false && play.hidden === true) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+        }
+    });
+
     //thanh duration thay đổi
     duration.addEventListener('change', function () {
         audio.currentTime = duration.value;
@@ -135,6 +178,45 @@ app.controller('myCtrl', function ($scope, $http) {
         audio.pause();
         resume.hidden = true;
         play.hidden = false;
+    })
+
+    //next
+    next.addEventListener('click', function () {
+        let index = audioService.getCurrentSong() + 1;
+        audioService.setCurrentSong(index);
+        let source = audioService.getListPlay()[index];
+        audio.src = source.audioFileUrl;
+        if (resume.hidden === false && play.hidden === true) {
+            audio.play();
+        } else {
+            audio.pause();
+        }
+    })
+
+
+    //prev
+    prev.addEventListener('click', function () {
+        var index = audioService.getCurrentSong() - 1;
+        audioService.setCurrentSong(index);
+        var source = audioService.getListPlay()[index];
+        audio.src = source.audioFileUrl;
+        if (resume.hidden === false && play.hidden === true) {
+            audio.play();
+        } else {
+            audio.pause();
+        }
+    })
+
+    //shuffle
+    var isShuffle = false;
+    shuffle.addEventListener('click', function () {
+        if (shuffle.classList.contains('isShuffle')) {
+            shuffle.classList.remove("isShuffle");
+            isShuffle = false;
+        } else {
+            shuffle.classList.add("isShuffle");
+            isShuffle = true;
+        }
     })
 
     //mute
@@ -165,12 +247,12 @@ app.controller('myCtrl', function ($scope, $http) {
     loop.addEventListener('click', function () {
         let icon = loop.children;
         if (loop.classList.contains('loop')) {
-            icon.style.color="green"
+            icon.style.color = "green"
             loop.classList.remove("repeat");
             loop.classList.add("loop");
             audio.loop = true;
         } else {
-            icon.style.color="white"
+            icon.style.color = "white"
             loop.classList.remove("loop");
             audio.loop = false;
         }
@@ -203,5 +285,5 @@ app.controller('myCtrl', function ($scope, $http) {
 
     audio.load();
     $scope.Owner();
-    
+
 })

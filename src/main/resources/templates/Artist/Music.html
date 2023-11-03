@@ -110,7 +110,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3" id="album-release">
+                    <div ng-show="listAlbumReleased.length > 0" class="col-3" id="album-release">
                         <div ng-repeat="item in listAlbumReleased">
                             <a type="button" ng-click="detail(item.albumId,'album')" data-bs-toggle="modal"
                                 data-bs-target="#detail">
@@ -180,7 +180,7 @@
                                                             <ul class="dropdown-menu">
                                                                 <li ng-repeat="item in listRecord">
                                                                     <a ng-click="addRecordToSongOrAlbum(typeDetail,typeDetail==='album' ? album : song,item)"
-                                                                        class="dropdown-item" href="#">
+                                                                        class="dropdown-item">
                                                                         <div class="d-flex align-items-center">
                                                                             <div>
                                                                                 <img style="width: 50px; height: 50px; object-fit: cover;"
@@ -274,7 +274,7 @@
                                                     </div>
                                                     <div class="d-flex justify-content-between">
                                                         <button class="btn">Elimidate Song</button>
-                                                        <button ng-show="artist.artistId !== song.artistCreate"
+                                                        <button ng-show="artist.artistId !== song.artistCreate && typeDetail === 'song'"
                                                             class="btn"
                                                             ng-click="outSong(song.songId,artist.artistId)">Out
                                                             Song</button>
@@ -446,17 +446,26 @@
                 </div>
             </div>
             <div class="tab-p tab-pane" id="tab6-p">
-                <div class="row">
+                <div class="row justify-content-around">
                     <div class="col-5">
-                        <textarea class="w-100" name="" id="lyricsContainer" rows="20"></textarea>
+                        <textarea class="w-100" name="" id="lyricsContainer" rows="15"></textarea>
                     </div>
-                    <div class="col-7">
+                    <div class="col-5">
+                        <textarea class="w-100" name="" id="after-generate" rows="15" readonly></textarea>
+                    </div>
+                    <div class="col-12 mt-3">
                         <audio class="w-100" controls id="audio-lyrics" src=""></audio>
-                        <div class="d-flex justify-content-between">
-                            <input type="file" id="fileAudio">
-                            <button class="btn btn-primary rounded-pill" id="btn-generate">Generate</button>
-                        </div>
-                        
+                        <div class="row mt-3 align-items-center">
+                            <div class="col-5">
+                                <input class="form-control" type="file" id="fileAudio">
+                            </div>
+                            
+                            <div class="col-7">
+                                <button class="btn text-white px-4 bg-black rounded-pill" id="btn-generate">Generate</button>
+                                <button class="btn text-white px-4 bg-black rounded-pill" id="btn-reset">Reset</button>
+                            </div>
+                            
+                        </div>     
                     </div>
                 </div>
             </div>

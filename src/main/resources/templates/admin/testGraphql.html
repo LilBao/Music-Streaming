@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html >
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/graphql-request@6.1.0/build/cjs/index.min.js"></script>
+
+<body>
+
+<div ng-app="myApp"  ng-controller="myCtrl"> 
+
+<p>Today's welcome message is:</p>
+
+
+
+<ul>
+  
+    <li ng-repeat="data in asd"> {{data._username}} </li>
+</ul>
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+
+<script>
+var app = angular.module('myApp', []);
+
+app.service('graphqlService',function ($http) {
+    const graphqlEndpoint = 'http://localhost:8080/graphql'; // Replace with your GraphQL server's endpoint
+
+    this.executeQuery = function (query) {
+        const options = {
+            method: 'POST',
+            url: graphqlEndpoint,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            data: JSON.stringify({ query }),
+        };
+
+        return $http(options)
+            .then(response => response.data.data)
+            .catch(error => {
+                throw error.data.errors;
+            });
+    };
+});
+
+app.controller('myCtrl', function(graphqlService, $scope) {
+
+    $scope.dase="321";
+    const query = `{
+        users {
+            _id
+            _username
+            _password
+        }
+    }`;
+
+ 
+    graphqlService.executeQuery(query)
+          
+        .then(data => {
+           
+            $scope.asd = data.users;
+         
+        })
+        .catch(error => {
+          console.log(error);
+        });
+
+       
+});
+
+</script>
+
+</body>
+</html>

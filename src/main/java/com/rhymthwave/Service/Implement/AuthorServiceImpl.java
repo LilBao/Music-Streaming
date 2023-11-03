@@ -14,8 +14,8 @@ public class AuthorServiceImpl implements AuthorService{
 	AuthorDAO dao;
 	
 	@Override
-	public Author findAuthor(Integer idRole, String email) {
-		return dao.findAuthor(idRole, email);
+	public Author findAuthor(Integer roleId, String email) {
+		return dao.findAuthor(roleId, email);
 	}
 	
 	
