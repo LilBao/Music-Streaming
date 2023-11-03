@@ -29,7 +29,7 @@ public class Playlist_Podcast implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "PLAYLIST_PODCASTID")
-	private long playlistPodcastId;
+	private Integer playlistPodcastId;
 
 	@ManyToOne
 	@JoinColumn(name = "PLAYLISTID")

@@ -25,7 +25,7 @@ public class SongGenre implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	private Long id;
+	private Integer id;
 
 	@ManyToOne
 	@JoinColumn(name = "IDGENRE")

@@ -1,11 +1,8 @@
 package com.rhymthwave.ServiceAdmin.Implement;
 
+import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.rhymthwave.DAO.AccountDAO;
@@ -27,19 +24,19 @@ public class AccountServiceAdminImp implements IAccountServiceAdmin{
 	private final SortBy<String, String> sortService;
 	
 	@Override
+	public List<Account> findAllAccountByRole(Integer page, String sortBy, String sortField, EROLE role) {
 
-	public Page<Account> findAllAccountByRole(Integer page, String sortBy, String sortField, EROLE role) {
 		try {
-			Sort sort = sortService.sortBy(sortBy, sortField);
+//			Sort sort = sortService.sortBy(sortBy, sortField);
+//
+//			Pageable pageable = PageRequest.of(page, 6,sort);
 
-			Pageable pageable = PageRequest.of(page, 6,sort);
-
-			Page<Account> pageAccount = accountDAO.findAllAccountRole(pageable, role);
-			log.info(">>>>>>>>>>> AccountServiceAdminImp:findAllAccount |  Page findAllAccountByRole: {}",pageAccount);
+			List<Account> pageAccount = accountDAO.findAllAccountRole( role);
+		//	log.info(">>>>>>>>>>> AccountServiceAdminImp:findAllAccountByRole |  Page findAllAccountByRole: {}",pageAccount);
 			return pageAccount;
 		} catch (Exception e) {
-			log.error(">>>>>>>>>>> AccountServiceAdminImp:findAllAccount | Error findAllAccount: {}",e.getMessage());
-			return null;
+			log.error(">>>>>>>>>>> AccountServiceAdminImp:findAllAccountByRole | Error findAllAccount: {}",e.getMessage());
+		return null;
 		}
 	}
 

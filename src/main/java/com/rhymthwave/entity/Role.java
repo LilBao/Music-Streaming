@@ -33,7 +33,7 @@ public class Role implements Serializable {
 	@Column(name = "IDROLE")
 	private Integer roleId;
 
-	@Column(name = "NAMEROLE")
+	@Column(name = "NAMEROLE",columnDefinition = "varchar(35)")
 	@Enumerated(EnumType.STRING)
 	private EROLE role = EROLE.USER;
 

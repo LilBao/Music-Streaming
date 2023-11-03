@@ -32,55 +32,61 @@ public class Recording implements Serializable {
 	@Column(name = "RECORDINGID")
 	private Long recordingId;
 
-	@Column(name = "RECORDINGIDNAME")
+	@Column(name = "RECORDINGIDNAME",columnDefinition = "nvarchar(55)")
 	private String recordingName;
 
-	@Column(name = "AUDIOFILEURL")
+	@Column(name = "AUDIOFILEURL",columnDefinition = "varchar(max)")
 	private String audioFileUrl;
 	
-	@Column(name = "PUBLICIDAUDIOFILE")
+	@Column(name = "PUBLICIDAUDIOFILE",columnDefinition = "varchar(max)")
 	private String publicIdAudio;
 
-	@Column(name = "LYRICSURL")
+	@Column(name = "LYRICSURL",columnDefinition = "nvarchar(max)")
 	private String lyricsUrl;
 
-	@Column(name = "PUBLICIDLYRICS")
+	@Column(name = "PUBLICIDLYRICS",columnDefinition = "varchar(max)")
 	private String publicIdLyrics;
 	
-	@Column(name = "LISTENED")
-	private Long listened;
+	@Column(name = "LIKES")
+	private long likes;
 
-	@Column(name = "SONGSTYLE")
+	@Column(name = "DURATION")
+	private int duration;
+
+	@Column(name = "SONGSTYLE",columnDefinition = "nvarchar(55)")
 	private String songStyle;
 
-	@Column(name = "MOOD")
+	@Column(name = "LISTENED")
+	private Long listened;
+	
+	@Column(name = "MOOD",columnDefinition = "nvarchar(55)")
 	private String mood;
 
-	@Column(name = "CULTURE")
+	@Column(name = "CULTURE",columnDefinition = "nvarchar(55)")
 	private String culture;
 
-	@Column(name = "INSTRUMENT")
+	@Column(name = "INSTRUMENT",columnDefinition = "nvarchar(55)")
 	private String instrument;
 
-	@Column(name = "VERSIONS")
+	@Column(name = "VERSIONS",columnDefinition = "nvarchar(55)")
 	private String versions;
 
-	@Column(name = "STUDIO")
+	@Column(name = "STUDIO",columnDefinition = "nvarchar(55)")
 	private String studio;
 
-	@Column(name = "IDMV")
+	@Column(name = "IDMV",columnDefinition = "varchar(200)")
 	private String idMv;
 
-	@Column(name = "PRODUCE")
+	@Column(name = "PRODUCE",columnDefinition = "nvarchar(55)")
 	private String produce;
 
 	@Column(name = "RECORDINGDATE")
 	private Date recordingdate = new Date();
 
 	@Column(name = "ISDELETED")
-	private Boolean isDeleted;
+	private boolean isDeleted;
 	
-	@Column(name = "EMAILCREATE")
+	@Column(name = "EMAILCREATE",columnDefinition = "varchar(255)")
 	private String emailCreate;
 
 

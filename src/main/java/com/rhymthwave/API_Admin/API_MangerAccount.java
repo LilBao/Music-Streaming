@@ -1,6 +1,7 @@
 package com.rhymthwave.API_Admin;
 
-import org.springframework.data.domain.Page;
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -31,9 +32,9 @@ public class API_MangerAccount {
 			@RequestParam(value = "sortBy", required = false, defaultValue = "asc") String sortBy,
 			@RequestParam(value = "sortfield", required = false, defaultValue = "email") String sortField,
 			@RequestParam(value = "role", required = false, defaultValue = "USER") EROLE role) {
+		List<Account> pages = accountServiceAdmin.findAllAccountByRole(page, sortBy, sortField,role);
 
 		
-		Page<Account> pages = accountServiceAdmin.findAllAccountByRole(page, sortBy, sortField,role);
 		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", pages));
 	}
 	

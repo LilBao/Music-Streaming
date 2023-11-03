@@ -18,27 +18,27 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "NOTIFICATION ")
+@Table(name = "NOTIFICATION")
 public class Notification implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "NOTIFICATIONID")
-	private int notificationId;
+	private Integer notificationId;
 	
-	@Column(name = "TITILE")
+	@Column(name = "TITILE",columnDefinition = "nvarchar(55)")
 	private String title;
 	
-	@Column(name = "CONTENT")
+	@Column(name = "CONTENT",columnDefinition = "varchar(max)")
 	private String content;
 	
-	@Column(name = "CREATEBY",length = 255)
+	@Column(name = "CREATEBY",columnDefinition = "nvarchar(255)")
 	private String createBy;
 	
 	@Column(name = "CREATEDATE")
 	private Date createDate;
 	
-	@Column(name = "MODIFIEDBY", length = 255)
+	@Column(name = "MODIFIEDBY",columnDefinition = "nvarchar(255)")
 	private String modifiedBy;
 	
 	@Column(name = "MODIFIDATE")

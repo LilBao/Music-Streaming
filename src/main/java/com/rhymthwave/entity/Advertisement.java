@@ -22,21 +22,21 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "ADVERTISEMENT ")
+@Table(name = "ADVERTISEMENT")
 public class Advertisement implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "IDADS")
-	private long adId;
+	private Integer adId;
 
-	@Column(name = "TITLE")
+	@Column(name = "TITLE",columnDefinition = "nvarchar(255)")
 	private String title;
 
-	@Column(name = "CONTENT")
+	@Column(name = "CONTENT",columnDefinition = "nvarchar(255)")
 	private String content;
 
-	@Column(name = "URL")
+	@Column(name = "URL",columnDefinition = "nvarchar(max)")
 	private String url;
 
 	@Column(name = "STARTDATE")
@@ -48,10 +48,10 @@ public class Advertisement implements Serializable {
 	@Column(name = "BUDGET")
 	private float budget;
 
-	@Column(name = "STATUS")
+	@Column(name = "STATUS",columnDefinition = "nvarchar(55)")
 	private String status;
 
-	@Column(name = "TARGETAUDIENCE")
+	@Column(name = "TARGETAUDIENCE",columnDefinition = "nvarchar(55)")
 	private String targetAudience;
 
 	@Column(name = "CLICKED")
@@ -60,19 +60,19 @@ public class Advertisement implements Serializable {
 	@Column(name = "PRIORITY")
 	private int priority;
 
-	@Column(name = "AUDIOFILE",length = 2000)
+	@Column(name = "AUDIOFILE",columnDefinition = "nvarchar(max)")
 	private String audioFile;
 	
-	@Column(name = "PUBLICIDAUDIO",length = 2000)
+	@Column(name = "PUBLICIDAUDIO",columnDefinition = "nvarchar(max)")
 	private String  publicIdAudio;
 	
-	@Column(name = "TAG")
+	@Column(name = "TAG",columnDefinition = "varchar(55)")
 	private String tag;
 
 	@Column(name = "CREATEDATE")
 	private Date createDate;
 	
-	@Column(name = "MODIFIEDBY", length = 255)
+	@Column(name = "MODIFIEDBY",columnDefinition = "nvarchar(255)")
 	private String modifiedBy;
 	
 	@Column(name = "MODIFIDATE")

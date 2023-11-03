@@ -17,10 +17,10 @@ import com.rhymthwave.entity.TypeEnum.EROLE;
 public interface AccountDAO extends JpaRepository<Account, String>{
 
 	@Query("SELECT au.account FROM Author au WHERE au.role.role = :role")
-	Page<Account> findAllAccountRole(Pageable pageable, @Param("role") EROLE role);
+	List<Account> findAllAccountRole(@Param("role") EROLE role);
 	
 	@Query("SELECT au.account FROM Author au WHERE au.role.role = :role")
-	List<Account> findAllAccountRole(@Param("role") EROLE role);
+	List<Account> Account(@Param("role") EROLE role);
 	
 	Account findByEmail(String email);
 
