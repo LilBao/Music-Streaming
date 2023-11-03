@@ -30,7 +30,6 @@ public class Recording implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "RECORDINGID")
-
 	private Long recordingId;
 
 	@Column(name = "RECORDINGIDNAME",columnDefinition = "nvarchar(55)")

@@ -15,6 +15,9 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link rel="stylesheet" href="../../static/css/signup.css" />
   <script src="../../static/js/angularjs/user/signup.js"></script>
+  <link rel="stylesheet" href="../../static/css/toasts.css">
+  <script src="../../static/js/jscustom/UI-Js-Admin/bootstrap-show-notification.js"></script>
+  <script src="../../static/js/jscustom/toasts.js"></script>
 </head>
 
 <body ng-app="myApp" ng-controller="signupCtrl">
@@ -116,17 +119,10 @@
             <div class="bl-btn-login">
               <button type="submit" class="btn-login btn">Sign up</button>
             </div>
-            <div ng-show="successMessage" class="success-message">
-              {{ successMessage }}
-          </div>
-          
-          <div ng-show="errorMessage" class="error-message">
-              {{ errorMessage }}
-          </div>
           </form>
           <hr class="bl-hr">
           <div class="bl-sign-up">
-            <p>Have an account? <a href="http://127.0.0.1:5500/Music-Streaming/src/main/resources/templates/user/login.html">Log in</a></p>
+            <p>Have an account? <a href="./login.html">Log in</a></p>
           </div>
         </div>
       </div>
