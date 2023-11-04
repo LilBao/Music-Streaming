@@ -61,4 +61,16 @@ public class FollowREST {
 		Follow follow = followSer.findFollowByAccount(accountA, accountB);
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudFollow.delete(follow.getFollowerId())));
 	}
+	
+	@GetMapping("/api/v1/check-follow")
+	public ResponseEntity<MessageResponse> checkFollow(@RequestParam("email") String email,@RequestParam("type") Integer type, HttpServletRequest req){
+		String main = host.getEmailByRequest(req);
+		Author accountA = authorSer.findAuthor(1, main);
+		Author accountB = authorSer.findAuthor(type, email);
+		Follow follow = followSer.findFollowByAccount(accountA, accountB);
+		if (follow!=null) {
+			return ResponseEntity.ok(new MessageResponse(true,"success",follow));
+		}
+		return ResponseEntity.ok(new MessageResponse(false,"fail",null)); 
+	}
 }

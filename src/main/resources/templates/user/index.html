@@ -75,7 +75,7 @@
                                 <div class="playlist">
                                     <li ng-repeat="item in listFollow">
                                         <div class="d-flex align-items-center">
-                                            <img class="m-2 rounded-2 thumbnail-playlist" src="{{item.authorsAccountB.account.image !==null ? 'item.authorsAccountB.account.image':'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}" alt="">
+                                            <img class="m-2 rounded-2 thumbnail-playlist" src="{{item.authorsAccountB.account.image !==null ? item.authorsAccountB.account.image:'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}" alt="">
                                             <div>
                                                 <p class="p-0 m-0">{{item.authorsAccountB.role.role === 'PODCAST' ? item.authorsAccountB.account.username : item.authorsAccountB.account.artist.artistName}}</p>
                                                 <span>{{item.authorsAccountB.role.role}}</span>
@@ -84,10 +84,11 @@
                                     </li>
                                     <li ng-repeat="item in listPlaylist">
                                         <div class="d-flex align-items-center">
-                                            <img class="m-2 rounded-2 thumbnail-playlist" src="{{item.image !==null ? 'item.image.url':'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}" alt="">
+                                            <img class="m-2 rounded-2 thumbnail-playlist" src="{{item.image !==null ? item.image.url:'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}" alt="">
                                             <div>
                                                 <p class="p-0 m-0">{{item.playlistName}}</p>
                                                 <span>{{item.quantity}}</span>
+                                                <a href="#!playlist/{{item.playlistId}}">test {{item.playlistId}}</a>
                                             </div>
                                         </div>
                                     </li>
@@ -220,6 +221,7 @@
     <script src="../../static/js/angularjs/user/Karaoke.js"></script>
     <script src="../../static/js/angularjs/user/Queue.js"></script>
     <script src="../../static/js/angularjs/user/search.js"></script>
+    <script src="../../static/js/angularjs/user/playlist.js"></script>
 </body>
 
 </html>

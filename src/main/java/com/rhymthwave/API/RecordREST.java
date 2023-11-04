@@ -140,4 +140,9 @@ public class RecordREST {
 		String owner =host.getEmailByRequest(req);
 		return ResponseEntity.ok(new MessageResponse(true,"success",recordSer.findRecordDelete(owner)));
 	}
+	
+	@GetMapping("/api/v1/record-random")
+	public ResponseEntity<MessageResponse> findListRecordRandom(){
+		return ResponseEntity.ok(new MessageResponse(true,"success",recordSer.findListRecordRandom()));
+	}
 }

@@ -82,5 +82,10 @@ public class RecordServiceImpl implements RecordService, CRUD<Recording, Long>{
 		List<Recording> listRecord = dao.getRecordDelete(email);
 		return listRecord;
 	}
+
+	@Override
+	public List<Recording> findListRecordRandom() {
+		return dao.findListRandom();
+	}
 	
 }
