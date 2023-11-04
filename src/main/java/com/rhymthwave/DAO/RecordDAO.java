@@ -25,4 +25,7 @@ public interface RecordDAO extends JpaRepository<Recording, Long>{
 	
 	@Query("Select o from Recording o where o.isDeleted = true and o.emailCreate = :creater")
 	List<Recording> getRecordDelete(@Param("creater") String creater);
+	
+	@Query(value="SELECT r.* FROM RECORDING r join SONGS s on r.SONGSID = s.SONGSID ORDER BY NEWID()",nativeQuery = true)
+	List<Recording> findListRandom();
 }

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -89,7 +90,7 @@ public class Recording implements Serializable {
 	@Column(name = "EMAILCREATE",columnDefinition = "varchar(255)")
 	private String emailCreate;
 
-
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@ManyToOne
 	@JoinColumn(name = "SONGSID")
 	private Song song;

@@ -19,6 +19,10 @@ app.config(function ($routeProvider) {
             templateUrl: "Karaoke.html",
             controller:'karaokeCtrl'
         })
+        .when("/playlist/:id", {
+            templateUrl: "playlist.html",
+            controller:'playlistCtrl'
+        })
         .when("/queue", {
             templateUrl: "Queue.html",
             controller:'queueCtrl'

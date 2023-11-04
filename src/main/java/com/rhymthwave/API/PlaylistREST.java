@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -97,10 +98,11 @@ public class PlaylistREST {
 	}
 
 	@PutMapping(value = "/api/v1/playlist-image", consumes = { "multipart/form-data" })
-	public ResponseEntity<MessageResponse> updateImagePlaylist(@ModelAttribute Playlist playlist,
+	public ResponseEntity<MessageResponse> updateImagePlaylist(@RequestParam("id") Long id,
 			HttpServletRequest req, @PathParam("coverImg") MultipartFile coverImg) {
 		String owner = host.getEmailByRequest(req);
 		Account account = crudAccount.findOne(owner);
+		Playlist playlist = crudPlaylist.findOne(id);
 		if (coverImg != null) {
 			Map<?, ?> respImg = cloudinary.Upload(coverImg, "ImagePlaylist", account.getUsername());
 			Image image = imgSer.getEntity(respImg);

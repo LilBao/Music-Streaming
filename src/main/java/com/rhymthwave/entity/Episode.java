@@ -67,8 +67,8 @@ public class Episode implements Serializable {
 	@Column(name = "ISDELETED")
 	private boolean isDelete;
 	
-	@Column(name = "LIKES")
-	private Long likes;
+	@Column(name = "LISTENED")
+	private Long listened;
 	
 	@ManyToOne()
 	@JoinColumn(name = "PODCASTID")
