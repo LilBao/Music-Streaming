@@ -2,7 +2,7 @@
 var apiAccount = "http://localhost:8080/api/v1/admin/account";
 var apiRole = "http://localhost:8080/api/v1/admin/role";
 var cookieName = "token";
-app.controller("tableAccountController", function ($scope, $http, $cookies, $log) {
+app.controller("tableAccountController", function ($scope, $http) {
 
 	$scope.formUser = {};
 	$scope.items = [];
@@ -10,6 +10,9 @@ app.controller("tableAccountController", function ($scope, $http, $cookies, $log
 	$scope.currentPage = 0;
 	$scope.success = false;
 	$scope.author = 'USER';
+	$scope.countReport;
+	$scope.countWishlist;
+
 	$scope.reset = function () {
 		$scope.formUser = {};
 		$scope.key = null;
@@ -18,49 +21,37 @@ app.controller("tableAccountController", function ($scope, $http, $cookies, $log
 	$scope.load_all_User = (role) => {
 		$http.get(apiAccount,{params:{role}}).then(resp => {
 			$scope.items = resp.data.data;
-		//	$scope.utilitiesPage.totalPages(resp.data.data.totalPages);
+			console.log($scope.items)
+	
 			$scope.author  = role;
 		}).catch(error => {
 			console.log("Error", error)
 		});
 	}
 
-	// $scope.goToPage = function (pageNumber) {
-
-	// 	$http.get(apiAccount, 
-	// 		{
-	// 		params: { page: pageNumber, role : $scope.author}
-	// 	    }
-	// 	)
-	// 		.then(resp => {
-	// 			$scope.items = resp.data.data.content;
-	// 			$scope.currentPage = pageNumber;
-	// 		}).catch(error => {
-	// 			console.log("Error", error)
-	// 		});
-	// };
-
-	// $scope.utilitiesPage = {
-
-	// 	totalPages(totalPages) {
-	// 		$scope.page.length = 0;
-	// 		for (var i = 0; i <= totalPages - 1 ; i++) {
-	// 			$scope.page.push(i);
-	// 		}
-	// 	},
-
-	// 	firstPage() {
-	// 		$scope.goToPage($scope.page[0]);
-	// 	},
-	// 	endPage() {
-	// 		$scope.goToPage($scope.page[$scope.page.length - 1]);
-	// 	}
-	// }
-
 	$scope.profileById = (idUser) =>{
 		$http.get(apiAccount+ `/${idUser}` ).then(resp => {
-			$scope.formUser = resp.data.data
-			
+			$scope.formUser = resp.data.data;
+			console.log(resp.data)
+			$scope.countRp(idUser);
+			$scope.countWl(idUser);
+		}).catch(error => {
+			console.log("Error", error)
+		});
+	}
+
+	$scope.countRp = (idUser) =>{
+		$http.get(apiAccount+ `/${idUser}`+"/report" ).then(resp => {
+			$scope.countReport = resp.data.data
+		
+		}).catch(error => {
+			console.log("Error", error)
+		});
+	}
+
+	$scope.countWl = (idUser) =>{
+		$http.get(apiAccount+ `/${idUser}`+"/wishlist" ).then(resp => {
+			$scope.countWishlist = resp.data.data		
 		}).catch(error => {
 			console.log("Error", error)
 		});

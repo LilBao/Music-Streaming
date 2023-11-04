@@ -60,5 +60,27 @@ app.config(function($routeProvider,$cookiesProvider) {
   .when("/statistical_managerment", {
     templateUrl : "statistical_managerment.html",
     controller: "ChartController"
-  });
+  }).otherwise({ templateUrl : "404.html"});
+  
+});
+
+app.service('graphqlService',function ($http) {
+  const graphqlEndpoint = 'http://localhost:8080/graphql'; 
+
+  this.executeQuery = function (query) {
+      const options = {
+          method: 'POST',
+          url: graphqlEndpoint,
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          data: JSON.stringify({ query }),
+      };
+
+      return $http(options)
+          .then(response => response.data.data)
+          .catch(error => {
+              throw error.data.errors;
+          });
+  };
 });

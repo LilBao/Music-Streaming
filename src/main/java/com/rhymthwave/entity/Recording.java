@@ -47,9 +47,6 @@ public class Recording implements Serializable {
 	@Column(name = "PUBLICIDLYRICS",columnDefinition = "varchar(max)")
 	private String publicIdLyrics;
 	
-	@Column(name = "LIKES")
-	private long likes;
-
 	@Column(name = "DURATION")
 	private int duration;
 

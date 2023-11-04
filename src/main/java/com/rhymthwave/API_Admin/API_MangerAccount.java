@@ -44,6 +44,20 @@ public class API_MangerAccount {
 		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", account));
 	}
 	
+	
 
 
+	@GetMapping("/{idAccount}/report")
+	public ResponseEntity<?> countReport(@PathVariable("idAccount") String idAccount) {
+		int count = accountServiceAdmin.countReportByAccount(idAccount);
+		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", count));
+	}
+	
+	@GetMapping("/{idAccount}/wishlist")
+	public ResponseEntity<?> countWishlist(@PathVariable("idAccount") String idAccount) {
+		int count = accountServiceAdmin.countWithlistByAccount(idAccount);
+		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", count));
+	}
+	
+	
 }

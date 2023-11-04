@@ -4,5 +4,6 @@ import com.rhymthwave.entity.Artist;
 
 public interface IArtistService {
 
-	Artist getOneArtist(Integer id);
+
+	Artist getOneArtistByEmail(String email);
 }

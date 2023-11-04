@@ -1,0 +1,43 @@
+# schema.graphqls
+
+#import "./Access.graphqls"
+#import "./Account.graphqls"
+#import "./Advertisement.graphqls"
+#import "./Album.graphqls"
+#import "./Artist.graphqls"
+#import "./Author.graphqls"
+#import "./Category.graphqls"
+#import "./Country.graphqls"
+#import "./Culture.graphqls"
+#import "./Episode.graphqls"
+#import "./Follow.graphqls"
+#import "./Genre.graphqls"
+#import "./Image.graphqls"
+#import "./Instrument.graphqls"
+#import "./Monitor.graphqls"
+#import "./Mood.graphqls"
+#import "./News.graphqls"
+#import "./Notification.graphqls"
+#import "./Playlist_Podcast.graphqls"
+#import "./Playlist.graphqls"
+#import "./PlaylistRecord.graphqls"
+#import "./Podcast.graphqls"
+#import "./Recording.graphqls"
+#import "./Report.graphqls"
+#import "./Role.graphqls"
+#import "./Slide.graphqls"
+#import "./Song.graphqls"
+#import "./SongGenre.graphqls"
+#import "./SongStyle.graphqls"
+#import "./Subscription.graphqls"
+#import "./Tag.graphqls"
+#import "./Track.graphqls"
+#import "./UserType.graphqls"
+#import "./Wishlist.graphqls"
+#import "./Writter.graphqls"
+
+type Query {
+ findOneArtist(emailArtist: String): Artist
+ 
+}
+
