@@ -14,4 +14,6 @@ public interface RecordService {
 	List<Recording> findRecordBySong(Long songId);
 	
 	List<Recording> findRecordDelete(String email);
+	
+	List<Recording> findListRecordRandom();
 }

@@ -11,4 +11,6 @@ import com.rhymthwave.entity.UserType;
 @Repository
 public interface PlaylistDAO extends JpaRepository<Playlist, Long>{	
 	List<Playlist> findByUsertype(UserType usertype);
+	
+	
 }
