@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>statistical managerment</title>
+</head>
+<html >
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/graphql-request@6.1.0/build/cjs/index.min.js"></script>
+
+<body>
+
+<div ng-app="myApp"  ng-controller="myCtrl"> 
+
+<p>Today's welcome message is:</p>
+
+
+
+<ul>
+  
+    <li > {{asd.findOneArtist.artistId}} </li>
+    <li > {{asd.findOneArtist.backgroundImage.accessId}} </li>
+</ul>
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+
+<script>
+var app = angular.module('myApp', []);
+
+
+
+app.controller('myCtrl', function(graphqlService, $scope) {
+
+    const query = `{
+        findOneArtist(id: 1) {
+            artistId
+            artistName
+            fullName
+            backgroundImage {
+                accessId
+            }
+        }
+    }`;
+
+ 
+    graphqlService.executeQuery(query)
+        .then(data => {
+            $scope.asd = data;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+
+       
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+#Advertisement.graphqls
+#import "./Image.graphqls"
+#import "./Account.graphqls"
+
+type Advertisement{
+	adId: ID
+	title: String
+	content: String
+	url: String
+	startDate: String
+	endDate:String
+	budget: Float
+	status: String
+	targetAudience: String
+	clicked: Int
+	priority: Int
+	audioFile: String
+	publicIdAudio: String
+	tag: String
+	createDate: String
+	modifiedBy: String
+	modifiDate: String
+	image: Image
+	account: Account
+}

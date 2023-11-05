@@ -25,7 +25,7 @@ public class Track implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "TRACKID")
-	private long trackId;
+	private Long trackId;
 
 	@Column(name = "TRACKNUMBER")
 	private int trackNumber;

@@ -32,18 +32,18 @@ public class Episode implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "EPISODESID")
-	private long episodeId;
+	private Integer episodeId;
 
-	@Column(name = "PUBLICIDFILE")
+	@Column(name = "PUBLICIDFILE",columnDefinition = "nvarchar(max)")
 	private String publicIdFile;
 	
-	@Column(name = "FILEURL")
+	@Column(name = "FILEURL",columnDefinition = "nvarchar(max)")
 	private String fileUrl;
 
-	@Column(name = "EPISODESTITLE")
+	@Column(name = "EPISODESTITLE",columnDefinition = "nvarchar(max)")
 	private String episodeTitle;
 
-	@Column(name = "DESCRIPTIONS")
+	@Column(name = "DESCRIPTIONS",columnDefinition = "nvarchar(max)")
 	private String description;
 
 	@Column(name = "PUBLISHDATE")
@@ -55,10 +55,10 @@ public class Episode implements Serializable {
 	@Column(name = "EPNUMBER")
 	private Integer episodeNumber;
 
-	@Column(name = "EPTYPE")
+	@Column(name = "EPTYPE",columnDefinition = "nvarchar(55)")
 	private String episodeType;
 
-	@Column(name = "CONTENT")
+	@Column(name = "CONTENT",columnDefinition = "nvarchar(55)")
 	private String content;
 
 	@Column(name = "ISPUBLIC")
@@ -70,12 +70,12 @@ public class Episode implements Serializable {
 	@Column(name = "LISTENED")
 	private Long listened;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne()
 	@JoinColumn(name = "PODCASTID")
 	@JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
 	private Podcast podcast;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne()
 	@JoinColumn(name = "IMAGEEP")
 	@JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
 	private Image image;

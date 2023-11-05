@@ -30,16 +30,16 @@ public class Tag implements Serializable {
 	@Column(name = "TAGID")
 	private Long tagId;
 
-	@Column(name = "NAMETAG")
+	@Column(name = "NAMETAG",columnDefinition = "nvarchar(55)")
 	private String tagName;
 	
-	@Column(name = "CREATEBY",length = 255)
+	@Column(name = "CREATEBY",columnDefinition = "nvarchar(255)")
 	private String createBy;
 	
 	@Column(name = "CREATEDATE")
 	private Date createDate;
 	
-	@Column(name = "MODIFIEDBY", length = 255)
+	@Column(name = "MODIFIEDBY",columnDefinition = "nvarchar(255)")
 	private String modifiedBy;
 	
 	@Column(name = "MODIFIDATE")

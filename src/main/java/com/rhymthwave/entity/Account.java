@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,10 +32,10 @@ public class Account implements Serializable {
 	@Column(name = "EMAIL")
 	private String email;
 
-	@Column(name = "PASSWORD")
+	@Column(name = "PASSWORD",columnDefinition = "varchar(500)")
 	private String password;
 
-	@Column(name = "USENAME")
+	@Column(name = "USENAME",columnDefinition = "nvarchar(55)")
 	private String username;
 
 	@Column(name = "BIRTHDAY")
@@ -43,13 +44,13 @@ public class Account implements Serializable {
 	@Column(name = "GENDER")
 	private int gender;
 
-	@Column(name = "COUNTRY",columnDefinition = "nvarchar")
+	@Column(name = "COUNTRY",columnDefinition = "nvarchar(55)")
 	private String country;
 
 	@Column(name = "ISVERIFY")
 	private boolean isVerify;
 
-	@Column(name = "VERIFYCATIONCODE")
+	@Column(name = "VERIFYCATIONCODE",columnDefinition = "varchar(250)")
 	private String verificationCode;
 
 	@Column(name = "VERIFYCATIONCODEEXPIRES")
@@ -61,16 +62,12 @@ public class Account implements Serializable {
 	@Column(name = "ISBLOCKED")
 	private boolean isBlocked;
 
-	@Column(name = "REFRESHTOKEN")
+	@Column(name = "REFRESHTOKEN",columnDefinition = "varchar(max)")
 	private String refreshToken;
 
 	@OneToOne
 	@JoinColumn(name = "IMAGEID")
 	private Image image;
-
-	@JsonIgnore
-	@OneToMany(mappedBy = "account",fetch = FetchType.EAGER)
-	private List<Author> author;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "account")
@@ -94,4 +91,8 @@ public class Account implements Serializable {
 	@JsonIgnore
 	@OneToOne(mappedBy = "account")
 	private Artist artist;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "account",fetch = FetchType.EAGER)
+	private List<Author> author;
 }

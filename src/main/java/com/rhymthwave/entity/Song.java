@@ -34,7 +34,7 @@ public class Song implements Serializable {
 	@Column(name = "SONGSID")
 	private Long songId;
 
-	@Column(name = "SONGNAME")
+	@Column(name = "SONGNAME",columnDefinition = "nvarchar(55)")
 	private String songName;
 
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -48,7 +48,7 @@ public class Song implements Serializable {
 	@Column(name = "ISDELETED")
 	private boolean isDeleted;
 	
-	@Column(name = "DESCRIPTIONS")
+	@Column(name = "DESCRIPTIONS",columnDefinition = "nvarchar(max)")
 	private String description;
 	
 	@Column(name = "ARTISTCREATE")

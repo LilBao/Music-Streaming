@@ -24,18 +24,18 @@ public class Mood implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "MOODID ")
-	private int moodid;
+	private Integer moodid;
 	
-	@Column(name = "MOODNAME")
+	@Column(name = "MOODNAME",columnDefinition = "nvarchar(55)")
 	private String moodname;
 	
-	@Column(name = "CREATEBY",length = 255)
+	@Column(name = "CREATEBY",columnDefinition = "nvarchar(255)")
 	private String createBy;
 	
 	@Column(name = "CREATEDATE")
 	private Date createDate;
 	
-	@Column(name = "MODIFIEDBY", length = 255)
+	@Column(name = "MODIFIEDBY",columnDefinition = "nvarchar(255)")
 	private String modifiedBy;
 	
 	@Column(name = "MODIFIDATE")

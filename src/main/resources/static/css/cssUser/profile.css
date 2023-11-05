@@ -52,7 +52,7 @@ body {
     color: white;
 }
 
-.btn {
+.pr-btn {
     color: white;
     border: 1px solid var(--essential-subdued, #878787);
     justify-content: center;
@@ -71,14 +71,14 @@ body {
     color: white;
 }
 
-.name-title {
+.prf-name-title {
     font-size: 24px;
     /* Điều chỉnh kích thước của chữ trong in4-name */
     font-weight: bold;
     /* In đậm chữ trong in4-name */
 }
 
-.show {
+.prf-show {
     position: absolute;
     right: 10px;
     bottom: 6px;
@@ -193,7 +193,7 @@ profile artist */
     font-size: 44px;
 }
 
-.shuffle {
+.prf-shuffle {
     font-size: 24px;
     margin-top: 15px;
 }

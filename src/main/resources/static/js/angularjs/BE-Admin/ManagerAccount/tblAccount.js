@@ -2,66 +2,89 @@
 var apiAccount = "http://localhost:8080/api/v1/admin/account";
 var apiRole = "http://localhost:8080/api/v1/admin/role";
 var cookieName = "token";
-app.controller("tableAccountController", function ($scope, $http, $cookies,$log , $timeout) {
+app.controller("tableAccountController", function (graphqlService, $scope, $http) {
 
-	$scope.form = {};
+	$scope.formUser = {};
 	$scope.items = [];
-    $scope.itemRole = [];
+	$scope.itemsAccountByRole =[];
 	$scope.page = [];
 	$scope.currentPage = 0;
 	$scope.success = false;
+	$scope.author = 'USER';
+	$scope.countReport;
+	$scope.countWishlist;
 
 	$scope.reset = function () {
-		$scope.form = {};
+		$scope.formUser = {};
 		$scope.key = null;
 	}
 
-    $scope.load_all_Role = function(){
-        $http.get(apiRole).then(resp => {
-			$scope.itemRole = resp.data.data;			
-		}).catch(error => {
-			console.log("Error", error)
-		});
-    }
- 
 
-	$scope.load_all_User = (role) => {
-		$http.get(apiAccount+ "?role="+role).then(resp => {
-			$scope.items = resp.data.data.content;
-			$scope.utilitiesPage.totalPages(resp.data.data.totalPages);
-		}).catch(error => {
-			console.log("Error", error)
-		});
-	}
 
-	$scope.goToPage = function (pageNumber) {
-		// Gửi yêu cầu đến máy chủ Spring Boot để lấy dữ liệu trang mới
-		$http.get(apiAccount  + "?page=" + pageNumber)
-			.then(resp =>{
-				$scope.items = resp.data.data.content;			
-				$scope.currentPage = pageNumber;	
-			}).catch(error => {
-				console.log("Error", error)
-			});
-	};
-
-	$scope.utilitiesPage = {
-
-		totalPages(totalPages) {
-			for (var i = 0; i <= totalPages - 1; i++) {
-				$scope.page.push(i);
+	$scope.load_all_AccountByRole = (role) => {
+		const queryAccountByRole = `{
+			getAllAccountByRole(role: "${role}") {
+			  email
+			  password
+			  username
+			  birthday
+			  gender
+			  country
+			  isVerify
+			  verificationCode
+			  verificationCodeExpires
+			  remainingVerification
+			  isBlocked
+			  refreshToken
+			  artist {
+				imagesProfile {
+				  url
+				}
+			  }
+			  userType{
+				nameType
+			  }
 			}
-		},
+		  }`;
 
-		firstPage(){
-			$scope.goToPage($scope.page[0]);
-		},
-		endPage(){
-			$scope.goToPage($scope.page[$scope.page.length - 1]);
-		}
+		graphqlService.executeQuery(queryAccountByRole).then(data => {
+
+			$scope.itemsAccountByRole = data.getAllAccountByRole;
+			
+		}).catch(error => {
+			console.log(error);
+		});
+			
 	}
 
 
-    $scope.load_all_Role();
-	$scope.load_all_User('USER');
+	$scope.profileById = (idUser) => {
+		$http.get(apiAccount + `/${idUser}`).then(resp => {
+			$scope.formUser = resp.data.data;
+			console.log(resp.data)
+			$scope.countRp(idUser);
+			$scope.countWl(idUser);
+		}).catch(error => {
+			console.log("Error", error)
+		});
+	}
+
+	$scope.countRp = (idUser) => {
+		$http.get(apiAccount + `/${idUser}` + "/report").then(resp => {
+			$scope.countReport = resp.data.data
+
+		}).catch(error => {
+			console.log("Error", error)
+		});
+	}
+
+	$scope.countWl = (idUser) => {
+		$http.get(apiAccount + `/${idUser}` + "/wishlist").then(resp => {
+			$scope.countWishlist = resp.data.data
+		}).catch(error => {
+			console.log("Error", error)
+		});
+	}
+	$scope.load_all_AccountByRole('USER');
+	
 })

@@ -5,8 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,27 +32,27 @@ public class Podcast implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "PODCASTID")
-	private long podcastId;
+	private Integer podcastId;
 
-	@Column(name = "PODCASTNAME")
+	@Column(name = "PODCASTNAME",columnDefinition = "nvarchar(55)")
 	private String podcastName;
 
-	@Column(name = "BIO")
+	@Column(name = "BIO",columnDefinition = "nvarchar(max)")
 	private String bio;
 
-	@Column(name = "SOCIALMEDIALINK")
+	@Column(name = "SOCIALMEDIALINK",columnDefinition = "varchar(max)")
 	private String socialMediaLink;
 
 	@Column(name = "RELEASEDATE")
 	private Date releaseDate;
 
-	@Column(name = "LANGUAGE")
+	@Column(name = "LANGUAGE",columnDefinition = "nvarchar(55)")
 	private String language;
 	
 	@Column(name = "RATE")
 	private Integer rate;
 
-	@Column(name = "AUTHORNAME")
+	@Column(name = "AUTHORNAME",columnDefinition = "nvarchar(100)")
 	private String authorName;
 	
 	@OneToOne

@@ -1,0 +1,16 @@
+#Subscription.graphqls
+#import "./UserType.graphqls"
+
+type Subscription{
+	subscriptionId: ID
+	subscriptionType: String
+	price: Float
+	description: String
+	prdStripeId: String
+	prdPaypalId: String
+	createDate: String
+	duration: Int
+	playlistAllow: Int
+	nip: Int
+	userTypes: [UserType]
+}

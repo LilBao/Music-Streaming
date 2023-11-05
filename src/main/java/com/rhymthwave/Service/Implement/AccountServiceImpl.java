@@ -43,7 +43,6 @@ public class AccountServiceImpl implements AccountService, CRUD<Account, String>
 
 	@Override
 	public Account findOne(String email) {
-		
 		Optional<Account> account = dao.findById(email);
 		if(account.isEmpty()) {
 			return null;

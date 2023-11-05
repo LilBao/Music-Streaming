@@ -1,11 +1,11 @@
-var app = angular.module("myApp", ["ngRoute","ngCookies","angularUtils.directives.dirPagination","ngMessages"]);
+var app = angular.module("myApp", ["ngRoute","ngCookies","ngMessages","angularUtils.directives.dirPagination"]);
 app.config(function($routeProvider,$cookiesProvider) {
   
   $routeProvider
   .when("/", {
     templateUrl : "dashboard.html"
   })
-  .when("/Create_Blog", {
+  .when("/create-news", {
     templateUrl : "Create_Blog.html",
     controller: "newController",
     controllerAs: "eventCtl"
@@ -14,7 +14,7 @@ app.config(function($routeProvider,$cookiesProvider) {
     templateUrl : "tableAccount.html",
     controller: "tableAccountController"
   })
-  .when("/EditUser", {
+  .when("/edit-user", {
     templateUrl : "EditUser.html"
   })
   .when("/ManagerBlog", {
@@ -22,14 +22,15 @@ app.config(function($routeProvider,$cookiesProvider) {
     controller: "managerBlogController"
    
   })
-  .when("/ArtistProfile", {
-    templateUrl : "ArtistProfile.html"
+  .when("/artist-profile/:id", {
+    templateUrl : "ArtistProfile.html",
+    controller: "profileAccountController"
   })
   .when("/display-slide", {
     templateUrl : "displaySlide.html",
     controller: "displaySlideController"
   })
-  .when("/Mood", {
+  .when("/mood", {
     templateUrl : "Categories/Mood.html",
     controller: "moodController"
   })
@@ -53,13 +54,33 @@ app.config(function($routeProvider,$cookiesProvider) {
     templateUrl : "Categories/Genre.html",
     controller: "genreController"
   })
-  .when("/manage_report", {
+  .when("/manage-report", {
     templateUrl : "ManageReport.html",
   })
   .when("/statistical_managerment", {
     templateUrl : "statistical_managerment.html",
     controller: "ChartController"
-  });
+  }).otherwise({ templateUrl : "404.html"});
+  
 });
 
+app.service('graphqlService',function ($http) {
+  const graphqlEndpoint = 'http://localhost:8080/graphql'; 
 
+  this.executeQuery = function (query) {
+      const options = {
+          method: 'POST',
+          url: graphqlEndpoint,
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          data: JSON.stringify({ query }),
+      };
+
+      return $http(options)
+          .then(response => response.data.data)
+          .catch(error => {
+              throw error.data.errors;
+          });
+  };
+});

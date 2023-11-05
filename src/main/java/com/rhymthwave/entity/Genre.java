@@ -1,6 +1,7 @@
 package com.rhymthwave.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 
@@ -29,9 +30,21 @@ public class Genre implements Serializable {
 	@Column(name = "ID")
 	private Integer id;
 
-	@Column(name = "NAMEGENRE")
+	@Column(name = "NAMEGENRE",columnDefinition = "varchar(30)")
 	private String nameGenre;
 
+	@Column(name = "CREATEBY",columnDefinition = "nvarchar(255)")
+	private String createBy;
+	
+	@Column(name = "CREATEDATE")
+	private Date createDate;
+	
+	@Column(name = "MODIFIEDBY",columnDefinition = "nvarchar(255)")
+	private String modifiedBy;
+	
+	@Column(name = "MODIFIDATE")
+	private Date modifiDate;
+	
 	@JsonIgnore
 	@OneToMany(mappedBy = "genre")
 	private List<SongGenre> songGenres;
