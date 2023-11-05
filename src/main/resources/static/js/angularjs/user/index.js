@@ -75,10 +75,10 @@ app.service('audioService', function() {
         getListPlay: function(){
             return listPlay;
         },
-        setCurrentSong: function(index){
+        setCurrentAudio: function(index){
             current = index;
         },
-        getCurrentSong: function(){
+        getCurrentAudio: function(){
             return current;
         }
     };

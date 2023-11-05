@@ -109,13 +109,13 @@
                 <div class="media d-flex align-items-center">
                     <div class="media-left">
                         <a href="">
-                            <img class="m-2 thumbnail" src="https://img.youtube.com/vi/lkzhGTwzDjc/maxresdefault.jpg"
+                            <img class="m-2 thumbnail" src="{{record.song.image.url}}"
                                 alt="">
                         </a>
                     </div>
                     <div class="media-content d-none d-md-block">
-                        <span><a href="">Song title</a></span>
-                        <h6><a href="">Name Singer</a></h6>
+                        <span><a class="text-white">{{record.recordingName}}</a></span>
+                        <h6><a>Name Singer</a></h6>
                     </div>
                     <div class="media-right d-flex">
                         <div class="level-item">
@@ -162,7 +162,7 @@
                 </div>
                 <div class="time-line w-100 d-flex align-items-center flex-fill">
                     <span style="font-size: x-small;" id="current-time">00:00</span>
-                    <input id="duration-audio" class="duration-bar w-100" type="range" min="0" step="0.1" name="" id="">
+                    <input id="duration-audio" class="duration-bar w-100" type="range" min="0" value="0" step="0.1" name="" id="">
                     <audio id="audio" src=""></audio>
                     <div class="line-first"></div>
                     <div class="line-current"></div>

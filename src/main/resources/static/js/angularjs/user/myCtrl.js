@@ -1,5 +1,5 @@
 var host = "http://localhost:8080/api/";
-app.controller('myCtrl', function ($scope, $http,$route,audioService, queueService) {
+app.controller('myCtrl', function ($scope, $http, $route, audioService, queueService) {
     $('#myModal').modal('show');
     $scope.account = {};
     $scope.playlist = {};
@@ -89,14 +89,15 @@ app.controller('myCtrl', function ($scope, $http,$route,audioService, queueServi
     var shuffle = document.getElementById('shuffle');
     volumeAudio.value = audio.volume;
 
-    $scope.selectSong = function (item, list, index) {
+    $scope.selectAudio = function (item, list, index) {
         audioService.setAudio(item.audioFileUrl);
         if (item.lyricsUrl !== null) {
             audioService.setLyricsSrc(item.lyricsUrl);
         }
         audioService.setListPlay(list);
-        audioService.setCurrentSong(index);
+        audioService.setCurrentAudio(index);
         audio.src = audioService.getAudio();
+        $scope.record=item;
         if (resume.hidden === false && play.hidden === true) {
             audio.play();
         } else {
@@ -141,16 +142,16 @@ app.controller('myCtrl', function ($scope, $http,$route,audioService, queueServi
     }
 
     //end
-    if(audioService.getCurrentSong() === undefined){
-        var currentSongIndex=0;
-    }else{
-        currentSongIndex = audioService.getCurrentSong();
+    if (audioService.getCurrentAudio() === undefined) {
+        var currentSongIndex = 0;
+    } else {
+        currentSongIndex = audioService.getCurrentAudio();
     }
-   
+
     audio.addEventListener("ended", function () {
         if (isShuffle === true && currentSongIndex < audioService.getListPlay().length) {
             currentSongIndex = Math.floor(Math.random() * (audioService.getListPlay().length));
-            audioService.setCurrentSong(currentSongIndex);
+            audioService.setCurrentAudio(currentSongIndex);
             let source = audioService.getListPlay()[currentSongIndex];
             audio.src = source.audioFileUrl;
             if (resume.hidden === false && play.hidden === true) {
@@ -173,6 +174,9 @@ app.controller('myCtrl', function ($scope, $http,$route,audioService, queueServi
         audio.play();
         resume.hidden = false;
         play.hidden = true;
+        //playlist
+        $('#btn-playlist-pause').attr('hidden', false);
+        $('#btn-playlist-play').attr('hidden', true);
     })
 
     //pause
@@ -180,6 +184,9 @@ app.controller('myCtrl', function ($scope, $http,$route,audioService, queueServi
         audio.pause();
         resume.hidden = true;
         play.hidden = false;
+        //playlist
+        $('#btn-playlist-pause').attr('hidden', true);
+        $('#btn-playlist-play').attr('hidden', false);
     })
 
     //next
@@ -187,35 +194,38 @@ app.controller('myCtrl', function ($scope, $http,$route,audioService, queueServi
         Next();
     })
 
-    function Next(){
+    function Next() {
         if (isLoopPlaylist === true && currentSongIndex === audioService.getListPlay().length - 1) {
             currentSongIndex = 0;
-            audioService.setCurrentSong(currentSongIndex);
+            audioService.setCurrentAudio(currentSongIndex);
             let source = audioService.getListPlay()[currentSongIndex];
+            $scope.record = audioService.getListPlay()[currentSongIndex];
             audio.src = source.audioFileUrl;
             if (resume.hidden === false && play.hidden === true) {
                 audio.play();
             } else {
                 audio.pause();
             }
-        }else if(currentSongIndex === (audioService.getListPlay().length - 1)){
+        } else if (currentSongIndex === (audioService.getListPlay().length - 1)) {
             //lấy list set vào Queue
             //lưu queue vào listplay
 
             currentSongIndex = 0;
             audioService.setListPlay();
-            audioService.setCurrentSong(currentSongIndex);
+            audioService.setCurrentAudio(currentSongIndex);
             let source = audioService.getListPlay()[currentSongIndex];
+            $scope.record = audioService.getListPlay()[currentSongIndex];
             audio.src = source.audioFileUrl;
             if (resume.hidden === false && play.hidden === true) {
                 audio.play();
             } else {
                 audio.pause();
             }
-        }else{
+        } else {
             currentSongIndex += 1;
-            audioService.setCurrentSong(currentSongIndex);
+            audioService.setCurrentAudio(currentSongIndex);
             let source = audioService.getListPlay()[currentSongIndex];
+            $scope.record = audioService.getListPlay()[currentSongIndex];
             audio.src = source.audioFileUrl;
             if (resume.hidden === false && play.hidden === true) {
                 audio.play();
@@ -225,20 +235,22 @@ app.controller('myCtrl', function ($scope, $http,$route,audioService, queueServi
         }
         if (audioService.getListPlay()[currentSongIndex].lyricsUrl !== null) {
             audioService.setLyricsSrc(audioService.getListPlay()[currentSongIndex].lyricsUrl);
+            $scope.record = audioService.getListPlay()[currentSongIndex];
         }
         reloadKaraoke();
     }
 
     //prev
     prev.addEventListener('click', function () {
-        var index = audioService.getCurrentSong();
-        if(index ===0){
-            index = audioService.getListPlay().length -1;
-        }else{
-            index = audioService.getCurrentSong()-1;
+        var index = audioService.getCurrentAudio();
+        if (index === 0) {
+            index = audioService.getListPlay().length - 1;
+        } else {
+            index = audioService.getCurrentAudio() - 1;
         }
-        audioService.setCurrentSong(index);
+        audioService.setCurrentAudio(index);
         var source = audioService.getListPlay()[index];
+        $scope.record = audioService.getListPlay()[index];
         audio.src = source.audioFileUrl;
         if (resume.hidden === false && play.hidden === true) {
             audio.play();
@@ -263,6 +275,15 @@ app.controller('myCtrl', function ($scope, $http,$route,audioService, queueServi
             shuffle.classList.add("isShuffle");
             icon[0].style.color = 'green';
             isShuffle = true;
+        }
+        //playlist
+        let iconPlaylist = $('#btn-playlist-shuffle').children();
+        if ($('#btn-playlist-shuffle').hasClass('isShuffle')) {
+            $('#btn-playlist-shuffle').removeClass("isShuffle");
+            iconPlaylist.eq(0).css('color', 'white', 'important');
+        } else {
+            $('#btn-playlist-shuffle').addClass("isShuffle");
+            iconPlaylist.eq(0).css('color', 'green', 'important');
         }
     })
 
