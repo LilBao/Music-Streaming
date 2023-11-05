@@ -14,6 +14,10 @@ public interface IAccountServiceAdmin {
 
 	Account findById(String idUser);
 
+	int countReportByAccount(String idAccount);
+
+	int countWithlistByAccount(String idAccount);
+
 	
 	
 }

@@ -6,6 +6,7 @@ body {
     overflow-x: hidden !important;
     background-color: rgb(23, 15, 35);
     /* background: rgba(0, 0, 0, 0.9); */
+    overflow-x: visible!important;
 }
 #line-chart {
     min-height: 500px;
@@ -36,9 +37,10 @@ body {
     border-radius: 20px;
 }
 .content {
-    min-height: 88vh;
-    position: relative;
+    min-height: 87vh;
+    position: relative;  
 }
+
 
 .sidebar {
     color: white;
@@ -71,6 +73,7 @@ main {
     bottom: 0;
     overflow-y: scroll;
     color: white;
+    overflow-x: hidden;
 }
 
 footer {

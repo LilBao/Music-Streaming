@@ -1,5 +1,5 @@
 var host = "http://localhost:8080/api/";
-app.controller('myCtrl', function ($scope, $http, audioService) {
+app.controller('myCtrl', function ($scope, $http,$route,audioService, queueService) {
     $('#myModal').modal('show');
     $scope.account = {};
     $scope.playlist = {};
@@ -91,7 +91,9 @@ app.controller('myCtrl', function ($scope, $http, audioService) {
 
     $scope.selectSong = function (item, list, index) {
         audioService.setAudio(item.audioFileUrl);
-        audioService.setLyricsSrc(item.lyricsUrl);
+        if (item.lyricsUrl !== null) {
+            audioService.setLyricsSrc(item.lyricsUrl);
+        }
         audioService.setListPlay(list);
         audioService.setCurrentSong(index);
         audio.src = audioService.getAudio();
@@ -138,10 +140,18 @@ app.controller('myCtrl', function ($scope, $http, audioService) {
         }
     }
 
-    //end 
+    //end
+    if(audioService.getCurrentSong() === undefined){
+        var currentSongIndex=0;
+    }else{
+        currentSongIndex = audioService.getCurrentSong();
+    }
+   
     audio.addEventListener("ended", function () {
-        if (isShuffle === true) {
-            let source = audioService.getListPlay()[Math.floor(Math.random()* (audioService.getListPlay().length))];
+        if (isShuffle === true && currentSongIndex < audioService.getListPlay().length) {
+            currentSongIndex = Math.floor(Math.random() * (audioService.getListPlay().length));
+            audioService.setCurrentSong(currentSongIndex);
+            let source = audioService.getListPlay()[currentSongIndex];
             audio.src = source.audioFileUrl;
             if (resume.hidden === false && play.hidden === true) {
                 audio.play();
@@ -149,15 +159,7 @@ app.controller('myCtrl', function ($scope, $http, audioService) {
                 audio.pause();
             }
         } else {
-            let index = audioService.getCurrentSong() + 1;
-            audioService.setCurrentSong(index);
-            let source = audioService.getListPlay()[index];
-            audio.src = source.audioFileUrl;
-            if (resume.hidden === false && play.hidden === true) {
-                audio.play();
-            } else {
-                audio.pause();
-            }
+            Next();
         }
     });
 
@@ -182,21 +184,59 @@ app.controller('myCtrl', function ($scope, $http, audioService) {
 
     //next
     next.addEventListener('click', function () {
-        let index = audioService.getCurrentSong() + 1;
-        audioService.setCurrentSong(index);
-        let source = audioService.getListPlay()[index];
-        audio.src = source.audioFileUrl;
-        if (resume.hidden === false && play.hidden === true) {
-            audio.play();
-        } else {
-            audio.pause();
-        }
+        Next();
     })
 
+    function Next(){
+        if (isLoopPlaylist === true && currentSongIndex === audioService.getListPlay().length - 1) {
+            currentSongIndex = 0;
+            audioService.setCurrentSong(currentSongIndex);
+            let source = audioService.getListPlay()[currentSongIndex];
+            audio.src = source.audioFileUrl;
+            if (resume.hidden === false && play.hidden === true) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+        }else if(currentSongIndex === (audioService.getListPlay().length - 1)){
+            //lấy list set vào Queue
+            //lưu queue vào listplay
+
+            currentSongIndex = 0;
+            audioService.setListPlay();
+            audioService.setCurrentSong(currentSongIndex);
+            let source = audioService.getListPlay()[currentSongIndex];
+            audio.src = source.audioFileUrl;
+            if (resume.hidden === false && play.hidden === true) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+        }else{
+            currentSongIndex += 1;
+            audioService.setCurrentSong(currentSongIndex);
+            let source = audioService.getListPlay()[currentSongIndex];
+            audio.src = source.audioFileUrl;
+            if (resume.hidden === false && play.hidden === true) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+        }
+        if (audioService.getListPlay()[currentSongIndex].lyricsUrl !== null) {
+            audioService.setLyricsSrc(audioService.getListPlay()[currentSongIndex].lyricsUrl);
+        }
+        reloadKaraoke();
+    }
 
     //prev
     prev.addEventListener('click', function () {
-        var index = audioService.getCurrentSong() - 1;
+        var index = audioService.getCurrentSong();
+        if(index ===0){
+            index = audioService.getListPlay().length -1;
+        }else{
+            index = audioService.getCurrentSong()-1;
+        }
         audioService.setCurrentSong(index);
         var source = audioService.getListPlay()[index];
         audio.src = source.audioFileUrl;
@@ -205,16 +245,23 @@ app.controller('myCtrl', function ($scope, $http, audioService) {
         } else {
             audio.pause();
         }
+        if (audioService.getListPlay()[index].lyricsUrl !== null) {
+            audioService.setLyricsSrc(audioService.getListPlay()[index].lyricsUrl);
+        }
+        reloadKaraoke();
     })
 
     //shuffle
     var isShuffle = false;
     shuffle.addEventListener('click', function () {
+        let icon = shuffle.children;
         if (shuffle.classList.contains('isShuffle')) {
             shuffle.classList.remove("isShuffle");
+            icon[0].style.color = 'white';
             isShuffle = false;
         } else {
             shuffle.classList.add("isShuffle");
+            icon[0].style.color = 'green';
             isShuffle = true;
         }
     })
@@ -243,17 +290,24 @@ app.controller('myCtrl', function ($scope, $http, audioService) {
 
 
     //loop
-    var isRepeat = false;
+    var isLoopPlaylist = false;
     loop.addEventListener('click', function () {
         let icon = loop.children;
         if (loop.classList.contains('loop')) {
-            icon.style.color = "green"
-            loop.classList.remove("repeat");
-            loop.classList.add("loop");
-            audio.loop = true;
-        } else {
-            icon.style.color = "white"
+            icon[0].className = "bi bi-repeat-1"
+            loop.classList.add("repeat");
             loop.classList.remove("loop");
+            audio.loop = true;
+        } else if (loop.classList.contains('repeat')) {
+            loop.classList.remove("repeat");
+            icon[0].style.color = 'white';
+            icon[0].className = "bi bi-repeat"
+            isLoopPlaylist = false;
+            audio.loop = false;
+        } else {
+            icon[0].style.color = 'green';
+            isLoopPlaylist = true;
+            loop.classList.add("loop");
             audio.loop = false;
         }
     })
@@ -266,6 +320,10 @@ app.controller('myCtrl', function ($scope, $http, audioService) {
         audioLink.download = "file.mp3";
         audioLink.click();
     })
+
+    function reloadKaraoke() {
+        $route.reload();
+    };
 
     function time(currentTime) {
         const hours = Math.floor(currentTime / 3600);
@@ -282,7 +340,6 @@ app.controller('myCtrl', function ($scope, $http, audioService) {
             return `${minutesStr}:${secondsStr}`;
         }
     }
-
     audio.load();
     $scope.Owner();
 
