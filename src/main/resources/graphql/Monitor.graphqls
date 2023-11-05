@@ -1,0 +1,9 @@
+#Monitor.graphqls
+#import "./Recording.graphqls"
+#import "./Account.graphqls"
+
+type Monitor{
+	instrumentId: ID
+	recording: Recording
+	account: Account
+}

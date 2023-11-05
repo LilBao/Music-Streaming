@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.rhymthwave.DAO.AccountDAO;
+import com.rhymthwave.DAO.ReportDAO;
+import com.rhymthwave.DAO.WishlistDAO;
 import com.rhymthwave.ServiceAdmin.IAccountServiceAdmin;
 import com.rhymthwave.Utilities.SortBy;
 import com.rhymthwave.entity.Account;
@@ -21,7 +23,11 @@ public class AccountServiceAdminImp implements IAccountServiceAdmin{
 
 	private final AccountDAO accountDAO;
 	
+	private final ReportDAO reportDAO;
+	
 	private final SortBy<String, String> sortService;
+	
+	private final WishlistDAO wishlistDAO;
 	
 	@Override
 	public List<Account> findAllAccountByRole(Integer page, String sortBy, String sortField, EROLE role) {
@@ -47,6 +53,18 @@ public class AccountServiceAdminImp implements IAccountServiceAdmin{
 			return null;
 		}
 		return account.get();
+	}
+
+	@Override
+	public int countReportByAccount(String idAccount) {
+	
+		return reportDAO.countReportByAccount(idAccount);
+	}
+
+	@Override
+	public int countWithlistByAccount(String idAccount) {
+	
+		return wishlistDAO.countWishlistByAccount(idAccount);
 	}
 
 	

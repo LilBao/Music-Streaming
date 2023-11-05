@@ -1,0 +1,11 @@
+#PlaylistRecord.graphqls
+#import "./Recording.graphqls"
+#import "./Playlist.graphqls"
+#import "./Access.graphqls"
+
+type PlaylistRecord{
+	playlistRecordingId: ID
+	recording: Recording
+	playlist: Playlist
+	accesses: [Access]
+}

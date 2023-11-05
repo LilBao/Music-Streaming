@@ -1,0 +1,32 @@
+#Artist.graphqls
+#import "./Image.graphqls"
+#import "./Account.graphqls"
+#import "./Report.graphqls"
+#import "./Album.graphqls"
+#import "./Writter.graphqls"
+
+type query{
+	findOneArtist(emailArtist: String):Artist
+}
+
+
+type Artist{
+	artistId: ID
+	artistName: String
+	dateOfBirth: String
+	fullName: String
+	placeOfBirth: String
+	bio: String
+	imagesGallery: [String]
+	publicIdImageGallery: [String]
+	socialMediaLinks: [String]
+	active: String
+	isVerify: Boolean
+	dateStarted: String
+	imagesProfile: Image
+	backgroundImage: Image
+	account: Account
+	reports: [Report]
+	albums: [Album]
+	writters: [Writter]
+}

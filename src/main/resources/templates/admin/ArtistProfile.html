@@ -1,289 +1,312 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <body>
-      <!-- CONTENT START  -->
+   <!-- CONTENT START  -->
 
-      <div class="content-wrapper">
-         <section class="dashboard-top-sec">
-            <div class="container-fluid">
-               <div class="d-flex justify-content-end mb-3 ">
-               <a href="" class="di-btn purple-gradient ">Look acc</a>
+   <div class="content-wrapper">
+      <section class="dashboard-top-sec">
+         <div class="container-fluid">
+            <div class="d-flex justify-content-end mb-3 ">
+               <a href="" class="di-btn purple-gradient ">Lock acc</a>
             </div>
-               <div class="row profile-content">
-                  <div class="col-12 col-md-12 col-lg-4">
-                     <div class="iq-card">
-                        <div class="iq-card-body profile-page">
+            <div class="row profile-content">
+               <div class="col-12 col-md-12 col-lg-4">
+                  <div class="iq-card">
+                     <div class="iq-card-body profile-page">
 
-                           <div class="profile-header">
-                              <div class="box-img-info text-center">
-                                 <img src="../../static/img/profile.png" class="img-profile" alt="">
-                                 <div class="profile-detail mt-3">
-                                    <h3>Barry Tech</h3>
-                                    <p class="text-primary">Web designer</p>
-                                    <p>Phasellus faucibus mollis pharetra. Proin blandit ac massa.Morbi nulla dolor,
-                                       ornare at commodo non, feugiat non nisi.</p>
+                        <div class="profile-header">
+                           <div class="box-img-info text-center">
+                              <img ng-src="{{form.imagesProfile.url}}" class="img-profile" alt="">
+                              <div class="profile-detail mt-3 ">
+                                 <h3>{{form.artistName}}</h3>
+                                 <p class="text-primary">{{form.fullName}}</p>
+                                 <div class="accordion accordion-flush" id="accordionFlushExample">
+                                    <div class="accordion-item">
+                                       <h2 class="accordion-header">
+                                          <button class=" collapsed btn btn-link" type="button"
+                                             data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+                                             aria-expanded="false" aria-controls="flush-collapseOne"
+                                             style="text-decoration: none;">
+                                             show more
+                                          </button>
+
+                                       </h2>
+                                       <div id="flush-collapseOne" class="accordion-collapse collapse"
+                                          data-bs-parent="#accordionFlushExample">
+                                          <div class="accordion-body">{{form.bio}}</div>
+                                       </div>
+                                    </div>
+
                                  </div>
+                                 <!-- <p >{{form.bio}}</p> -->
+                              </div>
 
-                                 <div class="icon-profile">
-                                    <ul class="list-inline d-flex p-0 mb-0 align-items-center">
-                                       <li>
-                                          <a href="#" class="icon-profile-detail"><i class="bi bi-facebook"
-                                                aria-hidden="true"></i></a>
-                                       </li>
-                                       <li>
-                                          <a href="#" class="icon-profile-detail"><i class="bi bi-facebook"
-                                                aria-hidden="true"></i></a>
-                                       </li>
-                                       <li>
-                                          <a href="#" class="icon-profile-detail"><i class="bi bi-facebook"
-                                                aria-hidden="true"></i></a>
-                                       </li>
+                              <div class="icon-profile">
+                                 <ul class="list-inline d-flex p-0 mb-0 align-items-center">
+                                    <li ng-repeat="social in form.socialMediaLinks">
+                                       <a ng-href="{{social}}" class="icon-profile-detail"><i class="bi bi-facebook"
+                                             aria-hidden="true"></i></a>
+                                    </li>
 
-                                    </ul>
-                                 </div>
+
+                                 </ul>
                               </div>
                            </div>
+                        </div>
 
-                        </div>
                      </div>
-                     <div class="iq-card">
-                        <div class="iq-card-header d-flex justify-content-between align-items-center mb-0">
-                           <div class="iq-header-title">
-                              <h4 class="card-title mb-0">Personal Details</h4>
-                           </div>
-                        </div>
-                        <div class="iq-card-body">
-                           <ul class="profile-detail-personal list-inline p-0 mb-0 ">
-                              <li>
-                                 <div class="d-flex align-items-center justify-content-between mb-3">
-                                    <h6>Birthday</h6>
-                                    <p class="mb-0">3rd March</p>
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="d-flex align-items-center justify-content-between mb-3">
-                                    <h6>Address</h6>
-                                    <p class="mb-0">Landon</p>
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="d-flex align-items-center justify-content-between mb-3">
-                                    <h6>Phone</h6>
-                                    <p class="mb-0">(010)987 543 201</p>
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="d-flex align-items-center justify-content-between mb-3">
-                                    <h6>Email</h6>
-                                    <p class="mb-0">Barry@example.com</p>
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="d-flex align-items-center justify-content-between mb-3">
-                                    <h6>Twitter</h6>
-                                    <p class="mb-0">@Barry</p>
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="d-flex align-items-center justify-content-between mb-3">
-                                    <h6>Twitter</h6>
-                                    <p class="mb-0">@Barry_Tech</p>
-                                 </div>
-                              </li>
-                           </ul>
-                        </div>
-                     </div>
-
                   </div>
-                  <div class="col-12 col-md-12 col-lg-8">
-                     <div class="row">
-                        <div class="col-md-6">
-                           <div class="iq-card iq-card-block iq-card-stretch iq-card-height  mb-0" >
-                              <div class="iq-card-header d-flex justify-content-between align-items-center mb-0">
-                                 <div class="iq-header-title">
-                                    <h4 class="card-title mb-0">Statistic</h4>
-                                 </div>
+                  <div class="iq-card">
+                     <div class="iq-card-header d-flex justify-content-between align-items-center mb-0">
+                        <div class="iq-header-title">
+                           <h4 class="card-title mb-0">Personal Details</h4>
+                        </div>
+                     </div>
+                     <div class="iq-card-body">
+                        <ul class="profile-detail-personal list-inline p-0 mb-0 ">
+                           <li>
+                              <div class="d-flex align-items-center justify-content-between mb-3">
+                                 <h6>Email</h6>
+                                 <p class="mb-0">{{form.account.email}}</p>
                               </div>
-                              <div class="iq-card-body ">
-                                 <ul class="list-inline p-0 mb-4">
-                                    <li class="d-flex mb-4 align-items-center">
-                                       <div class="profile-icon bg-secondary"><span><i
-                                                class="ri-file-3-fill"></i></span></div>
-                                       <div class="media-support-info ml-3">
-                                          <h6>Total Album</h6>
-                                          <p class="mb-0">3</p>
-                                       </div>
+                           </li>
+                           <li>
+                              <div class="d-flex align-items-center justify-content-between mb-3">
+                                 <h6>Birthday</h6>
+                                 <p class="mb-0">{{form.dateOfBirth | date: 'dd-MM-yyyy'}}</p>
+                              </div>
+                           </li>
+                           <li>
+                              <div class="d-flex align-items-center justify-content-between mb-3">
+                                 <h6>Gender</h6>
+                                 <p class="mb-0">{{form.account.gender == 1 ? 'Male':'Female'}}</p>
+                              </div>
+                           </li>
+                           <li>
+                              <div class="d-flex align-items-center justify-content-between mb-3">
+                                 <h6>Address</h6>
+                                 <p class="mb-0">{{form.placeOfBirth}}</p>
+                              </div>
+                           </li>
+                           <li>
+                              <div class="d-flex align-items-center justify-content-between mb-3">
+                                 <h6>Date Started</h6>
+                                 <p class="mb-0">{{form.dateStarted | date: 'dd-MM-yyyy'}}</p>
+                              </div>
+                           </li>
+                           <li>
+                              <div class="d-flex align-items-center justify-content-between mb-3">
+                                 <h6>userType</h6>
+                                 <p class="mb-0" ng-repeat="userType in form.account.userType"><span
+                                       ng-class="{'badge text-bg-info mx-1': userType.nameType === 'BASIC', 'badge text-bg-warning mx-1': userType.nameType === 'PREMIUM'}">{{userType.nameType}}</span>
+                                 </p>
 
-                                    </li>
-                                    <li class="d-flex mb-4 align-items-center">
-                                       <div class="profile-icon bg-secondary"><span><i class="ri-image-fill"></i></span>
-                                       </div>
-                                       <div class="media-support-info ml-3">
-                                          <h6>Total Song</h6>
-                                          <p class="mb-0">204kb</p>
-                                       </div>
+                              </div>
+                           </li>
 
-                                    </li>
-                                    <li class="d-flex mb-4 align-items-center">
-                                       <div class="profile-icon bg-secondary"><span><i class="ri-video-fill"></i></span>
-                                       </div>
-                                       <div class="media-support-info ml-3">
-                                          <h6>Follower</h6>
-                                          <p class="mb-0">509kb</p>
-                                       </div>
+                        </ul>
+                     </div>
+                  </div>
 
-                                    </li>
-                                    <li class="d-flex  align-items-center">
-                                       <div class="profile-icon bg-secondary"><span><i
-                                                class="ri-file-3-fill"></i></span></div>
-                                       <div class="media-support-info ml-3">
-                                          <h6>Listener</h6>
-                                          <p class="mb-0">48kb</p>
-                                       </div>
-
-                                    </li>
-
-                                 </ul>
+               </div>
+               <div class="col-12 col-md-12 col-lg-8">
+                  <div class="row">
+                     <div class="col-md-6">
+                        <div class="iq-card iq-card-block iq-card-stretch iq-card-height  mb-0">
+                           <div class="iq-card-header d-flex justify-content-between align-items-center mb-0">
+                              <div class="iq-header-title">
+                                 <h4 class="card-title mb-0">Statistic</h4>
                               </div>
                            </div>
+                           <div class="iq-card-body ">
+                              <ul class="list-inline p-0 mb-4">
+                                 <li class="d-flex mb-4 align-items-center">
+                                    <div class="profile-icon bg-secondary"><span><i class="ri-file-3-fill"></i></span>
+                                    </div>
+                                    <div class="media-support-info ml-3">
+                                       <h6>Total Album</h6>
+                                       <p class="mb-0">3</p>
+                                    </div>
+
+                                 </li>
+                                 <li class="d-flex mb-4 align-items-center">
+                                    <div class="profile-icon bg-secondary"><span><i class="ri-image-fill"></i></span>
+                                    </div>
+                                    <div class="media-support-info ml-3">
+                                       <h6>Total Song</h6>
+                                       <p class="mb-0">204kb</p>
+                                    </div>
+
+                                 </li>
+                                 <li class="d-flex mb-4 align-items-center">
+                                    <div class="profile-icon bg-secondary"><span><i class="ri-video-fill"></i></span>
+                                    </div>
+                                    <div class="media-support-info ml-3">
+                                       <h6>Follower</h6>
+                                       <p class="mb-0">509kb</p>
+                                    </div>
+
+                                 </li>
+                                 <li class="d-flex  align-items-center">
+                                    <div class="profile-icon bg-secondary"><span><i class="ri-file-3-fill"></i></span>
+                                    </div>
+                                    <div class="media-support-info ml-3">
+                                       <h6>Listener</h6>
+                                       <p class="mb-0">48kb</p>
+                                    </div>
+
+                                 </li>
+
+                              </ul>
+                           </div>
                         </div>
-                        <div class="col-md-6">
-                           <div class="iq-card iq-card-block iq-card-stretch iq-card-height" >
-                              <div class="iq-card-header d-flex justify-content-between align-items-center mb-0">
-                                 <div class="iq-header-title">
-                                    <h4 class="card-title mb-0">Albums</h4>
-                                 </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                           <div class="iq-card-header d-flex justify-content-between align-items-center mb-0">
+                              <div class="iq-header-title">
+                                 <h4 class="card-title mb-0">Albums</h4>
                               </div>
-                              <div class="iq-card-body">
-                                 <ul class="list-inline p-0 mb-0">
-                                    <li>
-                                       <div class="iq-details mb-2 d-flex">
+                           </div>
+                           <div class="iq-card-body">
+                              <ul class="list-inline p-0 mb-0">
+                                 <li ng-repeat="album in album">
+                                    <div class="iq-details mb-2 d-flex">
 
-                                          <img
-                                             src="https://cdn.24h.com.vn/upload/4-2020/images/2020-11-11/Nu-sinh-Nhan-van-la-nguoi-mau-anh-tuoi-20-mon-mon-dep-xinh-khong-kem-dich-Le-Nhiet-Ba-107368862_2653859988196507_3262836775669550024_n-1605081022-435-width960height960.jpg"
-                                             alt="img" class="img-album rounded-1  ">
+                                       <img ng-src="{{album.image.url}}" alt="img" class="img-album rounded-1  ">
 
-                                          <div class="title-album ms-2 mt-2">
-                                             <h6>Ten Album</h6>
-                                             <p class="songs-in-album">songs <span>9</span></p>
-                                          </div>
-
+                                       <div class="title-album ms-2 mt-2">
+                                          <h6>{{album.albumName}}</h6>
+                                          <p class="songs-in-album">Songs: <span>9</span></p>
                                        </div>
-                                    </li>
-                                    <li>
-                                       <div class="iq-details mb-2 d-flex">
 
-                                          <img
-                                             src="https://cdn.24h.com.vn/upload/4-2020/images/2020-11-11/Nu-sinh-Nhan-van-la-nguoi-mau-anh-tuoi-20-mon-mon-dep-xinh-khong-kem-dich-Le-Nhiet-Ba-107368862_2653859988196507_3262836775669550024_n-1605081022-435-width960height960.jpg"
-                                             alt="img" class="img-album rounded-1  ">
+                                    </div>
+                                 </li>
 
-                                          <div class="title-album ms-2 mt-2">
-                                             <h6>Ten Album</h6>
-                                             <p class="songs-in-album">songs <span>9</span></p>
-                                          </div>
 
-                                       </div>
-                                    </li>
+                              </ul>
 
-                                    <li>
-                                       <div class="iq-details mb-2 d-flex">
-
-                                          <img
-                                             src="https://cdn.24h.com.vn/upload/4-2020/images/2020-11-11/Nu-sinh-Nhan-van-la-nguoi-mau-anh-tuoi-20-mon-mon-dep-xinh-khong-kem-dich-Le-Nhiet-Ba-107368862_2653859988196507_3262836775669550024_n-1605081022-435-width960height960.jpg"
-                                             alt="img" class="img-album rounded-1  ">
-
-                                          <div class="title-album ms-2 mt-2">
-                                             <h6>Ten Album</h6>
-                                             <p class="songs-in-album">songs <span>9</span></p>
-                                          </div>
-
-                                       </div>
-                                    </li>
-                                    <li>
-                                       <div class="iq-details mb-2 d-flex">
-
-                                          <img
-                                             src="https://cdn.24h.com.vn/upload/4-2020/images/2020-11-11/Nu-sinh-Nhan-van-la-nguoi-mau-anh-tuoi-20-mon-mon-dep-xinh-khong-kem-dich-Le-Nhiet-Ba-107368862_2653859988196507_3262836775669550024_n-1605081022-435-width960height960.jpg"
-                                             alt="img" class="img-album rounded-1  ">
-
-                                          <div class="title-album ms-2 mt-2">
-                                             <h6>Ten Album</h6>
-                                             <p class="songs-in-album">songs <span>9</span></p>
-                                          </div>
-
-                                       </div>
-                                    </li>
-
-                                 </ul>
-
-                                 <div class="paginations d-flex justify-content-between">
-                                    <a href="#" class="previous round">&#8249;</a>
-                                    <h6 class="number-page-artistProfile mt-2"> 1 </h6>
-                                    <a href="#" class="next round">&#8250;</a>
-                                 </div>
+                              <div class="paginations d-flex justify-content-between">
+                                 <a href="#" class="previous round">&#8249;</a>
+                                 <h6 class="number-page-artistProfile mt-2"> 1 </h6>
+                                 <a href="#" class="next round">&#8250;</a>
                               </div>
                            </div>
                         </div>
                      </div>
-                     <div class="iq-card">
-                        <div class="iq-card-header d-flex justify-content-between align-items-center mb-0">
-                           <div class="iq-header-title">
-                              <h4 class="card-title mb-0">Songs</h4>
-                           </div>
-
+                  </div>
+                  <div class="iq-card">
+                     <div class="iq-card-header d-flex justify-content-between align-items-center mb-0">
+                        <div class="iq-header-title">
+                           <h4 class="card-title mb-0">Songs</h4>
                         </div>
-                        <div class="iq-card-body">
 
-                           <div class="d-flex justify-content-between mb-2 title-song-artistPrfile">
-                              <div class="songIn-artistProfile">
-                                 Song name
-                              </div>
-                              <div class="songIn-artistProfile">
-                                 Album
-                              </div>
-                              <div class="songIn-artistProfile">
-                                 Time
-                              </div>
-                           </div>
-
-                           <ul class="list-inline p-0 mb-0">
-                              <li>
-                                 <div class="iq-details mb-2 d-flex justify-content-between">
-                                    <div class="d-flex">
-                                       <div>
-                                          <img
-                                             src="https://cdn.24h.com.vn/upload/4-2020/images/2020-11-11/Nu-sinh-Nhan-van-la-nguoi-mau-anh-tuoi-20-mon-mon-dep-xinh-khong-kem-dich-Le-Nhiet-Ba-107368862_2653859988196507_3262836775669550024_n-1605081022-435-width960height960.jpg"
-                                             alt="img" class="img-songs rounded-1  ">
+                     </div>
+                     <div class="iq-card-body">
+                        <div class="table-responsive ">
+                           <table class="table table-hover table-borderless">
+                              <thead style="border-bottom: 1px solid rgb(234, 230, 230);">
+                                 <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Song name</th>
+                                    <th scope="col">Album</th>
+                                    <th scope="col">Time</th>
+                                 </tr>
+                              </thead>
+                              <tbody c>
+                                 <tr ng-repeat="song in song">
+                                    <th scope="row">{{$index +1}}</th>
+                                    <td>
+                                       <div class="d-flex align-items-center ">
+                                          <img ng-src="{{song.song.image.url}}" alt="img" class="img-songs rounded-1  ">
+                                          <div class="mx-2"   style="line-height: 15px;">
+                                             <a href="#" class="song-namefor-actist">{{song.song.songName}}</a>
+                                             <h6 class="songs-in-album ">hát cùng ai<span>9</span></h6>
+                                          </div>
                                        </div>
-                                       <div class="title-album ms-2 align-content-center">
-                                          <a href="#" class="song-namefor-actist">Song name</a>
+                                       <!-- <div class="title-album ms-2 align-content-center">
+                                          <a href="#" class="song-namefor-actist">{{song.song.songName}}</a>
 
                                           <h6 class="songs-in-album ">hát cùng ai<span>9</span></h6>
-                                       </div>
-                                    </div>
-                                    <div class="title-albums">
+                                       </div> -->
 
-                                       <h6 class="songs-in-album mb-1">trong album nao<span>9</span></h6>
+                                    </td>
+                                    <td>
+                                       <div class="title-albums">
+                                          <h6 class="songs-in-album mb-1" ng-repeat="album in song.song.recordings"
+                                             ng-repeat="album in song.song.recordings.tracks">
+                                             {{album.albumName}}<span>9</span></h6>
+                                       </div>
+                                    </td>
+                                    <td>
+                                       <div class="title-albums ">
+                                          <h6 class="songs-in-album " ng-repeat="duration in song.song.recordings">
+                                             <span>{{duration.duration}}</span>
+                                          </h6>
+                                       </div>
+                                    </td>
+                                 </tr>
+
+                              </tbody>
+                           </table>
+                        </div>
+
+                        <!-- <div class="d-flex justify-content-between mb-2 title-song-artistPrfile">
+                           <div class="songIn-artistProfile">
+                              Song name
+                           </div>
+                           <div class="songIn-artistProfile">
+                              Album
+                           </div>
+                           <div class="songIn-artistProfile">
+                              Time
+                           </div>
+                        </div> -->
+                        <!-- 
+                        <ul class="list-inline p-0 mb-0">
+                           <li ng-repeat="song in song">
+                              <div class="iq-details mb-2 d-flex justify-content-between">
+                                 <div class="d-flex">
+                                    <div>
+                                       <img ng-src="{{song.song.image.url}}" alt="img" class="img-songs rounded-1  ">
                                     </div>
-                                    <div class="title-albums ">
-                                       <h6 class="songs-in-album "><span>02:12</span></h6>
+                                    <div class="title-album ms-2 align-content-center">
+                                       <a href="#" class="song-namefor-actist">{{song.song.songName}}</a>
+
+                                       <h6 class="songs-in-album ">hát cùng ai<span>9</span></h6>
                                     </div>
                                  </div>
-                              </li>
-                           </ul>
-                           <div class="pagination d-flex justify-content-between">
-                              <a href="#" class="previous round">&#8249;</a>
-                              <h6 class="number-page-artistProfile mt-2"> 1 </h6>
-                              <a href="#" class="next round">&#8250;</a>
-                           </div>
+                                 <div class="title-albums">
+
+                                    <h6 class="songs-in-album mb-1" ng-repeat="album in song.song.recordings"
+                                       ng-repeat="album in song.song.recordings.tracks">
+                                       {{album.albumName}}<span>9</span></h6>
+                                 </div>
+                                 <div class="title-albums ">
+                                    <h6 class="songs-in-album " ng-repeat="duration in song.song.recordings">
+                                       <span>{{duration.duration}}</span>
+                                    </h6>
+                                 </div>
+                              </div>
+                           </li>
+
+
+                        </ul> -->
+                        <div class="pagination d-flex justify-content-between">
+                           <a href="#" class="previous round">&#8249;</a>
+                           <h6 class="number-page-artistProfile mt-2"> 1 </h6>
+                           <a href="#" class="next round">&#8250;</a>
                         </div>
                      </div>
                   </div>
                </div>
             </div>
-         </section>
-      </div>
-      <!--  CONTENT END  -->
+         </div>
+      </section>
+   </div>
+   <!--  CONTENT END  -->
    </div>
 </body>
+
 </html>
