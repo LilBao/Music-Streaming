@@ -28,7 +28,7 @@ public class Tag implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "TAGID")
-	private Integer tagId;
+	private Long tagId;
 
 	@Column(name = "NAMETAG",columnDefinition = "nvarchar(55)")
 	private String tagName;

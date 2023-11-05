@@ -9,6 +9,9 @@
 #import "./Artist.graphqls"
 
 
+
+
+
 type Account{
 	email: ID
 	password: String

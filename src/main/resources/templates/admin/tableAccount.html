@@ -35,22 +35,22 @@
 
                         <ul class="nav nav-pills mb-3 ms-2" id="pills-tab" role="tablist">
                            <li class="nav-item" role="presentation">
-                              <button class="nav-link active" id="pills-user-tab" ng-click="load_all_User('USER')"
+                              <button class="nav-link active" id="pills-user-tab" ng-click="load_all_AccountByRole('USER')"
                                  data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab"
                                  aria-controls="pills-home" aria-selected="true">User</button>
                            </li>
                            <li class="nav-item" role="presentation">
-                              <button class="nav-link" id="pills-artist-tab" ng-click="load_all_User('ARTIST')"
+                              <button class="nav-link" id="pills-artist-tab" ng-click="load_all_AccountByRole('ARTIST')"
                                  data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab"
                                  aria-controls="pills-profile" aria-selected="false">Artist</button>
                            </li>
                            <li class="nav-item" role="presentation">
-                              <button class="nav-link" id="pills-podcast-tab" ng-click="load_all_User('PODCAST')"
+                              <button class="nav-link" id="pills-podcast-tab" ng-click="load_all_AccountByRole('PODCAST')"
                                  data-bs-toggle="pill" data-bs-target="#pills-podcast" type="button" role="tab"
                                  aria-controls="pills-podcast" aria-selected="false">Podcast</button>
                            </li>
                            <li class="nav-item" role="presentation">
-                              <button class="nav-link" id="pills-staff-tab" ng-click="load_all_User('STAFF')"
+                              <button class="nav-link" id="pills-staff-tab" ng-click="load_all_AccountByRole('STAFF')"
                                  data-bs-toggle="pill" data-bs-target="#pills-staff" type="button" role="tab"
                                  aria-controls="pills-staff" aria-selected="false">Staff</button>
                            </li>
@@ -89,6 +89,9 @@
                                  </div>
                               </div>
 
+
+                              <!-- LIST USER -->
+                              
                               <div class="row">
                                  <div class="col-sm-12">
                                     <div class="table-responsive">
@@ -106,7 +109,7 @@
                                           </thead>
                                           <tbody>
 
-                                             <tr ng-repeat="user in items | filter:searchText">
+                                             <tr dir-paginate="user in itemsAccountByRole | itemsPerPage: 1 | filter:searchText">
                                                 <th scope="row">{{$index + 1}}</th>
 
                                                 <td>
@@ -172,7 +175,7 @@
                                     <div id="custom-search-input" class="mb-2 mt-0">
                                        <div class="input-group col-md-12">
                                           <input type="text" class="form-control form-control-sm"
-                                             placeholder="search" />
+                                             placeholder="search" ng-modal="searchText1" />
                                           <span class="input-group-btn">
                                              <button class="btn btn-info btn-lg" type="button">
                                                 <i class="bi bi-search"></i>
@@ -216,13 +219,13 @@
                                           </thead>
                                           <tbody>
 
-                                             <tr dir-paginate="user in items | itemsPerPage: 1">
+                                             <tr dir-paginate="user in itemsAccountByRole | itemsPerPage: 1 | filter:searchText1">
                                                 <th scope="row">{{$index + 1}}</th>
 
                                                 <td>
                                                    <div class="cha">
                                                       <a href=""> <img
-                                                            ng-src="{{user.image.url ?  user.image.url : 'https://res.cloudinary.com/div9ldpou/image/upload/v1697882865/ProfilePicture/User%20null/user-null.png' }}"
+                                                            ng-src="{{user.artist.imagesProfile.url ?  user.artist.imagesProfile.url : 'https://res.cloudinary.com/div9ldpou/image/upload/v1697882865/ProfilePicture/User%20null/user-null.png' }}"
                                                             alt="" class="image-table-user-tabs"></a>
 
                                                    </div>
@@ -279,7 +282,7 @@
                                     <div id="custom-search-input" class="mb-2 mt-0">
                                        <div class="input-group col-md-12">
                                           <input type="text" class="form-control form-control-sm"
-                                             placeholder="search" />
+                                             placeholder="search" ng-modal="searchText2" />
                                           <span class="input-group-btn">
                                              <button class="btn btn-info btn-lg" type="button">
                                                 <i class="bi bi-search"></i>
@@ -323,13 +326,13 @@
                                           </thead>
                                           <tbody>
 
-                                             <tr ng-repeat="user in items">
+                                             <tr dir-paginate="user in itemsAccountByRole | itemsPerPage: 1 | filter:searchText2">
                                                 <th scope="row">{{$index + 1}}</th>
 
                                                 <td>
                                                    <div class="cha">
                                                       <a href=""> <img
-                                                            ng-src="{{user.image.url ?  user.image.url : 'https://res.cloudinary.com/div9ldpou/image/upload/v1697882865/ProfilePicture/User%20null/user-null.png' }}"
+                                                            ng-src="{{user.artist.imagesProfile.url ?  user.artist.imagesProfile.url : 'https://res.cloudinary.com/div9ldpou/image/upload/v1697882865/ProfilePicture/User%20null/user-null.png' }}"
                                                             alt="" class="image-table-user-tabs"></a>
 
                                                    </div>
@@ -385,7 +388,7 @@
                                     <div id="custom-search-input" class="mb-2 mt-0">
                                        <div class="input-group col-md-12">
                                           <input type="text" class="form-control form-control-sm"
-                                             placeholder="search" />
+                                             placeholder="search" ng-modal="searchText3"  />
                                           <span class="input-group-btn">
                                              <button class="btn btn-info btn-lg" type="button">
                                                 <i class="bi bi-search"></i>
@@ -411,7 +414,7 @@
                               </div>
 
 
-                              <!-- LIST PODCAST -->
+                              <!-- LIST STAFF -->
 
                               <div class="row">
                                  <div class="col-sm-12">
@@ -430,7 +433,7 @@
                                           </thead>
                                           <tbody>
 
-                                             <tr ng-repeat="user in items">
+                                             <tr dir-paginate="user in itemsAccountByRole | itemsPerPage: 1 | filter:searchText3">
                                                 <th scope="row">{{$index + 1}}</th>
 
                                                 <td>
@@ -556,7 +559,7 @@
                                              {{formUser.email}}
                                           </h6>
                                           <p class="proile-rating">User Type : <span
-                                                ng-repeat="userType in formUser.userType"
+                                                ng-repeat="userType in userType.userType"
                                                 ng-class="{'badge text-bg-info mx-1': userType.nameType === 'BASIC', 'badge text-bg-warning mx-1': userType.nameType === 'PREMIUM'}">{{userType.nameType}}</span>
                                           </p>
                                           <ul class="nav nav-tabs" id="myTab" role="tablist">

@@ -38,6 +38,7 @@
 
 type Query {
  findOneArtist(emailArtist: String): Artist
+ getAllAccountByRole(role: String):[Account]
  
 }
 
