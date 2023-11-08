@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.rhymthwave.entity.Artist;
+import com.rhymthwave.entity.Author;
 
 @Repository
 public interface ArtistDAO extends JpaRepository<Artist, Integer>{
@@ -19,4 +20,16 @@ public interface ArtistDAO extends JpaRepository<Artist, Integer>{
 	
 	@Query("select o from Artist o where o.artistId <> :id and o.artistName like :artistName and o.isVerify = true")
 	List<Artist> findAllArtistVerify(@Param("id") Long id, @Param("artistName") String artistName);
+	
+	@Query(value = "exec sp_Statistic_forManagerArtist :idAccount",nativeQuery = true)
+	Object totalAlbumAndSong(@Param("idAccount") String idAccount);
+	
+	@Query(value = "select SUM(recording.listened) from recording left join songs on  songs.songsid = recording.songsid\r\n"
+			+ "						left join writter on writter.songsid = songs.songsid\r\n"
+			+ "						left join artist on artist.artistid = writter.artistid\r\n"
+			+ "						where artist.email = ?1", nativeQuery = true)
+	String sumListenedArtist(String idAccount);
+	
+	@Query("SELECT COUNT(*) FROM Follow f WHERE f.authorsAccountB.authorId = ?1")
+	int countFollowerArtist(Integer author);
 }

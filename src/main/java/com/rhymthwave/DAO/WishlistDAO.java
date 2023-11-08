@@ -9,4 +9,5 @@ public interface WishlistDAO extends JpaRepository<Wishlist, Integer>{
 
 	@Query("SELECT COUNT(w.usertype.userTypeId) AS w FROM Wishlist w where w.usertype.account.email = ?1")
 	int countWishlistByAccount(String idAccount);
+
 }

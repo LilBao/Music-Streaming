@@ -331,12 +331,6 @@ h4.card-title.mb-0 {
     font-weight: 500;
 }
 
-.title-albums {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .title-song-artistPrfile {
     border-bottom: 1px solid #eaeaea;
 }
