@@ -1,4 +1,4 @@
-<body ng-app="myApp">
+<body ng-controller="SearchController">
   <div class="card card-content shadow mb-4">
     <div class="card-body">
       <div class="table-responsive">
@@ -21,13 +21,13 @@
                 </svg>
               </button>
             </div>
-            <div class="bl-input-search" ng-controller="SearchController">
+            <div class="bl-input-search">
               <div class="bl-input-search-box">
                 <div class="bl-input-search-f">
-                  <form role="search">
-                    <input class="bl-input-search-f-in" maxlength="800" autocorrect="off" autocapitalize="off"
-                      spellcheck="false" placeholder="What do you want to listen to?" data-testid="search-input"
-                      data-encore-id="type" value="" style="color: rgb(0, 0, 0)" ng-model="searchInput" />
+                  <form id="searchform">
+                    <input ng-model="searchKeyword" class="bl-input-search-f-in" maxlength="800" autocorrect="off"
+                      autocapitalize="off" spellcheck="false" placeholder="What do you want to listen to?"
+                      data-testid="search-input" data-encore-id="type" value="" style="color: rgb(0, 0, 0)" />
                   </form>
                   <div class="bl-input-search-f-icon">
                     <span class="H6jh9Xd7DNOq3NsLDmCB"><svg role="img" height="16" width="16" aria-hidden="true"
@@ -76,6 +76,7 @@
         </div>
 
         <!-- love list -->
+
         <div class="container-fluid mt-5">
           <div class="text-title mb-3">
             <h3>Browse all</h3>
@@ -226,16 +227,4 @@
       </div>
     </div>
   </div>
-  <script>
-    app.controller('SearchController', ['$scope', '$location', function ($scope, $location) {
-      // Watch for changes in the input field
-      $scope.$watch('searchInput', function (newVal) {
-        // Check if the input value meets your criteria
-        if (newVal && newVal.length > 0) {
-          // If the input is not empty, navigate to the desired route (search-detail)
-          $location.path('/search-detail');
-        }
-      });
-    }]);  
-  </script>
 </body>

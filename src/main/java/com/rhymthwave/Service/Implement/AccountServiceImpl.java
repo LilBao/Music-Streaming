@@ -12,8 +12,8 @@ import com.rhymthwave.Utilities.GetHostByRequest;
 import com.rhymthwave.entity.Account;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-
 
 @Service
 @RequiredArgsConstructor
@@ -22,8 +22,7 @@ public class AccountServiceImpl implements AccountService, CRUD<Account, String>
 	private final AccountDAO dao;
 
 	private final GetHostByRequest getHostByRequest;
-	
-	
+
 	@Override
 	public Account create(Account entity) {
 		return null;
@@ -31,7 +30,7 @@ public class AccountServiceImpl implements AccountService, CRUD<Account, String>
 
 	@Override
 	public Account update(Account entity) {
-		
+
 		return dao.save(entity);
 	}
 
@@ -44,10 +43,10 @@ public class AccountServiceImpl implements AccountService, CRUD<Account, String>
 	@Override
 	public Account findOne(String email) {
 		Optional<Account> account = dao.findById(email);
-		if(account.isEmpty()) {
+		if (account.isEmpty()) {
 			return null;
 		}
-		
+
 		return account.get();
 	}
 
@@ -58,10 +57,13 @@ public class AccountServiceImpl implements AccountService, CRUD<Account, String>
 
 	@Override
 	public Account findAdminByEmail(HttpServletRequest request) {
-		String email  = getHostByRequest.getEmailByRequest(request);
+		String email = getHostByRequest.getEmailByRequest(request);
 		Account admin = findOne(email);
 		return admin;
 	}
 
-
+	@Override
+	public List<Object> search(String keyword) {
+		return dao.search(keyword);
+	}
 }

@@ -49,7 +49,7 @@ public class Recording implements Serializable {
 	private String publicIdLyrics;
 	
 	@Column(name = "DURATION")
-	private int duration;
+	private Integer duration;
 
 	@Column(name = "SONGSTYLE",columnDefinition = "nvarchar(55)")
 	private String songStyle;

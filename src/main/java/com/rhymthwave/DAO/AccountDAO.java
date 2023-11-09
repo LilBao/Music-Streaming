@@ -6,13 +6,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
 import com.rhymthwave.entity.Account;
 import com.rhymthwave.entity.TypeEnum.EROLE;
+import jakarta.transaction.Transactional;
 
-
+@Transactional
 @Repository
 public interface AccountDAO extends JpaRepository<Account, String>{
 
@@ -26,4 +27,6 @@ public interface AccountDAO extends JpaRepository<Account, String>{
 
 	Account findByVerificationCode(String verificationCode);
 	
+	@Procedure(name = "SEARCH")
+	List<Object> search(String keyword);
 }
