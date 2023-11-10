@@ -9,11 +9,11 @@ app.config(function ($routeProvider) {
             templateUrl: "discover.html"
         })
         .when("/search", {
-            templateUrl: "search.html"
-        })
-        .when("/search-detail", {
             templateUrl: "search-detail.html",
             controller: "SearchController"
+        })
+        .when("/browse-podcast", {
+            templateUrl: "browse-podcast.html",
         })
         .when("/karaoke", {
             templateUrl: "Karaoke.html",
