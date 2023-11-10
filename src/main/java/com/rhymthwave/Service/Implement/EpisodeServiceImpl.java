@@ -50,6 +50,9 @@ public class EpisodeServiceImpl implements EpisodeService, CRUD<Episode, Long>{
 
 	@Override
 	public Episode findOne(Long key) {
+		if(key == null) {
+			return null;
+		}
 		return dao.findById(key).get();
 	}
 

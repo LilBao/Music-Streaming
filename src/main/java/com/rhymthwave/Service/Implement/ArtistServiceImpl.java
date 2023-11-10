@@ -14,7 +14,7 @@ import com.rhymthwave.entity.Artist;
 import jakarta.transaction.Transactional;
 
 @Service
-public class ArtistServiceImpl implements ArtistService, CRUD<Artist, Integer> {
+public class ArtistServiceImpl implements ArtistService, CRUD<Artist, Long> {
 	@Autowired
 	ArtistDAO dao;
 
@@ -33,13 +33,13 @@ public class ArtistServiceImpl implements ArtistService, CRUD<Artist, Integer> {
 
 	@Override
 	@Transactional
-	public Boolean delete(Integer key) {
+	public Boolean delete(Long key) {
 		dao.deleteById(key);
 		return true;
 	}
 
 	@Override
-	public Artist findOne(Integer key) {
+	public Artist findOne(Long key) {
 		
 		Optional<Artist> artist = dao.findById(key);
 		

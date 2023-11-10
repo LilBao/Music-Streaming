@@ -37,6 +37,7 @@ public class RecordServiceImpl implements RecordService, CRUD<Recording, Long>{
 	@Override
 	public Boolean delete(Long key) {
 		if (key instanceof Long && key >= 0) {
+			dao.deleteById(key);
 			return true;
 		}
 		return false;

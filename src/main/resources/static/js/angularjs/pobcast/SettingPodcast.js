@@ -30,9 +30,29 @@ app.controller('myPodcastCtrl',function($scope,$http){
     
     $scope.destroyPodcast=function(){
         let url = host + "/v1/podcast/"+$scope.podcast.podcastId;
-        let data = angular.copy($scope.podcast);
+        var data = angular.copy($scope.podcast);
         $http.delete(url).then(resp => {
+            $scope.deleteImage(data.image.accessId,data.image.publicId)
             window.location.href = "./SelectPodcast.html" 
+        }).catch(error => {
+
+        })
+    }
+
+    $scope.deleteImageCloudinary = function (publicId) {
+        let url = host + "/v1/cloudinary?public_id=" + publicId;
+        $http.delete(url).then(resp => {
+            showStickyNotification('Delete picture success', 'success', 3000);
+        }).catch(error => {
+            showStickyNotification('Delete picture fail', 'danger', 3000);
+        })
+    }
+
+    //Delete image
+    $scope.deleteImage = function (assetId, publicId) {
+        var url = host + "/v1/image/" + assetId;
+        $http.delete(url).then(resp => {
+            $scope.deleteImageCloudinary(publicId);
         }).catch(error => {
 
         })

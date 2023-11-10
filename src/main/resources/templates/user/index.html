@@ -26,7 +26,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
     <link rel="stylesheet" href="../../static/css/style.css">
     <link rel="stylesheet" href="../../static/css/toasts.css">
-
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -75,18 +75,43 @@
                                     </div>
                                 </div>
                                 <div class="playlist">
+                                    <!-- Wishlist -->
+                                    <li>
+                                        <a class="" href="#!wishlist">
+                                            <div class="d-flex align-items-center">
+                                                <img class="m-2 rounded-2 thumbnail-playlist"
+                                                    src="https://res.cloudinary.com/div9ldpou/image/upload/v1699455162/Background/System/liked-songs-640_mhrtwz.png"
+                                                    alt="">
+                                                <div>
+                                                    <h6 class="p-0 m-0">Liked songs</h6>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        
+                                    </li>
+                                    <!-- list follow -->
                                     <li ng-repeat="item in listFollow">
                                         <div class="d-flex align-items-center">
-                                            <img class="m-2 rounded-2 thumbnail-playlist" src="{{item.authorsAccountB.account.image !==null ? item.authorsAccountB.account.image:'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}" alt="">
+                                            <img class="m-2 rounded-2 thumbnail-playlist"
+                                                src="{{item.authorsAccountB.account.image !==null ? 
+                                                    item.authorsAccountB.account.image:
+                                                    'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}"
+                                                alt="">
                                             <div>
-                                                <p class="p-0 m-0">{{item.authorsAccountB.role.role === 'PODCAST' ? item.authorsAccountB.account.username : item.authorsAccountB.account.artist.artistName}}</p>
+                                                <p class="p-0 m-0">{{item.authorsAccountB.role.role === 'PODCAST' ?
+                                                    item.authorsAccountB.account.username :
+                                                    item.authorsAccountB.role.role === 'USER' ? item.authorsAccountB.account.username :
+                                                    item.authorsAccountB.account.artist.artistName}}</p>
                                                 <span>{{item.authorsAccountB.role.role}}</span>
                                             </div>
                                         </div>
                                     </li>
+                                    <!-- list Playlist -->
                                     <li ng-repeat="item in listPlaylist">
                                         <div class="d-flex align-items-center">
-                                            <img class="m-2 rounded-2 thumbnail-playlist" src="{{item.image !==null ? item.image.url:'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}" alt="">
+                                            <img class="m-2 rounded-2 thumbnail-playlist"
+                                                src="{{item.image !==null ? item.image.url:'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}"
+                                                alt="">
                                             <div>
                                                 <p class="p-0 m-0">{{item.playlistName}}</p>
                                                 <span>{{item.quantity}}</span>
@@ -101,27 +126,41 @@
                 </ul>
             </div>
         </div>
-        <main class="bl-body p-1" ng-view>
+        <main class="bl-body p-0" ng-view>
 
         </main>
     </div>
-    <footer class="player-controls col-12 fixed-bottom">
+    <footer class="player-controls col-12 fixed-bottom p-0">
         <div class="audio-bar row align-items-center">
             <div class="col-md-3 col-3 player-controls-left">
                 <div class="media d-flex align-items-center">
                     <div class="media-left">
-                        <a href="">
-                            <img class="m-2 thumbnail" src="{{record.song.image.url}}"
-                                alt="">
+                        <a ng-show="!ads.adId" href="">
+                            <img ng-if="!audioItem.episodeId" class="m-2 thumbnail" src="{{audioItem.song.image.url}}" alt="">
+                            <img ng-if="audioItem.episodeId" class="m-2 thumbnail" src="{{audioItem.image.url}}" alt="">
+                        </a>
+                        <a  href="">
+                            <img ng-show="ads.adId" class="m-2 thumbnail" src="{{ads.image.url}}" alt="">
                         </a>
                     </div>
                     <div class="media-content d-none d-md-block">
-                        <span><a class="text-white">{{record.recordingName}}</a></span>
-                        <h6><a>Name Singer</a></h6>
+                        <div ng-show="!ads.adId"  class="m-0 p-0">
+                            <span><a class="text-white">{{audioItem.recordingName}}</a></span>
+                            <span><a class="text-white">{{audioItem.episodeTitle}}</a></span>
+                        </div>
+                        <span><a class="text-white">{{ads.title}}</a></span>
+                        <div class="m-0 p-0">
+                            <div ng-show="!ads.adId" class="m-0 p-0">
+                                <a class="text-white" ng-repeat="item in audioItem.song.writters">{{item.artist.artistName}} | </a>
+                                <a class="text-white">{{audioItem.podcast.authorName}}</a>
+                            </div>
+                            <a ng-show="ads.adId" href="{{ads.url}}" class="text-white">Learn more</a>
+                        </div>
                     </div>
+
                     <div class="media-right d-flex">
                         <div class="level-item">
-                            <span><button class="btn button-control" data-bs-hover="tooltip"
+                            <span><button id="btn-wishlist" class="btn button-control border-0" ng-click="addToWishlist(audioItem)" data-bs-hover="tooltip"
                                     title="Thêm vào yêu thích!"><i class="bi bi-heart"></i></button></span>
                         </div>
                         <div class="level-item d-none d-md-block">
@@ -164,7 +203,8 @@
                 </div>
                 <div class="time-line w-100 d-flex align-items-center flex-fill">
                     <span style="font-size: x-small;" id="current-time">00:00</span>
-                    <input id="duration-audio" class="duration-bar w-100" type="range" min="0" value="0" step="0.1" name="" id="">
+                    <input id="duration-audio" class="duration-bar w-100" type="range" min="0" value="0" step="0.1"
+                        name="" id="">
                     <audio id="audio" src=""></audio>
                     <div class="line-first"></div>
                     <div class="line-current"></div>

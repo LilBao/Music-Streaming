@@ -2,63 +2,89 @@
 <html lang="en">
 
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>statistical managerment</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>statistical managerment</title>
 </head>
-<html >
+<html>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/graphql-request@6.1.0/build/cjs/index.min.js"></script>
 
 <body>
 
-<div ng-app="myApp"  ng-controller="myCtrl"> 
+    <div ng-app="myApp" ng-controller="myCtrl">
 
-<p>Today's welcome message is:</p>
-
-
-
-<ul>
-  
-    <li > {{asd.findOneArtist.artistId}} </li>
-    <li > {{asd.findOneArtist.backgroundImage.accessId}} </li>
-</ul>
-
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-
-
-<script>
-var app = angular.module('myApp', []);
+        <p>Today's welcome message is:</p>
 
 
 
-app.controller('myCtrl', function(graphqlService, $scope) {
+        <ul>
 
-    const query = `{
-        findOneArtist(id: 1) {
-            artistId
-            artistName
-            fullName
-            backgroundImage {
-                accessId
-            }
-        }
-    }`;
+            <li> {{asd.artistId}} </li>
+            <li> {{asd.findOneArtist.backgroundImage.accessId}} </li>
+        </ul>
 
- 
-    graphqlService.executeQuery(query)
-        .then(data => {
-            $scope.asd = data;
-        })
-        .catch(error => {
-          console.log(error);
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+
+    <script>
+        var app = angular.module('myApp', []);
+
+        app.service('graphqlService', function ($http) {
+            const graphqlEndpoint = 'http://localhost:8080/graphql';
+
+            this.executeQuery = function (query) {
+                const options = {
+                    method: 'POST',
+                    url: graphqlEndpoint,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    data: JSON.stringify({ query }),
+                };
+
+                return $http(options)
+                    .then(response => response.data.data)
+                    .catch(error => {
+                        throw error.data.errors;
+                    });
+            };
         });
 
-       
-});
+        app.controller('myCtrl', function (graphqlService, $scope) {
+            const query = `{
+        findOneArtist(emailArtist: "mck@gmail.com") {
+    artistId
+    artistName
+    dateOfBirth
+    fullName
+    placeOfBirth
+    bio
+    active
+    isVerify
+    dateStarted
+    account : account{
+      username
+    }
+  }
+    }`;
 
-</script>
+
+            graphqlService.executeQuery(query)
+                .then(data => {
+                    $scope.asd = data.findOneArtist;
+                    console.log(data)
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+
+
+        });
+
+    </script>
 
 </body>
+
 </html>

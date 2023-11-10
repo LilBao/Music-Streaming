@@ -1,5 +1,5 @@
 var host = "http://localhost:8080/api/";
-app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location) {
+app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location, graphqlService, audioService) {
     // var params = $location.search();
     // $scope.paramA = params.a;
     // $scope.paramB = params.b;
@@ -9,24 +9,105 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location)
     $scope.playlistPodcast = {};
     $scope.listRecommended = [];
     $scope.listAudioPlaylist = [];
+    $scope.wishList = [];
+    $scope.listLikedSongs = [];
 
     $scope.findPlaylist = function () {
-        let url = host + "v1/playlist/" + $scope.playlistId;
-        $http.get(url).then(resp => {
-            $scope.playlist = resp.data.data
-            console.log($scope.playlist.recording[0])
-        }).catch(err => {
+        if ($scope.playlistId !== undefined) {
+            const query = `{
+            playlistById(playlistId:`+ $scope.playlistId + `){
+                playlistId
+                playlistName
+                isPublic
+                description
+                image {
+                    accessId
+                    url
+                }
+                usertype {
+                    userTypeId
+                    nameType
+                }
+                playlistRecords {
+                    dateAdded
+                    recording {
+                        recordingId
+                        duration
+                        recordingName
+                        audioFileUrl
+                        tracks{
+                            album{
+                                albumId
+                                albumName
+                            }
+                        }
+                        song {
+                            image {
+                                url
+                            }
+                            writters{
+                                artist{
+                                artistName
+                                }
+                            }
+                        }
+                    }
+                }
+                playlistPodcast {
+                dateAdded
+                episode {
+                    episodeId
+                    duration
+                    episodeTitle
+                    fileUrl
+                    image{
 
-        })
+                        url
+                    }
+                    podcast{
+                        podcastId
+                        authorName
+                        podcastName
+                    }
+                }
+                }
+            }
+        }`
+            graphqlService.executeQuery(query).then(data => {
+                try {
+                    $scope.playlist = data.playlistById;
+                    $scope.listDateAdded = [...data.playlistById.playlistRecords, ...data.playlistById.playlistPodcast]
+
+                    $scope.listAudioPlaylist = [...data.playlistById.playlistRecords.map(function (item) {
+                        return { recording: item.recording };
+                    }).map(function (item) {
+                        return item.recording;
+                    }), ...data.playlistById.playlistPodcast.map(function (item) {
+                        return { episode: item.episode };
+                    }).map(function (item) {
+                        return item.episode;
+                    })];
+                } catch (error) {
+
+                }
+            }).catch(error => {
+                console.log(error);
+            });
+        }
     }
     $scope.findPlaylist();
 
     $('#btn-playlist-play').click(function () {
         $('#btn-playlist-pause').attr('hidden', false);
         $('#btn-playlist-play').attr('hidden', true);
-        //$scope.selectAudio($scope.listAudioPlaylist[0], $scope.listAudioPlaylist, 0);
+        if ($scope.listAudioPlaylist[0].recordingId) {
+            $scope.selectAudio($scope.listAudioPlaylist[0], 'song', $scope.listAudioPlaylist, 0);
+        } else {
+            $scope.selectAudio($scope.listAudioPlaylist[0], 'episode', $scope.listAudioPlaylist, 0);
+        }
         play.click();
     })
+
 
     //pause
     $('#btn-playlist-pause').click(function () {
@@ -63,6 +144,7 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location)
     $scope.updatePlaylist = function () {
         let url = host + "v1/playlist";
         let data = angular.copy($scope.playlist);
+        console.log(data)
         $http.put(url, data).then(resp => {
             if ($scope.coverImg !== undefined) {
                 $scope.updateImage();
@@ -70,7 +152,7 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location)
                 showStickyNotification('Update successfull', 'success', 3000);
             }
         }).catch(err => {
-
+            console.log("")
         })
     }
 
@@ -94,9 +176,31 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location)
     }
 
     $scope.recommended = function () {
-        let url = host + "v1/record-random"
-        $http.get(url).then(resp => {
-            $scope.listRecommended = resp.data.data;
+        const query = `{
+            recommendedListRecording {
+                recordingId
+                recordingName
+                audioFileUrl
+                song{
+                  writters{
+                    artist{
+                      artistId
+                      artistName
+                    }
+                  }
+                  image{
+                    url
+                  }
+                }
+                tracks{
+                  album{
+                    albumName
+                  }
+                }
+            }
+        }`
+        graphqlService.executeQuery(query).then(data => {
+            $scope.listRecommended = data.recommendedListRecording
         }).catch(err => {
             console.log(err)
         })
@@ -112,6 +216,7 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location)
         data.recording = item;
         data.playlist = $scope.playlist;
         $http.post(url, data).then(resp => {
+            $scope.findPlaylist();
             showStickyNotification('Addition successfull', 'success', 3000);
         })
     }
@@ -122,6 +227,7 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location)
         $scope.playlistPodcast.playlist = $scope.playlist;
         let data = angular.copy($scope.playlistRecord);
         $http.post(url, data).then(resp => {
+            $scope.findPlaylist();
             showStickyNotification('Addition successfull', 'success', 3000);
         })
     }
@@ -157,11 +263,134 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location)
         })
     })
 
+    /*------------------------------*/
+    /******************************* */
+    /**        Wishlist             */
+    /***************************** */
+    $scope.MyWishList = function () {
+        if ($scope.account.email !== undefined) {
+            const query = `{
+            myWishlist(email: "mck@gmail.com") {
+              wishlistId
+              addDate
+              usertype {
+                userTypeId
+                nameType
+                startDate
+                endDate
+                status
+                paymentStatus
+              }
+              recording {
+                recordingId
+                recordingName
+                audioFileUrl
+                publicIdAudio
+                lyricsUrl
+                publicIdLyrics
+                duration
+                songStyle
+                listened
+                mood
+                culture
+                instrument
+                versions
+                studio
+                idMv
+                produce
+                recordingdate
+                isDeleted
+                emailCreate
+                song{
+                  songId
+                  image{
+                    url
+                  }
+                  writters{
+                    artist{
+                      artistName
+                    }
+                  }
+                }
+                tracks{
+                  album{
+                    albumName
+                  }
+                }
+              }
+              episode {
+                episodeId
+                publicIdFile
+                fileUrl
+                episodeTitle
+                description
+                publishDate
+                sessionNumber
+                episodeNumber
+                episodeType
+                content
+                isPublic
+                isDelete
+                listened
+                duration
+                image{
+                  accessId
+                  url
+                }
+                podcast{
+                  podcastId
+                  podcastName
+                  authorName
+                }
+              }
+            }
+        }`
+            graphqlService.executeQuery(query).then(data => {
+                $scope.wishList = data.myWishlist;
+                $scope.wishList.forEach(item => {
+                    if (item.recording) {
+                        $scope.listLikedSongs.push(item.recording);
+                    } else {
+                        $scope.listLikedSongs.push(item.episode);
+                    }
+                });
+            }).catch(err => {
+                console.log(err)
+            })
+        }
+    }
+    $scope.MyWishList();
+    //ng-dblclick="removeTag('mood',$event)"
+    //event.target.textContent;
+
+    $('#btn-wishlist-play').click(function () {
+        $('#btn-wishlist-pause').attr('hidden', false);
+        $('#btn-wishlist-play').attr('hidden', true);
+        if ($scope.listLikedSongs[0].recordingId) {
+            $scope.selectAudio($scope.listLikedSongs[0], 'song', $scope.listLikedSongs, 0);
+        } else {
+            $scope.selectAudio($scope.listLikedSongs[0], 'episode', $scope.listLikedSongs, 0);
+        }
+        play.click();
+    })
+
+    $('#btn-wishlist-shuffle').click(function () {
+        let icon = $('#btn-playlist-shuffle').children();
+        if ($('#btn-wishlist-shuffle').hasClass('isShuffle')) {
+            $('#btn-wishlist-shuffle').removeClass("isShuffle");
+            icon.eq(0).css('color', 'white', 'important');
+        } else {
+            $('#btn-wishlist-shuffle').addClass("isShuffle");
+            icon.eq(0).css('color', 'green', 'important');
+        }
+        shuffle.click();
+    })
+
     //js
     if (play.hidden == true) {
         $('#btn-playlist-pause').attr('hidden', false);
         $('#btn-playlist-play').attr('hidden', true);
-    }else{
+    } else {
         $('#btn-playlist-pause').attr('hidden', true);
         $('#btn-playlist-play').attr('hidden', false);
     }

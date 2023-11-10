@@ -4,10 +4,10 @@ app.controller('recordCtrl', function ($scope, $http) {
     $scope.songGenre = {};
     //Call API => create Record
     $('#create-record').click(function () {
-        $scope.createRecord() 
+        $scope.createRecord()
     })
 
-    $scope.createRecord = function(){
+    $scope.createRecord = function () {
         $scope.checkbox();
         var url = host + "/v1/record";
         var data = new FormData();
@@ -21,6 +21,7 @@ app.controller('recordCtrl', function ($scope, $http) {
         data.append('instrument', $scope.instruments);
         data.append('versions', $scope.record.version);
         data.append('fileRecord', $scope.recordFile);
+        data.append('duration', $scope.duration);
         if ($scope.lyricsFile) {
             data.append('fileLyrics', $scope.lyricsFile);
         }
@@ -77,6 +78,13 @@ app.controller('recordCtrl', function ($scope, $http) {
                 $scope.$apply(function () {
                     if (id == 'records') {
                         $scope.recordFile = file;
+                        var audio = new Audio();
+                        audio.src = URL.createObjectURL(file);
+                        audio.onloadedmetadata = function () {
+                            var time = audio.duration;
+                            $scope.duration = time;
+                            URL.revokeObjectURL(audio.src);
+                        };
                     }
                     if (id == 'lyrics') {
                         $scope.lyricsFile = file;
@@ -156,7 +164,7 @@ app.controller('recordCtrl', function ($scope, $http) {
         });
         $scope.genre = selectedValues;
     }
-    
+
     $('#genre').on('keypress', function (event) {
         if (event.key === 'Enter') {
             event.preventDefault();
@@ -174,7 +182,7 @@ app.controller('recordCtrl', function ($scope, $http) {
             }
         }
         if (selectedOption && selectedOption != "") {
-            var tag = $('<div class="checkbox"> <input type="checkbox" checked name="genre" value='+selectedOption+'id="" />' +
+            var tag = $('<div class="checkbox"> <input type="checkbox" checked name="genre" value=' + selectedOption + 'id="" />' +
                 '<div class="box bg-black text-white"><p>' + GenreText + '</p></div>' +
                 '</div>');
             tag.find('input[name="genre"]').val(selectedOption);
@@ -183,7 +191,7 @@ app.controller('recordCtrl', function ($scope, $http) {
         }
         $('#genre').val("");
     });
-    
+
     $('#list-genres').on('click', 'input[name="genre"]', function () {
         var selectedGenre = $(this).val();
         var genreName = $(this).find('option:selected').text();
@@ -196,12 +204,12 @@ app.controller('recordCtrl', function ($scope, $http) {
         }
     });
 
-    $('#genre').change(function(){
-        if(document.getElementsByTagName('genre').length > 3){
-            $('#genre').attr('readonly',true);
+    $('#genre').change(function () {
+        if (document.getElementsByTagName('genre').length > 3) {
+            $('#genre').attr('readonly', true);
         }
     })
-    
+
     var countC = 0;
     var countM = 0;
     var countS = 0;

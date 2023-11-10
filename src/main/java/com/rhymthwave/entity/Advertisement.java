@@ -55,10 +55,13 @@ public class Advertisement implements Serializable {
 	private String targetAudience;
 
 	@Column(name = "CLICKED")
-	private long clicked;
+	private Long clicked;
+	
+	@Column(name = "LISTENED")
+	private Long listened;
 
 	@Column(name = "PRIORITY")
-	private int priority;
+	private Integer priority;
 
 	@Column(name = "AUDIOFILE",columnDefinition = "nvarchar(max)")
 	private String audioFile;
@@ -68,6 +71,9 @@ public class Advertisement implements Serializable {
 	
 	@Column(name = "TAG",columnDefinition = "varchar(55)")
 	private String tag;
+	
+	@Column(name = "CURRENCY",columnDefinition = "varchar(55)")
+	private String currency;
 
 	@Column(name = "CREATEDATE")
 	private Date createDate;

@@ -1,11 +1,25 @@
 var host = "http://localhost:8080/api/";
-app.controller('myCtrl', function ($scope, $http, $route, audioService, queueService) {
+app.controller('myCtrl', function ($scope, $http, $route, audioService, queueService, graphqlService) {
     $('#myModal').modal('show');
+    //variable of sidebar
     $scope.account = {};
     $scope.playlist = {};
     $scope.listPlaylist = [];
     $scope.listFollow = [];
-    $scope.record = {};
+
+    //variable of current audio
+    $scope.audioItem = {};
+
+    //variable of wislish and monitor
+    $scope.monitor = {};
+    $scope.wishlist = {};
+
+    //variable of Ads
+    $scope.listAdvertisment = [];
+    $scope.ads = {};
+    $scope.officalAds = [];
+    var audioAds = new Audio();
+    var currentAds = 0;
 
     $scope.Owner = function () {
         let url = host + "v1/account";
@@ -17,8 +31,10 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
                 $scope.findMyPlaylist(e.userTypeId)
             });
             $scope.findMyListFollow();
+
         })
     }
+    $scope.Owner();
 
     $scope.findMyPlaylist = function (userTypeId) {
         let url = host + "v1/my-playlist/" + userTypeId;
@@ -28,11 +44,30 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
     }
 
     $scope.findMyListFollow = function () {
-        let url = host + "v1/my-list-follow";
-        $http.get(url, {
-            headers: { 'Authorization': 'Bearer ' + getCookie('token') }
-        }).then(resp => {
-            $scope.listFollow.push(...resp.data.data);
+        let query = `{
+            myListFollow(email: "`+ $scope.account.email + `") {
+                followerId
+                authorsAccountB {
+                  role{
+                    role
+                  }
+                  account {
+                    username
+                    image{
+                      url
+                    }
+                    artist{
+                      artistName
+                      imagesProfile{
+                        url
+                      }
+                    }
+                  }
+                }
+              }
+            }`
+        graphqlService.executeQuery(query).then(data => {
+            $scope.listFollow = data.myListFollow
         })
     }
 
@@ -42,7 +77,7 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
         $http.post(url, data, {
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
-            if (resp.success === true) {
+            if (resp.data.success === true) {
                 showStickyNotification('Create playlist success', 'success', 2000);
             } else {
                 showStickyNotification(resp.data.data, 'warning', 2000);
@@ -87,17 +122,112 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
     var next = document.getElementById('next');
     var prev = document.getElementById('prev');
     var shuffle = document.getElementById('shuffle');
+    var btnWishlist = document.getElementById('btn-wishlist');
+    var checkWishlist = document.querySelectorAll('bi bi-heart');
+
     volumeAudio.value = audio.volume;
 
-    $scope.selectAudio = function (item, list, index) {
-        audioService.setAudio(item.audioFileUrl);
-        if (item.lyricsUrl !== null) {
-            audioService.setLyricsSrc(item.lyricsUrl);
+
+    $scope.getCurrentAudio = function (id, type) {
+        if (type === 'song') {
+            var query = `{
+            recordingById(recordingId:`+ id + `) {
+                recordingId
+                recordingName
+                audioFileUrl
+                publicIdAudio
+                lyricsUrl
+                publicIdLyrics
+                duration
+                songStyle
+                listened
+                mood
+                culture
+                instrument
+                versions
+                studio
+                idMv
+                produce
+                recordingdate
+                isDeleted
+                emailCreate
+                song{
+                    songId
+                    image{
+                        accessId
+                        url
+                    }
+                    writters{
+                        artist{
+                            artistId
+                            artistName
+                        }
+                    }
+                }
+              }
+        }`} else {
+            var query = `{
+                episodeById(episodeId: `+ id + `) {
+                    episodeId
+                    publicIdFile
+                    fileUrl
+                    episodeTitle
+                    description
+                    publishDate
+                    sessionNumber
+                    episodeNumber
+                    episodeType
+                    content
+                    isPublic
+                    isDelete
+                    listened
+                    duration
+                    image {
+                      accessId
+                      url
+                    }
+                    podcast {
+                      podcastId
+                      authorName
+                      podcastName
+                    }
+                }
+            }`
+        }
+        graphqlService.executeQuery(query)
+            .then(data => {
+                if (type === 'song') {
+                    $scope.audioItem = data.recordingById;
+                } else {
+                    $scope.audioItem = data.episodeById;
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+
+    $scope.selectAudio = function (item, type, list, index) {
+        listened = 0;
+        if (type === 'song') {
+            audioService.setAudio(item.audioFileUrl);
+            if (item.lyricsUrl) {
+                audioService.setLyricsSrc(item.lyricsUrl);
+            }
+            $scope.getCurrentAudio(item.recordingId, 'song')
+        } else {
+            audioService.setAudio(item.fileUrl);
+            $scope.getCurrentAudio(item.episodeId, 'episode');
         }
         audioService.setListPlay(list);
         audioService.setCurrentAudio(index);
         audio.src = audioService.getAudio();
-        $scope.record=item;
+        currentAudioIndex = audioService.getCurrentAudio();
+
+        listHistoryAudio.push(item);
+        var encryptedData = CryptoJS.AES.encrypt(JSON.stringify(listHistoryAudio), "whoami").toString();
+        setCookie("history", encodeURIComponent(encryptedData), 30);
+
         if (resume.hidden === false && play.hidden === true) {
             audio.play();
         } else {
@@ -105,8 +235,26 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
         }
     }
 
-    if (audioService.getAudio() !== null) {
+    //check cookie
+    if (audioService.getAudio()) {
         audio.src = audioService.getAudio();
+    } else {
+        try {
+            if (getCookie("history")) {
+                var decryptedData = CryptoJS.AES.decrypt(decodeURIComponent(getCookie("history")), "whoami");
+                var decryptedString = decryptedData.toString(CryptoJS.enc.Utf8);
+                var listHistoryAudio = JSON.parse(decryptedString);
+                if (listHistoryAudio[listHistoryAudio.length - 1].recordingId) {
+                    $scope.selectAudio(listHistoryAudio[listHistoryAudio.length - 1], 'song', listHistoryAudio, listHistoryAudio.length - 1);
+                } else {
+                    $scope.selectAudio(listHistoryAudio[listHistoryAudio.length - 1], 'episode', listHistoryAudio, listHistoryAudio.length - 1);
+                }
+            } else {
+                var listHistoryAudio = [];
+            }
+        } catch (error) {
+
+        }
     }
 
     audio.onloadedmetadata = function () {
@@ -114,13 +262,34 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
         duration.value = 0;
         duration.setAttribute('max', audio.duration);
         volumeAudio.setAttribute('max', 1);
+
     };
 
     //thời gian thay đổi của audio
+    var listened;
     audio.ontimeupdate = function () {
         if (audio.duration) {
             duration.value = audio.currentTime;
             currentTimes.innerText = time(audio.currentTime);
+        }
+        if (audio.currentTime === 0) {
+            listened = 0;
+            currentAds=0;
+            if ($scope.account.userType) {
+                if (($scope.account.userType.length === 1 || new Date($scope.account.userType[1].endDate) < new Date())
+                    && (Math.floor(Math.random() * 3) + 1 === 3) && $scope.officalAds.length > 0) {
+                    resume.click();
+                    play.disabled=true;
+                    resume.disabled=true;
+                    loop.disabled=true;
+                    next.disabled=true;
+                    prev.disabled=true;
+                    shuffle.disabled=true;
+                    btnWishlist.disabled=true;
+                    duration.disabled=true;
+                    $scope.insertAds();
+                }
+            }
         }
         //thay đổi lyrics
         const currentTime = audio.currentTime;
@@ -140,19 +309,21 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
 
         }
     }
+    audio.load();
 
     //end
     if (audioService.getCurrentAudio() === undefined) {
-        var currentSongIndex = 0;
+        var currentAudioIndex = 0;
     } else {
-        currentSongIndex = audioService.getCurrentAudio();
+        currentAudioIndex = audioService.getCurrentAudio();
     }
 
     audio.addEventListener("ended", function () {
-        if (isShuffle === true && currentSongIndex < audioService.getListPlay().length) {
-            currentSongIndex = Math.floor(Math.random() * (audioService.getListPlay().length));
-            audioService.setCurrentAudio(currentSongIndex);
-            let source = audioService.getListPlay()[currentSongIndex];
+        if (isShuffle === true && currentAudioIndex < audioService.getListPlay().length) {
+            listened = 0;
+            currentAudioIndex = Math.floor(Math.random() * (audioService.getListPlay().length));
+            audioService.setCurrentAudio(currentAudioIndex);
+            let source = audioService.getListPlay()[currentAudioIndex];
             audio.src = source.audioFileUrl;
             if (resume.hidden === false && play.hidden === true) {
                 audio.play();
@@ -162,12 +333,38 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
         } else {
             Next();
         }
+
     });
 
     //thanh duration thay đổi
     duration.addEventListener('change', function () {
         audio.currentTime = duration.value;
     })
+
+    //count real time view
+    //update listened
+    $scope.updateListened = function () {
+        $scope.countTime = setInterval(function () {
+            listened++;
+            if (listened === (Math.floor($scope.audioItem.duration / 3))) {
+                if ($scope.audioItem.recordingId) {
+                    $scope.Monitoring();
+
+                } else {
+                    $scope.Monitoring();
+                }
+            }
+            if (listened === (Math.floor($scope.audioItem.duration / 2))) {
+                if ($scope.audioItem.recordingId) {
+                    $scope.updateListenedAudio();
+
+                } else {
+                    $scope.updateListenedAudio();
+                }
+            }
+        }, 1000);
+    }
+
 
     //play
     play.addEventListener('click', function () {
@@ -177,6 +374,9 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
         //playlist
         $('#btn-playlist-pause').attr('hidden', false);
         $('#btn-playlist-play').attr('hidden', true);
+        if (resume.hidden === false && play.hidden === true) {
+            $scope.updateListened();
+        }
     })
 
     //pause
@@ -184,6 +384,7 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
         audio.pause();
         resume.hidden = true;
         play.hidden = false;
+        clearInterval($scope.countTime);
         //playlist
         $('#btn-playlist-pause').attr('hidden', true);
         $('#btn-playlist-play').attr('hidden', false);
@@ -195,53 +396,66 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
     })
 
     function Next() {
-        if (isLoopPlaylist === true && currentSongIndex === audioService.getListPlay().length - 1) {
-            currentSongIndex = 0;
-            audioService.setCurrentAudio(currentSongIndex);
-            let source = audioService.getListPlay()[currentSongIndex];
-            $scope.record = audioService.getListPlay()[currentSongIndex];
-            audio.src = source.audioFileUrl;
+        listened = 0;
+        currentAds = 0;
+        if (isLoopPlaylist === true && currentAudioIndex === audioService.getListPlay().length - 1) {
+            currentAudioIndex = 0;
+            audioService.setCurrentAudio(currentAudioIndex);
+            var item = audioService.getListPlay()[currentAudioIndex];
+            if (item.recordingId) {
+                $scope.selectAudio(item, 'song', audioService.getListPlay(), currentAudioIndex)
+            } else {
+                $scope.selectAudio(item, 'episode', audioService.getListPlay(), currentAudioIndex)
+            }
             if (resume.hidden === false && play.hidden === true) {
                 audio.play();
             } else {
                 audio.pause();
             }
-        } else if (currentSongIndex === (audioService.getListPlay().length - 1)) {
+        } else if (currentAudioIndex === (audioService.getListPlay().length - 1)) {
             //lấy list set vào Queue
             //lưu queue vào listplay
 
-            currentSongIndex = 0;
+            currentAudioIndex = 0;
             audioService.setListPlay();
-            audioService.setCurrentAudio(currentSongIndex);
-            let source = audioService.getListPlay()[currentSongIndex];
-            $scope.record = audioService.getListPlay()[currentSongIndex];
-            audio.src = source.audioFileUrl;
+            audioService.setCurrentAudio(currentAudioIndex);
+            var item = audioService.getListPlay()[currentAudioIndex];
+            if (item.recordingId) {
+                $scope.selectAudio(item, 'song', audioService.getListPlay(), currentAudioIndex)
+            } else {
+                $scope.selectAudio(item, 'episode', audioService.getListPlay(), currentAudioIndex)
+            }
             if (resume.hidden === false && play.hidden === true) {
                 audio.play();
             } else {
                 audio.pause();
             }
         } else {
-            currentSongIndex += 1;
-            audioService.setCurrentAudio(currentSongIndex);
-            let source = audioService.getListPlay()[currentSongIndex];
-            $scope.record = audioService.getListPlay()[currentSongIndex];
-            audio.src = source.audioFileUrl;
+            currentAudioIndex += 1;
+            audioService.setCurrentAudio(currentAudioIndex);
+            var item = audioService.getListPlay()[currentAudioIndex];
+            if (item.recordingId) {
+                $scope.selectAudio(item, 'song', audioService.getListPlay(), currentAudioIndex)
+            } else {
+                $scope.selectAudio(item, 'episode', audioService.getListPlay(), currentAudioIndex)
+            }
             if (resume.hidden === false && play.hidden === true) {
                 audio.play();
             } else {
                 audio.pause();
             }
         }
-        if (audioService.getListPlay()[currentSongIndex].lyricsUrl !== null) {
-            audioService.setLyricsSrc(audioService.getListPlay()[currentSongIndex].lyricsUrl);
-            $scope.record = audioService.getListPlay()[currentSongIndex];
+        if (audioService.getListPlay()[currentAudioIndex].lyricsUrl !== null) {
+            audioService.setLyricsSrc(audioService.getListPlay()[currentAudioIndex].lyricsUrl);
+            $scope.audioItem = audioService.getListPlay()[currentAudioIndex];
         }
         reloadKaraoke();
     }
 
     //prev
     prev.addEventListener('click', function () {
+        listened = 0;
+        currentAds = 0;
         var index = audioService.getCurrentAudio();
         if (index === 0) {
             index = audioService.getListPlay().length - 1;
@@ -249,9 +463,13 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
             index = audioService.getCurrentAudio() - 1;
         }
         audioService.setCurrentAudio(index);
-        var source = audioService.getListPlay()[index];
-        $scope.record = audioService.getListPlay()[index];
-        audio.src = source.audioFileUrl;
+        var item = audioService.getListPlay()[index];
+        if (item.recordingId) {
+            $scope.selectAudio(item, 'song', audioService.getListPlay(), index)
+        } else {
+            $scope.selectAudio(item, 'episode', audioService.getListPlay(), index)
+        }
+
         if (resume.hidden === false && play.hidden === true) {
             audio.play();
         } else {
@@ -291,22 +509,48 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
     mute.addEventListener('click', function () {
         if (mute.classList.contains('muted')) {
             audio.volume = 1;
+            try {
+                audioAds.volume = 1;
+            } catch (error) {
+                
+            }
             volumeAudio.value = 1
             mute.classList.remove("muted")
             iconVolume.className = "bi bi-volume-up"
             iconVolume.classList.remove = "bi bi-volume-mute"
+            
         } else {
             audio.volume = 0;
+            try {
+                audioAds.volume = 0;
+            } catch (error) {
+                
+            }
             volumeAudio.value = 0
             mute.classList.add("muted");
             iconVolume.className = "bi bi-volume-mute"
             iconVolume.classList.remove = "bi bi-volume-up"
+            
         }
     })
 
     //volumn
     volumeAudio.addEventListener('change', function () {
         audio.volume = volumeAudio.value;
+        try {
+            audioAds.volume = volumeAudio.value;
+        } catch (error) {
+            
+        }
+        if(audio.volume>0 || audioAds.volume >0){
+            mute.classList.remove("muted")
+            iconVolume.className = "bi bi-volume-up"
+            iconVolume.classList.remove = "bi bi-volume-mute"
+        }else{
+            mute.classList.add("muted");
+            iconVolume.className = "bi bi-volume-mute"
+            iconVolume.classList.remove = "bi bi-volume-up"
+        }
     })
 
 
@@ -333,7 +577,6 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
         }
     })
 
-
     //download
     download.addEventListener('click', function () {
         var audioLink = document.createElement("a");
@@ -345,6 +588,209 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
     function reloadKaraoke() {
         $route.reload();
     };
+
+    $scope.updateListenedAudio = function () {
+        let data = angular.copy($scope.audioItem);
+        if (data.recordingId) {
+            var url = host + "v1/record";
+            data.recordingdate = new Date(data.recordingdate);
+        } else {
+            var url = host + "v1/episode";
+            data.publishDate = new Date(data.publishDate);
+        }
+
+        data.listened += 1;
+        $http.put(url, data).then(resp => {
+
+        }).catch(err => {
+
+        })
+    }
+
+    /*------------------------------*/
+    /******************************* */
+    /**        Monitor             */
+    /***************************** */
+    $scope.Monitoring = function () {
+        var item = angular.copy($scope.monitor);
+        var data = angular.copy($scope.audioItem);
+        item.account = $scope.account;
+        if (data.recordingId) {
+            var url = host + "v1/monitor";
+            data.recordingdate = new Date(data.recordingdate);
+            item.recording = data;
+        } else {
+            var url = host + "v1/monitor-episode";
+            data.publishDate = new Date(data.publishDate);
+            item.episode = data;
+        }
+        $http.post(url, item).then(resp => {
+
+        }).catch(err => {
+            console.log(err)
+        })
+    }
+
+    /*------------------------------*/
+    /******************************* */
+    /**        Wishlist             */
+    /***************************** */
+
+    $scope.checkExisted = function (data, event) {
+        //var icon = event.target; 
+        let url = host + "v1/exist-my-wishlist"
+        if (data.recordingId) {
+            var recording = data.recordingId;
+            var episode = null;
+        } else {
+            var recording = null;
+            var episode = data.episodeId;
+        }
+        $http.get(url, {
+            params: { episode: episode, recording: recording },
+            headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+        }).then(resp => {
+            console.log(resp.data)
+            if (resp.data.data === true) {
+                icon.style.color = "green"
+            }
+        })
+    }
+    var checkWishlist = document.querySelectorAll('bi bi-heart');
+    checkWishlist.forEach(item => {
+        $scope.checkExisted(item)
+    })
+
+    $scope.addToWishlist = function (data) {
+        let item = angular.copy($scope.wishlist);
+        if (data.recordingId) {
+            data.recordingdate = new Date(data.recordingdate);
+            item.recording = data;
+            item.episode = null;
+        } else {
+            data.publishDate = new Date(data.publishDate);
+            item.recording = null;
+            item.episode = data;
+        }
+        let url = host + "v1/wishlist"
+        $http.post(url, item, {
+            headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+        }).then(resp => {
+            if (resp.data.success === true) {
+                showStickyNotification("Add wishlist success", 'success', 3000);
+            } else {
+                showStickyNotification(resp.data.message, 'warning', 3000);
+            }
+        }).catch(err => {
+            console.log(err)
+        })
+    }
+
+    /*------------------------------*/
+    /******************************* */
+    /**       Advertisment          */
+    /***************************** */
+
+    //Advertisment with ratio 33% and certainty 1 ads priority 1 and 6/4 (priority 2 / priority 3)
+    $scope.findAllListAdsAudio = function () {
+        const query = `{
+            findAllAdsAudio {
+              adId
+              title
+              content
+              url
+              targetAudience
+              clicked
+              listened
+              priority
+              audioFile
+              tag
+              image {
+                accessId
+                url
+              }
+            }
+        }`
+        graphqlService.executeQuery(query).then(data => {
+            $scope.listAdvertisment = data.findAllAdsAudio;
+            $scope.ratioAds($scope.listAdvertisment);
+        }).catch(err => {
+
+        })
+    }
+
+    $scope.ratioAds = function (list) {
+        if (list.length > 0) {
+            $scope.officalAds.push(list[0]);
+            var priority1Ads = list.filter(ad => ad.priority === 1);
+            var ads2 = list.find(item => {
+                return item.priority == 2;
+            })
+            var ads3 = list.find(item => {
+                return item.priority == 3;
+            })
+
+            var ratio = Math.random();
+            if (priority1Ads.length > 0) {
+                var random = Math.floor(Math.random() * priority1Ads.length) + 1; //skip ads 0
+                var ads1 = priority1Ads[random];
+                var twentyPercent = 0.2;
+                var sixtyPercent = 0.6;
+                let selectedObject = ratio <= twentyPercent ? ads3 : (twentyPercent < ratio < sixtyPercent ? ads2 : ads1);
+                $scope.officalAds.push(selectedObject);
+            } else {
+                if (ads2) {
+                    var sixtyPercent = 0.6;
+                    let selectedObject = ratio < sixtyPercent ? ads2 : ads3;
+                    $scope.officalAds.push(selectedObject);
+                }
+            }
+        }
+    }
+    $scope.findAllListAdsAudio();
+
+    $scope.insertAds = function () {
+        $scope.ads = $scope.officalAds[currentAds];
+        audioAds.src = $scope.officalAds[currentAds].audioFile;
+        audioAds.play();
+    }
+
+    audioAds.addEventListener('ended', function () {
+        currentAds++;
+        if (currentAds === $scope.officalAds.length) {
+            play.disabled=false;
+            resume.disabled=false;
+            loop.disabled=false;
+            next.disabled=false;
+            prev.disabled=false;
+            shuffle.disabled=false;
+            btnWishlist.disabled=false;
+            play.click();
+            duration.disabled=false;
+            currentAds = 0;
+            $scope.officalAds = [];
+            $scope.ads={};
+            $scope.findAllListAdsAudio();
+        } else {
+            var item = angular.copy($scope.ads);
+            item.listened += 1;
+            console.log(item)
+            $scope.updateAds(item);
+            
+            $scope.insertAds();
+        }
+        
+    });
+
+    //update listened ads
+    $scope.updateAds = function (item) {
+        let url = host + "v1/ads";
+        $http.put(url, item).then(resp => {
+            console.log(resp.data.data)
+        }).catch(err => {
+
+        })
+    }
 
     function time(currentTime) {
         const hours = Math.floor(currentTime / 3600);
@@ -361,7 +807,9 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
             return `${minutesStr}:${secondsStr}`;
         }
     }
-    audio.load();
-    $scope.Owner();
+
+    function clickHandler(event) {
+        event.preventDefault()
+    }
 
 })

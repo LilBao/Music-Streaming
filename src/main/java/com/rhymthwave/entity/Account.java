@@ -76,6 +76,10 @@ public class Account implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "account")
 	private List<Monitor> monitor;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "account")
+	private List<MonitorEpisode> monitorEp;
 
 	@OneToMany(mappedBy = "account")
 	private List<UserType> userType;
