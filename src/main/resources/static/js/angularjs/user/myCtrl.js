@@ -689,7 +689,7 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
     /*------------------------------*/
     /******************************* */
     /**       Advertisment          */
-    /***************************** */
+    /*****************************  */
 
     //Advertisment with ratio 33% and certainty 1 ads priority 1 and 6/4 (priority 2 / priority 3)
     $scope.findAllListAdsAudio = function () {
