@@ -25,6 +25,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
     <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" href="../../static/css/cssUser/profile.css" />
+
     <link rel="stylesheet" href="../../static/css/toasts.css">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
@@ -87,7 +89,7 @@
                                                 </div>
                                             </div>
                                         </a>
-                                        
+
                                     </li>
                                     <!-- list follow -->
                                     <li ng-repeat="item in listFollow">
@@ -100,7 +102,8 @@
                                             <div>
                                                 <p class="p-0 m-0">{{item.authorsAccountB.role.role === 'PODCAST' ?
                                                     item.authorsAccountB.account.username :
-                                                    item.authorsAccountB.role.role === 'USER' ? item.authorsAccountB.account.username :
+                                                    item.authorsAccountB.role.role === 'USER' ?
+                                                    item.authorsAccountB.account.username :
                                                     item.authorsAccountB.account.artist.artistName}}</p>
                                                 <span>{{item.authorsAccountB.role.role}}</span>
                                             </div>
@@ -136,22 +139,24 @@
                 <div class="media d-flex align-items-center">
                     <div class="media-left">
                         <a ng-show="!ads.adId" href="">
-                            <img ng-if="!audioItem.episodeId" class="m-2 thumbnail" src="{{audioItem.song.image.url}}" alt="">
+                            <img ng-if="!audioItem.episodeId" class="m-2 thumbnail" src="{{audioItem.song.image.url}}"
+                                alt="">
                             <img ng-if="audioItem.episodeId" class="m-2 thumbnail" src="{{audioItem.image.url}}" alt="">
                         </a>
-                        <a  href="">
+                        <a href="">
                             <img ng-show="ads.adId" class="m-2 thumbnail" src="{{ads.image.url}}" alt="">
                         </a>
                     </div>
                     <div class="media-content d-none d-md-block">
-                        <div ng-show="!ads.adId"  class="m-0 p-0">
+                        <div ng-show="!ads.adId" class="m-0 p-0">
                             <span><a class="text-white">{{audioItem.recordingName}}</a></span>
                             <span><a class="text-white">{{audioItem.episodeTitle}}</a></span>
                         </div>
                         <span><a class="text-white">{{ads.title}}</a></span>
                         <div class="m-0 p-0">
                             <div ng-show="!ads.adId" class="m-0 p-0">
-                                <a class="text-white" ng-repeat="item in audioItem.song.writters">{{item.artist.artistName}} | </a>
+                                <a class="text-white"
+                                    ng-repeat="item in audioItem.song.writters">{{item.artist.artistName}} | </a>
                                 <a class="text-white">{{audioItem.podcast.authorName}}</a>
                             </div>
                             <a ng-show="ads.adId" href="{{ads.url}}" class="text-white">Learn more</a>
@@ -160,8 +165,12 @@
 
                     <div class="media-right d-flex">
                         <div class="level-item">
-                            <span><button id="btn-wishlist" class="btn button-control border-0" ng-click="addToWishlist(audioItem)" data-bs-hover="tooltip"
-                                    title="Thêm vào yêu thích!"><i class="bi bi-heart"></i></button></span>
+                            <span>
+                                <button id="btn-wishlist" class="btn button-control border-0"
+                                    ng-click="checkExisted(audioItem,$event)" data-bs-hover="tooltip"
+                                    title="Thêm vào yêu thích!">
+                                    <i ng-style="{'color': isExistedLiked ? 'green' : 'white'}" class="{{isExistedLiked ? 'bi bi-heart-fill' : 'bi bi-heart'}}"></i>
+                                </button></span>
                         </div>
                         <div class="level-item d-none d-md-block">
 
@@ -264,6 +273,8 @@
     <script src="../../static/js/angularjs/user/Queue.js"></script>
     <script src="../../static/js/angularjs/user/search.js"></script>
     <script src="../../static/js/angularjs/user/playlist.js"></script>
+    <script src="../../static/js/angularjs/user/profile.js"></script>
+
 </body>
 
 </html>

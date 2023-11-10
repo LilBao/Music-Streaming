@@ -56,5 +56,7 @@ type Query {
  myWishlist(email: String!): [Wishlist]
  
  findAllAdsAudio: [Advertisement]
+ 
+ accountByUsername(username: String!): Account
 }
 
