@@ -32,4 +32,5 @@ public interface ArtistDAO extends JpaRepository<Artist, Integer>{
 	
 	@Query("SELECT COUNT(*) FROM Follow f WHERE f.authorsAccountB.authorId = ?1")
 	int countFollowerArtist(Integer author);
+	
 }

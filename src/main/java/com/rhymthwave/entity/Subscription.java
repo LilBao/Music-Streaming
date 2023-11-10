@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -39,6 +40,9 @@ public class Subscription implements Serializable {
 	@Column(name = "DESCRIPTION",columnDefinition = "nvarchar(max)")
 	private String description;
 	
+	@Column(name = "ACTIVE")
+	private Boolean active;
+	
 	@Column(name = "PRDSTRIPEID")
 	private String prdStripeId;
 	
@@ -58,7 +62,7 @@ public class Subscription implements Serializable {
 	private Integer nip;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "subscription")
+	@OneToMany(mappedBy = "subscription", cascade = CascadeType.REFRESH)
 	private List<UserType> userTypes;
 }
 
