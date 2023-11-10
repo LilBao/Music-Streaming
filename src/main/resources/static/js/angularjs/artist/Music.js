@@ -407,7 +407,6 @@ app.controller('musicCtrl', function ($scope, $http) {
     $scope.updateRecord = function (data) {
         let url = host + "/v1/record";
         $http.put(url, data).then(resp => {
-            showStickyNotification('Update record successfully.', 'success', 3000);
         }).catch(err => {
             showStickyNotification('Update record fail.', 'danger', 3000);
         })
@@ -669,6 +668,8 @@ app.controller('musicCtrl', function ($scope, $http) {
         $scope.updateFileRecordOrLyrics();
         let data = angular.copy($scope.record)
         $scope.updateRecord(data);
+        showStickyNotification('Update record successfully.', 'success', 3000);
+
     }
 
     //Move recording to garbage
@@ -695,24 +696,22 @@ app.controller('musicCtrl', function ($scope, $http) {
     }
 
     //Destroy recording
-    $http.DestroyRecord = function (id, publicId) {
+    $scope.DestroyRecord = function (id, publicIdAudio,publicIdLyrics) {
         let url = host + "/v1/record/" + id;
         $http.delete(url).then(resp => {
-            $scope.deleteImageCloudinary(publicId);
+            $scope.deleteCloudinary(publicIdAudio);
+            $scope.deleteCloudinary(publicIdLyrics);
             $scope.getListRecordRemoved();
         }).catch(error => {
-
+            console.log(error)
         })
     }
 
     //Delete in cloudinary
-    $scope.deleteImageCloudinary = function (publicId) {
+    $scope.deleteCloudinary = function (publicId) {
         let url = host + "/v1/cloudinary?public_id=" + publicId;
-        $http.delete(url).then(resp => {
-            showStickyNotification('Destroy image success', 'success', 3000);
-            $scope.listTypePicture();
+        $http.delete(url).then(resp => {  
         }).catch(error => {
-            showStickyNotification('Destroy image fail', 'danger', 3000);
         })
     }
 
@@ -721,25 +720,25 @@ app.controller('musicCtrl', function ($scope, $http) {
     $scope.tmpMood = "";
     $scope.tmpSongStyle = "";
     $scope.tmpInstrument = "";
+    
     $scope.addTag = function (tag, value) {
         if (tag === 'culture') {
-            if ($scope.record.culture.split(' ').length <= 3 && !$scope.record.culture.includes(value)) {
-                $scope.record.culture += " " + value.trim();
+            if ($scope.record.culture.trim().split(' ').length < 3 && !$scope.record.culture.trim().includes(value)) {
+                $scope.record.culture= $scope.record.culture.trim()+" " + value.trim();
             }
         } else if (tag === 'mood') {
-            if ($scope.record.mood.split(' ').length <= 3 && !$scope.record.mood.includes(value)) {
-                $scope.record.mood += " " + value.trim();
+            if ($scope.record.mood.trim().split(' ').length < 3 && !$scope.record.mood.trim().includes(value)) {
+                $scope.record.mood=$scope.record.mood.trim()+ " " + value.trim();
             }
 
         } else if (tag === 'songStyle') {
-            if ($scope.record.songStyle.split(' ').length <= 3 && !$scope.record.songStyle.includes(value)) {
-                $scope.record.songStyle += " " + value.trim();
+            if ($scope.record.songStyle.trim().split(' ').length < 3 && !$scope.record.songStyle.trim().includes(value)) {
+                $scope.record.songStyle=$scope.record.songStyle.trim()+" "+ value.trim();
             }
 
         } else {
-            if (!$scope.record.instrument.includes(value)) {
-                $scope.record.instrument += " " + value.trim();
-                console.log($scope.record.instrument)
+            if (!$scope.record.instrument.trim().includes(value)) {
+                $scope.record.instrument=$scope.record.instrument.trim()+ " " + value.trim();
             }
         }
     }

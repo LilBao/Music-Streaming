@@ -1,0 +1,9 @@
+#MonitorEpisode.graphqls
+#import "./Episode.graphqls"
+#import "./Account.graphqls"
+
+type MonitorEpisode{
+	instrumentId: ID
+	episode: Episode
+	account: Account
+}

@@ -503,3 +503,7 @@ li {
 .line-lyrics:hover{
     color: red;
 }
+
+a{
+    text-decoration: none;
+}

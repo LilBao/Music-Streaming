@@ -7,6 +7,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -55,7 +56,7 @@ public class Recording implements Serializable {
 	private String songStyle;
 
 	@Column(name = "LISTENED")
-	private Long listened;
+	private Long listened=0L;
 	
 	@Column(name = "MOOD",columnDefinition = "nvarchar(55)")
 	private String mood;
@@ -82,7 +83,7 @@ public class Recording implements Serializable {
 	private Date recordingdate = new Date();
 
 	@Column(name = "ISDELETED")
-	private boolean isDeleted;
+	private Boolean isDeleted;
 	
 	@Column(name = "EMAILCREATE",columnDefinition = "varchar(255)")
 	private String emailCreate;
@@ -95,7 +96,7 @@ public class Recording implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "recording")
 	private List<Monitor> monitors;
-
+	
 	@JsonIgnore
 	@OneToMany(mappedBy = "recording")
 	private List<Wishlist> wishlists;
@@ -113,7 +114,7 @@ public class Recording implements Serializable {
 	private List<Track> tracks;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "recording")
+	@OneToMany(mappedBy = "recording",cascade = CascadeType.ALL)
 	private List<SongGenre> songGenres;
 	
 }

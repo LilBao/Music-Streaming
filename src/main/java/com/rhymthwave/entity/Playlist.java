@@ -32,7 +32,7 @@ public class Playlist implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "PLAYLISTID")
-	private Integer playlistId;
+	private Long playlistId;
 
 	@Column(name = "PLAYLISTNAME",columnDefinition = "nvarchar(55)")
 	private String playlistName;

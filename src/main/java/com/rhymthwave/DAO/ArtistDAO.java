@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.rhymthwave.entity.Artist;
 
 @Repository
-public interface ArtistDAO extends JpaRepository<Artist, Integer>{
+public interface ArtistDAO extends JpaRepository<Artist, Long>{
 	@Query("Select o from Artist o where account.email = :email")
 	Artist findByEmail(@Param("email") String email);
 	

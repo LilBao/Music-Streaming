@@ -13,9 +13,12 @@ type Episode{
 	content: String
 	isPublic: Boolean
 	isDelete: Boolean
-	likes: Int
+	listened: Int
 	podcast: Podcast
 	image: Image
+	duration: Int
 	playlistPodcast: [Playlist_Podcast]
 	reports: [Report]
+	monitorEp: [MonitorEpisode]
+	wishlist: [Wishlist]
 }

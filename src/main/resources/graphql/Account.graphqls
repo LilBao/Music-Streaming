@@ -28,6 +28,7 @@ type Account{
 	image: Image
 	news:[News]
 	monitor:[Monitor]
+	monitorEp:[MonitorEpisode]
 	userType:[UserType]
 	advertisement:[Advertisement]
 	podcast:[Podcast]

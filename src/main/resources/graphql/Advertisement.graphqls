@@ -13,10 +13,12 @@ type Advertisement{
 	status: String
 	targetAudience: String
 	clicked: Int
+	listened: Int
 	priority: Int
 	audioFile: String
 	publicIdAudio: String
 	tag: String
+	currency: String
 	createDate: String
 	modifiedBy: String
 	modifiDate: String

@@ -259,7 +259,7 @@
                             </div>
 
                             <div class="d-flex flex-column" ng-if="artist.socialMediaLinks !=null">
-                                <div ng-repeat="item in artist.socialMediaLinks" class="d-flex justify-content-between">
+                                <div ng-repeat="item in artist.socialMediaLinks track by $index" class="d-flex justify-content-between">
                                     <a href="{{item}}" class="link-social">{{item}}</a>
                                     <button ng-click="removeSocialLink(item)" class="btn"><i
                                             class="bi bi-x-lg"></i></button>

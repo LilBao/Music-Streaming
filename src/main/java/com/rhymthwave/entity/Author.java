@@ -29,7 +29,7 @@ public class Author implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "AUTHORID")
-	private Integer authorId;
+	private Long authorId;
 
 	@ManyToOne
 	@JoinColumn(name = "IDROLE")
