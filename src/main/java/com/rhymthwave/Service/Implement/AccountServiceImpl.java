@@ -66,4 +66,9 @@ public class AccountServiceImpl implements AccountService, CRUD<Account, String>
 	public List<Object> search(String keyword) {
 		return dao.search(keyword);
 	}
+
+	public Account findAccountByUsername(String username) {
+		Account account = dao.findByUsername(username);
+		return account;
+	}
 }

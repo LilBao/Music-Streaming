@@ -1,19 +1,51 @@
 var host = "http://localhost:8080/api/";
-var app = angular.module('myApp', []);
-app.controller('profileCtrl', function ($scope, $http,$routeParams) {
-    $scope.profile = {}
-    $scope.author ={};
+app.controller('profileCtrl', function ($scope, $http,$location,$routeParams,graphqlService) {
+    $scope.role = $routeParams.profile.toLowerCase();
+    $scope.idProfile = $location.path().toLowerCase().includes($routeParams.id);
 
-    $http.get(host + "v1/account/jvke@gmail.com").then(resp => {
-        $scope.profile = resp.data.data;
-        $scope.checkFollowExist();
-    })
+    $scope.author ={};
+    $scope.profile = {};
+    $scope.type = 0;
+
+    $scope.findProfile = function(){
+        const query =`{
+            accountByUsername(username: `+idProfile+`) {
+                email
+                username
+                birthday
+                gender
+                country
+                author {
+                  authorId
+                  role {
+                    roleId
+                  }
+                }
+                artist{
+                  artistId
+                  artistName
+                }
+            }
+        }`
+        graphqlService.executeQuery(query).then(data => {
+            $scope.profile = data.accountByUsername;
+            if(role ==='artist'){
+                $scope.type=2;
+            }else if(role ==='podcaster'){
+                $scope.type=3;
+            }else{
+                $scope.type=1;
+            }
+            $scope.checkFollowExist();
+        })
+    }
+    
 
     $scope.follow = function () {
         var url = host + "v1/follow";
         var data = angular.copy($scope.author);
         data.email=$scope.profile.email;
-        data.type=1;
+        data.type=$scope.type;
         $http.post(url,data,{
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
@@ -22,9 +54,10 @@ app.controller('profileCtrl', function ($scope, $http,$routeParams) {
 
         });
     }
+    $scope.findProfile();
 
     $scope.unfollow = function () {
-        let url = host + "v1/follow?email="+$scope.profile.email+"&type=1";
+        let url = host + "v1/follow?email="+$scope.profile.email+"&type="+$scope.type;
         $http.delete(url,{
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
@@ -37,7 +70,7 @@ app.controller('profileCtrl', function ($scope, $http,$routeParams) {
     $scope.checkFollowExist =function(){
         let url = host +"v1/check-follow";
         $http.get(url,{
-            params: { email: $scope.profile.email, type: 1 },
+            params: { email: $scope.profile.email, type: $scope.type},
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
             if(resp.data.success == true){

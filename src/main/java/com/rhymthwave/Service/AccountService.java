@@ -9,4 +9,7 @@ public interface AccountService {
 	Account findAdminByEmail(HttpServletRequest request);
 
 	List<Object> search(String keyword);
+
+	Account findAccountByUsername(String username);
+
 }

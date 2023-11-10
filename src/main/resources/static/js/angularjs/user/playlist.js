@@ -347,21 +347,21 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location,
         }`
             graphqlService.executeQuery(query).then(data => {
                 $scope.wishList = data.myWishlist;
-                $scope.wishList.forEach(item => {
-                    if (item.recording) {
-                        $scope.listLikedSongs.push(item.recording);
-                    } else {
-                        $scope.listLikedSongs.push(item.episode);
-                    }
-                });
+                if ($scope.wishList) {
+                    $scope.wishList.forEach(item => {
+                        if (item.recording) {
+                            $scope.listLikedSongs.push(item.recording);
+                        } else {
+                            $scope.listLikedSongs.push(item.episode);
+                        }
+                    });
+                }
             }).catch(err => {
                 console.log(err)
             })
         }
     }
     $scope.MyWishList();
-    //ng-dblclick="removeTag('mood',$event)"
-    //event.target.textContent;
 
     $('#btn-wishlist-play').click(function () {
         $('#btn-wishlist-pause').attr('hidden', false);
@@ -385,6 +385,25 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location,
         }
         shuffle.click();
     })
+
+    $scope.removeWishlist = function (id, index) {
+        let url = host + "v1/wishlist/" + id;
+        $http.delete(url).then(resp => {
+            $scope.listLikedSongs.splice(index, 1);
+            showStickyNotification('Removed from liked songs', 'success', 3000);
+        }).catch(err => {
+            showStickyNotification('Try again', 'warning', 3000);
+        })
+    }
+
+    $scope.isLiked = function (data) {
+        if (data.recordingId) {
+            var index = $scope.listLikedSongs.findIndex(item => item.recordingId ===data.recordingId);
+        } else {    
+            var index = $scope.listLikedSongs.findIndex(item => item.episodeId ===data.episodeId);
+        }
+        return index !==-1;
+    }
 
     //js
     if (play.hidden == true) {

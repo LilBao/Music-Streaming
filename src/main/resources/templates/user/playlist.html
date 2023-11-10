@@ -106,7 +106,9 @@
                         <!-- Col 5 -->
                         <td>
                             <div class="d-flex justify-content-center align-items-center">
-                                <button class="btn border-0 text-white"><i class="bi bi-heart"></i></button>
+                                <button ng-click="checkExisted(item,$event)" class="btn border-0 playlist-liked text-white">         
+                                    <i ng-style="{'color': isLiked(item) ? 'green' : 'white'}" class="{{isLiked(item) ? 'bi bi-heart-fill' : 'bi bi-heart'}}"></i>
+                                </button>
                                 <h6 class="p-0 m-0 text-white"><format-time seconds="item.duration"></format-time></h6>
                                 <button class="btn border-0 text-white"><i class="bi bi-three-dots"></i></button>
                             </div>
