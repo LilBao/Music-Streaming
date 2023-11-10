@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,7 +31,7 @@ public class Episode implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "EPISODESID")
-	private Integer episodeId;
+	private Long episodeId;
 
 	@Column(name = "PUBLICIDFILE",columnDefinition = "nvarchar(max)")
 	private String publicIdFile;
@@ -68,7 +67,10 @@ public class Episode implements Serializable {
 	private boolean isDelete;
 	
 	@Column(name = "LISTENED")
-	private Long listened;
+	private Long listened=0L;
+	
+	@Column(name = "DURATION")
+	private Integer duration;
 	
 	@ManyToOne()
 	@JoinColumn(name = "PODCASTID")
@@ -83,8 +85,16 @@ public class Episode implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "episode")
 	private List<Playlist_Podcast> playlistPodcast;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "episode")
+	private List<Wishlist> wishlist;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "episode")
 	private List<Report> reports;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "episode")
+	private List<MonitorEpisode> monitorEp;
 }

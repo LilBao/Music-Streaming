@@ -6,5 +6,6 @@ type Wishlist{
 	wishlistId: ID
 	addDate: String
 	recording: Recording
+	episode: Episode
 	usertype: UserType
 }

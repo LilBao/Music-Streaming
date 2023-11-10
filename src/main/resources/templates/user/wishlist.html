@@ -1,0 +1,114 @@
+<body ng-controller="playlistCtrl">
+    <section class="w-100 h-100">
+        <div class="row pt-5" style="background: linear-gradient(to bottom, #4e2e89, rgb(75, 106, 135));">
+            <div class="col-2 ms-3 mb-3">
+                <img class="w-100 img-playlist" style="height: 200px; object-fit: cover;"
+                    src="https://res.cloudinary.com/div9ldpou/image/upload/v1699455162/Background/System/liked-songs-640_mhrtwz.png"
+                    alt="">
+            </div>
+            <div class="col-9 d-flex flex-column justify-content-center">
+                <div>
+                    <p class="p-0 m-0">Playlist</p>
+                    <h1>Liked songs</h1>
+                </div>
+                <div>
+                    <p class="text-white-50">{{playlist.description}}</p>
+                </div>
+                <div>
+                    <h6>{{account.username}}</h6>
+                </div>
+            </div>
+        </div>
+        <div ng-show="listLikedSongs.length > 0" class="d-flex justify-content-between align-items-center">
+            <div>
+                <button id="btn-wishlist-play" class="btn border-0">
+                    <i class="display-3 bi bi-play-circle" style="color: green;"></i>
+                </button>
+                <button id="btn-wishlist-pause" hidden class="btn border-0">
+                    <i class="display-3 bi bi-pause-circle" style="color: green;"></i>
+                </button>
+                <button id="btn-wishlist-shuffle" class="btn text-white border-0 py-0"><i
+                        class="display-6 bi bi-shuffle"></i></button>
+            </div>
+            <div class="d-flex align-items-center">
+                <div class="input-group me-3">
+                    <span class="input-group-text" style="background-color: transparent;"><i
+                            class="text-white bi bi-search-heart"></i></span>
+                    <input type="text" class="text-white form-control" placeholder="Search in playlist"
+                        style="background-color: transparent;">
+                </div>
+                <div>
+                    <select name="" id="" class="border-0 text-white" style="background-color: transparent;">
+                        <option value="">Custom order</option>
+                        <option value="">Title</option>
+                        <option value="">Artist</option>
+                        <option value="">Album</option>
+                        <option value="">Date added</option>
+                        <option value="">Duration</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="mx-4">
+            <table ng-show="listLikedSongs.length > 0" class="table text-white table-hover"
+                style="background-color: transparent!important;">
+                <thead>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Album</th>
+                    <th>Date added</th>
+                    <th class="text-center"><i class="bi bi-stopwatch"></i></th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in listLikedSongs | limitTo: 10"
+                        ng-dblclick="item.recordingId ? selectAudio(item,'song',listLikedSongs,$index) : selectAudio(item,'episode',listLikedSongs,$index)"
+                        class="align-items-center">
+                        <!-- Col 1 -->
+                        <td class="text-white">
+                            {{$index+1}}
+                        </td>
+                        <!-- Col 2 -->
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="d-flex">
+                                    <img class="rounded-2 mx-3"
+                                        src="{{item.recordingId ? item.song.image.url : item.image.url}}"
+                                        style="width: 50px; height: 50px; object-fit: cover;" alt="">
+                                    <div>
+                                        <h6 class="text-white">{{item.recordingId ? item.recordingName :
+                                            item.episodeTitle}}</h6>
+                                        <span class="small text-white"
+                                            ng-repeat="a in item.song.writters">{{a.artist.artistName}}</span>
+                                        <span class="small text-white">{{item.podcast.authorName}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <!-- Col 3 -->
+                        <td>
+                            <h6 ng-show="item.tracks.length === 0" class="p-0 m-0 text-white">{{item.recordingName}}</h6>
+                            <h6 ng-show="item.tracks.length > 0" class="p-0 m-0 text-white">
+                                {{item.tracks[0].album.albumName}}
+                            </h6>
+                            <h6 class="p-0 m-0 text-white">{{item.podcast.podcastName}}</h6>
+                        </td>
+
+                        <!-- Col 4 -->
+                        <td>
+                            <p class="p-0 m-0 text-white">{{wishList[$index].addDate}}</p>
+                        </td>
+
+                        <!-- Col 5 -->
+                        <td>
+                            <div class="d-flex justify-content-center align-items-center">
+                                <button class="btn border-0 text-white"><i class="bi bi-heart"></i></button>
+                                <h6 class="p-0 m-0 text-white"><format-time seconds="item.duration"></format-time></h6>
+                                <button class="btn border-0 text-white"><i class="bi bi-three-dots"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</body>

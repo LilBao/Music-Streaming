@@ -1,7 +1,6 @@
 window.setCookie=function(cookieName, cookieValue,expirationDays){
     const expirationDate = new Date();
     expirationDate.setDate(expirationDate.getDate()+expirationDays);
-
     const cookieString = `${cookieName}=${cookieValue};expires=${expirationDate.toUTCString()};path=/`
     document.cookie= cookieString;
 }

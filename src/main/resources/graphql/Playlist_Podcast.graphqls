@@ -7,5 +7,6 @@ type Playlist_Podcast{
 	playlistPodcastId: ID
 	playlist: Playlist
 	episode: Episode
+	dateAdded: String
 	accesses: [Access]
 }

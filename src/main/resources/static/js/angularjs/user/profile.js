@@ -1,6 +1,6 @@
 var host = "http://localhost:8080/api/";
 var app = angular.module('myApp', []);
-app.controller('profileCtrl', function ($scope, $http) {
+app.controller('profileCtrl', function ($scope, $http,$routeParams) {
     $scope.profile = {}
     $scope.author ={};
 

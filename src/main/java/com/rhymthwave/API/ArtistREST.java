@@ -38,7 +38,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ArtistREST {
 
-	private final CRUD<Artist, Integer> crud;
+	private final CRUD<Artist, Long> crud;
 
 	private final CloudinaryService cloudinary;
 
@@ -59,7 +59,7 @@ public class ArtistREST {
 	}
 
 	@GetMapping("/api/v1/artist/{id}")
-	public ResponseEntity<MessageResponse> getById(@PathVariable("id") Integer id) {
+	public ResponseEntity<MessageResponse> getById(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(new MessageResponse(true, "succeess", crud.findOne(id)));
 	}
 	
