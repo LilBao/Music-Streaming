@@ -27,13 +27,8 @@ app.config(function ($routeProvider) {
             templateUrl: "playlist.html",
             controller: 'playlistCtrl'
         })      
-        .when("/user/:id", {
-            templateUrl: "playlist.html",
-            controller: 'playlistCtrl'
-        })
-        .when("/artist/:id", {
-            templateUrl: "playlist.html",
-            controller: 'playlistCtrl'
+        .when("/:profile/:id", {
+            controller: 'profileCtrl'
         })
         .when("/podcast/:id", {
             templateUrl: "playlist.html",

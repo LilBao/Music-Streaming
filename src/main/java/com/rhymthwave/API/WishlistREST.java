@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -118,6 +119,30 @@ public class WishlistREST {
 			return ResponseEntity.ok(new MessageResponse(true, "Existed", true));
 		}
 		return ResponseEntity.ok(new MessageResponse(true, "Existed", false));
-
+	}
+	
+	@DeleteMapping("/api/v1/wishlist/{id}")
+	public ResponseEntity<MessageResponse> deleteWishlist(@PathVariable("id") Long id){
+		return ResponseEntity.ok(new MessageResponse(true, "success", crudWishlist.delete(id)));
+	}
+	
+	@GetMapping("/api/v1/find-wishlist")
+	public ResponseEntity<MessageResponse> findWishlist(HttpServletRequest req, @RequestParam("episode") Optional<Long> episodeId,
+			@RequestParam("recording") Optional<Long> recordingId) {
+		String owner = host.getEmailByRequest(req);
+		Account account = crudAccount.findOne(owner);
+		Episode episode = crudEpisode.findOne(episodeId.orElse(null));
+		Recording recording = crudRecording.findOne(recordingId.orElse(null));
+		UserType premium = account.getUserType().get(1);
+		UserType basic = account.getUserType().get(0);
+		Wishlist wlb = wishlistSer.checkExtist(basic, episode, recording);
+		Wishlist wlp = wishlistSer.checkExtist(premium, episode, recording);
+		
+		if (wlb!= null) {
+			return ResponseEntity.ok(new MessageResponse(true, "success", wlb));
+		}else if(wlp!=null) {
+			return ResponseEntity.ok(new MessageResponse(true, "Existed", wlp));
+		}
+		return ResponseEntity.ok(new MessageResponse(false, "Existed", null));
 	}
 }

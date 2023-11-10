@@ -16,15 +16,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../../static/css/cssUser/profile.css" />
+    <script src="../../static/js/angularjs/user/profile.js"></script>
 </head>
 
-<body>
+<body ng-app="myApp" ng-controller="profileCtrl">
     <div class="container-fluid m-0 p-0">
         <div class="background-in4">
             <img src="../../static/img/bg.png" class="w-100" alt="">
             <div class="in4-card">
                 <div class="in4-text">
-                    <p>Verified Artist</p>
+                    <p><i style="color: rgb(69, 69, 230);" class="bi bi-patch-check-fill"></i> Verified Artist</p>
                     <p class="display-1 text-bold fw-bolder">W/N</p>
                     <p>1,000,431 monthly listeners</p>
                 </div>

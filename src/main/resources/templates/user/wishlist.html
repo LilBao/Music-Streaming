@@ -60,7 +60,7 @@
                     <th class="text-center"><i class="bi bi-stopwatch"></i></th>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="item in listLikedSongs | limitTo: 10"
+                    <tr ng-repeat="item in listLikedSongs"
                         ng-dblclick="item.recordingId ? selectAudio(item,'song',listLikedSongs,$index) : selectAudio(item,'episode',listLikedSongs,$index)"
                         class="align-items-center">
                         <!-- Col 1 -->
@@ -101,7 +101,7 @@
                         <!-- Col 5 -->
                         <td>
                             <div class="d-flex justify-content-center align-items-center">
-                                <button class="btn border-0 text-white"><i class="bi bi-heart"></i></button>
+                                <button ng-click="removeWishlist(wishList[$index].wishlistId,$index)" class="btn border-0 text-white"><i style="color: green;" class="bi bi-heart-fill"></i></button>
                                 <h6 class="p-0 m-0 text-white"><format-time seconds="item.duration"></format-time></h6>
                                 <button class="btn border-0 text-white"><i class="bi bi-three-dots"></i></button>
                             </div>

@@ -63,5 +63,10 @@ public class AccountServiceImpl implements AccountService, CRUD<Account, String>
 		return admin;
 	}
 
+	@Override
+	public Account findAccountByUsername(String username) {
+		Account account = dao.findByUsername(username);
+		return account;
+	}
 
 }

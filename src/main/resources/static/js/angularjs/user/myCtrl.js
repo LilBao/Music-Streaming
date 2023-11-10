@@ -123,8 +123,7 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
     var prev = document.getElementById('prev');
     var shuffle = document.getElementById('shuffle');
     var btnWishlist = document.getElementById('btn-wishlist');
-    var checkWishlist = document.querySelectorAll('bi bi-heart');
-
+    var listHistoryAudio = [];
     volumeAudio.value = audio.volume;
 
 
@@ -243,18 +242,19 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
             if (getCookie("history")) {
                 var decryptedData = CryptoJS.AES.decrypt(decodeURIComponent(getCookie("history")), "whoami");
                 var decryptedString = decryptedData.toString(CryptoJS.enc.Utf8);
-                var listHistoryAudio = JSON.parse(decryptedString);
+                listHistoryAudio = JSON.parse(decryptedString);
                 if (listHistoryAudio[listHistoryAudio.length - 1].recordingId) {
                     $scope.selectAudio(listHistoryAudio[listHistoryAudio.length - 1], 'song', listHistoryAudio, listHistoryAudio.length - 1);
                 } else {
                     $scope.selectAudio(listHistoryAudio[listHistoryAudio.length - 1], 'episode', listHistoryAudio, listHistoryAudio.length - 1);
                 }
             } else {
-                var listHistoryAudio = [];
+                listHistoryAudio = [];
             }
         } catch (error) {
 
         }
+
     }
 
     audio.onloadedmetadata = function () {
@@ -274,19 +274,19 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
         }
         if (audio.currentTime === 0) {
             listened = 0;
-            currentAds=0;
+            currentAds = 0;
             if ($scope.account.userType) {
                 if (($scope.account.userType.length === 1 || new Date($scope.account.userType[1].endDate) < new Date())
                     && (Math.floor(Math.random() * 3) + 1 === 3) && $scope.officalAds.length > 0) {
                     resume.click();
-                    play.disabled=true;
-                    resume.disabled=true;
-                    loop.disabled=true;
-                    next.disabled=true;
-                    prev.disabled=true;
-                    shuffle.disabled=true;
-                    btnWishlist.disabled=true;
-                    duration.disabled=true;
+                    play.disabled = true;
+                    resume.disabled = true;
+                    loop.disabled = true;
+                    next.disabled = true;
+                    prev.disabled = true;
+                    shuffle.disabled = true;
+                    btnWishlist.disabled = true;
+                    duration.disabled = true;
                     $scope.insertAds();
                 }
             }
@@ -512,25 +512,25 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
             try {
                 audioAds.volume = 1;
             } catch (error) {
-                
+
             }
             volumeAudio.value = 1
             mute.classList.remove("muted")
             iconVolume.className = "bi bi-volume-up"
             iconVolume.classList.remove = "bi bi-volume-mute"
-            
+
         } else {
             audio.volume = 0;
             try {
                 audioAds.volume = 0;
             } catch (error) {
-                
+
             }
             volumeAudio.value = 0
             mute.classList.add("muted");
             iconVolume.className = "bi bi-volume-mute"
             iconVolume.classList.remove = "bi bi-volume-up"
-            
+
         }
     })
 
@@ -540,13 +540,13 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
         try {
             audioAds.volume = volumeAudio.value;
         } catch (error) {
-            
+
         }
-        if(audio.volume>0 || audioAds.volume >0){
+        if (audio.volume > 0 || audioAds.volume > 0) {
             mute.classList.remove("muted")
             iconVolume.className = "bi bi-volume-up"
             iconVolume.classList.remove = "bi bi-volume-mute"
-        }else{
+        } else {
             mute.classList.add("muted");
             iconVolume.className = "bi bi-volume-mute"
             iconVolume.classList.remove = "bi bi-volume-up"
@@ -636,8 +636,8 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
     /**        Wishlist             */
     /***************************** */
 
-    $scope.checkExisted = function (data, event) {
-        //var icon = event.target; 
+    $scope.checkExisted = function (data,event) {
+        var icon = angular.element(event.currentTarget).children(); 
         let url = host + "v1/exist-my-wishlist"
         if (data.recordingId) {
             var recording = data.recordingId;
@@ -650,16 +650,20 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
             params: { episode: episode, recording: recording },
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
-            console.log(resp.data)
-            if (resp.data.data === true) {
-                icon.style.color = "green"
-            }
+            var isExisted = resp.data.data;
+            if(isExisted === true){  
+                $scope.removeLikedSongs(data);
+                icon.addClass('bi bi-heart');
+                icon.removeClass('bi bi-heart-fill');
+                icon.css('color', 'white');
+            }else{
+                icon.removeClass('bi bi-heart');
+                icon.addClass('bi bi-heart-fill');
+                icon.css('color', 'green');
+                $scope.addToWishlist(data);
+            }   
         })
     }
-    var checkWishlist = document.querySelectorAll('bi bi-heart');
-    checkWishlist.forEach(item => {
-        $scope.checkExisted(item)
-    })
 
     $scope.addToWishlist = function (data) {
         let item = angular.copy($scope.wishlist);
@@ -677,12 +681,40 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
             if (resp.data.success === true) {
-                showStickyNotification("Add wishlist success", 'success', 3000);
+                showStickyNotification("Added to liked songs", 'success', 3000);
             } else {
                 showStickyNotification(resp.data.message, 'warning', 3000);
             }
         }).catch(err => {
             console.log(err)
+        })
+    }
+
+    $scope.removeLikedSongs = function (data) {
+        let url = host + "v1/find-wishlist"
+        if (data.recordingId) {
+            var recording = data.recordingId;
+            var episode = null;
+        } else {
+            var recording = null;
+            var episode = data.episodeId;
+        }
+        $http.get(url, {
+            params: { episode: episode, recording: recording },
+            headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+        }).then(resp => {
+            if (resp.data.success === true) {
+                let url = host + "v1/wishlist/" + resp.data.data.wishlistId;
+                $http.delete(url).then(resp => {
+                    showStickyNotification('Removed from liked songs', 'success', 3000);
+                }).catch(err => {
+                    showStickyNotification('Try again', 'warning', 3000);
+                })
+            } else {
+                showStickyNotification('Try again', 'warning', 3000);
+            }
+        }).catch(err => {
+            showStickyNotification('Try again', 'warning', 3000);
         })
     }
 
@@ -732,7 +764,7 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
 
             var ratio = Math.random();
             if (priority1Ads.length > 0) {
-                var random = Math.floor(Math.random() * priority1Ads.length) + 1; //skip ads 0
+                var random = Math.floor(Math.random() * (priority1Ads.length - 1)) + 1; //skip ads 0
                 var ads1 = priority1Ads[random];
                 var twentyPercent = 0.2;
                 var sixtyPercent = 0.6;
@@ -758,35 +790,33 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
     audioAds.addEventListener('ended', function () {
         currentAds++;
         if (currentAds === $scope.officalAds.length) {
-            play.disabled=false;
-            resume.disabled=false;
-            loop.disabled=false;
-            next.disabled=false;
-            prev.disabled=false;
-            shuffle.disabled=false;
-            btnWishlist.disabled=false;
+            play.disabled = false;
+            resume.disabled = false;
+            loop.disabled = false;
+            next.disabled = false;
+            prev.disabled = false;
+            shuffle.disabled = false;
+            btnWishlist.disabled = false;
             play.click();
-            duration.disabled=false;
+            duration.disabled = false;
             currentAds = 0;
             $scope.officalAds = [];
-            $scope.ads={};
+            $scope.ads = {};
             $scope.findAllListAdsAudio();
         } else {
             var item = angular.copy($scope.ads);
             item.listened += 1;
-            console.log(item)
             $scope.updateAds(item);
-            
+
             $scope.insertAds();
         }
-        
     });
 
     //update listened ads
     $scope.updateAds = function (item) {
         let url = host + "v1/ads";
         $http.put(url, item).then(resp => {
-            console.log(resp.data.data)
+
         }).catch(err => {
 
         })
@@ -808,8 +838,10 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
         }
     }
 
-    function clickHandler(event) {
-        event.preventDefault()
-    }
+    /*------------------------------*/
+    /******************************* */
+    /**           Side bar          */
+    /*****************************  */
+
 
 })

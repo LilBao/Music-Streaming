@@ -26,4 +26,6 @@ public interface AccountDAO extends JpaRepository<Account, String>{
 
 	Account findByVerificationCode(String verificationCode);
 	
+	Account findByUsername(String username);
+	
 }
