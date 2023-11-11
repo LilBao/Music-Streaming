@@ -1,15 +1,8 @@
-app.controller('queueCtrl', function ($scope, $http,queueService) {
+app.controller('queueCtrl', function ($scope, $http,queueService,audioService) {
     $scope.queue = queueService.getQueue();
-    $scope.listTest = [];
-    $scope.enQueue = function(item){
-        queueService.enQueue(item);
+    $scope.listPlay =[... audioService.getListPlay()];
+    $scope.currentIndex = audioService.getCurrentAudio();
+    $scope.clearQueue = function(){
+        queueService.clearQueue()
     }
-
-    $scope.testData = function(){
-        $http.get('http://localhost:8080/api/v1/record').then(resp => {
-            $scope.listTest= resp.data.data;
-        })
-    }
-    $scope.testData();
-    
 })

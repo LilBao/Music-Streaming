@@ -1,5 +1,5 @@
 var host = "http://localhost:8080/api/";
-app.controller('myCtrl', function ($scope, $http, $route, audioService, queueService, graphqlService) {
+app.controller('myCtrl', function ($scope, $http, $route, audioService, queueService, graphqlService, $sce) {
     $('#myModal').modal('show');
     //variable of sidebar
     $scope.account = {};
@@ -13,6 +13,7 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
     //variable of wislish and monitor
     $scope.monitor = {};
     $scope.wishlist = {};
+    $scope.isLikeExist;
 
     //variable of Ads
     $scope.listAdvertisment = [];
@@ -31,7 +32,6 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
                 $scope.findMyPlaylist(e.userTypeId)
             });
             $scope.findMyListFollow();
-
         })
     }
     $scope.Owner();
@@ -57,6 +57,7 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
                       url
                     }
                     artist{
+                      artistId
                       artistName
                       imagesProfile{
                         url
@@ -197,6 +198,12 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
             .then(data => {
                 if (type === 'song') {
                     $scope.audioItem = data.recordingById;
+                    if ($scope.audioItem.lyricsUrl !== null) {
+                        audioService.setLyricsSrc($scope.audioItem.lyricsUrl);
+                    }
+                    if ($scope.audioItem.idMv !== null) {
+                        $scope.trustedUrl = $sce.trustAsResourceUrl('https://www.youtube.com/embed/' + $scope.audioItem.idMv);
+                    }
                 } else {
                     $scope.audioItem = data.episodeById;
                 }
@@ -210,14 +217,12 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
         listened = 0;
         if (type === 'song') {
             audioService.setAudio(item.audioFileUrl);
-            if (item.lyricsUrl) {
-                audioService.setLyricsSrc(item.lyricsUrl);
-            }
             $scope.getCurrentAudio(item.recordingId, 'song')
         } else {
             audioService.setAudio(item.fileUrl);
             $scope.getCurrentAudio(item.episodeId, 'episode');
         }
+        $scope.isLikeExist = audioService.isLiked(item);
         audioService.setListPlay(list);
         audioService.setCurrentAudio(index);
         audio.src = audioService.getAudio();
@@ -319,21 +324,7 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
     }
 
     audio.addEventListener("ended", function () {
-        if (isShuffle === true && currentAudioIndex < audioService.getListPlay().length) {
-            listened = 0;
-            currentAudioIndex = Math.floor(Math.random() * (audioService.getListPlay().length));
-            audioService.setCurrentAudio(currentAudioIndex);
-            let source = audioService.getListPlay()[currentAudioIndex];
-            audio.src = source.audioFileUrl;
-            if (resume.hidden === false && play.hidden === true) {
-                audio.play();
-            } else {
-                audio.pause();
-            }
-        } else {
-            Next();
-        }
-
+        Next();
     });
 
     //thanh duration thay đổi
@@ -398,56 +389,49 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
     function Next() {
         listened = 0;
         currentAds = 0;
-        if (isLoopPlaylist === true && currentAudioIndex === audioService.getListPlay().length - 1) {
-            currentAudioIndex = 0;
-            audioService.setCurrentAudio(currentAudioIndex);
-            var item = audioService.getListPlay()[currentAudioIndex];
+        if(queueService.getQueue().length > 0){
+            let item = queueService.getQueue()[0];
+            if (item.recordingId) {
+                audio.src = item.audioFileUrl;
+            } else {
+                audio.src = item.fileUrl;
+            }
+            $scope.audioItem = queueService.getQueue()[0];
+            queueService.deQueue();
+        }else{
+            if (isShuffle === true && currentAudioIndex < audioService.getListPlay().length) {
+                currentAudioIndex = Math.floor(Math.random() * (audioService.getListPlay().length));
+                audioService.setCurrentAudio(currentAudioIndex);
+                var item = audioService.getListPlay()[currentAudioIndex];
+    
+            } else if (isLoopPlaylist === true && currentAudioIndex === audioService.getListPlay().length - 1) {
+                currentAudioIndex = 0;
+                audioService.setCurrentAudio(currentAudioIndex);
+                var item = audioService.getListPlay()[currentAudioIndex];
+                console.log(item)
+            } else if (currentAudioIndex === (audioService.getListPlay().length - 1)) {
+    
+                currentAudioIndex = 0;
+                audioService.setListPlay(queueService.getQueue());
+                audioService.setCurrentAudio(currentAudioIndex);
+    
+                var item = audioService.getListPlay()[currentAudioIndex];
+            } else {
+                currentAudioIndex += 1;
+                audioService.setCurrentAudio(currentAudioIndex);
+                var item = audioService.getListPlay()[currentAudioIndex];
+            }
             if (item.recordingId) {
                 $scope.selectAudio(item, 'song', audioService.getListPlay(), currentAudioIndex)
             } else {
                 $scope.selectAudio(item, 'episode', audioService.getListPlay(), currentAudioIndex)
-            }
-            if (resume.hidden === false && play.hidden === true) {
-                audio.play();
-            } else {
-                audio.pause();
-            }
-        } else if (currentAudioIndex === (audioService.getListPlay().length - 1)) {
-            //lấy list set vào Queue
-            //lưu queue vào listplay
-
-            currentAudioIndex = 0;
-            audioService.setListPlay();
-            audioService.setCurrentAudio(currentAudioIndex);
-            var item = audioService.getListPlay()[currentAudioIndex];
-            if (item.recordingId) {
-                $scope.selectAudio(item, 'song', audioService.getListPlay(), currentAudioIndex)
-            } else {
-                $scope.selectAudio(item, 'episode', audioService.getListPlay(), currentAudioIndex)
-            }
-            if (resume.hidden === false && play.hidden === true) {
-                audio.play();
-            } else {
-                audio.pause();
-            }
-        } else {
-            currentAudioIndex += 1;
-            audioService.setCurrentAudio(currentAudioIndex);
-            var item = audioService.getListPlay()[currentAudioIndex];
-            if (item.recordingId) {
-                $scope.selectAudio(item, 'song', audioService.getListPlay(), currentAudioIndex)
-            } else {
-                $scope.selectAudio(item, 'episode', audioService.getListPlay(), currentAudioIndex)
-            }
-            if (resume.hidden === false && play.hidden === true) {
-                audio.play();
-            } else {
-                audio.pause();
             }
         }
-        if (audioService.getListPlay()[currentAudioIndex].lyricsUrl !== null) {
-            audioService.setLyricsSrc(audioService.getListPlay()[currentAudioIndex].lyricsUrl);
-            $scope.audioItem = audioService.getListPlay()[currentAudioIndex];
+        
+        if (resume.hidden === false && play.hidden === true) {
+            audio.play();
+        } else {
+            audio.pause();
         }
         reloadKaraoke();
     }
@@ -569,11 +553,16 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
             icon[0].className = "bi bi-repeat"
             isLoopPlaylist = false;
             audio.loop = false;
+
+            audioService.setListPlay(audioService.getListPlay().splice($scope.listLoop, audioService.getListPlay().length));
         } else {
             icon[0].style.color = 'green';
             isLoopPlaylist = true;
             loop.classList.add("loop");
             audio.loop = false;
+
+            $scope.listLoop = audioService.getListPlay().length;
+            audioService.setListPlay([...audioService.getListPlay(), ...audioService.getListPlay()]);
         }
     })
 
@@ -636,8 +625,8 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
     /**        Wishlist             */
     /***************************** */
 
-    $scope.checkExisted = function (data,event) {
-        var icon = angular.element(event.currentTarget).children(); 
+    $scope.checkExisted = function (data, event) {
+        var icon = angular.element(event.currentTarget).children();
         let url = host + "v1/exist-my-wishlist"
         if (data.recordingId) {
             var recording = data.recordingId;
@@ -651,17 +640,17 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
             var isExisted = resp.data.data;
-            if(isExisted === true){  
+            if (isExisted === true) {
                 $scope.removeLikedSongs(data);
                 icon.addClass('bi bi-heart');
                 icon.removeClass('bi bi-heart-fill');
                 icon.css('color', 'white');
-            }else{
+            } else {
                 icon.removeClass('bi bi-heart');
                 icon.addClass('bi bi-heart-fill');
                 icon.css('color', 'green');
                 $scope.addToWishlist(data);
-            }   
+            }
         })
     }
 
@@ -842,6 +831,16 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
     /******************************* */
     /**           Side bar          */
     /*****************************  */
+    $scope.enqueue = function (data) {
+        queueService.enQueue(data);
+    }
 
-
+    $scope.isLiked = function (data) {
+        if (data.recordingId) {
+            var index = audioService.getListLikedSongs().findIndex(item => item.recordingId === data.recordingId);
+        } else {
+            var index = audioService.getListLikedSongs().findIndex(item => item.episodeId === data.episodeId);
+        }
+        return index !== -1;
+    }
 })

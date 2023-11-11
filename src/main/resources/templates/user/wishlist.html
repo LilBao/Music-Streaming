@@ -62,7 +62,7 @@
                 <tbody>
                     <tr ng-repeat="item in listLikedSongs"
                         ng-dblclick="item.recordingId ? selectAudio(item,'song',listLikedSongs,$index) : selectAudio(item,'episode',listLikedSongs,$index)"
-                        class="align-items-center">
+                        class="audio align-items-center">
                         <!-- Col 1 -->
                         <td class="text-white">
                             {{$index+1}}
@@ -110,5 +110,6 @@
                 </tbody>
             </table>
         </div>
+        <div></div>
     </section>
 </body>

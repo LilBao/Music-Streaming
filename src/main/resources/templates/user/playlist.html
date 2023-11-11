@@ -61,7 +61,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="item in listAudioPlaylist | limitTo: 10"
-                        ng-dblclick="item.recordingId ? selectAudio(item,'song',listAudioPlaylist,$index) : selectAudio(item,'episode',listAudioPlaylist,$index)" class="align-items-center">
+                        ng-dblclick="item.recordingId ? selectAudio(item,'song',listAudioPlaylist,$index) : selectAudio(item,'episode',listAudioPlaylist,$index)" class="audio align-items-center">
                         <!-- Col 1 -->
                         <td class="text-white">
                             {{$index+1}}
@@ -131,7 +131,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="item in listRecommended | limitTo: 10" class="align-items-center">
+                    <tr ng-repeat="item in listRecommended | limitTo: 10" class="audio align-items-center">
                         <td ng-dblclick="selectAudio(item,'song',listRecommended,$index)">
                             <div class="d-flex align-items-center">
                                 <div class="d-flex">

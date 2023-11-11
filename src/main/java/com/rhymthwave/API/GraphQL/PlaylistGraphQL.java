@@ -33,7 +33,6 @@ public class PlaylistGraphQL {
 		
 	@QueryMapping("playlistById")
 	public Playlist findPlaylistById(@Argument("playlistId") Long id) {
-		log.info(">>>>>>> GraphQL_Playlist:findPlaylistById | id: {}", id);
 		return crudPlaylist.findOne(id);
 	}
 	
