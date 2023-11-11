@@ -1,19 +1,20 @@
 <body ng-controller="profileCtrl">
     <div class="container-fluid m-0 p-0">
         <div class="background-in4">
-            <img src="../../static/img/bg.png" class="w-100" alt="">
-            <div class="in4-card">
+            <img src="../../static/img/bg.png" class="w-100 h-100" alt="">
+            <div class="in4-card py-0">
                 <img src="../../static/img/dz.png" alt="">
                 <div class="d-flex flex-column justify-content-between">
                     <div>
-                        <h6 class="text-white">Profile</h6>
-                        <h1 class="text-white">{{profile.username}}</h1>
-                    </div>  
+                        <h6 class="text-white">{{role ==='podcast' ? 'Podcaster' : 'Profile'}}</h6>
+                        <h1 class="display-1 text-bold fw-bolder">{{profile.username}}</h1>
+                    </div>
                     <p>11 Public Playlist - 4,607 Followers</p>
                 </div>
             </div>
             <div class="flow">
-                <button class="btn border-1 border-white rounded-pill text-white me-5 ms-3 mb-3" id="btn-follow"> Follow</button>
+                <button class="btn border-1 border-white rounded-pill text-white me-5 ms-3 mb-3" id="btn-follow">
+                    Follow</button>
                 <div class="dropdown">
                     <button type="button" class="btn border-0" data-bs-toggle="dropdown">
                         <div class="in"><i class="text-white bi bi-three-dots"></i></div>
@@ -25,6 +26,8 @@
                 </div>
             </div>
         </div>
+    </div>
+    <section class="mx-3">
         <div class="public-play">
             <div class="title mt-5">
                 <p class="prf-name-title">Public Playlists</p>
@@ -105,96 +108,38 @@
                 <p class="prf-show">Show All</p>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-3">
-            <div class="employee-card">
-                <div class="employee-image">
-                    <img src="../../static/img/dz.png" class="mt-4" alt="Employee Image">
-                </div>
-                <div class="employee-name">
-                    John Doe
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3">
-            <div class="employee-card">
-                <div class="employee-image">
-                    <img src="../../static/img/dz.png" class="mt-4" alt="Employee Image">
-                </div>
-                <div class="employee-name">
-                    John Doe
+
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="employee-card">
+                    <div class="employee-image">
+                        <img src="../../static/img/dz.png" class="mt-4" alt="Employee Image">
+                    </div>
+                    <div class="employee-name">
+                        John Doe
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-3">
-            <div class="employee-card">
-                <div class="employee-image">
-                    <img src="../../static/img/dz.png" class="mt-4" alt="Employee Image">
-                </div>
-                <div class="employee-name">
-                    John Doe
+        <div class="public-play">
+            <div class="title mt-5">
+                <p class="prf-name-title">Following</p>
+                <p class="prf-show">Show All</p>
+            </div>
+        </div>
+        </div>
+        <div class="row my-5">
+            <div class="col-sm-3">
+                <div class="employee-card">
+                    <div class="employee-image">
+                        <img src="../../static/img/dz.png" class="mt-4" alt="Employee Image">
+                    </div>
+                    <div class="employee-name">
+                        John Doe
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-3">
-            <div class="employee-card">
-                <div class="employee-image">
-                    <img src="../../static/img/dz.png" class="mt-4" alt="Employee Image">
-                </div>
-                <div class="employee-name">
-                    John Doe
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="public-play">
-        <div class="title mt-5">
-            <p class="prf-name-title">Following</p>
-            <p class="prf-show">Show All</p>
-        </div>
-    </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-3">
-            <div class="employee-card">
-                <div class="employee-image">
-                    <img src="../../static/img/dz.png" class="mt-4" alt="Employee Image">
-                </div>
-                <div class="employee-name">
-                    John Doe
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3">
-            <div class="employee-card">
-                <div class="employee-image">
-                    <img src="../../static/img/dz.png" class="mt-4" alt="Employee Image">
-                </div>
-                <div class="employee-name">
-                    John Doe
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3">
-            <div class="employee-card">
-                <div class="employee-image">
-                    <img src="../../static/img/dz.png" class="mt-4" alt="Employee Image">
-                </div>
-                <div class="employee-name">
-                    John Doe
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3">
-            <div class="employee-card">
-                <div class="employee-image">
-                    <img src="../../static/img/dz.png" class="mt-4" alt="Employee Image">
-                </div>
-                <div class="employee-name">
-                    John Doe
-                </div>
-            </div>
-        </div>
-    </div>
+    </section>
+
 </body>

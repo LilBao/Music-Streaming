@@ -32,7 +32,12 @@ app.config(function ($routeProvider) {
             templateUrl: "playlist.html",
             controller: 'playlistCtrl'
         })      
-        .when("/:profile/:id", {
+        .when("/profile/:profile/:id", {
+            templateUrl: "profile.html",
+            controller: 'profileCtrl'
+        })
+        .when("/artist/:id", {
+            templateUrl: "profileArtist.html",
             controller: 'profileCtrl'
         })
         .when("/podcast/:id", {
@@ -54,7 +59,6 @@ app.service('queueService', function () {
         },
         deQueue: function () {
             peekQueue.push(queue.splice(0, 1));
-            queue.splice(0, 1);
         },
         getQueue: function () {
             return queue;
@@ -74,6 +78,7 @@ app.service('audioService', function () {
     var lyricsSrc;
     var listPlay = [];
     var current;
+    var listLikedSongs = [];
     return {
         setAudio: function (src) {
             audioSrc = src
@@ -100,6 +105,20 @@ app.service('audioService', function () {
         },
         getCurrentAudio: function () {
             return current;
+        },
+        setListLikedSongs: function (list) {
+            listLikedSongs = list;
+        },
+        getListLikedSongs: function () {
+            return listLikedSongs;
+        },
+        isLiked: function (data) {
+            if (data.recordingId) {
+                var index = this.getListLikedSongs().findIndex(item => item.recordingId ===data.recordingId);
+            } else {    
+                var index = this.getListLikedSongs().findIndex(item => item.episodeId ===data.episodeId);
+            }
+            return index !==-1;
         }
     };
 });
@@ -146,3 +165,57 @@ app.directive('formatTime', function () {
         }
     };
 });
+app.service('sortService', function () {
+    this.sort = function (list, field) {
+        this.direction = this.direction === "asc" ? "desc" : "asc";
+        if (this.direction === "asc") {
+            list.sort((a, b) => a[field].localeCompare(b[field]))
+        } else {
+            list.sort((a, b) => b[field].localeCompare(a[field]))
+        }
+    }
+    this.sortNumber = function (list, field) {
+        this.direction = this.direction === "asc" ? "desc" : "asc";
+        if (this.direction === "asc") {
+            list.sort((a, b) => a[field] - (b[field]))
+        } else {
+            list.sort((a, b) => b[field] - (a[field]))
+        }
+    }
+})
+
+app.service('pageService', function () {
+    this.pager = {
+        page: 0,
+        size: 5,
+        setPageSize: function(newSize) {
+            this.size = newSize;
+        },
+        items(list) {
+            var start = this.page * this.size;
+            return list.slice(start, start + this.size)
+        },
+        count(list) {
+            return Math.ceil(1.0 * list.length / this.size)
+        },
+        prev() {
+            this.page--;
+            if (this.page < 0) {
+                this.page = 0;
+            }
+        },
+        next(list) {
+            this.page++;
+            if (this.page >= this.count(list)) {
+                this.page = this.count(list) - 1;
+            }
+        },
+        getNumbers(n) {
+            var rangeArray = [];
+            for (var i = 1; i <= n; i++) {
+                rangeArray.push(i);
+            }
+            return rangeArray;
+        }
+    }
+})

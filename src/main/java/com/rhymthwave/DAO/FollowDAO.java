@@ -18,4 +18,6 @@ public interface FollowDAO extends JpaRepository<Follow, Long>{
 	
 	List<Follow> findByAuthorsAccountA(Author authorsAccountA);
 	
+	@Query("SELECT o FROM Follow o WHERE o.authorsAccountB.authorId = :authorId")
+	List<Follow> findByAuthorsAccountB(@Param("authorId") Long authorId);
 }

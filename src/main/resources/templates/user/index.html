@@ -93,34 +93,49 @@
                                     </li>
                                     <!-- list follow -->
                                     <li ng-repeat="item in listFollow">
-                                        <div class="d-flex align-items-center">
-                                            <img class="m-2 rounded-2 thumbnail-playlist"
-                                                src="{{item.authorsAccountB.account.image !==null ? 
-                                                    item.authorsAccountB.account.image:
-                                                    'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}"
-                                                alt="">
-                                            <div>
-                                                <p class="p-0 m-0">{{item.authorsAccountB.role.role === 'PODCAST' ?
-                                                    item.authorsAccountB.account.username :
-                                                    item.authorsAccountB.role.role === 'USER' ?
-                                                    item.authorsAccountB.account.username :
-                                                    item.authorsAccountB.account.artist.artistName}}</p>
-                                                <span>{{item.authorsAccountB.role.role}}</span>
+                                        <a ng-if="item.authorsAccountB.role.role !== 'ARTIST'"
+                                            href="#!profile/{{item.authorsAccountB.role.role.toLowerCase()}}/{{item.authorsAccountB.account.username}}">
+                                            <div class="d-flex align-items-center">
+                                                <img class="m-2 rounded-2 thumbnail-playlist"
+                                                    src="{{item.authorsAccountB.account.image !==null ? 
+                                                    item.authorsAccountB.account.image.url:
+                                                    'https://res.cloudinary.com/div9ldpou/image/upload/v1699632134/Avatar/System/user_oujyrp.png'}}" alt="">
+
+                                                <div class="d-flex justify-content-between flex-column">
+                                                    <p class="p-0 m-0">{{item.authorsAccountB.account.username}}</p>
+                                                    <span class="small">{{item.authorsAccountB.role.role}}</span>
+                                                </div>
                                             </div>
-                                        </div>
+                                        </a>
+                                        <a ng-if="item.authorsAccountB.role.role === 'ARTIST'"
+                                            href="#!artist/{{item.authorsAccountB.account.artist.artistId}}">
+                                            <div class="d-flex align-items-center">
+                                                <img class="m-2 rounded-2 thumbnail-playlist"
+                                                    src="{{item.authorsAccountB.account.artist.imagesProfile !==null ? 
+                                                        item.authorsAccountB.account.artist.imagesProfile.url :
+                                                    'https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png'}}" alt="">
+                                                <div class="d-flex justify-content-between flex-column">
+                                                    <p class="p-0 m-0">
+                                                        {{item.authorsAccountB.account.artist.artistName}}
+                                                    </p>
+                                                    <span class="small">{{item.authorsAccountB.role.role}}</span>
+                                                </div>
+                                            </div>
+                                        </a>
                                     </li>
                                     <!-- list Playlist -->
                                     <li ng-repeat="item in listPlaylist">
-                                        <div class="d-flex align-items-center">
-                                            <img class="m-2 rounded-2 thumbnail-playlist"
-                                                src="{{item.image !==null ? item.image.url:'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}"
-                                                alt="">
-                                            <div>
-                                                <p class="p-0 m-0">{{item.playlistName}}</p>
-                                                <span>{{item.quantity}}</span>
-                                                <a href="#!playlist/{{item.playlistId}}">test {{item.playlistId}}</a>
+                                        <a href="#!playlist/{{item.playlistId}}">
+                                            <div class="d-flex align-items-center">
+                                                <img class="m-2 rounded-2 thumbnail-playlist"
+                                                    src="{{item.image !==null ? item.image.url:'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}"
+                                                    alt="">
+                                                <div>
+                                                    <p class="p-0 m-0">{{item.playlistName}}</p>
+                                                    <span>{{item.quantity}}</span>
+                                                </div>
                                             </div>
-                                        </div>
+                                        </a>
                                     </li>
                                 </div>
                             </div>
@@ -169,7 +184,8 @@
                                 <button id="btn-wishlist" class="btn button-control border-0"
                                     ng-click="checkExisted(audioItem,$event)" data-bs-hover="tooltip"
                                     title="Thêm vào yêu thích!">
-                                    <i ng-style="{'color': isExistedLiked ? 'green' : 'white'}" class="{{isExistedLiked ? 'bi bi-heart-fill' : 'bi bi-heart'}}"></i>
+                                    <i ng-style="{'color': isLiked(audioItem) ? 'green' : 'white'}"
+                                        class="{{isLiked(audioItem) ? 'bi bi-heart-fill' : 'bi bi-heart'}}"></i>
                                 </button></span>
                         </div>
                         <div class="level-item d-none d-md-block">
@@ -212,7 +228,7 @@
                 </div>
                 <div class="time-line w-100 d-flex align-items-center flex-fill">
                     <span style="font-size: x-small;" id="current-time">00:00</span>
-                    <input id="duration-audio" class="duration-bar w-100" type="range" min="0" value="0" step="0.1"
+                    <input id="duration-audio" class="duration-bar w-100 mx-2" type="range" min="0" value="0" step="0.1"
                         name="" id="">
                     <audio id="audio" src=""></audio>
                     <div class="line-first"></div>
@@ -223,10 +239,12 @@
             </div>
             <div class="col-md-3 d-none d-md-block player-controls-right ">
                 <div class="d-flex align-items-center">
-                    <button class="btn text-white" data-bs-toggle="modal" data-bs-target="#MV">MV</button>
-                    <button id="download" class="btn button-control"><i class="bi bi-download"></i></button>
-                    <a href="#!queue" class="btn button-control"><i class="bi bi-hdd-stack"></i></a>
-                    <a href="#!karaoke" id="karaoke" class="btn button-control"><i class="bi bi-mic"></i></a>
+                    <button ng-if="audioItem.idMv!==null && !ads.adId" class="btn text-white border-0"
+                        data-bs-toggle="modal" data-bs-target="#MV">MV</button>
+                    <button id="download" class="btn border-0 button-control"><i class="bi bi-download"></i></button>
+                    <a href="#!queue" class="btn border-0 button-control"><i class="bi bi-hdd-stack"></i></a>
+                    <a ng-if="audioItem.lyricsUrl !== null" href="#!karaoke" id="karaoke"
+                        class="btn border-0 button-control"><i class="bi bi-mic"></i></a>
 
                     <button id="mute" class="btn button-control"><i id="icon-mute" class="bi bi-volume-up"></i></button>
                     <input id="volumeAudio" class="" type="range" min="0" max="1" step="0.1" name="" id="">
@@ -255,11 +273,10 @@
         <div class="popup modal-dialog">
             <div class="popup-message  modal-content" style="background-color: transparent;">
                 <div class="modal-body p-0">
-                    <iframe class="w-100" height="600"
-                        src="https://www.youtube.com/embed/U0Vr1zotKIo?si=1psE6T1thDFwY7vY" title="YouTube video player"
-                        frameborder="0"
+                    <iframe class="w-100" height="600" title="YouTube video player" frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen></iframe>
+                        allowfullscreen autoplay src="{{trustedUrl}}"> Your
+                        browser does not support HTML video. </iframe>
                 </div>
             </div>
         </div>
