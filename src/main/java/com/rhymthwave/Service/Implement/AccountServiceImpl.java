@@ -71,4 +71,5 @@ public class AccountServiceImpl implements AccountService, CRUD<Account, String>
 		Account account = dao.findByUsername(username);
 		return account;
 	}
+
 }

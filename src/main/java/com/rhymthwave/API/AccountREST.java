@@ -45,4 +45,5 @@ public class AccountREST {
 	public ResponseEntity<MessageResponse> search(@PathVariable("keyword") String keyword) {
 		return ResponseEntity.ok(new MessageResponse(true, "success", accountService.search(keyword)));
 	}
+	
 }

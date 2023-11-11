@@ -1,6 +1,7 @@
-var host = "http://localhost:8080/api";
+var host = "http://localhost:8080/api/";
 
 app.controller('SearchController', function ($scope, $http) {
+  // data search bar
   $scope.searchKeyword = '';
   $scope.data = {};
   $scope.dataArt = {};
@@ -80,12 +81,11 @@ app.controller('SearchController', function ($scope, $http) {
     } else {
       $scope.interface1 = true;
       $scope.interface2 = false;
-      
-      $('.has-act').each(function(){      
+
+      $('.has-act').each(function () {
         $(this).removeClass('active')
       });
-      
-      // Clear data when search keyword is empty
+
       $scope.data = {};
       $scope.dataArt = {};
       $scope.dataAlbum = {};
@@ -97,4 +97,19 @@ app.controller('SearchController', function ($scope, $http) {
       $scope.dataGr = {};
     }
   });
+
+
+  // search browser
+  $scope.listPodcast = [];
+
+  $scope.getListPodcast = function () {
+    $http.get(host + 'v1/podcast')
+      .then(function (resp) {
+        $scope.listPodcast = resp.data.data;
+      })
+      .catch(function (error) {
+        console.error("Error fetching list podcast data:", error);
+      });
+  };
+  $scope.getListPodcast();
 });
