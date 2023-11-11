@@ -25,4 +25,9 @@ public class FollowGraphQL {
 		Author accountA = authorSer.findAuthor(1, email);
 		return followSer.findMyListFollow(accountA);
 	}
+	
+	@QueryMapping("findYourFollow")
+	public List<Follow> findMyListFollow(@Argument("authorId") Long authorId) {
+		return followSer.findYourListFollow(authorId);
+	}
 }

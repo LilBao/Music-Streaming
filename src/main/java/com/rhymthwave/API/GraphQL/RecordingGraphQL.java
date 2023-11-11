@@ -24,13 +24,11 @@ public class RecordingGraphQL {
 	
 	@QueryMapping("recordingById")
 	public Recording findOne(@Argument("recordingId") Long id) {
-		log.info(">>>>>>> GraphQL_Recording:findRecordById | id: {}", id);
 		return crudRecording.findOne(id);
 	}
 	
 	@QueryMapping("recommendedListRecording")
 	public List<Recording> findListRandom() {
-		log.info(">>>>>>> GraphQL_Recording:findRandom");
 		return recordSer.findListRecordRandom();
 	}
 }

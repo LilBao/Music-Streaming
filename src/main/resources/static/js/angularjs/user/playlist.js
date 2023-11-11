@@ -356,6 +356,7 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location,
                         }
                     });
                 }
+                audioService.setListLikedSongs($scope.listLikedSongs);
             }).catch(err => {
                 console.log(err)
             })
@@ -394,15 +395,6 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location,
         }).catch(err => {
             showStickyNotification('Try again', 'warning', 3000);
         })
-    }
-
-    $scope.isLiked = function (data) {
-        if (data.recordingId) {
-            var index = $scope.listLikedSongs.findIndex(item => item.recordingId ===data.recordingId);
-        } else {    
-            var index = $scope.listLikedSongs.findIndex(item => item.episodeId ===data.episodeId);
-        }
-        return index !==-1;
     }
 
     //js

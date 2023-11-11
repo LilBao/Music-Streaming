@@ -1,40 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
-    <link rel="icon" type="image/x-icon" href="../../static/img/favicon.png">
-    <!-- Latest compiled and minified CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <!-- Latest compiled JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-        crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="../../static/css/cssUser/profile.css" />
-    <script src="../../static/js/angularjs/user/profile.js"></script>
-</head>
-
-<body ng-app="myApp" ng-controller="profileCtrl">
+<body ng-controller="profileCtrl">
     <div class="container-fluid m-0 p-0">
         <div class="background-in4">
-            <img src="../../static/img/bg.png" class="w-100" alt="">
+            <img src="{{profile.backgroundImage !==null ? profile.backgroundImage.url : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696341682/Background/System/ilikeU_bgvlyy.png'}}"
+                class="w-100" style="height: 350px; object-fit: cover;" alt="">
             <div class="in4-card">
                 <div class="in4-text">
                     <p><i style="color: rgb(69, 69, 230);" class="bi bi-patch-check-fill"></i> Verified Artist</p>
-                    <p class="display-1 text-bold fw-bolder">W/N</p>
+                    <p class="display-1 text-bold fw-bolder">{{profile.artistName}}</p>
                     <p>1,000,431 monthly listeners</p>
                 </div>
             </div>
-            <div class="flow">
-                <div class="play"><i class="bi bi-play-circle-fill ms-3 me-4"></i></div>
-                <div class="prf-shuffle"><i class="bi bi-shuffle"></i></div>
-                <button class="pr-btn me-5 ms-3 mb-3 mt-2"> Following</button>
-                <div class="in-dot"><i class="bi bi-three-dots"></i></div>
+            <div class="flow align-items-center">
+                <button id="btn-artist-play" class="btn border-0">
+                    <i class="display-3 bi bi-play-circle" style="color: green;"></i>
+                </button>
+                <button id="btn-artist-pause" hidden class="btn border-0">
+                    <i class="display-3 bi bi-pause-circle" style="color: green;"></i>
+                </button>
+                <button id="btn-artist-shuffle" class="btn text-white border-0 py-0"><i
+                        class="display-6 bi bi-shuffle"></i></button>
+                <button class="btn border-1 border-white rounded-pill text-white mx-3 h-50" id="btn-follow">
+                    Follow</button>
+                <div class="dropdown">
+                    <button type="button" class="btn border-0" data-bs-toggle="dropdown">
+                        <div class="in"><i class="text-white bi bi-three-dots"></i></div>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Report</a></li>
+                        <li><a class="dropdown-item" href="#">Copy link to profile</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -195,4 +190,3 @@
         </div>
     </div>
 </body>
-</html>
