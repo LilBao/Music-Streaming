@@ -31,16 +31,16 @@ public class PaymentController {
 
 	@GetMapping("/payment")
 	public String completedPayment() {
-		return "";
+		return "User/pay";
 	}
 
 	@GetMapping("/cancelled")
 	public String cancelledPayment() {
-		return "";
+		return "User/payfail";
 	}
 
 	@PostMapping("/complete-payment-vnpay")
-	public String completePaymentVNPay(@RequestParam("total") Integer total,
+	public String completePaymentVNPay(@RequestParam("total") Float total,@RequestParam("token") String token,@RequestParam("PayerID") String PayerID,
 			@RequestParam("subcriptionId") Integer subcriptionId, @RequestParam("email") String email,
 			HttpServletRequest req) {
 		
@@ -49,17 +49,17 @@ public class PaymentController {
 	}
 
 	@GetMapping("/complete-payment-paypal")
-	public String completePayment(@RequestParam("token") String token, @RequestParam("email") String email,
-			@RequestParam("subscription") Integer subscriptionId) {
+	public String completePayment(@RequestParam("token") String token, @RequestParam("email") String email,@RequestParam("total") Float total,
+			@RequestParam("PayerID") String PayerID, @RequestParam("subcriptionId") Integer subscriptionId) {
 
 		paymentSer.paypal(token);
 		crudUserType.create(usertypeSer.generateEntity(email, subscriptionId, 1));
 		return "redirect:/payment";
 	}
 
-	@GetMapping("/complete-payment-stripe")
-	public String completePayment(HttpServletRequest req, @RequestParam("subscription") Integer subscriptionId,
-			@RequestParam("email") String email) {
+	@GetMapping("/completed-payment-stripe")
+	public String completePayment(@RequestParam("subscription") Integer subscriptionId,@RequestParam("email") String email
+							,@RequestParam("total") Float total) {
 		crudUserType.create(usertypeSer.generateEntity(email, subscriptionId, 1));
 		return "redirect:/payment";
 	}

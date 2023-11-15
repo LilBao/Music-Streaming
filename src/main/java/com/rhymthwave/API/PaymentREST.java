@@ -40,17 +40,20 @@ public class PaymentREST {
 	
 	
 	@PostMapping("/api/v1/payment-paypal")
-	public ResponseEntity<Payment> createPaymetnPaypal(@RequestParam("total") BigDecimal total,@RequestParam("subscriptionId") Integer subscription,HttpServletRequest req,String pathReturn, String pathCancel){
-		pathReturn = "/complete-payment-paypal";
-		pathCancel = "/";
+	public ResponseEntity<Payment> createPaymetnPaypal(@RequestParam("total") Float total,@RequestParam("subscriptionId") Integer subscription,HttpServletRequest req,String pathReturn, String pathCancel){
 		String email = host.getEmailByRequest(req);
+		pathReturn = "/complete-payment-paypal?email="+email+"&total="+total+"&subcriptionId="+subscription;
+		pathCancel = "/";
+		
 		return ResponseEntity.ok(paymentSer.createPaypal(total,subscription,email,req,pathReturn,pathCancel));
 	}
 	
 	@PostMapping("/api/v1/payment-stripe")
 	public ResponseEntity<Payment> createPaymentStripe(@RequestBody SubscriptionDTO subscription ,HttpServletRequest req){
 		String owner = host.getEmailByRequest(req);
-		return ResponseEntity.ok(stripeSer.checkoutPayment(subscription,owner,req));
+		String pathReturn = "/completed-payment-stripe?subscription="+subscription.getSubscriptionId()+"&email="+owner+"&total="+subscription.getPrice();
+		String pathCancel = "/cancelled-payment-stripe";
+		return ResponseEntity.ok(stripeSer.checkoutPayment(subscription,owner,req,pathReturn,pathCancel));
 	}
 	
 	@PostMapping("/api/v1/create-card-stripe")
