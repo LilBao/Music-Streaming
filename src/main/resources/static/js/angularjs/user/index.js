@@ -60,10 +60,6 @@ app.config(function ($routeProvider) {
             templateUrl: "playlist.html",
             controller: 'playlistCtrl'
         })
-        .when("/album/:id", {
-            //templateUrl: "playlist.html",
-            //controller: 'playlistCtrl'
-        })
         .when("/song/:id", {
             //templateUrl: "playlist.html",
             //controller: 'playlistCtrl'

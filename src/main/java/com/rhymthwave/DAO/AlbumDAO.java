@@ -20,6 +20,6 @@ public interface AlbumDAO extends JpaRepository<Album, Long> {
 			+ "and EXISTS (SELECT 1 FROM TRACK t WHERE t.ALBUMID = a.ALBUMID)", nativeQuery = true)
 	List<Album> getListAlbumReleasedByArtist(@Param("artistId") Long artistId);
 
-	@Query(value = "SELECT AL.*, IMGAL.URL FROM ALBUM AL LEFT JOIN IMAGES IMGAL ON AL.COVERIMAGE = IMGAL.ACCESSID WHERE AL.ALBUMNAME LIKE %:keyword%", nativeQuery = true)
+	@Query(value = "SELECT AL.*, IMGAL.URL FROM ALBUM AL LEFT JOIN IMAGES IMGAL ON AL.COVERIMAGE = IMGAL.ACCESSID WHERE AL.ALBUMNAME LIKE %:keyword% AND AL.RELEASEDATE < GETDATE()", nativeQuery = true)
 	List<Object> findByName(@Param("keyword") String keyword);
 }

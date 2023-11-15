@@ -20,6 +20,6 @@ public interface SongDAO extends JpaRepository<Song, Long> {
 			+ "EXISTS (SELECT 1 FROM RECORDING WHERE RECORDING.SONGSID = SONGS.SONGSID)", nativeQuery = true)
 	List<Song> getListSongReleasedByArtist(@Param("emailCreate") String emailCreate);
 
-	@Query(value = "select s.* from songs s where s.songname like %:keyword%", nativeQuery = true)
+	@Query(value = "select s.* from songs s where s.songname like %:keyword% and s.isdeleted = 0 and s.realeaseday < GETDATE()", nativeQuery = true)
 	List<Song> findByName(@Param("keyword") String keyword);
 }
