@@ -70,4 +70,9 @@ public class ArtistServiceImpl implements ArtistService, CRUD<Artist, Long> {
 		return dao.findAllArtistVerify(id,artistName);
 	}
 
+	@Override
+	public List<Object> findByName(String keyword) {
+		return dao.findByName(keyword);
+	}
+
 }

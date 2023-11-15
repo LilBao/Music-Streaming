@@ -1,0 +1,204 @@
+<body ng-controller="ShowPodcast">
+    <div class="card card-content shadow mb-4" style="background: linear-gradient(to bottom, #237958, #413d3d);">
+        <div class="card-body">
+            <div class="table-responsive">
+                <div class="bl-search">
+                    <div class="bl-search-box">
+                        <div class="bl-search-hilden" style="opacity: 0"></div>
+                        <div class="bl-back-next">
+                            <button class="bl-back-next-btn" id="back">
+                                <svg role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16"
+                                    data-encore-id="icon">
+                                    <path
+                                        d="M11.03.47a.75.75 0 0 1 0 1.06L4.56 8l6.47 6.47a.75.75 0 1 1-1.06 1.06L2.44 8 9.97.47a.75.75 0 0 1 1.06 0z">
+                                    </path>
+                                </svg>
+                            </button>
+                            <button class="bl-back-next-btn" id="forward">
+                                <svg role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16"
+                                    data-encore-id="icon">
+                                    <path
+                                        d="M4.97.47a.75.75 0 0 0 0 1.06L11.44 8l-6.47 6.47a.75.75 0 1 0 1.06 1.06L13.56 8 6.03.47a.75.75 0 0 0-1.06 0z">
+                                    </path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="bl-input-search">
+
+                        </div>
+                        <div class="bl-install-ring-account">
+                            <div class="bl-install-ring-account-hilden"></div>
+                            <a href="">
+                                <svg role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16"
+                                    data-encore-id="icon" class="Svg-sc-ytk21e-0 haNxPq">
+                                    <path
+                                        d="M4.995 8.745a.75.75 0 0 1 1.06 0L7.25 9.939V4a.75.75 0 0 1 1.5 0v5.94l1.195-1.195a.75.75 0 1 1 1.06 1.06L8 12.811l-.528-.528a.945.945 0 0 1-.005-.005L4.995 9.805a.75.75 0 0 1 0-1.06z">
+                                    </path>
+                                    <path
+                                        d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13z">
+                                    </path>
+                                </svg>
+                                <span class="Type__TypeElement-sc-goli3j-0 eoWRdH ellipsis-one-line"
+                                    data-encore-id="type">Install
+                                    App</span>
+                            </a>
+                            <button class="bl-install-ring-account-btn">
+                                <svg role="img" height="16" width="16" aria-hidden="true"
+                                    class="Svg-sc-ytk21e-0 haNxPq t93PZphItuM19kPhX7tC" viewBox="0 0 16 16"
+                                    data-encore-id="icon">
+                                    <path
+                                        d="M8 1.5a4 4 0 0 0-4 4v3.27a.75.75 0 0 1-.1.373L2.255 12h11.49L12.1 9.142a.75.75 0 0 1-.1-.374V5.5a4 4 0 0 0-4-4zm-5.5 4a5.5 5.5 0 0 1 11 0v3.067l2.193 3.809a.75.75 0 0 1-.65 1.124H10.5a2.5 2.5 0 0 1-5 0H.957a.75.75 0 0 1-.65-1.124L2.5 8.569V5.5zm4.5 8a1 1 0 1 0 2 0H7z">
+                                    </path>
+                                </svg>
+                            </button>
+                            <button class="bl-install-ring-account-btn">
+                                <figure>
+                                    <svg role="img" height="16" width="16" aria-hidden="true"
+                                        class="Svg-sc-ytk21e-0 haNxPq t93PZphItuM19kPhX7tC" viewBox="0 0 16 16">
+                                        <path
+                                            d="M6.233.371a4.388 4.388 0 0 1 5.002 1.052c.421.459.713.992.904 1.554.143.421.263 1.173.22 1.894-.078 1.322-.638 2.408-1.399 3.316l-.127.152a.75.75 0 0 0 .201 1.13l2.209 1.275a4.75 4.75 0 0 1 2.375 4.114V16H.382v-1.143a4.75 4.75 0 0 1 2.375-4.113l2.209-1.275a.75.75 0 0 0 .201-1.13l-.126-.152c-.761-.908-1.322-1.994-1.4-3.316-.043-.721.077-1.473.22-1.894a4.346 4.346 0 0 1 .904-1.554c.411-.448.91-.807 1.468-1.052zM8 1.5a2.888 2.888 0 0 0-2.13.937 2.85 2.85 0 0 0-.588 1.022c-.077.226-.175.783-.143 1.323.054.921.44 1.712 1.051 2.442l.002.001.127.153a2.25 2.25 0 0 1-.603 3.39l-2.209 1.275A3.25 3.25 0 0 0 1.902 14.5h12.196a3.25 3.25 0 0 0-1.605-2.457l-2.209-1.275a2.25 2.25 0 0 1-.603-3.39l.127-.153.002-.001c.612-.73.997-1.52 1.052-2.442.032-.54-.067-1.097-.144-1.323a2.85 2.85 0 0 0-.588-1.022A2.888 2.888 0 0 0 8 1.5z">
+                                        </path>
+                                    </svg>
+                                </figure>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container-fluid">
+                    <div class="text-title mb-3">
+                        <div class="row">
+                            <div class="col-xxl-3">
+                                <div class="card" style="width: 300px; height: 300px; object-fit: cover !important ;">
+                                    <div class="card-img">
+                                        <img ng-src="{{ podcastDetail.image.url }}" alt="Sunset Over the Sea"
+                                            style="width: 300px; height: 300px;" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-9">
+                                <h4>Podcast</h4>
+                                <h1 style="font-size: 120px;">{{podcastDetail.podcastName | limitTo: 13}}</h1> <br>
+                                <h2>{{podcastDetail.authorName}}</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="eps in episodeAll">
+                            <th scope="row" style="color: #fff;background-color: rgb(85, 84, 84);" ng-if="$first">
+                                <p>up next</p>
+                                <h3>{{eps.episodeTitle}}</h3>
+                                <h6><i class="bi bi-circle-fill" style="color: lightblue;font-size: 12px;"></i>
+                                    {{podcastDetail.podcastName}} ({{eps.publishDate | date :'dd-MM-yyyy'}})</h6>
+                                <div class="d-flex">
+                                    <p><i class="bi bi-star-fill" style="color: yellow;"></i>
+                                    <p>{{eps.content}}: <a href="{{podcastDetail.socialMediaLink}}"
+                                            style="color: #fff;"> {{podcastDetail.socialMediaLink}}</a></p>
+                                    </p>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <button class="btn" id="play-pobcast">
+                                            <i class="bi bi-play-circle-fill"
+                                                style="font-size: 30px; color: green;"></i>
+                                        </button>
+                                        <div class="">
+                                            <span> <format-time seconds="eps.duration"></format-time></span>
+                                        </div>
+                                    </div>
+
+                                    <button class="btn">
+                                        <button class="btn" data-bs-toggle="modal"
+                                            data-bs-target="#share">
+                                            <i class="bi bi-cloud-arrow-up"></i>
+                                            Share
+                                        </button>
+                                    </button>
+                                </div>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div>
+                    <h2>All Episodes</h2>
+                    <div>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="eps in episodeAll">
+                                    <th scope="row" style="color: #fff;"
+                                        onmouseover="this.style.backgroundColor='#404040'"
+                                        onmouseout="this.style.backgroundColor=''">
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <img class="w-100" ng-src="{{eps.image.url}}" alt=""
+                                                    style="width: 120px;height: 120px;">
+                                            </div>
+                                            <div class="col-9 flex-fill">
+                                                <h3>{{eps.episodeTitle}}</h3>
+                                                <h6>{{podcastDetail.podcastName}} ({{eps.publishDate | date
+                                                    :'dd-MM-yyyy'}})</h6>
+                                                <div class="d-flex">
+                                                    <p><i class="bi bi-star-fill" style="color: yellow;"></i>
+                                                    <p>{{eps.content}}: <a href="{{podcastDetail.socialMediaLink}}"
+                                                            style="color: #fff;"> {{podcastDetail.socialMediaLink}}</a>
+                                                    </p>
+                                                    </p>
+                                                </div>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="d-flex align-items-center">
+                                                        <button class="btn" id="play-pobcast">
+                                                            <i class="bi bi-play-circle-fill"
+                                                                style="font-size: 30px; color: #fff;"></i>
+                                                        </button>
+                                                        <div class="">
+                                                            <span> <format-time seconds="eps.duration"></format-time></span>
+                                                        </div>
+                                                    </div>
+
+                                                    <button class="btn">
+                                                        <button class="btn" data-bs-toggle="modal"
+                                                            data-bs-target="#share">
+                                                            <i class="bi bi-cloud-arrow-up"></i>
+                                                            Share
+                                                        </button>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h2>About</h2>
+                <p>{{podcastDetail.bio}}</p>
+                <button
+                    style="color: #fff ; padding: 5px 10px; border: none;border-radius: 25px; background-color: #2b2929; text-align: center;">
+                    <div>5 <i class="bi bi-star"></i> ({{podcastDetail.rate |limitTo : 2}})</div>
+                </button>
+            </div>
+        </div>
+    </div>
+</body>

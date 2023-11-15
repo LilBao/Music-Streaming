@@ -70,5 +70,10 @@ public class AlbumServiceImpl implements AlbumService, CRUD<Album, Long> {
 	public List<Album> findAlbumReleasedByArtist(Long artistId) {
 		List<Album> listAlbum = dao.getListAlbumReleasedByArtist(artistId);
 		return listAlbum;
+	}
+
+	@Override
+	public List<Object> findByName(String keyword) {
+		return dao.findByName(keyword);
 	}	
 }

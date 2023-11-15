@@ -8,4 +8,6 @@ public interface AlbumService {
 	List<Album> findAlbumNotRecord(String email);
 	
 	List<Album> findAlbumReleasedByArtist(Long artistId);
+	
+	List<Object> findByName(String keyword);
 }
