@@ -1,12 +1,9 @@
 package com.rhymthwave.API;
 
-import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rhymthwave.DTO.MessageResponse;
@@ -45,5 +42,28 @@ public class AccountREST {
 	public ResponseEntity<MessageResponse> search(@PathVariable("keyword") String keyword) {
 		return ResponseEntity.ok(new MessageResponse(true, "success", accountService.search(keyword)));
 	}
-	
+
+	@Transactional
+	@GetMapping("/api/v1/search/art/{id}")
+	public ResponseEntity<MessageResponse> searchArt(@PathVariable("id") long id) {
+		return ResponseEntity.ok(new MessageResponse(true, "success", accountService.searchArt(id)));
+	}
+
+	@Transactional
+	@GetMapping("/api/v1/search/pl/{id}")
+	public ResponseEntity<MessageResponse> searchPl(@PathVariable("id") long id) {
+		return ResponseEntity.ok(new MessageResponse(true, "success", accountService.searchPl(id)));
+	}
+
+	@Transactional
+	@GetMapping("/api/v1/search/al/{id}")
+	public ResponseEntity<MessageResponse> searchAl(@PathVariable("id") int id) {
+		return ResponseEntity.ok(new MessageResponse(true, "success", accountService.searchAl(id)));
+	}
+
+	@Transactional
+	@GetMapping("/api/v1/search/gr/{keyword}")
+	public ResponseEntity<MessageResponse> searchGr(@PathVariable("keyword") String keyword) {
+		return ResponseEntity.ok(new MessageResponse(true, "success", accountService.searchGr(keyword)));
+	}
 }

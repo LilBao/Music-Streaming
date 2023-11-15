@@ -10,14 +10,16 @@ import org.springframework.stereotype.Repository;
 import com.rhymthwave.entity.Album;
 
 @Repository
-public interface AlbumDAO extends JpaRepository<Album, Long>{
-	@Query(value="SELECT a.* FROM ALBUM a join artist on a.ARTISTID = ARTIST.ARTISTID "
-				+ "WHERE a.ARTISTID= :artistId and NOT EXISTS (SELECT 1 FROM TRACK t WHERE t.ALBUMID = a.ALBUMID)", nativeQuery = true)
+public interface AlbumDAO extends JpaRepository<Album, Long> {
+	@Query(value = "SELECT a.* FROM ALBUM a join artist on a.ARTISTID = ARTIST.ARTISTID "
+			+ "WHERE a.ARTISTID= :artistId and NOT EXISTS (SELECT 1 FROM TRACK t WHERE t.ALBUMID = a.ALBUMID)", nativeQuery = true)
 	List<Album> getAlbumNotTrack(@Param("artistId") Long artistId);
-	
-	@Query(value="SELECT a.* FROM ALBUM a join artist on a.ARTISTID = ARTIST.ARTISTID \r\n"
-				+ "WHERE a.ARTISTID= :artistId "
-				+ "and a.RELEASEDATE <  getDATE()"
-				+ "and EXISTS (SELECT 1 FROM TRACK t WHERE t.ALBUMID = a.ALBUMID)", nativeQuery = true)
+
+	@Query(value = "SELECT a.* FROM ALBUM a join artist on a.ARTISTID = ARTIST.ARTISTID \r\n"
+			+ "WHERE a.ARTISTID= :artistId " + "and a.RELEASEDATE <  getDATE()"
+			+ "and EXISTS (SELECT 1 FROM TRACK t WHERE t.ALBUMID = a.ALBUMID)", nativeQuery = true)
 	List<Album> getListAlbumReleasedByArtist(@Param("artistId") Long artistId);
+
+	@Query(value = "SELECT AL.*, IMGAL.URL FROM ALBUM AL LEFT JOIN IMAGES IMGAL ON AL.COVERIMAGE = IMGAL.ACCESSID WHERE AL.ALBUMNAME LIKE %:keyword%", nativeQuery = true)
+	List<Object> findByName(@Param("keyword") String keyword);
 }

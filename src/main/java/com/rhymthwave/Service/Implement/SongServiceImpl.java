@@ -70,6 +70,11 @@ public class SongServiceImpl implements SongService, CRUD<Song, Long> {
 		List<Song> listSong = dao.getListSongReleasedByArtist(emailCreate);
 		return listSong;
 	}
+
+	@Override
+	public List<Song> findByName(String keyword) {
+		return dao.findByName(keyword);
+	}
 	
 	
 }

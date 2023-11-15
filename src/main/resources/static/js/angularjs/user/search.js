@@ -74,10 +74,12 @@ app.controller('SearchController', function ($scope, $http) {
               $scope.dataGr[element[22]] = element;
             }
           });
+          console.log( $scope.dataArt);
         })
         .catch(function (error) {
           console.error('Error searching');
         });
+       
     } else {
       $scope.interface1 = true;
       $scope.interface2 = false;
@@ -112,4 +114,13 @@ app.controller('SearchController', function ($scope, $http) {
       });
   };
   $scope.getListPodcast();
+
+  // btn back and forward
+  $("#back").on("click", function() {
+    history.back();
+  });
+  
+  $("#forward").on("click", function() {
+    history.forward();
+  });
 });

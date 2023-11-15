@@ -615,3 +615,11 @@ input[type="range"]:hover{
     color: green;
     --clip-edges: 0rem;
 }
+/* find more playlist*/
+.visible {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}

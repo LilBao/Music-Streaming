@@ -12,7 +12,6 @@ import com.rhymthwave.Utilities.GetHostByRequest;
 import com.rhymthwave.entity.Account;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -70,6 +69,26 @@ public class AccountServiceImpl implements AccountService, CRUD<Account, String>
 	public Account findAccountByUsername(String username) {
 		Account account = dao.findByUsername(username);
 		return account;
+	}
+
+	@Override
+	public List<Object> searchArt(long id) {
+		return dao.searchArt(id);
+	}
+
+	@Override
+	public List<Object> searchPl(long id) {
+		return dao.searchPl(id);
+	}
+
+	@Override
+	public List<Object> searchAl(int id) {
+		return dao.searchAl(id);
+	}
+
+	@Override
+	public List<Object> searchGr(String keyword) {
+		return dao.searchGr(keyword);
 	}
 
 }

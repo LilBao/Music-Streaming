@@ -19,4 +19,7 @@ public interface ArtistDAO extends JpaRepository<Artist, Long>{
 	
 	@Query("select o from Artist o where o.artistId <> :id and o.artistName like :artistName and o.isVerify = true")
 	List<Artist> findAllArtistVerify(@Param("id") Long id, @Param("artistName") String artistName);
+	
+	@Query(value = "select art.*, imgart.url from Artist art left join images imgart on art.profileimage = imgart.accessid where art.artistName like %:keyword%",nativeQuery = true)
+	List<Object> findByName(@Param("keyword") String keyword);
 }

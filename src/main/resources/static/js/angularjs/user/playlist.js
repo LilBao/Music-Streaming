@@ -406,4 +406,121 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location,
         $('#btn-playlist-play').attr('hidden', false);
     }
 
+
+    $("#toggle").click(function () {
+        // Lấy thẻ div1 và div2
+        var div1 = $("#f1");
+        var div2 = $("#f2");
+        var tog = $("#toggle")
+
+        // Kiểm tra xem div1 đang hiển thị hay không
+        if (div1.hasClass("visible")) {
+            // Nếu đang hiển thị, ẩn div1 và hiển thị div2
+            div1.removeClass("visible").addClass("hidden");
+            div2.removeClass("hidden").addClass("visible");
+            tog.text("X");
+        } else {
+            // Ngược lại, ẩn div2 và hiển thị div1
+            div2.removeClass("visible").addClass("hidden");
+            div1.removeClass("hidden").addClass("visible");
+            tog.text("Find more");
+        }
+    });
+
+    $scope.songData = {};
+    $scope.episodeData = {};
+    $scope.artData = {};
+    $scope.alData = {};
+    $scope.$watch('searchSE', function (keyword) {
+        if (keyword) {
+            clap.css("display", "block");
+            $http.get(host + 'v1/song-pl/' + keyword)
+                .then(function (resp) {
+                    $scope.songData = resp.data.data;
+                    console.log("song");
+                    console.log($scope.songData);
+                }).catch(function (error) {
+                    console.error('Error searching');
+                });
+
+            $http.get(host + 'v1/episode-pl/' + keyword)
+                .then(function (resp) {
+                    $scope.episodeData = resp.data.data;
+                    console.log("epi");
+                    console.log($scope.episodeData)
+                }).catch(function (error) {
+                    console.error('Error searching');
+                });
+
+            $http.get(host + 'v1/artist-pl/' + keyword)
+                .then(function (resp) {
+                    $scope.artData = resp.data.data;
+                    console.log("art");
+                    console.log($scope.artData)
+                }).catch(function (error) {
+                    console.error('Error searching');
+                });
+
+            $http.get(host + 'v1/album-pl/' + keyword)
+                .then(function (resp) {
+                    $scope.alData = resp.data.data;
+                    console.log("al");
+                    console.log($scope.alData)
+                }).catch(function (error) {
+                    console.error('Error searching');
+                });
+        } else {
+            clap.css("display", "none");
+            $scope.songData = {};
+            $scope.episodeData = {};
+            $scope.artData = {};
+            $scope.alData = {};
+        }
+    });
+
+    var clap = $(".clap");
+    var fn = $("#fn");
+    var showsaa = $("#showsaa");
+    var showsaal = $("#showsaal");
+    var showsas = $("#showsas");
+
+    $("#saa").click(function () {
+        if (fn.hasClass("visible")) {
+            fn.removeClass("visible").addClass("hidden");
+            showsaa.removeClass("hidden").addClass("visible");
+        }
+    });
+
+    $("#saal").click(function () {
+        if (fn.hasClass("visible")) {
+            fn.removeClass("visible").addClass("hidden");
+            showsaal.removeClass("hidden").addClass("visible");
+        }
+    });
+
+    $("#sas").click(function () {
+        if (fn.hasClass("visible")) {         
+            fn.removeClass("visible").addClass("hidden");
+            showsas.removeClass("hidden").addClass("visible");
+        }
+    });
+
+    $("#saaback").click(function () {
+        if (fn.hasClass("hidden")) {         
+            fn.removeClass("hidden").addClass("visible");
+            showsaa.removeClass("visible").addClass("hidden");
+        }
+    });
+    $("#saalback").click(function () {
+        if (fn.hasClass("hidden")) {         
+            fn.removeClass("hidden").addClass("visible");
+            showsaal.removeClass("visible").addClass("hidden");
+        }
+    });
+    $("#sasback").click(function () {
+        if (fn.hasClass("hidden")) {         
+            fn.removeClass("hidden").addClass("visible");
+            showsas.removeClass("visible").addClass("hidden");
+        }
+    });
 })
