@@ -40,6 +40,16 @@ type Query {
  #NgoNhien
  findOneArtist(emailArtist: String): Artist
  getAllAccountByRole(role: String):[Account]
+ getAllIsVerifyArtist:[Artist]
+ totalSubscriptionsUsing:[Subscription]
+ getAllMood:[Mood]
+ getAllInstrument:[Instrument]
+ getAllSongStyle:[SongStyle]
+ getAllCulture:[Culture] 
+ getAllGener:[Genre]
+ getAllTag:[Tag]
+ getAllPlaylist:[Playlist]
+ getAllPodcastPlaylist:[Playlist]
  
  
  #VanBao

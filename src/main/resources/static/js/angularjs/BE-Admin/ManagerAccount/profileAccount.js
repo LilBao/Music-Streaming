@@ -9,79 +9,127 @@ var cookieName = "token";
 app.controller("profileAccountController", function (graphqlService, $scope, $http, $routeParams) {
 
 
-    $scope.form = {};
-    $scope.album = [];
-    $scope.song =[];
-    var idArtist = $routeParams.id;
+  $scope.form = {};
+  $scope.album = {};
+  $scope.song = [];
+  $scope.totalAlbumAndSong= [];
+  $scope.sumListened = 0;
+  var idArtist = $routeParams.id;
 
-    $scope.edit = function (idArtist) {
+  $scope.edit = function (idArtist) {
 
-        let url = apiArtist + "/" + idArtist;
-        $http.get(url).then(resp => {
-            $scope.form = resp.data.data;
-            console.log( $scope.form)
-        }).catch(error => {
-            console.log("Error", error)
-        });
-    }
+    let url = apiArtist + "/" + idArtist;
+    $http.get(url).then(resp => {
+      $scope.form = resp.data.data;
+      $scope.getOneArtist(idArtist);
+      $scope.totalAlbumAndSong(idArtist);
+      $scope.sumListen(idArtist);
+      $scope.follower(2,idArtist);
+    }).catch(error => {
+      console.log("Error", error)
+    });
+  }
+
+  $scope.totalAlbumAndSong = function (idArtist) {
+
+    let url = apiArtist + "/" + idArtist + "/" +"statistic";
+    $http.get(url).then(resp => {
+      $scope.totalAlbumAndSong = resp.data.data;
+    }).catch(error => {
+      console.log("Error", error)
+    });
+  }
+  
+
+  $scope.sumListen = function (idArtist) {
+
+    let url = apiArtist + "/" + idArtist + "/" +"sumListened";
+    $http.get(url).then(resp => {
+      $scope.sumListened = resp.data.data;
+   
+    }).catch(error => {
+      console.log("Error", error)
+    });
+  }
 
 
+  $scope.follower = function (idRole,idArtist) {
 
-    const queryAlbum = `  {
-        findOneArtist(emailArtist: "${idArtist}") {
-          albums{
-            albumName
-            image{
-              url
-            }
+    let url = apiArtist + "/" + idArtist +  "/" + idRole+ "/" +"follower";
+    $http.get(url).then(resp => {
+      $scope.follower = resp.data.data;
+    }).catch(error => {
+      console.log("Error", error)
+    });
+  }
+
+
+  $scope.getOneArtist = function (idArtist) {
+    const queryAlbum = `{
+      findOneArtist(emailArtist: "${idArtist}") {
+        albums {
+          albumName
+          image {
+            url
+          }
+          tracks {
+            trackId
           }
         }
-      }`;
-
-    const querySong = `{
-        findOneArtist(emailArtist:  "${idArtist}") {
-             writters{
-            song{
-              image{
-                url
-              }
-              songName
-              recordings{
-                duration
-                tracks{
-                  album{
-                    albumName
-                  }
+        writters {
+          song {
+            recordings {
+              recordingId
+              listened
+              duration
+              audioFileUrl
+              wishlists{
+                wishlistId
+               }
+              tracks {
+                album {
+                  albumName
                 }
               }
+              song {
+                songName
+                image {
+                  url
+                }
+                songId
+              }
             }
           }
         }
-      }`;
-
-
-
+      }
+    }`;
     graphqlService.executeQuery(queryAlbum)
-        .then(data => {
+      .then(data => {
 
-            $scope.album = data.findOneArtist.albums;
-           
-        })
-        .catch(error => {
-            console.log(error);
-        });
-    $scope.edit(idArtist);
+        $scope.album = data.findOneArtist;
+       
+      })
+      .catch(error => {
+        console.log(error);
 
-    graphqlService.executeQuery(querySong)
-        .then(data => {
+      });
+  }
 
-            $scope.song = data.findOneArtist.writters;
-          
-        })
-        .catch(error => {
-            console.log(error);
-        });
+  $scope.playAudio = () => {
+    var audio = document.getElementById("audio-player");
+    if (audio.paused) {
+      audio.play();
 
-   
+    } else{
+      audio.paused();
+    }
+    ;
+  }
+
+  $scope.edit(idArtist);
+
+
+
+
 });
 

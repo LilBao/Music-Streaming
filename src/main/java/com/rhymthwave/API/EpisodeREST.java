@@ -117,5 +117,8 @@ public class EpisodeREST {
 		return ResponseEntity.ok(new MessageResponse(true,"success",episodeSer.findLatestEpisodeByPodcast(id)));
 	}
 	
-	
+	@GetMapping("/api/v1/episode-pl/{keyword}")
+	public ResponseEntity<MessageResponse> findEpisodeByName(@PathVariable("keyword") String keyword) {
+		return ResponseEntity.ok(new MessageResponse(true, "successs", episodeSer.findByName(keyword)));
+	}
 }

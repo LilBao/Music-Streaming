@@ -4,8 +4,8 @@
 body {
     overflow-y: hidden !important;
     overflow-x: hidden !important;
-    background-color: rgb(23, 15, 35);
-    /* background: rgba(0, 0, 0, 0.9); */
+    
+    background: rgba(0, 0, 0, 0.9);
     overflow-x: visible !important;
 }
 
@@ -632,6 +632,15 @@ input[type="range"]::-webkit-slider-thumb {
 input[type="range"]:hover {
     color: green;
     --clip-edges: 0rem;
+}
+
+/* find more playlist*/
+.visible {
+    display: block;
+}
+
+.hidden {
+    display: none;
 }
 
 .ul-dropdown-start-end{

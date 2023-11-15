@@ -20,5 +20,6 @@ public class MessageResponse {
 	public MessageResponse(boolean success, String message) {
 		this.success = success;
 		this.message = message;
-	}
+		this.data = "";
+	};
 }

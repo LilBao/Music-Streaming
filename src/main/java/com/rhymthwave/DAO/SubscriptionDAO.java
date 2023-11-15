@@ -8,4 +8,5 @@ import com.rhymthwave.entity.Subscription;
 @Repository
 public interface SubscriptionDAO extends JpaRepository<Subscription, Integer>{
 	Subscription findBySubscriptionType(String subscriptionType);
+	
 }

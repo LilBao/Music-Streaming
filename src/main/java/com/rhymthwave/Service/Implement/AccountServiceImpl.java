@@ -14,7 +14,6 @@ import com.rhymthwave.entity.Account;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
-
 @Service
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService, CRUD<Account, String> {
@@ -22,8 +21,7 @@ public class AccountServiceImpl implements AccountService, CRUD<Account, String>
 	private final AccountDAO dao;
 
 	private final GetHostByRequest getHostByRequest;
-	
-	
+
 	@Override
 	public Account create(Account entity) {
 		return null;
@@ -31,7 +29,7 @@ public class AccountServiceImpl implements AccountService, CRUD<Account, String>
 
 	@Override
 	public Account update(Account entity) {
-		
+
 		return dao.save(entity);
 	}
 
@@ -44,10 +42,10 @@ public class AccountServiceImpl implements AccountService, CRUD<Account, String>
 	@Override
 	public Account findOne(String email) {
 		Optional<Account> account = dao.findById(email);
-		if(account.isEmpty()) {
+		if (account.isEmpty()) {
 			return null;
 		}
-		
+
 		return account.get();
 	}
 
@@ -58,15 +56,39 @@ public class AccountServiceImpl implements AccountService, CRUD<Account, String>
 
 	@Override
 	public Account findAdminByEmail(HttpServletRequest request) {
-		String email  = getHostByRequest.getEmailByRequest(request);
+		String email = getHostByRequest.getEmailByRequest(request);
 		Account admin = findOne(email);
 		return admin;
 	}
 
 	@Override
+	public List<Object> search(String keyword) {
+		return dao.search(keyword);
+	}
+
 	public Account findAccountByUsername(String username) {
 		Account account = dao.findByUsername(username);
 		return account;
+	}
+
+	@Override
+	public List<Object> searchArt(long id) {
+		return dao.searchArt(id);
+	}
+
+	@Override
+	public List<Object> searchPl(long id) {
+		return dao.searchPl(id);
+	}
+
+	@Override
+	public List<Object> searchAl(int id) {
+		return dao.searchAl(id);
+	}
+
+	@Override
+	public List<Object> searchGr(String keyword) {
+		return dao.searchGr(keyword);
 	}
 
 }

@@ -19,5 +19,4 @@ public interface IAccountServiceAdmin {
 	int countWithlistByAccount(String idAccount);
 
 	
-	
 }
