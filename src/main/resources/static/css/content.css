@@ -1,3 +1,6 @@
+::placeholder{
+    font-size: 12px;
+}
 .content-wrapper {
     margin-left: 240px;
     margin-top: 65px;
@@ -329,12 +332,6 @@ h4.card-title.mb-0 {
     font-size: 16px;
     color: var(--dark-bg);
     font-weight: 500;
-}
-
-.title-albums {
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .title-song-artistPrfile {

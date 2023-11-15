@@ -74,7 +74,7 @@ public class News implements Serializable {
 	@Column(name = "LASTMODIFIED")
 	private Date lastModified;
 
-	@Column(name = "CREATEDATE")
+	@Column(name = "CREATEDATE" ,columnDefinition = "date")
 	private Date createDate;
 	
 	@Column(name = "CREATEFOR",columnDefinition = "varchar(20)")
