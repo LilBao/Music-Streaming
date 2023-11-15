@@ -23,7 +23,7 @@ public class API_ApproveRoles {
 	private final IArtistService artistService;
 	
 	@PostMapping("/{idUser}")
-	public ResponseEntity<?> approveRoles(@PathVariable("idUser") Integer idUser){
+	public ResponseEntity<?> approveRoles(@PathVariable("idUser") Long idUser){
 		
 		Artist artist = artistService.approveRolesArtist(idUser);
 		

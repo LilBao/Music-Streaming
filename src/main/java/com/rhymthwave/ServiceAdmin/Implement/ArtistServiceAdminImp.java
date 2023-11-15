@@ -68,7 +68,7 @@ public class ArtistServiceAdminImp implements IArtistService, INotification<Arti
 	}
 
 	@Override
-	public Artist approveRolesArtist(Integer idUser) {
+	public Artist approveRolesArtist(Long idUser) {
 		var artist = artistDAO.findById(idUser).orElse(null);
 		if (artist != null) {
 			var user = accountDAO.findByEmail(artist.getAccount().getEmail());

@@ -59,13 +59,7 @@ public class SendMailTemplateService {
 					"is your email address, you’ll be able to publish episodes and distribute your podcast.");
 			context.setVariable("address", address);
 			context.setVariable("type", "Pobcaster");
-		}
-		if (type.equalsIgnoreCase("USER")) {
-			context.setVariable("content",
-					"is your email address, you’ll be able to publish episodes and distribute your podcast.");
-			context.setVariable("address", address);
-			context.setVariable("type", "USER");
-		} else {
+		}else {
 			context.setVariable("content",
 					"is your email address, you’ll be received from us. Please follow your email to receive latest notifications.");
 			context.setVariable("address", "");

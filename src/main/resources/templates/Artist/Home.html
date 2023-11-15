@@ -1,45 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <!-- Latest compiled JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-        crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-
 <body>
     <section class="container">
         <h1>Home</h1>
         <div class="row">
             <div class="col-8">
                 <div class="row">
-                    <div class="col-6">
-                        <img class="w-100" src="../static/img/ms10.webp" alt="">
-                        <h4>Making Money on Spotify: Loud & Clear, Merch, Ticketing, Fan Support, and Future
-                            Opportunities
-                        </h4>
-                        <p>Watch the replay of our latest Spotify for Artists Masterclass event to learn about Loud &
-                            Clear
-                            and the different ways to make money on Spotify.
-                        </p>
+                    <div ng-if="listSongUpcoming.length > 0" class="col-6 shadow border-1">
+                        <div class="d-flex mt-2 flex-wrap">
+                            <img ng-repeat="img in listSongUpcoming" class="w-50" style="height: 150px; object-fit: cover;" src="{{img.image.url}}" alt="">
+                        </div>
+                        
+                        <h4>Pitch songs to our editors</h4>
+                        <p class="font-weight-bold">Have {{listSongUpcoming.length}} need pitch</p>
+                        <div class="d-flex justify-content-end">
+                            <a style="text-decoration: none;" href="#!artist-music"><h5>Pitch songs</h5></a>
+                        </div>
                     </div>
-                    <div class="col-6">
-                        <img class="w-100" src="../static/img/ms10.webp" alt="">
-                        <h4>Making Money on Spotify: Loud & Clear, Merch, Ticketing, Fan Support, and Future
-                            Opportunities
-                        </h4>
-                        <p>Watch the replay of our latest Spotify for Artists Masterclass event to learn about Loud &
-                            Clear
-                            and the different ways to make money on Spotify.
-                        </p>
+                    <div ng-repeat="item in listNews" class="col-6">
+                        <img class="w-100" src="{{item.image.url}}" alt="">
+                        <h4>{{item.title}}</h4>
+                        <p>{{item.content}}</p>
+                        <div class="d-flex justify-content-end">
+                            <p>{{item.publishDate | date:'yyyy-MM-dd'}}</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -51,7 +33,7 @@
                                 <th>
                                     <h4>Last 7 days</h4>
                                 </th>
-                                <th>9/9 - 16/9</th>
+                                <th>{{sevenDaysAgo | date:'dd-MM' }} -> {{ currentDate | date:'dd-MM' }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -65,7 +47,7 @@
                                 <td>
                                     <h6>Followers</h6>
                                 </td>
-                                <td>12,2023</td>
+                                <td><i class="bi bi-caret-up-fill"></i> {{quantityFollow}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -81,26 +63,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="align-items-center">
+                            <tr ng-repeat="item in listSong | limitTo: 3" class="align-items-center">
                                 <td class="d-flex align-items-center">
-                                    <img class="w-25" src="../../static/img/cs1.webp" alt="">
-                                    <h6>Listeners</h6>
+                                    <img class="rounded-4 me-3" src="{{item.song.image.url}}" style="width: 100px; height: 100px; object-fit: cover;" alt="">
+                                    <div>
+                                        <h6>{{item.recordingName}}</h6>
+                                        <h6 ng-repeat="a in item.song.writters">{{a.artist.artistName}}</h6>
+                                        <span ng-repeat="g in item.songGenres" class="badge rounded-pill bg-dark me-3">{{g.genre.nameGenre}}</span>
+                                    </div>
                                 </td>
-                                <td class="text-center">12,2023</td>
-                            </tr>
-                            <tr class="align-items-center">
-                                <td class="d-flex align-items-center">
-                                    <img class="w-25" src="../../static/img/cs1.webp" alt="">
-                                    <h6>Listeners</h6>
-                                </td>
-                                <td class="text-center">12,2023</td>
-                            </tr>
-                            <tr class="align-items-center">
-                                <td class="d-flex align-items-center">
-                                    <img class="w-25" src="../../static/img/cs1.webp" alt="">
-                                    <h6>Listeners</h6>
-                                </td>
-                                <td class="text-center">12,2023</td>
+                                <td class="text-center">{{item.listened}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -147,5 +119,3 @@
 
     </section>
 </body>
-
-</html>

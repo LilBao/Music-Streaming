@@ -17,6 +17,6 @@ public interface IArtistService {
 	
 	List<Artist> getIsVerityArtist();
 
-	Artist approveRolesArtist(Integer idUser);
+	Artist approveRolesArtist(Long idUser);
 }
 	

@@ -4,10 +4,11 @@ app.controller('karaokeCtrl', function ($http,audioService) {
     if(audioService.getLyricsSrc() !==undefined){
         getLyrics();
     }
-    
     function getLyrics(){
-        var url = host + "v1/cloudinary/read-lyrics?url="+String(audioService.getLyricsSrc());
-        $http.get(url).then(resp => {
+        var url = host + "v1/cloudinary/read-lyrics";
+        $http.get(url,{
+            params: { url: audioService.getLyricsSrc()},
+        }).then(resp => {
             lyrics = resp.data.data;
             var lyricsContainer = document.getElementById('lyricsContainer');
             var lineLyrics = lyrics.split('\r\n');
@@ -26,6 +27,7 @@ app.controller('karaokeCtrl', function ($http,audioService) {
                 };
                 li.setAttribute("data-time", time);
                 li.className="line-lyrics";
+                li.style.fontSize = "xx-large";
                 lyricsContainer.appendChild(li);
             });
         }).catch(err => {

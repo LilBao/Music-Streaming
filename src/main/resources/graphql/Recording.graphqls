@@ -8,7 +8,7 @@
 #import "./SongGenre.graphqls"
 
 type Recording{
-	recordingId: ID
+	recordingId: ID!
 	recordingName: String
 	audioFileUrl: String
 	publicIdAudio: String

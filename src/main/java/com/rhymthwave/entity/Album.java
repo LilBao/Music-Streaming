@@ -7,6 +7,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -55,7 +56,7 @@ public class Album implements Serializable {
 
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "album")
+	@OneToMany(mappedBy = "album",cascade = CascadeType.ALL)
 	private List<Track> tracks;
 
 }

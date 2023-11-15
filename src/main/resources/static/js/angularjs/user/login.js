@@ -16,10 +16,11 @@ app.controller('loginCtrl', function ($scope, $http) {
     var url = host + "/v1/accounts/login";
     var data = angular.copy($scope.loginRequest);
     $http.post(url, data).then(function (resp) {
-      setCookie("token", resp.data.data.accessToken);
+      setCookie("token", resp.data.data.accessToken,30);
       showStickyNotification('Login success', 'success', 3000);
     }).catch(function (error) {
       showStickyNotification('Login fail', 'danger', 3000);
+      console.log(error)
     });
 
 
@@ -42,4 +43,3 @@ function showCaptchaDialog(event) {
 function cancel() {
   document.getElementById("captchaDialog").style.display = "none";
 }
-

@@ -37,6 +37,7 @@
 #import "./Writter.graphqls"
 
 type Query {
+ #NgoNhien
  findOneArtist(emailArtist: String): Artist
  getAllAccountByRole(role: String):[Account]
  getAllIsVerifyArtist:[Artist]
@@ -49,5 +50,36 @@ type Query {
  getAllTag:[Tag]
  getAllPlaylist:[Playlist]
  getAllPodcastPlaylist:[Playlist]
+ 
+ 
+ #VanBao
+ recordingById(recordingId: ID!):Recording
+ 
+ episodeById(episodeId: ID!):Episode
+ 
+ playlistById(playlistId: ID!):Playlist
+ 
+ myListFollow(email: String!): [Follow]
+ 
+ recommendedListRecording: [Recording!]
+ 
+ myWishlist(email: String!): [Wishlist]
+ 
+ findAllAdsAudio: [Advertisement]
+ 
+ accountByUsername(username: String!): Account
+ 
+ artistById(artistId: Int!): Artist
+ 
+ findYourFollow(roleId: Int!, email: String!): [Follow]
+  
+ mySongProject(artistid: Int!): [Recording]
+ 
+ findPublicPlaylist(userTypeId: Int!, isPublic: Boolean): [Playlist]
+ 
+ findPodcastByEmail(email:String!): [Podcast]
+ 
+ getListSongReleased(email:String!): [Recording]
+  
 }
 

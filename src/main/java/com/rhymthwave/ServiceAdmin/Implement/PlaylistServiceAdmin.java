@@ -84,7 +84,7 @@ public class PlaylistServiceAdmin implements IPlayListServiceAdmin {
 		playlist.setPlaylistName(playlistName);
 		playlist.setDescription(description);
 		 playlist.setQuantity(listRecord.size());
-		playlist.setPublic(false);
+		playlist.setIsPublic(false);
 		playlist.setCreateDate(GetCurrentTime.getTimeNow());
 		playlist.setImage(img);
 		playlist.setUsertype(userType);
@@ -127,7 +127,7 @@ public class PlaylistServiceAdmin implements IPlayListServiceAdmin {
 		playlist.setPlaylistName(playlistName);
 		playlist.setDescription(description);
 		playlist.setQuantity(listPodcast.size());
-		playlist.setPublic(false);
+		playlist.setIsPublic(false);
 		playlist.setCreateDate(GetCurrentTime.getTimeNow());
 		playlist.setImage(img);
 		playlist.setUsertype(userType);

@@ -1,39 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
-    <link rel="icon" type="image/x-icon" href="../../static/img/favicon.png">
-    <!-- Latest compiled and minified CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <!-- Latest compiled JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-        crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="../../static/css/cssUser/profile.css" />
-</head>
-
-<body>
+<body ng-controller="profileCtrl">
     <div class="container-fluid m-0 p-0">
         <div class="background-in4">
-            <img src="../../static/img/bg.png" class="w-100" alt="">
+            <img src="{{profile.backgroundImage !==null ? profile.backgroundImage.url : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696341682/Background/System/ilikeU_bgvlyy.png'}}"
+                class="w-100" style="height: 350px; object-fit: cover;" alt="">
             <div class="in4-card">
                 <div class="in4-text">
-                    <p>Verified Artist</p>
-                    <p class="display-1 text-bold fw-bolder">W/N</p>
+                    <p><i style="color: rgb(69, 69, 230);" class="bi bi-patch-check-fill"></i> Verified Artist</p>
+                    <p class="display-1 text-bold fw-bolder">{{profile.artistName}}</p>
                     <p>1,000,431 monthly listeners</p>
                 </div>
             </div>
-            <div class="flow">
-                <div class="play"><i class="bi bi-play-circle-fill ms-3 me-4"></i></div>
-                <div class="prf-shuffle"><i class="bi bi-shuffle"></i></div>
-                <button class="pr-btn me-5 ms-3 mb-3 mt-2"> Following</button>
-                <div class="in-dot"><i class="bi bi-three-dots"></i></div>
+            <div class="flow align-items-center">
+                <button id="btn-artist-play" class="btn border-0">
+                    <i class="display-3 bi bi-play-circle" style="color: green;"></i>
+                </button>
+                <button id="btn-artist-pause" hidden class="btn border-0">
+                    <i class="display-3 bi bi-pause-circle" style="color: green;"></i>
+                </button>
+                <button id="btn-artist-shuffle" class="btn text-white border-0 py-0"><i
+                        class="display-6 bi bi-shuffle"></i></button>
+                <button class="btn border-1 border-white rounded-pill text-white mx-3 h-50" id="btn-follow">
+                    Follow</button>
+                <div class="dropdown">
+                    <button type="button" class="btn border-0" data-bs-toggle="dropdown">
+                        <div class="in"><i class="text-white bi bi-three-dots"></i></div>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Report</a></li>
+                        <li><a class="dropdown-item" href="#">Copy link to profile</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -105,93 +101,65 @@
     </div>
 
     <div class="container-fluid">
-        <div class="title mt-5">
-            <p class="prf-name-title">Public Playlists</p>
-        </div>
-    </div>
-    <div class="container-fluid">
-        <div class="row mt-3">
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="../../static/img/ms3.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                        <div class="icon">
-                            <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                            <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                            <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                        </div>
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="../../static/img/ms4.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                        <div class="icon">
-                            <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                            <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                            <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                        </div>
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="../../static/img/ms5.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                        <div class="icon">
-                            <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                            <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                            <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                        </div>
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="../../static/img/ms6.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                        <div class="icon">
-                            <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                            <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                            <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                        </div>
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="container-fluid">
-        <div class="title mt-5">
+        <div class="title tile-playlist-profile mt-5">
             <p class="prf-name-title">About</p>
+            <p class="show-all-playlist-profile">Show All</p>
         </div>
     </div>
-    <div class="about ms-5">
-        <img src="../../static/img/ms6.webp" alt="">
-        <div class="text-about">
-            <p>1,000,432</p>
-            <p>hi i'm W/n,, W/n là một ##### , ***** .... anh được mọi người biết đến qua các bài hát của mình như như 3
-                1 0 7 , 3 1 0 7 2 , , crush , crush 2 ..... Cho đến bây giờ những thông tin thêm về W/n vẫn chưa được
-                tiết lộ</p>
-            <p>Contact my manager : info@riox.network</p>
+    <div class="container my-5">
+        <div class="card-tt-profile card" id="myCard" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <img src="{{profile.imagesProfile.url}}" alt="">
+            <div class="title-profile-card">
+                <p>1,000,432 monthy listeners</p>
+                <p>{{profile.bio}}</p>
+                <p>Contact my manager : info@riox.network</p>
+            </div>
         </div>
     </div>
+
+
+    <div class="modal modal-detail-artist" id="staticBackdrop">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content detail-profile">
+                <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+                <div class="modal-body modal-body-detail-artist">
+                    <div id="demo" class="carousel slide" data-bs-ride="carousel">
+                        <!-- The slideshow/carousel -->
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img style="height: 400px; object-fit: cover;" src="{{profile.imagesGallery[0]}}" alt="Los Angeles" class="d-block w-100">
+                            </div>
+                            <div ng-if="$index > 0" ng-repeat="item in profile.imagesGallery" class="carousel-item">
+                                <img style="height: 400px; object-fit: cover;" src="{{item}}" alt="Chicago" class="d-block w-100">
+                              </div>
+                        </div>
+
+                        <!-- Left and right controls/icons -->
+                        <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </button>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-sm-4">
+                            <p style="font-size: 30px;">745,703</p>
+                            <p>Followers</p>
+                            <p style="font-size: 30px;">1,0000,000</p>
+                            <p>Monthly Listener</p>
+                        </div>
+                        <div class="col-sm-8">
+                            <p>1,000,432 Monthly Listener</p>
+                            <p>{{profile.bio}}</p>
+                            <p>Contact my manager : info@riox.network</p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
-</html>

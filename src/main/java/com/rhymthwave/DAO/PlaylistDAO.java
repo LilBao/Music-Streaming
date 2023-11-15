@@ -45,5 +45,6 @@ public interface PlaylistDAO extends JpaRepository<Playlist, Long>{
 			+ "						playlists.image,\r\n"
 			+ "						playlists.usertypeid",nativeQuery = true)
 	List<Playlist> getPodcastPlayListAdmin();
+	List<Playlist> findByUsertypeAndIsPublic(UserType usertype, Boolean isPublic);
 	
 }

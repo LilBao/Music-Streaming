@@ -17,6 +17,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -44,7 +46,8 @@ public class Podcast implements Serializable {
 	private String socialMediaLink;
 
 	@Column(name = "RELEASEDATE")
-	private Date releaseDate;
+	@Temporal(TemporalType.DATE)
+	private Date releaseDate = new Date();
 
 	@Column(name = "LANGUAGE",columnDefinition = "nvarchar(55)")
 	private String language;

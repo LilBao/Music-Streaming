@@ -20,4 +20,5 @@ public interface  SongDAO extends JpaRepository<Song, Long>{
 				+ "where songs.REALEASEDAY < GETDATE() and RECORDING.EMAILCREATE = :emailCreate and "
 				+ "EXISTS (SELECT 1 FROM RECORDING WHERE RECORDING.SONGSID = SONGS.SONGSID)",nativeQuery = true)
 	List<Song> getListSongReleasedByArtist(@Param("emailCreate") String emailCreate);
+	
 }	

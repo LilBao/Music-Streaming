@@ -11,7 +11,7 @@ import com.rhymthwave.entity.Artist;
 import com.rhymthwave.entity.Author;
 
 @Repository
-public interface ArtistDAO extends JpaRepository<Artist, Integer>{
+public interface ArtistDAO extends JpaRepository<Artist, Long>{
 	@Query("Select o from Artist o where account.email = :email")
 	Artist findByEmail(@Param("email") String email);
 	
@@ -31,6 +31,6 @@ public interface ArtistDAO extends JpaRepository<Artist, Integer>{
 	String sumListenedArtist(String idAccount);
 	
 	@Query("SELECT COUNT(*) FROM Follow f WHERE f.authorsAccountB.authorId = ?1")
-	int countFollowerArtist(Integer author);
+	int countFollowerArtist(Long author);
 	
 }
