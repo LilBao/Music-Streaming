@@ -47,10 +47,6 @@
     border-bottom: 3px solid green !important;
 }
 
-.modal-dialog {
-    min-width: 95% !important;
-}
-
 .tab {
     display: none
 }

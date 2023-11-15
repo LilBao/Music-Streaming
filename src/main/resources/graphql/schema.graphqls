@@ -40,6 +40,16 @@ type Query {
  #NgoNhien
  findOneArtist(emailArtist: String): Artist
  getAllAccountByRole(role: String):[Account]
+ getAllIsVerifyArtist:[Artist]
+ totalSubscriptionsUsing:[Subscription]
+ getAllMood:[Mood]
+ getAllInstrument:[Instrument]
+ getAllSongStyle:[SongStyle]
+ getAllCulture:[Culture] 
+ getAllGener:[Genre]
+ getAllTag:[Tag]
+ getAllPlaylist:[Playlist]
+ getAllPodcastPlaylist:[Playlist]
  
  
  #VanBao
@@ -61,6 +71,15 @@ type Query {
  
  artistById(artistId: Int!): Artist
  
- findYourFollow(authorId: Int!): [Follow]
+ findYourFollow(roleId: Int!, email: String!): [Follow]
+  
+ mySongProject(artistid: Int!): [Recording]
+ 
+ findPublicPlaylist(userTypeId: Int!, isPublic: Boolean): [Playlist]
+ 
+ findPodcastByEmail(email:String!): [Podcast]
+ 
+ getListSongReleased(email:String!): [Recording]
+  
 }
 

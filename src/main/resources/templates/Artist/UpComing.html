@@ -1,11 +1,11 @@
 <body>
     <div ng-controller="upComingCtrl" class="modal fade" id="upcoming">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Modal Heading</h4>
+                    <h4 class="modal-title">Up coming</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
@@ -17,14 +17,14 @@
                                 <img ng-click="selectFile('coverImg')" class="img-thumbnail w-100 coverImg"
                                     src="https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg"
                                     alt="">
-                                <input id="coverImg" hidden type="file">
+                                <input id="coverImg" hidden type="file" required>
                             </div>
 
                             <div class="col-8">
                                 <div class="my-3">
                                     <label for="">Name</label>
                                     <input ng-model="upcoming.name" class="form-control" type="text" name="" id=""
-                                        placeholder="Name">
+                                        placeholder="Name" required>
                                 </div>
                                 <div class="my-3">
                                     <label for="">Type</label>
@@ -36,7 +36,7 @@
                                 <div class="my-3">
                                     <label for="">Release date</label>
                                     <input ng-model="upcoming.releaseDate" class="form-control mb-3"
-                                        type="datetime-local">
+                                        type="datetime-local" required>
                                 </div>
                                 <div>
                                     <label id="label-collab" for="">Colaboration</label>
@@ -62,8 +62,8 @@
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                    <button id="create-song" class="btn btn-primary">OK</button>
+                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                    <button id="create-song" class="btn btn-outline-dark">Upload</button>
                 </div>
 
             </div>

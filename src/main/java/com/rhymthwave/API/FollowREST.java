@@ -73,4 +73,11 @@ public class FollowREST {
 		}
 		return ResponseEntity.ok(new MessageResponse(false,"fail",null)); 
 	}
+	
+	@GetMapping("/api/v1/quantity-follow")
+	public ResponseEntity<MessageResponse> getQuantityFollow(@RequestParam("email") String email,@RequestParam("type") Integer type,@RequestParam("days") Integer days){
+		Author account = authorSer.findAuthor(type, email);
+		Integer quantity = followSer.getQuantityFollowByDate(account.getAuthorId(), days);
+		return ResponseEntity.ok(new MessageResponse(true,"success",quantity)); 
+	}
 }

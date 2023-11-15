@@ -60,6 +60,14 @@ app.config(function ($routeProvider) {
             templateUrl: "playlist.html",
             controller: 'playlistCtrl'
         })
+        .when("/album/:id", {
+            //templateUrl: "playlist.html",
+            //controller: 'playlistCtrl'
+        })
+        .when("/song/:id", {
+            //templateUrl: "playlist.html",
+            //controller: 'playlistCtrl'
+        })
         .when("/queue", {
             templateUrl: "Queue.html",
             controller: 'queueCtrl'
@@ -181,6 +189,7 @@ app.directive('formatTime', function () {
         }
     };
 });
+
 app.service('sortService', function () {
     this.sort = function (list, field) {
         this.direction = this.direction === "asc" ? "desc" : "asc";

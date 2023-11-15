@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rhymthwave.DAO.MonitorDAO;
+import com.rhymthwave.DTO.AnalysisDTO;
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.Service.MonitorService;
 import com.rhymthwave.entity.Account;
@@ -59,5 +60,22 @@ public class MonitorServiceImpl implements CRUD<Monitor, Long>, MonitorService{
 		}
 		return null;
 	}
+
+	@Override
+	public List<AnalysisDTO> resultMonitorAgeRecording(Long recordingid, Integer dateMonitor) {
+		return dao.analysisRecordingAge(recordingid, dateMonitor);
+	}
+
+	@Override
+	public List<AnalysisDTO> resultMonitorGenderRecording(Long recordingid, Integer dateMonitor) {
+		return dao.analysisRecordingGender(recordingid, dateMonitor);
+	}
+
+	@Override
+	public List<AnalysisDTO> resultMonitorCountryRecording(Long recordingid, Integer dateMonitor) {
+		return dao.analysisRecordingCountry(recordingid, dateMonitor);
+	}
+	
+	
 	
 }

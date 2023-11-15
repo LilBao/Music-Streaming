@@ -19,4 +19,11 @@ public interface EpisodeDAO extends JpaRepository<Episode, Long>{
 	
 	@Query(value = "select * from episodes e where e.episodestitle like %:keyword%",nativeQuery = true)
 	List<Episode> findByName(@Param("keyword") String keyword);
+
+	@Query(value ="select top 10  episodes.* from podcast \r\n"
+			+ "						left join tags on podcast.category = tags.tagid\r\n"
+			+ "						join  episodes on podcast.podcastid = episodes.podcastid\r\n"
+			+ "					where tags.tagid = :tag and episodes.ispublic = 1 \r\n"
+			+ "					ORDER BY NEWID()",nativeQuery = true)
+	List<Episode> getRandomPodcasts(@Param("tag") Integer id);
 }

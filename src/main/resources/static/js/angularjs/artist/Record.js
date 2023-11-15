@@ -204,16 +204,11 @@ app.controller('recordCtrl', function ($scope, $http) {
         }
     });
 
-    $('#genre').change(function () {
-        if (document.getElementsByTagName('genre').length > 3) {
-            $('#genre').attr('readonly', true);
-        }
-    })
-
     var countC = 0;
     var countM = 0;
     var countS = 0;
-    $('input[name="culture"]').on('change', function () {
+    
+    $('input[name="culture"]:checked').on('change', function () {
         console.log("fsdfds")
         if (this.checked) {
             if (countC < 3) {
@@ -225,7 +220,7 @@ app.controller('recordCtrl', function ($scope, $http) {
             countC--;
         }
     });
-    $('input[name="mood"]').on('change', function () {
+    $('input[name="mood"]:checked').on('change', function () {
         if (this.checked) {
             if (countM < 3) {
                 countM++;
@@ -236,7 +231,7 @@ app.controller('recordCtrl', function ($scope, $http) {
             countM--;
         }
     });
-    $('input[name="style"]').on('change', function () {
+    $('input[name="style"]:checked').on('change', function () {
         if (this.checked) {
             if (countS < 3) {
                 countS++;

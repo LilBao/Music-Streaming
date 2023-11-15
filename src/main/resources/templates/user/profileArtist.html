@@ -101,92 +101,65 @@
     </div>
 
     <div class="container-fluid">
-        <div class="title mt-5">
-            <p class="prf-name-title">Public Playlists</p>
-        </div>
-    </div>
-    <div class="container-fluid">
-        <div class="row mt-3">
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="../../static/img/ms3.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                        <div class="icon">
-                            <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                            <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                            <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                        </div>
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="../../static/img/ms4.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                        <div class="icon">
-                            <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                            <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                            <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                        </div>
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="../../static/img/ms5.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                        <div class="icon">
-                            <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                            <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                            <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                        </div>
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-sm-3">
-                <div class="card play-list">
-                    <div class="card-img">
-                        <img src="../../static/img/ms6.webp" class="card-img-top" alt="Sunset Over the Sea" />
-                        <div class="icon">
-                            <div class="icon-play"><i class="bi bi-play-circle"></i></div>
-                            <div class="icon-heart"><i class="bi bi-heart"></i></div>
-                            <div class="icon-dif"><i class="bi bi-three-dots"></i></div>
-                        </div>
-                    </div>
-                    <div class="card-play-list">
-                        <p class="card-text">Va vào những giai điệu thư giản của V-Pop</p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="container-fluid">
-        <div class="title mt-5">
+        <div class="title tile-playlist-profile mt-5">
             <p class="prf-name-title">About</p>
+            <p class="show-all-playlist-profile">Show All</p>
         </div>
     </div>
-    <div class="about ms-5">
-        <img src="../../static/img/ms6.webp" alt="">
-        <div class="text-about">
-            <p>1,000,432</p>
-            <p>hi i'm W/n,, W/n là một ##### , ***** .... anh được mọi người biết đến qua các bài hát của mình như như 3
-                1 0 7 , 3 1 0 7 2 , , crush , crush 2 ..... Cho đến bây giờ những thông tin thêm về W/n vẫn chưa được
-                tiết lộ</p>
-            <p>Contact my manager : info@riox.network</p>
+    <div class="container my-5">
+        <div class="card-tt-profile card" id="myCard" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <img src="{{profile.imagesProfile.url}}" alt="">
+            <div class="title-profile-card">
+                <p>1,000,432 monthy listeners</p>
+                <p>{{profile.bio}}</p>
+                <p>Contact my manager : info@riox.network</p>
+            </div>
         </div>
     </div>
+
+
+    <div class="modal modal-detail-artist" id="staticBackdrop">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content detail-profile">
+                <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+                <div class="modal-body modal-body-detail-artist">
+                    <div id="demo" class="carousel slide" data-bs-ride="carousel">
+                        <!-- The slideshow/carousel -->
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img style="height: 400px; object-fit: cover;" src="{{profile.imagesGallery[0]}}" alt="Los Angeles" class="d-block w-100">
+                            </div>
+                            <div ng-if="$index > 0" ng-repeat="item in profile.imagesGallery" class="carousel-item">
+                                <img style="height: 400px; object-fit: cover;" src="{{item}}" alt="Chicago" class="d-block w-100">
+                              </div>
+                        </div>
+
+                        <!-- Left and right controls/icons -->
+                        <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </button>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-sm-4">
+                            <p style="font-size: 30px;">745,703</p>
+                            <p>Followers</p>
+                            <p style="font-size: 30px;">1,0000,000</p>
+                            <p>Monthly Listener</p>
+                        </div>
+                        <div class="col-sm-8">
+                            <p>1,000,432 Monthly Listener</p>
+                            <p>{{profile.bio}}</p>
+                            <p>Contact my manager : info@riox.network</p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>

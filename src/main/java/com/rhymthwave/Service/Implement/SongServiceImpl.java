@@ -41,6 +41,7 @@ public class SongServiceImpl implements SongService, CRUD<Song, Long> {
 	@Override
 	public Boolean delete(Long key) {
 		if (key instanceof Long && key >= 0) {
+			dao.deleteById(key);
 			return true;
 		}
 		return false;
@@ -75,6 +76,4 @@ public class SongServiceImpl implements SongService, CRUD<Song, Long> {
 	public List<Song> findByName(String keyword) {
 		return dao.findByName(keyword);
 	}
-	
-	
 }

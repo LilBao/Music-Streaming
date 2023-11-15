@@ -11,6 +11,8 @@ public interface FollowService {
 	Follow findFollowByAccount(Author accountA, Author accountB);
 	
 	List<Follow> findMyListFollow(Author accountA);
+		
+	List<Follow> findYourListFollow(Author accountB);
 	
-	List<Follow> findYourListFollow(Long authorId);
+	Integer getQuantityFollowByDate(Long authorId,Integer days);
 }
