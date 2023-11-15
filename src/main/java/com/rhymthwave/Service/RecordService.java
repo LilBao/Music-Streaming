@@ -2,7 +2,10 @@ package com.rhymthwave.Service;
 
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
+
 import com.rhymthwave.entity.Recording;
+import com.rhymthwave.entity.Song;
 
 public interface RecordService {
 	List<Recording> findListRecordNotRaw(String email);
@@ -16,4 +19,8 @@ public interface RecordService {
 	List<Recording> findRecordDelete(String email);
 	
 	List<Recording> findListRecordRandom();
+	
+	List<Recording> findListRandomFavorite(String nameGenre, String culture, String instrument, String mood, String songstyle, String versions);
+
+	List<Recording> findMyProject(Long artistId);
 }

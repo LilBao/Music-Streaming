@@ -61,6 +61,15 @@ type Query {
  
  artistById(artistId: Int!): Artist
  
- findYourFollow(authorId: Int!): [Follow]
+ findYourFollow(roleId: Int!, email: String!): [Follow]
+  
+ mySongProject(artistid: Int!): [Recording]
+ 
+ findPublicPlaylist(userTypeId: Int!, isPublic: Boolean): [Playlist]
+ 
+ findPodcastByEmail(email:String!): [Podcast]
+ 
+ getListSongReleased(email:String!): [Recording]
+  
 }
 

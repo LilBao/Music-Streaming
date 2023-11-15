@@ -90,7 +90,7 @@ public class Recording implements Serializable {
 
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@ManyToOne
-	@JoinColumn(name = "SONGSID")
+	@JoinColumn(name = "SONGSID",nullable = true)
 	private Song song;
 
 	@JsonIgnore

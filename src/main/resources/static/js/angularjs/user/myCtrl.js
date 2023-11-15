@@ -79,6 +79,7 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
             if (resp.data.success === true) {
+                $scope.playlist=resp.data.data;
                 showStickyNotification('Create playlist success', 'success', 2000);
             } else {
                 showStickyNotification(resp.data.data, 'warning', 2000);
@@ -229,6 +230,7 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
         currentAudioIndex = audioService.getCurrentAudio();
 
         listHistoryAudio.push(item);
+    
         var encryptedData = CryptoJS.AES.encrypt(JSON.stringify(listHistoryAudio), "whoami").toString();
         setCookie("history", encodeURIComponent(encryptedData), 30);
 
@@ -305,9 +307,10 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
                 if (!isNaN(time) && currentTime >= time) {
                     li.style.fontWeight = "bold";
                     li.style.color = "red";
+                    
                 } else {
-                    li.style.fontWeight = "normal"; // Bỏ đánh dấm in đậm
-                    li.style.color = "white"; // Reset màu chữ
+                    li.style.fontWeight = "normal";
+                    li.style.color = "white";
                 }
             }
         } catch (error) {
@@ -338,12 +341,11 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
         $scope.countTime = setInterval(function () {
             listened++;
             if (listened === (Math.floor($scope.audioItem.duration / 3))) {
-                if ($scope.audioItem.recordingId) {
+                // if ($scope.audioItem.recordingId) {
                     $scope.Monitoring();
-
-                } else {
-                    $scope.Monitoring();
-                }
+                // } else {
+                //     $scope.Monitoring();
+                // }
             }
             if (listened === (Math.floor($scope.audioItem.duration / 2))) {
                 if ($scope.audioItem.recordingId) {
@@ -389,7 +391,7 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
     function Next() {
         listened = 0;
         currentAds = 0;
-        if(queueService.getQueue().length > 0){
+        if (queueService.getQueue().length > 0) {
             let item = queueService.getQueue()[0];
             if (item.recordingId) {
                 audio.src = item.audioFileUrl;
@@ -398,23 +400,22 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
             }
             $scope.audioItem = queueService.getQueue()[0];
             queueService.deQueue();
-        }else{
+        } else {
             if (isShuffle === true && currentAudioIndex < audioService.getListPlay().length) {
                 currentAudioIndex = Math.floor(Math.random() * (audioService.getListPlay().length));
                 audioService.setCurrentAudio(currentAudioIndex);
                 var item = audioService.getListPlay()[currentAudioIndex];
-    
+
             } else if (isLoopPlaylist === true && currentAudioIndex === audioService.getListPlay().length - 1) {
                 currentAudioIndex = 0;
                 audioService.setCurrentAudio(currentAudioIndex);
                 var item = audioService.getListPlay()[currentAudioIndex];
                 console.log(item)
             } else if (currentAudioIndex === (audioService.getListPlay().length - 1)) {
-    
+
                 currentAudioIndex = 0;
                 audioService.setListPlay(queueService.getQueue());
                 audioService.setCurrentAudio(currentAudioIndex);
-    
                 var item = audioService.getListPlay()[currentAudioIndex];
             } else {
                 currentAudioIndex += 1;
@@ -427,7 +428,7 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
                 $scope.selectAudio(item, 'episode', audioService.getListPlay(), currentAudioIndex)
             }
         }
-        
+
         if (resume.hidden === false && play.hidden === true) {
             audio.play();
         } else {
@@ -843,4 +844,214 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
         }
         return index !== -1;
     }
+
+    $scope.makePrivate = function (item, isLock) {
+        let url = host + "v1/playlist";
+        item.isPublic = isLock;
+        $http.put(url).then(resp => {
+            showStickyNotification('Playlist has been made ' + isLock == true ? 'public' : 'private', 'success', 3000);
+        }).catch(err => {
+            showStickyNotification('', 'success', 3000);
+        })
+    }
+
+    $scope.addOtherPlaylistOrQueue = function (id, type) {
+        if ($scope.playlistId !== undefined) {
+            const query = `{
+            playlistById(playlistId:`+ id + `){
+                playlistId
+                playlistName
+                isPublic
+                description
+                image {
+                    accessId
+                    url
+                }
+                usertype {
+                    userTypeId
+                    nameType
+                }
+                playlistRecords {
+                    dateAdded
+                    recording {
+                        recordingId
+                        duration
+                        recordingName
+                        audioFileUrl
+                        tracks{
+                            album{
+                                albumId
+                                albumName
+                            }
+                        }
+                        song {
+                            image {
+                                url
+                            }
+                            writters{
+                                artist{
+                                artistName
+                                }
+                            }
+                        }
+                    }
+                }
+                playlistPodcast {
+                dateAdded
+                episode {
+                    episodeId
+                    duration
+                    episodeTitle
+                    fileUrl
+                    image{
+
+                        url
+                    }
+                    podcast{
+                        podcastId
+                        authorName
+                        podcastName
+                    }
+                }
+                }
+            }
+        }`
+            graphqlService.executeQuery(query).then(data => {
+                try {
+                    var listAudioPlaylist = [...data.playlistById.playlistRecords.map(function (item) {
+                        return { recording: item.recording };
+                    }).map(function (item) {
+                        return item.recording;
+                    }), ...data.playlistById.playlistPodcast.map(function (item) {
+                        return { episode: item.episode };
+                    }).map(function (item) {
+                        return item.episode;
+                    })];
+
+                    if (type == 'playlist') {
+                        listAudioPlaylist.forEach(item => {
+                            if (item.recordingId) {
+                                var url = host + "v1/playlist-record";
+                                var data = {};
+                                data.recording = item;
+
+                            } else {
+                                var url = host + "v1/playlist-episode";
+                                var data = {};
+                                data.episode = item;
+                            }
+                            data.playlist.playlistId = id;
+                            $http.post(url, data).then(resp => {
+                                showStickyNotification('Addition successfull', 'success', 3000);
+                            })
+                        })
+                    } else {
+                        listAudioPlaylist.forEach(item => {
+                            queueService.enQueue(item);
+                        })
+                    }
+
+
+                } catch (error) {
+
+                }
+            }).catch(error => {
+                console.log(error);
+            });
+        }
+    }
+
+    $scope.genres="";
+    $scope.cultures="";
+    $scope.instruments="";
+    $scope.moods="";
+    $scope.songstyles="";    
+    $scope.versions="";
+    $scope.categoryInPlaylist=function(id){
+        const query =`{
+            playlistById(playlistId : `+id+`) {
+                playlistId
+                playlistRecords {
+                  recording{
+                   songGenres{
+                     genre{
+                       nameGenre
+                     }
+                   }
+                   culture
+                   versions
+                   instrument
+                   mood
+                   songStyle
+                 }
+                }
+              }
+        }`
+        graphqlService.executeQuery(query).then(data => {
+            data.playlistById.playlistRecords.forEach(item => {
+                item.recording.songGenres.forEach(e => {
+                    if(!$scope.genres.includes(e.genre.nameGenre)){
+                        $scope.genres+=`'`+e.genre.nameGenre+`'`+','
+                    }
+                });
+                if(!$scope.instruments.includes(item.recording.instrument)){
+                    $scope.instruments =$scope.instruments.trim()+ " "+ item.recording.instrument.trim();
+                }
+                if(!$scope.moods.includes(item.recording.mood)){
+                    $scope.moods =$scope.moods.trim()+ " "+ item.recording.mood.trim();
+                }
+                if(!$scope.songstyles.includes(item.recording.songStyle)){
+                    $scope.songstyles =$scope.songstyles.trim() + " "+ item.recording.songStyle.trim();
+                }
+                if(!$scope.versions.includes(item.recording.versions)){
+                    $scope.versions =$scope.versions.trim() +" "+ item.recording.versions.trim();
+                }
+                if(!$scope.cultures.includes(item.recording.culture)){
+                    $scope.cultures =$scope.cultures.trim()+" "+ item.recording.culture.trim();
+                }
+            })
+            $scope.genres=$scope.genres.slice(0, -1);
+            $scope.instruments = removeDuplicateWords($scope.instruments.trim());
+            $scope.moods= removeDuplicateWords($scope.moods.trim());
+            $scope.songstyles= removeDuplicateWords($scope.songstyles.trim());
+            $scope.versions= removeDuplicateWords($scope.versions.trim());
+            $scope.cultures= removeDuplicateWords($scope.cultures.trim());
+            $scope.createSimilarPlaylist();
+        })
+    }
+    function removeDuplicateWords(inputString) {
+        const words = inputString.split(' ');
+        const uniqueWords = [...new Set(words)];
+        const resultString = uniqueWords.join(' ');
+        return resultString;
+    }
+
+    $scope.createSimilarPlaylist = function () {
+        let url = host + "v1/similar-playlist";
+        var data = new FormData();
+        data.append('email',$scope.account.email)
+        data.append('genre', $scope.genres)
+        data.append('culture', $scope.cultures)
+        data.append('instrument', $scope.instruments)
+        data.append('mood', $scope.moods)
+        data.append('songstyle', $scope.songstyles)
+        data.append('versions', $scope.versions)
+        $http.post(url,data,{
+            headers: {
+                'Content-Type': undefined,
+            },
+            transformRequest: angular.identity
+        }).then(resp => {
+            if (resp.data.success === true) {
+                showStickyNotification('Create playlist success', 'success', 2000);
+            } else {
+                showStickyNotification(resp.data.data, 'warning', 2000);
+            }
+
+        }).catch(err => {
+            showStickyNotification("Create playlist fail", 'danger', 3000);
+            console.log(err);
+        })
+    }
+
 })

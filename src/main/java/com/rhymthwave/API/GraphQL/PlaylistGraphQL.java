@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.rhymthwave.DTO.MessageResponse;
 import com.rhymthwave.Service.CRUD;
+import com.rhymthwave.Service.PlaylistService;
+import com.rhymthwave.Service.UserTypeService;
 import com.rhymthwave.Service.WishlistService;
 import com.rhymthwave.Utilities.GetHostByRequest;
 import com.rhymthwave.entity.Account;
@@ -30,6 +32,10 @@ public class PlaylistGraphQL {
 	private final CRUD<Account, String> crudAccount;
 	
 	private final WishlistService wishlistSer;
+	
+	private final PlaylistService playlistSer;
+	
+	private final CRUD<UserType,Long> crudUserType;
 		
 	@QueryMapping("playlistById")
 	public Playlist findPlaylistById(@Argument("playlistId") Long id) {
@@ -40,15 +46,20 @@ public class PlaylistGraphQL {
 	public List<Wishlist> findMyWishlist(@Argument("email") String email){
 		Account account = crudAccount.findOne(email);
 		UserType basic = account.getUserType().get(0);
-		UserType premium = account.getUserType().get(1);
 		List<Wishlist> list = wishlistSer.myWishlist(basic);
-		if(premium !=null) {
+		if(account.getUserType().toArray().length > 2) {
+			UserType premium = account.getUserType().get(1);
 			list.addAll( wishlistSer.myWishlist(premium));
-		}
+		}		
 		if(!list.isEmpty()) {
 			return list;
 		}
 		return null;
+	}
+	
+	@QueryMapping("findPublicPlaylist")
+	public List<Playlist> findPublicPlaylist(@Argument("userTypeId") Long userTypeId,@Argument("isPublic") Boolean isPublic){
+		return playlistSer.findPublicPlaylist(crudUserType.findOne(userTypeId), isPublic);
 	}
 	
 }

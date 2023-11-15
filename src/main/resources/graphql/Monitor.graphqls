@@ -3,7 +3,8 @@
 #import "./Account.graphqls"
 
 type Monitor{
-	instrumentId: ID
+	monitorid: ID
+	dateMonitor: String
 	recording: Recording
 	account: Account
 }

@@ -19,6 +19,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -40,6 +42,7 @@ public class Artist implements Serializable {
 	private String artistName;
 
 	@Column(name = "DATEOFBIRTH")
+	@Temporal(TemporalType.DATE)
 	private Date dateOfBirth;
 
 	@Column(name = "FULLNAME",columnDefinition = "nvarchar(55)")
@@ -67,7 +70,8 @@ public class Artist implements Serializable {
 	private Boolean isVerify;
 
 	@Column(name = "DATESTARTED")
-	private Date dateStarted;
+	@Temporal(TemporalType.DATE)
+	private Date dateStarted = new Date();
 
 	@OneToOne
 	@JoinColumn(name = "PROFILEIMAGE")
