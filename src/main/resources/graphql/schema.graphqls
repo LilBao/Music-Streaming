@@ -62,5 +62,9 @@ type Query {
  artistById(artistId: Int!): Artist
  
  findYourFollow(authorId: Int!): [Follow]
+ 
+ #Khoa
+ findAllReport : [Report]
+ findAllReportStatusTrue : [Report]
 }
 

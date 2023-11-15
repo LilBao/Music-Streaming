@@ -22,7 +22,6 @@ import com.rhymthwave.Utilities.JWT.JwtAuthentitationFilter;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-	
 	@Autowired
 	private CustomUserDetailsService customUserDetailsService;
 	

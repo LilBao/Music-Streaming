@@ -1,8 +1,11 @@
 package com.rhymthwave.Service_LR.Implement;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,7 +31,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SignUpServiceImpl implements ISignUpService {
 
-	private final AccountDAO dao;
+private final AccountDAO dao;
 
 	
 	private final RoleDAO roleDAO;
@@ -38,6 +41,8 @@ public class SignUpServiceImpl implements ISignUpService {
 
 	@Autowired
 	private AuthorDAO authorDAO;
+	
+	private static final int EXPIRATION_TIME = 15;
 
 //	@Autowired
 //	private VerificationTokenRepository tokenRepository;
@@ -70,5 +75,44 @@ public class SignUpServiceImpl implements ISignUpService {
 		newAuthor.setAccount(newAccount);
 		authorDAO.save(newAuthor);
 		return newAccount ;
+	}
+
+	public ResponseEntity<String> verifyEmail(Account account) {
+		if (account == null) {
+			return ResponseEntity.badRequest().body("Invalid verification token");
+		}
+
+		Calendar calendar = Calendar.getInstance();
+		int remainingVerification = account.getRemainingVerification();
+		
+		if (account.getVerificationCodeExpires().getTime() - calendar.getTime().getTime() <= 0) {
+			remainingVerification--;
+			account.setRemainingVerification(remainingVerification);
+			account.setVerificationCodeExpires(getTokenExpirationTime());
+			dao.save(account);
+			return ResponseEntity.badRequest().body("The token has expired, please click on the verification link again");
+		}
+
+		if (remainingVerification == 0) {
+			account.setVerificationCode(null);
+			account.setVerificationCodeExpires(null);
+			account.setBlocked(true);
+			dao.save(account);
+			return ResponseEntity.badRequest().body("Email is blocked");
+		}
+
+		account.setVerificationCode(null);
+		account.setVerificationCodeExpires(null);
+		account.setVerify(true);
+		dao.save(account);
+		return ResponseEntity.ok("Verified successfully");
+		
+	}
+	
+	public Date getTokenExpirationTime() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(new Date().getTime());
+		calendar.add(Calendar.MINUTE, EXPIRATION_TIME);
+		return new Date(calendar.getTime().getTime());
 	}
 }

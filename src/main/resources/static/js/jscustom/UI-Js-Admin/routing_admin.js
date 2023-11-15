@@ -56,6 +56,7 @@ app.config(function($routeProvider,$cookiesProvider) {
   })
   .when("/manage-report", {
     templateUrl : "ManageReport.html",
+    controller: "ReportController"
   })
   .when("/statistical_managerment", {
     templateUrl : "statistical_managerment.html",

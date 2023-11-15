@@ -28,4 +28,7 @@ public interface RecordDAO extends JpaRepository<Recording, Long>{
 	
 	@Query(value="SELECT r.* FROM RECORDING r join SONGS s on r.SONGSID = s.SONGSID ORDER BY NEWID()",nativeQuery = true)
 	List<Recording> findListRandom();
+
+	@Query(value = "select * from recording where recordingid = :recordingId", nativeQuery = true)
+	Recording findAllById(@Param("recordingId") Long recordingId);
 }

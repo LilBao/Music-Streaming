@@ -63,35 +63,7 @@ public class SignUpAPI {
 	@GetMapping("/verifyEmail")
 	public ResponseEntity<?> verifyEmail(@RequestParam("token") String verificationToken) {
 		Account account = accountDAO.findByVerificationCode(verificationToken);
-
-		if (account == null) {
-			return ResponseEntity.badRequest().body("Invalid verification token");
-		}
-
-		Calendar calendar = Calendar.getInstance();
-		int remainingVerification = account.getRemainingVerification();
-		
-		if (account.getVerificationCodeExpires().getTime() - calendar.getTime().getTime() <= 0) {
-			remainingVerification--;
-			account.setRemainingVerification(remainingVerification);
-			account.setVerificationCodeExpires(listener.getTokenExpirationTime());
-			accountDAO.save(account);
-			return ResponseEntity.badRequest().body("The token has expired, please click on the verification link again");
-		}
-
-		if (remainingVerification == 0) {
-			account.setVerificationCode(null);
-			account.setVerificationCodeExpires(null);
-			account.setBlocked(true);
-			accountDAO.save(account);
-			return ResponseEntity.badRequest().body("Email is blocked");
-		}
-
-		account.setVerificationCode(null);
-		account.setVerificationCodeExpires(null);
-		account.setVerify(true);
-		accountDAO.save(account);
-
+		signUpServiceImpl.verifyEmail(account);		
 		return ResponseEntity.ok("Verified successfully");
 	}
 
