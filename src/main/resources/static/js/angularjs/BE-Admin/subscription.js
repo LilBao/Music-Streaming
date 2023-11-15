@@ -70,6 +70,7 @@ app.controller("subscriptionController", function (graphqlService, $scope, $http
     $scope.totalSubscriptionsUsing = function () {
         const query = `{
             totalSubscriptionsUsing {
+              subscriptionId
               subscriptionType
               price
               description

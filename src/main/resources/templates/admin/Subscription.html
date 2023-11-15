@@ -402,14 +402,14 @@
                                                             data-bs-toggle="modal" data-bs-target="#exampleModal"
                                                             ng-click="edit(item.subscriptionId)">Edit</a>
                                                         <a href="" class="btn btn-danger text-uppercase btns"
-                                                            data-bs-toggle="modal" data-bs-target="#delete">Delete</a>
+                                                            data-bs-toggle="modal" data-bs-target="#delete-{{item.subscriptionId}}">Delete</a>
                                                     </div>
                                                 </div>
 
 
                                                 <!-- START MODAL DELETE -->
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="delete" tabindex="-1"
+                                                <div class="modal fade" id="delete-{{item.subscriptionId}}" tabindex="-1"
                                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog modal-sm modal-dialog-centered">
                                                         <div class="modal-content">
@@ -551,7 +551,9 @@
                                                 <th class="text-center" scope="row">{{$index + 1}}</th>
 
                                                 <td class="text-center">
-                                                    {{statistics.subscriptionType}}
+                                                  
+                                                    <span    ng-class="{'badge text-bg-info mx-1':statistics.subscriptionType === 'BASIC', 'badge text-bg-warning mx-1': statistics.subscriptionType === 'PREMIUM'}">{{statistics.subscriptionType}}</span>
+                                                   
                                                 </td>
                                                 <td class="text-center">{{statistics.price}}</td>
                                                 <td class="text-center">{{statistics.description }}</td>

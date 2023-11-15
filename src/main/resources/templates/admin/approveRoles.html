@@ -13,14 +13,16 @@
             font-size: 16px;
             font-weight: 300px;
         }
+
         .round-btn {
 
             font-size: 20px;
             font-weight: 400px;
             color: white;
-            
+
         }
-        .table-hover{
+
+        .table-hover {
             cursor: pointer;
         }
     </style>
@@ -83,6 +85,15 @@
             .text-uppercase {
                 letter-spacing: 0.1em;
             }
+
+            .btn-circle.btn-lg {
+                width: 40px;
+                height: 40px;
+                padding: 5px 8px;
+                font-size: 20px;
+                line-height: 1.33;
+                border-radius: 25px;
+            }
         </style>
         <section class="dashboard-top-sec">
             <div class="container-fluid">
@@ -91,40 +102,54 @@
                     <div class="p-5 bg-white rounded shadow mb-5">
                         <div class="container">
                             <div class=" table-responsive ">
-                                <table class="table table-striped custab table-hover">
-                                    <thead>
-                                        <a href="#" class="btn btn-primary btn-xs pull-right"><b>+</b> Add new
-                                            categories</a>
+                                <table class="table align-middle mb-0 bg-white">
+                                    <thead class="bg-light ">
                                         <tr>
-                                            <th class="bold ">ID</th>
-                                            <th>Title</th>
-                                            <th>Parent ID</th>
-                                            <th class="text-center">Action</th>
-                                            <th class="text-left"></th>
+                                            <th>Email</th>
+                                            <th>Name Artist</th>
+                                            <th>User Type</th>
+                                            <th>Date Started</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>News</td>
-                                        <td>News Cate</td>
-                                        <td class="text-center">
-                                            <button class='btn btn-success btn-xs round-btn' href="#"> 
-                                                <i class="bi bi-check-circle "></i> 
-                                            </button>     
+                                    <tbody>
+                                     
+                                        <tr ng-repeat="item in item" class="text-start ">
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <img ng-src="{{item.account.image.url}}"
+                                                        class="rounded-circle" alt=""
+                                                        style="width: 45px; height: 45px" />
+                                                    <div class="ms-3">
+                                                        <p class="fw-bold mb-1">{{item.account.username}}</p>
+                                                        <p class="text-muted mb-0">{{item.account.email}}</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="fw-normal mb-1">{{item.artistName}}</p>
+                                                <p class="text-muted mb-0">{{item.fullName}}</p>
+                                            </td>
+                                            <td ng-repeat="userType in item.account.userType">
+                                               
+                                                <span  ng-class="{'badge text-bg-info mx-1': userType.nameType === 'BASIC', 'badge text-bg-warning mx-1': userType.nameType === 'PREMIUM'}">{{userType.nameType}}</span>
 
-                                            <button class="btn btn-info btn-xs round-btn">
-                                                <i class="bi bi-x-circle"></i>
-                                            </button>
-                                        </td>
-                                        <td style="font-size: 60px;" class="text-end text-danger">
-                                            <i class="bi bi-dot"></i>
-                                        </td>
+                                            </td>
+                                            <td>{{item.dateStarted  | date:'dd-MM-yyyy'}}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-success btn-circle btn-lg"><i class="bi bi-person-fill-check"></i></button>
+                                                <button type="button" class="btn btn-success btn-circle btn-lg"><i class="bi bi-person-x"></i></button>
 
-                                    </tr>
-
-
+                                            </td>
+                                        </tr>
+                                    </tbody>
                                 </table>
+
                             </div>
+
+
+
+
                         </div>
                     </div>
 

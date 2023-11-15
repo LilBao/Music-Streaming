@@ -22,6 +22,9 @@ public class PlaylistServiceImpl implements PlaylistService, CRUD<Playlist, Long
 	@Override
 	@Transactional
 	public Playlist create(Playlist entity) {
+		if(entity.getQuantity() > 0 || entity.getPlaylistName() != null) {
+			return dao.save(entity);
+		}
 		Playlist playlist = entity;
 		playlist.setQuantity(0);
 		playlist.setPlaylistName("My Playlist");

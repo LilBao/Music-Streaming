@@ -57,11 +57,16 @@ app.config(function($routeProvider,$cookiesProvider) {
   .when("/manage-report", {
     templateUrl : "ManageReport.html",
   })
+  .when("/manage-playlist", {
+    templateUrl : "managerPlaylist.html",
+    controller: "managerPlaylistController"
+  })
   .when("/statistical_managerment", {
     templateUrl : "statistical_managerment.html",
     controller: "ChartController"
   }).when("/approve-role", {
     templateUrl : "approveRoles.html",
+    controller: "approveRolesController"
   })
   .when("/subscriptions", {
     templateUrl : "Subscription.html",

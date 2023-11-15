@@ -6,8 +6,6 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
 import com.rhymthwave.Service.CRUD;
-import com.rhymthwave.ServiceAdmin.IArtistService;
-import com.rhymthwave.entity.Artist;
 import com.rhymthwave.entity.Subscription;
 
 import lombok.RequiredArgsConstructor;
