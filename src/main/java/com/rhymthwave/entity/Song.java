@@ -17,6 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PreRemove;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -60,7 +61,12 @@ public class Song implements Serializable {
 	private List<Recording> recordings;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "song")
+	@OneToMany(mappedBy = "song",cascade = CascadeType.ALL)
 	private List<Writter> writters;
+	
+	@PreRemove
+	public void nullificarRecordings() {
+		recordings.forEach(record -> record.setSong(null));
+	}
 
 }

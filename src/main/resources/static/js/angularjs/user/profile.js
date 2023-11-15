@@ -1,21 +1,27 @@
 var host = "http://localhost:8080/api/";
-app.controller('profileCtrl', function ($scope, $http,$location,$routeParams,graphqlService) {
-    if($routeParams.profile){
+app.controller('profileCtrl', function ($scope, $http, $location, $routeParams, graphqlService) {
+    if ($routeParams.profile) {
         $scope.role = $routeParams.profile;
     }
 
-    
+
     $scope.idProfile = $routeParams.id;
     $scope.isArtist = $location.path().includes('artist');
 
-    $scope.author ={};
+    $scope.author = {};
     $scope.profile = {};
     $scope.type = 0;
 
-    $scope.findProfile = function(){
-        if(!$scope.isArtist){
-            var query =`{
-                accountByUsername(username: "`+$scope.idProfile+`") {
+    //Follow
+    $scope.listFollower = [];
+    $scope.listFollowing = [];
+    $scope.listPlaylistPublic = [];
+    $scope.listPodcast = [];
+
+    $scope.findProfile = function () {
+        if (!$scope.isArtist) {
+            var query = `{
+                accountByUsername(username: "`+ $scope.idProfile + `") {
                   email
                   username
                   birthday
@@ -27,20 +33,24 @@ app.controller('profileCtrl', function ($scope, $http,$location,$routeParams,gra
                       roleId
                     }
                   }
+                  image{
+                    url
+                  }
                   artist {
                     artistId
                     artistName
                   }
                   userType{
+                    userTypeId
                     playlists{
                       playlistId
                     }
                   }
                 }
               }`
-        }else{
-            var query =`{
-                artistById(artistId: `+$scope.idProfile+`) {
+        } else {
+            var query = `{
+                artistById(artistId: `+ $scope.idProfile + `) {
                     artistId
                     artistName
                     dateOfBirth
@@ -60,33 +70,50 @@ app.controller('profileCtrl', function ($scope, $http,$location,$routeParams,gra
                 }
             }`
         }
-        
+
         graphqlService.executeQuery(query).then(data => {
-            if($scope.isArtist){
+            if ($scope.isArtist) {
+                $scope.type = 2;
                 $scope.profile = data.artistById;
-            }else{
+                $scope.findFollower(data.artistById.account.email);
+            } else if ($scope.role === 'podcast') {
+                $scope.type = 3;
                 $scope.profile = data.accountByUsername;
-            }
-            
-            if($scope.isArtist){
-                $scope.type=2;
-            }else if($scope.role ==='podcast'){
-                $scope.type=3;
-            }else{
-                $scope.type=1;
+                $scope.findListPodcast($scope.profile.email);
+                $scope.findFollower($scope.profile.email);
+            } else {
+                $scope.type = 1;
+                $scope.profile = data.accountByUsername;
+                $scope.profile.userType.forEach(e => {
+                    $scope.findListPlaylistPublic(e.userTypeId, true);
+                });
+                $scope.findFollower($scope.profile.email);
+
             }
             $scope.checkFollowExist();
+
+            if ($scope.type == 1) {
+                $scope.findFollowing($scope.profile.email);
+                if($scope.profile.email ==$scope.account.email){
+                    $('#container-profile').attr('data-bs-toggle','modal');
+                    $('#container-profile').attr('data-bs-target','#my-profile');
+                }else{
+                    $('#container-profile').removeAttr('data-bs-toggle')
+                    $('#container-profile').removeAttr('data-bs-target')
+                }
+            }
         })
+
     }
     $scope.findProfile();
-    
+
 
     $scope.follow = function () {
         var url = host + "v1/follow";
         var data = angular.copy($scope.author);
-        data.email=$scope.isArtist ? $scope.profile.account.email:$scope.profile.email;
-        data.type=$scope.type;
-        $http.post(url,data,{
+        data.email = $scope.isArtist ? $scope.profile.account.email : $scope.profile.email;
+        data.type = $scope.type;
+        $http.post(url, data, {
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
 
@@ -94,12 +121,11 @@ app.controller('profileCtrl', function ($scope, $http,$location,$routeParams,gra
 
         });
     }
-   
 
     $scope.unfollow = function () {
         const mail = $scope.isArtist ? $scope.profile.account.email : $scope.profile.email;
-        let url = host + "v1/follow?email="+mail+"&type="+$scope.type;
-        $http.delete(url,{
+        let url = host + "v1/follow?email=" + mail + "&type=" + $scope.type;
+        $http.delete(url, {
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
             console.log("success")
@@ -108,14 +134,16 @@ app.controller('profileCtrl', function ($scope, $http,$location,$routeParams,gra
         })
     }
 
-    $scope.checkFollowExist =function(){
-        let url = host +"v1/check-follow";
-        $http.get(url,{
-            params: { email: $scope.isArtist ? $scope.profile.account.email:$scope.profile.email, 
-                      type: $scope.type},
+    $scope.checkFollowExist = function () {
+        let url = host + "v1/check-follow";
+        $http.get(url, {
+            params: {
+                email: $scope.isArtist ? $scope.profile.account.email : $scope.profile.email,
+                type: $scope.type
+            },
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
-            if(resp.data.success == true){
+            if (resp.data.success == true) {
                 $('#btn-follow').addClass('unfollow');
                 $('#btn-follow').text("Following");
             }
@@ -164,4 +192,157 @@ app.controller('profileCtrl', function ($scope, $http,$location,$routeParams,gra
         }
         shuffle.click();
     })
+
+    //List podcast by account
+    $scope.findListPodcast = function (email) {
+       
+        const query = `{ 
+            findPodcastByEmail(email:"`+String(email)+`") {
+                podcastId
+                podcastName
+                image{
+                    url
+                }
+            }
+        }`
+        graphqlService.executeQuery(query).then(data =>{
+            $scope.listPodcast = data.findPodcastByEmail;
+        })
+    }
+
+    //List playlist by account
+    $scope.findListPlaylistPublic = function (usertypeId, isPublic) {
+        const query = `{
+            findPublicPlaylist(userTypeId:`+ usertypeId + `,isPublic:` + isPublic + `) {
+                playlistId
+                playlistName
+                image{
+                    url
+                }
+              }
+        }`
+        graphqlService.executeQuery(query).then(data => {
+            $scope.listPlaylistPublic.push(...data.findPublicPlaylist);
+        })
+    }
+
+    //List Following
+    $scope.findFollowing = function (email) {
+        const query = `{
+            myListFollow(email:"`+ email + `") {
+                followerId
+                followDate
+                authorsAccountB {
+                    authorId
+                    account{
+                        email
+                        username
+                        image{
+                            url
+                        }
+                        artist{
+                            artistId
+                            artistName
+                            imagesProfile{
+                                url
+                            }
+                        }
+                    }
+                    role{
+                        roleId
+                        role
+                    }
+                }
+            }
+        }`
+        graphqlService.executeQuery(query).then(data => {
+            $scope.listFollowing = data.myListFollow;
+        })
+    }
+
+    //List Follower
+    $scope.findFollower = function (email) {
+        const query = `{
+            findYourFollow(roleId:`+ $scope.type + `,email:"` + String(email) + `") {
+              followerId
+              followDate
+              authorsAccountA {
+                authorId
+                account{
+                    email
+                    username
+                    image{
+                        url
+                    }
+                }
+              }
+            }
+        }`
+        graphqlService.executeQuery(query).then(data => {
+            $scope.listFollower = data.findYourFollow;
+        })
+    }
+
+    //my profile
+    $scope.modifiedMyProfile = function(){
+        let url = host + "v1/account";
+        var data = angular.copy($scope.account);
+        $http.put(url,data).then(resp => {
+            if($scope.pictureProfile){
+                $scope.modifiedMyPictureProfile();
+            }else{
+                showStickyNotification('Update successfull', 'success', 3000);
+            }
+        }).catch(err => {
+
+        })
+    }
+
+    $scope.modifiedMyPictureProfile = function(){
+        let url = host + "v1/account-image";
+        var data = new FormData();
+        data.append('avatar',$scope.pictureProfile);
+        $http.put(url,data,{
+            headers: { 
+                'Content-Type': undefined,
+                'Authorization': 'Bearer ' + getCookie('token')
+            }, 
+            transformRequest: angular.identity
+        }).then(resp => {
+            showStickyNotification('Update successfull', 'success', 3000);
+        }).catch(err => {
+
+        })
+    }
+
+    $('.img-my-profile').click(function () {
+        $scope.pictureProfile=null;
+        $('#img-my-profile').click();
+        $('#img-my-profile').change(function (e) {
+            var file = e.target.files[0];
+            if (file) {
+                $scope.pictureProfile = file;
+                $scope.$apply(function () {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var imageDataUrl = e.target.result;
+                        $('.img-my-profile').attr('src', imageDataUrl);
+                    };
+                    reader.readAsDataURL(file);
+                })
+            }
+        })
+    })
+    //JS
+    function getRandomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+    const color1 = getRandomColor();
+    const color2 = getRandomColor();
+    $('#container-profile').css('background', `linear-gradient(to right, ${color1}, ${color2})`);
 })

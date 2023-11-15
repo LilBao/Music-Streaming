@@ -27,7 +27,11 @@ public class FollowGraphQL {
 	}
 	
 	@QueryMapping("findYourFollow")
-	public List<Follow> findMyListFollow(@Argument("authorId") Long authorId) {
-		return followSer.findYourListFollow(authorId);
+	public List<Follow> findListFollower(@Argument("roleId") Integer roleId,@Argument("email") String email) {
+		Author accountB = authorSer.findAuthor(roleId, email);
+		if(accountB!=null) {
+			return followSer.findYourListFollow(accountB);
+		}
+		return null;
 	}
 }

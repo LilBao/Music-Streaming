@@ -74,8 +74,12 @@ public class FollowServiceImpl implements CRUD<Follow, Long>, FollowService{
 	}
 
 	@Override
-	public List<Follow> findYourListFollow(Long authorId) {
-		return dao.findByAuthorsAccountB(authorId);
+	public List<Follow> findYourListFollow(Author accountB) {
+		return dao.findByAuthorsAccountB(accountB.getAuthorId());
 	}
-	
+
+	@Override
+	public Integer getQuantityFollowByDate(Long authorId, Integer days) {
+		return dao.getQuantityFollowByDate(authorId, days);
+	}
 }

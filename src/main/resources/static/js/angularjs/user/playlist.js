@@ -29,6 +29,7 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location,
                     nameType
                 }
                 playlistRecords {
+                    playlistRecordingId
                     dateAdded
                     recording {
                         recordingId
@@ -43,17 +44,20 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location,
                         }
                         song {
                             image {
+                                accessId
                                 url
                             }
                             writters{
                                 artist{
-                                artistName
+                                    artistId
+                                    artistName
                                 }
                             }
                         }
                     }
                 }
                 playlistPodcast {
+                playlistPodcastId
                 dateAdded
                 episode {
                     episodeId
@@ -61,13 +65,16 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location,
                     episodeTitle
                     fileUrl
                     image{
-
+                        accessId
                         url
                     }
                     podcast{
                         podcastId
                         authorName
                         podcastName
+                        account{
+                            username
+                        }
                     }
                 }
                 }
@@ -76,7 +83,7 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location,
             graphqlService.executeQuery(query).then(data => {
                 try {
                     $scope.playlist = data.playlistById;
-                    $scope.listDateAdded = [...data.playlistById.playlistRecords, ...data.playlistById.playlistPodcast]
+                    $scope.playlistRE = [...data.playlistById.playlistRecords, ...data.playlistById.playlistPodcast];
 
                     $scope.listAudioPlaylist = [...data.playlistById.playlistRecords.map(function (item) {
                         return { recording: item.recording };
@@ -107,7 +114,6 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location,
         }
         play.click();
     })
-
 
     //pause
     $('#btn-playlist-pause').click(function () {
@@ -144,13 +150,15 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location,
     $scope.updatePlaylist = function () {
         let url = host + "v1/playlist";
         let data = angular.copy($scope.playlist);
-        console.log(data)
         $http.put(url, data).then(resp => {
             if ($scope.coverImg !== undefined) {
                 $scope.updateImage();
             } else {
                 showStickyNotification('Update successfull', 'success', 3000);
             }
+            $scope.account.userType.forEach(e => {
+                $scope.findMyPlaylist(e.userTypeId);
+            });
         }).catch(err => {
             console.log("")
         })
@@ -210,35 +218,72 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location,
         $scope.recommended();
     })
 
-    $scope.additionRecord = function (item) {
+    $scope.additionRecord = function (item, playlist) {
         let url = host + "v1/playlist-record";
         let data = angular.copy($scope.playlistRecord);
         data.recording = item;
-        data.playlist = $scope.playlist;
+        data.playlist = playlist;
         $http.post(url, data).then(resp => {
             $scope.findPlaylist();
             showStickyNotification('Addition successfull', 'success', 3000);
         })
     }
 
-    $scope.additionEpisode = function (item) {
+    $scope.additionEpisode = function (item, playlist) {
         let url = host + "v1/playlist-episode";
-        $scope.playlistPodcast.episode = item;
-        $scope.playlistPodcast.playlist = $scope.playlist;
-        let data = angular.copy($scope.playlistRecord);
+        let data = angular.copy($scope.playlistPodcast);
+        data.episode = item;
+        data.playlist = playlist;
         $http.post(url, data).then(resp => {
             $scope.findPlaylist();
             showStickyNotification('Addition successfull', 'success', 3000);
+        })
+    }
+
+    $scope.removeRecordFromPlaylist = function (id) {
+        let url = host + "v1/playlist-record/" + id;
+        $http.delete(url).then(resp => {
+            $scope.findPlaylist();
+            showStickyNotification('removed from playlist', 'success', 3000);
+        })
+    }
+
+    $scope.removeEpisodeFromPlaylist = function (id) {
+        let url = host + "v1/playlist-episode/" + id;
+        $http.delete(url).then(resp => {
+            $scope.findPlaylist();
+            showStickyNotification('removed from playlist', 'success', 3000);
         })
     }
 
     $scope.addition = function (type, item, index) {
         if (type === 'record') {
-            $scope.additionRecord(item);
+            $scope.additionRecord(item, $scope.playlist);
         } else {
-            $scope.additionEpisode(id);
+            $scope.additionEpisode(id, $scope.playlist);
         }
         $scope.listRecommended.splice(index, 1)
+    }
+
+    $scope.addAnotherPlaylist = function (item, playlist) {
+        if (item.recording) {
+            $scope.additionRecord(item.recording, playlist);
+        } else {
+            $scope.additionEpisode(item.episode, playlist);
+        }
+    }
+
+    $scope.searchMyPlaylist = function (value) {
+        $scope.listPlaylist = $scope.listPlaylist.sort((a, b) => {
+            const nameA = a.playlistName.toLowerCase();
+            const nameB = b.playlistName.toLowerCase();
+            const searchValue = value.toLowerCase();
+
+            const scoreA = nameA.includes(searchValue) ? nameA.indexOf(searchValue) : Number.MAX_SAFE_INTEGER;
+            const scoreB = nameB.includes(searchValue) ? nameB.indexOf(searchValue) : Number.MAX_SAFE_INTEGER;
+
+            return scoreA - scoreB;
+        });
     }
 
     $('#btn-update-playlist').click(function () {
@@ -270,7 +315,7 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location,
     $scope.MyWishList = function () {
         if ($scope.account.email !== undefined) {
             const query = `{
-            myWishlist(email: "mck@gmail.com") {
+            myWishlist(email:"`+ String($scope.account.email) + `") {
               wishlistId
               addDate
               usertype {
@@ -397,6 +442,48 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location,
         })
     }
 
+    $scope.createPlaylistAddSong = function (item) {
+        var playlist = {};
+        playlist.image = item.song.image;
+        if (item.recordingId) {
+            playlist.playlistName = item.recordingName;
+            let url = host + "v1/playlist";
+            console.log(playlist)
+            $http.post(url, playlist, {
+                headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+            }).then(resp => {
+                if (resp.data.success === true) {
+                    $scope.additionRecord(item, resp.data.data);
+                } else {
+                    showStickyNotification(resp.data.data, 'warning', 2000);
+                }
+
+            }).catch(err => {
+                showStickyNotification("Create playlist fail", 'danger', 3000);
+                console.log(err);
+            })
+        } else {
+            playlist.playlistName = item.episodeTitle;
+            let url = host + "v1/playlist";
+            $http.post(url, playlist, {
+                headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+            }).then(resp => {
+                if (resp.data.success === true) {
+                    $scope.additionEpisode(episodeTitle, resp.data.data);
+                } else {
+                    showStickyNotification(resp.data.data, 'warning', 2000);
+                }
+
+            }).catch(err => {
+                showStickyNotification("Create playlist fail", 'danger', 3000);
+                console.log(err);
+            })
+           
+
+        }
+
+    }
+
     //js
     if (play.hidden == true) {
         $('#btn-playlist-pause').attr('hidden', false);
@@ -405,5 +492,18 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location,
         $('#btn-playlist-pause').attr('hidden', true);
         $('#btn-playlist-play').attr('hidden', false);
     }
+
+    function getRandomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+    const color1 = getRandomColor();
+    const color2 = getRandomColor();
+    $('.background-playlist').css('background', `linear-gradient(to right, ${color1}, ${color2})`);
+
 
 })

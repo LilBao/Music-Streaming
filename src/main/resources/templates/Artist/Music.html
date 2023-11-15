@@ -12,7 +12,7 @@
             </li>
             <li class="nav-item me-3 pb-3">
                 <button class="tab-button-p nav-link" id="click-tab-3" role="tab"
-                    onclick="openTabProfile(event, 'tab3-p')">Playlists</button>
+                    onclick="openTabProfile(event, 'tab3-p')">Project</button>
             </li>
             <li class="nav-item me-3 pb-3">
                 <button class="tab-button-p nav-link" id="click-tab-4" role="tab"
@@ -72,7 +72,7 @@
                                 <td class="align-items-center">
                                     {{item.recordingName}}
                                 </td>
-                                <td class="align-items-center">12,2023</td>
+                                <td class="align-items-center">{{item.listened}}</td>
                                 <td class="align-items-center">{{item.recordingdate | date:'dd/MM/yyyy'}}</td>
                                 <td>
                                     <div class="dropdown">
@@ -152,6 +152,10 @@
                     <div class="modal" id="detail">
                         <div class="modal-dialog">
                             <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Details</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
                                 <!-- Modal body -->
                                 <div class="modal-body py-0">
                                     <div class="row">
@@ -199,7 +203,7 @@
                                                                 <input type="text" class="form-control "
                                                                     id="search-artist" placeholder="Search Artist">
                                                             </div>
-                                                            <div ng-show="search.length >0" class="menu-artist mt-2">
+                                                            <div ng-show="search.length>0" class="menu-artist mt-2">
                                                                 <div ng-click="JoinSongWritter(item)"
                                                                     ng-repeat="item in listArtist | limitTo: 5">
                                                                     <div class="d-flex align-items-center">
@@ -273,11 +277,8 @@
                                                             song.description}}</textarea>
                                                     </div>
                                                     <div class="d-flex justify-content-between">
-                                                        <button class="btn">Elimidate Song</button>
-                                                        <button ng-show="artist.artistId !== song.artistCreate && typeDetail === 'song'"
-                                                            class="btn"
-                                                            ng-click="outSong(song.songId,artist.artistId)">Out
-                                                            Song</button>
+                                                        <button class="btn btn-outline-danger ms-3"
+                                                            ng-click="Elimidate(typeDetail === 'album' ? album.albumId : song.songId,typeDetail)">Elimidate</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -324,6 +325,51 @@
 
             </div>
             <div class="tab-p tab-pane" id="tab3-p">
+                <div class="row">
+                    <div class="col-3" ng-repeat="item in listRecordProject">
+                        <div class="card w-100" style="border: 1px !important">
+                            <div data-bs-toggle="collapse" data-bs-target="#project-{{item.recordingId}}">
+                                <img class="card-img-top rounded-4" src="{{item.song.image.url}}" alt="Card image">
+                            </div>
+                            <div class="card-body p-0">
+                                <h6 class="card-title">{{item.recordingName}}</h6>
+                                <div id="project-{{item.recordingId}}" class="collapse">
+                                    <div class="d-flex">
+                                        <h6 class="me-2" ng-repeat="a in item.song.writters">{{a.artist.artistName}}</h6>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <p>{{item.song.releaseDay | date:'dd/MM/yyyy'}}</p>
+                                        <p>{{item.listened}} listened</p>
+                                    </div>
+                                    <audio class="mt-2" controls src="{{item.audioFileUrl}}"></audio>
+                                    <div class="d-flex justify-content-end">
+                                        <button class="btn border-0" data-bs-toggle="modal" data-bs-target="#out-project-{{item.recordingId}}"><i class="bi bi-door-open"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="out-project-{{item.recordingId}}">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h4 class="modal-title">Out project</h4>
+                                  <button id="btn-out-song-{{item.recordingId}}" type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+
+                                <div class="modal-body d-flex align-items-center">
+                                    <img class="w-50 rounded-4 m-3" src="{{item.song.image.url}}" alt="Card image">
+                                    <h5 class="card-title">{{item.recordingName}}</h5>
+                                </div>
+
+                                <div class="modal-footer">
+                                  <button ng-show="artist.artistId !== item.song.artistCreate" type="button" class="btn btn-outline-dark" ng-click="outSong(item.song.writters,item.song.songId,artist.artistId,item.recordingId)">Yes</button>
+                                </div>
+                          
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                </div>
             </div>
             <div class="tab-p tab-pane" id="tab4-p">
                 <table class="table table-hover">
@@ -333,7 +379,7 @@
                                 <h4>Realease</h4>
                             </th>
                             <th>Playlist pitch</th>
-                            <th>realease day</th>
+                            <th>Realease day</th>
                             <th>
                                 <button class="btn border-0" data-bs-toggle="modal" data-bs-target="#upcoming">
                                     <i class="bi bi-plus-circle"></i>
@@ -341,16 +387,16 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="align-items-center">
                         <tr class="align-items-center" ng-repeat="x in listSongUpcoming">
                             <td class="d-flex align-items-center">
                                 <i class="bi bi-music-note"></i>
                                 <img class="cover-image rounded-4" src="{{x.image.url}}" alt="">
                                 <h6>{{x.songName}}</h6>
                             </td>
-                            <td class="">
-                                <button id="" type="button" ng-click="pitch('song',x.songId)" class="btn btn-primary"
-                                    data-bs-toggle="modal" data-bs-target="#myModal">
+                            <td>
+                                <button id="" type="button" ng-click="pitch('song',x.songId)"
+                                    class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#myModal">
                                     Pitch
                                 </button>
                             </td>
@@ -363,7 +409,7 @@
                                 <h6>{{x.albumName}}</h6>
                             </td>
                             <td class="">
-                                <button type="button" class="btn btn-primary" ng-click="pitch('album',x.albumId)"
+                                <button type="button" class="btn btn-outline-dark" ng-click="pitch('album',x.albumId)"
                                     data-bs-toggle="modal" data-bs-target="#myModal">
                                     Pitch
                                 </button>
@@ -404,8 +450,7 @@
                                 <th>Audio</th>
                                 <th>Uploaded date </th>
                                 <th>
-                                    <button ng-click="resetRecord()" class="btn border-0 p-0" data-bs-toggle="modal"
-                                        data-bs-target="#record">
+                                    <button class="btn border-0">
                                         <i class="bi bi-plus-circle"></i>
                                     </button>
                                 </th>
@@ -459,21 +504,22 @@
                             <div class="col-5">
                                 <input class="form-control" type="file" id="fileAudio">
                             </div>
-                            
+
                             <div class="col-7">
-                                <button class="btn text-white px-4 bg-black rounded-pill" id="btn-generate">Generate</button>
+                                <button class="btn text-white px-4 bg-black rounded-pill"
+                                    id="btn-generate">Generate</button>
                                 <button class="btn text-white px-4 bg-black rounded-pill" id="btn-reset">Reset</button>
                             </div>
-                            
-                        </div>     
+
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
     <!-- The Modal -->
-    <div class="modal" id="myModal">
-        <div class="modal-dialog">
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
@@ -657,5 +703,5 @@
             </div>
         </div>
     </div>
-   
+
 </body>

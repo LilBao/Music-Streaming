@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.rhymthwave.DAO.MonitorDAO;
 import com.rhymthwave.DTO.MessageResponse;
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.Service.MonitorService;
@@ -23,7 +25,7 @@ public class MonitorREST {
 	private final CRUD<Monitor, Long> crudMonitor;
 	
 	private final MonitorService monitorSer;
-	
+		
 	@GetMapping("/api/v1/monitor/{id}")
 	public ResponseEntity<MessageResponse> findMonitorId(@PathVariable("id") Long id){
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudMonitor.findOne(id)));
@@ -41,5 +43,20 @@ public class MonitorREST {
 	@DeleteMapping("/api/v1/monitor/{id}")
 	public ResponseEntity<MessageResponse> deleteMonitor(@PathVariable("id") Long id){
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudMonitor.delete(id)));
+	}
+	
+	@GetMapping("/api/v1/monitor/age")
+	public ResponseEntity<MessageResponse> MonitorAge(@RequestParam("id") Long recordingId, @RequestParam("duration") Integer duration){
+		return ResponseEntity.ok(new MessageResponse(true,"success", monitorSer.resultMonitorAgeRecording(recordingId, duration)));
+	}
+	
+	@GetMapping("/api/v1/monitor/country")
+	public ResponseEntity<MessageResponse> MonitorCountry(@RequestParam("id") Long recordingId, @RequestParam("duration") Integer duration){
+		return ResponseEntity.ok(new MessageResponse(true,"success", monitorSer.resultMonitorCountryRecording(recordingId,duration)));
+	}
+	
+	@GetMapping("/api/v1/monitor/gender")
+	public ResponseEntity<MessageResponse> MonitorGender(@RequestParam("id") Long recordingId, @RequestParam("duration") Integer duration){
+		return ResponseEntity.ok(new MessageResponse(true,"success", monitorSer.resultMonitorGenderRecording(recordingId, duration)));
 	}
 }
