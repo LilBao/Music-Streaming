@@ -30,15 +30,19 @@ public interface RecordDAO extends JpaRepository<Recording, Long> {
 	@Query(value = "SELECT r.* FROM RECORDING r join SONGS s on r.SONGSID = s.SONGSID ORDER BY NEWID()", nativeQuery = true)
 	List<Recording> findListRandom();
 
-	@Query(value = "select top 50 r.* from recording r " + "join songs s on r.songsid = s.songsid "
-			+ "join songgenre sg on r.recordingid = sg.idrecord " + "join genre g on g.id = sg.idgenre "
-			+ "where g.namegenre in (:nameGenre) " + "or r.culture like :culture or r.instrument like :instrument "
+	@Query(value = "select top 50 r.* from recording r "
+			+ "join songs s on r.songsid = s.songsid "
+			+ "join songgenre sg on r.recordingid = sg.idrecord join genre g on g.id = sg.idgenre "
+			+ "where g.namegenre in (:nameGenre) or r.culture like :culture or r.instrument like :instrument "
 			+ "or r.mood like :mood or r.songstyle like :songstyle " 
-			+ "and s.realeaseday < GETDATE() and r.isdeleted = 0" + "ORDER BY NEWID();", nativeQuery = true)
+			+ "and s.realeaseday < GETDATE() and r.isdeleted = 0 "
+			+ "group by r.recordingid, r.audiofileurl,r.culture,r.instrument,r.emailcreate, r.recordingname,r.recordingdate,r.songstyle,r.duration, "
+			+ "r.idmv, r.isdeleted,r.listened,r.lyricsurl,r.mood, r.produce,r.publicidaudiofile,r.publicidlyrics,r.studio,r.versions,r.songsid "
+			+ "ORDER BY NEWID();", nativeQuery = true)
 	List<Recording> findListRecordRandom(@Param("nameGenre") String nameGenre, @Param("culture") String culture,
 			@Param("instrument") String instrument, @Param("mood") String mood, @Param("songstyle") String songstyle);
 
-@Query(value="select top 50 r.* from recording r "
+	@Query(value="select top 50 r.* from recording r "
 			+ "join songs s on r.songsid = s.songsid "
 			+ "join songgenre sg on r.recordingid = sg.idrecord "
 			+ "join genre g on g.id = sg.idgenre "
@@ -46,7 +50,9 @@ public interface RecordDAO extends JpaRepository<Recording, Long> {
 			+ "or r.culture like :culture or r.instrument like :instrument "
 			+ "or r.mood like :mood or r.songstyle like :songstyle "
 			+ "or r.versions like :versions "
-			+ "and s.realeaseday < GETDATE() and r.isdeleted = 0"
+			+ "and s.realeaseday < GETDATE() and r.isdeleted = 0 "
+			+ "group by r.recordingid, r.audiofileurl,r.culture,r.instrument,r.emailcreate, r.recordingname,r.recordingdate,r.songstyle,r.duration, "
+			+ "r.idmv, r.isdeleted,r.listened,r.lyricsurl,r.mood, r.produce,r.publicidaudiofile,r.publicidlyrics,r.studio,r.versions,r.songsid "
 			+ "ORDER BY NEWID();",nativeQuery = true)
 	
 	List<Recording> findListRandomFavorite(@Param("nameGenre") String nameGenre, @Param("culture") String culture

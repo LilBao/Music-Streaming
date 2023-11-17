@@ -1,6 +1,5 @@
 package com.rhymthwave.API;
 
-import java.math.BigDecimal;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,7 +15,6 @@ import com.rhymthwave.Service.Payment.PaymentService;
 import com.rhymthwave.Service.Payment.StripeService;
 import com.rhymthwave.Utilities.GetHostByRequest;
 import com.rhymthwave.entity.payment.Payment;
-import com.stripe.exception.StripeException;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +31,7 @@ public class PaymentREST {
 	private final GetHostByRequest host;
 	
 	@PostMapping("/api/v1/payment-vnpay")
-	public ResponseEntity<Payment> createPaymentVNPay(@RequestParam("total") Integer total,@RequestParam("subcriptionId") Integer subcriptionId,HttpServletRequest req){
+	public ResponseEntity<Payment> createPaymentVNPay(@RequestParam("total") Integer total,@RequestParam("subscriptionId") Integer subcriptionId,HttpServletRequest req){
 		String email = host.getEmailByRequest(req);
 		return ResponseEntity.ok(paymentSer.vnpay(total, email,subcriptionId));
 	}

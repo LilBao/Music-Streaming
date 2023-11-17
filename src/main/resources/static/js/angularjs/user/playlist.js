@@ -478,10 +478,7 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location,
                 showStickyNotification("Create playlist fail", 'danger', 3000);
                 console.log(err);
             })
-           
-
         }
-
     }
 
     //js
