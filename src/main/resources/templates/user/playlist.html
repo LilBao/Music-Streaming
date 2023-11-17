@@ -169,8 +169,10 @@
                                             </ul>
                                         </li>
                                         <li class="li-dropdown-start-end">
-                                            <a class="btn text-white dropdown-item py-2"><i
-                                                    class="bi bi-journal-album"></i> Go to album</a>
+                                            <a href="{{item.episode ? '#!episode/'+item.episode.episodeId : item.recording.tracks.length>0 ? '#!album/'+item.recording.tracks[0].album.albumId : '#!song/'+item.recording.recordingId}}" 
+                                                class="btn text-white dropdown-item py-2">
+                                                <i class="bi bi-journal-album"></i> Go to album
+                                                </a>
                                         </li>
                                         <li class="li-dropdown-start-end" ng-if="item.recordingId">
                                             <a class="btn text-white dropdown-item py-2" data-bs-toggle="modal"

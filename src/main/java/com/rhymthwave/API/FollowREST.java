@@ -80,4 +80,9 @@ public class FollowREST {
 		Integer quantity = followSer.getQuantityFollowByDate(account.getAuthorId(), days);
 		return ResponseEntity.ok(new MessageResponse(true,"success",quantity)); 
 	}
+	
+	@DeleteMapping("/api/v1/unfollow/{id}")
+	public ResponseEntity<MessageResponse> unFollow(@PathVariable("id") Long id){
+		return ResponseEntity.ok(new MessageResponse(true,"success",crudFollow.delete(id)));
+	}
 }

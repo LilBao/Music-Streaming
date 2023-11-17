@@ -80,6 +80,8 @@ type Query {
  findPodcastByEmail(email:String!): [Podcast]
  
  getListSongReleased(email:String!): [Recording]
+ 
+ getListRecordByFavorite(genre: String, culture:String, instrument: String, mood:String, songstyle: String, versions: String): [Recording]
   
 }
 

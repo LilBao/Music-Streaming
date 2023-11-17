@@ -72,6 +72,26 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
         })
     }
 
+    $scope.deleteFollow = function (id) {
+        let url = host + "v1/unfollow/" + id;
+        $.confirm({
+            title: 'Remove from Your library!',
+            content: 'We will remove this profile from Your Library, but you will still \n be able to search for it on Rhythm Wave',
+            buttons: {
+                confirm: function () {
+                    $http.delete(url).then(resp => {
+                        showStickyNotification("Unfollow successfull", 'danger', 3000);
+                    }).catch(err => {
+                        console.log(err);
+                    })
+                },
+                cancel: function () {
+
+                },
+            }
+        });
+    }
+
     $scope.createPlaylist = function () {
         let url = host + "v1/playlist";
         let data = angular.copy(playlist);
@@ -79,7 +99,7 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
             if (resp.data.success === true) {
-                $scope.playlist=resp.data.data;
+                $scope.playlist = resp.data.data;
                 showStickyNotification('Create playlist success', 'success', 2000);
             } else {
                 showStickyNotification(resp.data.data, 'warning', 2000);
@@ -93,11 +113,22 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
 
     $scope.deletePlaylist = function (idPlaylist) {
         let url = host + "v1/playlist/" + idPlaylist;
-        $http.delete(url).then(resp => {
-            showStickyNotification("Delete playlist success", 'success', 3000);
-        }).catch(err => {
-            showStickyNotification("Delete playlist fail", 'danger', 3000);
-        })
+        $.confirm({
+            title: 'Remove from Your library!',
+            content: 'This will delete from Your Library',
+            buttons: {
+                confirm: function () {
+                    $http.delete(url).then(resp => {
+                        showStickyNotification("Delete playlist success", 'success', 3000);
+                    }).catch(err => {
+                        showStickyNotification("Delete playlist fail", 'danger', 3000);
+                    })
+                },
+                cancel: function () {
+
+                },
+            }
+        });
     }
 
     document.getElementById('create-playlist').addEventListener('click', function () {
@@ -127,7 +158,6 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
     var btnWishlist = document.getElementById('btn-wishlist');
     var listHistoryAudio = [];
     volumeAudio.value = audio.volume;
-
 
     $scope.getCurrentAudio = function (id, type) {
         if (type === 'song') {
@@ -230,7 +260,7 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
         currentAudioIndex = audioService.getCurrentAudio();
 
         listHistoryAudio.push(item);
-    
+
         var encryptedData = CryptoJS.AES.encrypt(JSON.stringify(listHistoryAudio), "whoami").toString();
         setCookie("history", encodeURIComponent(encryptedData), 30);
 
@@ -307,7 +337,7 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
                 if (!isNaN(time) && currentTime >= time) {
                     li.style.fontWeight = "bold";
                     li.style.color = "red";
-                    
+
                 } else {
                     li.style.fontWeight = "normal";
                     li.style.color = "white";
@@ -342,7 +372,7 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
             listened++;
             if (listened === (Math.floor($scope.audioItem.duration / 3))) {
                 // if ($scope.audioItem.recordingId) {
-                    $scope.Monitoring();
+                $scope.Monitoring();
                 // } else {
                 //     $scope.Monitoring();
                 // }
@@ -410,22 +440,28 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
                 currentAudioIndex = 0;
                 audioService.setCurrentAudio(currentAudioIndex);
                 var item = audioService.getListPlay()[currentAudioIndex];
-                console.log(item)
-            } else if (currentAudioIndex === (audioService.getListPlay().length - 1)) {
 
-                currentAudioIndex = 0;
-                audioService.setListPlay(queueService.getQueue());
-                audioService.setCurrentAudio(currentAudioIndex);
-                var item = audioService.getListPlay()[currentAudioIndex];
+            } else if (currentAudioIndex === (audioService.getListPlay().length - 1)) {
+                $scope.getRecordByFavorite().then(data => {
+                    currentAudioIndex = 0;
+                    audioService.setListPlay(data.getListRecordByFavorite);
+                    audioService.setCurrentAudio(currentAudioIndex);
+                    var item = audioService.getListPlay()[currentAudioIndex];
+                    $scope.selectAudio(item, 'song', audioService.getListPlay(), currentAudioIndex)
+                })
             } else {
                 currentAudioIndex += 1;
                 audioService.setCurrentAudio(currentAudioIndex);
                 var item = audioService.getListPlay()[currentAudioIndex];
             }
-            if (item.recordingId) {
-                $scope.selectAudio(item, 'song', audioService.getListPlay(), currentAudioIndex)
-            } else {
-                $scope.selectAudio(item, 'episode', audioService.getListPlay(), currentAudioIndex)
+            try {
+                if (item.recordingId) {
+                    $scope.selectAudio(item, 'song', audioService.getListPlay(), currentAudioIndex)
+                } else {
+                    $scope.selectAudio(item, 'episode', audioService.getListPlay(), currentAudioIndex)
+                }
+            } catch (error) {
+                
             }
         }
 
@@ -595,6 +631,55 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
         }).catch(err => {
 
         })
+    }
+
+    $scope.getRecordByFavorite = function () {
+        var genre = "'Rap'";
+        var culture = "";
+        var instrument = "";
+        var mood = "";
+        var songstyle = "";
+        var versions = "";
+        return new Promise((resolve, reject) => {
+            const query = `
+                {
+                    getListRecordByFavorite(
+                        genre: "${genre}"
+                        culture: "${culture}"
+                        instrument:"${instrument}"
+                        mood: "${mood}"
+                        songstyle:"${songstyle}"
+                        versions:"${versions}"
+                      ) {
+                        recordingId
+                        duration
+                        recordingName
+                        audioFileUrl
+                        tracks{
+                            album{
+                                albumId
+                                albumName
+                            }
+                        }
+                        song {
+                            image {
+                                accessId
+                                url
+                            }
+                            writters{
+                                artist{
+                                    artistId
+                                    artistName
+                                }
+                            }
+                        }
+                    }
+                }`;
+
+            graphqlService.executeQuery(query)
+                .then(data => resolve(data))
+                .catch(error => reject(error));
+        });
     }
 
     /*------------------------------*/
@@ -812,22 +897,6 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
         })
     }
 
-    function time(currentTime) {
-        const hours = Math.floor(currentTime / 3600);
-        const minutes = Math.floor((currentTime % 3600) / 60);
-        const seconds = Math.floor((currentTime % 60));
-
-        const hoursStr = hours > 0 ? (hours < 10 ? "0" + hours : hours) : "";
-        const minutesStr = minutes < 10 ? "0" + minutes : minutes;
-        const secondsStr = seconds < 10 ? "0" + seconds : seconds;
-
-        if (hours > 0) {
-            return `${hoursStr}:${minutesStr}:${secondsStr}`;
-        } else {
-            return `${minutesStr}:${secondsStr}`;
-        }
-    }
-
     /*------------------------------*/
     /******************************* */
     /**           Side bar          */
@@ -847,102 +916,115 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
 
     $scope.makePrivate = function (item, isLock) {
         let url = host + "v1/playlist";
-        item.isPublic = isLock;
-        $http.put(url).then(resp => {
-            showStickyNotification('Playlist has been made ' + isLock == true ? 'public' : 'private', 'success', 3000);
+        var data = angular.copy(item);
+        data.isPublic = isLock;
+        $http.put(url, data).then(resp => {
+            showStickyNotification("Playlist has been made " + (isLock === true ? "public" : "private"), "success", 3000);
         }).catch(err => {
             showStickyNotification('', 'success', 3000);
         })
     }
 
-    $scope.addOtherPlaylistOrQueue = function (id, type) {
-        if ($scope.playlistId !== undefined) {
-            const query = `{
-            playlistById(playlistId:`+ id + `){
-                playlistId
-                playlistName
-                isPublic
-                description
-                image {
-                    accessId
-                    url
-                }
-                usertype {
-                    userTypeId
-                    nameType
-                }
-                playlistRecords {
-                    dateAdded
-                    recording {
-                        recordingId
-                        duration
-                        recordingName
-                        audioFileUrl
-                        tracks{
-                            album{
-                                albumId
-                                albumName
+    $scope.getPlaylistById = function (id) {
+        return new Promise((resolve, reject) => {
+            const query = `
+                {
+                    playlistById(playlistId:${id}){
+                        playlistId
+                        playlistName
+                        isPublic
+                        description
+                        image {
+                            accessId
+                            url
+                        }
+                        usertype {
+                            userTypeId
+                            nameType
+                        }
+                        playlistRecords {
+                            playlistRecordingId
+                            dateAdded
+                            recording {
+                                recordingId
+                                duration
+                                recordingName
+                                audioFileUrl
+                                tracks{
+                                    album{
+                                        albumId
+                                        albumName
+                                    }
+                                }
+                                song {
+                                    image {
+                                        url
+                                    }
+                                    writters{
+                                        artist{
+                                            artistName
+                                        }
+                                    }
+                                }
                             }
                         }
-                        song {
-                            image {
-                                url
-                            }
-                            writters{
-                                artist{
-                                artistName
+                        playlistPodcast {
+                            playlistPodcastId
+                            dateAdded
+                            episode {
+                                episodeId
+                                duration
+                                episodeTitle
+                                fileUrl
+                                image{
+                                    url
+                                }
+                                podcast{
+                                    podcastId
+                                    authorName
+                                    podcastName
                                 }
                             }
                         }
                     }
-                }
-                playlistPodcast {
-                dateAdded
-                episode {
-                    episodeId
-                    duration
-                    episodeTitle
-                    fileUrl
-                    image{
+                }`;
 
-                        url
-                    }
-                    podcast{
-                        podcastId
-                        authorName
-                        podcastName
-                    }
-                }
-                }
-            }
-        }`
-            graphqlService.executeQuery(query).then(data => {
-                try {
-                    var listAudioPlaylist = [...data.playlistById.playlistRecords.map(function (item) {
-                        return { recording: item.recording };
-                    }).map(function (item) {
-                        return item.recording;
-                    }), ...data.playlistById.playlistPodcast.map(function (item) {
-                        return { episode: item.episode };
-                    }).map(function (item) {
-                        return item.episode;
-                    })];
+            graphqlService.executeQuery(query)
+                .then(data => resolve(data))
+                .catch(error => reject(error));
+        });
+    }
 
-                    if (type == 'playlist') {
+    $scope.addOtherPlaylistOrQueue = function (idOld, idNew, type) {
+        $scope.getPlaylistById(idOld).then(data => {
+            console.log(data.playlistById)
+            try {
+                var listAudioPlaylist = [...data.playlistById.playlistRecords.map(function (item) {
+                    return { recording: item.recording };
+                }).map(function (item) {
+                    return item.recording;
+                }), ...data.playlistById.playlistPodcast.map(function (item) {
+                    return { episode: item.episode };
+                }).map(function (item) {
+                    return item.episode;
+                })];
+
+                $scope.getPlaylistById(idNew).then(data => {
+                    var value = {};
+                    value.playlist = data.playlistById
+                    if (type === 'playlist') {
                         listAudioPlaylist.forEach(item => {
                             if (item.recordingId) {
                                 var url = host + "v1/playlist-record";
-                                var data = {};
-                                data.recording = item;
-
+                                value.recording = item;
                             } else {
                                 var url = host + "v1/playlist-episode";
-                                var data = {};
-                                data.episode = item;
+                                value.episode = item;
                             }
-                            data.playlist.playlistId = id;
-                            $http.post(url, data).then(resp => {
-                                showStickyNotification('Addition successfull', 'success', 3000);
+                            $http.post(url, value).then(resp => {
+                                console.log(resp.data.data)
+                            }).catch(err => {
+                                console.log(err)
                             })
                         })
                     } else {
@@ -950,26 +1032,24 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
                             queueService.enQueue(item);
                         })
                     }
+                })
+            } catch (error) {
 
-
-                } catch (error) {
-
-                }
-            }).catch(error => {
-                console.log(error);
-            });
-        }
+            }
+        }).catch(error => {
+            console.log(error);
+        });
     }
 
-    $scope.genres="";
-    $scope.cultures="";
-    $scope.instruments="";
-    $scope.moods="";
-    $scope.songstyles="";    
-    $scope.versions="";
-    $scope.categoryInPlaylist=function(id){
-        const query =`{
-            playlistById(playlistId : `+id+`) {
+    $scope.genres = "";
+    $scope.cultures = "";
+    $scope.instruments = "";
+    $scope.moods = "";
+    $scope.songstyles = "";
+    $scope.versions = "";
+    $scope.categoryInPlaylist = function (id) {
+        const query = `{
+            playlistById(playlistId : `+ id + `) {
                 playlistId
                 playlistRecords {
                   recording{
@@ -990,35 +1070,36 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
         graphqlService.executeQuery(query).then(data => {
             data.playlistById.playlistRecords.forEach(item => {
                 item.recording.songGenres.forEach(e => {
-                    if(!$scope.genres.includes(e.genre.nameGenre)){
-                        $scope.genres+=`'`+e.genre.nameGenre+`'`+','
+                    if (!$scope.genres.includes(e.genre.nameGenre)) {
+                        $scope.genres += `'` + e.genre.nameGenre + `'` + ','
                     }
                 });
-                if(!$scope.instruments.includes(item.recording.instrument)){
-                    $scope.instruments =$scope.instruments.trim()+ " "+ item.recording.instrument.trim();
+                if (!$scope.instruments.includes(item.recording.instrument)) {
+                    $scope.instruments = $scope.instruments.trim() + " " + item.recording.instrument.trim();
                 }
-                if(!$scope.moods.includes(item.recording.mood)){
-                    $scope.moods =$scope.moods.trim()+ " "+ item.recording.mood.trim();
+                if (!$scope.moods.includes(item.recording.mood)) {
+                    $scope.moods = $scope.moods.trim() + " " + item.recording.mood.trim();
                 }
-                if(!$scope.songstyles.includes(item.recording.songStyle)){
-                    $scope.songstyles =$scope.songstyles.trim() + " "+ item.recording.songStyle.trim();
+                if (!$scope.songstyles.includes(item.recording.songStyle)) {
+                    $scope.songstyles = $scope.songstyles.trim() + " " + item.recording.songStyle.trim();
                 }
-                if(!$scope.versions.includes(item.recording.versions)){
-                    $scope.versions =$scope.versions.trim() +" "+ item.recording.versions.trim();
+                if (!$scope.versions.includes(item.recording.versions)) {
+                    $scope.versions = $scope.versions.trim() + " " + item.recording.versions.trim();
                 }
-                if(!$scope.cultures.includes(item.recording.culture)){
-                    $scope.cultures =$scope.cultures.trim()+" "+ item.recording.culture.trim();
+                if (!$scope.cultures.includes(item.recording.culture)) {
+                    $scope.cultures = $scope.cultures.trim() + " " + item.recording.culture.trim();
                 }
             })
-            $scope.genres=$scope.genres.slice(0, -1);
+            $scope.genres = $scope.genres.slice(0, -1);
             $scope.instruments = removeDuplicateWords($scope.instruments.trim());
-            $scope.moods= removeDuplicateWords($scope.moods.trim());
-            $scope.songstyles= removeDuplicateWords($scope.songstyles.trim());
-            $scope.versions= removeDuplicateWords($scope.versions.trim());
-            $scope.cultures= removeDuplicateWords($scope.cultures.trim());
+            $scope.moods = removeDuplicateWords($scope.moods.trim());
+            $scope.songstyles = removeDuplicateWords($scope.songstyles.trim());
+            $scope.versions = removeDuplicateWords($scope.versions.trim());
+            $scope.cultures = removeDuplicateWords($scope.cultures.trim());
             $scope.createSimilarPlaylist();
         })
     }
+
     function removeDuplicateWords(inputString) {
         const words = inputString.split(' ');
         const uniqueWords = [...new Set(words)];
@@ -1029,14 +1110,14 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
     $scope.createSimilarPlaylist = function () {
         let url = host + "v1/similar-playlist";
         var data = new FormData();
-        data.append('email',$scope.account.email)
+        data.append('email', $scope.account.email)
         data.append('genre', $scope.genres)
         data.append('culture', $scope.cultures)
         data.append('instrument', $scope.instruments)
         data.append('mood', $scope.moods)
         data.append('songstyle', $scope.songstyles)
         data.append('versions', $scope.versions)
-        $http.post(url,data,{
+        $http.post(url, data, {
             headers: {
                 'Content-Type': undefined,
             },
@@ -1054,4 +1135,66 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
         })
     }
 
+    $scope.createSamePlaylist = function (playlistId) {
+        $scope.getPlaylistById(playlistId).then(data => {
+            console.log(data.playlistById)
+            var item = angular.copy(data.playlistById)
+            item.playlistId = null;
+            item.playlistName += " - Copy";
+            item.isPublic = false;
+            let url = host + "v1/playlist";
+            console.log(item.playlistRecords)
+            $http.post(url, item, {
+                headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+            }).then(resp => {
+                if (resp.data.success === true) {
+                    showStickyNotification("Create playlist fail", 'danger', 3000);
+                } else {
+                    showStickyNotification(resp.data.data, 'warning', 2000);
+                }
+            }).catch(err => {
+                showStickyNotification("Create playlist fail", 'danger', 3000);
+                console.log(err);
+            })
+        }).catch(err => {
+            console.log(err)
+        })
+
+    }
+
+    contextMenu = function (e, menuPlaylistId) {
+        e.preventDefault();
+        const elementMenu = document.getElementById(angular.element(menuPlaylistId).children('.element-menu').attr('id'));
+
+        elementMenu.style.left = `${e.clientX}px`;
+        elementMenu.style.top = '40%';
+        elementMenu.style.zIndex = '1000';
+        elementMenu.style.display = 'block';
+        elementMenu.style.position = 'fixed';
+    };
+
+    addEventListener('click', function (e) {
+        const contextMenus = document.querySelectorAll('.element-menu');
+        contextMenus.forEach((contextMenu) => {
+            if (!contextMenu.contains(e.target)) {
+                contextMenu.style.display = 'none';
+            }
+        });
+    });
+
+    function time(currentTime) {
+        const hours = Math.floor(currentTime / 3600);
+        const minutes = Math.floor((currentTime % 3600) / 60);
+        const seconds = Math.floor((currentTime % 60));
+
+        const hoursStr = hours > 0 ? (hours < 10 ? "0" + hours : hours) : "";
+        const minutesStr = minutes < 10 ? "0" + minutes : minutes;
+        const secondsStr = seconds < 10 ? "0" + seconds : seconds;
+
+        if (hours > 0) {
+            return `${hoursStr}:${minutesStr}:${secondsStr}`;
+        } else {
+            return `${minutesStr}:${secondsStr}`;
+        }
+    }
 })
