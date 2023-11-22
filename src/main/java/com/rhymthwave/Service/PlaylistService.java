@@ -13,4 +13,8 @@ public interface PlaylistService {
 	Playlist createSimilarPodcast(Playlist playlist,List<Recording> list);
 	
 	List<Playlist> findPublicPlaylist(UserType userType, Boolean isPublic);
+	
+	List<Playlist> findPlaylistFeaturingArtist(Long artistId, List<Integer> roleId);
+
+	List<Playlist> findDiscoverArtist(Long artistId, List<Integer> roleId);
 }

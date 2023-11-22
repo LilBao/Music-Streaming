@@ -24,41 +24,44 @@ public class Subscription implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "SUBCRIPTIONID")
 	private Integer subscriptionId;
-	
+
 	@Column(name = "SUBCRIPTIONTYPE",columnDefinition = "nvarchar(50)")
 	private String subscriptionType;
 
 	@Column(name = "SUBCRIPTIONCATEGORY",columnDefinition = "nvarchar(50)")
 	@Enumerated(EnumType.STRING)
 	private ESubscription subscriptionCategory;
-	
+
 	@Column(name = "PRICE",columnDefinition = "Float")
 	private Float price;
-	
+
 	@Column(name = "DESCRIPTION",columnDefinition = "nvarchar(max)")
 	private String description;
-	
+
 	@Column(name = "ACTIVE")
 	private Boolean active;
-	
+
 	@Column(name = "PRDSTRIPEID")
 	private String prdStripeId;
-	
+
 	@Column(name = "PRDPAYPALID")
 	private String prdPaypalId;
-	
+
 	@Column(name = "CREATEDATE")
 	private Date createDate;
-	
+
 	@Column(name = "DURATION")
 	private Integer duration;
-	
+
+	@Column(name = "PRIORITY")
+	private Integer priority;
+
 	@Column(name = "PLAYLISTALLOW")
 	private Integer playlistAllow;
-	
+
 	@Column(name = "NIP")
 	private Integer nip;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "subscription", cascade = CascadeType.REFRESH)
 	private List<UserType> userTypes;
@@ -67,4 +70,3 @@ public class Subscription implements Serializable {
 	@OneToMany(mappedBy = "subscription", cascade = CascadeType.ALL)
 	private List<Advertisement> advertisement;
 }
-

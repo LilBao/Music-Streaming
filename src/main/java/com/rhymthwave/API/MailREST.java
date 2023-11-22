@@ -42,7 +42,7 @@ public class MailREST {
 		Email mail = new Email();
 		mail.setTo(owner);
 		mail.setSubject("RTHYMEWAVE: CONFIRM YOUR REQUEST");
-		mail.setBody(sendMailTemplateSer.getContentForConfirm(owner, "templateMail", "podcast", applicationUrl(req,"/request-email-artist")));
+		mail.setBody(sendMailTemplateSer.getContentForConfirm(owner, "templateRoleArtist", "podcast", ""));
 		mailService.enqueue(mail);
 		return ResponseEntity.ok(new MessageResponse(true, "succeess", mail));
 	}

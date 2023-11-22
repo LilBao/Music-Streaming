@@ -22,7 +22,9 @@ app.controller('subscriptionCtrl', function ($scope, $http, $routeParams) {
 
     $scope.findAllSubscription = function(){
         var url = host + "/v1/subscription"
-        $http.get(url).then(resp => {
+        $http.get(url,{
+            params: {cate: "ACCOUNT"}
+        }).then(resp => {
             $scope.listSubscription=resp.data.data;
         }).catch(err => {
             console.log(err)

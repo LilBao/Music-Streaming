@@ -65,4 +65,19 @@ public interface RecordDAO extends JpaRepository<Recording, Long> {
 			+ "join artist a on a.artistid = w.artistid "
 			+ "where a.artistid= :artistid and a.artistid != songs.artistcreate",nativeQuery = true)
 	List<Recording> getMyProject(@Param("artistid") Long artistid);
+	
+	@Query(value="select r.* from recording r "
+			+ "join songs s on s.songsid = r.songsid "
+			+ "join writter w on w.songsid = r.songsid "
+			+ "join artist a on a.artistid=w.artistid "
+			+ "where a.artistid = :artistId and s.realeaseday < GETDATE() and r.isdeleted = 0 "
+			+ "order by r.listened desc",nativeQuery = true)
+	List<Recording> findListPopularByArtist(@Param("artistId") Long artistId);
+	
+	@Query(value="select RECORDING.* from RECORDING "
+			+ "join SONGS on RECORDING.SONGSID = SONGS.SONGSID "
+			+ "join writter w on w.songsid = songs.songsid "
+			+ "join artist a on a.artistid = w.artistid "
+			+ "where a.artistid= :artistid and a.artistid != songs.artistcreate and songs.realeaseday < GETDATE() and RECORDING.isdeleted = 0",nativeQuery = true)
+	List<Recording> findListAppearOn(@Param("artistid") Long artistid);
 }

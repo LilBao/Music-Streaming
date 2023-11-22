@@ -83,6 +83,15 @@ type Query {
  getListSongReleased(email:String!): [Recording]
  
  getListRecordByFavorite(genre: String, culture:String, instrument: String, mood:String, songstyle: String, versions: String): [Recording]
+ 
+ findListPopularByArtist(artistId: Int!): [Recording]
+ 
+ findListArtistFanLiked(accountFan: [Int], idRole: Int, country: String): [Author]
+ 
+ findPlaylistFeaturingByArtist(artistId: Int, roleId: [Int]): [Playlist]
+ 
+ findPlaylistDiscoverByArtist(artistId: Int, roleId: [Int]): [Playlist]
   
+ findRecordingAppearOnByArtist(artistId: Int): [Recording]
 }
 

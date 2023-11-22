@@ -101,5 +101,16 @@ public class RecordServiceImpl implements RecordService, CRUD<Recording, Long>{
 		List<Recording> listRecord = dao.getMyProject(artistid);
 		return listRecord;
 	}
+
+	@Override
+	public List<Recording> findListPopularByArtist(Long artistId) {
+		return dao.findListPopularByArtist(artistId);
+	}
+
+	@Override
+	public List<Recording> findAppearOn(Long artistId) {
+		return dao.findListAppearOn(artistId);
+	}
+	
 	
 }

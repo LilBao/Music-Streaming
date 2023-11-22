@@ -84,6 +84,16 @@ public class PlaylistServiceImpl implements PlaylistService, CRUD<Playlist, Long
 	public List<Playlist> findPublicPlaylist(UserType userType, Boolean isPublic) {
 		return dao.findByUsertypeAndIsPublic(userType, isPublic);
 	}
+
+	@Override
+	public List<Playlist> findPlaylistFeaturingArtist(Long artistId, List<Integer> roleId) {
+		return dao.findPlaylistFeaturingByArtist(artistId, roleId);
+	}
+
+	@Override
+	public List<Playlist> findDiscoverArtist(Long artistId, List<Integer> roleId) {
+		return dao.findPlaylistDiscoverByArtist(artistId, roleId);
+	}
 	
 	
 }

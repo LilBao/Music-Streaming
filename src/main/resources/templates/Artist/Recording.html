@@ -4,7 +4,7 @@
             <div class="modal-content">
     
                 <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button id="btn-close-upload-record" type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
     
                 <div class="modal-body">
@@ -19,11 +19,11 @@
                                 <div class=" my-3">
                                     <label for="">Record name</label>
                                     <input ng-model="record.name" class="form-control" type="text" name="" id=""
-                                        placeholder="Name">
+                                        placeholder="Name" required>
                                 </div>
                                 <div class=" my-3">
                                     <label for="">File record</label>
-                                    <input ng-click="selectFileRecord('records')" class="form-control" type="file" id="records" >
+                                    <input ng-click="selectFileRecord('records')" class="form-control" type="file" id="records" required>
                                 </div>
                                 <div class=" my-3">
                                     <label for="">File lyrics</label>
@@ -71,7 +71,7 @@
                                 <div class="mt-4">
                                     <h6>Choose up to 3 moods. (Optional)</h6>
                                     <div class="list-tag">
-                                        <div ng-repeat="item in moods  track by $index" class="checkbox">
+                                        <div ng-repeat="item in moods track by $index" class="checkbox">
                                             <input type="checkbox" name="mood" id="" value="{{item.moodname}}" />
                                             <div class="box">
                                                 <p>{{item.moodname}}</p>

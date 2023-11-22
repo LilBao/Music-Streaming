@@ -48,8 +48,11 @@ public class Advertisement implements Serializable {
     @Column(name = "BUDGET")
     private float budget;
 
+    @Column(name = "ACTIVE")
+    private Boolean active;
+
     @Column(name = "STATUS")
-    private Boolean status;
+    private Integer status;
 
     @Column(name = "TARGETAUDIENCE", columnDefinition = "nvarchar(55)")
     private String targetAudience;
