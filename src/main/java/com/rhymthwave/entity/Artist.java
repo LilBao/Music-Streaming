@@ -63,11 +63,15 @@ public class Artist implements Serializable {
 	@Column(name = "SOCIALMEDIALINKS",columnDefinition = "nvarchar(max)")
 	private String[] socialMediaLinks;
 
-	@Column(name = "ACTIVE",columnDefinition = "nvarchar(55)")
-	private String active;
+	@Column(name = "ACTIVE")
+	private Boolean active;
 
 	@Column(name = "VERIFY")
 	private Boolean isVerify;
+	
+	@Column(name="EXPIREPERMISSION")
+	@Temporal(TemporalType.DATE)
+	private Date expirePermission;
 
 	@Column(name = "DATESTARTED")
 	@Temporal(TemporalType.DATE)

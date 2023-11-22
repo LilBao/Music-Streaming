@@ -34,4 +34,9 @@ public class FollowGraphQL {
 		}
 		return null;
 	}
+	
+	@QueryMapping("findListArtistFanLiked")
+	public List<Author> findListArtistFanLiked(@Argument("accountFan") List<Long> accountFan, @Argument("idRole") Integer idRole,@Argument("country") String country){
+		return followSer.getListArtistFanLiked(accountFan, idRole, country);
+	}
 }

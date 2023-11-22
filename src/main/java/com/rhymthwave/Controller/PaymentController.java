@@ -8,13 +8,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.paypal.core.PayPalHttpClient;
 import com.paypal.http.HttpResponse;
+import com.paypal.orders.Capture;
 import com.paypal.orders.Order;
 import com.paypal.orders.OrdersCaptureRequest;
+import com.paypal.orders.OrdersGetRequest;
+import com.paypal.orders.PurchaseUnit;
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.Service.UserTypeService;
 import com.rhymthwave.Service.Payment.PaymentService;
+import com.rhymthwave.Utilities.Cookie.CookiesUntils;
 import com.rhymthwave.entity.UserType;
+import com.stripe.exception.StripeException;
+import com.stripe.model.checkout.Session;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -27,8 +36,8 @@ public class PaymentController {
 
 	private final UserTypeService usertypeSer;
 	
-	private final PayPalHttpClient payPalHttpClient;
-
+	private final CookiesUntils cookie;
+	
 	@GetMapping("/payment")
 	public String completedPayment() {
 		return "User/pay";
@@ -40,33 +49,24 @@ public class PaymentController {
 	}
 
 	@GetMapping("/complete-payment-vnpay")
-	public String completePaymentVNPay(@RequestParam("subcriptionId") Integer subcriptionId, @RequestParam("email") String email) {
+	public String completePaymentVNPay(@RequestParam("subcriptionId") Integer subcriptionId,
+			@RequestParam("email") String email) {
 		crudUserType.create(usertypeSer.generateEntity(email, subcriptionId, 1));
 		return "redirect:/payment";
 	}
 
 	@GetMapping("/complete-payment-paypal")
-	public String completePayment(@RequestParam("token") String token, @RequestParam("email") String email,@RequestParam("total") Float total,
-			@RequestParam("PayerID") String PayerID, @RequestParam("subcriptionId") Integer subscriptionId) {
-		try {
-			OrdersCaptureRequest request = new OrdersCaptureRequest(paymentSer.paypal(token).getToken());
-			request.requestBody("{\"payer_id\": \"" + PayerID + "\"}");
-			HttpResponse<Order> captureResponse = captureResponse = payPalHttpClient.execute(request);
-			Order capturedOrder = captureResponse.result();
-			crudUserType.create(usertypeSer.generateEntity(email, subscriptionId, 1));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
+	public String completePayment(@RequestParam("token") String token, @RequestParam("email") String email,
+			@RequestParam("total") Float total, @RequestParam("PayerID") String PayerID,
+			@RequestParam("subcriptionId") Integer subscriptionId) {
+		Order order = paymentSer.billing(token);
+		crudUserType.create(usertypeSer.generateEntity(email, subscriptionId, 1));
 		return "redirect:/payment";
 	}
 
 	@GetMapping("/completed-payment-stripe")
-	public String completePayment(@RequestParam("subscription") Integer subscriptionId,@RequestParam("email") String email
-							,@RequestParam("total") Float total) {
+	public String completePayment(@RequestParam("subscription") Integer subscriptionId,
+			@RequestParam("email") String email, @RequestParam("total") Float total,HttpServletRequest req) {
 		crudUserType.create(usertypeSer.generateEntity(email, subscriptionId, 1));
 		return "redirect:/payment";
 	}

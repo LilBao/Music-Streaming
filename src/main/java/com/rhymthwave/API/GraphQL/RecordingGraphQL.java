@@ -56,4 +56,14 @@ public class RecordingGraphQL {
 			@Argument("versions") Optional<String> versions){
 		return recordSer.findListRandomFavorite(genre.orElse("''"), culture.orElse(""), instrument.orElse(""), mood.orElse(""), songstyle.orElse(""), versions.orElse(""));
 	}
+	
+	@QueryMapping("findListPopularByArtist")
+	public List<Recording> findListPopularByArtist(@Argument("artistId") Long artist){
+		return recordSer.findListPopularByArtist(artist);
+	}
+	
+	@QueryMapping("findRecordingAppearOnByArtist")
+	public List<Recording> findAppearOnByArtist(@Argument("artistId") Long artist){
+		return recordSer.findAppearOn(artist);
+	}
 }
