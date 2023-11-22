@@ -204,10 +204,19 @@ footer {
 .bl-option-search-box{
   padding-left: 5px;
 }
-.bl-option-search-box a>button{
-  background-color: rgba(26, 25, 25, 0.7);
-  color: rgb(255, 255, 255);
-  border: none;
+.bl-option-search-box a{
+  background-color: rgba(26, 25, 25, 0.7) !important;
+  color: rgb(255, 255, 255) !important;
+  border: none !important;
+  border-radius: 500px;
+  width: auto;
+  padding: 4px 10px;
+  cursor: pointer;
+}
+.bl-option-search-box .active{
+  background-color: white !important;
+  color: black !important;
+  border: none !important;
   border-radius: 500px;
   width: auto;
   padding: 4px 10px;

@@ -86,11 +86,11 @@ public class StripeService {
 	}
 	
 	//phải tạo product trên stripe
-	public Payment checkoutPayment(SubscriptionDTO subscription,String email,HttpServletRequest req){
+	public Payment checkoutPayment(SubscriptionDTO subscription,String email,HttpServletRequest req, String pathReturn, String pathCancel){
 		try {
 			SessionCreateParams params = SessionCreateParams.builder().setMode(SessionCreateParams.Mode.PAYMENT)
-					.setSuccessUrl(applicationUrl(req, "/completed-payment-stripe?subscription="+subscription.getSubscriptionId()+"&email="+email))
-					.setCancelUrl(applicationUrl(req, "/cancelled-payment-stripe"))
+					.setSuccessUrl(applicationUrl(req, pathReturn))
+					.setCancelUrl(applicationUrl(req, pathCancel))
 					.addLineItem(SessionCreateParams.LineItem.builder().setQuantity(1L)
 					.setPrice(subscription.getPrdStripeId()).build())
 					.build();

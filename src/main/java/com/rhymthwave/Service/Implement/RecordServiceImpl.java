@@ -93,7 +93,7 @@ public class RecordServiceImpl implements RecordService, CRUD<Recording, Long>{
 	@Override
 	public List<Recording> findListRandomFavorite(String nameGenre, String culture, String instrument, String mood,
 			String songstyle, String versions) {
-		return dao.findListRandomFavorite(nameGenre, "%"+culture+"%", "%"+instrument+"%","%"+mood+"%", "%"+songstyle+"%", versions+"%");
+		return dao.findListRandomFavorite(nameGenre, "%"+culture+"%", "%"+instrument+"%","%"+mood+"%", "%"+songstyle+"%", "%"+versions+"%");
 	}
 	
 	@Override

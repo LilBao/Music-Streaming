@@ -37,7 +37,7 @@ public class PaymentServiceImpl implements PaymentService{
 	
 
 	@Override
-	public Payment createPaypal(BigDecimal fee,Integer subscription, String email ,HttpServletRequest req, String pathReturn, String pathCancel) {
+	public Payment createPaypal(Float fee,Integer subscription, String email ,HttpServletRequest req, String pathReturn, String pathCancel) {
 		return paypalSer.createPayment(fee,subscription,email ,req, pathReturn, pathCancel);
 	}
 
@@ -61,8 +61,8 @@ public class PaymentServiceImpl implements PaymentService{
 
 
 	@Override
-	public Payment checkoutStripe(SubscriptionDTO subscription, String email, HttpServletRequest req) {
-		return stripeSer.checkoutPayment(subscription, email, req);
+	public Payment checkoutStripe(SubscriptionDTO subscription, String email, HttpServletRequest req,String pathReturn, String pathCancel) {
+		return stripeSer.checkoutPayment(subscription, email, req,pathReturn,pathCancel);
 	}
 	
 }

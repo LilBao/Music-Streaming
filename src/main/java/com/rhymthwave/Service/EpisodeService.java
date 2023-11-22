@@ -12,4 +12,6 @@ public interface EpisodeService{
 	List<Episode> findAllEpisodeByPodcast(Long podcastId, Boolean status);
 	
 	Episode findLatestEpisodeByPodcast(Long podcastId);
+	
+	List<Episode> findByName(String keyword);
 }
