@@ -33,8 +33,8 @@ select playlists.* from usertype
 
 select top 10  episodes.* from podcast 
 						left join tags on podcast.category = tags.tagid
-						join  episodes on podcast.podcastid = episodes.podcastid
-					where tags.tagid in (8,16) and episodes.ispublic = 1 
+						left join  episodes on podcast.podcastid = episodes.podcastid
+					where tags.nametag in ('Relationships')
+					and episodes.ispublic = 1  and episodes.publishdate < GETDATE()
 					ORDER BY NEWID()
 					
-select * from tags where tagid in (2,16)

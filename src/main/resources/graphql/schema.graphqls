@@ -50,7 +50,8 @@ type Query {
  getAllTag:[Tag]
  getAllPlaylist:[Playlist]
  getAllPodcastPlaylist:[Playlist]
- 
+ getPlayListById(idPlaylist: Int):Playlist
+
  
  #VanBao
  recordingById(recordingId: ID!):Recording

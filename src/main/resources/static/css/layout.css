@@ -245,6 +245,23 @@ nav.animated {
     background-color: var(--second-color);
 }
 
+
+/* CSS RUN SONG MENU LEFT */
+.nav-song{
+    width: 240px;
+    background: var(--white-color);
+}
+.nav-song.hide {
+    width: 0;
+    transition: .7s;
+}
+.navbar-brand.hide{
+    visibility: hidden ;
+    width: 0;
+    transition: .7s;
+}
+
+
 ul#sidebar {
     margin: 0;
     padding: 0;

@@ -17,8 +17,12 @@ $(document).ready(function(){
     $("#toggleSidebar").click(function(){
         $(".left-menu").toggleClass("hide");
         $(".content-wrapper").toggleClass("hide");
-
+        $(".nav-song").toggleClass("hide");
+        $(".hasd").toggleClass("hide");
+        $(".navbar-brand").toggleClass("hide");
     });
 });
+
+
 
 // ============ upload anh blog ==================

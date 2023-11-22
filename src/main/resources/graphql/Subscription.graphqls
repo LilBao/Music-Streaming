@@ -4,6 +4,7 @@
 type Subscription{
 	subscriptionId: ID
 	subscriptionType: String
+	subscriptionCategory: String
 	price: Float
 	description: String
 	prdStripeId: String
