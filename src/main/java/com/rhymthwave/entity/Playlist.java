@@ -44,7 +44,7 @@ public class Playlist implements Serializable {
 	@Column(name = "ISPUBLIC")
 	private Boolean isPublic;
 
-	@Column(name = "DESCRIPTION",columnDefinition = "varchar(255)")
+	@Column(name = "DESCRIPTION",columnDefinition = "nvarchar(255)")
 	private String description;
 	
 	

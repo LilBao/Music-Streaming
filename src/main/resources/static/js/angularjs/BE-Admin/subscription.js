@@ -16,7 +16,8 @@ app.controller("subscriptionController", function (graphqlService, $scope, $http
     $scope.createSubscription = () => {
         let item = angular.copy($scope.form);
         $http.post(apiSubscription, item).then(resp => {
-
+            $scope.resetFrom();
+            $scope.getAllSubscription();
             showStickyNotification("successful", "success", 2000);
 
         }).catch(error => {
@@ -61,7 +62,7 @@ app.controller("subscriptionController", function (graphqlService, $scope, $http
         $http.put(apiSubscription, item).then(resp => {
 
             showStickyNotification("successful", "success", 2000);
-
+            $scope.getAllSubscription();
         }).catch(error => {
             showStickyNotification("Create subscription fail", "danger", 2000);
         })
@@ -72,10 +73,12 @@ app.controller("subscriptionController", function (graphqlService, $scope, $http
             totalSubscriptionsUsing {
               subscriptionId
               subscriptionType
+              subscriptionCategory
               price
               description
               playlistAllow
               nip
+              duration
               userTypes {
                 userTypeId
               }

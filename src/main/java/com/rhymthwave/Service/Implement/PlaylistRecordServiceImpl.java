@@ -46,7 +46,7 @@ public class PlaylistRecordServiceImpl implements CRUD<PlaylistRecord, Long>{
 
 	@Override
 	public PlaylistRecord findOne(Long key) {
-		return dao.findById(key).get();
+		return dao.findById(key).orElse(null);
 	}
 
 	@Override
