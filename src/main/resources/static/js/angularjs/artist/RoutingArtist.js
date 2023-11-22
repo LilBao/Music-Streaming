@@ -16,6 +16,10 @@ app.config(function($routeProvider) {
     templateUrl : "Audience.html",
     controller: "analysisCtrl",
   })
+  .when("/artist-marketing", {
+    templateUrl : "Marketing.html",
+    controller :"marketingCtrl"
+  })
   .when("/artist-profile", {
     templateUrl : "Profile.html",
     controller :"profileArtistCtrl"

@@ -1,5 +1,7 @@
 package com.rhymthwave.entity;
 
+import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,6 +25,9 @@ public class Payment {
 
     @Column(name = "paymentType",columnDefinition = "nvarchar(100)")
     private String paymentType;
+    
+    @Column(name = "CREATEDATE")
+    private Date CREATEDATE=new Date();
 
     @JsonIgnore
     @ManyToOne

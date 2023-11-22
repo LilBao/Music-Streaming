@@ -14,9 +14,11 @@ import com.paypal.orders.OrdersCaptureRequest;
 import com.paypal.orders.OrdersGetRequest;
 import com.paypal.orders.PurchaseUnit;
 import com.rhymthwave.Service.CRUD;
+import com.rhymthwave.Service.HistoryPaymentService;
 import com.rhymthwave.Service.UserTypeService;
 import com.rhymthwave.Service.Payment.PaymentService;
 import com.rhymthwave.Utilities.Cookie.CookiesUntils;
+import com.rhymthwave.entity.Payment;
 import com.rhymthwave.entity.UserType;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
@@ -36,7 +38,9 @@ public class PaymentController {
 
 	private final UserTypeService usertypeSer;
 	
-	private final CookiesUntils cookie;
+	private final CRUD<Payment, Long> crudPayment;
+	
+	private final HistoryPaymentService historyPayment;
 	
 	@GetMapping("/payment")
 	public String completedPayment() {
@@ -49,25 +53,28 @@ public class PaymentController {
 	}
 
 	@GetMapping("/complete-payment-vnpay")
-	public String completePaymentVNPay(@RequestParam("subcriptionId") Integer subcriptionId,
+	public String completePaymentVNPay(@RequestParam("subcriptionId") Integer subcriptionId,@RequestParam("paymentName") String paymentName,
 			@RequestParam("email") String email) {
 		crudUserType.create(usertypeSer.generateEntity(email, subcriptionId, 1));
+		crudPayment.create(historyPayment.payment(email, subcriptionId, paymentName));
 		return "redirect:/payment";
 	}
 
 	@GetMapping("/complete-payment-paypal")
-	public String completePayment(@RequestParam("token") String token, @RequestParam("email") String email,
+	public String completePayment(@RequestParam("token") String token, @RequestParam("email") String email,@RequestParam("paymentName") String paymentName,
 			@RequestParam("total") Float total, @RequestParam("PayerID") String PayerID,
 			@RequestParam("subcriptionId") Integer subscriptionId) {
 		Order order = paymentSer.billing(token);
 		crudUserType.create(usertypeSer.generateEntity(email, subscriptionId, 1));
+		crudPayment.create(historyPayment.payment(email, subscriptionId, paymentName));
 		return "redirect:/payment";
 	}
 
 	@GetMapping("/completed-payment-stripe")
-	public String completePayment(@RequestParam("subscription") Integer subscriptionId,
+	public String completePayment(@RequestParam("subscription") Integer subscriptionId,@RequestParam("paymentName") String paymentName,
 			@RequestParam("email") String email, @RequestParam("total") Float total,HttpServletRequest req) {
 		crudUserType.create(usertypeSer.generateEntity(email, subscriptionId, 1));
+		crudPayment.create(historyPayment.payment(email, subscriptionId, paymentName));
 		return "redirect:/payment";
 	}
 }

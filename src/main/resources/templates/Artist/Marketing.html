@@ -1,0 +1,95 @@
+<body ng-controller="marketingCtrl">   
+    <div>
+        <h1>Marketing</h1>
+        <div class="d-flex justify-content-between">
+            <div class="input-group w-25">
+                <span class="input-group-text "><i class="bi bi-search"></i></span>
+                <input type="text" class=" form-control" placeholder="search">
+            </div>
+            <div class="dropdown">
+                <button type="button options" class="btn dropdown-toggle" data-bs-toggle="dropdown">
+                    Last 24 hours
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Last 1 month</a></li>
+                    <li><a class="dropdown-item" href="#">Last 6 months</a></li>
+                    <li><a class="dropdown-item" href="#">Last 1 years</a></li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>
+                            Name Record
+                        </th>
+                        <th>Listeners</th>
+                        <th>Uploaded date </th>
+                        <th>
+                            <button ng-click="resetRecord()" id="btn-upload-record" class="btn border-0 p-0" data-bs-toggle="modal"
+                                data-bs-target="#record">
+                                <i class="bi bi-plus-circle"></i>
+                            </button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in listRecord" class="align-items-start">
+                        <td>{{$index+1}}
+                            <i ng-if="item.song ==null" class="ms-1 bi bi-filetype-raw"></i>
+                            <i ng-if="item.song !=null" class="ms-1 bi bi-file-music"></i>
+                        </td>
+                        <td class="align-items-center">
+                            {{item.recordingName}}
+                        </td>
+                        <td class="align-items-center">{{item.listened}}</td>
+                        <td class="align-items-center">{{item.recordingdate | date:'dd/MM/yyyy'}}</td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="p-0 btn border-0 align-items-center" data-bs-toggle="dropdown">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a ng-click="getRecordDetail(item.recordingId)" data-bs-toggle="modal"
+                                            data-bs-target="#recordDetail" class="dropdown-item">Review</a>
+                                    </li>
+                                    <li><a ng-show="item.song ==null" ng-click="changeTab()"
+                                            class="dropdown-item">Pitch</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#marketing">
+            Open modal
+          </button>
+        <div class="modal" id="marketing">
+            <div class="modal-dialog">
+              <div class="modal-content">
+          
+                <!-- Modal Header -->
+                <div class="modal-header">
+                  <h4 class="modal-title">Modal Heading</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+          
+                <!-- Modal body -->
+                <div class="modal-body">
+                  Modal body..
+                </div>
+          
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+          
+              </div>
+            </div>
+          </div>
+    </div>
+</body>
