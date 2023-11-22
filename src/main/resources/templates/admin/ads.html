@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
- 
+
 
 <body>
    <div class="content-wrapper">
@@ -14,7 +14,6 @@
 
                <div class="col-12 col-md-12 col-lg-12">
 
-                
 
                   <div class="row">
                      <div class="col-md-12">
@@ -26,56 +25,325 @@
                            </div>
                            <div class="iq-card-body ">
 
-                              <div class="row">
-                             <div>
-                              <style>.custab{
-                                 border: 1px solid #ccc;
-                                 padding: 5px;
-                                 margin: 5% 0;
-                                 box-shadow: 3px 3px 2px #ccc;
-                                 transition: 0.5s;
-                                 }
-                             .custab:hover{
-                                 box-shadow: 3px 3px 0px transparent;
-                                 transition: 0.5s;
-                                 }</style>
-                             </div>
-                           
-                                 <div class="container">
-                                    <div class="row col-md-offset-2 custyle">
-                                    <table class="table table-striped custab">
-                                    <thead>
-                                    <a href="#" class="btn btn-primary btn-xs pull-right"><b>+</b> Add new categories</a>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Title</th>
-                                            <th>Parent ID</th>
-                                            <th class="text-center">Action</th>
-                                        </tr>
-                                    </thead>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>News</td>
-                                                <td>News Cate</td>
-                                                <td class="text-center"><a class='btn btn-info btn-xs' href="#"><span class="bi bi-pencil-square"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="bi bi-trash3"></span> Del</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Products</td>
-                                                <td>Main Products</td>
-                                                <td class="text-center"><a class='btn btn-info btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Blogs</td>
-                                                <td>Parent Blogs</td>
-                                                <td class="text-center"><a class='btn btn-info btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
-                                            </tr>
-                                    </table>
+                              <!-- START FILTER ADS -->
+
+                              <div class="row mb-1 border-bottom pb-3">
+
+                                 <div class="col-md-8 filter-ads d-flex">
+                                    <div class="form col-5 mx-2">
+                                       <i class="fa fa-search"></i>
+                                       <input type="text" class="form-control form-input" placeholder="Search">
+
                                     </div>
-                                </div>
+
+                                    <div class=" col-5 mx-2">
+                                       <select class="form-select" style="font-size: 16px;">
+                                          <option value="1">Running</option>
+                                          <option value="2">Completed</option>
+                                       </select>
+                                    </div>
+
+                                    <div class="col-2 pt-1">
+                                    
+                                       <a href="" class=" d-inline text-primary" type="reset" >Remove</a>
+                                    </div>
+                                 </div>
                               </div>
-                              
+
+                              <!-- END FILTER ADS -->
+
+                              <div class="row">
+
+                                 <div class="container">
+                                    <div class="table-responsive">
+                                       <table class="table table-hover">
+                                          <thead>
+                                             <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Advertisement</th>
+                                                <th scope="col">Clicked</th>
+                                                <th scope="col">Listened</th>
+                                                <th scope="col">Budget</th>
+                                                <th scope="col"></th>
+                                             </tr>
+                                          </thead>
+                                          <tbody>
+                                             <tr class="align-middle">
+                                                <th>1</th>
+                                                <td>
+                                                   <div>
+                                                      <img class=" rounded img-fluid " src="../../static/img/ab1.webp"
+                                                         alt="img" style="width: 10%;">
+                                                      <span>title</span>
+                                                      <span class="badge rounded-pill text-bg-warning">running</span>
+                                                   </div>
+
+                                                </td>
+                                                <td>Otto</td>
+                                                <td>@mdo</td>
+                                                <td>@Budget</td>
+                                                <td> <button class="btn btn-secondary" type="button"
+                                                      data-bs-toggle="modal" data-bs-target="#adsModal">See
+                                                      results</button> </td>
+
+                                                <!-- START  MODAL ADS DETAIL -->
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="adsModal" tabindex="-1"
+                                                   aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                   <div class="modal-dialog modal-dialog-scrollable modal-xl">
+                                                      <div class="modal-content">
+                                                         <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">See
+                                                               results</h1>
+
+                                                            <button type="button" class="btn-close"
+                                                               data-bs-dismiss="modal" aria-label="Close"></button>
+                                                         </div>
+                                                         <div class="modal-body bg-body-secondary">
+                                                            <div class="row">
+                                                               <div class="col-md-6">
+                                                                  <div
+                                                                     class="shadow-sm p-3 mb-5 bg-body-tertiary rounded "
+                                                                     style="margin-bottom: 10px !important;">
+                                                                     <div class="row">
+                                                                        <h6>Effective</h6>
+                                                                        <div class="col-md-12">
+                                                                          <div class="container mt-2">
+                                                                              <div class="row">
+
+                                                                                 <div class="col-md-6">
+
+                                                                                       <div class="rounded p-3 mb-2 lh-lg d-flex justify-content-between align-items-center" style="min-height: 40px; background-color: rgb(234, 234, 234);">
+                                                                                           <b>Cuộc trò chuyện bắt đầu qua tin nhắn</b>
+                                                                                           <span style="font-size: 20px; font-weight: 600;">123</span>
+                                                                                        </div>
+                                                                                       <div class="rounded p-3 mb-2 lh-lg d-flex justify-content-between align-items-center" style="min-height: 40px; background-color: rgb(234, 234, 234);">
+                                                                                          <b>Người tiếp cận </b>
+                                                                                          <span style="font-size: 20px; font-weight: 600;">123</span>
+                                                                                      </div>
+                                                                                 </div>
+
+                                                                                 <div class="col-md-6 ">
+                                                                                    <div class="rounded p-3 mb-2 lh-lg d-flex justify-content-between align-items-center" style="min-height: 40px; background-color: rgb(234, 234, 234);">
+                                                                                       <b>Cuộc trò chuyện bắt đầu qua tin nhắn</b>
+                                                                                       <span style="font-size: 20px; font-weight: 600;">123</span>
+                                                                                    </div>
+                                                                                 </div>
+
+                                                                              </div>
+                                                                              
+                                                                          </div>
+                                                                        </div>
+
+                                                                        <!-- START Operation -->
+
+                                                                        <h6 class="mt-2">Operation</h6>
+                                                                        <div class="col-md-12">
+                                                                           <div class="container mt-2">
+
+                                                                              <div class="row lh-sm mb-3">
+                                                                                 <span>Lượt tương tác với bài viết</span>
+                                                                                 <div class="col-md-11 align-items-center">
+                                                                                   
+                                                                                       <div class="mt-1">
+                                                                                          <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                                                                             <div class="progress-bar" style="width: 25%"></div>
+                                                                                           </div>
+                                                                                       </div>
+                                                                                   
+                                                                                    
+                                                                                   
+                                                                                 </div>
+                                                                                 <div class="col-md-1 mt-1">
+                                                                                    1
+                                                                                 </div>
+                                                                              </div>
+
+                                                                              <div class="row lh-sm mb-3">
+                                                                                 <span>Lượt click vào liên kết</span>
+                                                                                 <div class="col-md-11 align-items-center">
+                                                                                       <div class="mt-1">
+                                                                                          <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                                                                             <div class="progress-bar" style="width: 25%"></div>
+                                                                                           </div>
+                                                                                       </div>
+                                                                                 </div>
+                                                                                 <div class="col-md-1 mt-1">
+                                                                                    1
+                                                                                 </div>
+                                                                              </div>
+
+                                                                              <div class="row lh-sm mb-3">
+                                                                                 <span>Lượt bắt đầu cuộc trò chuyện qua tin nhắn</span>
+                                                                                 <div class="col-md-11 align-items-center">
+                                                                                       <div class="mt-1">
+                                                                                          <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                                                                             <div class="progress-bar" style="width: 25%"></div>
+                                                                                           </div>
+                                                                                       </div>
+                                                                                 </div>
+                                                                                 <div class="col-md-1 mt-1">
+                                                                                    1
+                                                                                 </div>
+                                                                              </div>
+                                                                           </div>
+                                                                        </div>
+                                                                                    <!-- START Operation -->
+                                                                     </div>
+                                                                           
+
+                                                                  </div>
+                                                               </div>
+                                                               <div class="col-md-6">
+
+
+                                                                    <!-- START DETAIL ADS -->
+                                                                  <div class="col-md-12">
+                                                                     <div
+                                                                        class="shadow-sm p-3 mb-5 bg-body-tertiary rounded"
+                                                                        style="margin-bottom: 10px !important;">
+                                                                        <div class="row">
+                                                                           <h6>Details</h6>
+                                                                           <div class="col-md-12">
+                                                                             
+                                                                           </div>
+                                                                        </div>
+
+                                                                        <!-- START DETAIL ADS -->
+                                                                        <div class="row">
+                                                                           <div class="all-detail">
+                                                                              <div class="detail-ads mb-2">
+
+                                                                                 <div class="border-bottom pb-1 mt-2 d-flex align-items-start " >
+                                                                                   
+                                                                                    <span><i  class="icon-detail bi bi-person-fill"></i></span>
+                                                                                    <div class="ms-2 lh-sm">
+                                                                                       
+                                                                                       <span class="start-date-detail">Creator</span>
+                                                                                       <br>
+                                                                                       <span class="fs-6">NgoNhien</span>
+                                                                                          
+                                                                                    </div>
+                                                                                 </div>
+                                                                                 <div class="border-bottom pb-1 mt-2 d-flex align-items-start">
+                                                                                   
+                                                                                    <span><i  class="icon-detail bi bi-currency-exchange"></i></span>
+                                                                                    <div class="ms-2 lh-sm">
+                                                                                       
+                                                                                       <span class="start-date-detail">Daily budget</span>
+                                                                                       <br>
+                                                                                       <span class="fs-6">30.000</span>
+                                                                                          
+                                                                                    </div>
+                                                                                 </div>
+
+                                                                                 <div
+                                                                                    class="border-bottom pb-1 mt-2 d-flex align-items-start">
+                                                                                    <span><i
+                                                                                          class="icon-detail bi bi-stopwatch-fill"></i></span>
+                                                                                    <div class="ms-2 lh-sm">
+                                                                                       <span
+                                                                                          class="start-date-detail">Period</span>
+                                                                                       <br>
+                                                                                       <span class="fs-6">3 day</span>
+                                                                                    </div>
+                                                                                 </div>
+                                                                              </div>
+
+                                                                              <div class="accordion accordion-flush"
+                                                                                 id="accordionFlushExample">
+                                                                                 <div class="accordion-item ">
+
+                                                                                    <h2
+                                                                                       class="accordion-header text-center">
+                                                                                       <button
+                                                                                          class="accordion-button collapsed "
+                                                                                          type="button"
+                                                                                          data-bs-toggle="collapse"
+                                                                                          data-bs-target="#flush-collapseOne"
+                                                                                          aria-expanded="false"
+                                                                                          aria-controls="flush-collapseOne">
+                                                                                          Show more
+                                                                                       </button>
+                                                                                    </h2>
+                                                                                    <div id="flush-collapseOne"
+                                                                                       class="accordion-collapse collapse"
+                                                                                       data-bs-parent="#accordionFlushExample">
+                                                                                       <div class="accordion-body" style="padding-left: 5px;">
+                                                                                         
+                                                                            
+                                                                                         
+                                                                                         <div  class="border-bottom pb-1 mt-2 d-flex align-items-start">
+                                                                                          <span><i
+                                                                                                class="icon-detail bi bi-calendar-plus-fill"></i></span>
+      
+                                                                                          <div class="ms-2 lh-sm">
+                                                                                             <span
+                                                                                                class="start-date-detail">Start
+                                                                                                date</span> <br>
+                                                                                             <span
+                                                                                                class="fs-6">13/12/20023</span>
+                                                                                          </div>
+                                                                                       </div>
+      
+                                                                                       
+                                                                                        <div  class="border-bottom pb-1 mt-2 d-flex align-items-start">
+                                                                                          <span><i
+                                                                                                class="icon-detail bi bi-calendar-minus-fill"></i></span>
+                                                                                          <div class="ms-2 lh-sm">
+                                                                                             <span
+                                                                                                class="start-date-detail">Start
+                                                                                                date</span> <br>
+                                                                                             <span
+                                                                                                class="fs-6">13/12/20023</span>
+                                                                                          </div>
+                                                                                       </div>
+      
+
+                                                                                       </div>
+                                                                                    </div>
+                                                                                 </div>
+
+                                                                              </div>
+                                                                           </div>
+                                                                        </div>
+                                                                          <!-- END DETAIL ADS -->
+                                                                     </div>
+                                                                  </div>
+                                                                    <!-- END DETAIL ADS -->
+                                                                  <div class="col-md-12">
+                                                                     <div class="shadow-sm p-3 mb-5 bg-body-tertiary rounded">
+                                                                                                                                            
+                                                                        <h6>Target</h6>
+                                                                     
+                                                                     </div>
+                                                                  </div>
+
+
+
+                                                               </div>
+
+                                                            </div>
+                                                         </div>
+                                                         <!-- <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                               data-bs-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-primary">Save
+                                                               changes</button>
+                                                         </div> -->
+                                                      </div>
+                                                   </div>
+                                                </div>
+
+                                                <!-- END  MODAL ADS DETAIL -->
+                                             </tr>
+
+                                          </tbody>
+                                       </table>
+                                    </div>
+                                 </div>
+                              </div>
+
 
                            </div>
                         </div>
@@ -91,10 +359,11 @@
    </div>
 
 
-   <script src="../../static/js/jscustom/UI-Js-Admin/cdn.jsdelivr.net_npm_bootstrap@5.3.1_dist_js_bootstrap.bundle.min.js"></script>
+   <script
+      src="../../static/js/jscustom/UI-Js-Admin/cdn.jsdelivr.net_npm_bootstrap@5.3.1_dist_js_bootstrap.bundle.min.js"></script>
    <script src="../../static/js/jscustom/UI-Js-Admin/code.jquery.com_jquery-3.7.1.min.js"></script>
    <script src="../../static/js/jscustom/UI-Js-Admin/admin.js"></script>
- 
+
 </body>
 
 </html>

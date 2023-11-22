@@ -1063,3 +1063,18 @@ td {
     border-radius: 10px;
 }
 /* END SEARCH PLAYLIST DETAIL */
+
+/* START MODAL ADS  */
+
+.icon-detail{
+    font-size: x-large;
+    color: #808080;
+}
+.start-date-detail{
+    color: #8b8b8b;
+    font-size: smaller;
+}
+.progress-bar{
+    background-color: rgb(0, 122, 128);
+}
+/* START MODAL ADS */

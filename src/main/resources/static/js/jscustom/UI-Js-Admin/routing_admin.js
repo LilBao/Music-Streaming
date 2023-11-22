@@ -80,6 +80,10 @@ app.config(function($routeProvider,$cookiesProvider) {
     templateUrl : "SubscriptionsStatistics.html",
     controller: "subscriptionController"
   })
+  .when("/ads", {
+    templateUrl : "ads.html",
+    controller: "subscriptionController"
+  })
   .otherwise({ templateUrl : "404.html"});
   
 });

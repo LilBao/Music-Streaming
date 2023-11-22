@@ -26,8 +26,7 @@ public class Subscription implements Serializable {
 	private Integer subscriptionId;
 	
 	@Column(name = "SUBCRIPTIONTYPE",columnDefinition = "nvarchar(50)")
-	@Enumerated(EnumType.STRING)
-	private EUserType subscriptionType;
+	private String subscriptionType;
 
 	@Column(name = "SUBCRIPTIONCATEGORY",columnDefinition = "nvarchar(50)")
 	@Enumerated(EnumType.STRING)
