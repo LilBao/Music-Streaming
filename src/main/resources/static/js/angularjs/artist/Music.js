@@ -95,10 +95,10 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService) {
         })
     }
     //Out song
-    $scope.outSong = function (listWritter, songId, artistId,idrecord) {
+    $scope.outSong = function (listWritter, songId, artistId, idrecord) {
         var writter = listWritter.find(item => item.artist.artistId == artistId && item.song.songId == songId);
         $scope.deleteWritter(writter.writterId);
-        $('#btn-out-song-'+idrecord).click();
+        $('#btn-out-song-' + idrecord).click();
     }
 
     //Get list song has not record (lấy những bài hát không có record)
@@ -367,6 +367,10 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService) {
             let url = host + "/v1/track-album/" + id;
             $http.get(url).then(resp => {
                 $scope.listDetail = resp.data.data;
+                $scope.listened = 0;
+                $scope.listDetail.forEach(item => {
+                    $scope.listened += item.recording.listened;
+                })
             })
         } else {
             $scope.findSong(id);
@@ -375,7 +379,11 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService) {
             $scope.typeDetail = "song"
             let url = host + "/v1/record-song/" + id;
             $http.get(url).then(resp => {
-                $scope.listDetail = resp.data.data
+                $scope.listDetail = resp.data.data;
+                $scope.listened = 0;
+                $scope.listDetail.forEach(item => {
+                    $scope.listened += item.listened;
+                })
             })
         }
     }
@@ -559,6 +567,7 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService) {
             $scope.songStyle = resp.data.data;
         })
     }
+
     $scope.getListCulture = function () {
         let url = host + "/v1/culture";
         $http.get(url).then(resp => {
@@ -734,11 +743,23 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService) {
 
     //Move recording to garbage
     $scope.MoveRecordToGarbage = function () {
-        var data = angular.copy($scope.record);
-        data.isDeleted = true;
-        showStickyNotification('Delete record successfully.\n Record will exist before 30days was deleted', 'success', 3000);
-        $scope.updateRecord(data);
-        $scope.findListRecordArtist();
+        $.confirm({
+            title: 'Remove to garbage!',
+            content: 'This will delete from Your Library',
+            buttons: {
+                confirm: function () {
+                    var data = angular.copy($scope.record);
+                    data.isDeleted = true;
+                    showStickyNotification('Delete record successfully.\n Record will be moved to garbage', 'success', 3000);
+                    $scope.updateRecord(data);
+                    $scope.findListRecordArtist();
+                    $('#btn-close-record-detail').click();
+                },
+                cancel: function () {
+
+                },
+            }
+        });
     }
 
     //Recovery recording 
@@ -758,13 +779,25 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService) {
     //Destroy recording
     $scope.DestroyRecord = function (id, publicIdAudio, publicIdLyrics) {
         let url = host + "/v1/record/" + id;
-        $http.delete(url).then(resp => {
-            $scope.deleteCloudinary(publicIdAudio);
-            $scope.deleteCloudinary(publicIdLyrics);
-            $scope.getListRecordRemoved();
-        }).catch(error => {
-            console.log(error)
-        })
+        $.confirm({
+            title: 'This record will be remove forever!',
+            content: 'This will delete from Your Library',
+            buttons: {
+                confirm: function () {
+                    $http.delete(url).then(resp => {
+                        $scope.deleteCloudinary(publicIdAudio);
+                        $scope.deleteCloudinary(publicIdLyrics);
+                        $scope.getListRecordRemoved();
+                        showStickyNotification('Delete record successfully.', 'success', 3000);
+                    }).catch(error => {
+                        console.log(error)
+                    })
+                },
+                cancel: function () {
+
+                },
+            }
+        });
     }
 
     //Delete in cloudinary
@@ -969,7 +1002,7 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService) {
             line = 0;
         }
     })
-    
+
     btnReset.addEventListener('click', function () {
         lyricsContainer.value = "";
         afterGenerate.innerText = "";

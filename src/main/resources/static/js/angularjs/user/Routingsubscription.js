@@ -3,6 +3,7 @@ app.config(function ($routeProvider) {
     $routeProvider
         .when("/", {
             templateUrl: "subscription.html",
+            controller:"subscriptionCtrl"
         })
         .when("/premium", {
             templateUrl: "subscription.html",

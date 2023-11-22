@@ -1,11 +1,13 @@
 package com.rhymthwave.Service.Implement;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.rhymthwave.DAO.AuthorDAO;
 import com.rhymthwave.DAO.FollowDAO;
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.Service.FollowService;
@@ -19,6 +21,9 @@ public class FollowServiceImpl implements CRUD<Follow, Long>, FollowService{
 	
 	@Autowired
 	FollowDAO dao;
+	
+	@Autowired
+	AuthorDAO authDao;
 
 	@Override
 	@Transactional
@@ -44,13 +49,11 @@ public class FollowServiceImpl implements CRUD<Follow, Long>, FollowService{
 
 	@Override
 	public Follow findOne(Long key) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<Follow> findAll() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
@@ -81,5 +84,14 @@ public class FollowServiceImpl implements CRUD<Follow, Long>, FollowService{
 	@Override
 	public Integer getQuantityFollowByDate(Long authorId, Integer days) {
 		return dao.getQuantityFollowByDate(authorId, days);
+	}
+
+	@Override
+	public List<Author> getListArtistFanLiked(List<Long> accountFans, Integer idRole, String country) {
+		List<Author> list = new ArrayList<>();
+		for (Long e : dao.getListFansLiked(accountFans, idRole, country)) {
+			list.add(authDao.findById(e).get());
+		}
+		return list;
 	}
 }

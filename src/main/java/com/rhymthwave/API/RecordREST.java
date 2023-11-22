@@ -145,4 +145,6 @@ public class RecordREST {
 	public ResponseEntity<MessageResponse> findListRecordRandom(){
 		return ResponseEntity.ok(new MessageResponse(true,"success",recordSer.findListRecordRandom()));
 	}
+	
+	
 }

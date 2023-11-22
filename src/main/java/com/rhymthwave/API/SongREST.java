@@ -127,10 +127,17 @@ public class SongREST {
 		return ResponseEntity.ok(new MessageResponse(true, "success", songSer.findSongNotRecord(owner)));
 	}
 
+	//get song release if your account is artist
 	@GetMapping("/api/v1/song-artist-released")
-	public ResponseEntity<MessageResponse> albumReleasedByArtist(HttpServletRequest req) {
+	public ResponseEntity<MessageResponse> mySongReleasedByArtist(HttpServletRequest req) {
 		String owner = host.getEmailByRequest(req);
 		return ResponseEntity.ok(new MessageResponse(true, "success",songSer.findSongReleasedByArtist(owner)));
+	}
+	
+	//get song release if your account is user
+	@GetMapping("/api/v1/song-released")
+	public ResponseEntity<MessageResponse> songReleasedByArtist(@RequestParam("artistEmail") String artistEmail) {
+		return ResponseEntity.ok(new MessageResponse(true, "success",songSer.findSongReleasedByArtist(artistEmail)));
 	}
 	
 	@GetMapping("/api/v1/song-pl/{keyword}")

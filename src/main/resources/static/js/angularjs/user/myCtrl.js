@@ -1013,7 +1013,7 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
                     var value = {};
                     value.playlist = data.playlistById
                     if (type === 'playlist') {
-                        listAudioPlaylist.forEach(item => {
+                        listAudioPlaylist.some(item => {
                             if (item.recordingId) {
                                 var url = host + "v1/playlist-record";
                                 value.recording = item;
@@ -1021,8 +1021,15 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
                                 var url = host + "v1/playlist-episode";
                                 value.episode = item;
                             }
-                            $http.post(url, value).then(resp => {
-                                console.log(resp.data.data)
+                            $http.post(url, value,{
+                                headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+                            }).then(resp => {
+                                if(resp.data.success == false){
+                                    showStickyNotification(resp.data.message, 'warning', 3000);
+                                    return true;
+                                }else{
+                                    return false;
+                                }
                             }).catch(err => {
                                 console.log(err)
                             })

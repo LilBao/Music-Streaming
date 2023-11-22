@@ -51,7 +51,7 @@ public class VNPayService {
 	        vnp_Params.put("vnp_OrderInfo", "Thanh toan don hang:" + vnp_TxnRef);
 	        vnp_Params.put("vnp_OrderType", "other");
 	        vnp_Params.put("vnp_Locale", "vn");
-	        vnp_Params.put("vnp_ReturnUrl", VNPayConfig.vnp_Returnurl+"?email="+email+"&subcriptionId="+subscriptionId);
+	        vnp_Params.put("vnp_ReturnUrl", VNPayConfig.vnp_Returnurl+"?email="+email+"&subcriptionId="+subscriptionId+"paymentName=vnpay");
 	        vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
 	        
 			Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));

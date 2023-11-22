@@ -83,7 +83,7 @@ public class Recording implements Serializable {
 	private Date recordingdate = new Date();
 
 	@Column(name = "ISDELETED")
-	private Boolean isDeleted;
+	private Boolean isDeleted=false;
 	
 	@Column(name = "EMAILCREATE",columnDefinition = "varchar(255)")
 	private String emailCreate;

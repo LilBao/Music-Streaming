@@ -62,4 +62,14 @@ public class PlaylistGraphQL {
 		return playlistSer.findPublicPlaylist(crudUserType.findOne(userTypeId), isPublic);
 	}
 	
+	@QueryMapping("findPlaylistFeaturingByArtist")
+	public List<Playlist> findPlaylistFeaturingByArtist(@Argument("artistId") Long artistId,@Argument("roleId") List<Integer> roleId){
+		return playlistSer.findPlaylistFeaturingArtist(artistId,roleId);
+	}
+	
+	@QueryMapping("findPlaylistDiscoverByArtist")
+	public List<Playlist> findPlaylistDiscoverByArtist(@Argument("artistId") Long artistId,@Argument("roleId") List<Integer> roleId){
+		return playlistSer.findDiscoverArtist(artistId, roleId);
+	}
+	
 }

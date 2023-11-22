@@ -23,7 +23,7 @@
 
 </head>
 
-<body ng-app="myApp" ng='myCtrl'>
+<body ng-app="myApp" ng-controller="myCtrl">
     <nav class="navbar navbar-expand-lg bg-black text-white">
         <div class="container-fluid">
             <button class="navbar-toggler navbar-light buttonCss" type="button" data-bs-toggle="offcanvas"
@@ -54,8 +54,11 @@
                             <a class="nav-link text-white" href="#!artist-audience">Audience</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#!artist-profile">Profile</a>
+                            <a class="nav-link text-white" href="#!artist-marketing">Marketing</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#!artist-profile">Profile</a>
+                        </li>              
                     </ul>
                 </div>
             </div>
@@ -67,9 +70,12 @@
     </section>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../../static/js/Utiliez/CookiesUtil.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
     <script src="../../static/js/jscustom/UI-Js-Admin/bootstrap-show-notification.js"></script>
     <script src="../../static/js/jscustom/toasts.js"></script>
     <!-- Tab home -->
+    <script src="../../static/js/angularjs/artist/Artist.js"></script>
     <script src="../../static/js/angularjs/artist/Home.js"></script>
     <!-- Tab music -->
     <script src="../../static/js/angularjs/artist/Music.js"></script>

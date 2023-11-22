@@ -15,9 +15,8 @@ public interface SongDAO extends JpaRepository<Song, Long> {
 			+ "where s.ARTISTCREATE= :idArtist and not exists (select 1 from recording r where r.songsid = s.songsid)", nativeQuery = true)
 	List<Song> getSongNotRecord(@Param("idArtist") Long idArtist);
 
-	@Query(value = "select SONGS.* from SONGS " + "join RECORDING on RECORDING.SONGSID = SONGS.SONGSID "
-			+ "where songs.REALEASEDAY < GETDATE() and RECORDING.EMAILCREATE = :emailCreate and "
-			+ "EXISTS (SELECT 1 FROM RECORDING WHERE RECORDING.SONGSID = SONGS.SONGSID)", nativeQuery = true)
+	@Query(value = "select SONGS.* from SONGS join RECORDING on RECORDING.SONGSID = SONGS.SONGSID "
+			+ "where songs.REALEASEDAY < GETDATE() and RECORDING.EMAILCREATE = :emailCreate", nativeQuery = true)
 	List<Song> getListSongReleasedByArtist(@Param("emailCreate") String emailCreate);
 
 	@Query(value = "select s.* from songs s where s.songname like %:keyword% and s.isdeleted = 0 and s.realeaseday < GETDATE()", nativeQuery = true)

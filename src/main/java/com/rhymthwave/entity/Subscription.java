@@ -54,6 +54,9 @@ public class Subscription implements Serializable {
 	@Column(name = "DURATION")
 	private Integer duration;
 	
+	@Column(name = "PRIORITY")
+	private Integer priority;
+	
 	@Column(name = "PLAYLISTALLOW")
 	private Integer playlistAllow;
 	

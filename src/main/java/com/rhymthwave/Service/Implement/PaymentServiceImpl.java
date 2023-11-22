@@ -1,10 +1,20 @@
 package com.rhymthwave.Service.Implement;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.paypal.core.PayPalHttpClient;
+import com.paypal.http.HttpResponse;
+import com.paypal.orders.Order;
+import com.paypal.orders.OrdersGetRequest;
 import com.rhymthwave.DTO.payment.StripeChargeDTO;
 import com.rhymthwave.DTO.payment.StripeTokenDTO;
 import com.rhymthwave.DTO.payment.SubscriptionDTO;
@@ -17,6 +27,7 @@ import com.rhymthwave.entity.payment.CompletedOrder;
 import com.rhymthwave.entity.payment.Payment;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Service
 public class PaymentServiceImpl implements PaymentService{
@@ -29,6 +40,9 @@ public class PaymentServiceImpl implements PaymentService{
 	
 	@Autowired
 	StripeService stripeSer;
+	
+	@Autowired
+	PayPalHttpClient payPalHttpClient;
 	
 	@Override
 	public Payment vnpay(Integer total, String email,Integer subscriptionId) {
@@ -45,6 +59,19 @@ public class PaymentServiceImpl implements PaymentService{
 	@Override
 	public CompletedOrder paypal(String token) {
 		return paypalSer.completePayment(token);
+	}
+	
+	@Override
+	public Order billing(String token) {
+		try {
+			OrdersGetRequest request = new OrdersGetRequest(token);
+		    HttpResponse<Order> response = payPalHttpClient.execute(request);
+		    Order order = response.result();
+		    return order;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 

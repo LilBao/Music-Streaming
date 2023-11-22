@@ -60,6 +60,8 @@ public class SubscriptionServiceImpl implements SubscriptionService, CRUD<Subscr
 		return dao.findAll();
 	}
 
-
-
+	@Override
+	public List<Subscription> findByCategory(ESubscription cate) {
+		return dao.findBySubscriptionCategory(cate);
+	}
 }

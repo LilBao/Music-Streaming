@@ -404,6 +404,26 @@ app.controller('profileArtistCtrl', function ($scope, $http,graphqlService) {
             console.log(error);
         })
     }
+
+    //Disabled account
+    $scope.disableAccount = function(){
+        $.confirm({
+            title: 'Disable account!',
+            content: 'Your account will be dissabled.\n If you do not log in your artist profile after 6 months, you will lose access to your account',
+            buttons: {
+                confirm: function () {
+                    var data = angular.copy($scope.artist);
+                    data.active = false;
+                    data.expirePermission = new Date(currentDate.getTime() + (180 * 24 * 60 * 60 * 1000));
+                    $scope.updateArtist(data);
+                },
+                cancel: function () {
+
+                },
+            }
+        });
+    }
+
     //JS
     $('#modified-linkSocial').click(function () {
         var icon = $(this).find("i");
