@@ -82,7 +82,7 @@ app.config(function($routeProvider,$cookiesProvider) {
   })
   .when("/ads", {
     templateUrl : "ads.html",
-    controller: "subscriptionController"
+    controller: "advertisementController"
   })
   .otherwise({ templateUrl : "404.html"});
   

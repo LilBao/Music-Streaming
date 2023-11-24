@@ -92,7 +92,6 @@ public class Advertisement implements Serializable {
     private Image image;
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "ACCOUNTID")
     private Account account;
 

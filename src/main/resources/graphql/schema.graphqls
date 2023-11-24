@@ -3,6 +3,7 @@
 #import "./Access.graphqls"
 #import "./Account.graphqls"
 #import "./Advertisement.graphqls"
+#import "./AdvertisementStatistics.graphqls"
 #import "./Album.graphqls"
 #import "./Artist.graphqls"
 #import "./Author.graphqls"
@@ -51,7 +52,7 @@ type Query {
  getAllPlaylist:[Playlist]
  getAllPodcastPlaylist:[Playlist]
  getPlayListById(idPlaylist: Int):Playlist
-
+ findAllAdvertisementPendingAndRejectByStatus:[AdvertisementStatistics]
  
  #VanBao
  recordingById(recordingId: ID!):Recording
