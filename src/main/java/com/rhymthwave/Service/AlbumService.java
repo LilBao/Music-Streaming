@@ -9,5 +9,7 @@ public interface AlbumService {
 	
 	List<Album> findAlbumReleasedByArtist(Long artistId);
 	
+	List<Album> findAlbumByArtist(Long artistId);
+	
 	List<Object> findByName(String keyword);
 }

@@ -14,8 +14,8 @@
                     </h3>
                 </div>
                 <div class="d-flex">
-                    <button class="btn border-dark bg-dark text-white rounded-pill me-3" id="show">Show more</button>
-                    <button class="btn border-dark bg-dark text-white rounded-pill">Profile page</button>
+                    <a href="#!podcast-settings" class="btn border-dark bg-dark text-white rounded-pill me-3" id="show">Show more</a>
+                    <!-- <button class="btn border-dark bg-dark text-white rounded-pill">Profile page</button> -->
                 </div>
             </div>
             <div class="col-5">
@@ -27,21 +27,16 @@
                 <div class="shadow-sm p-4 d-flex flex-row justify-content-around bg-white card">
                     <div>
                         <p>Plays</p>
-                        <h4>76,256</h4>
+                        <h4>{{listener | number:0}}</h4>
                         <span>All time</span>
                     </div>
                     <div>
                         <p>Audience size</p>
-                        <h4>8,580</h4>
-                        <span>Last 7 days</span>
-                    </div>
-                    <div>
-                        <p>Current balance</p>
-                        <h4>8,580</h4>
-                        <a>Go to wallet</a>
+                        <h4>{{listMonitor.length | number:0}}</h4>
+                        <span>All time</span>
                     </div>
                 </div>
-                <a class="float-end text-black">Show more</a>
+                <a href="#!analytics" class="float-end text-black">Show more</a>
             </div>
             <div class="col-5">
                 <div ng-if="episodeLatest !==null" >
@@ -58,41 +53,27 @@
                                 alt="">
                         </div>
                     </div>
-                    <a class="float-end text-black">Show more</a>
+                    <a href="#!episodes" class="float-end text-black">Show more</a>
                 </div>
             </div>
         </div>
         <div class="row mt-5">
             <h6 class="">Hightlights</h6>
-            <div class="col-4">
+            <div class="col-4" ng-repeat="item in listNews">
                 <div class="card">
                     <img class="card-img-top image-new img-thumbnail"
-                        src="https://media.istockphoto.com/id/1222357475/vi/vec-to/bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-xem-tr%C6%B0%E1%BB%9Bc-h%C3%ACnh-%E1%BA%A3nh-gi%E1%BB%AF-ch%E1%BB%97-h%C3%ACnh-%E1%BA%A3nh-cho-trang-web-ho%E1%BA%B7c-thi%E1%BA%BFt-k%E1%BA%BF-ui-ux-minh-h%E1%BB%8Da.jpg?s=612x612&w=0&k=20&c=85Mb60buhPvbdQd2CaKEXn6YJyhKqd_QZ0nIh_2OtqM="
+                        src="{{item.image.url}}"
                         alt="Card image">
                     <div class="card-body">
-                        <p class="p-small-bold">fsdfds</p>
-                        <p class="p-bold">Share fdskjfksldfjkdsjflsdjfkdl</p>
-                        <p class="p-opacity">fsdfdsfsdfdssdfsd</p>
+                        <p class="p-small-bold text-truncate">{{item.content}}</p>
+                        <p class="p-bold text-truncate">{{item.title}}</p>
+                        <p class="p-opacity">{{item.publishDate | date:'yyyy-MM-dd'}}</p>
                         <button class="btn float-end border-dark rounded-pill">Check it out</button>
                     </div>
                 </div>
             </div>
-            <div class="col-4">
-                <div class="card">
-                    <div class="card-header">Header</div>
-                    <div class="card-body">Content</div>
-                    <div class="card-footer">Footer</div>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="card">
-                    <div class="card-header">Header</div>
-                    <div class="card-body">Content</div>
-                    <div class="card-footer">Footer</div>
-                </div>
-            </div>
         </div>
-        <section class="mt-5">
+        <section class="my-5">
             <div id="demo" class="carousel slide" data-bs-ride="carousel">
                 <!-- Indicators/dots -->
                 <div class="carousel-indicators">
@@ -124,26 +105,19 @@
               </div>
         </section>
 
-        <section class="row mt-5">
+        <section ng-show="listArtical.length > 0" class="row mt-5">
             <h6>Article</h6>
-            <div class="col-6">
+            <div class="col-6" ng-repeat="item in listArtical">
                 <div class="card">
                     <img class="card-img-top image-new img-thumbnail"
-                        src="https://media.istockphoto.com/id/1222357475/vi/vec-to/bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-xem-tr%C6%B0%E1%BB%9Bc-h%C3%ACnh-%E1%BA%A3nh-gi%E1%BB%AF-ch%E1%BB%97-h%C3%ACnh-%E1%BA%A3nh-cho-trang-web-ho%E1%BA%B7c-thi%E1%BA%BFt-k%E1%BA%BF-ui-ux-minh-h%E1%BB%8Da.jpg?s=612x612&w=0&k=20&c=85Mb60buhPvbdQd2CaKEXn6YJyhKqd_QZ0nIh_2OtqM="
+                        src="{{item.image.url}}"
                         alt="Card image">
                     <div class="card-body">
-                        <p class="p-small-bold">fsdfds</p>
-                        <p class="p-bold">Share fdskjfksldfjkdsjflsdjfkdl</p>
-                        <p class="p-opacity">fsdfdsfsdfdssdfsd</p>
+                        <p class="p-small-bold text-truncate">{{item.content}}</p>
+                        <p class="p-bold text-truncate">{{item.title}}</p>
+                        <p class="p-opacity">{{item.publishDate | date:'yyyy-MM-dd'}}</p>
                         <button class="btn float-end border-dark rounded-pill">Check it out</button>
                     </div>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="card">
-                    <div class="card-header">Header</div>
-                    <div class="card-body">Content</div>
-                    <div class="card-footer">Footer</div>
                 </div>
             </div>
         </section>

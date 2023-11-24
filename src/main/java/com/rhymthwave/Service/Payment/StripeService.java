@@ -38,7 +38,7 @@ public class StripeService {
 	public void init() {
 		Stripe.apiKey = stripeSecretKey;
 	}
-	
+
 	public StripeTokenDTO createCardToken(StripeTokenDTO stripe) {
 		try {
 			Map<String, Object> card = new HashMap<>();
@@ -88,20 +88,20 @@ public class StripeService {
 		}
 
 	}
-	
-	//phải tạo product trên stripe
-	public Payment checkoutPayment(SubscriptionDTO subscription,String email,HttpServletRequest req, String pathReturn, String pathCancel){
+
+	// phải tạo product trên stripe
+	public Payment checkoutPayment(SubscriptionDTO subscription, String email, HttpServletRequest req,
+			String pathReturn, String pathCancel, String packages) {
 		try {
 			SessionCreateParams params = SessionCreateParams.builder().setMode(SessionCreateParams.Mode.PAYMENT)
-					.setSuccessUrl(applicationUrl(req, pathReturn))
-					.setCancelUrl(applicationUrl(req, pathCancel))
+					.setSuccessUrl(applicationUrl(req, pathReturn)).setCancelUrl(applicationUrl(req, pathCancel))
 					.addLineItem(SessionCreateParams.LineItem.builder().setQuantity(1L)
-					.setPrice(subscription.getPrdStripeId()).build())
+							.setPrice(subscription.getPrdStripeId()).build())
 					.build();
 			Session session = Session.create(params);
-			return new Payment("00","success",session.getUrl());
+			return new Payment("00", "success", session.getUrl());
 		} catch (Exception e) {
-			return new Payment("01","fail","");
+			return new Payment("01", "fail", "");
 		}
 	}
 
