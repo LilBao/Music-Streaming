@@ -20,6 +20,6 @@ public interface NewsDAO extends JpaRepository<News, Integer> {
 			+ "AND (MONTH(n.createDate) = :month OR :month IS NULL) " + "ORDER BY n.createDate")
 	List<News> findNewsByYearAndMonth(@Param("year") Integer year, @Param("month") Integer month);
 
-	@Query("SELECT n FROM News n WHERE n.createFor = ?1")
+	@Query("SELECT n FROM News n WHERE n.createFor = ?1 ORDER BY n.createDate desc")
 	List<News> findAllNewsCreateFor(EROLE role);
 }

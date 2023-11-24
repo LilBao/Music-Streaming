@@ -1,5 +1,5 @@
 <body ng-controller="marketingCtrl">
-    <div>
+    <div class="container mt-5">
         <h1>Marketing</h1>
         <div class="d-flex justify-content-between">
             <div class="input-group w-25">
@@ -74,35 +74,32 @@
                         <section>
                             <ul id="myTab" role="tablist"
                                 class="nav nav-tabs nav-pills d-flex text-center border-0 rounded-nav">
-                                <button id="singles-tab" data-toggle="tab" id="pills-user-tab" data-bs-toggle="pill"
-                                    data-bs-target="#pills-singles" type="button" role="tab"
-                                    aria-controls="pills-singles" aria-selected="true"
-                                    class="btn border-0 rounded-pill bg-dark text-white px-3 font-weight-bold active">Singles
+                                <button id="Episodes-tab" data-toggle="tab" id="pills-user-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-Episodes" type="button" role="tab"
+                                    aria-controls="pills-Episodes" aria-selected="true"
+                                    class="btn border-0 rounded-pill bg-dark text-white px-3 font-weight-bold active">Episodes
                                 </button>
 
-                                <button id="pills-albums-tab" data-bs-toggle="pill" data-bs-target="#pills-albums"
-                                    type="button" role="tab" aria-controls="pills-albums" aria-selected="false"
-                                    class="btn border-0 rounded-pill bg-dark text-white px-3 mx-3 font-weight-bold">Albums
+                                <button id="pills-Podcast-tab" data-bs-toggle="pill" data-bs-target="#pills-Podcast"
+                                    type="button" role="tab" aria-controls="pills-Podcast" aria-selected="false"
+                                    class="btn border-0 rounded-pill bg-dark text-white px-3 mx-3 font-weight-bold">Podcast
                                 </button>
                             </ul>
                             <div id="myTabContent" class="tab-content">
-                                <div id="pills-singles" role="tabpanel" aria-labelledby="pills-user-tab" tabindex="0"
+                                <div id="pills-Episodes" role="tabpanel" aria-labelledby="pills-user-tab" tabindex="0"
                                     class="tab-pane fade show active">
-                                    <div ng-if="listSong.length > 0 | limitTo : 6" class="row">
-                                        <div class="col-2 mt-3" ng-repeat="item in listSong"
-                                            ng-click="selectSongAlbum(item)">
+                                    <div ng-if="listEpisode.length > 0 | limitTo : 6" class="row">
+                                        <div class="col-2 mt-3" ng-repeat="item in listEpisode"
+                                            ng-click="selectAdsQuick(item)">
                                             <div class="card card-play-list-profile">
                                                 <div class="img-car-profile">
-                                                    <img src="{{item.song.image.url}}" class="card-img-top w-100"
+                                                    <img src="{{item.image.url}}" class="card-img-top w-100"
                                                         style="height: 150px; object-fit: cover;" alt="...">
                                                 </div>
                                                 <div class="card-body card-body-playlist-profile">
-                                                    <h6 class="text-truncate">{{item.song.songName}}</h6>
+                                                    <h6 class="text-truncate">{{item.episodeTitle}}</h6>
                                                     <div class="d-flex">
-                                                        <p class="card-text-playlist-profile-folow">
-                                                            {{item.song.releaseDay | date: 'yyyy'}}</p>
-                                                        <i class="bi bi-dot"></i>
-                                                        <p class="card-text-playlist-profile-folow">Single</p>
+                                                        <p class="card-text-playlist-profile-folow">Episode</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -110,23 +107,22 @@
                                     </div>
 
                                 </div>
-                                <div id="pills-albums" role="tabpanel" aria-labelledby="pills-albums-tab" tabindex="0"
+                                <div id="pills-Podcast" role="tabpanel" aria-labelledby="pills-Podcast-tab" tabindex="0"
                                     class="tab-pane fade">
-                                    <div ng-if="listAlbum.length > 0 | limitTo : 6" class="row">
-                                        <div class="col-2 mt-3" ng-repeat="item in listAlbum"
-                                            ng-click="selectSongAlbum(item)">
+                                    <div class="row">
+                                        <div class="col-2 mt-3" ng-click="selectAdsQuick(podcast)">
                                             <div class="card card-play-list-profile">
                                                 <div class="img-car-profile">
-                                                    <img src="{{item.image.url}}" class="card-img-top w-100"
+                                                    <img src="{{podcast.image.url}}" class="card-img-top w-100"
                                                         style="height: 150px; object-fit: cover;" alt="...">
                                                 </div>
                                                 <div class="card-body card-body-playlist-profile">
-                                                    <h6 class="text-truncate">{{item.albumName}}</h6>
+                                                    <h6 class="text-truncate">{{podcast.podcastName}}</h6>
                                                     <div class="d-flex">
-                                                        <p class="card-text-playlist-profile-folow">{{item.releaseDate |
+                                                        <p class="card-text-playlist-profile-folow">{{podcast.releaseDate |
                                                             date: 'yyyy'}}</p>
                                                         <i class="bi bi-dot"></i>
-                                                        <p class="card-text-playlist-profile-folow">Album</p>
+                                                        <p class="card-text-playlist-profile-folow">Podcast</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -490,10 +486,9 @@
                         </div>
                     </div>
                     <div class="my-4 d-flex justify-content-end">
-                        <button ng-click="deleteAds(ads.adId)" ng-show="ads.active == null" type="button" class="btn bg-dark text-white mx-4">Delete draft</button>
                         <button ng-readonly="(ads.active == null || (ads.active == false && ads.status == 1))"  ng-click="updateAds(ads)" type="button" class="mx-4 btn bg-dark text-white">Save</button>
                         <button ng-show="ads.active == null" type="button" class="btn bg-dark text-white mx-4"
-                            data-bs-toggle="collapse" data-bs-target="#auto">Payment method</button>               
+                            data-bs-toggle="collapse" data-bs-target="#auto">Payment method</button>
                     </div>
 
                     <div id="auto" class="collapse mb-4">

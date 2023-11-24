@@ -93,7 +93,8 @@
                     </div>
                     <div class="mt-3">
                         <label for="">Publish date:</label>
-                        <input ng-model="episode.publishDate" class="form-control my-1" type="datetime-local">
+                        <input ng-model="episode.publishDate | date:'dd/MM/yyyy, hh:mm a'" type="text" class="form-control my-1">
+                        
                     </div>
                     <div class="my-3">
                         <hr>

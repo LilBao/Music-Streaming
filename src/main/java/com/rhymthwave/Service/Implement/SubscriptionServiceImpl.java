@@ -27,7 +27,7 @@ public class SubscriptionServiceImpl implements SubscriptionService, CRUD<Subscr
 	@Override
 	public Subscription create(Subscription entity) {
 		if(entity.getSubscriptionCategory() == ESubscription.ACCOUNT){
-			entity.setSubscriptionType(EUserType.PREMIUM);
+			entity.setSubscriptionType("PREMIUM");
 		}
 		entity.setActive(true);
 		entity.setCreateDate(GetCurrentTime.getTimeNow());
@@ -61,7 +61,7 @@ public class SubscriptionServiceImpl implements SubscriptionService, CRUD<Subscr
 	}
 
 	@Override
-	public List<Subscription> findByCategory(ESubscription cate) {
-		return dao.findBySubscriptionCategory(cate);
+	public List<Subscription> findByCategory(ESubscription cate,Boolean active) {
+		return dao.findBySubscriptionCategoryAndActive(cate,active);
 	}
 }

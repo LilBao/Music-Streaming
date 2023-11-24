@@ -61,4 +61,10 @@ public class MonitorEpisodeServiceImpl implements CRUD<MonitorEpisode, Long>, Mo
 		}
 		return null;
 	}
+
+	@Override
+	public List<MonitorEpisode> findMonitorEpisodeByPodcast(Long id) {
+		return dao.findMonitorEpisodeByPodcast(id);
+	}
+	
 }

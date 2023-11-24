@@ -23,7 +23,7 @@ app.controller('subscriptionCtrl', function ($scope, $http, $routeParams) {
     $scope.findAllSubscription = function(){
         var url = host + "/v1/subscription"
         $http.get(url,{
-            params: {cate: "ACCOUNT"}
+            params: {cate: "ACCOUNT",active: true}
         }).then(resp => {
             $scope.listSubscription=resp.data.data;
         }).catch(err => {
@@ -50,6 +50,8 @@ app.controller('subscriptionCtrl', function ($scope, $http, $routeParams) {
         var data = new FormData();
         data.append('total', total);
         data.append('subscriptionId', Number(subscriptionId));
+        data.append('packages', 'ACCOUNT');
+        data.append('adsId', Number(null));
         $http.post(url, data, {
             headers: {
                 'Content-Type': undefined
@@ -68,6 +70,8 @@ app.controller('subscriptionCtrl', function ($scope, $http, $routeParams) {
         var data = new FormData();
         data.append('total', total);
         data.append('subscriptionId', subscriptionId);
+        data.append('packages', 'ACCOUNT');
+        data.append('adsId', Number(null));
         $http.post(url, data, {
             headers: {
                 'Content-Type': undefined
@@ -82,7 +86,7 @@ app.controller('subscriptionCtrl', function ($scope, $http, $routeParams) {
     }
 
     $scope.paymentStripe = function () {
-        let url = host + "/v1/payment-stripe";
+        let url = host + "/v1/payment-stripe?packages=ACCOUNT&adsId="+Number(null);
         var data = {};
         data.subscriptionId = $scope.subscriptionId;
         data.prdStripeId = $scope.subscription.prdStripeId;

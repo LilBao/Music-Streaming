@@ -114,7 +114,7 @@ public class AlbumREST {
 	public ResponseEntity<MessageResponse> albumReleasedByArtist(HttpServletRequest req) {
 		String owner = host.getEmailByRequest(req);
 		Account account = crudAccount.findOne(owner);
-		return ResponseEntity.ok(new MessageResponse(true, "success",albumSer.findAlbumReleasedByArtist(account.getArtist().getArtistId())));
+		return ResponseEntity.ok(new MessageResponse(true, "success",albumSer.findAlbumByArtist(account.getArtist().getArtistId())));
 	}
 	
 	//get all album if your account is user
