@@ -124,13 +124,16 @@
                                                         <span class="input-group-text"
                                                             style="background-color: transparent;"><i
                                                                 class="text-white bi bi-search-heart"></i></span>
-                                                        <input ng-model="nameMyPlaylist" ng-change="searchMyPlaylist(nameMyPlaylist)" type="text" class="text-white form-control"
+                                                        <input ng-model="nameMyPlaylist"
+                                                            ng-change="searchMyPlaylist(nameMyPlaylist)" type="text"
+                                                            class="text-white form-control"
                                                             placeholder="Search in playlist"
                                                             style="background-color: transparent;">
                                                     </div>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a ng-click="createPlaylistAddSong(item.recording ? item.recording : item.episode)" class="nav-link text-white">
+                                                    <a ng-click="createPlaylistAddSong(item.recording ? item.recording : item.episode)"
+                                                        class="nav-link text-white">
                                                         <i class="bi bi-plus-lg"></i> Create playlist
                                                     </a>
                                                 </li>
@@ -152,7 +155,8 @@
                                                 : 'Save to your liked songs' }} </a>
                                         </li>
                                         <li class="li-dropdown-start-end">
-                                            <a class="btn text-white dropdown-item py-2" ng-click="enqueue(item.recording ? item.recording : item.episode)"><i
+                                            <a class="btn text-white dropdown-item py-2"
+                                                ng-click="enqueue(item.recording ? item.recording : item.episode)"><i
                                                     class="bi bi-hdd-stack"></i> Add to queue</a>
                                         </li>
                                         <li class="li-dropdown-start-end">
@@ -163,8 +167,9 @@
                                                     class="bi bi-person-lines-fill"></i> Go to artist</a>
                                             <ul class="nav bg-dark w-100">
                                                 <li class="nav-item" ng-repeat="a in item.recording.song.writters">
-                                                    <a href="#!artist/{{a.artist.artistId}}" class="nav-link text-white">
-                                                    {{a.artist.artistName}}</a>
+                                                    <a href="#!artist/{{a.artist.artistId}}"
+                                                        class="nav-link text-white">
+                                                        {{a.artist.artistName}}</a>
                                                 </li>
                                             </ul>
                                         </li>
@@ -275,10 +280,10 @@
                             <td ng-dblclick="selectAudio(item,'song',songData,$index)">
                                 <div class="d-flex align-items-center">
                                     <div class="d-flex">
-                                        <img class="rounded-2 mx-3" src="{{item.image.url}}"
+                                        <img class="rounded-2 mx-3" src="{{item.song.image.url}}"
                                             style="width: 50px; height: 50px; object-fit: cover;" alt="">
                                         <div>
-                                            <h6 class="text-white">{{item.songName}}</h6>
+                                            <h6 class="text-white">{{item.recordingName}}</h6>
                                             <a class="text-white" ng-repeat="a in item.song.writters" href="">
                                                 <h6>{{a.artist.artistName}}</h6>
                                             </a>
@@ -306,7 +311,10 @@
                                             <a class="text-white" ng-repeat="a in item.song.writters" href="">
                                                 <h6>{{a.artist.artistName}}</h6>
                                             </a>
-
+                                            <a class="text-white"
+                                                href="#!profile/podcast/{{item.podcast.account.username}}">
+                                                {{item.podcast.authorName}}
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -402,10 +410,10 @@
                             <td ng-dblclick="selectAudio(item,'song',songData,$index)">
                                 <div class="d-flex align-items-center">
                                     <div class="d-flex">
-                                        <img class="rounded-2 mx-3" src="{{item.image.url}}"
+                                        <img class="rounded-2 mx-3" src="{{item.song.image.url}}"
                                             style="width: 50px; height: 50px; object-fit: cover;" alt="">
                                         <div>
-                                            <h6 class="text-white">{{item.songName}}</h6>
+                                            <h6 class="text-white">{{item.recordingName}}</h6>
                                             <a class="text-white" ng-repeat="a in item.song.writters" href="">
                                                 <h6>{{a.artist.artistName}}</h6>
                                             </a>

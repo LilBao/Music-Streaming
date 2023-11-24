@@ -46,4 +46,9 @@ public class RecordingGraphQL {
 	public List<Recording> getListSongReleased(@Argument("email") String email){
 		return recordSer.findRecordByCreater(email);
 	}
+	
+	@QueryMapping("findSongPl")
+	public List<Recording> findSongPl(@Argument("songName") String songName){
+		return recordSer.findSongPl(songName);
+	}
 }

@@ -360,7 +360,7 @@ footer {
 
 /* list */
 .play-list {
-    background-color: rgb(23, 15, 35);
+    background-color: rgb(32, 32, 32);
 }
 
 .play-list .card-img-top {
@@ -671,4 +671,10 @@ input[type="range"]:hover {
 
 .li-dropdown-start-end a:hover{
     background-color: rgba(238, 237, 237, 0.3);
+}
+
+@media (min-width: 1248px) {
+    .tt-pct h1{
+        font-size: 110px;
+    }
 }

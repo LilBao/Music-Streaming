@@ -28,15 +28,6 @@ public interface AccountDAO extends JpaRepository<Account, String>{
 	@Procedure(name = "SEARCH")
 	List<Object> search(String keyword);
 	
-	@Query(value = "EXEC SP_SEARCH_ART :id",nativeQuery = true)
-	List<Object> searchArt(long id);
-	
-	@Query(value = "EXEC SP_SEARCH_PL :id",nativeQuery = true)
-	List<Object> searchPl(long id);
-	
-	@Query(value = "EXEC SP_SEARCH_AL :id",nativeQuery = true)
-	List<Object> searchAl(int id);
-	
 	@Query(value = "EXEC SP_SEARCH_GR :keyword",nativeQuery = true)
 	List<Object> searchGr(String keyword);
 

@@ -72,21 +72,6 @@ public class AccountServiceImpl implements AccountService, CRUD<Account, String>
 	}
 
 	@Override
-	public List<Object> searchArt(long id) {
-		return dao.searchArt(id);
-	}
-
-	@Override
-	public List<Object> searchPl(long id) {
-		return dao.searchPl(id);
-	}
-
-	@Override
-	public List<Object> searchAl(int id) {
-		return dao.searchAl(id);
-	}
-
-	@Override
 	public List<Object> searchGr(String keyword) {
 		return dao.searchGr(keyword);
 	}

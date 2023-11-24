@@ -23,4 +23,6 @@ public interface RecordService {
 	List<Recording> findListRandomFavorite(String nameGenre, String culture, String instrument, String mood, String songstyle, String versions);
 
 	List<Recording> findMyProject(Long artistId);
+	
+	List<Recording> findSongPl(String songName);
 }

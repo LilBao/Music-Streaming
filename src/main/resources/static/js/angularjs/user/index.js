@@ -36,6 +36,10 @@ app.config(function ($routeProvider) {
             templateUrl: "search-episodes.html",
             controller: "episode"
         })
+        .when("/discography/:id", {
+            templateUrl: "profile-discography.html",
+            controller: 'discography'
+        })
         .when("/karaoke", {
             templateUrl: "Karaoke.html",
             controller: 'karaokeCtrl'

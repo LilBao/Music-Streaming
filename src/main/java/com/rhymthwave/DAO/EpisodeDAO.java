@@ -17,7 +17,7 @@ public interface EpisodeDAO extends JpaRepository<Episode, Long>{
 	@Query(value="SELECT TOP 1 * FROM EPISODES WHERE PUBLISHDATE < GETDATE() AND ISPUBLIC= 1 AND ISDELETED = 0 AND PODCASTID = :podcastId ORDER BY PUBLISHDATE DESC",nativeQuery = true)
 	Episode findLatestByPodcast(@Param("podcastId") Long podcastId);
 	
-	@Query(value = "select e.* from episodes e where e.episodestitle like %:keyword% and e.ispublic = 0 and e.publishdate < getdate()",nativeQuery = true)
+	@Query(value = "select e.* from episodes e where e.episodestitle like %:keyword% and e.ispublic = 1 and e.publishdate < getdate() and e.isdeleted = 0",nativeQuery = true)
 	List<Episode> findByName(@Param("keyword") String keyword);
 
 	@Query(value ="select top 10  episodes.* from podcast \r\n"

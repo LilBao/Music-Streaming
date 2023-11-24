@@ -81,5 +81,8 @@ type Query {
  
  getListSongReleased(email:String!): [Recording]
   
+ #Nam
+ findAlbum(id: ID!): Album
+ findAlByArtist(idArist: ID!): Artist
+ findSongPl(songName: String!): [Recording]
 }
-
