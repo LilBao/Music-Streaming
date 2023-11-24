@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.poi.ss.formula.functions.Now;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.rhymthwave.DAO.AccountDAO;
 import com.rhymthwave.DAO.AuthorDAO;
 import com.rhymthwave.DAO.RoleDAO;
+import com.rhymthwave.DAO.UserTypeDAO;
 import com.rhymthwave.DTO.UserAlreadyExistsException;
 import com.rhymthwave.Request.DTO.SignUpDTO;
 import com.rhymthwave.Service_LR.ISignUpService;
@@ -41,6 +43,8 @@ private final AccountDAO dao;
 
 	@Autowired
 	private AuthorDAO authorDAO;
+	
+	private final UserTypeDAO userTypeDAO;
 	
 	private static final int EXPIRATION_TIME = 15;
 
@@ -74,6 +78,11 @@ private final AccountDAO dao;
 		newAuthor.setRole(roleDAO.findByRole(EROLE.USER));
 		newAuthor.setAccount(newAccount);
 		authorDAO.save(newAuthor);
+		UserType newUserType = new UserType();
+		newUserType.setAccount(newAccount);
+		newUserType.setNameType("BASIC");
+		newUserType.setStartDate(getTimeNow());
+		userTypeDAO.save(newUserType);
 		return newAccount ;
 	}
 
@@ -107,6 +116,13 @@ private final AccountDAO dao;
 		dao.save(account);
 		return ResponseEntity.ok("Verified successfully");
 		
+	}
+	
+	
+	public Date getTimeNow() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(new Date().getTime());
+		return new Date(calendar.getTime().getTime());
 	}
 	
 	public Date getTokenExpirationTime() {

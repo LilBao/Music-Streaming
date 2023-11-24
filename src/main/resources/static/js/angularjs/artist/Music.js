@@ -1,5 +1,5 @@
 var host = "http://localhost:8080/api";
-app.controller('musicCtrl', function ($scope, $http) {
+app.controller('musicCtrl', function ($scope, $http, graphqlService) {
     $scope.listSongUpcoming = [];
     $scope.listAlbumUpcoming = [];
     $scope.listRecord = [];
@@ -42,7 +42,6 @@ app.controller('musicCtrl', function ($scope, $http) {
         }
     }
     //Get list record
-
     $scope.findListRecordArtist = function () {
         let url = host + '/v1/record-artist';
         $http.get(url, {
@@ -87,17 +86,19 @@ app.controller('musicCtrl', function ($scope, $http) {
     $scope.deleteWritter = function (idWritter) {
         let url = host + '/v1/writter/' + idWritter;
         $http.delete(url).then(resp => {
-            $scope.findListSongWritter($scope.song.songId)
+            if ($scope.song.songId) {
+                $scope.findListSongWritter($scope.song.songId);
+                $scope.listMyRecordProject();
+            }
         }).catch(error => {
 
         })
     }
     //Out song
-    $scope.outSong = function (idSong, idArtist) {
-        var writter = $scope.songWritter.find(function (item) {
-            return item.song.songId === idSong && item.artist.artistId === idArtist
-        })
+    $scope.outSong = function (listWritter, songId, artistId,idrecord) {
+        var writter = listWritter.find(item => item.artist.artistId == artistId && item.song.songId == songId);
         $scope.deleteWritter(writter.writterId);
+        $('#btn-out-song-'+idrecord).click();
     }
 
     //Get list song has not record (lấy những bài hát không có record)
@@ -175,9 +176,9 @@ app.controller('musicCtrl', function ($scope, $http) {
     $scope.deleteSong = function (id) {
         let url = host + "/v1/song/" + id
         $http.delete(url).then(resp => {
-            showStickyNotification('Update successfully.', 'success', 3000);
+            showStickyNotification('Delete successfully.', 'success', 3000);
         }).catch(error => {
-            showStickyNotification('Update fail.', 'danger', 3000);
+            showStickyNotification('Delete fail.', 'danger', 3000);
         })
     }
 
@@ -317,7 +318,7 @@ app.controller('musicCtrl', function ($scope, $http) {
                 }).catch(error => {
                 })
             })
-           
+
             if ($scope.type === "song") {
                 $scope.updateSong(dataSong);
             } else {
@@ -338,7 +339,7 @@ app.controller('musicCtrl', function ($scope, $http) {
             console.log(error);
         })
     }
-    
+
     $('#click-tab-2').click(function () {
         $scope.getListAlbumReleased();
     })
@@ -411,6 +412,7 @@ app.controller('musicCtrl', function ($scope, $http) {
             showStickyNotification('Update record fail.', 'danger', 3000);
         })
     }
+
     //update cover image song
     $scope.updateCoverImageSong = function (id) {
         if ($scope.coverImg != null) {
@@ -520,6 +522,15 @@ app.controller('musicCtrl', function ($scope, $http) {
         }
     }
 
+    //Elimidate song or album
+    $scope.Elimidate = function (id, type) {
+        if (type === 'song') {
+            $scope.deleteSong(id);
+        } else {
+            $scope.deleteAlbum(id);
+        }
+    }
+
     //list sub table
     $scope.getListGenre = function () {
         let url = host + "/v1/genre";
@@ -534,12 +545,14 @@ app.controller('musicCtrl', function ($scope, $http) {
             $scope.mood = resp.data.data;
         })
     }
+
     $scope.getListInstrument = function () {
         let url = host + "/v1/instrument";
         $http.get(url).then(resp => {
             $scope.instrument = resp.data.data;
         })
     }
+
     $scope.getListSongStyle = function () {
         let url = host + "/v1/song-style";
         $http.get(url).then(resp => {
@@ -663,6 +676,7 @@ app.controller('musicCtrl', function ($scope, $http) {
 
         })
     }
+
     //Record detail
     $scope.SaveRecord = function () {
         $scope.updateFileRecordOrLyrics();
@@ -671,6 +685,52 @@ app.controller('musicCtrl', function ($scope, $http) {
         showStickyNotification('Update record successfully.', 'success', 3000);
 
     }
+
+    //My project
+    $scope.listMyRecordProject = function () {
+        const query = `{
+            mySongProject(artistid: `+ $scope.artist.artistId + `) {
+                recordingId
+                recordingName
+                audioFileUrl
+                duration
+                songStyle
+                listened
+                mood
+                culture
+                instrument
+                versions
+                studio
+                produce
+                recordingdate
+                song {
+                  songId
+                  songName
+                  releaseDay
+                  image {
+                    accessId
+                    url
+                  }
+                  writters {
+                    writterId
+                    song{
+                        songId
+                    }
+                    artist {
+                      artistId
+                      artistName
+                    }
+                  }
+                }
+            }
+        }`
+        graphqlService.executeQuery(query).then(data => {
+            $scope.listRecordProject = data.mySongProject;
+        })
+    }
+    $('#click-tab-3').click(function () {
+        $scope.listMyRecordProject();
+    })
 
     //Move recording to garbage
     $scope.MoveRecordToGarbage = function () {
@@ -696,7 +756,7 @@ app.controller('musicCtrl', function ($scope, $http) {
     }
 
     //Destroy recording
-    $scope.DestroyRecord = function (id, publicIdAudio,publicIdLyrics) {
+    $scope.DestroyRecord = function (id, publicIdAudio, publicIdLyrics) {
         let url = host + "/v1/record/" + id;
         $http.delete(url).then(resp => {
             $scope.deleteCloudinary(publicIdAudio);
@@ -710,7 +770,7 @@ app.controller('musicCtrl', function ($scope, $http) {
     //Delete in cloudinary
     $scope.deleteCloudinary = function (publicId) {
         let url = host + "/v1/cloudinary?public_id=" + publicId;
-        $http.delete(url).then(resp => {  
+        $http.delete(url).then(resp => {
         }).catch(error => {
         })
     }
@@ -720,25 +780,25 @@ app.controller('musicCtrl', function ($scope, $http) {
     $scope.tmpMood = "";
     $scope.tmpSongStyle = "";
     $scope.tmpInstrument = "";
-    
+
     $scope.addTag = function (tag, value) {
         if (tag === 'culture') {
             if ($scope.record.culture.trim().split(' ').length < 3 && !$scope.record.culture.trim().includes(value)) {
-                $scope.record.culture= $scope.record.culture.trim()+" " + value.trim();
+                $scope.record.culture = $scope.record.culture.trim() + " " + value.trim();
             }
         } else if (tag === 'mood') {
             if ($scope.record.mood.trim().split(' ').length < 3 && !$scope.record.mood.trim().includes(value)) {
-                $scope.record.mood=$scope.record.mood.trim()+ " " + value.trim();
+                $scope.record.mood = $scope.record.mood.trim() + " " + value.trim();
             }
 
         } else if (tag === 'songStyle') {
             if ($scope.record.songStyle.trim().split(' ').length < 3 && !$scope.record.songStyle.trim().includes(value)) {
-                $scope.record.songStyle=$scope.record.songStyle.trim()+" "+ value.trim();
+                $scope.record.songStyle = $scope.record.songStyle.trim() + " " + value.trim();
             }
 
         } else {
             if (!$scope.record.instrument.trim().includes(value)) {
-                $scope.record.instrument=$scope.record.instrument.trim()+ " " + value.trim();
+                $scope.record.instrument = $scope.record.instrument.trim() + " " + value.trim();
             }
         }
     }
@@ -889,7 +949,7 @@ app.controller('musicCtrl', function ($scope, $http) {
         }
     }
     var line = 0;
-    var lyrics = "Made by Rthyme Wave\n";
+    var lyrics = "[00:00]Made by Rthyme Wave\n";
     btnGenerate.addEventListener('click', function () {
         if (sentence[line].trim() == "" || sentence[line].trim() == NaN) {
             line++;
@@ -897,7 +957,7 @@ app.controller('musicCtrl', function ($scope, $http) {
 
         lyrics += timeLyrics(audioLyrics.currentTime) + sentence[line].trim() + "\n";
         line++;
-        afterGenerate.innerHTML=lyrics;
+        afterGenerate.innerHTML = lyrics;
         if (line === sentence.length - 1) {
             const blob = new Blob([lyrics], { type: "text/plain" });
             const url = URL.createObjectURL(blob);
@@ -909,9 +969,10 @@ app.controller('musicCtrl', function ($scope, $http) {
             line = 0;
         }
     })
-    btnReset.addEventListener('click',function(){
-        lyricsContainer.value="";
-        afterGenerate.innerText="";
-        audioLyrics.src="";
+    
+    btnReset.addEventListener('click', function () {
+        lyricsContainer.value = "";
+        afterGenerate.innerText = "";
+        audioLyrics.src = "";
     })
 })

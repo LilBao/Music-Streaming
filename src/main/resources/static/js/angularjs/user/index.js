@@ -9,11 +9,32 @@ app.config(function ($routeProvider) {
             templateUrl: "discover.html"
         })
         .when("/search", {
-            templateUrl: "search.html"
-        })
-        .when("/search-detail", {
             templateUrl: "search-detail.html",
             controller: "SearchController"
+        })
+        .when("/browse-podcast", {
+            templateUrl: "browse-podcast.html",
+            controller: "SearchController"
+        })
+        .when("/show/:id", {
+            templateUrl: "show-podcast.html",
+            controller: "ShowPodcast"
+        })
+        .when("/playlist-art/:id", {
+            templateUrl: "search-playlist-art.html",
+            controller: "playlistCtrl"
+        })
+        .when("/album/:id", {
+            templateUrl: "search-album.html",
+            controller: "album"
+        })
+        .when("/mood/:id", {
+            templateUrl: "search-mood.html",
+            controller: "mood"
+        })
+        .when("/episode/:id", {
+            templateUrl: "search-episodes.html",
+            controller: "episode"
         })
         .when("/karaoke", {
             templateUrl: "Karaoke.html",
@@ -26,7 +47,7 @@ app.config(function ($routeProvider) {
         .when("/playlist/:id", {
             templateUrl: "playlist.html",
             controller: 'playlistCtrl'
-        })      
+        })
         .when("/profile/:profile/:id", {
             templateUrl: "profile.html",
             controller: 'profileCtrl'
@@ -38,6 +59,10 @@ app.config(function ($routeProvider) {
         .when("/podcast/:id", {
             templateUrl: "playlist.html",
             controller: 'playlistCtrl'
+        })
+        .when("/song/:id", {
+            //templateUrl: "playlist.html",
+            //controller: 'playlistCtrl'
         })
         .when("/queue", {
             templateUrl: "Queue.html",
@@ -61,9 +86,9 @@ app.service('queueService', function () {
         getPeekQueue: function () {
             return peekQueue;
         },
-        clearQueue: function(){
+        clearQueue: function () {
             queue = [];
-            return queue; 
+            return queue;
         }
     };
 });
@@ -109,11 +134,11 @@ app.service('audioService', function () {
         },
         isLiked: function (data) {
             if (data.recordingId) {
-                var index = this.getListLikedSongs().findIndex(item => item.recordingId ===data.recordingId);
-            } else {    
-                var index = this.getListLikedSongs().findIndex(item => item.episodeId ===data.episodeId);
+                var index = this.getListLikedSongs().findIndex(item => item.recordingId === data.recordingId);
+            } else {
+                var index = this.getListLikedSongs().findIndex(item => item.episodeId === data.episodeId);
             }
-            return index !==-1;
+            return index !== -1;
         }
     };
 });
@@ -160,6 +185,7 @@ app.directive('formatTime', function () {
         }
     };
 });
+
 app.service('sortService', function () {
     this.sort = function (list, field) {
         this.direction = this.direction === "asc" ? "desc" : "asc";
@@ -183,7 +209,7 @@ app.service('pageService', function () {
     this.pager = {
         page: 0,
         size: 5,
-        setPageSize: function(newSize) {
+        setPageSize: function (newSize) {
             this.size = newSize;
         },
         items(list) {

@@ -27,6 +27,7 @@ app.controller('karaokeCtrl', function ($http,audioService) {
                 };
                 li.setAttribute("data-time", time);
                 li.className="line-lyrics";
+                li.style.fontSize = "xx-large";
                 lyricsContainer.appendChild(li);
             });
         }).catch(err => {

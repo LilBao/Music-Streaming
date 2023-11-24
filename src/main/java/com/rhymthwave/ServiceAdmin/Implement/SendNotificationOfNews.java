@@ -1,6 +1,5 @@
 package com.rhymthwave.ServiceAdmin.Implement;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +47,26 @@ public class SendNotificationOfNews implements INotification<NewDTO> {
 			mailService.enqueue(email);
 		}
 
+	}
+	
+	@Override
+	public void sendEmailBan(String email) {
+		Account accounts = accountDAO.findByEmail(email);
+		Email emails = new Email();
+		emails.setFrom("musicstreaming2023@gmail.com");
+		emails.setTo(email);
+		emails.setSubject("Ban Account");
+		emails.setBody(sendMailTemplateSer.getContentForReport("templateReportAdmin"));
+		mailService.enqueue(emails);
+	}
+	@Override
+	public void sendEmailWarring(String email) {
+		Account accounts = accountDAO.findByEmail(email);
+		Email emails = new Email();
+		emails.setFrom("musicstreaming2023@gmail.com");
+		emails.setTo(email);
+		emails.setSubject("Warring Account");
+		emails.setBody(sendMailTemplateSer.getContentForReport("templateWarring"));
+		mailService.enqueue(emails);
 	}
 }

@@ -20,4 +20,8 @@ public interface FollowDAO extends JpaRepository<Follow, Long>{
 	
 	@Query("SELECT o FROM Follow o WHERE o.authorsAccountB.authorId = :authorId")
 	List<Follow> findByAuthorsAccountB(@Param("authorId") Long authorId);
+
+	@Query(value="select count(*) from follower where account_b = :authorId and followdate > GETDATE() - :days",nativeQuery = true)
+	Integer getQuantityFollowByDate(@Param("authorId") Long authorId, @Param("days") Integer days);
+	
 }

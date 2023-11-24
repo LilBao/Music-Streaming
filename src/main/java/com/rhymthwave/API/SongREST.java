@@ -132,4 +132,9 @@ public class SongREST {
 		String owner = host.getEmailByRequest(req);
 		return ResponseEntity.ok(new MessageResponse(true, "success",songSer.findSongReleasedByArtist(owner)));
 	}
+	
+	@GetMapping("/api/v1/song-pl/{keyword}")
+	public ResponseEntity<MessageResponse> getSongByName(@PathVariable("keyword") String keyword) {
+		return ResponseEntity.ok(new MessageResponse(true, "success", songSer.findByName(keyword)));
+	}
 }

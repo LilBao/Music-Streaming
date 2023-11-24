@@ -116,4 +116,9 @@ public class AlbumREST {
 		return ResponseEntity.ok(new MessageResponse(true, "success",
 				albumSer.findAlbumReleasedByArtist(account.getArtist().getArtistId())));
 	}
+	
+	@GetMapping("/api/v1/album-pl/{keyword}")
+	public ResponseEntity<MessageResponse> getAlbumByName(@PathVariable("keyword") String keyword) {
+		return ResponseEntity.ok(new MessageResponse(true, "success", albumSer.findByName(keyword)));
+	}
 }

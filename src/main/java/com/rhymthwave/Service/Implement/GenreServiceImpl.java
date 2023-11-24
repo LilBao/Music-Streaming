@@ -84,5 +84,11 @@ public class GenreServiceImpl implements CRUD<Genre, Integer>, IGenreService{
 			return null;
 		}
 	}
+
+	@Override
+	public List<Genre> findAllGenre() {
+		// TODO Auto-generated method stub
+		return dao.findAll();
+	}
 	
 }

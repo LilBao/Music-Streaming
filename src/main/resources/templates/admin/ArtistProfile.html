@@ -17,7 +17,7 @@
 
                         <div class="profile-header">
                            <div class="box-img-info text-center">
-                              <img ng-src="{{form.imagesProfile.url}}" class="img-profile" alt="">
+                              <img ng-src="{{form.imagesProfile.url == null ? 'https://res.cloudinary.com/div9ldpou/image/upload/v1697882865/ProfilePicture/User%20null/user-null.png' : form.imagesProfile.url}}" class="img-profile" alt="">
                               <div class="profile-detail mt-3 ">
                                  <h3>{{form.artistName}}</h3>
                                  <p class="text-primary">{{form.fullName}}</p>
@@ -126,7 +126,7 @@
                                     </div>
                                     <div class="media-support-info ml-3">
                                        <h6>Total Album</h6>
-                                       <p class="mb-0">3</p>
+                                       <p class="mb-0">{{totalAlbumAndSong[1] === null || "" ? 0: totalAlbumAndSong[1]}}</p>
                                     </div>
 
                                  </li>
@@ -135,7 +135,7 @@
                                     </div>
                                     <div class="media-support-info ml-3">
                                        <h6>Total Song</h6>
-                                       <p class="mb-0">204kb</p>
+                                       <p class="mb-0">{{totalAlbumAndSong[0] === null || "" ? 0: totalAlbumAndSong[0]}}</p>
                                     </div>
 
                                  </li>
@@ -144,7 +144,7 @@
                                     </div>
                                     <div class="media-support-info ml-3">
                                        <h6>Follower</h6>
-                                       <p class="mb-0">509kb</p>
+                                       <p class="mb-0">{{follower}}</p>
                                     </div>
 
                                  </li>
@@ -153,7 +153,7 @@
                                     </div>
                                     <div class="media-support-info ml-3">
                                        <h6>Listener</h6>
-                                       <p class="mb-0">48kb</p>
+                                       <p class="mb-0" >{{sumListened}}</p>
                                     </div>
 
                                  </li>
@@ -171,14 +171,14 @@
                            </div>
                            <div class="iq-card-body">
                               <ul class="list-inline p-0 mb-0">
-                                 <li ng-repeat="album in album">
+                                 <li ng-repeat="album in album.albums">
                                     <div class="iq-details mb-2 d-flex">
 
                                        <img ng-src="{{album.image.url}}" alt="img" class="img-album rounded-1  ">
 
                                        <div class="title-album ms-2 mt-2">
                                           <h6>{{album.albumName}}</h6>
-                                          <p class="songs-in-album">Songs: <span>9</span></p>
+                                          <p class="songs-in-album">Songs: <span>{{album.tracks.length}}</span></p>
                                        </div>
 
                                     </div>
@@ -208,91 +208,69 @@
                            <table class="table table-hover table-borderless">
                               <thead style="border-bottom: 1px solid rgb(234, 230, 230);">
                                  <tr>
-                                    <th scope="col">#</th>
+                                    
                                     <th scope="col">Song name</th>
+                                    <th scope="col">Listened</th>
+                                    <th scope="col">Wishlist</th>
                                     <th scope="col">Album</th>
                                     <th scope="col">Time</th>
                                  </tr>
                               </thead>
-                              <tbody c>
-                                 <tr ng-repeat="song in song">
-                                    <th scope="row">{{$index +1}}</th>
-                                    <td>
-                                       <div class="d-flex align-items-center ">
-                                          <img ng-src="{{song.song.image.url}}" alt="img" class="img-songs rounded-1  ">
+                              <tbody ng-repeat=" itemSong in album.writters" >
+                                 <tr  ng-repeat=" itemRecording in itemSong.song.recordings">
+                                   
+                                    <td >
+                                       <div class="d-flex align-items-center " style="cursor:pointer">
+                                          <img ng-src="{{itemRecording.song.image.url}}" alt="img" class="img-songs rounded-1  ">
                                           <div class="mx-2"   style="line-height: 15px;">
-                                             <a href="#" class="song-namefor-actist">{{song.song.songName}}</a>
+                                             <span ng-click="playAudio()"  class="song-namefor-actist">{{itemRecording.song.songName}} {{itemRecording.recordingId}} 
+                                             </span>
+
+                                             <!-- <audio   id="audio-player" src="{{itemRecording.audioFileUrl}}">
+                                                
+                                             </audio> -->
+
                                              <h6 class="songs-in-album ">hát cùng ai<span>9</span></h6>
                                           </div>
                                        </div>
-                                       <!-- <div class="title-album ms-2 align-content-center">
-                                          <a href="#" class="song-namefor-actist">{{song.song.songName}}</a>
-
-                                          <h6 class="songs-in-album ">hát cùng ai<span>9</span></h6>
-                                       </div> -->
-
                                     </td>
-                                    <td>
+                                 
+
+                                    <td >
                                        <div class="title-albums">
-                                          <h6 class="songs-in-album mb-1" ng-repeat="album in song.song.recordings"
-                                             ng-repeat="album in song.song.recordings.tracks">
-                                             {{album.albumName}}<span>9</span></h6>
+                                          <h6 class="songs-in-album mb-1"  >
+                                           
+                                             <span class="mx-2">{{ itemRecording.listened}} </span>   </h6>
+                                       </div>
+                                    </td>
+
+                                    
+                                    <td >
+                                       <div class="title-albums">
+                                          <h6 class="songs-in-album mb-1"  >
+                                           
+                                             <span class="mx-2">{{ itemRecording.wishlists.length}} </span>   </h6>
+                                       </div>
+                                    </td>
+
+                                    <td >
+                                       <div class="title-albums">
+                                          <h6 class="songs-in-album mb-1" 
+                                             ng-repeat="album in itemRecording.tracks">
+                                             <span class="mx-2">{{ album.album.albumName}} </span>   </h6>
                                        </div>
                                     </td>
                                     <td>
                                        <div class="title-albums ">
-                                          <h6 class="songs-in-album " ng-repeat="duration in song.song.recordings">
-                                             <span>{{duration.duration}}</span>
+                                          <h6 class="songs-in-album " >
+                                             <span>{{itemRecording.duration}}</span>
                                           </h6>
                                        </div>
                                     </td>
                                  </tr>
-
                               </tbody>
                            </table>
                         </div>
-
-                        <!-- <div class="d-flex justify-content-between mb-2 title-song-artistPrfile">
-                           <div class="songIn-artistProfile">
-                              Song name
-                           </div>
-                           <div class="songIn-artistProfile">
-                              Album
-                           </div>
-                           <div class="songIn-artistProfile">
-                              Time
-                           </div>
-                        </div> -->
-                        <!-- 
-                        <ul class="list-inline p-0 mb-0">
-                           <li ng-repeat="song in song">
-                              <div class="iq-details mb-2 d-flex justify-content-between">
-                                 <div class="d-flex">
-                                    <div>
-                                       <img ng-src="{{song.song.image.url}}" alt="img" class="img-songs rounded-1  ">
-                                    </div>
-                                    <div class="title-album ms-2 align-content-center">
-                                       <a href="#" class="song-namefor-actist">{{song.song.songName}}</a>
-
-                                       <h6 class="songs-in-album ">hát cùng ai<span>9</span></h6>
-                                    </div>
-                                 </div>
-                                 <div class="title-albums">
-
-                                    <h6 class="songs-in-album mb-1" ng-repeat="album in song.song.recordings"
-                                       ng-repeat="album in song.song.recordings.tracks">
-                                       {{album.albumName}}<span>9</span></h6>
-                                 </div>
-                                 <div class="title-albums ">
-                                    <h6 class="songs-in-album " ng-repeat="duration in song.song.recordings">
-                                       <span>{{duration.duration}}</span>
-                                    </h6>
-                                 </div>
-                              </div>
-                           </li>
-
-
-                        </ul> -->
                         <div class="pagination d-flex justify-content-between">
                            <a href="#" class="previous round">&#8249;</a>
                            <h6 class="number-page-artistProfile mt-2"> 1 </h6>

@@ -169,4 +169,9 @@ public class ArtistREST {
 		List<Artist> list = artistSer.findAllArtistNameisVerify(artist.getArtistId(), "%"+artistName+"%");
 		return ResponseEntity.ok(new MessageResponse(true,"success",list));
 	}
+	
+	@GetMapping("/api/v1/artist-pl/{keyword}")
+	public ResponseEntity<MessageResponse> getArtByName(@PathVariable("keyword") String keyword) {
+		return ResponseEntity.ok(new MessageResponse(true, "succeess", artistSer.findByName(keyword)));
+	}
 }

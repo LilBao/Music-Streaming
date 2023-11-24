@@ -58,10 +58,22 @@ app.config(function($routeProvider,$cookiesProvider) {
     templateUrl : "ManageReport.html",
     controller: "ReportController"
   })
+  .when("/manage-playlist", {
+    templateUrl : "managerPlaylist.html",
+    controller: "managerPlaylistController"
+  })
   .when("/statistical_managerment", {
     templateUrl : "statistical_managerment.html",
     controller: "ChartController"
-  }).otherwise({ templateUrl : "404.html"});
+  }).when("/approve-role", {
+    templateUrl : "approveRoles.html",
+    controller: "approveRolesController"
+  })
+  .when("/subscriptions", {
+    templateUrl : "Subscription.html",
+    controller: "subscriptionController"
+  })
+  .otherwise({ templateUrl : "404.html"});
   
 });
 
@@ -85,3 +97,58 @@ app.service('graphqlService',function ($http) {
           });
   };
 });
+
+app.service('sortService', function () {
+  this.sort = function (list, field) {
+      this.direction = this.direction === "asc" ? "desc" : "asc";
+      if (this.direction === "asc") {
+          list.sort((a, b) => a[field].localeCompare(b[field]))
+      } else {
+          list.sort((a, b) => b[field].localeCompare(a[field]))
+      }
+  }
+  sortNumber = function (list, field) {
+      this.direction = this.direction === "asc" ? "desc" : "asc";
+      if (this.direction === "asc") {
+          list.sort((a, b) => a[field] - (b[field]))
+      } else {
+          list.sort((a, b) => b[field] - (a[field]))
+      }
+  }
+})
+
+app.service('pageService', function () {
+  this.pager = {
+      page: 0,
+      size: 5,
+      setPageSize: function(newSize) {
+          this.size = newSize;
+      },
+      items(list) {
+          var start = this.page * this.size;
+          return list.slice(start, start + this.size)
+      },
+      count(list) {
+          return Math.ceil(1.0 * list.length / this.size)
+      },
+      prev() {
+          this.page--;
+          if (this.page < 0) {
+              this.page = 0;
+          }
+      },
+      next(list) {
+          this.page++;
+          if (this.page >= this.count(list)) {
+              this.page = this.count(list) - 1;
+          }
+      },
+      getNumbers(n) {
+          var rangeArray = [];
+          for (var i = 1; i <= n; i++) {
+              rangeArray.push(i);
+          }
+          return rangeArray;
+      }
+  }
+}) 

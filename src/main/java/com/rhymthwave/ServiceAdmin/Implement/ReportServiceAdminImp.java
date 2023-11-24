@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -14,10 +15,13 @@ import com.rhymthwave.DAO.ArtistDAO;
 import com.rhymthwave.DAO.EpisodeDAO;
 import com.rhymthwave.DAO.RecordDAO;
 import com.rhymthwave.DAO.ReportDAO;
+import com.rhymthwave.Request.DTO.NewDTO;
 import com.rhymthwave.Service.CRUD;
+import com.rhymthwave.ServiceAdmin.INotification;
 import com.rhymthwave.ServiceAdmin.IReportServiceAdmin;
 import com.rhymthwave.entity.Account;
 import com.rhymthwave.entity.Artist;
+import com.rhymthwave.entity.Email;
 import com.rhymthwave.entity.Episode;
 import com.rhymthwave.entity.Podcast;
 import com.rhymthwave.entity.Recording;
@@ -43,6 +47,10 @@ public class ReportServiceAdminImp implements IReportServiceAdmin, CRUD<Report, 
 	
 	@Autowired
 	private JavaMailSender mailSender;
+	
+	@Qualifier("sendNotificationOfNews")
+	private final INotification<NewDTO> notification;
+	
 	
 	public List<Report> findAllReport() {
 		// TODO Auto-generated method stub
@@ -106,10 +114,13 @@ public class ReportServiceAdminImp implements IReportServiceAdmin, CRUD<Report, 
 		Account newAccount = newArtist.getAccount();
 		newAccount.setBlocked(true);
 		accountDAO.save(newAccount);
-		sendEmailBan(newAccount.getEmail());
+//		sendEmailBan(newAccount.getEmail());
+		notification.sendEmailBan(newAccount.getEmail());
 	}
 
 	public void sendEmailBan(String email) throws MessagingException, UnsupportedEncodingException {
+		
+
 		String subject = "Email Band Account";
 		String senderName = "Baned Account";
 		String mailContent = "You violated the community rules so we decided to lock your account";
@@ -128,14 +139,16 @@ public class ReportServiceAdminImp implements IReportServiceAdmin, CRUD<Report, 
 		episodeDAO.save(newEpisode);
 		Podcast newPodcast = newEpisode.getPodcast();
 		Account email = newPodcast.getAccount();
-		sendEmailBan(email.getEmail());
+//		sendEmailBan(email.getEmail());
+		notification.sendEmailBan(email.getEmail());
 	}
 
 	public void banrecordingId(Long recordingId) throws UnsupportedEncodingException, MessagingException {
 		Recording newRecording = recordDAO.findAllById(recordingId);
 		newRecording.setIsDeleted(true);
 		recordDAO.save(newRecording);
-		sendEmailBan(newRecording.getEmailCreate());
+//		sendEmailBan(newRecording.getEmailCreate());
+		notification.sendEmailBan(newRecording.getEmailCreate());
 		
 	}
 
@@ -145,7 +158,7 @@ public class ReportServiceAdminImp implements IReportServiceAdmin, CRUD<Report, 
 		episodeDAO.save(newEpisode);
 		Podcast newPodcast = newEpisode.getPodcast();
 		Account email = newPodcast.getAccount();
-		sendEmailBan(email.getEmail());
-		
+//		sendEmailBan(email.getEmail());
+		notification.sendEmailBan(email.getEmail());
 	}
 }

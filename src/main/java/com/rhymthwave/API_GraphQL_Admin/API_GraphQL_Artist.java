@@ -26,20 +26,6 @@ public class API_GraphQL_Artist {
 		Artist artist = artistService.getOneArtistByEmail(email);
 		return artist;
 	}
-//	
-//	@QueryMapping("count")
-//	public Object count(@Argument("idAccount") String idArtist) {
-//		log.info(">>>>>>>>>>> idArtist {}", idArtist);
-//		return idArtist;
-//	}
-	
-//	
-//	@QueryMapping("countReport")
-//	public Integer count(@Argument("idAccount") String idAccount) {
-//		int count = accountServiceAdmin.countReportByAccount(idAccount);
-//		log.info(">>>>>>>>>>> idArtist {}", count);
-//
-//		return 123;
-//	}
+
 
 }

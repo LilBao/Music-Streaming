@@ -10,4 +10,6 @@ public interface ArtistService {
 	List<Artist> findIsVerify(Boolean verify);
 	
 	List<Artist> findAllArtistNameisVerify(Long id,String artistName);
+	
+	List<Object> findByName(String keyword);
 }

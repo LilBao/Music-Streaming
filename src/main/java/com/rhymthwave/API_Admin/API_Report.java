@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,9 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rhymthwave.DAO.ReportDAO;
 import com.rhymthwave.DAO.SlideDAO;
 import com.rhymthwave.DTO.MessageResponse;
+import com.rhymthwave.Request.DTO.NewDTO;
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.Service.Implement.AccountServiceImpl;
 import com.rhymthwave.ServiceAdmin.IDisplaySlide;
+import com.rhymthwave.ServiceAdmin.INotification;
 import com.rhymthwave.ServiceAdmin.IReportServiceAdmin;
 import com.rhymthwave.ServiceAdmin.Implement.DisplaySlideImp;
 import com.rhymthwave.ServiceAdmin.Implement.ReportServiceAdminImp;
@@ -48,6 +51,9 @@ public class API_Report {
 	private final ReportServiceAdminImp reportServiceAdminImp;
 	
 	private final CRUD<Report,Integer> crudReport;
+	
+	@Qualifier("sendNotificationOfNews")
+	private final INotification<NewDTO> notification;
 
 //	@GetMapping
 //	public ResponseEntity<?> getAllReport() {
@@ -63,7 +69,7 @@ public class API_Report {
 	}
 	@PostMapping("/sendemailwarring/{email}")
 	public ResponseEntity<?> sendEmailWarring(@PathVariable("email") String email) throws UnsupportedEncodingException, MessagingException{
-		reportServiceAdminImp.sendEmailWarring(email);
+		notification.sendEmailWarring(email);
 		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", null));
 		
 	}

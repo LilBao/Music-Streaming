@@ -8,4 +8,6 @@ public interface SongService {
 	List<Song> findSongNotRecord(String email);
 	
 	List<Song> findSongReleasedByArtist(String artistId);
+	
+	List<Song> findByName(String keyword);
 }

@@ -9,6 +9,7 @@ import com.rhymthwave.DAO.RecordDAO;
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.Service.RecordService;
 import com.rhymthwave.entity.Recording;
+import com.rhymthwave.entity.Song;
 
 @Service
 public class RecordServiceImpl implements RecordService, CRUD<Recording, Long>{
@@ -87,6 +88,18 @@ public class RecordServiceImpl implements RecordService, CRUD<Recording, Long>{
 	@Override
 	public List<Recording> findListRecordRandom() {
 		return dao.findListRandom();
+	}
+
+	@Override
+	public List<Recording> findListRandomFavorite(String nameGenre, String culture, String instrument, String mood,
+			String songstyle, String versions) {
+		return dao.findListRandomFavorite(nameGenre, "%"+culture+"%", "%"+instrument+"%","%"+mood+"%", "%"+songstyle+"%", versions+"%");
+	}
+	
+	@Override
+	public List<Recording> findMyProject(Long artistid) {
+		List<Recording> listRecord = dao.getMyProject(artistid);
+		return listRecord;
 	}
 	
 }

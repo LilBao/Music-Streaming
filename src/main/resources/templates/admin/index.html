@@ -22,6 +22,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/graphql-request@6.1.0/build/cjs/index.min.js"></script>
     <script src="../../static/js/jscustom/UI-Js-Admin/routing_admin.js"></script>
+    <script src="../../static/js/jscustom/UI-Js-Admin/subscriptionUI.js"></script>
     <link rel="stylesheet" href="../../static/css/toasts.css">
     <style>
         .alert-success {
@@ -167,7 +168,7 @@
                             <a href="#/!"><i class="bi bi-house-door-fill"></i>Dashboard</a>
                         </li>
                         <li>
-                            <a href="#!EditUser"><i class="bi bi-music-note-list"></i>Manager Playlist</a>
+                            <a href="#!manage-playlist"><i class="bi bi-music-note-list"></i>Manager Playlist</a>
                         </li>
                         <li>
                             <a href="#!account"><i class="bi bi-people-fill"></i>Manager Account</a>
@@ -201,7 +202,7 @@
                             <a href="#!edit-user"><i class="bi bi-person-gear"></i>Edit User</a>
                         </li>
                         <li>
-                            <a href="#!artist-profile"><i class="bi bi-person-lines-fill"></i>ArtistProfile</a>
+                            <a href="#!approve-role"><i class="bi bi-person-lines-fill"></i>Approve Role</a>
                         </li>
                         <li class="sub-menu">
                             <a href=""><i class="bi bi-house-door-fill"></i>Category
@@ -221,7 +222,7 @@
                                 Managerment</a>
                         </li>
                         <li>
-                            <a href="#"><i class="bi bi-file-music-fill"></i>bootstrap-icons</a>
+                            <a href="#!subscriptions"><i class="bi bi-file-music-fill"></i>Subcriptions</a>
                         </li>
                         <li>
                             <a href="#"><i class="bi bi-house-door-fill"></i>font-awesome icon</a>
@@ -245,10 +246,13 @@
     </div>
     <!-- js -->
 
+
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="../../static/js/jscustom/UI-Js-Admin/statistical.js"></script>
     <script src="../../static/js/jscustom/UI-Js-Admin/code.jquery.com_jquery-3.7.1.min.js"></script>
+
     <script src="../../static/js/jscustom/UI-Js-Admin/UI_DisplaySlide.js"></script>
     <script src="../../static/js/angularjs/BE-Admin/Profile/profile.js"></script>
     <script src="../../static/js/angularjs/BE-Admin/Category/mood.js"></script>
@@ -261,72 +265,57 @@
     <script src="../../static/js/angularjs/BE-Admin/News/managerNews.js "></script>
     <script src="../../static/js/angularjs/BE-Admin/Slide/displaySlide.js"></script>
     <script src="../../static/js/angularjs/BE-Admin/Report/Report.js"></script>
+    <script src="../../static/js/angularjs/BE-Admin/subscription.js"></script>
     <script src="../../static/js/angularjs/BE-Admin/ManagerAccount/tblAccount.js"></script>
     <script src="../../static/js/angularjs/BE-Admin/ManagerAccount/profileAccount.js"></script>
+    <script src="../../static/js/angularjs/BE-Admin/managerPlaylist.js"></script>
+    <script src="../../static/js/angularjs/BE-Admin/approveRole.js"></script>
     <script src="../../static/js/jscustom/UI-Js-Admin/bootstrap-show-notification.js"></script>
     <script
         src="../../static/js/jscustom/UI-Js-Admin/cdn.jsdelivr.net_npm_bootstrap@5.3.1_dist_js_bootstrap.bundle.min.js"></script>
     <script src="../../static/js/jscustom/toasts.js"></script>
-
     <script src="../../static/js/jscustom/UI-Js-Admin/dirPagination.js"></script>
     <script src="../../static/js/jscustom/UI-Js-Admin/admin.js"></script>
-    <!-- <script>
-        var chrt = document.getElementById("chartId").getContext("2d");
-        var chartId = new Chart(chrt, {
-            type: 'pie',
-            data: {
-                labels: ["HTML", "CSS", "JAVASCRIPT"],
-                datasets: [{
-                    label: "online tutorial subjects",
-                    data: [60, 20, 20],
-                    backgroundColor: ['yellow', 'aqua', 'pink', 'lightgreen', 'gold', 'lightblue'],
-                    hoverOffset: 5
-                }],
-            },
-            options: {
-                responsive: false,
-            },
-        });
-    </script>
-
+    <!-- <script src="../../static/js/jscustom/UI-Js-Admin/subscriptionUI.js"></script> -->
     <script>
-        var chartTooltip = document.getElementById("toolTip").getContext("2d");
-        var toolTip = new Chart(chartTooltip, {
-            type: "line",
-            data: {
-                labels: ["HTML", "CSS", "JAVASCRIPT", "CHART.JS", "JQUERY", "BOOTSTRP"],
-                datasets: [{
-                    label: "online tutorial subjects",
-                    data: [20, 40, 30, 35, 30, 20],
-                    backgroundColor: ['coral', 'aqua', 'pink', 'lightgreen', 'lightblue', 'crimson'],
-                    borderColor: [
-                        "black",
-                    ],
-                    borderWidth: 1,
-                    pointRadius: 5,
-                }],
-            },
-            options: {
-                responsive: false,
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'bottom',
-                        align: 'center',
-                        labels: {
-                            color: 'darkred',
-                            font: {
-                                weight: 'bold'
-                            },
-                        }
-                    }
-                }
-            }
+
+        $('.newbtn').bind("click", function () {
+            $('#pic').click();
         });
-    </script> -->
 
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
 
+                reader.onload = function (e) {
+                    $('#blah')
+                        .attr('src', e.target.result);
+                };
 
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+    </script>
+    <script>
+        
+        $('.newbtn1').bind("click", function () {
+            $('#pic1').click();
+        });
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#blah1')
+                        .attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 </body>
 
 </html>
