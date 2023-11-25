@@ -20,7 +20,7 @@ type Artist{
 	imagesGallery: [String]
 	publicIdImageGallery: [String]
 	socialMediaLinks: [String]
-	active: String
+	active: Boolean
 	isVerify: Boolean
 	dateStarted: String
 	imagesProfile: Image

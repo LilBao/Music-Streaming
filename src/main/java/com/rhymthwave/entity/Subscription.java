@@ -1,22 +1,16 @@
 package com.rhymthwave.entity;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import com.rhymthwave.entity.TypeEnum.ESubscription;
+import com.rhymthwave.entity.TypeEnum.EUserType;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 @SuppressWarnings("serial")
 @Data
@@ -31,8 +25,13 @@ public class Subscription implements Serializable {
 	@Column(name = "SUBCRIPTIONID")
 	private Integer subscriptionId;
 	
-	@Column(name = "SUBCRIPTIONTYPE")
-	private String subscriptionType;
+	@Column(name = "SUBCRIPTIONTYPE",columnDefinition = "nvarchar(50)")
+	@Enumerated(EnumType.STRING)
+	private EUserType subscriptionType;
+
+	@Column(name = "SUBCRIPTIONCATEGORY",columnDefinition = "nvarchar(50)")
+	@Enumerated(EnumType.STRING)
+	private ESubscription subscriptionCategory;
 	
 	@Column(name = "PRICE",columnDefinition = "Float")
 	private Float price;
@@ -55,6 +54,9 @@ public class Subscription implements Serializable {
 	@Column(name = "DURATION")
 	private Integer duration;
 	
+	@Column(name = "PRIORITY")
+	private Integer priority;
+	
 	@Column(name = "PLAYLISTALLOW")
 	private Integer playlistAllow;
 	
@@ -64,5 +66,9 @@ public class Subscription implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "subscription", cascade = CascadeType.REFRESH)
 	private List<UserType> userTypes;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "subscription", cascade = CascadeType.ALL)
+	private List<Advertisement> advertisement;
 }
 

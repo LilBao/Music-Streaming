@@ -62,6 +62,10 @@ app.config(function($routeProvider,$cookiesProvider) {
     templateUrl : "managerPlaylist.html",
     controller: "managerPlaylistController"
   })
+  .when("/playlist/:id/detail", {
+    templateUrl : "PlaylistDetail.html",
+    controller: "playlistDetailController"
+  })
   .when("/statistical_managerment", {
     templateUrl : "statistical_managerment.html",
     controller: "ChartController"
@@ -69,8 +73,12 @@ app.config(function($routeProvider,$cookiesProvider) {
     templateUrl : "approveRoles.html",
     controller: "approveRolesController"
   })
-  .when("/subscriptions", {
+  .when("/subscriptions-package", {
     templateUrl : "Subscription.html",
+    controller: "subscriptionController"
+  })
+  .when("/subscriptions-statistic", {
+    templateUrl : "SubscriptionsStatistics.html",
     controller: "subscriptionController"
   })
   .otherwise({ templateUrl : "404.html"});
@@ -152,3 +160,27 @@ app.service('pageService', function () {
       }
   }
 }) 
+
+app.directive('formatTime', function () {
+  return {
+      restrict: 'E',
+      scope: {
+          seconds: '='
+      },
+      template: '<span>{{ secondsToTime(seconds) }}</span>',
+      link: function (scope, element, attrs) {
+          scope.secondsToTime = function (seconds) {
+              var hours = Math.floor(seconds / 3600);
+              var minutes = Math.floor((seconds % 3600) / 60);
+              var secs = Math.floor((seconds % 60))
+              const secondsStr = secs < 10 ? "0" + secs : secs;
+              if (hours > 0) {
+                  return hoursStr + ':' + minutes + ':' + secondsStr;
+              } {
+                  return minutes + ':' + secondsStr;
+              }
+          };
+      }
+  };
+});
+

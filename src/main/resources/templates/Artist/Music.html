@@ -56,7 +56,7 @@
                                 <th>Listeners</th>
                                 <th>Uploaded date </th>
                                 <th>
-                                    <button ng-click="resetRecord()" class="btn border-0 p-0" data-bs-toggle="modal"
+                                    <button ng-click="resetRecord()" id="btn-upload-record" class="btn border-0 p-0" data-bs-toggle="modal"
                                         data-bs-target="#record">
                                         <i class="bi bi-plus-circle"></i>
                                     </button>
@@ -149,8 +149,8 @@
                             </a>
                         </div>
                     </div>
-                    <div class="modal" id="detail">
-                        <div class="modal-dialog">
+                    <div class="modal fade" id="detail">
+                        <div class="modal-dialog modal-xl">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h4 class="modal-title">Details</h4>
@@ -235,7 +235,7 @@
                                                         <input id="fileCoverImg" type="file" hidden>
                                                     </div>
 
-                                                    <div class="ms-5">
+                                                    <div class="mx-4">
                                                         <input id="nameDetail" class="inputCss" type="text"
                                                             value="{{typeDetail === 'album' ? album.albumName : song.songName}}"
                                                             readonly>
@@ -264,8 +264,8 @@
                                                             </div>
                                                         </div>
                                                         <div class="d-flex justify-content-between">
-                                                            <p class="m-0 p-0">20 record</p>
-                                                            <p class="m-0 p-0">102222 listeners</p>
+                                                            <p class="m-0 p-0">{{listDetail.length}} record</p>
+                                                            <p class="m-0 p-0">{{listened}} listeners</p>
                                                         </div>
                                                         <div>
                                                             <input class="inputCss" type="text" id="releaseDetail"
@@ -293,7 +293,7 @@
                                                                     class="d-flex justify-content-between align-items-center">
                                                                     <div class="d-flex align-items-center">
                                                                         <p>{{$index + 1}}</p>
-                                                                        <img class=""
+                                                                        <img class="mx-3"
                                                                             style="object-fit: cover; width: 50px; height: 50px;"
                                                                             ng-src="{{typeDetail === 'album' ? item.recording.song.image.url : item.song.image.url}}"
                                                                             alt="">
@@ -301,7 +301,7 @@
                                                                             <h6>{{typeDetail === 'album' ?
                                                                                 item.recording.song.songName :
                                                                                 item.recordingName}}</h6>
-                                                                            <span>123123 views</span>
+                                                                            <span>{{typeDetail === 'album' ? item.recording.listened : item.listened}} listened</span>
                                                                         </div>
                                                                     </div>
                                                                     <div>
@@ -391,7 +391,7 @@
                         <tr class="align-items-center" ng-repeat="x in listSongUpcoming">
                             <td class="d-flex align-items-center">
                                 <i class="bi bi-music-note"></i>
-                                <img class="cover-image rounded-4" src="{{x.image.url}}" alt="">
+                                <img class="mx-3 cover-image rounded-4" src="{{x.image.url}}" alt="">
                                 <h6>{{x.songName}}</h6>
                             </td>
                             <td>
@@ -400,7 +400,7 @@
                                     Pitch
                                 </button>
                             </td>
-                            <td colspan="2">{{x.releaseDay | date:'dd/MM/yyyy, hh:mm:ss'}}</td>
+                            <td colspan="2">{{x.releaseDay | date:'dd/MM/yyyy, hh:mm a'}}</td>
                         </tr>
                         <tr class="align-items-center" ng-repeat="x in listAlbumUpcoming">
                             <td class="d-flex align-items-center">
@@ -414,7 +414,7 @@
                                     Pitch
                                 </button>
                             </td>
-                            <td colspan="2">{{x.releaseDate | date:'dd/MM/yyyy, hh:mm:ss'}}</td>
+                            <td colspan="2">{{x.releaseDate | date:'dd/MM/yyyy, hh:mm a'}}</td>
                         </tr>
                     </tbody>
                 </table>

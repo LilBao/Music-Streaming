@@ -2,6 +2,8 @@ package com.rhymthwave.Service.Implement;
 
 import java.util.List;
 
+import com.rhymthwave.entity.TypeEnum.ESubscription;
+import com.rhymthwave.entity.TypeEnum.EUserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,9 @@ public class SubscriptionServiceImpl implements SubscriptionService, CRUD<Subscr
 
 	@Override
 	public Subscription create(Subscription entity) {
+		if(entity.getSubscriptionCategory() == ESubscription.ACCOUNT){
+			entity.setSubscriptionType(EUserType.PREMIUM);
+		}
 		entity.setActive(true);
 		entity.setCreateDate(GetCurrentTime.getTimeNow());
 		return dao.save(entity);
@@ -55,6 +60,8 @@ public class SubscriptionServiceImpl implements SubscriptionService, CRUD<Subscr
 		return dao.findAll();
 	}
 
-
-
+	@Override
+	public List<Subscription> findByCategory(ESubscription cate) {
+		return dao.findBySubscriptionCategory(cate);
+	}
 }

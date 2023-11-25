@@ -325,12 +325,6 @@
                                 Subscription</a>
                         </li>
 
-                        <li class="nav-item flex-sm-fill">
-                            <a id="statistics-tab" id="pills-statistics-tab" data-bs-toggle="pill"
-                                data-bs-target="#pills-statistics" type="button" role="tab"
-                                aria-controls="pills-statistics" aria-selected="false"
-                                class="nav-link border-0 text-uppercase font-weight-bold">Statistics</a>
-                        </li>
                     </ul>
                     <div id="myTabContent" class="tab-content">
 
@@ -424,7 +418,7 @@
                                                                 </div>
                                                                 <div style="text-align: center;" class="m-2">
                                                                     <h5> Are you sure ? </h5>
-                                                                    {{item.subscriptionId}}
+                                                                   
                                                                 </div>
 
                                                             </div>
@@ -458,12 +452,11 @@
                             class="tab-pane fade px-4  ">
                             <div class="container">
                                 <div class="mb-3">
-                                    <label for="formGroupExampleInput" class="form-label mb-0">Subscription
-                                        Type:</label>
-                                    <select class="form-select form-select mb-3" ng-model="form.subscriptionType">
-                                        <option value="PREMIUM">PREMIUM</option>
-                                        <option value="BASIC">BASIC</option>
-
+                                    <label for="formGroupExampleInput" class="form-label mb-0">Subscription Category:</label>
+                                      
+                                    <select class="form-select form-select mb-3" ng-model="form.subscriptionCategory">
+                                        <option value="ADVERTISEMENT">Advertisement</option>
+                                        <option value="ACCOUNT">Account</option>
                                     </select>
                                 </div>
 
@@ -480,7 +473,7 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="formGroupExampleInput" class="form-label mb-0">Duration:</label>
+                                    <label for="formGroupExampleInput" class="form-label mb-0">Duration day:</label>
                                     <input ng-model="form.duration" type="number" name="title" class="form-control"
                                         placeholder="Subscription expiration time">
                                 </div>
@@ -527,65 +520,7 @@
 
                         </div>
 
-                        <!-- Statistics -->
-                        <div id="pills-statistics" role="tabpanel" aria-labelledby="pills-statistics-tab" tabindex="0"
-                            class="tab-pane fade px-4  ">
-                            <div class="container">
-                                <div class="table-responsive">
-                                    <table class="table ">
-                                        <thead class="table-light">
-                                            <tr>
-                                                <th scope="col" class="text-center">#</th>
-                                                <th scope="col" class="text-center"> Type</th>
-                                                <th scope="col" class="text-center">Price</th>
-                                                <th scope="col" class="text-center">Description</th>
-                                                <th scope="col" class="text-center">Limit playlist</th>
-                                                <th scope="col" class="text-center">Limit songs</th>
-                                                <th scope="col" class="text-center">Total Users using</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                            <tr
-                                                ng-repeat="statistics in statistics | orderBy : 'userTypes.length' : 'false'">
-                                                <th class="text-center" scope="row">{{$index + 1}}</th>
-
-                                                <td class="text-center">
-                                                  
-                                                    <span    ng-class="{'badge text-bg-info mx-1':statistics.subscriptionType === 'BASIC', 'badge text-bg-warning mx-1': statistics.subscriptionType === 'PREMIUM'}">{{statistics.subscriptionType}}</span>
-                                                   
-                                                </td>
-                                                <td class="text-center">{{statistics.price}}</td>
-                                                <td class="text-center">{{statistics.description }}</td>
-                                                <td class="text-center">
-                                                    {{statistics.playlistAllow }}
-                                                </td>
-                                                <td class="text-center">
-                                                    {{statistics.nip }}
-                                                </td>
-                                                <td class="text-center">
-                                                    {{statistics.userTypes.length }}
-                                                </td>
-                                            </tr>
-
-
-
-                                        </tbody>
-                                        <tfoot>
-                                            <th scope="col" class="text-center">#</th>
-                                            <th scope="col" class="text-center"> Type</th>
-                                            <th scope="col" class="text-center">Price</th>
-                                            <th scope="col" class="text-center">Description</th>
-                                            <th scope="col" class="text-center">Limit playlist</th>
-                                            <th scope="col" class="text-center">Limit songs</th>
-                                            <th scope="col" class="text-center">Total Users using</th>
-                                        </tfoot>
-                                    </table>
-                                </div>
-                            </div>
-
-
-                        </div>
+                
 
                         <!--END CREATE A Subscription -->
                     </div>

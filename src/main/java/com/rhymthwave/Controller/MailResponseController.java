@@ -17,29 +17,29 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MailResponseController {
 	private final CRUD<Author, Long> crudAuthor;
-	
+
 	private final AuthorService authorSer;
-	
+
 	private final CRUD<Account, String> crudAccount;
-		
+
 	private final CRUD<Role, Integer> crudRole;
 
 	@GetMapping("/confirm-success")
 	public String uiresp() {
 		return "";
 	}
-	
+
 	@GetMapping("/confirm-fail")
 	public String uirespFail() {
 		return "";
 	}
 
-	//Test ==> Move to controller
+	// Test ==> Move to controller
 	@GetMapping("/confirm-email-podcaster/{email}")
 	public String confirmPodcast(@PathVariable("email") String email) {
 		Account account = crudAccount.findOne(email);
 		Role role = crudRole.findOne(3);
-		if(authorSer.findAuthor(3, email)==null) {
+		if (authorSer.findAuthor(3, email) == null) {
 			Author author = new Author();
 			author.setAccount(account);
 			author.setRole(role);

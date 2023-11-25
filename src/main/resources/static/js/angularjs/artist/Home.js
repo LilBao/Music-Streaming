@@ -21,6 +21,7 @@ app.controller('homeArtistCtrl', function ($scope, $http,graphqlService,$filter)
             $scope.getListAlbumReleased();
             $scope.findListSongUpcoming();
             $scope.countFollow();
+            $scope.getListNews();
         }).catch(error => {
             console.log("Not found artist profile")
         })
@@ -81,8 +82,10 @@ app.controller('homeArtistCtrl', function ($scope, $http,graphqlService,$filter)
     }
 
     $scope.getListNews = function(){
-        let url = host + "";
-        $http.get(url).then(resp => {
+        let url = host + "/v1/news";
+        $http.get(url,{
+            params : {createfor: 'ARTIST'}
+        }).then(resp => {
             $scope.listNews=resp.data.data;
         })
     }

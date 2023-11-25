@@ -56,6 +56,9 @@ public class SignUpAPI {
 	@PostMapping("/signUp")
 	public ResponseEntity<?> signUp(@RequestBody SignUpDTO signUpDTO, final HttpServletRequest request) {
 		Account account = signUpServiceImpl.signUp(signUpDTO);
+		if(account == null) {
+			return ResponseEntity.ok(new MessageResponse(false, "Account is exist!!!"));
+		}
 		publisher.publishEvent(new SignUpCompleteEvent(account, applicationUrl(request)));
 		return ResponseEntity.ok(new MessageResponse(true, "Success! Please, check your email for to complete your signUp"));
 	}

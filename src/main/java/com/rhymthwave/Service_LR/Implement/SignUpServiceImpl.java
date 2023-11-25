@@ -61,7 +61,7 @@ private final AccountDAO dao;
 	public Account signUp(@RequestBody SignUpDTO request) {
 		Account account = dao.findByEmail(request.email());
 		if (account != null) {
-			throw new UserAlreadyExistsException("User with email "+ request.email()+" already exists");
+			return null;
 		}
 		Account newAccount = new Account();
 		newAccount.setEmail(request.email());

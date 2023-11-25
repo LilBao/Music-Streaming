@@ -5,7 +5,7 @@ body {
     overflow-y: hidden !important;
     overflow-x: hidden !important;
     
-    background: rgba(0, 0, 0, 0.9);
+    background: #121212;
     overflow-x: visible !important;
 }
 
@@ -55,6 +55,11 @@ body {
     overflow-y: visible;
     overflow-x: hidden;
     border-right: 1px solid white;
+}
+
+.sidebar::-webkit-scrollbar {
+    background-color: transparent;
+    max-width: 5px;
 }
 
 
@@ -247,7 +252,7 @@ footer {
 
 .playlist::-webkit-scrollbar {
     background-color: transparent;
-    max-width: 100px;
+    max-width: 5px;
 }
 
 .playlist::-webkit-scrollbar-thumb {
@@ -670,5 +675,36 @@ input[type="range"]:hover {
 }
 
 .li-dropdown-start-end a:hover{
+    background-color: rgba(238, 237, 237, 0.3);
+}
+
+/* end */
+.ul-dropdown-end{
+    margin: 0;
+    padding: 0;
+    flex-direction: column;
+}
+
+.li-dropdown-end {
+    padding: 0;
+    position: relative;
+}
+
+.li-dropdown-end ul {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: -100%;
+    background-color: dark;
+    padding: 0;
+    flex-direction: column;
+    /* Hiển thị submenu dọc */
+}
+
+.li-dropdown-end:hover>ul {
+    display: flex;
+}
+
+.li-dropdown-end a:hover{
     background-color: rgba(238, 237, 237, 0.3);
 }

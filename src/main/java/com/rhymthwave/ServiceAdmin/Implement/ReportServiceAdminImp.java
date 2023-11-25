@@ -1,6 +1,7 @@
 package com.rhymthwave.ServiceAdmin.Implement;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -109,7 +110,8 @@ public class ReportServiceAdminImp implements IReportServiceAdmin, CRUD<Report, 
 
 	public void banArtist(Long artistId) throws UnsupportedEncodingException, MessagingException {
 		Artist newArtist = artistDAO.findbyID(artistId);
-		newArtist.setIsVerify(false);
+		newArtist.setActive(false);
+		newArtist.setExpirePermission(new Date());
 		artistDAO.save(newArtist);
 		Account newAccount = newArtist.getAccount();
 		newAccount.setBlocked(true);

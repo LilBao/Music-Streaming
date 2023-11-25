@@ -16,20 +16,19 @@ public interface EpisodeDAO extends JpaRepository<Episode, Long>{
 	
 	@Query(value="SELECT TOP 1 * FROM EPISODES WHERE PUBLISHDATE < GETDATE() AND ISPUBLIC= 1 AND ISDELETED = 0 AND PODCASTID = :podcastId ORDER BY PUBLISHDATE DESC",nativeQuery = true)
 	Episode findLatestByPodcast(@Param("podcastId") Long podcastId);
-
-
-	@Query(value = "select * from episodes where episodesid= :episodeId", nativeQuery = true)
-	Episode findAllById(@Param("episodeId") Long episodeId);
-
 	
-	@Query(value = "select e.* from episodes e where e.episodestitle like %:keyword% and e.ispublic = 0 and e.publishdate < getdate()",nativeQuery = true)
+	@Query(value = "select e.* from episodes e where e.episodestitle like %:keyword% and e.ispublic = 1 and e.publishdate < getdate()",nativeQuery = true)
 	List<Episode> findByName(@Param("keyword") String keyword);
 
 	@Query(value ="select top 10  episodes.* from podcast \r\n"
 			+ "						left join tags on podcast.category = tags.tagid\r\n"
-			+ "						join  episodes on podcast.podcastid = episodes.podcastid\r\n"
-			+ "					where tags.tagid = :tag and episodes.ispublic = 1 \r\n"
+			+ "						left join  episodes on podcast.podcastid = episodes.podcastid\r\n"
+			+ "					where tags.nametag in (:tags) \r\n"
+			+ "					and episodes.ispublic = 1  and episodes.publishdate < GETDATE()\r\n"
 			+ "					ORDER BY NEWID()",nativeQuery = true)
-	List<Episode> getRandomPodcasts(@Param("tag") Integer id);
+	List<Episode> getRandomPodcasts(@Param("tags") List<String> tags);
+	
+	@Query(value = "select * from episodes where episodesid= :episodeId", nativeQuery = true)
+	Episode findAllById(@Param("episodeId") Long episodeId);
 
 }

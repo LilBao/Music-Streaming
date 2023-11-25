@@ -22,6 +22,7 @@ import com.rhymthwave.Utilities.JWT.JwtAuthentitationFilter;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
 	@Autowired
 	private CustomUserDetailsService customUserDetailsService;
 	
@@ -72,6 +73,7 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.POST,"/**").permitAll()
 				.requestMatchers(HttpMethod.PUT,"/**").permitAll()
 				.requestMatchers(HttpMethod.DELETE,"/**").permitAll()
+				.requestMatchers(HttpMethod.PATCH,"/**").permitAll()
 				)
 				.authenticationProvider(AuthenticationProvider())
 				.addFilterBefore(jwtAuthentitationFilter(),UsernamePasswordAuthenticationFilter.class)

@@ -1,10 +1,12 @@
 package com.rhymthwave.API.GraphQL;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.Service.RecordService;
@@ -45,5 +47,23 @@ public class RecordingGraphQL {
 	@QueryMapping("getListSongReleased")
 	public List<Recording> getListSongReleased(@Argument("email") String email){
 		return recordSer.findRecordByCreater(email);
+	}
+	
+	@QueryMapping("getListRecordByFavorite")
+	public List<Recording> getListRecordByFavorite(@Argument("genre") Optional<String> genre,
+			@Argument("culture") Optional<String> culture, @Argument("instrument") Optional<String> instrument,
+			@Argument("mood") Optional<String> mood, @Argument("songstyle") Optional<String> songstyle, 
+			@Argument("versions") Optional<String> versions){
+		return recordSer.findListRandomFavorite(genre.orElse("''"), culture.orElse(""), instrument.orElse(""), mood.orElse(""), songstyle.orElse(""), versions.orElse(""));
+	}
+	
+	@QueryMapping("findListPopularByArtist")
+	public List<Recording> findListPopularByArtist(@Argument("artistId") Long artist){
+		return recordSer.findListPopularByArtist(artist);
+	}
+	
+	@QueryMapping("findRecordingAppearOnByArtist")
+	public List<Recording> findAppearOnByArtist(@Argument("artistId") Long artist){
+		return recordSer.findAppearOn(artist);
 	}
 }

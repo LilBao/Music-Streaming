@@ -34,7 +34,7 @@ public class Recording implements Serializable {
 	@Column(name = "RECORDINGID")
 	private Long recordingId;
 
-	@Column(name = "RECORDINGIDNAME",columnDefinition = "nvarchar(55)")
+	@Column(name = "RECORDINGNAME",columnDefinition = "nvarchar(55)")
 	private String recordingName;
 
 	@Column(name = "AUDIOFILEURL",columnDefinition = "varchar(max)")
@@ -83,7 +83,7 @@ public class Recording implements Serializable {
 	private Date recordingdate = new Date();
 
 	@Column(name = "ISDELETED")
-	private Boolean isDeleted;
+	private Boolean isDeleted=false;
 	
 	@Column(name = "EMAILCREATE",columnDefinition = "varchar(255)")
 	private String emailCreate;

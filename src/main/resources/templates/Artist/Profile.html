@@ -186,9 +186,14 @@
                                 <input id="infor-dateOfBirth" readonly class="mx-0 px-0 border-0 form-control" type="text"
                                     ng-model="artist.dateOfBirth">
                             </div>
-                            <div class="mt-3 d-flex align-items-center">
-                                <h6 class="me-2">Date join Rhymthwave: </h6>
-                                <h6 type="text">{{artist.dateStarted | date:'yyyy-MM-dd'}}</h6>
+                            <div class="mt-3 d-flex align-items-center justify-content-between">
+                                <div class="d-flex">
+                                    <h6 class="me-2">Date join Rhymthwave: </h6>
+                                    <h6 type="text">{{artist.dateStarted | date:'yyyy-MM-dd'}}</h6>
+                                </div>
+                                <div>
+                                    <button ng-click="disableAccount()" class="btn rounded-pill bg-dark text-white">Disable account</button>
+                                </div>
                             </div>
                         </div>
                     </div>
