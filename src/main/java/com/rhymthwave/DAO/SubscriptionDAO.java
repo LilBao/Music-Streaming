@@ -12,5 +12,5 @@ import com.rhymthwave.entity.TypeEnum.ESubscription;
 public interface SubscriptionDAO extends JpaRepository<Subscription, Integer>{
 	Subscription findBySubscriptionType(String subscriptionType);
 	
-	List<Subscription> findBySubscriptionCategory(ESubscription category);
+	List<Subscription> findBySubscriptionCategoryAndActive(ESubscription category,Boolean active);
 }

@@ -8,6 +8,6 @@ import com.rhymthwave.entity.TypeEnum.ESubscription;
 public interface SubscriptionService {
 	Subscription getSubByName(String name);
 	
-	List<Subscription> findByCategory(ESubscription cate);
+	List<Subscription> findByCategory(ESubscription cate,Boolean active);
 	
 }
