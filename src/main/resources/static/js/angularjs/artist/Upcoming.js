@@ -43,6 +43,8 @@ app.controller('upComingCtrl', function ($scope, $http) {
             transformRequest: angular.identity
         }).then(resp => {
             $scope.upcoming = {};
+            $scope.findListAlbumUpcoming();
+            showStickyNotification('Create upcoming success', 'success', 3000);
         }).catch(error => {
 
         })
@@ -80,6 +82,7 @@ app.controller('upComingCtrl', function ($scope, $http) {
 
                 });
             }
+            $scope.findListSongUpcoming();
             showStickyNotification('Create upcoming success', 'success', 3000);
         }).catch(error => {
             showStickyNotification('Create upcoming fail', 'danger', 3000);

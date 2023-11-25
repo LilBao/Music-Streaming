@@ -60,18 +60,27 @@ public class UserTypeServiceImpl implements CRUD<UserType, Long>, UserTypeServic
 
 	@Override
 	public UserType generateEntity(String email, Integer subscriptionId,Integer paymentStatus) {
-		UserType usertype = new UserType();
 		Account acc = account.findOne(email);
 		Subscription sub = subscription.findOne(subscriptionId);
-		usertype.setNameType("PREMIUM");
-		usertype.setAccount(acc);
-		usertype.setSubscription(sub);
-		usertype.setPaymentStatus(paymentStatus);
-		usertype.setStartDate(new Date());
-		
-		LocalDate startDate = usertype.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		usertype.setEndDate(java.sql.Date.valueOf(startDate.plusDays(sub.getDuration())));
-		return usertype;
+		if(acc.getUserType().toArray().length>1) {
+			UserType usertype = acc.getUserType().get(1);
+			usertype.setSubscription(sub);
+			usertype.setPaymentStatus(paymentStatus);
+			usertype.setStartDate(new Date());
+			LocalDate startDate = usertype.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			usertype.setEndDate(java.sql.Date.valueOf(startDate.plusDays(sub.getDuration())));
+			return usertype;
+		}else {
+			UserType usertype = new UserType();
+			usertype.setNameType("PREMIUM");
+			usertype.setAccount(acc);
+			usertype.setSubscription(sub);
+			usertype.setPaymentStatus(paymentStatus);
+			usertype.setStartDate(new Date());
+			LocalDate startDate = usertype.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			usertype.setEndDate(java.sql.Date.valueOf(startDate.plusDays(sub.getDuration())));
+			return usertype;
+		}
 	}
 	
 }
