@@ -40,6 +40,7 @@ app.controller('recordCtrl', function ($scope, $http) {
                     let genre = resp.data.data;
                     $scope.createSongGenre(song, genre);
                     $('#btn-close-upload-record').click();
+                    $scope.findListRecordArtist();
                 }).catch(error => {
                     console.log(error)
                 })
@@ -69,6 +70,19 @@ app.controller('recordCtrl', function ($scope, $http) {
         if ($scope.lyricsFile) {
             data.append('fileLyrics', $scope.lyricsFile);
         }
+    }
+
+    //reset record
+    $scope.resetRecord = function () {
+        $scope.record = {};
+        $scope.getListGenre();
+        $scope.getListMood();
+        $scope.getListInstrument();
+        $scope.getListSongStyle();
+        $scope.getListCulture();
+        $('#btn-close-upload-record').click();
+        $scope.recordFile = undefined;
+        $scope.lyricsFile = undefined;
     }
 
     //Get File Audio and File lyrics
