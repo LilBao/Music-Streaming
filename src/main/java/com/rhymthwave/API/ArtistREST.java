@@ -1,5 +1,6 @@
 package com.rhymthwave.API;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -147,7 +148,18 @@ public class ArtistREST {
 	@GetMapping("/api/v1/profile")
 	public ResponseEntity<MessageResponse> findProfile(HttpServletRequest req){
 		String owner = host.getEmailByRequest(req);
-		return ResponseEntity.ok(new MessageResponse(true,"success",artistSer.findByEmail(owner)));
+		Artist artist = artistSer.findByEmail(owner);
+		if(artist.getActive()) {
+			return ResponseEntity.ok(new MessageResponse(true,"success", artist));
+		}else {
+			if(artist.getExpirePermission().before(new Date())) {
+				return ResponseEntity.ok(new MessageResponse(false,"You have not permission. Please contact us again to reopen your account", null));
+			}else {
+				artist.setActive(true);
+				artist.setExpirePermission(null);
+				return ResponseEntity.ok(new MessageResponse(true,"success", crud.update(artist)));
+			}
+		}
 	}
 	
 	@GetMapping("/api/v1/find-artist/{email}")

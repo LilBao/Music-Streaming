@@ -50,7 +50,8 @@ type Query {
  getAllTag:[Tag]
  getAllPlaylist:[Playlist]
  getAllPodcastPlaylist:[Playlist]
- 
+ getPlayListById(idPlaylist: Int):Playlist
+
  
  #VanBao
  recordingById(recordingId: ID!):Recording
@@ -80,9 +81,22 @@ type Query {
  findPodcastByEmail(email:String!): [Podcast]
  
  getListSongReleased(email:String!): [Recording]
-  
+ 
+ getListRecordByFavorite(genre: String, culture:String, instrument: String, mood:String, songstyle: String, versions: String): [Recording]
+ 
+ findListPopularByArtist(artistId: Int!): [Recording]
+ 
+ findListArtistFanLiked(accountFan: [Int], idRole: Int, country: String): [Author]
+ 
+ findPlaylistFeaturingByArtist(artistId: Int, roleId: [Int]): [Playlist]
+ 
+ findPlaylistDiscoverByArtist(artistId: Int, roleId: [Int]): [Playlist]
+
+ findRecordingAppearOnByArtist(artistId: Int): [Recording]
+
  #Nam
  findAlbum(id: ID!): Album
  findAlByArtist(idArist: ID!): Artist
  findSongPl(songName: String!): [Recording]
 }
+

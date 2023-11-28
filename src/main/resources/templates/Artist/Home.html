@@ -15,10 +15,10 @@
                             <a style="text-decoration: none;" href="#!artist-music"><h5>Pitch songs</h5></a>
                         </div>
                     </div>
-                    <div ng-repeat="item in listNews" class="col-6">
+                    <div ng-repeat="item in listNews" class="col-6 bg-white border-1">
                         <img class="w-100" src="{{item.image.url}}" alt="">
-                        <h4>{{item.title}}</h4>
-                        <p>{{item.content}}</p>
+                        <h4 class="col-12 text-truncate">{{item.title}}</h4>
+                        <p class="text-truncate" style="width: 350px;">{{item.content}}</p>
                         <div class="d-flex justify-content-end">
                             <p>{{item.publishDate | date:'yyyy-MM-dd'}}</p>
                         </div>
@@ -63,7 +63,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="item in listSong | limitTo: 3" class="align-items-center">
+                            <tr ng-repeat="item in listSong | limitTo: 5" class="align-items-center">
                                 <td class="d-flex align-items-center">
                                     <img class="rounded-4 me-3" src="{{item.song.image.url}}" style="width: 100px; height: 100px; object-fit: cover;" alt="">
                                     <div>
@@ -73,42 +73,6 @@
                                     </div>
                                 </td>
                                 <td class="text-center">{{item.listened}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <a href=""><i class="bi bi-arrow-right"></i><span>See songs</span></a>
-                </div>
-                <div>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>
-                                    <h4>Your top playlist</h4>
-                                </th>
-                                <th>streams</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="align-items-center">
-                                <td class="d-flex align-items-center">
-                                    <img class="w-25" src="../../static/img/cs1.webp" alt="">
-                                    <h6>Listeners</h6>
-                                </td>
-                                <td class="text-center">12,2023</td>
-                            </tr>
-                            <tr class="align-items-center">
-                                <td class="d-flex align-items-center">
-                                    <img class="w-25" src="../../static/img/cs1.webp" alt="">
-                                    <h6>Listeners</h6>
-                                </td>
-                                <td class="text-center">12,2023</td>
-                            </tr>
-                            <tr class="align-items-center">
-                                <td class="d-flex align-items-center">
-                                    <img class="w-25" src="../../static/img/cs1.webp" alt="">
-                                    <h6>Listeners</h6>
-                                </td>
-                                <td class="text-center">12,2023</td>
                             </tr>
                         </tbody>
                     </table>

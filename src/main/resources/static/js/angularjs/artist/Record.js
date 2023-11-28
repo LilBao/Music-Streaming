@@ -21,7 +21,8 @@ app.controller('recordCtrl', function ($scope, $http) {
         data.append('instrument', $scope.instruments);
         data.append('versions', $scope.record.version);
         data.append('fileRecord', $scope.recordFile);
-        data.append('duration', $scope.duration);
+        //data.append('duration', Number($scope.duration));
+        data.append('duration', Number(0));
         if ($scope.lyricsFile) {
             data.append('fileLyrics', $scope.lyricsFile);
         }
@@ -39,6 +40,7 @@ app.controller('recordCtrl', function ($scope, $http) {
                 $http.get(url).then(resp => {
                     let genre = resp.data.data;
                     $scope.createSongGenre(song, genre);
+                    $('#btn-close-upload-record').click();
                 }).catch(error => {
                     console.log(error)
                 })
@@ -82,7 +84,7 @@ app.controller('recordCtrl', function ($scope, $http) {
                         audio.src = URL.createObjectURL(file);
                         audio.onloadedmetadata = function () {
                             var time = audio.duration;
-                            $scope.duration = time;
+                            $scope.duration = Math.floor(time);
                             URL.revokeObjectURL(audio.src);
                         };
                     }
@@ -148,16 +150,16 @@ app.controller('recordCtrl', function ($scope, $http) {
         $scope.instruments = "";
         const selectedValues = [];
         $('input[name="culture"]:checked').each(function () {
-            $scope.cultures += " " + $(this).val();
+            $scope.cultures = $scope.cultures.trim() + " " + $(this).val().trim();
         });
         $('input[name="mood"]:checked').each(function () {
-            $scope.moods += " " + $(this).val();
+            $scope.moods = $scope.moods.trim() + " " + $(this).val();
         });
         $('input[name="style"]:checked').each(function () {
-            $scope.styles += " " + $(this).val();
+            $scope.styles = $scope.styles.trim() + " " + $(this).val();
         });
         $('input[name="intrument"]:checked').each(function () {
-            $scope.instruments += " " + $(this).val();
+            $scope.instruments = $scope.instruments.trim() + " " + $(this).val();
         });
         $('input[name="genre"]:checked').each(function () {
             selectedValues.push($(this).val());
@@ -170,6 +172,15 @@ app.controller('recordCtrl', function ($scope, $http) {
             event.preventDefault();
         }
     });
+
+    $('#genre').click(function () {
+        if ($('input[name="genre"]:checked').length > 2) {
+            $('#genre').attr('readonly', true);
+        } else {
+            $('#genre').attr('readonly', false);
+        }
+    })
+
     $('#genre').on('change', function () {
         var selectedOption = $(this).val().trim();
         var datalist = document.getElementById('genres');
@@ -204,42 +215,45 @@ app.controller('recordCtrl', function ($scope, $http) {
         }
     });
 
-    var countC = 0;
-    var countM = 0;
-    var countS = 0;
-    
-    $('input[name="culture"]:checked').on('change', function () {
-        console.log("fsdfds")
-        if (this.checked) {
-            if (countC < 3) {
-                countC++;
+    $('#btn-upload-record').click(function () {
+        var countC = 0;
+        var countM = 0;
+        var countS = 0;
+
+        $('input[name="culture"]').on('change', function () {
+            if (this.checked) {
+                if (countC < 3) {
+                    countC++;
+                } else {
+                    this.checked = false;
+                }
             } else {
-                this.checked = false;
+                countC--;
             }
-        } else {
-            countC--;
-        }
-    });
-    $('input[name="mood"]:checked').on('change', function () {
-        if (this.checked) {
-            if (countM < 3) {
-                countM++;
+        });
+
+        $('input[name="mood"]').on('change', function () {
+            if (this.checked) {
+                if (countM < 3) {
+                    countM++;
+                } else {
+                    this.checked = false;
+                }
             } else {
-                this.checked = false;
+                countM--;
             }
-        } else {
-            countM--;
-        }
-    });
-    $('input[name="style"]:checked').on('change', function () {
-        if (this.checked) {
-            if (countS < 3) {
-                countS++;
+        });
+        $('input[name="style"]').on('change', function () {
+            if (this.checked) {
+                if (countS < 3) {
+                    countS++;
+                } else {
+                    this.checked = false;
+                }
             } else {
-                this.checked = false;
+                countS--;
             }
-        } else {
-            countS--;
-        }
-    });
+        });
+
+    })
 })

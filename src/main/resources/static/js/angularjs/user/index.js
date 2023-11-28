@@ -65,8 +65,8 @@ app.config(function ($routeProvider) {
             controller: 'playlistCtrl'
         })
         .when("/song/:id", {
-            //templateUrl: "playlist.html",
-            //controller: 'playlistCtrl'
+            templateUrl: "playlist.html",
+            controller: 'playlistCtrl'
         })
         .when("/queue", {
             templateUrl: "Queue.html",

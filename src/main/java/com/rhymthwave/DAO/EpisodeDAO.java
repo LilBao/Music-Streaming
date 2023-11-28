@@ -22,8 +22,9 @@ public interface EpisodeDAO extends JpaRepository<Episode, Long>{
 
 	@Query(value ="select top 10  episodes.* from podcast \r\n"
 			+ "						left join tags on podcast.category = tags.tagid\r\n"
-			+ "						join  episodes on podcast.podcastid = episodes.podcastid\r\n"
-			+ "					where tags.tagid = :tag and episodes.ispublic = 1 \r\n"
+			+ "						left join  episodes on podcast.podcastid = episodes.podcastid\r\n"
+			+ "					where tags.nametag in (:tags) \r\n"
+			+ "					and episodes.ispublic = 1  and episodes.publishdate < GETDATE()\r\n"
 			+ "					ORDER BY NEWID()",nativeQuery = true)
-	List<Episode> getRandomPodcasts(@Param("tag") Integer id);
+	List<Episode> getRandomPodcasts(@Param("tags") List<String> tags);
 }

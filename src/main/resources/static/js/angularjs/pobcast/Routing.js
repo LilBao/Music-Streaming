@@ -30,6 +30,10 @@ app.config(function ($routeProvider) {
             templateUrl: "EpisodeInfor.html",
             controller: "episodeInforCtrl"
         })
+        .when("/campaign", {
+            templateUrl : "Marketing.html",
+            controller :"marketingCtrl"
+        })
 })
 
 app.service('FileService', function () {

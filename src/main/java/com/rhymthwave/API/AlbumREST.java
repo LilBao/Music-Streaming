@@ -109,12 +109,18 @@ public class AlbumREST {
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudAlbum.delete(id)));
 	}
 
+	//Get All album if your account is artist
 	@GetMapping("/api/v1/album-artist-released")
 	public ResponseEntity<MessageResponse> albumReleasedByArtist(HttpServletRequest req) {
 		String owner = host.getEmailByRequest(req);
 		Account account = crudAccount.findOne(owner);
-		return ResponseEntity.ok(new MessageResponse(true, "success",
-				albumSer.findAlbumReleasedByArtist(account.getArtist().getArtistId())));
+		return ResponseEntity.ok(new MessageResponse(true, "success",albumSer.findAlbumByArtist(account.getArtist().getArtistId())));
+	}
+	
+	//get all album if your account is user
+	@GetMapping("/api/v1/album-artist")
+	public ResponseEntity<MessageResponse> albumByArtist(@RequestParam("artistId") Long artistId) {
+		return ResponseEntity.ok(new MessageResponse(true, "success",albumSer.findAlbumReleasedByArtist(artistId)));
 	}
 	
 	@GetMapping("/api/v1/album-pl/{keyword}")

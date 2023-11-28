@@ -224,9 +224,16 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location,
         let data = angular.copy($scope.playlistRecord);
         data.recording = item;
         data.playlist = playlist;
-        $http.post(url, data).then(resp => {
+        $http.post(url, data,{
+            headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+        }).then(resp => {
             $scope.findPlaylist();
-            showStickyNotification('Addition successfull', 'success', 3000);
+            if(resp.data.success==true){
+                $scope.findPlaylist();
+                showStickyNotification('Addition successfull', 'success', 3000);
+            }else{
+                showStickyNotification(resp.data.message, 'warning', 3000);
+            }
         })
     }
 
@@ -235,9 +242,16 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location,
         let data = angular.copy($scope.playlistPodcast);
         data.episode = item;
         data.playlist = playlist;
-        $http.post(url, data).then(resp => {
-            $scope.findPlaylist();
-            showStickyNotification('Addition successfull', 'success', 3000);
+        $http.post(url, data,{
+            headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+        }).then(resp => {
+            if(resp.data.success==true){
+                $scope.findPlaylist();
+                showStickyNotification('Addition successfull', 'success', 3000);
+            }else{
+                showStickyNotification(resp.data.message, 'warning', 3000);
+            }
+           
         })
     }
 
@@ -479,10 +493,7 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location,
                 showStickyNotification("Create playlist fail", 'danger', 3000);
                 console.log(err);
             })
-
-
         }
-
     }
 
     //js

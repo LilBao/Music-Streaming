@@ -25,71 +25,79 @@ import lombok.NoArgsConstructor;
 @Table(name = "ADVERTISEMENT")
 public class Advertisement implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "IDADS")
-	private Integer adId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "IDADS")
+    private Integer adId;
 
-	@Column(name = "TITLE",columnDefinition = "nvarchar(255)")
-	private String title;
+    @Column(name = "TITLE", columnDefinition = "nvarchar(255)")
+    private String title;
 
-	@Column(name = "CONTENT",columnDefinition = "nvarchar(255)")
-	private String content;
+    @Column(name = "CONTENT", columnDefinition = "nvarchar(255)")
+    private String content;
 
-	@Column(name = "URL",columnDefinition = "nvarchar(max)")
-	private String url;
+    @Column(name = "URL", columnDefinition = "nvarchar(max)")
+    private String url;
 
-	@Column(name = "STARTDATE")
-	private Date startDate;
+    @Column(name = "STARTDATE")
+    private Date startDate;
 
-	@Column(name = "ENDDATE")
-	private Date endDate;
+    @Column(name = "ENDDATE")
+    private Date endDate;
 
-	@Column(name = "BUDGET")
-	private float budget;
+    @Column(name = "BUDGET")
+    private float budget;
 
-	@Column(name = "STATUS",columnDefinition = "nvarchar(55)")
-	private String status;
+    @Column(name = "ACTIVE")
+    private Boolean active;
+    
+    @Column(name = "STATUS")
+    private Integer status;
 
-	@Column(name = "TARGETAUDIENCE",columnDefinition = "nvarchar(55)")
-	private String targetAudience;
+    @Column(name = "TARGETAUDIENCE", columnDefinition = "nvarchar(55)")
+    private String targetAudience;
 
-	@Column(name = "CLICKED")
-	private Long clicked;
-	
-	@Column(name = "LISTENED")
-	private Long listened;
+    @Column(name = "CLICKED")
+    private Long clicked;
 
-	@Column(name = "PRIORITY")
-	private Integer priority;
+    @Column(name = "LISTENED")
+    private Long listened;
 
-	@Column(name = "AUDIOFILE",columnDefinition = "nvarchar(max)")
-	private String audioFile;
-	
-	@Column(name = "PUBLICIDAUDIO",columnDefinition = "nvarchar(max)")
-	private String  publicIdAudio;
-	
-	@Column(name = "TAG",columnDefinition = "varchar(55)")
-	private String tag;
-	
-	@Column(name = "CURRENCY",columnDefinition = "varchar(55)")
-	private String currency;
+    @Column(name = "PRIORITY")
+    private Integer priority;
 
-	@Column(name = "CREATEDATE")
-	private Date createDate;
-	
-	@Column(name = "MODIFIEDBY",columnDefinition = "nvarchar(255)")
-	private String modifiedBy;
-	
-	@Column(name = "MODIFIDATE")
-	private Date modifiDate;
-	
-	@ManyToOne
-	@JoinColumn(name = "BANNER")
-	private Image image;
+    @Column(name = "AUDIOFILE", columnDefinition = "nvarchar(max)")
+    private String audioFile;
 
-	@ManyToOne
-	@JsonIgnore
-	@JoinColumn(name = "ACCOUNTID")
-	private Account account;
+    @Column(name = "PUBLICIDAUDIO", columnDefinition = "nvarchar(max)")
+    private String publicIdAudio;
+
+    @Column(name = "TAG", columnDefinition = "varchar(55)")
+    private String tag;
+
+    @Column(name = "CURRENCY", columnDefinition = "varchar(55)")
+    private String currency;
+
+    @Column(name = "CREATEDATE")
+    private Date createDate = new Date();
+
+    @Column(name = "MODIFIEDBY", columnDefinition = "nvarchar(255)")
+    private String modifiedBy;
+
+    @Column(name = "MODIFIDATE")
+    private Date modifiDate;
+
+    @ManyToOne
+    @JoinColumn(name = "BANNER")
+    private Image image;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "ACCOUNTID")
+    private Account account;
+
+  
+    @ManyToOne
+    @JoinColumn(name = "SUBCRIPTIONID")
+    private Subscription subscription;
 }

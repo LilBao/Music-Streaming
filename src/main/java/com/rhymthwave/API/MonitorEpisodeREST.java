@@ -30,6 +30,11 @@ public class MonitorEpisodeREST {
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudMonitorEpisode.findOne(id)));
 	}
 	
+	@GetMapping("/api/v1/monitor-episode-podcast/{id}")
+	public ResponseEntity<MessageResponse> findMonitorPodcast(@PathVariable("id") Long id){
+		return ResponseEntity.ok(new MessageResponse(true,"success",monitorEpSer.findMonitorEpisodeByPodcast(id)));
+	}
+	
 	@PostMapping("/api/v1/monitor-episode-test")
 	public ResponseEntity<MessageResponse> findMonitorId(@RequestBody MonitorEpisode monitor){
 		return ResponseEntity.ok(new MessageResponse(true,"success",monitorEpSer.checkExist(monitor.getEpisode(), monitor.getAccount())));

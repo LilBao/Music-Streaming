@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -43,7 +44,7 @@ public class Playlist implements Serializable {
 	@Column(name = "ISPUBLIC")
 	private Boolean isPublic;
 
-	@Column(name = "DESCRIPTION",columnDefinition = "varchar(255)")
+	@Column(name = "DESCRIPTION",columnDefinition = "nvarchar(255)")
 	private String description;
 	
 	
@@ -60,10 +61,10 @@ public class Playlist implements Serializable {
 	private Image image;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "playlist")
+	@OneToMany(mappedBy = "playlist",cascade = CascadeType.ALL)
 	private List<PlaylistRecord> playlistRecords;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "playlist")
+	@OneToMany(mappedBy = "playlist",cascade = CascadeType.ALL)
 	private List<Playlist_Podcast> playlistPodcast;
 }

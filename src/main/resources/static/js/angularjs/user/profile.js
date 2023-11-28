@@ -56,6 +56,7 @@ app.controller('profileCtrl', function ($scope, $http, $location, $routeParams, 
                     dateOfBirth
                     fullName
                     placeOfBirth
+                    socialMediaLinks
                     bio
                     backgroundImage{
                         url
@@ -66,6 +67,7 @@ app.controller('profileCtrl', function ($scope, $http, $location, $routeParams, 
                     imagesGallery
                     account{
                         email
+                        country
                     }
                 }
             }`
@@ -76,6 +78,11 @@ app.controller('profileCtrl', function ($scope, $http, $location, $routeParams, 
                 $scope.type = 2;
                 $scope.profile = data.artistById;
                 $scope.findFollower(data.artistById.account.email);
+                $scope.findListSongPopularArtist();
+                $scope.findListSongArtist();
+                $scope.findListAlbumArtist();
+                $scope.findPlaylistFeaturing();
+                $scope.findPlaylistDiscover();
             } else if ($scope.role === 'podcast') {
                 $scope.type = 3;
                 $scope.profile = data.accountByUsername;
@@ -94,10 +101,10 @@ app.controller('profileCtrl', function ($scope, $http, $location, $routeParams, 
 
             if ($scope.type == 1) {
                 $scope.findFollowing($scope.profile.email);
-                if($scope.profile.email ==$scope.account.email){
-                    $('#container-profile').attr('data-bs-toggle','modal');
-                    $('#container-profile').attr('data-bs-target','#my-profile');
-                }else{
+                if ($scope.profile.email == $scope.account.email) {
+                    $('#container-profile').attr('data-bs-toggle', 'modal');
+                    $('#container-profile').attr('data-bs-target', '#my-profile');
+                } else {
                     $('#container-profile').removeAttr('data-bs-toggle')
                     $('#container-profile').removeAttr('data-bs-target')
                 }
@@ -195,9 +202,9 @@ app.controller('profileCtrl', function ($scope, $http, $location, $routeParams, 
 
     //List podcast by account
     $scope.findListPodcast = function (email) {
-       
+
         const query = `{ 
-            findPodcastByEmail(email:"`+String(email)+`") {
+            findPodcastByEmail(email:"`+ String(email) + `") {
                 podcastId
                 podcastName
                 image{
@@ -205,7 +212,7 @@ app.controller('profileCtrl', function ($scope, $http, $location, $routeParams, 
                 }
             }
         }`
-        graphqlService.executeQuery(query).then(data =>{
+        graphqlService.executeQuery(query).then(data => {
             $scope.listPodcast = data.findPodcastByEmail;
         })
     }
@@ -280,17 +287,22 @@ app.controller('profileCtrl', function ($scope, $http, $location, $routeParams, 
         }`
         graphqlService.executeQuery(query).then(data => {
             $scope.listFollower = data.findYourFollow;
+            $scope.listAccountFan=[];
+            $scope.listFollower.forEach(item => {
+                $scope.listAccountFan.push(Number(item.authorsAccountA.authorId));
+            })
+            $scope.findListArtistFanLiked();
         })
     }
 
     //my profile
-    $scope.modifiedMyProfile = function(){
+    $scope.modifiedMyProfile = function () {
         let url = host + "v1/account";
         var data = angular.copy($scope.account);
-        $http.put(url,data).then(resp => {
-            if($scope.pictureProfile){
+        $http.put(url, data).then(resp => {
+            if ($scope.pictureProfile) {
                 $scope.modifiedMyPictureProfile();
-            }else{
+            } else {
                 showStickyNotification('Update successfull', 'success', 3000);
             }
         }).catch(err => {
@@ -298,15 +310,15 @@ app.controller('profileCtrl', function ($scope, $http, $location, $routeParams, 
         })
     }
 
-    $scope.modifiedMyPictureProfile = function(){
+    $scope.modifiedMyPictureProfile = function () {
         let url = host + "v1/account-image";
         var data = new FormData();
-        data.append('avatar',$scope.pictureProfile);
-        $http.put(url,data,{
-            headers: { 
+        data.append('avatar', $scope.pictureProfile);
+        $http.put(url, data, {
+            headers: {
                 'Content-Type': undefined,
                 'Authorization': 'Bearer ' + getCookie('token')
-            }, 
+            },
             transformRequest: angular.identity
         }).then(resp => {
             showStickyNotification('Update successfull', 'success', 3000);
@@ -316,7 +328,7 @@ app.controller('profileCtrl', function ($scope, $http, $location, $routeParams, 
     }
 
     $('.img-my-profile').click(function () {
-        $scope.pictureProfile=null;
+        $scope.pictureProfile = null;
         $('#img-my-profile').click();
         $('#img-my-profile').change(function (e) {
             var file = e.target.files[0];
@@ -333,6 +345,147 @@ app.controller('profileCtrl', function ($scope, $http, $location, $routeParams, 
             }
         })
     })
+
+    //List song  popular from artist 
+    $scope.findListSongPopularArtist = function () {
+        const query = `{
+            findListPopularByArtist(artistId: ${$scope.profile.artistId}) {
+                recordingId
+                recordingName
+                audioFileUrl
+                lyricsUrl
+                duration
+                listened
+                song {
+                  songId
+                  songName
+                  image {
+                    accessId
+                    url
+                  }
+                  writters {
+                    artist {
+                      artistName
+                    }
+                  }
+                }
+                tracks{
+                    album{
+                      albumName
+                    }
+                }
+            }
+        }`
+        graphqlService.executeQuery(query).then(data => {
+            $scope.listPopular = data.findListPopularByArtist;
+        })
+    }
+
+    //list song 
+    $scope.findListSongArtist = function () {
+        let url = host + "v1/song-released";
+        $http.get(url, {
+            params: { artistEmail: $scope.profile.account.email }
+        }).then(resp => {
+            $scope.listSong = resp.data.data;
+        })
+    }
+
+    //list album 
+    $scope.findListAlbumArtist = function () {
+        let url = host + "v1/album-artist";
+        $http.get(url, {
+            params: { artistId: $scope.profile.artistId }
+        }).then(resp => {
+            $scope.listAlbum = resp.data.data;
+        })
+    }
+
+    //List Featuring
+    $scope.findPlaylistFeaturing = function () {
+        const query =`{
+            findPlaylistFeaturingByArtist(artistId:${$scope.profile.artistId},roleId:[4,5]){
+                playlistId
+                playlistName
+                image{
+                  url
+                }
+            }
+        }`
+        graphqlService.executeQuery(query).then(data => {
+            $scope.listFeaturing = data.findPlaylistFeaturingByArtist;
+        })
+    }
+
+    //List discover
+    $scope.findPlaylistDiscover = function () {
+        const query =`{
+            findPlaylistDiscoverByArtist(artistId:${$scope.profile.artistId},roleId:[1,4,5]){
+                playlistId
+                playlistName
+                image{
+                  url
+                }
+                usertype{
+                    account{
+                      username
+                    }
+                }
+            }
+        }`
+        graphqlService.executeQuery(query).then(data => {
+            $scope.listDiscover = data.findPlaylistDiscoverByArtist;
+        })
+    }
+
+    //List fan also like
+    $scope.findListArtistFanLiked = function () {
+        const query = `{
+            findListArtistFanLiked(accountFan: [${$scope.listAccountFan}], idRole: ${$scope.type}, country: "${$scope.profile.account.country}") {
+                account{
+                  artist{
+                    artistId
+                    artistName
+                    imagesProfile{
+                      url
+                    }
+                  }
+                }
+            }
+        }`
+        graphqlService.executeQuery(query).then(data => {
+            $scope.listArtistFanLiked = data.findListArtistFanLiked;
+        }).catch(err =>{
+            console.log(err)
+        })
+    }
+    //Appear on
+    $scope.findListAppearOn = function(){
+        const query =`{
+            findRecordingAppearOnByArtist(artistId:${$scope.profile.artistId}) {
+                recordingId
+                recordingName
+                audioFileUrl
+                song{
+                    image{
+                      url
+                    }
+                  }
+                tracks{
+                  album{
+                    albumName
+                    image{
+                        url
+                    }
+                  }
+                }
+            }
+        }`
+        graphqlService.executeQuery(query).then(data => {
+            $scope.listAppearOn = data.findRecordingAppearOnByArtist;
+        })
+    }
+
     //JS
     function getRandomColor() {
         const letters = '0123456789ABCDEF';
