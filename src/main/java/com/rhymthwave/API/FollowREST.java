@@ -85,4 +85,9 @@ public class FollowREST {
 	public ResponseEntity<MessageResponse> unFollow(@PathVariable("id") Long id){
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudFollow.delete(id)));
 	}
+	
+	@GetMapping("/api/v1/monitor-follow")
+	public ResponseEntity<MessageResponse> monitorFollow(@RequestParam("email") String email,@RequestParam("role") Integer role,@RequestParam("duration") Integer duration){
+		return ResponseEntity.ok(new MessageResponse(true,"success",followSer.monitorFollower(email, role, duration))); 
+	}
 }

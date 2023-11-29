@@ -93,5 +93,9 @@ type Query {
  findPlaylistDiscoverByArtist(artistId: Int, roleId: [Int]): [Playlist]
   
  findRecordingAppearOnByArtist(artistId: Int): [Recording]
+ 
+ getNewListened(recordingId: Int, duration: Int): [Monitor]
+ 
+ getNewListenedEpisode(episodeId: Int, duration: Int): [MonitorEpisode]
 }
 

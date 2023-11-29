@@ -94,4 +94,14 @@ public class FollowServiceImpl implements CRUD<Follow, Long>, FollowService{
 		}
 		return list;
 	}
+
+	@Override
+	public List<Object[]> monitorFollower(String email,Integer role,Integer date) {
+		Author author = authDao.findAuthor(role, email);
+		Long auth =  author == null ? null : author.getAuthorId();
+		if(auth!=null) {
+			return dao.monitorFollower(auth, date);
+		}
+		return null;	
+	}
 }

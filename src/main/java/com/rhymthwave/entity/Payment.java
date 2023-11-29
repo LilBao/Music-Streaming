@@ -24,7 +24,7 @@ public class Payment {
     private String paymentName;
 
     @Column(name = "paymentType",columnDefinition = "nvarchar(100)")
-    private String paymentType;
+    private String paymentType="ATM";
     
     @Column(name = "CREATEDATE")
     private Date CREATEDATE=new Date();

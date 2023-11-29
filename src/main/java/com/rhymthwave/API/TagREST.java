@@ -20,17 +20,17 @@ public class TagREST {
 	CRUD<Tag, Integer> crudTag;
 	
 	@GetMapping("/api/v1/tag")
-	public ResponseEntity<MessageResponse> getAllGenre(){
+	public ResponseEntity<MessageResponse> getAllTag(){
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudTag.findAll()));
 	}
 	
 	@GetMapping("/api/v1/tag/{id}")
-	public ResponseEntity<MessageResponse> getGenreById(@PathVariable("id") Integer id){
+	public ResponseEntity<MessageResponse> getTagById(@PathVariable("id") Integer id){
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudTag.findOne(id)));
 	}
 	
 	@PostMapping("/api/v1/tag")
-	public ResponseEntity<MessageResponse> createGenre(@RequestBody Tag tag){
+	public ResponseEntity<MessageResponse> createTag(@RequestBody Tag tag){
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudTag.create(tag)));
 	}
 }

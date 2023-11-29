@@ -3,6 +3,7 @@ app.config(function($routeProvider) {
   $routeProvider
   .when("/", {
     templateUrl : "Home.html",
+    controller:"homeArtistCtrl"
   })
   .when("/artist-home", {
     templateUrl : "Home.html",
@@ -12,7 +13,7 @@ app.config(function($routeProvider) {
     templateUrl : "Music.html",
     controller: "musicCtrl"
   })
-  .when("/artist-audience", {
+  .when("/artist-audience/:id", {
     templateUrl : "Audience.html",
     controller: "analysisCtrl",
   })

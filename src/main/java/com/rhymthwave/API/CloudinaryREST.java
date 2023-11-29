@@ -28,7 +28,7 @@ public class CloudinaryREST {
 	}
 	
 	@DeleteMapping("/api/v1/cloudinary")
-	public ResponseEntity<MessageResponse> findListFileByFolder(@RequestParam("public_id") String public_id) {
+	public ResponseEntity<MessageResponse> deleteFile(@RequestParam("public_id") String public_id) {
 		return ResponseEntity.ok(new MessageResponse(true, "success",cloudinarSer.deleteFile(public_id)));
 	}
 	

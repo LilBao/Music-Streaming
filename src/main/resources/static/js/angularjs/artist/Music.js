@@ -532,11 +532,22 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService) {
 
     //Elimidate song or album
     $scope.Elimidate = function (id, type) {
-        if (type === 'song') {
-            $scope.deleteSong(id);
-        } else {
-            $scope.deleteAlbum(id);
-        }
+        $.confirm({
+            title: 'Disable account!',
+            content: 'Your account will be dissabled.\n If you do not log in your artist profile after 6 months, you will lose access to your account',
+            buttons: {
+                confirm: function () {
+                    if (type === 'song') {
+                        $scope.deleteSong(id);
+                    } else {
+                        $scope.deleteAlbum(id);
+                    }
+                },
+                cancel: function () {
+                },
+            }
+        });
+        
     }
 
     //list sub table

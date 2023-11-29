@@ -1,5 +1,7 @@
 package com.rhymthwave.API;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -46,17 +48,22 @@ public class MonitorREST {
 	}
 	
 	@GetMapping("/api/v1/monitor/age")
-	public ResponseEntity<MessageResponse> MonitorAge(@RequestParam("id") Long recordingId, @RequestParam("duration") Integer duration){
+	public ResponseEntity<MessageResponse> MonitorAge(@RequestParam("id") List<Long> recordingId, @RequestParam("duration") Integer duration){
 		return ResponseEntity.ok(new MessageResponse(true,"success", monitorSer.resultMonitorAgeRecording(recordingId, duration)));
 	}
 	
 	@GetMapping("/api/v1/monitor/country")
-	public ResponseEntity<MessageResponse> MonitorCountry(@RequestParam("id") Long recordingId, @RequestParam("duration") Integer duration){
+	public ResponseEntity<MessageResponse> MonitorCountry(@RequestParam("id") List<Long> recordingId, @RequestParam("duration") Integer duration){
 		return ResponseEntity.ok(new MessageResponse(true,"success", monitorSer.resultMonitorCountryRecording(recordingId,duration)));
 	}
 	
 	@GetMapping("/api/v1/monitor/gender")
-	public ResponseEntity<MessageResponse> MonitorGender(@RequestParam("id") Long recordingId, @RequestParam("duration") Integer duration){
+	public ResponseEntity<MessageResponse> MonitorGender(@RequestParam("id") List<Long> recordingId, @RequestParam("duration") Integer duration){
 		return ResponseEntity.ok(new MessageResponse(true,"success", monitorSer.resultMonitorGenderRecording(recordingId, duration)));
+	}
+	
+	@GetMapping("/api/v1/monitor/fan-also-liked")
+	public ResponseEntity<MessageResponse> MonitorAlsoLiked(@RequestParam("listRecord") List<Long> recordingId, @RequestParam("duration") Integer duration){
+		return ResponseEntity.ok(new MessageResponse(true,"success", monitorSer.getFanAlsoLiked(recordingId, duration)));
 	}
 }

@@ -3,13 +3,17 @@ package com.rhymthwave.Service.Implement;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.rhymthwave.DAO.MonitorEpisodeDAO;
+import com.rhymthwave.DTO.AnalysisDTO;
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.Service.MonitorEpisodeService;
 import com.rhymthwave.entity.Account;
 import com.rhymthwave.entity.Episode;
+import com.rhymthwave.entity.Monitor;
 import com.rhymthwave.entity.MonitorEpisode;
 
 import jakarta.transaction.Transactional;
@@ -66,5 +70,33 @@ public class MonitorEpisodeServiceImpl implements CRUD<MonitorEpisode, Long>, Mo
 	public List<MonitorEpisode> findMonitorEpisodeByPodcast(Long id) {
 		return dao.findMonitorEpisodeByPodcast(id);
 	}
+
+	@Override
+	public List<AnalysisDTO> resultMonitorAgeEpisode(List<Long> episodeId, Integer dateMonitor) {
+		return dao.analysisEpisodeAge(episodeId, dateMonitor);
+	}
+
+	@Override
+	public List<AnalysisDTO> resultMonitorGenderEpisode(List<Long> episodeId, Integer dateMonitor) {
+		return dao.analysisEpisodeGender(episodeId, dateMonitor);
+	}
+
+	@Override
+	public List<AnalysisDTO> resultMonitorCountryEpisode(List<Long> episodeId, Integer dateMonitor) {
+		return dao.analysisEpisodeCountry(episodeId, dateMonitor);
+	}
+
+	@Override
+	public List<MonitorEpisode> getNewListener(Long episodeId, Integer date) {
+		return dao.getNewListener(episodeId, date);
+	}
+
+	@Override
+	public List<Object[]> getFanAlsoLiked(List<Long> listEpisode, Integer date) {
+		Pageable pageable = PageRequest.of(0, 10);
+		return dao.findAccountFrequency(listEpisode,date,pageable);
+	}
+	
+	
 	
 }
