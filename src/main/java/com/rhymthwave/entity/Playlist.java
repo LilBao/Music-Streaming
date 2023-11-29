@@ -39,7 +39,7 @@ public class Playlist implements Serializable {
 	private String playlistName;
 
 	@Column(name = "QUANTITY")
-	private int quantity;
+	private int quantity=0;
 
 	@Column(name = "ISPUBLIC")
 	private Boolean isPublic;

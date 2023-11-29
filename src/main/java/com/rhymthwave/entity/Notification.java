@@ -32,6 +32,9 @@ public class Notification implements Serializable {
 	@Column(name = "CONTENT",columnDefinition = "varchar(max)")
 	private String content;
 	
+	@Column(name = "active")
+	private Boolean active;
+	
 	@Column(name = "CREATEBY",columnDefinition = "nvarchar(255)")
 	private String createBy;
 	

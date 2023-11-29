@@ -55,7 +55,7 @@ public class PlaylistRecordREST {
 	}
 
 	@DeleteMapping("/api/v1/playlist-record/{id}")
-	public ResponseEntity<MessageResponse> additionSongIntoPlaylist(@PathVariable("id") Long id) {
+	public ResponseEntity<MessageResponse> deleteSongIntoPlaylist(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudPlaylistRecord.delete(id)));
 	}
 }

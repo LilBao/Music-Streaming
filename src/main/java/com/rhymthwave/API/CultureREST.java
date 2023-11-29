@@ -20,17 +20,17 @@ public class CultureREST {
 	CRUD<Culture, Integer> crudCulture;
 	
 	@GetMapping("/api/v1/culture")
-	public ResponseEntity<MessageResponse> getAllGenre(){
+	public ResponseEntity<MessageResponse> getAllCulture(){
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudCulture.findAll()));
 	}
 	
 	@GetMapping("/api/v1/culture/{id}")
-	public ResponseEntity<MessageResponse> getGenreById(@PathVariable("id") Integer id){
+	public ResponseEntity<MessageResponse> getCultureById(@PathVariable("id") Integer id){
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudCulture.findOne(id)));
 	}
 	
 	@PostMapping("/api/v1/culture")
-	public ResponseEntity<MessageResponse> createGenre(@RequestBody Culture culture){
+	public ResponseEntity<MessageResponse> createCulture(@RequestBody Culture culture){
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudCulture.create(culture)));
 	}
 }

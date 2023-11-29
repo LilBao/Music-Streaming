@@ -111,6 +111,9 @@ public class RecordServiceImpl implements RecordService, CRUD<Recording, Long>{
 	public List<Recording> findAppearOn(Long artistId) {
 		return dao.findListAppearOn(artistId);
 	}
-	
-	
+
+	@Override
+	public List<Recording> statisticsByDate(String email, Integer date) {
+		return dao.statisticsByDate(email, date);
+	}
 }

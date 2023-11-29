@@ -1,5 +1,6 @@
 package com.rhymthwave.API;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -69,18 +70,19 @@ public class PlaylistREST {
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudPlaylist.findOne(id)));
 	}
 
-	@GetMapping("/api/v1/my-playlist/{usertypeId}")
-	public ResponseEntity<MessageResponse> getMyPlaylist(@PathVariable("usertypeId") Long usertypeId) {
-		UserType usertype = crudUserType.findOne(usertypeId);
-		return ResponseEntity.ok(new MessageResponse(true, "success", playlistSer.findMyPlaylist(usertype)));
+	@GetMapping("/api/v1/my-playlist/{email}")
+	public ResponseEntity<MessageResponse> getMyPlaylist(@PathVariable("email") String email) {
+		Account acc = crudAccount.findOne(email);
+		List<Playlist> list = new ArrayList<>();
+		acc.getUserType().forEach(item -> list.addAll(playlistSer.findMyPlaylist(item)));
+		return ResponseEntity.ok(new MessageResponse(true, "success", list));
 	}
 
 	@PostMapping("/api/v1/playlist")
 	public ResponseEntity<MessageResponse> createPlaylist(@RequestBody Playlist playlist, HttpServletRequest req) {
 		String owner = host.getEmailByRequest(req);
 		Account account = crudAccount.findOne(owner);
-		if (account.getUserType().get(0).getPlaylists().toArray().length < subSer.getSubByName("BASIC")
-				.getPlaylistAllow()) {
+		if (account.getUserType().get(0).getPlaylists().toArray().length < subSer.getSubByName("BASIC").getPlaylistAllow()) {
 			playlist.setUsertype(account.getUserType().get(0));
 			return ResponseEntity.ok(new MessageResponse(true, "success", crudPlaylist.create(playlist)));
 		} else {
@@ -121,7 +123,7 @@ public class PlaylistREST {
 	}
 
 	@DeleteMapping("/api/v1/playlist/{id}")
-	public ResponseEntity<MessageResponse> updatePlaylist(@PathVariable("id") Long id) {
+	public ResponseEntity<MessageResponse> deletePlaylist(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudPlaylist.delete(id)));
 	}
 
