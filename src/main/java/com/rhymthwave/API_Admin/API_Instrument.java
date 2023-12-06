@@ -1,54 +1,26 @@
 package com.rhymthwave.API_Admin;
 
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.rhymthwave.DAO.CountryDAO;
-import com.rhymthwave.DAO.CultureDAO;
-import com.rhymthwave.DAO.GenreDAO;
-import com.rhymthwave.DAO.InstrumentDAO;
-import com.rhymthwave.DAO.MoodDAO;
-import com.rhymthwave.DAO.SongStyleDAO;
+import com.rhymthwave.DAO.*;
 import com.rhymthwave.DTO.MessageResponse;
-import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.ServiceAdmin.IInstrumentServiceAdmin;
-import com.rhymthwave.Utilities.Excel;
 import com.rhymthwave.Utilities.ExcelExportService;
 import com.rhymthwave.Utilities.ImportEx;
-import com.rhymthwave.entity.Country;
-import com.rhymthwave.entity.Culture;
-import com.rhymthwave.entity.Genre;
-import com.rhymthwave.entity.Instrument;
-import com.rhymthwave.entity.Mood;
-import com.rhymthwave.entity.SongStyle;
-
+import com.rhymthwave.entity.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.apache.poi.ss.usermodel.*;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.InputStream;
+import java.util.Date;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 @RestController
 @CrossOrigin("*")
@@ -135,27 +107,36 @@ public class API_Instrument {
     }
 	
 	
-	private final GenreDAO moodDao;
+	private final MoodDAO moodDao;
+	private final GenreDAO genreDAO;
+	private  final InstrumentDAO instrumentDAO;
+	private  final CultureDAO cultureDAO;
+	private  final TagDAO tagDAO;
+	private  final CountryDAO countryDAO;
+	private  final  AccountDAO accountDAO;
+	private  final  ImageDAO imageDAO;
+	private  final AuthorDAO authorDAO;
+	private  final  RoleDAO roleDAO;
 
-	
+	private  final  ArtistDAO artistDAO;
 	@GetMapping("/import")
 	public ResponseEntity<?> deleteMood(@RequestParam("excel") MultipartFile file) {
 		try {
-			List<Genre> instruments = convertExceltoInstrument(file.getInputStream());
-				System.out.println(instruments.isEmpty());
-				moodDao.saveAll(instruments);
+			List<Artist> instruments = convertExceltoInstrument(file.getInputStream());
+			instruments.forEach(s -> System.out.println(s.getArtistName() + " -- " + s.getAccount().getEmail()));
+			artistDAO.saveAll(instruments);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", "OK"));
 	}
 	
-	public List<Genre>  convertExceltoInstrument(InputStream inputStream){
+	public List<Artist>  convertExceltoInstrument(InputStream inputStream){
 		
-		List<Genre> list = new ArrayList<>();
+		List<Artist> list = new ArrayList<>();
 		try {
 			Workbook workbook = WorkbookFactory.create(inputStream);
-			Sheet sheet = workbook.getSheet("Genre");
+			Sheet sheet = workbook.getSheet("Artist");
 		int rowNum = 0;
 		Iterator<Row> iterator = sheet.iterator();
 		while (iterator.hasNext()) {
@@ -167,24 +148,33 @@ public class API_Instrument {
 			Iterator<Cell> cells = row.iterator();
 			
 			int cid = 0;
-			var instrument = new Genre();
-			
+
+			var instrument = new Artist();
+			Image image = imageDAO.findById("1").orElse(null);
 			while (cells.hasNext()) {
 				Cell cell = cells.next();
 				switch(cid) {
+
 					case 0:
-						instrument.setId( (int)cell.getNumericCellValue());
+						instrument.setArtistName( cell.getStringCellValue());
 						break;
 					case 1:
-						instrument.setNameGenre((cell.getStringCellValue())); 
+						instrument.setFullName( cell.getStringCellValue());
 						break;
-//					case 2:
-//						instrument.setCreateBy((cell.getStringCellValue())); 
-//						break;
-//					case 3:
-//						instrument.setCreateDate(new Date()); 
-//						break;
-						
+
+					case 2:
+						instrument.setDateOfBirth(cell.getDateCellValue());
+						break;
+					case 3:
+						instrument.setPlaceOfBirth( cell.getStringCellValue());
+						break;
+					case 4:
+						instrument.setBio( cell.getStringCellValue());
+						break;
+					case 5:
+						Account account = accountDAO.findByEmail(cell.getStringCellValue());
+						instrument.setAccount( account);
+						break;
 					default:
 						break;
 				}

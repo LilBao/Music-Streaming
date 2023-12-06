@@ -72,7 +72,6 @@ public class API_Mood {
 	public ResponseEntity<?> updateMood(@PathVariable("id") Integer id,  @RequestBody Mood moodRequest, final HttpServletRequest request) {
 		
 		Mood mood = iMoodService.update(moodRequest,request);
-		
 		if (mood == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse(false, "Mood does exists", mood));
 		}

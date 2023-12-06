@@ -46,4 +46,10 @@ public class Notification implements Serializable {
 	
 	@Column(name = "MODIFIDATE")
 	private Date modifiDate;
+
+	@Column(name = "Public_IDImage" ,columnDefinition = "nvarchar(255)")
+	private String publicIdImage;
+
+	@Column(name = "URLIDImage",columnDefinition = "nvarchar(255)")
+	private String urlImage;
 }

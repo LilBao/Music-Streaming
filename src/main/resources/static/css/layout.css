@@ -65,6 +65,7 @@ p.count {
     align-items: center;
     border-radius: 50%;
     right: -3px;
+    padding: 8px;
 }
 
 .logo {

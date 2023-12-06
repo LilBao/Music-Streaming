@@ -3,6 +3,7 @@
 #import "./Access.graphqls"
 #import "./Account.graphqls"
 #import "./Advertisement.graphqls"
+#import "./AdvertisementStatistics.graphqls"
 #import "./Album.graphqls"
 #import "./Artist.graphqls"
 #import "./Author.graphqls"
@@ -51,8 +52,11 @@ type Query {
  getAllPlaylist:[Playlist]
  getAllPodcastPlaylist:[Playlist]
  getPlayListById(idPlaylist: Int):Playlist
+ getAllRecord: [Recording]
+ getAllEpisode: [Episode]
+ findAllAdvertisementPendingAndRejectByStatus:[AdvertisementStatistics]
+ findAccountByEmail(id: String): Account
 
- 
  #VanBao
  recordingById(recordingId: ID!):Recording
  
@@ -99,3 +103,6 @@ type Query {
  getNewListenedEpisode(episodeId: Int, duration: Int): [MonitorEpisode]
 }
 
+type Mutation{
+  lockAccount(id: String!, block:Boolean):Boolean
+}
