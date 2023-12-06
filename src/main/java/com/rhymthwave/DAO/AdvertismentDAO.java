@@ -5,6 +5,7 @@ import java.util.List;
 import com.rhymthwave.DTO.CountStatusADS;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.rhymthwave.entity.Advertisement;
@@ -30,5 +31,13 @@ public interface AdvertismentDAO extends JpaRepository<Advertisement, Long>{
 			+ "FROM advertisement A", nativeQuery = true)
 	List<CountStatusADS> findAllAdvertisementPendingAndRejectByStatus();
 
+	@Query("Select o from Advertisement o where o.account.email=:email order by o.endDate asc")
+	List<Advertisement> findAdsByEmail(@Param("email") String email);
+
+	@Query("select a.subscription.subscriptionId from Advertisement a where year(a.startDate) = :year")
+	List<Integer> findIdSubscriptionByYearFromAds( @Param(("year")) int year);
+
+	@Query(value = "select COUNT(*) from advertisement where advertisement.createdate = CONVERT(date, getdate())",nativeQuery = true)
+	int countSubscriptionCurrent();
 
 }

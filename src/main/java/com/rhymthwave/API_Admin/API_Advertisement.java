@@ -5,13 +5,11 @@ import com.rhymthwave.DTO.MessageResponse;
 import com.rhymthwave.Service.AdvertisementService;
 import com.rhymthwave.ServiceAdmin.IRole;
 import com.rhymthwave.entity.Advertisement;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,28 +19,28 @@ import java.util.List;
 @RequiredArgsConstructor
 public class API_Advertisement {
 
-	private  final AdvertisementService advertisementService;
-	private  final AdvertismentDAO advertismentDAO;
-	@GetMapping("/running-completed")
-	public ResponseEntity<?> getAllAdvertisementRunAndComplete() {
+    private final AdvertisementService advertisementService;
 
-		List<Advertisement> list = advertisementService.getAllAdvertisementRunningAndCompleted();
+    @GetMapping("/running-completed")
+    public ResponseEntity<?> getAllAdvertisementRunAndComplete() {
 
-		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully",list));
-	}
+        List<Advertisement> list = advertisementService.getAllAdvertisementRunningAndCompleted();
 
-	@GetMapping("/pending-reject")
-	public ResponseEntity<?> getAllAdvertisementPendingAndReject() {
+        return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", list));
+    }
 
-		List<Advertisement> list = advertisementService.getAllAdvertisementPendingAndReject();
+    @GetMapping("/pending-reject")
+    public ResponseEntity<?> getAllAdvertisementPendingAndReject() {
 
-		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully",list));
-	}
+        List<Advertisement> list = advertisementService.getAllAdvertisementPendingAndReject();
 
-	@GetMapping("/count")
-	public ResponseEntity<?> abc() {
+        return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", list));
+    }
 
-		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(
-				true, "Successfully",advertismentDAO.findAllAdvertisementPendingAndRejectByStatus()));
-	}
+    @PutMapping("/{id}/status")
+    public ResponseEntity<?> updateStatus(@PathVariable("id") Integer advertisementID, @RequestParam("status") Integer status, HttpServletRequest request) {
+        Advertisement advertisement = advertisementService.setStatus(advertisementID, status,request);
+        return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", advertisement));
+    }
+
 }

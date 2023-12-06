@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+   <!-- CONTENT START  -->
+   <div class="content-wrapper">
+
+      <section class="dashboard-top-sec">
+         <div class="container-fluid">
+
+
+            <div class="cardperShadow shadow mb-4">
+               <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary"> Create The Tag
+                  </h6>
+               </div>
+
+               <div class="card-bodyPerShadow">        
+
+                
+
+                  <div class="mb-3 row">
+                     <label class="col-sm-2 col-form-label">Name Tag:</label>
+                     <div class="col-sm-10">
+                        <input  ng-model="form.tagName" type="text" class="form-control">
+                     </div>
+                  </div>
+
+                  <div class="row">
+
+                     <div class="col-sm-2"></div>
+                     <div class="col-sm-10">
+                        <div class="event-createCountry">
+                           <button class="btn btn-success" ng-click="create()">Save</button>
+                           <button class="btn btn-success" ng-click="update()">Update</button>
+                           <button class="btn btn-success"  ng-click="delete(form.tagId)">Delete</button>                          
+                          
+                        </div>
+                     </div>
+
+                  </div>
+
+               </div>
+
+            </div>
+
+
+
+            <div class="cardperShadow shadow mb-4">
+               <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary"> Tag Table
+                  </h6>
+               </div>
+               <div class="card-bodyPerShadow">
+
+                  <div id="dataTable_wrapper">
+                     <div class="row">
+                        <div class="row">
+                           <div class="col-sm-6 text-left"></div>
+                           <div class="col-sm-6 text-right">
+                              <div class="dt-buttons btn-group mb-2">
+                                 <button class="btn btn-secondary buttons-export" ng-click="exportToExcel()" type="button"><span>Excel</span>
+                                 </button>
+                                 <button class="btn btn-secondary buttons-export" type="button"><span>Print</span>
+                                 </button>
+                                 <button class="btn btn-secondary buttons-export" type="button"><span>Excel</span>
+                                 </button>
+                                 <button class="btn btn-secondary buttons-export" type="button"><span>Excel</span>
+                                 </button>
+
+                              </div>
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-sm-12 ">
+                              <table class="table table-bordered ">
+                                 <thead style="border-bottom: 2px solid rgb(212, 212, 212);">
+                                    <tr>
+
+                                       <th scope="col" style="width: 145.333px;">Id</th>
+                                       <th scope="col" style="width: 218.333px;">Tag</th>
+                                       <th scope="col" style="width: 218.333px;">Create By</th>
+                                       <th scope="col" style="width: 218.333px;">Create Date</th>
+                                       <th scope="col" style="width: 218.333px;">Modified By</th>
+                                       <th scope="col" style="width: 218.333px;">Modified Date</th>
+                                       <th scope="col" style="width: 218.333px;">Action</th>
+                                    </tr>
+                                 </thead>
+                                 <tfoot>
+                                    <tr>
+                                       <th scope="col" rowspan="1" colspan="1">Id</th>
+                                       <th scope="col" rowspan="1" colspan="1">Tag</th>
+                                       <th scope="col" style="width: 218.333px;">Create By</th>
+                                       <th scope="col" style="width: 218.333px;">Create Date</th>
+                                       <th scope="col" style="width: 218.333px;">Modified By</th>
+                                       <th scope="col" style="width: 218.333px;">Modified Date</th>
+                                       <th scope="col" style="width: 218.333px;">Action</th>
+                                    </tr>
+                                 </tfoot>
+                                 <tbody>
+
+                                    <tr class="odd" ng-repeat=" tag in items">
+                                       <td class="sorting_1">{{tag.tagId}}</td>
+                                       <td>{{tag.tagName}}</td>
+                                       <td>{{tag.createBy}}</td>
+                                       <td>{{tag.createDate | date:'dd-MM-yyyy HH:mm:ss '}}</td>
+                                       <td>{{tag.modifiedBy ? tag.modifiedBy : "Null" }}</td>
+                                       <td>{{tag.modifiDate ? tag.modifiDate : "Null" | date:'dd-MM-yyyy HH:mm:ss '}}</td>
+                                       <td><button class="btn btn-primary" ng-click="edit(tag.tagId)">Edit</button></td>
+                                    </tr>
+                                
+                                
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+
+                        <div class="row"> 
+                           <div class="col-sm-12 col-md-5">
+                              <!-- <div class="dataTables_info" id="DataTables_Table_0_info" role="status"
+                                 aria-live="polite">Đang xem 1 đến 1 trong
+                                 tổng số 1 mục</div> -->
+                           </div>
+                           <div class="col-sm-12 col-md-7">
+                              <div class="pagination  d-flex justify-content-end align-content-center mb-3">
+                                 <a href="" ng-click="utilitiesPage.firstPage()" >&laquo;</a>
+
+                                 <a href=""  ng-repeat="pageNo in page" ng-click="goToPage(pageNo)" ng-class="{ 'active': currentPage === pageNo }">
+                                    {{pageNo + 1}}
+                                 </a>                           
+                                 <a href="" ng-click="utilitiesPage.endPage()" >&raquo;</a>
+                              </div>
+
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+
+               </div>
+            </div>
+      </section>
+   </div>
+   <!--  CONTENT END  -->
+   </div>
+   </div>
+
+</body>
+
+</html>

@@ -86,7 +86,7 @@ public class LoginAPI {
 		if(checkUserLogin == 3 ) {
 
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body(new MessageResponse(false, "Your email has been locked due to too many unverified attempts", null));
+					.body(new MessageResponse(false, "Your account has been locked", null));
 		}
 		
 		

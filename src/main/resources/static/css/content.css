@@ -1078,3 +1078,26 @@ td {
     background-color: rgb(0, 122, 128);
 }
 /* START MODAL ADS */
+
+
+/*START PROFILE PODCAST  */
+
+.box-image-name-profile{
+    border-right: 1px solid #c1c1c1;
+}
+
+.image-profile-podcast img{
+    height: 7rem;
+    object-fit: cover;
+}
+.personal-detail-podcast i{
+    font-size: 1.1rem;
+    margin-right: 1rem;
+    color: #787878;
+}
+.personal-detail-podcast p span{
+    font-size: 14px
+  
+}
+
+/*END PROFILE PODCAST  */

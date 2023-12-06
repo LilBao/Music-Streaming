@@ -28,7 +28,7 @@ public class SubscriptionREST {
 	}
 	
 	@GetMapping("/api/v1/subscription")
-	public ResponseEntity<MessageResponse> findAll(@RequestParam("cate") ESubscription cate){
-		return ResponseEntity.ok(new MessageResponse(true,"success",subSer.findByCategory(cate)));
+	public ResponseEntity<MessageResponse> findAll(@RequestParam("cate") ESubscription cate,@RequestParam("active") Boolean active){
+		return ResponseEntity.ok(new MessageResponse(true,"success",subSer.findByCategory(cate,active)));
 	}
 }

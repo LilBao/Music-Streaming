@@ -1,6 +1,7 @@
 package com.rhymthwave.API_GraphQL_Admin;
 
 import com.rhymthwave.DAO.AdvertismentDAO;
+import com.rhymthwave.DTO.CountStatusADS;
 import com.rhymthwave.Service.AdvertisementService;
 import com.rhymthwave.ServiceAdmin.IArtistService;
 import com.rhymthwave.entity.Advertisement;
@@ -18,16 +19,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class API_GraphQL_Advertisement {
 
-
-	private  final AdvertisementService advertisementService;
-
 	private  final AdvertismentDAO advertismentDAO;
-//	@QueryMapping("findAllAdvertisementPendingAndRejectByStatus")
-//	public Object[] findAllAdvertisementPendingAndRejectByStatus() {
-//		Object[] objects =  advertismentDAO.findAllAdvertisementPendingAndRejectByStatus();
-//		System.out.println(objects[1].toString());
-//		return objects;
-//	}
+	@QueryMapping("findAllAdvertisementPendingAndRejectByStatus")
+	public Object findAllAdvertisementPendingAndRejectByStatus() {
+		List<CountStatusADS> list  =  advertismentDAO.findAllAdvertisementPendingAndRejectByStatus();
+		return list;
+	}
 
 
 }

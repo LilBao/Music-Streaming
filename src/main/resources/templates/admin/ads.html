@@ -71,6 +71,11 @@
          .text-uppercase {
             letter-spacing: 0.1em;
          }
+         .fieldADS {
+            font-weight: 600;
+            color: rgb(110, 107, 107);
+            font-size:.9rem;           
+         }
       </style>
       <section class="dashboard-top-sec">
 
@@ -167,9 +172,9 @@
                                                                src="../../static/img/ab1.webp" alt="img"
                                                                style="width: 10%;">
                                                             <span>{{ads.title}}</span>
-                                                            <span
-                                                               class="badge rounded-pill text-bg-warning">{{ads.status
-                                                               ===2 ? 'running':'completed'}}</span>
+                                                            
+                                                            <span ng-class="ads.status === 2 ? 'badge rounded-pill text-bg-warning' : 'badge rounded-pill text-bg-success'">{{ads.status === 2 ? 'running' : 'completed'}}</span>
+                                                              
                                                          </div>
 
                                                       </td>
@@ -217,17 +222,16 @@
                                                                                  <div
                                                                                     class="rounded p-3 mb-2 lh-lg d-flex justify-content-between align-items-center"
                                                                                     style="min-height: 40px; background-color: rgb(234, 234, 234);">
-                                                                                    <b>Cuộc trò chuyện bắt đầu qua tin
-                                                                                       nhắn</b>
+                                                                                    <b>Listening figures</b>
                                                                                     <span
-                                                                                       style="font-size: 20px; font-weight: 600;">123</span>
+                                                                                       style="font-size: 20px; font-weight: 600;">{{statisticsON.listened}}</span>
                                                                                  </div>
                                                                                  <div
                                                                                     class="rounded p-3 mb-2 lh-lg d-flex justify-content-between align-items-center"
                                                                                     style="min-height: 40px; background-color: rgb(234, 234, 234);">
-                                                                                    <b>Người tiếp cận </b>
+                                                                                    <b>View the article</b>
                                                                                     <span
-                                                                                       style="font-size: 20px; font-weight: 600;">123</span>
+                                                                                       style="font-size: 20px; font-weight: 600;">{{statisticsON.clicked}}</span>
                                                                                  </div>
                                                                               </div>
 
@@ -235,10 +239,9 @@
                                                                                  <div
                                                                                     class="rounded p-3 mb-2 lh-lg d-flex justify-content-between align-items-center"
                                                                                     style="min-height: 40px; background-color: rgb(234, 234, 234);">
-                                                                                    <b>Cuộc trò chuyện bắt đầu qua tin
-                                                                                       nhắn</b>
+                                                                                    <b>Approach</b>
                                                                                     <span
-                                                                                       style="font-size: 20px; font-weight: 600;">123</span>
+                                                                                       style="font-size: 20px; font-weight: 600;">{{statisticsON.listened + statisticsON.clicked}}</span>
                                                                                  </div>
                                                                               </div>
 
@@ -254,7 +257,7 @@
                                                                         <div class="container mt-2">
 
                                                                            <div class="row lh-sm mb-3">
-                                                                              <span>Lượt tương tác với bài viết</span>
+                                                                              <span>Ad impressions</span>
                                                                               <div class="col-md-11 align-items-center">
 
                                                                                  <div class="mt-1">
@@ -265,7 +268,7 @@
                                                                                        aria-valuemin="0"
                                                                                        aria-valuemax="100">
                                                                                        <div class="progress-bar"
-                                                                                          style="width: 25%"></div>
+                                                                                          style="width: 1%"></div>
                                                                                     </div>
                                                                                  </div>
 
@@ -276,45 +279,33 @@
                                                                                  1
                                                                               </div>
                                                                            </div>
-
+                                                                          
                                                                            <div class="row lh-sm mb-3">
-                                                                              <span>Lượt click vào liên kết</span>
+                                                                              <span>Number of clicks on the link</span>
                                                                               <div class="col-md-11 align-items-center">
-                                                                                 <div class="mt-1">
-                                                                                    <div class="progress"
-                                                                                       role="progressbar"
-                                                                                       aria-label="Basic example"
-                                                                                       aria-valuenow="25"
-                                                                                       aria-valuemin="0"
-                                                                                       aria-valuemax="100">
-                                                                                       <div class="progress-bar"
-                                                                                          style="width: 25%"></div>
+                                                                                 <div class="mt-1" >
+                                                                                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="{{resultsADS.resultsClicked}}" aria-valuemin="0" aria-valuemax="100">
+                                                                                        <div class="progress-bar" ng-style="{ 'width': resultsADS.resultsClicked + '%' }"></div>
                                                                                     </div>
-                                                                                 </div>
-                                                                              </div>
+                                                                                </div>
+                                                                             </div>
                                                                               <div class="col-md-1 mt-1">
-                                                                                 1
+                                                                                 {{statisticsON.clicked}}
                                                                               </div>
                                                                            </div>
 
                                                                            <div class="row lh-sm mb-3">
-                                                                              <span>Lượt bắt đầu cuộc trò chuyện qua tin
-                                                                                 nhắn</span>
+                                                                              <span>Ad listens</span>
+                                                                                 
                                                                               <div class="col-md-11 align-items-center">
-                                                                                 <div class="mt-1">
-                                                                                    <div class="progress"
-                                                                                       role="progressbar"
-                                                                                       aria-label="Basic example"
-                                                                                       aria-valuenow="25"
-                                                                                       aria-valuemin="0"
-                                                                                       aria-valuemax="100">
-                                                                                       <div class="progress-bar"
-                                                                                          style="width: 25%"></div>
+                                                                                 <div class="mt-1" >
+                                                                                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="{{resultsADS.resultsListened}}" aria-valuemin="0" aria-valuemax="100">
+                                                                                        <div class="progress-bar" ng-style="{ 'width': resultsADS.resultsListened + '%' }"></div>
                                                                                     </div>
-                                                                                 </div>
+                                                                                </div>
                                                                               </div>
                                                                               <div class="col-md-1 mt-1">
-                                                                                 1
+                                                                                 {{statisticsON.listened }}
                                                                               </div>
                                                                            </div>
                                                                         </div>
@@ -508,10 +499,10 @@
                                           </div>
 
                                           <div class=" col-5 mx-2">
-                                             <select class="form-select" style="font-size: 16px;" ng-model="budgetFilter">
-                                                <option value="" selected >All</option>
-                                                <option value="budget"  >ASC</option>
-                                                <option value="-budget">DESC</option>
+                                             <select class="form-select" style="font-size: 16px;" ng-model="createDateFilter">
+                                                <option value selected >All</option>
+                                                <option value="createDate" >ASC</option>
+                                                <option value="-createDate">DESC</option>
                                              </select>
                                           </div>
 
@@ -541,7 +532,7 @@
                                                 </thead>
                                                 <tbody class="text-center">
                                                    <tr class="align-middle"
-                                                      ng-repeat="ads in allAdvertisementPendingAndReject |filter :{ status:'1'} | orderBy : budgetFilter ">
+                                                      ng-repeat="ads in allAdvertisementPendingAndReject |filter :{ status:'1'} | orderBy : createDateFilter ">
                                                       <th>{{$index + 1}}</th>
                                                       <td class="text-start">
                                                          <div>
@@ -549,7 +540,7 @@
                                                                src="../../static/img/ab1.webp" alt="img"
                                                                style="width: 10%;">
                                                             <span>{{ads.title}}</span>
-                                                            <span class="badge rounded-pill text-bg-danger">{{ads.status
+                                                            <span class="badge rounded-pill text-bg-info">{{ads.status
                                                                ===1 ? 'pending':'reject'}}</span>
                                                          </div>
 
@@ -557,8 +548,8 @@
                                                       <td class="text-start">
                                                          <span class=" col-5 text-truncate">{{ads.account.email}}</span>
 
-                                                         <span
-                                                            class="badge rounded-pill text-bg-danger">{{ads.account.advertisement.length}}</span>
+                                                        
+                                                           <span  class="badge rounded-pill text-bg-danger">{{ads.numberOfAds.advertisement.length}}</span>
 
 
                                                       </td>
@@ -566,7 +557,7 @@
                                                       <td>{{ads.budget}}</td>
                                                       <td>
                                                          <button class="btn btn-secondary" type="button"
-                                                            data-bs-toggle="modal" data-bs-target="#adsModal-pending">
+                                                            data-bs-toggle="modal" data-bs-target="#adsModal-pending" ng-click="statisticsDetail(ads.adId)">
                                                             See Detail
                                                          </button>
                                                       </td>
@@ -600,103 +591,34 @@
                                                                      <div class="col-md-12">
                                                                         <div class="container mt-2">
                                                                            <div class="row">
-                                                                              <div class="col-md-4">
-                                                                                 <div>
-                                                                                    <img src="../../static/img/ab2.webp"
-                                                                                       alt="" class="w-100 img-fluid">
-                                                                                    <br>
-                                                                                 </div>
-                                                                              </div>
-                                                                              <div class="col-md-8">
-                                                                                 <div class="row text-break">
-                                                                                     <h5>TitleTitleTitleTitleTitleTitleTitleTitleTi</h5>
-
-                                                                                 </div>
-                                                                                
-                                                                                 <div class="row mt-1 ">
-                                                                                    <div class="col-md-3">
-                                                                                       <p>URL:</p>
+                                                                              <div class="col-md-12 text-center">
+                                                                                 
+                                                                                    <div class="w-100 h-75">
+                                                                                         <img src="../../static/img/ab2.webp"
+                                                                                       alt="" class="img-fluid" style="object-fit: cover;">
                                                                                     </div>
-                                                                                    <div class="col-md-9 text-break">
-                                                                                       <p>TitleTitleTitleTitleTitleTitleTitleTitleTi</p>
-                                                                                    </div>
-                                                                                 </div>
-
-                                                                                 <div class="row mt-1 ">
-                                                                                    <div class="col-md-3">
-                                                                                       <p>Account:</p>
-                                                                                    </div>
-                                                                                    <div class="col-md-9 text-break">
-                                                                                       <p>TitleTitleTitleTitleTitleTitleTitleTitleTi</p>
-                                                                                    </div>
-                                                                                 </div>
-
-                                                                                 <div class="row mt-1 ">
-                                                                                    <div class="col-md-3">
-                                                                                       <p>currency:</p>
-                                                                                    </div>
-                                                                                    <div class="col-md-9 text-break">
-                                                                                       <p>TitleTitleTitleTitleTitleTitleTitleTitleTi</p>
-                                                                                    </div>
-                                                                                 </div>
-
-                                                                                 <div class="row mt-1 ">
-                                                                                    <div class="col-md-3">
-                                                                                       <p>Tag:</p>
-                                                                                    </div>
-                                                                                    <div class="col-md-9 text-break">
-                                                                                       <p>TitleTitleTitleTitleTitleTitleTitleTitleTi</p>
-                                                                                    </div>
-                                                                                 </div>
-
                                                                                 
                                                                               </div>
-                                                                            
+                                                                             
                                                                            </div>
-
-                                                                           <!-- START Operation -->
-
-                                                                           <h6 class="mt-2">Content</h6>
-                                                                           <div class="col-md-12">
-                                                                              <div class="container mt-2">
-
-                                                                                 <div class="row lh-sm mb-3">
-                                                                                    <span>Lượt tương tác với bài
-                                                                                       viết</span>
-                                                                                    <div
-                                                                                       class="col-md-11 align-items-center">
-
-                                                                                       <div class="mt-1">
-                                                                                          <div class="progress"
-                                                                                             role="progressbar"
-                                                                                             aria-label="Basic example"
-                                                                                             aria-valuenow="25"
-                                                                                             aria-valuemin="0"
-                                                                                             aria-valuemax="100">
-                                                                                             <div class="progress-bar"
-                                                                                                style="width: 25%">
-                                                                                             </div>
-                                                                                          </div>
-                                                                                       </div>
-
-
-
-                                                                                    </div>
-                                                                                    <div class="col-md-1 mt-1">
-                                                                                       1
-                                                                                    </div>
-                                                                                 </div>
-
-                                                                                 
-
-                                                                                 
-                                                                              </div>
-                                                                           </div>
-                                                                           <!-- START Operation -->
+                                                                          
                                                                         </div>
-
-
                                                                      </div>
+                                                                           <!-- START Audio -->
+                                                                     <h6 class="mt-2">Audio</h6>
+                                                                     <div class="col-md-12">
+                                                                        <div class="container mt-2">
+                                                                           <div class="row lh-sm mb-3">
+                                                                                       
+                                                                              <div class="audio-test">
+                                                                                
+                                                                                <audio controls   ng-src="{{statisticsON.audioFile}}"></audio>
+
+                                                                              </div>
+                                                                           </div>
+                                                                        </div>
+                                                                     </div>
+                                                                      <!-- START Audio -->
                                                                   </div>
 
 
@@ -714,359 +636,368 @@
                                                                      class="shadow-sm p-3 mb-5 bg-body-tertiary rounded"
                                                                      style="margin-bottom: 10px !important;">
                                                                      <div class="row">
-                                                                        <h6>Audio</h6>
-                                                                        <div class="row col-md-12">
-
-                                                                           <div class="audio-test">
-
-                                                                              <audio controls
-                                                                                 src="https://cdn.pixabay.com/audio/2023/01/18/audio_43b48c0a90.mp3"></audio>
-
+                                                                        <h6> Main Content</h6>
+                                                                        <div class="mt-1">
+                                                                           <div class="row mx-1">
+                                                                              <div class="col-md-4 fieldADS">Title:</div>
+                                                                              <div class="col-md-8 text-break">{{statisticsON.title}}</div>
+                                                                           </div>
+                                                                           <div class="row mx-1">
+                                                                              <div class="col-md-4 fieldADS">Account:</div>
+                                                                             <div class="col-md-8 text-break">{{statisticsON.account.email}}</div>
+                                                                           </div>
+                                                                           <div class="row mx-1">
+                                                                              <div class="col-md-4 fieldADS">Tag:</div>
+                                                                             <div class="col-md-8 text-break">{{statisticsON.tag}}</div>
+                                                                           </div>
+                                                                           <div class="row mx-1">
+                                                                              <div class="col-md-4 fieldADS">Currency:</div>
+                                                                              <div class="col-md-8 text-break">{{statisticsON.currency}}</div>
+                                                                           </div>
+                                                                           <div class="row mx-1">
+                                                                              <div class="col-md-4 fieldADS">Budget:</div>
+                                                                             <div class="col-md-8 text-break">{{statisticsON.budget}}</div>
+                                                                           </div>
+                                                                           <div class="row mx-1">
+                                                                              <div class="col-md-4 fieldADS">Target audience:</div>
+                                                                             <div class="col-md-8 text-break">{{statisticsON.targetAudience}}</div>
+                                                                           </div>
+                                                                           <div class="row mx-1">
+                                                                              <div class="col-md-4 fieldADS">URL:</div>
+                                                                             <div class="col-md-8 text-break">{{statisticsON.url}}</div>
+                                                                           </div>
+                                                                     </div>
+                                                                        <div class="row mt-2">
+                                                                           <h6>Content</h6>
+                                                                           <div class="text-break mx-3">
+                                                                              {{statisticsON.content}}
                                                                            </div>
                                                                         </div>
-                                                                     </div>
+
+                                                                   </div>
 
                                                                      <!-- START Audio ADS -->
-                                                                     <div class="row">
-                                                                     
-                                                                     </div>
+                                                                   
                                                                      <!-- END DETAIL ADS -->
                                                                   </div>
                                                                </div>
                                                                <!-- END DETAIL ADS -->
-                                                               <div class="col-md-12">
-                                                                  <div
-                                                                     class="shadow-sm p-3 mb-5 bg-body-tertiary rounded">
-
-                                                                     <h6>Target</h6>
-
-                                                                  </div>
-                                                               </div>
-
-
-
+                    
                                                             </div>
                                                            
                                                          </div>
                                                       </div>
+
                                                       <div class="modal-footer p-2 ">
-                                                         <button type="button" class="btn btn-danger">Reject</button>
-                                                         
+                                                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Reject</button>
+                                                         <button type="button" class="btn btn-success"  data-bs-dismiss="modal" ng-click="setStatus(statisticsON.adId,2)">Run</button>
                                                       </div>
-                                                   </div>
+                                                      
 
                                                    <!-- END  MODAL ADS DETAIL -->
                                                 </div>
                                              </div>
-                                          </div>
+                                             </div>
 
+
+                                                      <!-- Modal -->
+                                                      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                         <div class="modal-dialog modal-sm modal-dialog-centered">
+                                                            <div class="modal-content">
+                                                               <div class="modal-header modal-header-delete">
+                                                                  <div>
+                                                                  
+                                                                  </div>
+                                                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                               </div>
+                                                               <div class="modal-body">
+                                                                  <div class="icon-close-bodyModal">
+                                                                     <i class="bi bi-x-circle"></i>
+                                                                  </div>
+                                                                  <div style="text-align: center;" class="m-2">
+                                                                     <h5> Are you sure ? </h5>
+                                                                  
+                                                                  </div>
+                                                               
+                                                               </div>
+                                                               <div class="modal-footer btn-event-deleteModal">
+                                                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                  <button type="button" class="btn btn-danger"    data-bs-dismiss="modal" ng-click="setStatus(statisticsON.adId,4)">Reject</button>
+                                                               </div>
+                                                            </div>
+                                                            </div>
+                                                      </div>
+                                        
+                                    
+                                           <!-- <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                                             <div class="modal-dialog modal-dialog-centered">
+                                               <div class="modal-content">
+                                                 <div class="modal-header ">
+                                                   <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Reason for refusal</h1>
+                                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                 </div>
+                                                 <div class="modal-body ">
+                                                   <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"  placeholder="Reason"></textarea>
+                                                 </div>
+                                                 <div class="modal-footer border-top-0">
+                                                   <button class="btn btn-success " data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Save</button>
+                                                 </div>
+                                               </div>
+                                             </div>
+                                           </div> -->
 
                                        </div>
 
                                     </div>
 
-                                    <!--END ADVERTISEMENT PENDING -->
-
-                                   
-
+                                    <!--END ADVERTISEMENT PENDING -->                                 
                                 
                                  </div>
                                  <!-- End rounded tabs -->
 
 
                               </div> 
+                         
+                           </div>
+                                <!-- START ADVERTISEMENT REJECT -->
+                                <div id="pills-podcast" role="tabpanel" aria-labelledby="pills-podcast-tab"
+                                tabindex="0" class="tab-pane fade px-4 py-5">
+                                <div class="iq-card-body ">
+                                <!-- START FILTER ADS -->
+
+                                <div class="row mb-1 border-bottom pb-3">
+
+                                   <div class="col-md-8 filter-ads d-flex">
+                                      <div class="form col-5 mx-2">
+                                         <i class="fa fa-search"></i>
+                                         <input type="text" class="form-control form-input" placeholder="Search">
+
+                                      </div>
+
+                                      <div class=" col-5 mx-2">
+                                         <select class="form-select" style="font-size: 16px;" ng-model="budgetFilter">
+                                            <option value="" selected >All</option>
+                                            <option value="budget"  >ASC</option>
+                                            <option value="-budget">DESC</option>
+                                         </select>
+                                      </div>
+
+                                      <div class="col-2 pt-1">
+
+                                         <a href="" class=" d-inline text-primary" type="reset">Reset</a>
+                                      </div>
+                                   </div>
+                                </div>
+
+                                <!-- END FILTER ADS -->
+
+                                <div class="row">
+
+                                   <div class="container">
+                                      <div class="table-responsive">
+                                         <table class="table table-hover">
+                                            <thead>
+                                               <tr>
+                                                  <th scope="col">#</th>
+                                                  <th scope="col">Advertisement</th>
+                                                  <th scope="col">Account</th>
+                                                  <th scope="col">Target Audience</th>
+                                                  <th scope="col">Budget</th>
+                                                  <th scope="col"></th>
+                                               </tr>
+                                            </thead>
+                                            <tbody class="text-center">
+                                               <tr class="align-middle"
+                                                  ng-repeat="ads in allAdvertisementPendingAndReject  |filter :{ status:'4'} | orderBy : budgetFilter ">
+                                                  <th>{{$index + 1}}</th>
+                                                  <td class="text-start">
+                                                     <div>
+                                                        <img class=" rounded img-fluid "
+                                                           src="../../static/img/ab1.webp" alt="img"
+                                                           style="width: 10%;">
+                                                        <span>{{ads.title}}</span>
+                                                        <span class="badge rounded-pill text-bg-danger">{{ads.status
+                                                           ===1 ? 'pending':'reject'}}</span>
+                                                     </div>
+
+                                                  </td>
+                                                  <td class="text-start">
+                                                     <span class=" col-5 text-truncate">{{ads.account.email}}</span>
+
+                                                     <span
+                                                        class="badge rounded-pill text-bg-danger">{{ads.account.advertisement.length}}</span>
 
 
-                               <!-- START ADVERTISEMENT REJECT -->
-                              <div id="pills-podcast" role="tabpanel" aria-labelledby="pills-podcast-tab"
-                                    tabindex="0" class="tab-pane fade px-4 py-5">
-                                    <div class="iq-card-body ">
+                                                  </td>
+                                                  <td>{{ads.targetAudience}}</td>
+                                                  <td>{{ads.budget}}</td>
+                                                  <td>
+                                                     <button class="btn btn-secondary" type="button"
+                                                        data-bs-toggle="modal" data-bs-target="#adsModal-reject"  ng-click="statisticsDetail(ads.adId)">
+                                                        See Detail
+                                                     </button>
+                                                  </td>
+                                               </tr>
 
-                                    <!-- START FILTER ADS -->
+                                            </tbody>
+                                         </table>
 
-                                    <div class="row mb-1 border-bottom pb-3">
+                                         <!-- START  MODAL ADS DETAIL -->
+                                         <!-- Modal -->
+                                         <div class="modal fade" id="adsModal-reject" tabindex="-1"
+                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                         <div class="modal-dialog modal-dialog-scrollable modal-xl">
+                                            <div class="modal-content">
+                                               <div class="modal-header">
 
-                                       <div class="col-md-8 filter-ads d-flex">
-                                          <div class="form col-5 mx-2">
-                                             <i class="fa fa-search"></i>
-                                             <input type="text" class="form-control form-input" placeholder="Search">
-
-                                          </div>
-
-                                          <div class=" col-5 mx-2">
-                                             <select class="form-select" style="font-size: 16px;" ng-model="budgetFilter">
-                                                <option value="" selected >All</option>
-                                                <option value="budget"  >ASC</option>
-                                                <option value="-budget">DESC</option>
-                                             </select>
-                                          </div>
-
-                                          <div class="col-2 pt-1">
-
-                                             <a href="" class=" d-inline text-primary" type="reset">Reset</a>
-                                          </div>
-                                       </div>
-                                    </div>
-
-                                    <!-- END FILTER ADS -->
-
-                                    <div class="row">
-
-                                       <div class="container">
-                                          <div class="table-responsive">
-                                             <table class="table table-hover">
-                                                <thead>
-                                                   <tr>
-                                                      <th scope="col">#</th>
-                                                      <th scope="col">Advertisement</th>
-                                                      <th scope="col">Account</th>
-                                                      <th scope="col">Target Audience</th>
-                                                      <th scope="col">Budget</th>
-                                                      <th scope="col"></th>
-                                                   </tr>
-                                                </thead>
-                                                <tbody class="text-center">
-                                                   <tr class="align-middle"
-                                                      ng-repeat="ads in allAdvertisementPendingAndReject  |filter :{ status:'4'} | orderBy : budgetFilter ">
-                                                      <th>{{$index + 1}}</th>
-                                                      <td class="text-start">
-                                                         <div>
-                                                            <img class=" rounded img-fluid "
-                                                               src="../../static/img/ab1.webp" alt="img"
-                                                               style="width: 10%;">
-                                                            <span>{{ads.title}}</span>
-                                                            <span class="badge rounded-pill text-bg-danger">{{ads.status
-                                                               ===1 ? 'pending':'reject'}}</span>
-                                                         </div>
-
-                                                      </td>
-                                                      <td class="text-start">
-                                                         <span class=" col-5 text-truncate">{{ads.account.email}}</span>
-
-                                                         <span
-                                                            class="badge rounded-pill text-bg-danger">{{ads.account.advertisement.length}}</span>
+                                                  <h1 class="modal-title fs-5" id="exampleModalLabel"> See Detail
+                                                  </h1>
 
 
-                                                      </td>
-                                                      <td>{{ads.targetAudience}}</td>
-                                                      <td>{{ads.budget}}</td>
-                                                      <td>
-                                                         <button class="btn btn-secondary" type="button"
-                                                            data-bs-toggle="modal" data-bs-target="#adsModal-pending">
-                                                            See Detail
-                                                         </button>
-                                                      </td>
-                                                   </tr>
-
-                                                </tbody>
-                                             </table>
-
-                                             <!-- START  MODAL ADS DETAIL -->
-                                             <!-- Modal -->
-                                             <div class="modal fade" id="adsModal-pending" tabindex="-1"
-                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-scrollable modal-xl">
-                                                   <div class="modal-content">
-                                                      <div class="modal-header">
-
-                                                         <h1 class="modal-title fs-5" id="exampleModalLabel"> See Detail
-                                                         </h1>
-
-
-                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                      </div>
-                                                      <div class="modal-body bg-body-secondary">
-                                                         <div class="row">
-                                                            <div class="col-md-6">
-                                                               <div class="shadow-sm p-3 mb-5 bg-body-tertiary rounded "
-                                                                  style="margin-bottom: 10px !important;">
-                                                                  <div class="row">
-                                                                     <h6>Details</h6>
-                                                                     <div class="col-md-12">
-                                                                        <div class="container mt-2">
-                                                                           <div class="row">
-                                                                              <div class="col-md-4">
-                                                                                 <div>
-                                                                                    <img src="../../static/img/ab2.webp"
-                                                                                       alt="" class="w-100 img-fluid">
-                                                                                    <br>
-                                                                                 </div>
-                                                                              </div>
-                                                                              <div class="col-md-8">
-                                                                                 <div class="row text-break">
-                                                                                     <h5>TitleTitleTitleTitleTitleTitleTitleTitleTi</h5>
-
-                                                                                 </div>
+                                                  <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                     aria-label="Close"></button>
+                                               </div>
+                                               <div class="modal-body bg-body-secondary">
+                                                  <div class="row">
+                                                     <div class="col-md-6">
+                                                        <div class="shadow-sm p-3 mb-5 bg-body-tertiary rounded "
+                                                           style="margin-bottom: 10px !important;">
+                                                           <div class="row">
+                                                              <h6>Details</h6>
+                                                              <div class="col-md-12">
+                                                                 <div class="container mt-2">
+                                                                    <div class="row">
+                                                                       <div class="col-md-12 text-center">
+                                                                          
+                                                                             <div class="w-100 h-75">
+                                                                                  <img src="../../static/img/ab2.webp"
+                                                                                alt="" class="img-fluid" style="object-fit: cover;">
+                                                                             </div>
+                                                                         
+                                                                       </div>
+                                                                      
+                                                                    </div>
+                                                                   
+                                                                 </div>
+                                                              </div>
+                                                                    <!-- START Audio -->
+                                                              <h6 class="mt-2">Audio</h6>
+                                                              <div class="col-md-12">
+                                                                 <div class="container mt-2">
+                                                                    <div class="row lh-sm mb-3">
                                                                                 
-                                                                                 <div class="row mt-1 ">
-                                                                                    <div class="col-md-3">
-                                                                                       <p>URL:</p>
-                                                                                    </div>
-                                                                                    <div class="col-md-9 text-break">
-                                                                                       <p>TitleTitleTitleTitleTitleTitleTitleTitleTi</p>
-                                                                                    </div>
-                                                                                 </div>
+                                                                       <div class="audio-test">
+                                                                         
+                                                                         <audio controls   ng-src="{{statisticsON.audioFile}}"></audio>
 
-                                                                                 <div class="row mt-1 ">
-                                                                                    <div class="col-md-3">
-                                                                                       <p>Account:</p>
-                                                                                    </div>
-                                                                                    <div class="col-md-9 text-break">
-                                                                                       <p>TitleTitleTitleTitleTitleTitleTitleTitleTi</p>
-                                                                                    </div>
-                                                                                 </div>
-
-                                                                                 <div class="row mt-1 ">
-                                                                                    <div class="col-md-3">
-                                                                                       <p>currency:</p>
-                                                                                    </div>
-                                                                                    <div class="col-md-9 text-break">
-                                                                                       <p>TitleTitleTitleTitleTitleTitleTitleTitleTi</p>
-                                                                                    </div>
-                                                                                 </div>
-
-                                                                                 <div class="row mt-1 ">
-                                                                                    <div class="col-md-3">
-                                                                                       <p>Tag:</p>
-                                                                                    </div>
-                                                                                    <div class="col-md-9 text-break">
-                                                                                       <p>TitleTitleTitleTitleTitleTitleTitleTitleTi</p>
-                                                                                    </div>
-                                                                                 </div>
-
-                                                                                
-                                                                              </div>
-                                                                            
-                                                                           </div>
-
-                                                                           <!-- START Operation -->
-
-                                                                           <h6 class="mt-2">Content</h6>
-                                                                           <div class="col-md-12">
-                                                                              <div class="container mt-2">
-
-                                                                                 <div class="row lh-sm mb-3">
-                                                                                    <span>Lượt tương tác với bài
-                                                                                       viết</span>
-                                                                                    <div
-                                                                                       class="col-md-11 align-items-center">
-
-                                                                                       <div class="mt-1">
-                                                                                          <div class="progress"
-                                                                                             role="progressbar"
-                                                                                             aria-label="Basic example"
-                                                                                             aria-valuenow="25"
-                                                                                             aria-valuemin="0"
-                                                                                             aria-valuemax="100">
-                                                                                             <div class="progress-bar"
-                                                                                                style="width: 25%">
-                                                                                             </div>
-                                                                                          </div>
-                                                                                       </div>
-
-
-
-                                                                                    </div>
-                                                                                    <div class="col-md-1 mt-1">
-                                                                                       1
-                                                                                    </div>
-                                                                                 </div>
-
-                                                                                 
-
-                                                                                 
-                                                                              </div>
-                                                                           </div>
-                                                                           <!-- START Operation -->
-                                                                        </div>
-
-
-                                                                     </div>
-                                                                  </div>
+                                                                       </div>
+                                                                    </div>
+                                                                 </div>
+                                                              </div>
+                                                               <!-- START Audio -->
+                                                           </div>
 
 
 
 
-                                                               </div>
-                                                              
-                                                            </div>
-                                                            <div class="col-md-6">
+                                                        </div>
+                                                       
+                                                     </div>
+                                                     <div class="col-md-6">
 
 
-                                                               <!-- START Audio ADS -->
-                                                               <div class="col-md-12">
-                                                                  <div
-                                                                     class="shadow-sm p-3 mb-5 bg-body-tertiary rounded"
-                                                                     style="margin-bottom: 10px !important;">
-                                                                     <div class="row">
-                                                                        <h6>Audio</h6>
-                                                                        <div class="row col-md-12">
-
-                                                                           <div class="audio-test">
-
-                                                                              <audio controls
-                                                                                 src="https://cdn.pixabay.com/audio/2023/01/18/audio_43b48c0a90.mp3"></audio>
-
-                                                                           </div>
-                                                                        </div>
-                                                                     </div>
-
-                                                                     <!-- START Audio ADS -->
-                                                                     <div class="row">
-                                                                     
-                                                                     </div>
-                                                                     <!-- END DETAIL ADS -->
-                                                                  </div>
-                                                               </div>
-                                                               <!-- END DETAIL ADS -->
-                                                               <div class="col-md-12">
-                                                                  <div
-                                                                     class="shadow-sm p-3 mb-5 bg-body-tertiary rounded">
-
-                                                                     <h6>Target</h6>
-
-                                                                  </div>
-                                                               </div>
-
-
+                                                        <!-- START Audio ADS -->
+                                                        <div class="col-md-12">
+                                                           <div
+                                                              class="shadow-sm p-3 mb-5 bg-body-tertiary rounded"
+                                                              style="margin-bottom: 10px !important;">
+                                                              <div class="row">
+                                                                 <h6> Main Content</h6>
+                                                                 <div class="mt-1">
+                                                                    <div class="row mx-1">
+                                                                       <div class="col-md-4 fieldADS">Title:</div>
+                                                                       <div class="col-md-8 text-break">{{statisticsON.title}}</div>
+                                                                    </div>
+                                                                    <div class="row mx-1">
+                                                                       <div class="col-md-4 fieldADS">Account:</div>
+                                                                      <div class="col-md-8 text-break">{{statisticsON.account.email}}</div>
+                                                                    </div>
+                                                                    <div class="row mx-1">
+                                                                       <div class="col-md-4 fieldADS">Tag:</div>
+                                                                      <div class="col-md-8 text-break">{{statisticsON.tag}}</div>
+                                                                    </div>
+                                                                    <div class="row mx-1">
+                                                                       <div class="col-md-4 fieldADS">Currency:</div>
+                                                                       <div class="col-md-8 text-break">{{statisticsON.currency}}</div>
+                                                                    </div>
+                                                                    <div class="row mx-1">
+                                                                       <div class="col-md-4 fieldADS">Budget:</div>
+                                                                      <div class="col-md-8 text-break">{{statisticsON.budget}}</div>
+                                                                    </div>
+                                                                    <div class="row mx-1">
+                                                                       <div class="col-md-4 fieldADS">Target audience:</div>
+                                                                      <div class="col-md-8 text-break">{{statisticsON.targetAudience}}</div>
+                                                                    </div>
+                                                                    <div class="row mx-1">
+                                                                       <div class="col-md-4 fieldADS">URL:</div>
+                                                                      <div class="col-md-8 text-break">{{statisticsON.url}}</div>
+                                                                    </div>
+                                                              </div>
+                                                                 <div class="row mt-2">
+                                                                    <h6>Content</h6>
+                                                                    <div class="text-break mx-3">
+                                                                       {{statisticsON.content}}
+                                                                    </div>
+                                                                 </div>
 
                                                             </div>
-                                                           
-                                                         </div>
-                                                      </div>
-                                                      <div class="modal-footer p-2 ">
-                                                         <button type="button" class="btn btn-danger">Reject</button>
-                                                         
-                                                      </div>
-                                                   </div>
 
-                                                   <!-- END  MODAL ADS DETAIL -->
-                                                </div>
-                                             </div>
-                                          </div>
+                                                              <!-- START Audio ADS -->
+                                                            
+                                                              <!-- END DETAIL ADS -->
+                                                           </div>
+                                                        </div>
+                                                        <!-- END DETAIL ADS -->
+             
+                                                     </div>
+                                                    
+                                                  </div>
+                                               </div>
+
+                                               <div class="modal-footer p-2 " ng-show="statusShow">
+                                                  <button type="button" class="btn btn-success"  data-bs-dismiss="modal" ng-click="setStatus(statisticsON.adId,2)">Run</button>
+                                               </div>
+                                               
+
+                                            <!-- END  MODAL ADS DETAIL -->
+                                         </div>
+                                      </div>
+                                      </div>
+
+                                      </div>
 
 
-                                       </div>
-
-                                    </div>
-
-                                    <!--END ADVERTISEMENT PENDING -->
-
-                                   
-
-                                
-                                 </div>
+                                   </div>
 
                                 </div>
-                             
-                              <!-- END ADVERTISEMENT REJECT -->
-                           </div>
+
+                                <!--END ADVERTISEMENT PENDING -->
+
+                               
+
+                            
+                             </div>
+
+                            </div>
+                         
+                          <!-- END ADVERTISEMENT REJECT -->
                         </div>
                      </div>
                   </div>
 
                </div>
+
+             
       </section>
 
    </div>
