@@ -28,8 +28,6 @@ public class PaymentREST {
 
 	private final PaymentService paymentSer;
 
-	private final StripeService stripeSer;
-
 	private final GetHostByRequest host;
 
 	@PostMapping("/api/v1/payment-vnpay")
@@ -59,7 +57,7 @@ public class PaymentREST {
 		String pathReturn = "/completed-payment-stripe?subscription=" + subscription.getSubscriptionId() + "&email="
 				+ owner + "&total=" + subscription.getPrice() + "&paymentName=stripe"+"&packages="+packages+"&ads="+adsId;
 		String pathCancel = "/cancelled-payment-stripe";
-		return ResponseEntity.ok(stripeSer.checkoutPayment(subscription, owner, req, pathReturn, pathCancel,packages));
+		return ResponseEntity.ok(paymentSer.checkoutStripe(subscription, owner, req, pathReturn, pathCancel,packages));
 	}
 
 	@PostMapping("/api/v1/create-card-stripe")

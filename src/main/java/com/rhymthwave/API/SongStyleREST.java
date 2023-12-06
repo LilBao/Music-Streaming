@@ -20,17 +20,17 @@ public class SongStyleREST {
 	CRUD<SongStyle, Integer> crudStyle;
 	
 	@GetMapping("/api/v1/song-style")
-	public ResponseEntity<MessageResponse> getAllGenre(){
+	public ResponseEntity<MessageResponse> getAllSongStyle(){
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudStyle.findAll()));
 	}
 	
 	@GetMapping("/api/v1/song-style/{id}")
-	public ResponseEntity<MessageResponse> getGenreById(@PathVariable("id") Integer id){
+	public ResponseEntity<MessageResponse> getSongStyleById(@PathVariable("id") Integer id){
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudStyle.findOne(id)));
 	}
 	
 	@PostMapping("/api/v1/song-style")
-	public ResponseEntity<MessageResponse> createGenre(@RequestBody SongStyle songStyle){
+	public ResponseEntity<MessageResponse> createSongStyle(@RequestBody SongStyle songStyle){
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudStyle.create(songStyle)));
 	}
 }

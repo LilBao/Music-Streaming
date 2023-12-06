@@ -20,17 +20,17 @@ public class CountryREST {
 	CRUD<Country, String> crudCountry;
 	
 	@GetMapping("/api/v1/country")
-	public ResponseEntity<MessageResponse> getAllGenre(){
+	public ResponseEntity<MessageResponse> getAllCountry(){
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudCountry.findAll()));
 	}
 	
 	@GetMapping("/api/v1/country/{id}")
-	public ResponseEntity<MessageResponse> getGenreById(@PathVariable("id") String id){
+	public ResponseEntity<MessageResponse> getCountryById(@PathVariable("id") String id){
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudCountry.findOne(id)));
 	}
 	
 	@PostMapping("/api/v1/country")
-	public ResponseEntity<MessageResponse> createGenre(@RequestBody Country country){
+	public ResponseEntity<MessageResponse> createCountry(@RequestBody Country country){
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudCountry.create(country)));
 	}
 }

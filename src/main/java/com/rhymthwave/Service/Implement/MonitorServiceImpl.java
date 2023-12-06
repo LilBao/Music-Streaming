@@ -3,6 +3,8 @@ package com.rhymthwave.Service.Implement;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.rhymthwave.DAO.MonitorDAO;
@@ -62,20 +64,28 @@ public class MonitorServiceImpl implements CRUD<Monitor, Long>, MonitorService{
 	}
 
 	@Override
-	public List<AnalysisDTO> resultMonitorAgeRecording(Long recordingid, Integer dateMonitor) {
+	public List<AnalysisDTO> resultMonitorAgeRecording(List<Long> recordingid, Integer dateMonitor) {
 		return dao.analysisRecordingAge(recordingid, dateMonitor);
 	}
 
 	@Override
-	public List<AnalysisDTO> resultMonitorGenderRecording(Long recordingid, Integer dateMonitor) {
+	public List<AnalysisDTO> resultMonitorGenderRecording(List<Long> recordingid, Integer dateMonitor) {
 		return dao.analysisRecordingGender(recordingid, dateMonitor);
 	}
 
 	@Override
-	public List<AnalysisDTO> resultMonitorCountryRecording(Long recordingid, Integer dateMonitor) {
+	public List<AnalysisDTO> resultMonitorCountryRecording(List<Long> recordingid, Integer dateMonitor) {
 		return dao.analysisRecordingCountry(recordingid, dateMonitor);
 	}
-	
-	
-	
+
+	@Override
+	public List<Monitor> getNewListener(Long recordingId, Integer date) {
+		return dao.getNewListener(recordingId, date);
+	}
+
+	@Override
+	public List<Object[]> getFanAlsoLiked(List<Long> listRecord, Integer date) {
+		Pageable pageable = PageRequest.of(0, 10);
+		return dao.findAccountFrequency(listRecord,date,pageable);
+	}
 }

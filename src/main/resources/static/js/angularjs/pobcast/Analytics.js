@@ -4,24 +4,24 @@ app.controller('analysisCtrl', function ($scope, $http, graphqlService, $routePa
         e.preventDefault()
         $(this).tab('show')
     })
-
+    $scope.podcast = JSON.parse(localStorage.getItem('podcast'));
     $scope.selectedTime = 30;
     $scope.currentDate = $filter('date')(new Date(), 'yyyy-MM-dd');
     $scope.daysAgo = new Date(Date.now() - $scope.selectedTime * 24 * 60 * 60 * 1000);
     $scope.listCountries = [];
-    $scope.listRecord = [];
+    $scope.listEpisode = [];
     $scope.listListener = [];
-    $scope.listened = 0;
     var aCountries = [];
     var aAge;
     var aGender = [];
-    $scope.Recording = function () {
+    $scope.Episode = function () {
         const query = `{
-                recordingById(recordingId: ${$scope.recordingId}) {
-                    recordingId
-                    recordingName
+                episodeById(episodeId: ${$scope.episodeId}) {
+                    episodeId
+                    episodeTitle
                     listened
-                    monitors{
+                    publishDate
+                    monitorEp{
                       account{
                         username
                         birthday
@@ -32,11 +32,11 @@ app.controller('analysisCtrl', function ($scope, $http, graphqlService, $routePa
                 }
             }`
         graphqlService.executeQuery(query).then(data => {
-            $scope.monitor = data.recordingById.monitors;
-            $scope.listened = data.recordingById.listened;
-            $scope.analysicAge([$scope.recordingId]);
-            $scope.analysicGender([$scope.recordingId]);
-            $scope.analysicCountry([$scope.recordingId]);
+            $scope.monitor = data.episodeById.monitors;
+            $scope.listened = data.episodeById.listened;
+            $scope.analysicAge([$scope.episodeId]);
+            $scope.analysicGender([$scope.episodeId]);
+            $scope.analysicCountry([$scope.episodeId]);
             $scope.newListener();
         }).catch(err => {
 
@@ -46,58 +46,68 @@ app.controller('analysisCtrl', function ($scope, $http, graphqlService, $routePa
 
     const ctx = $('#chartFollower');
     const age = $('#age');
-    const record = $('#record');
+    const episode = $('#episode');
+    const rating = $('#rating');
+    const podcastListened = $('#podcastListened');
     const gender = $('#gender');
-    
+
     $scope.monitorFollow = function () {
-        $http.get(host + "/v1/profile", {
+        $http.get(host + "/v1/account", {
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
             let url = host + "/v1/monitor-follow";
-            $http.get(url,{
-                params: {email: resp.data.data.account.email, role: 2, duration: $scope.selectedTime}
+            $http.get(url, {
+                params: { email: resp.data.data.email, role: 3, duration: $scope.selectedTime }
             }).then(respChart => {
-                var listDate = [];
-                var listQuantity = [];
-                respChart.data.data.forEach(item => {
-                    listDate.push($filter('date')(new Date(item[0]), 'yyyy-MM-dd'));
-                    listQuantity.push(item[1])
-                })
-                new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: listDate, 
-                        datasets: [{
-                            data: listQuantity,
-                            borderWidth: 1,
-                            fill: true,
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            y: {
-                                beginAtZero: true,      
-                            }
+                if (respChart.data.data != null) {
+                    var listDate = [];
+                    var listQuantity = [];
+                    respChart.data.data.forEach(item => {
+                        listDate.push($filter('date')(new Date(item[0]), 'yyyy-MM-dd'));
+                        listQuantity.push(item[1])
+                    })
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: listDate,
+                            datasets: [{
+                                data: listQuantity,
+                                borderWidth: 1,
+                                fill: true,
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
                         },
-                        plugins: {
-                            legend: {
-                                display: false,
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                x: {
+                                    beginAtZero: true,
+                                },
+                                y: {
+                                    beginAtZero: true,
+                                }
                             },
+                            plugins: {
+                                legend: {
+                                    display: false,
+                                },
+                            }
                         }
-                    }
-                });
+                    });
+                }
+
             })
         }).catch(error => {
             console.log("Not found artist profile")
         })
     }
 
+
     $scope.analysicAge = function (listId) {
-        $http.get(host + '/v1/monitor/age', {
+        $http.get(host + '/v1/monitor-episode/age', {
             params: { id: listId, duration: $scope.selectedTime }
         }).then(resp => {
             var under18 = 0;
@@ -165,7 +175,7 @@ app.controller('analysisCtrl', function ($scope, $http, graphqlService, $routePa
     }
 
     $scope.analysicGender = function (listId) {
-        $http.get(host + '/v1/monitor/gender', {
+        $http.get(host + '/v1/monitor-episode/gender', {
             params: { id: listId, duration: $scope.selectedTime }
         }).then(resp => {
             var male = 0;
@@ -213,7 +223,7 @@ app.controller('analysisCtrl', function ($scope, $http, graphqlService, $routePa
 
     $scope.analysicCountry = function (listId) {
         anychart.onDocumentReady(function () {
-            $http.get(host + '/v1/monitor/country', {
+            $http.get(host + '/v1/monitor-episode/country', {
                 params: { id: listId, duration: $scope.selectedTime }
             }).then(resp => {
                 var map = anychart.map();
@@ -303,35 +313,30 @@ app.controller('analysisCtrl', function ($scope, $http, graphqlService, $routePa
 
     $scope.newListener = function () {
         const query = `{
-            getNewListened(recordingId: ${$scope.recordingId}, duration: ${$scope.selectedTime}) {
-                monitorid
+            getNewListenedEpisode(episodeId: ${$scope.episodeId}, duration: ${$scope.selectedTime}) {
+                id
                 dateMonitor
-              account {
-                email
-                username
-                image{
-                    url
+                account {
+                    email
+                    username
+                    image{
+                        url
+                    }
                 }
-              }
             }
         }`
         graphqlService.executeQuery(query).then(data => {
-            $scope.listListener = data.getNewListened;
+            $scope.listListener = data.getNewListenedEpisode;
         })
     }
 
-    $scope.statisticsRecord = function () {
-        let url = host + "/v1/record-statistics";
-        $http.get(url, {
-            params: { duration: $scope.selectedTime },
-            headers: { 'Authorization': 'Bearer ' + getCookie('token') }
-        }).then(resp => {
-            var labels = [];
-            var data = [];
-            var colors = [];
-            $scope.listRecord = resp.data.data;
-            $scope.listRecord.forEach(item => {
-                labels.push(item.recordingName);
+    $scope.statisticsEpisode = function (list) {
+        var labels = [];
+        var data = [];
+        var colors = [];
+        list.forEach(item => {
+            if (new Date(item.publishDate) >= new Date(Date.now() - $scope.selectedTime * 24 * 60 * 60 * 1000)) {
+                labels.push(item.episodeTitle);
                 data.push(item.listened);
                 var randomColor = 'rgba(' +
                     Math.floor(Math.random() * 256) + ',' +
@@ -339,22 +344,96 @@ app.controller('analysisCtrl', function ($scope, $http, graphqlService, $routePa
                     Math.floor(Math.random() * 256) + ',' +
                     '0.5)';
                 colors.push(randomColor);
+            }
+            $scope.listened += item.listened;
+        })
+        new Chart(episode, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data,
+                    borderWidth: 1,
+                    backgroundColor: colors,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        beforeUpdate(axis) {
+                            const labels = axis.chart.data.labels;
+                            for (let i = 0; i < labels.length; i++) {
+                                const lbl = labels[i];
+                                if (typeof lbl === 'string' && lbl.length > 30) {
+                                    labels[i] = lbl.substring(0, 30); // cutting
+                                }
+                            }
+                        }
+                    },
+                    y: {
+                        display: false, // Ẩn thanh y
+                        beginAtZero: true,
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false, // Ẩn chú thích
+                    },
+                }
+            }
+        });
+    }
+
+    $scope.chartAll = function () {
+        $scope.listAllPodcast().then(data => {
+            var labels = [];
+            var rate = [];
+            var listEpId = [];
+            var listEp = [];
+            var listListenPodcast = [];
+            data.findPodcastByEmail.forEach(item => {
+                var listen = 0;
+                if (new Date(item.releaseDate) >= new Date(Date.now() - $scope.selectedTime * 24 * 60 * 60 * 1000)) {
+                    labels.push(item.podcastName);
+                    rate.push(item.rate);
+
+                }
+                item.Episodes.forEach(item => {
+                    listEpId.push(item.episodeId);
+                    listEp.push(item);
+                    listen += item.listened;
+                })
+                listListenPodcast.push(listen);
             })
-            new Chart(record, {
+            $scope.findAllFanAlsoLike(listEpId);
+            $scope.analysicAge([...listEpId]);
+            $scope.analysicGender([...listEpId]);
+            $scope.analysicCountry([...listEpId]);
+            $scope.statisticsEpisode(listEp);
+            new Chart(rating, {
                 type: 'bar',
                 data: {
                     labels: labels,
                     datasets: [{
-                        data: data,
+                        data: rate,
                         borderWidth: 1,
-                        backgroundColor: colors,
-                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.5)',
+                            'rgba(75, 192, 192, 0.5)',
+                            'rgba(255, 205, 86, 0.5)',
+                            'rgba(54, 162, 235, 0.5)'
+                        ],
                         borderWidth: 1
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    aspectRatio: 1,
                     scales: {
                         x: {
                             beginAtZero: true,
@@ -368,16 +447,55 @@ app.controller('analysisCtrl', function ($scope, $http, graphqlService, $routePa
                         legend: {
                             display: false, // Ẩn chú thích
                         },
-                    }
+                    },
+                    height: 300,
+                }
+            });
+
+            new Chart(podcastListened, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: listListenPodcast,
+                        borderWidth: 1,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.5)',
+                            'rgba(75, 192, 192, 0.5)',
+                            'rgba(255, 205, 86, 0.5)',
+                            'rgba(54, 162, 235, 0.5)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    aspectRatio: 1,
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                        },
+                        y: {
+                            display: false, // Ẩn thanh y
+                            beginAtZero: true,
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false, // Ẩn chú thích
+                        },
+                    },
+                    height: 300,
                 }
             });
         })
     }
 
-    $scope.findAllFanAlsoLike = function (listRecordId) {
-        let url = host + "/v1/monitor/fan-also-liked";
+    $scope.findAllFanAlsoLike = function (listEpisodeId) {
+        let url = host + "/v1/monitor-episode/fan-also-liked";
         $http.get(url, {
-            params: { listRecord: listRecordId, duration: $scope.selectedTime }
+            params: { listEpisode: listEpisodeId, duration: $scope.selectedTime }
         }).then(resp => {
             $scope.listListenerAlsoLiked = resp.data.data;
         })
@@ -391,28 +509,69 @@ app.controller('analysisCtrl', function ($scope, $http, graphqlService, $routePa
         $scope.Recording();
     }
     //Char Map
-
-    if (Number($routeParams.id) > 0) {
-        $scope.recordingId = $routeParams.id;
-        $scope.Recording();
-    } else {
-        let url = host + '/v1/record-artist';
-        $http.get(url, {
-            headers: { 'Authorization': 'Bearer ' + getCookie('token') }
-        }).then(resp => {
-            var listRecordId = [];
-            resp.data.data.forEach(item => {
-                listRecordId.push(item.recordingId)
-                $scope.listened += item.listened
-            })
-            $scope.findAllFanAlsoLike(listRecordId);
-            $scope.analysicAge([...listRecordId]);
-            $scope.analysicGender([...listRecordId]);
-            $scope.analysicCountry([...listRecordId]);
-            $scope.monitorFollow();
-        }).catch(error => {
-            console.log(error)
+    $scope.findAllEpisode = function () {
+        return new Promise((resolve, reject) => {
+            let url = host + '/v1/podcast-episode/' + $scope.podcast.podcastId;
+            $http.get(url, {
+                headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+            }).then(data => resolve(data))
+                .catch(error => reject(error));
         })
-        $scope.statisticsRecord();
     }
+
+    $scope.listAllPodcast = function () {
+        return new Promise((resolve, reject) => {
+            const query = `{
+                findPodcastByEmail(email: "${$scope.podcast.account.email}") {
+                    podcastId
+                    podcastName
+                    rate
+                    releaseDate
+                    Episodes {
+                        episodeId
+                        episodeTitle
+                        listened
+                        publishDate
+                    }
+                }
+            }`
+            graphqlService.executeQuery(query)
+                .then(data => resolve(data))
+                .catch(error => reject(error));
+        });
+    }
+    if (Number($routeParams.id) > 0) {
+        $scope.listened = 0;
+        $scope.episodeId = $routeParams.id;
+        $scope.Episode();
+    } else {
+        $scope.listened = 0;
+        $scope.chartAll();
+        $scope.monitorFollow();
+    }
+
+    $scope.select = function (type) {
+        if (type === 'all') {
+            $scope.listened = 0;
+            $scope.chartAll();
+        } else {
+            Chart.getChart('4').destroy();
+            $scope.listened = 0;
+            $scope.findAllEpisode().then(resp => {
+                var listId = [];
+                resp.data.data.forEach(item => {
+                    listId.push(item.episodeId)
+                })
+                $scope.findAllFanAlsoLike(listId);
+                $scope.analysicAge([...listId]);
+                $scope.analysicGender([...listId]);
+                $scope.analysicCountry([...listId]);
+                $scope.statisticsEpisode(resp.data.data);
+            }).catch(error => {
+                console.log(error)
+            })
+        }
+        $scope.monitorFollow();
+    }
+
 })

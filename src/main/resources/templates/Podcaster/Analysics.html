@@ -18,30 +18,61 @@
                         <option value="365">Last 1 year</option>
                     </select>
                 </div>
-                <div ng-show="recordingId == undifined">
+                <div ng-show="episodeId == undifined">
+                    <div class="my-4">
+                        <div class="d-flex">
+                            <div class="checkbox ">
+                                <input ng-click="select('all')" checked type="radio" name="type"
+                                    value="Full" id="" />
+                                <div class="box">
+                                    <p class="my-0">Full</p>
+                                </div>
+                            </div>
+                            <div class="checkbox">
+                                <input ng-click="select('podcast')" type="radio" value="Trailer"
+                                    name="type" id="" />
+                                <div class="box">
+                                    <p>This Podcast</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
 
                         <li class="nav-item" role="presentation">
-                            <button class="tab-button-a nav-link active" onclick="openTabAudience(event, 'tab1-a')"
-                                role="tab">Listen record</button>
+                            <button class="tab-button-a nav-link active" onclick="openTabAudience(event, 'tabEp-a')"
+                                role="tab">Episode</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="tab-button-a nav-link" onclick="openTabAudience(event, 'tab2-a')"
-                                role="tab">Followers</button>
+                            <button class="tab-button-a nav-link" onclick="openTabAudience(event, 'tabRate-a')"
+                                role="tab">Rating</button>
                         </li>
-
+                        <li class="nav-item" role="presentation">
+                            <button class="tab-button-a nav-link" onclick="openTabAudience(event, 'tabPodcast-a')"
+                                role="tab">Podcast</button>
+                        </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane tab-a show active" id="tab1-a">
+                        <div class="tab-pane tab-a show active" id="tabEp-a">
                             <div>
-                                <canvas id="record"></canvas>
+                                <canvas id="episode"></canvas>
                             </div>
                         </div>
-                        <div class="tab-pane  tab-a" id="tab2-a">
+                        <div class="tab-pane  tab-a" id="tabRate-a">
                             <div>
-                                <canvas id="chartFollower"></canvas>
+                                <canvas id="rating"></canvas>
                             </div>
                         </div>
+                        <div class="tab-pane  tab-a" id="tabPodcast-a">
+                            <div>
+                                <canvas id="podcastListened"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Follower</h3>
+                    <div>
+                        <canvas id="chartFollower"></canvas>
                     </div>
                 </div>
             </div>

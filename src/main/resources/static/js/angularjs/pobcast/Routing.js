@@ -7,8 +7,9 @@ app.config(function ($routeProvider) {
         .when("/home", {
             templateUrl: "HomePobcast.html"
         })
-        .when("/analytics", {
-            templateUrl: "HomePobcast.html"
+        .when("/analytics/:id", {
+            templateUrl: "Analysics.html",
+            controller: "analysisCtrl"
         })
         .when("/episodes", {
             templateUrl: "Episode.html",
@@ -102,3 +103,22 @@ app.service('pageService', function () {
         }
     }
 })
+app.service('graphqlService', function ($http) {
+    const graphqlEndpoint = 'http://localhost:8080/graphql';
+    this.executeQuery = function (query) {
+        const options = {
+            method: 'POST',
+            url: graphqlEndpoint,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            data: JSON.stringify({ query }),
+        };
+  
+        return $http(options)
+            .then(response => response.data.data)
+            .catch(error => {
+                throw error.data.errors;
+            });
+    };
+  });

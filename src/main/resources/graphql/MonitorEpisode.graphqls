@@ -3,7 +3,7 @@
 #import "./Account.graphqls"
 
 type MonitorEpisode{
-	monitorEpisodeid: ID
+	id: ID
 	dateMonitor: String
 	episode: Episode
 	account: Account
