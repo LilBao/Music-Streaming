@@ -4,6 +4,7 @@ import com.rhymthwave.DTO.MessageResponse;
 import com.rhymthwave.Request.DTO.Top10ArtistDTO;
 import com.rhymthwave.ServiceAdmin.DashboardService;
 import com.rhymthwave.ServiceAdmin.StatisticsService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,12 @@ public class API_Dashboard {
     public ResponseEntity<?> getCountSongAndEpisode() {
 
         return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", statisticsService.getStatisticsOverview()));
+    }
+
+    @GetMapping("/visitor")
+    public ResponseEntity<?> getCountVisitor(HttpSession session) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", dashboardService.incrementCounts(session)));
     }
 
     @GetMapping("/top10-artist")

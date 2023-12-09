@@ -118,18 +118,18 @@
 
                                  <div class="iq-card-body ">
 
-                                    <!-- START FILTER ADS -->
+                                    <!-- START FILTER ADS ADVERTISEMENT ON -->
 
                                     <div class="row mb-1 border-bottom pb-3">
 
                                        <div class="col-md-8 filter-ads d-flex">
-                                          <div class="form col-5 mx-2">
+                                          <div class="form col-md-4 mx-2">
                                              <i class="fa fa-search"></i>
                                              <input type="text" class="form-control form-input" placeholder="Search">
 
                                           </div>
 
-                                          <div class=" col-5 mx-2">
+                                          <div class=" col-md-4 mx-2">
                                              <select class="form-select" style="font-size: 16px;" ng-model="status">
                                                 <option value="">All</option>
                                                 <option value="2">Running</option>
@@ -137,16 +137,100 @@
                                              </select>
                                           </div>
 
-                                          <div class="col-2 pt-1">
+                                          <div class="col-md-2 pt-1">
 
                                              <a href="" class=" d-inline text-primary" type="reset">Remove</a>
                                           </div>
+                                         
+                                       </div>
+                                       <div class="col-md-2 pt-1">
+
+                                         
+                                       </div>
+                                       <div class="col-md-2 pt-1 fs-4" >
+
+                                          <a href="" class=" d-inline text-dark fw-4 " type="button" data-bs-toggle="modal" data-bs-target="#addADS"><i class="bi bi-plus-circle"></i></a>
                                        </div>
                                     </div>
+                                    <!-- START ADD ADS -->
+                                    <!-- Modal -->
+                                       <div class="modal fade" id="addADS" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                          <div class="modal-dialog modal-lg modal-dialog-centered">
+                                          <div class="modal-content ">
+                                             <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Create Advertisement</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                             </div>
+                                             <div class="modal-body">
+                                               <div class="container">
+                                                <div class="row">
+                                                   <div class="col-md-4">
+                                                      <div class="">
+                                                         <img src="../../static/img/ab1.webp" alt="" class="img-fluid w-100 image-cover">
+                                                         <input type="file" class="form-control mt-2" name="fileImage" />
+                                                      </div>
+                                                   </div>
+                                                   <div class="col-md-8">
+                                                    
+                                                         <div class="mb-2">
+                                                            <label for="" class="form-label">Title Ads</label>
+                                                            <input
+                                                               type="text"
+                                                               class="form-control"
+                                                               name=""
+                                                               id=""
+                                                               placeholder=""
+                                                            />
+                                                          
+                                                         </div>
 
-                                    <!-- END FILTER ADS -->
+                                                         <div class="mb-2">
+                                                            <label for="" class="form-label">Tag Ads</label>
+                                                            <input
+                                                               type="text"
+                                                               class="form-control"
+                                                               name=""
+                                                               id=""
+                                                               placeholder=""
+                                                            />
+                                                          
+                                                         </div>
+                                                         <div class="mb-2">
+                                                            <label for="" class="form-label">Content Ads</label>
+                                                          <textarea class="form-control" name="" id="" cols="30" rows="3"></textarea>
+                                                          
+                                                         </div>
+                                                   
+                                                   </div>
+                                                </div>
+                                                <div class="row">
+                                                   <div class="mb-2">
+                                                      <label for="" class="form-label">File Audio</label>
+                                                      <input
+                                                         type="file"
+                                                         class="form-control"
+                                                         name=""
+                                                         id=""
+                                                         placeholder="asd"
+                                                      />
+                                                    
+                                                   </div>
 
-                                   
+                                                </div>
+                                               </div>
+                                             </div>
+                                             <div class="modal-footer">
+
+                                                <button type="button" class="btn btn-success" data-bs-dismiss="modal">Run</button>
+                                             
+                                             </div>
+                                          </div>
+                                          </div>
+                                       </div>
+
+                                          <!-- END ADD ADS -->
+
+                                    <!-- END FILTER ADS  ADVERTISEMENT ON-->
                                     <div class="row">
 
                                        <div class="container">
@@ -192,7 +276,7 @@
                                                 </tbody>
                                              </table>
 
-                                             <!-- START  MODAL ADS DETAIL -->
+                                             <!-- START  MODAL ADS DETAIL ADVERTISEMENT ON-->
                                              <!-- Modal -->
                                              <div class="modal fade" id="adsModal" tabindex="-1"
                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -203,8 +287,16 @@
                                                          <h1 class="modal-title fs-5" id="exampleModalLabel"> See
                                                             results</h1>
 
-                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
+                                                            <div>
+                                                            <button type="button" class="btn btn-success" style="margin-right: 1rem;"
+                                                               data-bs-dismiss="modal"><span>Send result</span><i class="bi bi-send-check-fill ms-2"></i>
+                                                            </button>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                               aria-label="Close">
+                                                            </button>
+                                                            </div>
+                                                         
+                                                            
                                                       </div>
                                                       <div class="modal-body bg-body-secondary">
                                                          <div class="row">
@@ -457,12 +549,11 @@
 
                                                          </div>
                                                       </div>
-                                                      <!-- <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                               data-bs-dismiss="modal">Close</button>
-                                                            <button type="button" class="btn btn-primary">Save
-                                                               changes</button>
-                                                         </div> -->
+                                                     <!-- <div class="modal-footer">
+                                                            <button type="button" class="btn btn-success"
+                                                               data-bs-dismiss="modal"><span>Send result</span><i class="bi bi-send-check-fill ms-2"></i></button>
+                                                          
+                                                         </div>  -->
                                                    </div>
                                                 </div>
                                              </div>
@@ -982,32 +1073,17 @@
                                 </div>
 
                                 <!--END ADVERTISEMENT PENDING -->
-
-                               
-
-                            
+                                                      
                              </div>
 
-                            </div>
-                         
+                            </div>                        
                           <!-- END ADVERTISEMENT REJECT -->
                         </div>
                      </div>
                   </div>
 
-               </div>
-
-             
+               </div>            
       </section>
-
    </div>
-
-
-   <script
-      src="../../static/js/jscustom/UI-Js-Admin/cdn.jsdelivr.net_npm_bootstrap@5.3.1_dist_js_bootstrap.bundle.min.js"></script>
-   <script src="../../static/js/jscustom/UI-Js-Admin/code.jquery.com_jquery-3.7.1.min.js"></script>
-   <script src="../../static/js/jscustom/UI-Js-Admin/admin.js"></script>
-
 </body>
-
 </html>

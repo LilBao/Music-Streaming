@@ -181,6 +181,7 @@
                            </div>
                            <div class="iq-card-body">
                               <ul class="list-inline p-0 mb-0">
+                                 <span ng-if="album.albums.length == 0"> None</span>
                                  <li ng-repeat="album in album.albums">
                                     <div class="iq-details mb-2 d-flex">
 
@@ -197,7 +198,7 @@
 
                               </ul>
 
-                              <div class="paginations d-flex justify-content-between">
+                              <div ng-if="album.albums.length > 0" class="paginations d-flex justify-content-between">
                                  <a href="#" class="previous round">&#8249;</a>
                                  <h6 class="number-page-artistProfile mt-2"> 1 </h6>
                                  <a href="#" class="next round">&#8250;</a>
@@ -242,7 +243,7 @@
                                  </tr>
                               </thead>
                               <tbody ng-repeat=" itemSong in album.writters" >
-                                 <tr  ng-repeat=" itemRecording in itemSong.song.recordings | filter: search | orderBy: '-song.songName'">
+                                 <tr ng-repeat=" itemRecording in itemSong.song.recordings  | filter: search | orderBy: 'song.songName'"  >
                                    
                                     <td >
                                        <div class="d-flex align-items-center " style="cursor:pointer">
@@ -298,11 +299,19 @@
                               </tbody>
                            </table>
                         </div>
-                        <div class="pagination d-flex justify-content-between">
+                        <!-- <div class="pagination d-flex justify-content-between">
                            <a href="#" class="previous round">&#8249;</a>
                            <h6 class="number-page-artistProfile mt-2"> 1 </h6>
                            <a href="#" class="next round">&#8250;</a>
-                        </div>
+                        </div> -->
+                        <!-- <div class="row">
+                                       
+                           <div class="mt-3 mb-3">
+                               
+                              <dir-pagination-controls class="dir-pagination-controls"></dir-pagination-controls>
+
+                           </div>
+                       </div> -->
                      </div>
                   </div>
                </div>
@@ -312,6 +321,7 @@
    </div>
    <!--  CONTENT END  -->
    </div>
+   
 </body>
 
 </html>

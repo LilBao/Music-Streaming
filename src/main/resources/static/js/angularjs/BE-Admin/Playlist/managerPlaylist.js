@@ -179,10 +179,7 @@ app.controller(
           params: { tag: tag },
         })
         .then((resp) => {
-          $scope.listEpisodeRandom = [];
-
           $scope.listEpisodeRandom = resp.data.data;
-
           $scope.showCreatePlaylist = true;
         })
         .catch((error) => {
@@ -242,9 +239,6 @@ app.controller(
   
 
     $scope.searchSong = () => {
-    
-
- 
         $http.get(apiPlaylist + "/all-record")
         .then((resp) => {
           $scope.membersList = resp.data.data;
@@ -272,15 +266,12 @@ app.controller(
       
             $scope.filterMember = output;
          
-        }
-
-     
-    
+        }    
     };
 
     $scope.fillTextbox = function (item) {
       $scope.members = item.recordingName;
-      $scope.listSearch.push(item);
+      $scope.listSearch.unshift(item);
       $scope.hidethis = true;
     };
 
@@ -290,7 +281,6 @@ app.controller(
        $scope.listSearch.splice(indexItem, 1);
         $scope.listRecordRandom.unshift(item)
     }
-
 
     $scope.createForSong = function () {
       var records = angular.copy($scope.listRecordRandom);
@@ -321,6 +311,48 @@ app.controller(
           console.log("Error", error);
         });
     };
+
+    $scope.membersEpisode = [];
+    $scope.searchPodcast = () => {
+      $http.get(apiPlaylist + "/all-episode")
+      .then((resp) => {
+        $scope.membersEpisode = resp.data.data;
+        
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+    $scope.completeEpisode = function (nameEpisode) {
+     
+      if(nameEpisode === "" || nameEpisode === null) {
+          $scope.hidethis = true;
+      }else{
+          $scope.hidethis = false;
+          var output = [];
+          angular.forEach($scope.membersEpisode, function (members) {
+           
+              if (members.episodeTitle.toLowerCase().indexOf(nameEpisode.toLowerCase()) > -1) {
+                
+                  output.push(members);
+              }
+          });
+    
+          $scope.listEpisodeSearch = output;
+      
+      }    
+  };
+  $scope.episodeTemporaryList = [];
+  $scope.AddEpisodeToTemporaryList = function (episode) {
+    $scope.episodeTemporaryList.unshift(episode);
+  }
+
+  $scope.AddEpisodeToList = function (episode) {
+    var indexItem = $scope.episodeTemporaryList.findIndex((episode) => episode.episodeId == episode.episodeId)
+    $scope.episodeTemporaryList.splice(indexItem, 1);
+    $scope.listEpisodeRandom.unshift(episode);
+  }
 
     $scope.createForPodcast = function () {
       var listEpisode = angular.copy($scope.listEpisodeRandom);
@@ -378,6 +410,8 @@ app.controller(
       location.href = `#!/playlist/${id}/detail`;
     };
 
+
+    $scope.searchPodcast();
     $scope.getAllPlaylist();
     $scope.getAllPlaylistPodcast();
     $scope.getAllMoods();

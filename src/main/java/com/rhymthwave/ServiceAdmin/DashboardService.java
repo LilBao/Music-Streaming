@@ -4,6 +4,7 @@ import com.rhymthwave.DAO.*;
 import com.rhymthwave.Request.DTO.Top10ArtistDTO;
 import com.rhymthwave.Request.DTO.Top10PodcastDTO;
 import com.rhymthwave.entity.*;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,10 @@ public class DashboardService {
     private  final AdvertismentDAO advertismentDAO;
 
     private  final  AccountDAO accountDAO;
+
+    private Set<String> uniqueVisitors = new HashSet<>();
+
+
     public List<Top10ArtistDTO> top10ArtistByListened() {
 
         return artistDAO.top10ArtistByListened();
@@ -79,6 +84,12 @@ public class DashboardService {
 
     public int countAllAccount(){
         return accountDAO.countAll();
+    }
+
+    public int incrementCounts(HttpSession session) {
+        String sessionId = session.getId();
+        uniqueVisitors.add(sessionId);
+        return uniqueVisitors.size();
     }
 
 }

@@ -17,28 +17,32 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GraphQL_Playlist {
 
-	private  final CRUD<Recording,Long> recordingService;
-	private  final CRUD<Episode,Long> episodeService;
-	private final IPlayListServiceAdmin playList;
-	@QueryMapping("getAllPlaylist")
-	public List<Playlist> getAllPlaylist() {
-		return playList.getAllSongsPlaylist();
-	}
+    private final CRUD<Recording, Long> recordingService;
+    private final CRUD<Episode, Long> episodeService;
+    private final IPlayListServiceAdmin playList;
 
-	@QueryMapping("getAllPodcastPlaylist")
-	public List<Playlist> getAllPodcastPlaylist() {
-		return playList.getAllPodcastPlaylist();
-	}
+    @QueryMapping("getAllPlaylist")
+    public List<Playlist> getAllPlaylist() {
+        return playList.getAllSongsPlaylist();
+    }
 
-	@QueryMapping("getPlayListById")
-	public Playlist  getPlayListById(@Argument("idPlaylist") Long id){return playList.findById(id);}
+    @QueryMapping("getAllPodcastPlaylist")
+    public List<Playlist> getAllPodcastPlaylist() {
+        return playList.getAllPodcastPlaylist();
+    }
 
-	@QueryMapping("getAllEpisode")
-	public List<Episode> getAllEpisode(){
-		return episodeService.findAll();
-	}
-	@QueryMapping("getAllRecord")
-	public List<Recording> getAllRecord(){
-		return recordingService.findAll();
-	}
+    @QueryMapping("getPlayListById")
+    public Playlist getPlayListById(@Argument("idPlaylist") Long id) {
+        return playList.findById(id);
+    }
+
+    @QueryMapping("getAllEpisode")
+    public List<Episode> getAllEpisode() {
+        return episodeService.findAll();
+    }
+
+    @QueryMapping("getAllRecord")
+    public List<Recording> getAllRecord() {
+        return recordingService.findAll();
+    }
 }

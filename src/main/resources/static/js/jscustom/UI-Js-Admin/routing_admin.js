@@ -32,6 +32,10 @@ app.config(function($routeProvider,$cookiesProvider) {
     templateUrl : "displaySlide.html",
     controller: "displaySlideController"
   })
+  .when("/notification", {
+    templateUrl : "Notification.html",
+    controller: "notificationController"
+  })
   .when("/mood", {
     templateUrl : "Categories/Mood.html",
     controller: "moodController"
@@ -201,3 +205,51 @@ app.directive('formatTime', function () {
   };
 });
 
+app.directive('pagination', function() {
+  return {
+    restrict: 'E',
+    scope: {
+      currentPage: '=',
+      totalPages: '=',
+      onPageChange: '&'
+    },
+    templateUrl: 'pagination-template.html',
+    controller: function($scope) {
+      $scope.getPages = function() {
+        var pages = [];
+        var currentPage = $scope.currentPage;
+        var totalPages = $scope.totalPages;
+
+        var startPage = Math.max(1, currentPage - 2);
+        var endPage = Math.min(totalPages, currentPage + 2);
+
+        if (startPage > 1) {
+          pages.push(1);
+          if (startPage > 2) {
+            pages.push('...');
+          }
+        }
+
+        for (var i = startPage; i <= endPage; i++) {
+          pages.push(i);
+        }
+
+        if (endPage < totalPages) {
+          if (endPage < totalPages - 1) {
+            pages.push('...');
+          }
+          pages.push(totalPages);
+        }
+
+        return pages;
+      };
+
+      $scope.goToPage = function(page) {
+        if (page !== '...') {
+          $scope.currentPage = page;
+          $scope.onPageChange({ page: page });
+        }
+      };
+    }
+  };
+});
