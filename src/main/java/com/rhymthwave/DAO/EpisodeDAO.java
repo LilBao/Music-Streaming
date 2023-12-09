@@ -32,6 +32,10 @@ public interface EpisodeDAO extends JpaRepository<Episode, Long>{
 	@Query("select count(e.episodeId) from  Episode e")
 	int countEpisode();
 
+
 	List<Episode> findTop100ByOrderByListenedDesc();
+
+	List<Episode> findTop10ByOrderByListenedDesc();
+
 
 }

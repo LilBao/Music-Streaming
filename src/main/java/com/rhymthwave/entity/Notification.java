@@ -50,6 +50,7 @@ public class Notification implements Serializable {
 	@Column(name = "TO_URL" ,columnDefinition = "nvarchar(255)")
 	private String toURL;
 
+
 	@Column(name = "Public_IDImage" ,columnDefinition = "nvarchar(255)")
 	private String publicIdImage;
 

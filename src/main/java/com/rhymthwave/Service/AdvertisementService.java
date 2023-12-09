@@ -1,6 +1,8 @@
 package com.rhymthwave.Service;
 
+
 import com.rhymthwave.Request.DTO.AdvertisementDTO;
+
 import com.rhymthwave.entity.Advertisement;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -9,7 +11,9 @@ import java.util.Map;
 
 public interface AdvertisementService extends CRUD<Advertisement, Long> {
 
+
     Advertisement save(AdvertisementDTO advertisementDTO,HttpServletRequest request);
+
 
     List<Advertisement> getAllAdvertisementRunningAndCompleted();
 

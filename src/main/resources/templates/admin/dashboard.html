@@ -13,7 +13,11 @@
                                     <h3 class="card-title text-white">Try Cap</h3>
                                        
                                     <div class="d-inline-block">
+
                                         <h2 class="text-white">{{visitor | number: 0}}</h2>
+
+                                        <h2 class="text-white">{{4565 | number: 0}}</h2>
+
                                         <p class="text-white mb-0">{{date | date:'longDate'}}</p>
                                     </div>
                                     <span class="float-right display-5 opacity-5 "><i
@@ -232,8 +236,8 @@
                                 <div class="table-responsive">
                                     <table class="table table-hover ">
                                         <thead>
-                                          <tr>
-                                          
+                                          <tr>                                         
+                                            <th scope="col">#</th>
                                             <th scope="col">Name</th>
                                             <th scope="col">Listened</th>
                                             <th scope="col"></th>
@@ -246,6 +250,9 @@
                                                 <span class="mx-2">{{artist.artistName}}</span>
                                             </td>
                                            
+                                            <th scope="row">1</th>
+                                            <td>{{artist.artistName}}</td>
+
                                             <td>{{artist.totalListened | number: 0}}</td>
                                             <td class="text-end fs-4 px-4">
                                                 <div class="dropdown">
@@ -278,6 +285,7 @@
                                         <thead>
                                           <tr>
                                            
+                                            <th scope="col">#</th>
                                             <th scope="col">Name</th>
                                             <th scope="col">Listened</th>
                                             <th scope="col"></th>
@@ -285,11 +293,16 @@
                                         </thead>
                                         <tbody>
                                           <tr ng-repeat=" account in top10Podcast">
+
                                             <td scope="row">
                                                 <img src="../../static/img/ab4.webp" class="img-fluid  rounded-3" alt="image Artist" style="width: 40px;">
                                                 <span class="mx-2">{{account.authorName}}</span>
                                             </td>
                                      
+
+                                            <th scope="row">1</th>
+                                            <td>{{account.authorName}}</td>
+
                                             <td>{{account.totalListened | number: 0}}</td>
                                             <td class="text-end fs-4 px-4">
                                                 <div class="dropdown" >

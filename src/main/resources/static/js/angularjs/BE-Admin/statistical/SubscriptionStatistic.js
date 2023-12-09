@@ -151,7 +151,11 @@ app.controller("SubscriptionStatisticsController",function($scope,graphqlService
                 labels:['12','13'],
                 datasets: [{
                     label: 'Series',
+
                     data:  [12,43],
+
+                    data:  [12,43,24],
+
                     backgroundColor: [
                        "#ff9933","#cccc00","#00ffff"
                     ],
@@ -163,7 +167,9 @@ app.controller("SubscriptionStatisticsController",function($scope,graphqlService
             },
         });
      }
+
      $scope.chartPieSumPriceSubscription2()
+
      $scope.getTotalSumPriceSubscriptionByYear();
      $scope.getTotalSumPriceSubscription();
      $scope.getRateSubscription();

@@ -243,7 +243,11 @@
                                  </tr>
                               </thead>
                               <tbody ng-repeat=" itemSong in album.writters" >
+
                                  <tr ng-repeat=" itemRecording in itemSong.song.recordings  | filter: search | orderBy: 'song.songName'"  >
+
+                                 <tr  ng-repeat=" itemRecording in itemSong.song.recordings | filter: search | orderBy: '-song.songName'">
+
                                    
                                     <td >
                                        <div class="d-flex align-items-center " style="cursor:pointer">

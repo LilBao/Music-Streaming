@@ -11,7 +11,9 @@ app.controller("dashboardController", function (graphqlService, $scope, $http) {
     $scope.totalAccount = 0;
     $scope.top10Artist = [];
     $scope.top10Podcast = [];
+
     $scope.visitor = 0;
+
     $scope.getCount = function () {
       $http.get(apiDashboard+"/count").then(function (response) {
         $scope.countSongAndEpisode = response.data.data;
@@ -20,6 +22,7 @@ app.controller("dashboardController", function (graphqlService, $scope, $http) {
         console.log(error);
       })
     }
+
 
     $scope.getCountVisitor = function () {
 
@@ -30,6 +33,7 @@ app.controller("dashboardController", function (graphqlService, $scope, $http) {
         console.log(error);
       })
     }
+
 
     $scope.getCountSubscription = function () {
         $http.get(apiDashboard+"/subscription").then(function (response) {
@@ -141,6 +145,7 @@ app.controller("dashboardController", function (graphqlService, $scope, $http) {
       })
     };
 
+
     $scope.getCountVisitor();
     $scope.getTop10Podcast();
     $scope.getTop10Artist();
@@ -148,5 +153,13 @@ app.controller("dashboardController", function (graphqlService, $scope, $http) {
     $scope.getTop4Genre();
     $scope.getCount();
     $scope.getCountSubscription();
+
+    $scope.getTop10Podcast();
+    $scope.getTop10Artist();
+    $scope.getTop1Country ();
+     $scope.getTop4Genre();
+     $scope.getCount();
+     $scope.getCountSubscription();
+
 })
 

@@ -1087,8 +1087,12 @@ td {
 }
 
 .image-profile-podcast img{
+
     height: 8rem;
     width: auto;
+
+    height: 7rem;
+
     object-fit: cover;
 }
 .personal-detail-podcast i{
@@ -1100,6 +1104,7 @@ td {
     font-size: 14px
   
 }
+
 
 /*END PROFILE PODCAST  */
 
@@ -1177,3 +1182,6 @@ td {
 .switchToggle label:active:after {
     width: 60px;
 }
+=======
+/*END PROFILE PODCAST  */
+

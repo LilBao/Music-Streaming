@@ -56,6 +56,22 @@
                               <div>
                                  <canvas id="accountRole" width="300" height="300"></canvas>
 
+
+
+               <div class="col-md-6">
+                  <div class="cardperShadow shadow mb-4">
+                     <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary"> Statistics Account Role
+                        </h6>
+                     </div>
+                     <div class="card-bodyPerShadow">
+
+                        <div class="container">
+                           <div class=" table-responsive ">
+                              <div>
+                                 <canvas id="accountRole" width="300" height="300"></canvas>
+
+
                               </div>
 
                            </div>
@@ -293,6 +309,13 @@
                                                       <ul class="dropdown-menu">
                                                          <li><a class="dropdown-item" type="button"
                                                                href="#!/{{user.email}}/artist-profile">Profile</a>
+
+                                                         </li>
+                                                         <li><button class="dropdown-item" type="button">Look
+                                                               Account</button></li>
+
+                                                         <li><button class="dropdown-item" type="button">Delete</button>
+
                                                          </li>
                                                         
                                                       </ul>
@@ -394,6 +417,13 @@
                                                       </a>
                                                       <ul class="dropdown-menu">
                                                          <li><a href="#!/{{user.email}}/podcast-profile" class="dropdown-item" type="button">Detail</a>
+
+
+                                                         </li>
+                                                         <li><button class="dropdown-item" type="button">Look
+                                                               Account</button></li>
+                                                         <li><button class="dropdown-item" type="button">Delete</button>
+
                                                          </li>
                                                        
                                                       </ul>
@@ -466,8 +496,9 @@
                                                       class="bi bi-three-dots-vertical"></i></th>
                                              </tr>
                                           </thead>
-                                          <tbody>
-                                             
+                                          <tbody>                               
+
+
                                              <tr
                                                 dir-paginate="user in itemsAccountByRole | itemsPerPage:12 | filter:searchText3">
                                                 <th scope="row">{{$index + 1}}</th>

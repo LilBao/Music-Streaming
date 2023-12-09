@@ -133,12 +133,21 @@ app.controller("tableAccountController", function (graphqlService, $scope, $http
             data: {
                 labels: ['User', 'Artist', 'Podcast','Staff'],
                 datasets: [{
+
                     label: 'Number',
+
+                    label: 'Year',
+
                     data:  $scope.countAccountByRole,
                     backgroundColor: [
                         "#0074D9", "#FF4136", "#2ECC40","#ffff99"
                     ],
-         
+
+                    // borderColor: [
+                    //     "#0074D9", "#FF4136", "#2ECC40","#ffff99"
+                    // ],
+                    // borderWidth: 1
+
                 }]
             },
         });

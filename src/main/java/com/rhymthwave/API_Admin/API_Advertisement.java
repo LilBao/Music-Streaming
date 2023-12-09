@@ -21,12 +21,12 @@ public class API_Advertisement {
 
     private final AdvertisementService advertisementService;
 
+
     @PostMapping
     public ResponseEntity<?> createAdvertisement() {
         return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully"));
     }
-
-
+      
     @GetMapping("/running-completed")
     public ResponseEntity<?> getAllAdvertisementRunAndComplete() {
 

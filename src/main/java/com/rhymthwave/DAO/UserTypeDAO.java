@@ -11,8 +11,13 @@ import java.util.List;
 @Repository
 public interface UserTypeDAO extends JpaRepository<UserType, Long>{
 	
+
 	@Query("SELECT uty FROM UserType uty WHERE uty.account.email = ?1 AND uty.subscription.subscriptionType = 'MASTER' ")
 	UserType findUserTypeEmail(String email);
+
+	@Query("SELECT uty FROM UserType uty WHERE uty.account.email = ?1 AND uty.subscription.subscriptionType = 'PROFESSIONAL' ")
+	UserType findUserTypeyEmail(String email);
+
 
 	@Query("select ut.subscription.subscriptionId from UserType ut where year(ut.startDate) = :year")
 	List<Integer> findIdSubscriptionByYearFromUserType( @Param(("year")) int year);
