@@ -40,8 +40,6 @@ public class SignUpAPI {
 	@Autowired
 	private ApplicationEventPublisher publisher;
 
-	private Account account;
-
 	@Autowired
 	private AccountDAO accountDAO;
 	
@@ -66,6 +64,9 @@ public class SignUpAPI {
 	@GetMapping("/verifyEmail")
 	public ResponseEntity<?> verifyEmail(@RequestParam("token") String verificationToken) {
 		Account account = accountDAO.findByVerificationCode(verificationToken);
+		if(account == null) {
+			return ResponseEntity.ok(new MessageResponse(false, "verificationToken is exist!!!"));
+		}
 		signUpServiceImpl.verifyEmail(account);		
 		return ResponseEntity.ok("Verified successfully");
 	}

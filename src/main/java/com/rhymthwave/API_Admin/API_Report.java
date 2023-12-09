@@ -40,17 +40,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class API_Report {
 	
-	private final IReportServiceAdmin iReportService;
-
-	private final GetHostByRequest host;
-
-	private final AccountServiceImpl accountService;
-
-	private final ReportDAO reportDAO;
 
 	private final ReportServiceAdminImp reportServiceAdminImp;
 	
-	private final CRUD<Report,Integer> crudReport;
 	
 	@Qualifier("sendNotificationOfNews")
 	private final INotification<NewDTO> notification;
@@ -94,6 +86,36 @@ public class API_Report {
 	@PutMapping("/banpodcast/{podcastId}")
 	public ResponseEntity<?> banPodcast(@PathVariable("podcastId") Long podcastId) throws UnsupportedEncodingException, MessagingException{
 		reportServiceAdminImp.banPodcast(podcastId);
+		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", null));
+		
+	}
+	@PutMapping("/unbanArtist/{artistId}")
+	public ResponseEntity<?> unBan(@PathVariable("artistId") Long artistId) throws UnsupportedEncodingException, MessagingException{
+		reportServiceAdminImp.unbanArtist(artistId);
+		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", null));
+		
+	}
+//	@PutMapping("/deletereport/{reportId}")
+//	public ResponseEntity<?> deleteReport(@PathVariable("reportId") Long reportId) throws UnsupportedEncodingException, MessagingException{
+//		reportServiceAdminImp.deleteReport(reportId);
+//		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", null));
+//		
+//	}
+	@PutMapping("/unbanEpisodes/{episodeId}")
+	public ResponseEntity<?> unbanEpisodes(@PathVariable("episodeId") Long episodeId) throws UnsupportedEncodingException, MessagingException{
+		reportServiceAdminImp.unbanEpisodes(episodeId);
+		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", null));
+		
+	}
+	@PutMapping("/unbanrecording/{recordingId}")
+	public ResponseEntity<?> unbanRecording(@PathVariable("recordingId") Long recordingId) throws UnsupportedEncodingException, MessagingException{
+		reportServiceAdminImp.unbanrecordingId(recordingId);
+		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", null));
+		
+	}
+	@PutMapping("/unbanpodcast/{podcastId}")
+	public ResponseEntity<?> unbanPodcast(@PathVariable("podcastId") Long podcastId) throws UnsupportedEncodingException, MessagingException{
+		reportServiceAdminImp.unbanPodcast(podcastId);
 		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", null));
 		
 	}

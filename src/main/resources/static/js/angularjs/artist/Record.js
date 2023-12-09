@@ -21,7 +21,8 @@ app.controller('recordCtrl', function ($scope, $http) {
         data.append('instrument', $scope.instruments);
         data.append('versions', $scope.record.version);
         data.append('fileRecord', $scope.recordFile);
-        data.append('duration', Number($scope.duration));
+        // data.append('duration', Number($scope.duration));
+        data.append('duration', Number(0));
         if ($scope.lyricsFile) {
             data.append('fileLyrics', $scope.lyricsFile);
         }

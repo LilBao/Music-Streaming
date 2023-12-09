@@ -85,7 +85,7 @@ public class RecordREST {
 			Map<String, Object> respLyrics = cloudinary.Upload(fileLyrics, "Lyrics", account.getArtist().getArtistName());
 			record.setLyricsUrl((String) respLyrics.get("url"));
 			record.setPublicIdLyrics((String) respLyrics.get("public_id"));
-		}
+		}		
 		
 		record.setAudioFileUrl((String) respRecord.get("url"));
 		record.setPublicIdAudio((String) respRecord.get("public_id"));

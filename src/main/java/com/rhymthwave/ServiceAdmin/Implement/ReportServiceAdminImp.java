@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.rhymthwave.DAO.AccountDAO;
 import com.rhymthwave.DAO.ArtistDAO;
 import com.rhymthwave.DAO.EpisodeDAO;
+import com.rhymthwave.DAO.PodcastDAO;
 import com.rhymthwave.DAO.RecordDAO;
 import com.rhymthwave.DAO.ReportDAO;
 import com.rhymthwave.Request.DTO.NewDTO;
@@ -45,6 +46,8 @@ public class ReportServiceAdminImp implements IReportServiceAdmin, CRUD<Report, 
 	private final EpisodeDAO episodeDAO;
 	
 	private final RecordDAO recordDAO;
+	
+	private final PodcastDAO podcastDAO;
 	
 	@Autowired
 	private JavaMailSender mailSender;
@@ -117,7 +120,7 @@ public class ReportServiceAdminImp implements IReportServiceAdmin, CRUD<Report, 
 		newAccount.setBlocked(true);
 		accountDAO.save(newAccount);
 //		sendEmailBan(newAccount.getEmail());
-		notification.sendEmailBan(newAccount.getEmail());
+		notification.sendEmailBan(newArtist.getAccount().getEmail(),"Your Account Artist has been banned");
 	}
 
 	public void sendEmailBan(String email) throws MessagingException, UnsupportedEncodingException {
@@ -137,30 +140,68 @@ public class ReportServiceAdminImp implements IReportServiceAdmin, CRUD<Report, 
 
 	public void banEpisodes(Long episodeId) throws UnsupportedEncodingException, MessagingException {
 		Episode newEpisode = episodeDAO.findAllById(episodeId);
-		newEpisode.setDelete(true);
+		newEpisode.setPublic(false);
 		episodeDAO.save(newEpisode);
 		Podcast newPodcast = newEpisode.getPodcast();
 		Account email = newPodcast.getAccount();
 //		sendEmailBan(email.getEmail());
-		notification.sendEmailBan(email.getEmail());
+		notification.sendEmailBan(email.getEmail(),"Your Episodes has been banned");
 	}
 
 	public void banrecordingId(Long recordingId) throws UnsupportedEncodingException, MessagingException {
 		Recording newRecording = recordDAO.findAllById(recordingId);
 		newRecording.setIsDeleted(true);
 		recordDAO.save(newRecording);
-//		sendEmailBan(newRecording.getEmailCreate());
-		notification.sendEmailBan(newRecording.getEmailCreate());
+		notification.sendEmailBan(newRecording.getEmailCreate(),"Your Record has been banned");
 		
 	}
 
 	public void banPodcast(Long podcastId) throws UnsupportedEncodingException, MessagingException {
-		Episode newEpisode = episodeDAO.findAllById(podcastId);
-		newEpisode.setDelete(true);
+		Podcast newPodcast = podcastDAO.findByID(podcastId);
+		Account newAccount = accountDAO.findByEmail(newPodcast.getAccount().getEmail());
+		newAccount.setBlocked(true);
+		accountDAO.save(newAccount);	
+		notification.sendEmailBan(newAccount.getEmail(),"Your Podcast has been banned");
+	}
+
+	public void unbanArtist(Long artistId) {
+		Artist newArtist = artistDAO.findbyID(artistId);
+		newArtist.setActive(true);
+		artistDAO.save(newArtist);
+		Account newAccount = newArtist.getAccount();
+		newAccount.setBlocked(false);
+		accountDAO.save(newAccount);	
+		notification.sendEmailBan(newArtist.getAccount().getEmail(),"Your Account Artist has been unbanned");
+		
+	}
+
+	public void unbanEpisodes(Long episodeId) {
+		Episode newEpisode = episodeDAO.findAllById(episodeId);
+		newEpisode.setDelete(false);
+		newEpisode.setPublic(true);
 		episodeDAO.save(newEpisode);
 		Podcast newPodcast = newEpisode.getPodcast();
 		Account email = newPodcast.getAccount();
 //		sendEmailBan(email.getEmail());
-		notification.sendEmailBan(email.getEmail());
+		notification.sendEmailBan(email.getEmail(),"Your Episodes has been unbanned");
+		
 	}
+
+	public void unbanrecordingId(Long recordingId) {
+		Recording newRecording = recordDAO.findAllById(recordingId);
+		newRecording.setIsDeleted(false);
+		recordDAO.save(newRecording);
+		notification.sendEmailBan(newRecording.getEmailCreate(),"Your Record has been banned");
+		
+	}
+
+	public void unbanPodcast(Long podcastId) {
+		Podcast newPodcast = podcastDAO.findByID(podcastId);
+		Account newAccount = accountDAO.findByEmail(newPodcast.getAccount().getEmail());
+		newAccount.setBlocked(false);
+		accountDAO.save(newAccount);
+		notification.sendEmailBan(newAccount.getEmail(),"Your Podcast has been unbanned");
+		
+	}
+
 }

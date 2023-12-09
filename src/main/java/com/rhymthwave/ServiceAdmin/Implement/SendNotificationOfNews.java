@@ -50,12 +50,12 @@ public class SendNotificationOfNews implements INotification<NewDTO> {
 	}
 	
 	@Override
-	public void sendEmailBan(String email) {
+	public void sendEmailBan(String email,String message) {
 		Account accounts = accountDAO.findByEmail(email);
 		Email emails = new Email();
 		emails.setFrom("musicstreaming2023@gmail.com");
 		emails.setTo(email);
-		emails.setSubject("Ban Account");
+		emails.setSubject(message);
 		emails.setBody(sendMailTemplateSer.getContentForReport("templateReportAdmin"));
 		mailService.enqueue(emails);
 	}

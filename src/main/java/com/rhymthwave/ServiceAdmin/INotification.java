@@ -4,7 +4,7 @@ public interface INotification<T> {
 	
 	void sendNotification(T noti, String urlImage);
 
-	void sendEmailBan(String email);
+	void sendEmailBan(String email,String message);
 
 	void sendEmailWarring(String email);
 

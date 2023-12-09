@@ -17,12 +17,17 @@ import com.rhymthwave.DAO.RoleDAO;
 import com.rhymthwave.DAO.UserTypeDAO;
 import com.rhymthwave.DTO.UserAlreadyExistsException;
 import com.rhymthwave.Request.DTO.SignUpDTO;
+import com.rhymthwave.Service.CRUD;
+import com.rhymthwave.Service.ImageService;
+import com.rhymthwave.Service.SubscriptionService;
 import com.rhymthwave.Service_LR.ISignUpService;
 //import com.rhymthwave.Utilities.JWT.VerificationTokenRepository;
 //import com.rhymthwave.Utilities.JWT.VerifyToken;
 import com.rhymthwave.entity.Account;
 import com.rhymthwave.entity.Author;
+import com.rhymthwave.entity.Image;
 import com.rhymthwave.entity.Role;
+import com.rhymthwave.entity.Subscription;
 import com.rhymthwave.entity.UserType;
 import com.rhymthwave.entity.TypeEnum.EROLE;
 import com.rhymthwave.entity.TypeEnum.EUserType;
@@ -40,11 +45,16 @@ private final AccountDAO dao;
 	
 	@Autowired
 	private PasswordEncoder encoder;
+	
+	@Autowired
+	private SubscriptionService subscriptionService;
 
 	@Autowired
 	private AuthorDAO authorDAO;
 	
 	private final UserTypeDAO userTypeDAO;
+	
+	private final CRUD<Image, String> crudImage;
 	
 	private static final int EXPIRATION_TIME = 15;
 
@@ -63,6 +73,8 @@ private final AccountDAO dao;
 		if (account != null) {
 			return null;
 		}
+		Subscription subscription = subscriptionService.getSubByName("BASIC");
+		Image image = crudImage.findOne("1");
 		Account newAccount = new Account();
 		newAccount.setEmail(request.email());
 		newAccount.setUsername(request.username());
@@ -73,6 +85,7 @@ private final AccountDAO dao;
 		newAccount.setVerify(false);
 		newAccount.setRemainingVerification(3);
 		newAccount.setBlocked(false);
+		newAccount.setImage(image);
 		dao.save(newAccount);
 		Author newAuthor = new Author();
 		newAuthor.setRole(roleDAO.findByRole(EROLE.USER));
@@ -82,7 +95,9 @@ private final AccountDAO dao;
 		newUserType.setAccount(newAccount);
 		newUserType.setNameType("BASIC");
 		newUserType.setStartDate(getTimeNow());
+		newUserType.setSubscription(subscription);
 		userTypeDAO.save(newUserType);
+		
 		return newAccount ;
 	}
 

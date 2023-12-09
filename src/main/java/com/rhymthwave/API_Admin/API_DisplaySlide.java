@@ -40,8 +40,6 @@ public class API_DisplaySlide {
 
 	private final AccountServiceImpl accountService;
 
-	private final SlideDAO slideDAO;
-
 	private final DisplaySlideImp displaySlideImp;
 	
 

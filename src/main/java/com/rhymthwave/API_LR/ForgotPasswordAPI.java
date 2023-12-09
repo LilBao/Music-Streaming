@@ -36,7 +36,6 @@ public class ForgotPasswordAPI {
 	@Autowired
 	private JavaMailSender mailSender;
 	
-	private Account account;
 
 	@PostMapping("/forgotpassword")
 	public ResponseEntity<?> forgotPassword(@RequestBody ForgotPasswordDTO forgotPasswordDTO) throws UnsupportedEncodingException {

@@ -27,12 +27,21 @@ $scope.sendEmailWarring = function (email,reportId) {
   });
 }
 
-$scope.banArtist = function (reportId) {
-  let url = apiReport+ "/banArtist" + "/" + reportId;
+$scope.banArtist = function (artistId,reportId) {
+  let url = apiReport+ "/banArtist" + "/" + artistId;
   $http.put(url).then(resp => {
       $scope.form = resp.data.data;
       $scope.seenReport(reportId);
-      showStickyNotification("Seen report successful", "success", 2000);
+      showStickyNotification("Ban artist successful", "success", 2000);
+  }).catch(error => {
+      console.log("Error", error)
+  });
+}
+$scope.unbanArtist = function (artistId) {
+  let url = apiReport+ "/unbanArtist" + "/" + artistId;
+  $http.put(url).then(resp => {
+      $scope.form = resp.data.data;
+      showStickyNotification("Unban Artist report successful", "success", 2000);
   }).catch(error => {
       console.log("Error", error)
   });
@@ -43,7 +52,17 @@ $scope.banEpisodes = function (episodeId,reportId) {
   $http.put(url).then(resp => {
       $scope.form = resp.data.data;
       $scope.seenReport(reportId);
-      showStickyNotification("Seen report successful", "success", 2000);
+      showStickyNotification("Ban Episode successful", "success", 2000);
+  }).catch(error => {
+      console.log("Error", error)
+  });
+}
+
+$scope.unbanEpisodes = function (episodeId) {
+  let url = apiReport+ "/unbanEpisodes" + "/" + episodeId;
+  $http.put(url).then(resp => {
+      $scope.form = resp.data.data;
+      showStickyNotification("Unban Episode successful", "success", 2000);
   }).catch(error => {
       console.log("Error", error)
   });
@@ -54,7 +73,17 @@ $scope.banRecording = function (recordingId,reportId) {
   $http.put(url).then(resp => {
       $scope.form = resp.data.data;
       $scope.seenReport(reportId);
-      showStickyNotification("Seen report successful", "success", 2000);
+      showStickyNotification("Ban record successful", "success", 2000);
+  }).catch(error => {
+      console.log("Error", error)
+  });
+}
+
+$scope.unbanRecording = function (recordingId) {
+  let url = apiReport+ "/unbanrecording" + "/" + recordingId;
+  $http.put(url).then(resp => {
+      $scope.form = resp.data.data;
+      showStickyNotification("Unban Record successful", "success", 2000);
   }).catch(error => {
       console.log("Error", error)
   });
@@ -65,11 +94,22 @@ $scope.banPodcast = function (podcastId,reportId) {
   $http.put(url).then(resp => {
       $scope.form = resp.data.data;
       $scope.seenReport(reportId);
-      showStickyNotification("Seen report successful", "success", 2000);
+      showStickyNotification("Ban Podcat successful", "success", 2000);
   }).catch(error => {
       console.log("Error", error)
   });
 }
+
+$scope.unbanPodcast = function (podcastId) {
+  let url = apiReport+ "/unbanpodcast" + "/" + podcastId;
+  $http.put(url).then(resp => {
+      $scope.form = resp.data.data;
+      showStickyNotification("UnBan Podcat successful", "success", 2000);
+  }).catch(error => {
+      console.log("Error", error)
+  });
+}
+
 
 
 

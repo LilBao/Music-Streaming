@@ -468,7 +468,7 @@
                                                         ng-click="sendEmailWarring(report.artist.account.email,report.reportId)"
                                                         class="btn btn-danger" data-bs-dismiss="modal">Warning
                                                         Email</button>
-                                                    <button ng-click="banArtist(report.reportId)" class="btn btn-danger"
+                                                    <button ng-click="banArtist(report.reportId,report.reportId)" class="btn btn-danger"
                                                         data-bs-dismiss="modal">Ban</button>
                                                 </div>
                                                 <div class="modal-footer" ng-if="report.episode">
@@ -490,7 +490,7 @@
                                                     <button ng-click="seenReport(report.reportId)"
                                                         class="btn btn-success" data-bs-dismiss="modal">Seen</button>
                                                     <button
-                                                        ng-click="sendEmailWarring(report.podcast.account.email,report.reportId)"
+                                                        ng-click="sendEmailWarring(report.podcast.podcastId,report.reportId)"
                                                         class="btn btn-warning" data-bs-dismiss="modal">Warning
                                                         Email</button>
                                                     <button
@@ -883,53 +883,29 @@
                                                 <div class="modal-footer" ng-if="report.artist">
                                                     <button class="btn btn-success"
                                                         data-bs-dismiss="modal">Cancel</button>
-                                                    <button ng-click="seenReport(report.reportId)"
-                                                        class="btn btn-success" data-bs-dismiss="modal">Seen</button>
-                                                    <button
-                                                        ng-click="sendEmailWarring(report.artist.account.email,report.reportId)"
-                                                        class="btn btn-warning" data-bs-dismiss="modal">Warning
-                                                        Email</button>
-                                                    <button ng-click="banArtist(report.reportId)" class="btn btn-danger"
-                                                        data-bs-dismiss="modal">Ban</button>
+                                                    <button ng-click="unbanArtist(report.reportId)" class="btn btn-danger"
+                                                        data-bs-dismiss="modal">UnBan</button>
                                                 </div>
                                                 <div class="modal-footer" ng-if="report.episode">
                                                     <button class="btn btn-success"
                                                         data-bs-dismiss="modal">Cancel</button>
-                                                    <button ng-click="seenReport(report.reportId)"
-                                                        class="btn btn-success" data-bs-dismiss="modal">Seen</button>
                                                     <button
-                                                        ng-click="sendEmailWarring(report.episode.podcast.account.email,report.reportId)"
-                                                        class="btn btn-warning" data-bs-dismiss="modal">Warning
-                                                        Email</button>
-                                                    <button
-                                                        ng-click="banEpisodes(report.episode.episodeId,report.reportId)"
-                                                        class="btn btn-danger" data-bs-dismiss="modal">Ban</button>
+                                                        ng-click="unbanEpisodes(report.episode.episodeId)"
+                                                        class="btn btn-danger" data-bs-dismiss="modal">UnBan</button>
                                                 </div>
                                                 <div class="modal-footer" ng-if="report.podcast">
                                                     <button class="btn btn-success"
                                                         data-bs-dismiss="modal">Cancel</button>
-                                                    <button ng-click="seenReport(report.reportId)"
-                                                        class="btn btn-success" data-bs-dismiss="modal">Seen</button>
                                                     <button
-                                                        ng-click="sendEmailWarring(report.podcast.account.email,report.reportId)"
-                                                        class="btn btn-warning" data-bs-dismiss="modal">Warning
-                                                        Email</button>
-                                                    <button
-                                                        ng-click="banPodcast(report.podcast.podcastId,report.reportId)"
-                                                        class="btn btn-danger" data-bs-dismiss="modal">Ban</button>
+                                                        ng-click="unbanPodcast(report.podcast.podcastId)"
+                                                        class="btn btn-danger" data-bs-dismiss="modal">UnBan</button>
                                                 </div>
                                                 <div class="modal-footer" ng-if="report.recording">
                                                     <button class="btn btn-success"
                                                         data-bs-dismiss="modal">Cancel</button>
-                                                    <button ng-click="seenReport(report.reportId)"
-                                                        class="btn btn-success" data-bs-dismiss="modal">Seen</button>
                                                     <button
-                                                        ng-click="sendEmailWarring(report.recording.emailCreate,report.reportId)"
-                                                        class="btn btn-warning" data-bs-dismiss="modal">Warning
-                                                        Email</button>
-                                                    <button
-                                                        ng-click="banRecording(report.recording.recordingId,report.reportId)"
-                                                        class="btn btn-danger" data-bs-dismiss="modal">Ban</button>
+                                                        ng-click="unbanRecording(report.recording.recordingId)"
+                                                        class="btn btn-danger" data-bs-dismiss="modal">UnBan</button>
                                                 </div>
                                             </div>
                                         </div>
