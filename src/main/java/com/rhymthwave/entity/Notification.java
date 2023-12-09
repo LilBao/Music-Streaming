@@ -32,6 +32,9 @@ public class Notification implements Serializable {
 	@Column(name = "CONTENT",columnDefinition = "varchar(max)")
 	private String content;
 	
+	@Column(name = "active")
+	private Boolean active;
+	
 	@Column(name = "CREATEBY",columnDefinition = "nvarchar(255)")
 	private String createBy;
 	
@@ -43,4 +46,10 @@ public class Notification implements Serializable {
 	
 	@Column(name = "MODIFIDATE")
 	private Date modifiDate;
+
+	@Column(name = "Public_IDImage" ,columnDefinition = "nvarchar(255)")
+	private String publicIdImage;
+
+	@Column(name = "URLIDImage",columnDefinition = "nvarchar(255)")
+	private String urlImage;
 }

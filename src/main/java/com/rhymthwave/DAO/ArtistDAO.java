@@ -1,18 +1,17 @@
-package com.rhymthwave.DAO;
+	package com.rhymthwave.DAO;
 
-import java.util.List;
-
+import com.rhymthwave.Request.DTO.Top10ArtistDTO;
+import com.rhymthwave.entity.Artist;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.rhymthwave.entity.Artist;
-import com.rhymthwave.entity.Author;
+import java.util.List;
 
 @Repository
 public interface ArtistDAO extends JpaRepository<Artist, Long>{
-	@Query("Select o from Artist o where account.email = :email")
+	@Query("Select o from Artist o where o.account.email = :email")
 	Artist findByEmail(@Param("email") String email);
 	
 	@Query("Select o from Artist o where o.isVerify = :verify")
@@ -41,4 +40,14 @@ public interface ArtistDAO extends JpaRepository<Artist, Long>{
 	@Query("SELECT COUNT(*) FROM Follow f WHERE f.authorsAccountB.authorId = ?1")
 	int countFollowerArtist(Long author);
 
+
+	@Query(value = "SELECT top 10  a.artistid, a.artistname,a.profileimage, a.email, SUM(r.listened) AS totalListened \n" +
+			"       FROM Recording r \n" +
+			"       JOIN songs s on s.songsid = r.songsid\n" +
+			"       JOIN writter w on w.songsid = s.songsid\n" +
+			"\t     JOIN artist a on a.artistid = w.artistid\n" +
+			"       WHERE r.isDeleted = 0\n" +
+			"       GROUP BY a.artistid, a.artistname,a.profileimage, a.email" +
+			"       ORDER BY totalListened DESC",nativeQuery = true)
+	List<Top10ArtistDTO> top10ArtistByListened();
 }

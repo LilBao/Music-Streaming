@@ -1,9 +1,10 @@
-var app = angular.module("myApp", ["ngRoute","ngCookies","ngMessages","angularUtils.directives.dirPagination"]);
+var app = angular.module("myApp", ["angular-jwt","ngRoute","ngCookies","ngMessages","angularUtils.directives.dirPagination"]);
 app.config(function($routeProvider,$cookiesProvider) {
   
   $routeProvider
   .when("/", {
-    templateUrl : "dashboard.html"
+    templateUrl : "dashboard.html",
+    controller: "dashboardController"
   })
   .when("/create-news", {
     templateUrl : "Create_Blog.html",
@@ -14,15 +15,16 @@ app.config(function($routeProvider,$cookiesProvider) {
     templateUrl : "tableAccount.html",
     controller: "tableAccountController"
   })
-  .when("/edit-user", {
-    templateUrl : "EditUser.html"
+  .when("/:id/podcast-profile", {
+    templateUrl : "podcastProfile.html",
+    controller: "podcastProfileController"
   })
   .when("/ManagerBlog", {
     templateUrl : "ManagerBlog.html",
     controller: "managerBlogController"
    
   })
-  .when("/artist-profile/:id", {
+  .when("/:id/artist-profile", {
     templateUrl : "ArtistProfile.html",
     controller: "profileAccountController"
   })
@@ -54,6 +56,10 @@ app.config(function($routeProvider,$cookiesProvider) {
     templateUrl : "Categories/Genre.html",
     controller: "genreController"
   })
+  .when("/tag", {
+    templateUrl : "Categories/tag.html",
+    controller: "tagController"
+  })
   .when("/manage-report", {
     templateUrl : "ManageReport.html",
     controller: "ReportController"
@@ -69,7 +75,16 @@ app.config(function($routeProvider,$cookiesProvider) {
   .when("/statistical_managerment", {
     templateUrl : "statistical_managerment.html",
     controller: "ChartController"
-  }).when("/approve-role", {
+  })
+  .when("/music-content", {
+    templateUrl : "statistical/MusicContentStatistics.html",
+    controller: "musicStatistics"
+  })
+  .when("/subscription-content", {
+    templateUrl : "statistical/SubscriptionStatistics.html",
+    controller: "SubscriptionStatisticsController" 
+  })
+  .when("/approve-role", {
     templateUrl : "approveRoles.html",
     controller: "approveRolesController"
   })
@@ -81,8 +96,11 @@ app.config(function($routeProvider,$cookiesProvider) {
     templateUrl : "SubscriptionsStatistics.html",
     controller: "subscriptionController"
   })
+  .when("/ads", {
+    templateUrl : "ads.html",
+    controller: "advertisementController"
+  })
   .otherwise({ templateUrl : "404.html"});
-  
 });
 
 app.service('graphqlService',function ($http) {

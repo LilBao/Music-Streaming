@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import com.rhymthwave.DTO.MessageResponse;
 import com.rhymthwave.Request.DTO.AccountDTO;
+import com.rhymthwave.Service.AccountService;
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.Service.CloudinaryService;
 import com.rhymthwave.Service.ImageService;
@@ -35,8 +36,10 @@ public class AccountREST {
 
 	private final CRUD<Account, String> crudAccount;
 
+	private final AccountServiceImpl accountServiceImpl;
 
-	private final AccountServiceImpl accountService;
+	private final AccountService accountService;
+
 	
 	private final CRUD<Image,String> crudImage;
 	
@@ -93,7 +96,7 @@ public class AccountREST {
 	}
 		
 	@PutMapping(value="/api/v1/account-image",consumes = { "multipart/form-data" })
-	public ResponseEntity<MessageResponse> updateImageArtist(HttpServletRequest req,@PathParam("avatar") MultipartFile avatar) {
+	public ResponseEntity<MessageResponse> updateImageAccount(HttpServletRequest req,@PathParam("avatar") MultipartFile avatar) {
 		String owner =host.getEmailByRequest(req);
 		Account account =crudAccount.findOne(owner);
 		Image imgOld = account.getImage();
@@ -117,8 +120,8 @@ public class AccountREST {
 	@PutMapping("/api/v1/account/logout")
     public ResponseEntity<MessageResponse> logout(HttpServletRequest req) {
 		String owner = host.getEmailByRequest(req);
-		Account account = accountService.findOne(owner);
-		accountService.logout(req,account);	
+		Account account = accountServiceImpl.findOne(owner);
+		accountServiceImpl.logout(req,account);	
         return ResponseEntity.ok(new MessageResponse(true, "Logout account successfully"));
     }
 }

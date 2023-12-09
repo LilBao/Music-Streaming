@@ -25,9 +25,9 @@ public class API_Profile {
 	@GetMapping
 	public ResponseEntity<?> getProfile(final HttpServletRequest request) {
 
-	//	Account admin = accountService.findAdminByEmail(request);
+		Account admin = accountService.findAdminByEmail(request);
 		
-		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", ""));
+		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", admin));
 	}
 
 }

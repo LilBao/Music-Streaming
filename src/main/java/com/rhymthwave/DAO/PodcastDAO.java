@@ -11,7 +11,13 @@ import com.rhymthwave.entity.Podcast;
 public interface PodcastDAO extends JpaRepository<Podcast, Long>{
 	@Query("select o from Podcast o where o.account.email = :email")
 	List<Podcast> findMyPobcast(@Param("email") String email);
+
 	
 	@Query(value = "select * from podcast where podcastid = :podcastId", nativeQuery = true)
 	Podcast findByID(Long podcastId);
+
+
+	@Query("select count(p.podcastId) from  Podcast  p")
+	int countPodcast();
+
 }

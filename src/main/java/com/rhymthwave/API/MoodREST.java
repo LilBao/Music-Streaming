@@ -20,17 +20,17 @@ public class MoodREST {
 	CRUD<Mood, Integer> crudMood;
 	
 	@GetMapping("/api/v1/mood")
-	public ResponseEntity<MessageResponse> getAllGenre(){
+	public ResponseEntity<MessageResponse> getAllMood(){
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudMood.findAll()));
 	}
 	
 	@GetMapping("/api/v1/mood/{id}")
-	public ResponseEntity<MessageResponse> getGenreById(@PathVariable("id") Integer id){
+	public ResponseEntity<MessageResponse> getMoodById(@PathVariable("id") Integer id){
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudMood.findOne(id)));
 	}
 	
 	@PostMapping("/api/v1/mood")
-	public ResponseEntity<MessageResponse> createGenre(@RequestBody Mood mood){
+	public ResponseEntity<MessageResponse> createMood(@RequestBody Mood mood){
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudMood.create(mood)));
 	}
 }

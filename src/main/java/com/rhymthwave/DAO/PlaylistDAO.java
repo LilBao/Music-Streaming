@@ -72,5 +72,7 @@ public interface PlaylistDAO extends JpaRepository<Playlist, Long>{
 			+ "group by pl.playlistid, pl.playlistname,pl.createdate,pl.description,pl.ispublic,pl.quantity,pl.image,pl.usertypeid "
 			+ "order by NEWID()",nativeQuery = true)
 	List<Playlist> findPlaylistDiscoverByArtist(@Param("artistId") Long artistId,@Param("roleId") List<Integer> roleId);
-	
+
+	@Query("select count(p.playlistId) from  Playlist  p")
+	int countPlaylist();
 }

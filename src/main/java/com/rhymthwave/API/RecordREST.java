@@ -115,7 +115,7 @@ public class RecordREST {
 	}
 
 	@PutMapping("/api/v1/record")
-	public ResponseEntity<MessageResponse> createUpcoming(@RequestBody Recording record) {
+	public ResponseEntity<MessageResponse> updateRecord(@RequestBody Recording record) {
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudRecord.update(record)));
 	}
 	
@@ -146,5 +146,9 @@ public class RecordREST {
 		return ResponseEntity.ok(new MessageResponse(true,"success",recordSer.findListRecordRandom()));
 	}
 	
-	
+	@GetMapping("/api/v1/record-statistics")
+	public ResponseEntity<MessageResponse> statisticsRecord(HttpServletRequest req,@RequestParam("duration") Integer duration){
+		String owner =host.getEmailByRequest(req);
+		return ResponseEntity.ok(new MessageResponse(true,"success",recordSer.statisticsByDate(owner,duration)));
+	}
 }

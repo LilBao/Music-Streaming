@@ -40,12 +40,13 @@ app.controller('recordCtrl', function ($scope, $http) {
                 $http.get(url).then(resp => {
                     let genre = resp.data.data;
                     $scope.createSongGenre(song, genre);
-                    $('#btn-close-upload-record').click();
-                    $scope.findListRecordArtist();
                 }).catch(error => {
                     console.log(error)
                 })
             })
+            $('#btn-close-upload-record').click();
+            $scope.findListRecordArtist();
+            $scope.resetRecord();
             showStickyNotification('Create record success', 'success', 3000);
         }).catch(error => {
             showStickyNotification('Create record fail', 'danger', 3000);
@@ -81,9 +82,12 @@ app.controller('recordCtrl', function ($scope, $http) {
         $scope.getListInstrument();
         $scope.getListSongStyle();
         $scope.getListCulture();
-        $('#btn-close-upload-record').click();
-        $scope.recordFile = undefined;
-        $scope.lyricsFile = undefined;
+        $('input[type="file"]').val(undefined);
+        $('input[name="culture"]').prop('checked', false);
+        $('input[name="mood"]').prop('checked', false);
+        $('input[name="style"]').prop('checked', false);
+        $('input[name="intrument"]').prop('checked', false);
+        $('input[name="genre"]').prop('checked', false);
     }
 
     //Get File Audio and File lyrics

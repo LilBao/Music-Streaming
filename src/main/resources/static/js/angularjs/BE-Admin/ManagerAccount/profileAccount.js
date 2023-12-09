@@ -77,6 +77,9 @@ app.controller("profileAccountController", function (graphqlService, $scope, $ht
           }
         }
         writters {
+          artist{
+            artistName
+          }
           song {
             recordings {
               recordingId
@@ -112,6 +115,30 @@ app.controller("profileAccountController", function (graphqlService, $scope, $ht
       .catch(error => {
         console.log(error);
 
+      });
+  }
+
+  $scope.lockAccount = function(id) {
+    let query =`mutation {
+        lockAccount(id: "${id}", block: true)
+      }`;
+      graphqlService.executeQuery(query).then(resp=>{
+        showStickyNotification("successful", "success", 2000);
+       }).catch(error => {
+        console.log(error);
+      });
+  }
+
+  $scope.unLockAccount = function(id) {
+    let query =`mutation {
+        lockAccount(id: "${id}", block: false)
+      }`;
+      graphqlService.executeQuery(query).then(resp=>{
+        showStickyNotification("successful", "success", 2000);
+       }).catch(error => {
+        showStickyNotification("Fail", "danger", 2000);
+
+        console.log(error);
       });
   }
 

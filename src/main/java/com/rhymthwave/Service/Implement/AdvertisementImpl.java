@@ -1,0 +1,120 @@
+package com.rhymthwave.Service.Implement;
+
+import com.rhymthwave.DAO.AdvertismentDAO;
+import com.rhymthwave.Service.AdvertisementService;
+import com.rhymthwave.Utilities.GetCurrentTime;
+import com.rhymthwave.Utilities.GetHostByRequest;
+import com.rhymthwave.entity.Advertisement;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@Service
+@RequiredArgsConstructor
+@Primary
+public class AdvertisementImpl implements AdvertisementService {
+
+    private final AdvertismentDAO advertisementDAO;
+
+    private final GetHostByRequest getIdByRequest;
+
+    @Override
+    public List<Advertisement> getAllAdvertisementRunningAndCompleted() {
+        return advertisementDAO.findAllAdvertisementRunningAndCompleted();
+    }
+
+    @Override
+    public List<Advertisement> getAllAdvertisementPendingAndReject() {
+        return advertisementDAO.findAllAdvertisementPendingAndReject();
+
+    }
+
+    @Override
+    public Advertisement getById(Integer idAdvertisementService) {
+        return advertisementDAO.findById(Long.valueOf(idAdvertisementService)).orElse(null);
+    }
+
+    @Override
+    public Advertisement updateStatusAds(Long id, Boolean active, Integer status) {
+        Advertisement ads = findOne(id);
+        if(ads!=null) {
+            ads.setActive(false);
+            ads.setStatus(1);
+            return update(ads);
+        }else {
+            return null;
+        }
+    }
+
+    @Override
+    public List<Advertisement> findAdsByEmail(String email) {
+        return advertisementDAO.findAdsByEmail(email);
+    }
+
+
+    @Override
+    public Map<String,Object> getResultsADS(Integer idADS) {
+        Advertisement advertisement = getById(idADS);
+        double resultsListened = advertisement.getListened();
+        double resultsClicked = advertisement.getClicked();
+        Map<String,Object> list = new HashMap<>();
+
+        if (resultsListened > advertisement.getClicked()) {
+            list.put("resultsListened",Math.round( (resultsListened/resultsListened *100 )));
+            list.put("resultsClicked", Math.round((resultsClicked /resultsListened * 100)));
+        }
+        else {
+            list.put("resultsListened",Math.round( (resultsListened/resultsClicked *100)));
+            list.put("resultsClicked", Math.round((resultsClicked /resultsClicked * 100)));
+        }
+        return list;
+    }
+
+    @Override
+    public Advertisement setStatus(Integer advertisementID, Integer status, HttpServletRequest request) {
+        String modify =  getIdByRequest.getEmailByRequest(request);
+        Advertisement advertisement = getById(advertisementID);
+        advertisement.setStatus(status);
+        advertisement.setModifiedBy(modify);
+        if(status == 4) advertisement.setActive(false);
+        else advertisement.setActive(true);
+        advertisement.setModifiDate(GetCurrentTime.getTimeNow());
+        return advertisementDAO.save(advertisement);
+    }
+
+    @Override
+    public Advertisement create(Advertisement entity) {
+
+        return advertisementDAO.save(entity);
+    }
+
+    @Override
+    public Advertisement update(Advertisement entity) {
+        return advertisementDAO.save(entity);
+    }
+
+    @Override
+    public Boolean delete(Long key) {
+        advertisementDAO.deleteById(key);
+        return true;
+    }
+
+    @Override
+    public Advertisement findOne(Long key) {
+        if(key==null) {
+            return null;
+        }
+        return advertisementDAO.findById(key).get();
+    }
+
+    @Override
+    public List<Advertisement> findAll() {
+        return advertisementDAO.findAll();
+    }
+
+}

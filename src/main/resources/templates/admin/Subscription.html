@@ -494,13 +494,13 @@
                                         placeholder="Payment id">
                                 </div>
 
-                                <div class="mb-3">
+                                <div class="mb-3" ng-if="form.subscriptionCategory ==='ACCOUNT'">
                                     <label for="formGroupExampleInput" class="form-label mb-0">Playlist Allow:</label>
                                     <input ng-model="form.playlistAllow" type="number" name="title" class="form-control"
                                         placeholder="Limit playlist">
                                 </div>
 
-                                <div class="mb-4">
+                                <div class="mb-4" ng-if="form.subscriptionCategory ==='ACCOUNT'">
                                     <label for="formGroupExampleInput" class="form-label mb-0 font-label">Number song in
                                         playlist:</label>
                                     <input ng-model="form.nip" type="number" name="title" class="form-control"
