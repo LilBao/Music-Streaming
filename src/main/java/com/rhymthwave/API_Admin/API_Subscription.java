@@ -27,14 +27,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class API_Subscription {
 
-	private final CRUD<Subscription, Integer> crud;
-	
 	private final SubscriptionService subscriptionService;
 	
 	@PostMapping
 	public ResponseEntity<?> createSubscription(@RequestBody Subscription subscription) {
 
-		crud.create(subscription);
+		subscriptionService.create(subscription);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(new MessageResponse(true, "Successfully", subscription));
 	}
@@ -43,14 +41,14 @@ public class API_Subscription {
 	@GetMapping()
 	public ResponseEntity<?> getAllSubscription() {
 
-		List<Subscription> subscription =  crud.findAll();
+		List<Subscription> subscription =  subscriptionService.findAll();
 		
 		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", subscription));
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteSubscription(@PathVariable("id") Integer id ) {
-		boolean status =  crud.delete(id);
+		boolean status =  subscriptionService.delete(id);
 		if(status == false) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse(false, "don't exist"));
 
@@ -62,13 +60,13 @@ public class API_Subscription {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getOneSubscription(@PathVariable("id") Integer id ) {
 	
-		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully",crud.findOne(id)));
+		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully",subscriptionService.findOne(id)));
 	}
 	
 	@PutMapping()
 	public ResponseEntity<?> updateSubscription(@RequestBody Subscription subscription) {
 	
-		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully",crud.update(subscription)));
+		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully",subscriptionService.update(subscription)));
 	}
 	
 	
