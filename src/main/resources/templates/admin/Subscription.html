@@ -340,7 +340,7 @@
                                         <div class="col-lg-4 mb-3" ng-repeat="item in item | filter:{active: true}">
                                             <div class="card mb-5 mb-lg-0">
                                                 <div class="card-body">
-                                                    <h5 class="card-title text-muted text-uppercase text-center">
+                                                    <h5 class="card-title text-muted text-uppercase text-center" >
                                                         {{item.subscriptionType}}
                                                     </h5>
                                                     <h6 class="card-price text-center">${{item.price}}<span
@@ -553,6 +553,12 @@
                                     </select>
                                 </div>
 
+                                <div class="mb-3"  ng-if="form.subscriptionCategory ==='ADVERTISEMENT'">
+                                    <label for="formGroupExampleInput" class="form-label mb-0">Name:</label>
+                                    <input ng-model="form.subscriptionType" type="text" name="title" class="form-control"
+                                        placeholder="Name Subscription">
+                                </div>
+
                                 <div class="mb-3">
                                     <label for="formGroupExampleInput" class="form-label mb-0">Price:</label>
                                     <input ng-model="form.price" type="number" name="title" class="form-control"
@@ -569,6 +575,12 @@
                                     <label for="formGroupExampleInput" class="form-label mb-0">Duration day:</label>
                                     <input ng-model="form.duration" type="number" name="title" class="form-control"
                                         placeholder="Subscription expiration time">
+                                </div>
+
+                                <div class="mb-3" ng-if="form.subscriptionCategory ==='ADVERTISEMENT'">
+                                    <label for="formGroupExampleInput" class="form-label mb-0">Priority:</label>
+                                    <input ng-model="form.priority" type="number" name="title" class="form-control"
+                                        placeholder="Priority for Ads">
                                 </div>
 
                                 <div class="mb-3">
@@ -632,7 +644,7 @@
                                 </div>
                                 <div class="modal-body" style="padding-top: 0px;">
                                     <div class="container" style="padding-top: 0px;">
-                                        <div class="mb-3">
+                                        <div class="mb-3" ng-if="form.subscriptionCategory ==='ACCOUNT'">
                                             <label for="formGroupExampleInput" class="form-label mb-0">Subscription
                                                 Type:</label>
                                             <select class="form-select form-select mb-3"
@@ -645,20 +657,28 @@
                                         <div class="mb-3">
                                             <label for="formGroupExampleInput" class="form-label mb-0">Active:</label>
                                             <select class="form-select form-select mb-3" ng-model="form.active">
-                                                <option value="true">Active</option>
-                                                <option value="false">Inactive</option>
+                                                <option ng-value="true">Active</option>
+                                                <option ng-value="false">Inactive</option>
 
                                             </select>
                                         </div>
 
-
+                                        <div class="mb-3"  ng-if="form.subscriptionCategory ==='ADVERTISEMENT'">
+                                            <label for="formGroupExampleInput" class="form-label mb-0">Name:</label>
+                                            <input ng-model="form.subscriptionType" type="text" name="title" class="form-control"
+                                                placeholder="Name Subscription">
+                                        </div>
 
                                         <div class="mb-3">
                                             <label for="formGroupExampleInput" class="form-label mb-0">Price:</label>
                                             <input ng-model="form.price" type="number" name="title" class="form-control"
                                                 placeholder="Price">
                                         </div>
-
+                                        <div class="mb-3" ng-if="form.subscriptionCategory ==='ADVERTISEMENT'">
+                                            <label for="formGroupExampleInput" class="form-label mb-0">Priority:</label>
+                                            <input ng-model="form.priority" type="number" name="title" class="form-control"
+                                                placeholder="Priority for Ads">
+                                        </div>
                                         <div class="mb-3">
                                             <label for="formGroupExampleInput"
                                                 class="form-label mb-0">Description:</label>
@@ -690,14 +710,14 @@
                                                 class="form-control" placeholder="Payment id">
                                         </div>
 
-                                        <div class="mb-3">
+                                        <div class="mb-3" ng-if="form.subscriptionCategory ==='ACCOUNT'">
                                             <label for="formGroupExampleInput" class="form-label mb-0">Playlist
                                                 Allow:</label>
                                             <input ng-model="form.playlistAllow" type="number" name="title"
                                                 class="form-control" placeholder="Limit playlist">
                                         </div>
 
-                                        <div class="mb-4">
+                                        <div class="mb-4" ng-if="form.subscriptionCategory ==='ACCOUNT'">
                                             <label for="formGroupExampleInput" class="form-label mb-0 font-label">Number
                                                 song in
                                                 playlist:</label>
