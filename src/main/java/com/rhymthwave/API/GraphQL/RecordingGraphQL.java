@@ -71,4 +71,9 @@ public class RecordingGraphQL {
 	public List<Recording> findAppearOnByArtist(@Argument("artistId") Long artist){
 		return recordSer.findAppearOn(artist);
 	}
+	
+	@QueryMapping("findRecordingBySongId")
+	public Recording findRecordingBySongId(@Argument("songId") Long id) {
+		return crudRecording.findOne(id);
+	}
 }

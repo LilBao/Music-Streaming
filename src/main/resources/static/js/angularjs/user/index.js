@@ -1,5 +1,5 @@
-var app = angular.module("myApp", ["ngRoute"]);
-app.config(function ($routeProvider) {
+var app = angular.module("myApp", ["ngRoute","ngCookies"]);
+app.config(function ($routeProvider, $cookiesProvider) {
     $routeProvider
         .when("/", {
             templateUrl: "discover.html",
@@ -40,6 +40,10 @@ app.config(function ($routeProvider) {
             templateUrl: "profile-discography.html",
             controller: 'discography'
         })
+        .when("/report/:option/:id", {
+            templateUrl: "report.html",
+            controller: 'report'
+        })
         .when("/karaoke", {
             templateUrl: "Karaoke.html",
             controller: 'karaokeCtrl'
@@ -65,8 +69,8 @@ app.config(function ($routeProvider) {
             controller: 'playlistCtrl'
         })
         .when("/song/:id", {
-            templateUrl: "playlist.html",
-            controller: 'playlistCtrl'
+            templateUrl: "song.html",
+            controller: 'song'
         })
         .when("/queue", {
             templateUrl: "Queue.html",

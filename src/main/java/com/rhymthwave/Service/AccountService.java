@@ -7,8 +7,9 @@ import jakarta.servlet.http.HttpServletRequest;
 public interface AccountService {
 
 	Account findAdminByEmail(HttpServletRequest request);
-
+	
 	List<Object> search(String keyword);
+	
 	List<Object> searchGr(String keyword);
 
 	Account findAccountByUsername(String username);

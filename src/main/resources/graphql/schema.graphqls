@@ -98,5 +98,6 @@ type Query {
  findAlbum(id: ID!): Album
  findAlByArtist(idArist: ID!): Artist
  findSongPl(songName: String!): [Recording]
+ findRecordingBySongId(songId: Int!): Recording
 }
 

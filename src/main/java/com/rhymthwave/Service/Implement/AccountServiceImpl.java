@@ -61,19 +61,18 @@ public class AccountServiceImpl implements AccountService, CRUD<Account, String>
 		return admin;
 	}
 
-	@Override
-	public List<Object> search(String keyword) {
-		return dao.search(keyword);
-	}
-
 	public Account findAccountByUsername(String username) {
 		Account account = dao.findByUsername(username);
 		return account;
 	}
 
 	@Override
+	public List<Object> search(String keyword) {
+		return dao.search(keyword);
+	}
+
+	@Override
 	public List<Object> searchGr(String keyword) {
 		return dao.searchGr(keyword);
 	}
-
 }

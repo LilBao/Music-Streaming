@@ -33,6 +33,9 @@ public class Report implements Serializable{
 
 	@Column(name = "DESCRIPTION",columnDefinition = "nvarchar(55)")
 	private String description;
+	
+	@Column(name = "STATUS")
+	private boolean status;
 
 	@ManyToOne
 	@JoinColumn(name = "ARTISTID")

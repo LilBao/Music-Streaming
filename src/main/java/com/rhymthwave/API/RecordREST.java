@@ -40,17 +40,17 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin("*")
 @RequiredArgsConstructor
 public class RecordREST {
-	
+
 	private final CRUD<Recording, Long> crudRecord;
 
 	private final CloudinaryService cloudinary;
 
 	private final RecordService recordSer;
-	
+
 	private final GetHostByRequest host;
-	
+
 	private final CRUD<Account, String> crudAccount;
-	
+
 	private final ArtistService artistSer;
 
 	@GetMapping("/api/v1/record")
@@ -62,58 +62,55 @@ public class RecordREST {
 	public ResponseEntity<MessageResponse> getOneRecord(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudRecord.findOne(id)));
 	}
-	
+
 	@GetMapping("/api/v1/my-record")
 	public ResponseEntity<MessageResponse> getMyRecord(HttpServletRequest req) {
-		String owner =host.getEmailByRequest(req);
+		String owner = host.getEmailByRequest(req);
 		return ResponseEntity.ok(new MessageResponse(true, "success", recordSer.findListRecordNotRaw(owner)));
 	}
-	
+
 	@GetMapping("/api/v1/my-record-not-raw")
 	public ResponseEntity<MessageResponse> getOneRecord(HttpServletRequest req) {
-		String owner =host.getEmailByRequest(req);
+		String owner = host.getEmailByRequest(req);
 		return ResponseEntity.ok(new MessageResponse(true, "success", recordSer.findRawRecordByCreater(owner)));
 	}
 
 	@PostMapping(value = "/api/v1/record", consumes = { "multipart/form-data" })
-	public ResponseEntity<MessageResponse> createRecord(@ModelAttribute Recording record,HttpServletRequest req,
+	public ResponseEntity<MessageResponse> createRecord(@ModelAttribute Recording record, HttpServletRequest req,
 			@PathParam("fileRecord") MultipartFile fileRecord, @PathParam("fileLyrics") MultipartFile fileLyrics) {
-		String owner =host.getEmailByRequest(req);
+		String owner = host.getEmailByRequest(req);
 		Account account = crudAccount.findOne(owner);
-		
+		Map<String, Object> respRecord = cloudinary.Upload(fileRecord, "Records", account.getArtist().getArtistName());
 		if (fileLyrics != null) {
-			Map<String, Object> respLyrics = cloudinary.Upload(fileLyrics, "Lyrics", account.getArtist().getArtistName());
+			Map<String, Object> respLyrics = cloudinary.Upload(fileLyrics, "Lyrics",
+					account.getArtist().getArtistName());
 			record.setLyricsUrl((String) respLyrics.get("url"));
 			record.setPublicIdLyrics((String) respLyrics.get("public_id"));
 		}
-		if(fileRecord != null) {
-			Map<String, Object> respRecord = cloudinary.Upload(fileRecord, "Records", account.getArtist().getArtistName());
-			record.setAudioFileUrl((String) respRecord.get("url"));
-			record.setPublicIdAudio((String) respRecord.get("public_id"));
-		}
-		
+		record.setAudioFileUrl((String) respRecord.get("url"));
+		record.setPublicIdAudio((String) respRecord.get("public_id"));
 		record.setEmailCreate(owner);
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudRecord.create(record)));
 	}
-	
+
 	@PutMapping(value = "/api/v1/record-file/{id}", consumes = { "multipart/form-data" })
-	public ResponseEntity<MessageResponse> updateRecordFile(@PathVariable("id") Long id,HttpServletRequest req,
+	public ResponseEntity<MessageResponse> updateRecordFile(@PathVariable("id") Long id, HttpServletRequest req,
 			@PathParam("fileRecord") MultipartFile fileRecord, @PathParam("fileLyrics") MultipartFile fileLyrics) {
-		String owner =host.getEmailByRequest(req);
-		Artist artist =artistSer.findByEmail(owner);
+		String owner = host.getEmailByRequest(req);
+		Artist artist = artistSer.findByEmail(owner);
 		Recording record = crudRecord.findOne(id);
-		if(fileRecord != null) {
+		if (fileRecord != null) {
 			Map<String, Object> respRecord = cloudinary.Upload(fileRecord, "Records", artist.getArtistName());
 			record.setAudioFileUrl((String) respRecord.get("url"));
 			record.setPublicIdAudio((String) respRecord.get("public_id"));
 		}
-		
+
 		if (fileLyrics != null) {
 			Map<String, Object> respLyrics = cloudinary.Upload(fileLyrics, "Lyrics", artist.getArtistName());
 			record.setLyricsUrl((String) respLyrics.get("url"));
 			record.setPublicIdLyrics((String) respLyrics.get("public_id"));
 		}
-		
+
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudRecord.update(record)));
 	}
 
@@ -121,33 +118,32 @@ public class RecordREST {
 	public ResponseEntity<MessageResponse> createUpcoming(@RequestBody Recording record) {
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudRecord.update(record)));
 	}
-	
+
 	@DeleteMapping("/api/v1/record/{id}")
 	public ResponseEntity<MessageResponse> deleteRecord(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudRecord.delete(id)));
 	}
-	
+
 	@GetMapping("/api/v1/record-song/{songId}")
-	public ResponseEntity<MessageResponse> findListRecordBySong(@PathVariable("songId") Long songId){
-		return ResponseEntity.ok(new MessageResponse(true,"success",recordSer.findRecordBySong(songId)));
+	public ResponseEntity<MessageResponse> findListRecordBySong(@PathVariable("songId") Long songId) {
+		return ResponseEntity.ok(new MessageResponse(true, "success", recordSer.findRecordBySong(songId)));
 	}
-	
+
 	@GetMapping("/api/v1/record-artist")
-	public ResponseEntity<MessageResponse> findListRecordByArtist(HttpServletRequest req){
-		String owner =host.getEmailByRequest(req);
-		return ResponseEntity.ok(new MessageResponse(true,"success",recordSer.findRecordByCreater(owner)));
+	public ResponseEntity<MessageResponse> findListRecordByArtist(HttpServletRequest req) {
+		String owner = host.getEmailByRequest(req);
+		return ResponseEntity.ok(new MessageResponse(true, "success", recordSer.findRecordByCreater(owner)));
 	}
-	
+
 	@GetMapping("/api/v1/record-delete")
-	public ResponseEntity<MessageResponse> findListRecordDelete(HttpServletRequest req){
-		String owner =host.getEmailByRequest(req);
-		return ResponseEntity.ok(new MessageResponse(true,"success",recordSer.findRecordDelete(owner)));
+	public ResponseEntity<MessageResponse> findListRecordDelete(HttpServletRequest req) {
+		String owner = host.getEmailByRequest(req);
+		return ResponseEntity.ok(new MessageResponse(true, "success", recordSer.findRecordDelete(owner)));
 	}
-	
+
 	@GetMapping("/api/v1/record-random")
-	public ResponseEntity<MessageResponse> findListRecordRandom(){
-		return ResponseEntity.ok(new MessageResponse(true,"success",recordSer.findListRecordRandom()));
+	public ResponseEntity<MessageResponse> findListRecordRandom() {
+		return ResponseEntity.ok(new MessageResponse(true, "success", recordSer.findListRecordRandom()));
 	}
-	
-	
+
 }

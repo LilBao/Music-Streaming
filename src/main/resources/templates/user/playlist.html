@@ -357,7 +357,7 @@
                                 <a href="#!artist/{{item[0]}}">
                                     <div class="d-flex align-items-center">
                                         <div class="d-flex">
-                                            <img class="rounded-2 mx-3" src="{{item[15]}}"
+                                            <img class="rounded-2 mx-3" src="{{item[15] !== null ? item[15] : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}"
                                                 style="width: 50px; height: 50px; object-fit: cover;" alt="">
                                             <div>
                                                 <h6 class="text-white">{{item[2]}}</h6>
@@ -384,7 +384,7 @@
                                 <a href="#!album/{{item[0]}}">
                                     <div class="d-flex align-items-center">
                                         <div class="d-flex">
-                                            <img class="rounded-2 mx-3" src="{{item[6]}}"
+                                            <img class="rounded-2 mx-3" src="{{item[6] !== null ? item[6] : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}"
                                                 style="width: 50px; height: 50px; object-fit: cover;" alt="">
                                             <div>
                                                 <h6 class="text-white">{{item[1]}}</h6>
@@ -410,7 +410,7 @@
                             <td ng-dblclick="selectAudio(item,'song',songData,$index)">
                                 <div class="d-flex align-items-center">
                                     <div class="d-flex">
-                                        <img class="rounded-2 mx-3" src="{{item.song.image.url}}"
+                                        <img class="rounded-2 mx-3" src="{{item.song.image.url !== null ? item.song.image.url : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}"
                                             style="width: 50px; height: 50px; object-fit: cover;" alt="">
                                         <div>
                                             <h6 class="text-white">{{item.recordingName}}</h6>
