@@ -110,7 +110,7 @@
                                        <div class="col-md-6">
                                           <div class=" personal-detail-podcast">
                                              <p><i class="bi bi-envelope-at"></i></i> <span>{{accountPodcast.email}}</span></p>
-                                             <p><i class="fa-solid fa-cake-candles"></i><span>{{accountPodcast.birthday | date: 'dd-MM-yyyy'}}</span></p>
+                                             <p><i class="fa-solid fa-cake-candles"></i><span>{{accountPodcast.birthday | date: 'dd'}}</span></p>
                                              <p><i class="bi bi-gender-trans"></i><span>{{accountPodcast.gender == 1 ? 'Male' : 'Female'}}</span></p>
                                              <p> <i class="bi bi-person-video2"></i> <span  ng-class="{'badge text-bg-info mx-1': userType.nameType === 'BASIC', 'badge text-bg-warning mx-1': userType.nameType === 'PREMIUM'}" ng-repeat="userType in accountPodcast.userType">{{userType.nameType}}</span>  
                                             </p>

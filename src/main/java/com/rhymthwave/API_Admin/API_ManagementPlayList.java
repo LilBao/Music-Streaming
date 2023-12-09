@@ -29,10 +29,18 @@ public class API_ManagementPlayList {
 
     private  final CRUD<Recording,Long> crud;
 
+    private  final CRUD<Episode,Long> crudEpisode;
+
     @GetMapping("/all-record")
     public ResponseEntity<?> getAllRecord()  {
         List<Recording> recordingList = crud.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "success", recordingList));
+    }
+
+    @GetMapping("/all-episode")
+    public ResponseEntity<?> getAllEpisode()  {
+        List<Episode> episodeList = crudEpisode.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "success", episodeList));
     }
 
     @GetMapping("/record-random")
@@ -64,7 +72,7 @@ public class API_ManagementPlayList {
         } catch (JsonProcessingException e) {
             e.printStackTrace(); // Handle the exception appropriately
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new MessageResponse(false, "Errorr handle objectMapper"));
+                    .body(new MessageResponse(false, "Error handle objectMapper"));
 
         }
 

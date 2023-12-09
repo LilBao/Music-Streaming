@@ -54,7 +54,7 @@ public class PlaylistServiceAdmin implements IPlayListServiceAdmin {
 
     @Override
     public Playlist createPlayListForSongs(MultipartFile file, String playlistName, String description, List<Recording> listRecord, HttpServletRequest request) {
-        UserType userType = userTypeDAO.findUserTypeyEmail(getEmailByRequest.getEmailByRequest(request));
+        UserType userType = userTypeDAO.findUserTypeEmail(getEmailByRequest.getEmailByRequest(request));
 
         Playlist playlist = new Playlist();
 
@@ -95,7 +95,7 @@ public class PlaylistServiceAdmin implements IPlayListServiceAdmin {
 
     @Override
     public Playlist createPlayListForPodcast(MultipartFile file, String playlistName, String description, List<Episode> listPodcast, HttpServletRequest request) {
-        UserType userType = userTypeDAO.findUserTypeyEmail(getEmailByRequest.getEmailByRequest(request));
+        UserType userType = userTypeDAO.findUserTypeEmail(getEmailByRequest.getEmailByRequest(request));
 
         Playlist playlist = new Playlist();
 
@@ -155,6 +155,9 @@ public class PlaylistServiceAdmin implements IPlayListServiceAdmin {
     public boolean removeRecordFromPlaylist(Long idRecord) {
         PlaylistRecord playlistRecord = playlistRecordService.findOne(idRecord);
         if (playlistRecord != null) {
+            int totalRecordInPlaylist =  playlistRecord.getPlaylist().getQuantity() - 1;
+            playlistRecord.getPlaylist().setQuantity(totalRecordInPlaylist);
+            playlistRecordService.update(playlistRecord);
             playlistRecordService.delete(idRecord);
             return true;
         }

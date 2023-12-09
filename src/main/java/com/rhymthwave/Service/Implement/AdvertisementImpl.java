@@ -1,10 +1,15 @@
 package com.rhymthwave.Service.Implement;
 
+import com.rhymthwave.DAO.AccountDAO;
 import com.rhymthwave.DAO.AdvertismentDAO;
+import com.rhymthwave.DAO.ImageDAO;
+import com.rhymthwave.Request.DTO.AdvertisementDTO;
 import com.rhymthwave.Service.AdvertisementService;
+import com.rhymthwave.Service.CloudinaryService;
 import com.rhymthwave.Utilities.GetCurrentTime;
 import com.rhymthwave.Utilities.GetHostByRequest;
 import com.rhymthwave.entity.Advertisement;
+import com.rhymthwave.entity.Image;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
@@ -22,6 +27,43 @@ public class AdvertisementImpl implements AdvertisementService {
     private final AdvertismentDAO advertisementDAO;
 
     private final GetHostByRequest getIdByRequest;
+
+    private final CloudinaryService cloudinaryService;
+
+    private final AccountDAO accountDAO;
+
+    private final ImageDAO imageDAO;
+
+    private static String FOLDER_CONTAINING_IMAGE_NEWS  = "ImageManager";
+
+    @Override
+    public Advertisement save(AdvertisementDTO dto,HttpServletRequest request) {
+
+        Map<String, Object> mapCloudinary = cloudinaryService.Upload(dto.getImage(),FOLDER_CONTAINING_IMAGE_NEWS , "Advertisement");
+        Map<String, Object> map = cloudinaryService.Upload(dto.getAudio(),"Audio" , "Advertisement");
+        String urlImage = (String) mapCloudinary.get("url");
+        String urlAudio = (String) map.get("url");
+        String accessId = (String) mapCloudinary.get("asset_id");
+        String public_id = (String) mapCloudinary.get("public_id");
+        Image image = new Image();
+        image.setUrl(urlImage);
+        image.setPublicId(public_id);
+        image.setAccessId(accessId);
+        imageDAO.save(image);
+
+        Advertisement advertisement = new Advertisement();
+        advertisement.setActive(true);
+        advertisement.setStatus(2);
+        advertisement.setUrl(dto.getUrl());
+        advertisement.setTitle(dto.getTitle());
+        advertisement.setTag(dto.getTag());
+        advertisement.setStartDate(GetCurrentTime.getTimeNow());
+        advertisement.setContent(dto.getContent());
+        advertisement.setAudioFile(urlAudio);
+        advertisement.setImage(image);
+        advertisement.setAccount(accountDAO.findById(getIdByRequest.getEmailByRequest(request)).orElse(null));
+        return advertisementDAO.save(advertisement);
+    }
 
     @Override
     public List<Advertisement> getAllAdvertisementRunningAndCompleted() {

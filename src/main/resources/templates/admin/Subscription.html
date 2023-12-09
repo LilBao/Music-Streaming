@@ -331,9 +331,102 @@
                         <!-- SUBSCRIPTION ON -->
 
                         <div id="pills-home" role="tabpanel" aria-labelledby="pills-user-tab" tabindex="0"
-                            class="tab-pane fade px-4 py-5 show active">
+                            class="tab-pane fade px-4 py-2 show active">
+                            
+                            <section class="pricing ">
+                                <div class="container">
+                                    <div class="row">
+                                        <!-- Free Tier -->
+                                        <div class="col-lg-4 mb-3" ng-repeat="item in item | filter:{active: true}">
+                                            <div class="card mb-5 mb-lg-0">
+                                                <div class="card-body">
+                                                    <h5 class="card-title text-muted text-uppercase text-center">
+                                                        {{item.subscriptionType}}
+                                                    </h5>
+                                                    <h6 class="card-price text-center">${{item.price}}<span
+                                                            class="period">/month</span></h6>
+                                                    <hr>
+                                                    <ul class="fa-ul">
+                                                        <li><span class="fa-li"><i
+                                                                    class="fas fa-check"></i></span>Description:
+                                                            {{item.description}}
+                                                        </li>
+                                                        <li><span class="fa-li"><i
+                                                                    class="fas fa-check"></i></span>Duration:
+                                                            {{item.duration}}
+                                                        </li>
+                                                        <li><span class="fa-li"><i class="fas fa-check"></i></span>Limit
+                                                            playlist:
+                                                            {{item.playlistAllow}}
+                                                        </li>
+                                                        <li><span class="fa-li"><i class="fas fa-check"></i></span>Limit
+                                                            songs in playlist:
+                                                            {{item.nip}}
+                                                        </li>
 
-                            <section id="slider">
+<!-- 
+                                                        <li class="text-muted"><span class="fa-li"><i
+                                                                    class="fas fa-times"></i></span>Dedicated Phone
+                                                            Support</li> -->
+
+
+
+                                                    </ul>
+                                                    <div class="d-grid gap-2">
+                                                        <a href="" class="btn btn-primary text-uppercase btns"
+                                                            data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                            ng-click="edit(item.subscriptionId)">Edit</a>
+                                                        <a href="" class="btn btn-danger text-uppercase btns"
+                                                            data-bs-toggle="modal" data-bs-target="#delete-{{item.subscriptionId}}">Delete</a>
+                                                    </div>
+                                                </div>
+
+
+                                                <!-- START MODAL DELETE -->
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="delete-{{item.subscriptionId}}" tabindex="-1"
+                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-sm modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header modal-header-delete">
+
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="icon-close-bodyModal">
+                                                                    <i class="bi bi-x-circle"></i>
+                                                                </div>
+                                                                <div style="text-align: center;" class="m-2">
+                                                                    <h5> Are you sure ? </h5>
+                                                                   
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="modal-footer btn-event-deleteModal">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Close</button>
+                                                                <button type="button" class="btn btn-danger"
+                                                                    data-bs-dismiss="modal"
+                                                                    ng-click="deleteSubscription(item.subscriptionId)">Delete</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- END MODAL DELETE -->
+
+                                            </div>
+
+
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- <section id="slider">
                                 <input type="radio" name="slider" id="s1">
                                 <input type="radio" name="slider" id="s2">
                                 <input type="radio" name="slider" id="s3" checked>
@@ -344,7 +437,7 @@
                                 <label for="s3" id="slide3"></label>
                                 <label for="s4" id="slide4"></label>
                                 <label for="s5" id="slide5"></label>
-                            </section>
+                            </section> -->
                         </div>
 
 

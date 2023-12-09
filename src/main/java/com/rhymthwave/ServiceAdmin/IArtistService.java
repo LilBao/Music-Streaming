@@ -10,8 +10,8 @@ public interface IArtistService {
 	Artist getOneArtistByEmail(String email);
 
 	Object TotalAlbumAndSong(String idAccount);
-	
-	int sumListenedArtist (String idAccount);
+
+	Long sumListenedArtist (String idAccount);
 
 	int followerArtist(Integer idRole, String idAccount);	
 	

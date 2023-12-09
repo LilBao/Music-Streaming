@@ -1,9 +1,5 @@
 package com.rhymthwave.ServiceAdmin.Implement;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import com.rhymthwave.DAO.AccountDAO;
 import com.rhymthwave.DAO.ArtistDAO;
 import com.rhymthwave.DAO.AuthorDAO;
@@ -15,8 +11,10 @@ import com.rhymthwave.Utilities.SendMailTemplateService;
 import com.rhymthwave.entity.Artist;
 import com.rhymthwave.entity.Author;
 import com.rhymthwave.entity.Email;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -47,12 +45,12 @@ public class ArtistServiceAdminImp implements IArtistService, INotification<Arti
 	}
 
 	@Override
-	public int sumListenedArtist(String idAccount) {
-		String sum = artistDAO.sumListenedArtist(idAccount);
+	public Long sumListenedArtist(String idAccount) {
+		Long sum = artistDAO.sumListenedArtist(idAccount);
 		if (sum == null) {
-			return 0;
+			return 0L;
 		}
-		return Integer.parseInt(sum);
+		return sum;
 	}
 
 	@Override
@@ -69,13 +67,16 @@ public class ArtistServiceAdminImp implements IArtistService, INotification<Arti
 
 	@Override
 	public Artist approveRolesArtist(Long idUser) {
+		
 		var artist = artistDAO.findById(idUser).orElse(null);
 		if (artist != null) {
 			var user = accountDAO.findByEmail(artist.getAccount().getEmail());
-			var author = authorDAO.findByEmailAccount(user.getEmail());
 			var role = roleDAO.findById(2).orElse(null);
+			var author = new Author();
 			author.setAccount(user);
 			author.setRole(role);
+			authorDAO.save(author);
+
 			artist.setIsVerify(true);
 			artistDAO.save(artist);
 			

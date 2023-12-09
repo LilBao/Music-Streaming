@@ -82,19 +82,19 @@
                                                               </tr>
                                                            </thead>
                                                            <tbody  >
-                                                              <tr dir-paginate=" record in listAllRecords | itemsPerPage: 100 |orderBy:'-listened' | limitTo :100">
+                                                    
+
+                                                              <tr ng-repeat=" record in listAllRecords">
                                                                  <td >
                                                                     <div class="d-flex align-items-center " style="cursor:pointer">
                                                                        <img ng-src="{{record.song.image.url}}" alt="img" class="img-songs rounded-1  ">
                                                                        <div class="mx-2"   style="line-height: 15px;">
-                                                                          <span class="song-namefor-actist">{{record.recordingName}}
+                                                                           <span class="song-namefor-actist">{{record.recordingName}}
                                                                           </span>
-                             
-                                                                          <!-- <audio   id="audio-player" src="{{itemRecording.audioFileUrl}}">
-                                                                             
-                                                                          </audio> -->
+                                                                          
+                                                                       
                                                                           <!-- hat cung voi ai -->
-                                                                          <h6 class="songs-in-album "><span>{{record.recordingName}}</span></h6>
+                                                                          <h6 class="songs-in-album "><span>{{record.song.writters.artist.artistName}}</span></h6>
                                                                        </div>
                                                                     </div>
                                                                  </td>
@@ -104,7 +104,7 @@
                                                                     <div class="title-albums">
                                                                        <h6 class="songs-in-album mb-1"  >
                                                                         
-                                                                          <span class="mx-2">{{record.listened | number:0}}</span>   </h6>
+                                                                          <span class="mx-2">{{record.listened === null ? 0 : record.listened | number:0 }}</span>   </h6>
                                                                     </div>
                                                                  </td>
                              
@@ -149,6 +149,8 @@
                                                 </div>
 
                                             </div>
+
+                                            <!-- TOP 100 PODCAST -->
                                             <div id="pills-profile" role="tabpanel" aria-labelledby="pills-artist-tab"
                                                 tabindex="0" class="tab-pane fade px-4 py-4  ">
                                                              
@@ -161,25 +163,22 @@
                                                                  <th scope="col">Song name</th>
                                                                  <th scope="col">Listened</th>
                                                                  <th scope="col">Wishlist</th>
-                                                                 <th scope="col">Album</th>
+                                                                 <th scope="col">In Playlist</th>
                                                                  <th scope="col">Time</th>
                                                               </tr>
                                                            </thead>
                                                            <tbody  >
-                                                              <tr  ng-repeat=" record in dataRecords | filter: search | orderBy: '-song.songName'">
+                                                              <tr  ng-repeat=" episode in listAllEpisode ">
                                                                 
                                                                  <td >
                                                                     <div class="d-flex align-items-center " style="cursor:pointer">
-                                                                       <img ng-src="{{record.song.image.url}}" alt="img" class="img-songs rounded-1  ">
+                                                                       <img ng-src="{{episode.image.url}}" alt="img" class="img-songs rounded-1  ">
                                                                        <div class="mx-2"   style="line-height: 15px;">
-                                                                          <span class="song-namefor-actist">{{record.recordingName}}
+                                                                          <span class="song-namefor-actist">{{episode.episodeTitle}}
                                                                           </span>
                              
-                                                                          <!-- <audio   id="audio-player" src="{{itemRecording.audioFileUrl}}">
-                                                                             
-                                                                          </audio> -->
                              
-                                                                          <h6 class="songs-in-album "><span ng-repeat="artist in itemSong.artist">{{artist}}</span></h6>
+                                                                          <h6 class="songs-in-album "><span ng-repeat="artist in itemSong.artist">{{episode.Podcast.authorName}}</span></h6>
                                                                        </div>
                                                                     </div>
                                                                  </td>
@@ -189,7 +188,7 @@
                                                                     <div class="title-albums">
                                                                        <h6 class="songs-in-album mb-1"  >
                                                                         
-                                                                          <span class="mx-2">{{ itemRecording.listened}} </span>   </h6>
+                                                                          <span class="mx-2">{{ episode.listened | number : 0}} </span>   </h6>
                                                                     </div>
                                                                  </td>
                              
@@ -198,22 +197,23 @@
                                                                     <div class="title-albums">
                                                                        <h6 class="songs-in-album mb-1"  >
                                                                         
-                                                                          <span class="mx-2">{{ itemRecording.wishlists.length}} </span>   </h6>
+                                                                          <span class="mx-2">{{ episode.wishlist.length}} </span>   </h6>
                                                                     </div>
                                                                  </td>
-                             
+                                                                 
                                                                  <td >
-                                                                    <div class="title-albums">
-                                                                       <h6 class="songs-in-album mb-1" 
-                                                                          ng-repeat="album in itemRecording.tracks">
-                                                                          <span class="mx-2">{{ album.album.albumName}} </span>   </h6>
-                                                                    </div>
-                                                                 </td>
+                                                                  <div class="title-albums">
+                                                                     <h6 class="songs-in-album mb-1"  >
+                                                                      
+                                                                        <span class="mx-2"  ng-repeat="playlist in episode.playlistPodcast">{{playlist.playlistName}} </span> 
+                                                                     </h6>
+                                                                  </div>
+                                                               </td>
                                                                  <td>
                                                                     <div class="title-albums ">
                                                                        <h6 class="songs-in-album " >
                                                                        
-                                                                          <format-time seconds="itemRecording.duration"></format-time>
+                                                                          <format-time seconds="episode.duration"></format-time>
                              
                                                                        </h6>
                                                                     </div>
