@@ -38,7 +38,7 @@ public class API_Artist {
 
 	@GetMapping("/{idAccount}/sumListened")
 	public ResponseEntity<?> sumListened(@PathVariable("idAccount") String idAccount) {
-		int sumListened = artistService.sumListenedArtist(idAccount);
+		Long sumListened = artistService.sumListenedArtist(idAccount);
 		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", sumListened));
 	}
 

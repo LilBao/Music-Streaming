@@ -189,11 +189,7 @@
                                                                data-bs-toggle="modal"
                                                                data-bs-target="#exampleModal">Profile</button>
                                                          </li>
-                                                         <li><button class="dropdown-item" type="button">Look
-                                                               Account</button></li>
-
-                                                         <li><button class="dropdown-item" type="button">Delete</button>
-                                                         </li>
+                                  
                                                       </ul>
                                                    </div>
                                                 </td>
@@ -298,11 +294,7 @@
                                                          <li><a class="dropdown-item" type="button"
                                                                href="#!/{{user.email}}/artist-profile">Profile</a>
                                                          </li>
-                                                         <li><button class="dropdown-item" type="button">Look
-                                                               Account</button></li>
-
-                                                         <li><button class="dropdown-item" type="button">Delete</button>
-                                                         </li>
+                                                        
                                                       </ul>
                                                    </div>
                                                 </td>
@@ -403,10 +395,7 @@
                                                       <ul class="dropdown-menu">
                                                          <li><a href="#!/{{user.email}}/podcast-profile" class="dropdown-item" type="button">Detail</a>
                                                          </li>
-                                                         <li><button class="dropdown-item" type="button">Look
-                                                               Account</button></li>
-                                                         <li><button class="dropdown-item" type="button">Delete</button>
-                                                         </li>
+                                                       
                                                       </ul>
                                                    </div>
                                                 </td>
@@ -449,14 +438,10 @@
                                  </div>
                                  <div class="col-sm-6 text-right">
                                     <div class="dt-buttons btn-group mb-2">
-                                       <button class="btn btn-secondary buttons-export" ng-click="exportToExcel()"
-                                          type="button"><span>Excel</span>
-                                       </button>
-                                       <button class="btn btn-secondary buttons-export" type="button"><span>Print</span>
-                                       </button>
-                                       <button class="btn btn-secondary buttons-export" type="button"><span>Excel</span>
-                                       </button>
-                                       <button class="btn btn-secondary buttons-export" type="button"><span>Excel</span>
+                                      
+                                       <button class="btn btn-warning text-dark-emphasis">
+                                          <i class="bi bi-person-fill-add"></i>
+                                        
                                        </button>
 
                                     </div>
@@ -482,7 +467,7 @@
                                              </tr>
                                           </thead>
                                           <tbody>
-
+                                             
                                              <tr
                                                 dir-paginate="user in itemsAccountByRole | itemsPerPage:12 | filter:searchText3">
                                                 <th scope="row">{{$index + 1}}</th>
@@ -511,10 +496,7 @@
                                                       <ul class="dropdown-menu">
                                                          <li><button class="dropdown-item" type="button">Detail</button>
                                                          </li>
-                                                         <li><button class="dropdown-item" type="button">Look
-                                                               Account</button></li>
-                                                         <li><button class="dropdown-item" type="button">Delete</button>
-                                                         </li>
+                                                        
                                                       </ul>
                                                    </div>
                                                 </td>

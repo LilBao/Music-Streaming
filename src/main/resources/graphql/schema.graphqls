@@ -56,7 +56,8 @@ type Query {
  getAllEpisode: [Episode]
  findAllAdvertisementPendingAndRejectByStatus:[AdvertisementStatistics]
  findAccountByEmail(id: String): Account
-
+ getAllRecordTop100:[Recording]
+ getAllEpisodeTop100: [Episode]
  #VanBao
  recordingById(recordingId: ID!):Recording
  

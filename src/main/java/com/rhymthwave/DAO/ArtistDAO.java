@@ -31,7 +31,7 @@ public interface ArtistDAO extends JpaRepository<Artist, Long>{
 			+ "						left join writter on writter.songsid = songs.songsid\r\n"
 			+ "						left join artist on artist.artistid = writter.artistid\r\n"
 			+ "						where artist.email = ?1", nativeQuery = true)
-	String sumListenedArtist(String idAccount);
+	Long sumListenedArtist(String idAccount);
 	
 	@Query("SELECT COUNT(*) FROM Follow f WHERE f.authorsAccountB.authorId = ?1")
 	int countFollowerArtist(Long author);
