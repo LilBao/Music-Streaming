@@ -1,9 +1,10 @@
-var app = angular.module("myApp", ["ngRoute","ngCookies","ngMessages","angularUtils.directives.dirPagination"]);
+var app = angular.module("myApp", ["angular-jwt","ngRoute","ngCookies","ngMessages","angularUtils.directives.dirPagination"]);
 app.config(function($routeProvider,$cookiesProvider) {
   
   $routeProvider
   .when("/", {
-    templateUrl : "dashboard.html"
+    templateUrl : "dashboard.html",
+    controller: "dashboardController"
   })
   .when("/create-news", {
     templateUrl : "Create_Blog.html",
@@ -14,21 +15,26 @@ app.config(function($routeProvider,$cookiesProvider) {
     templateUrl : "tableAccount.html",
     controller: "tableAccountController"
   })
-  .when("/edit-user", {
-    templateUrl : "EditUser.html"
+  .when("/:id/podcast-profile", {
+    templateUrl : "podcastProfile.html",
+    controller: "podcastProfileController"
   })
   .when("/ManagerBlog", {
     templateUrl : "ManagerBlog.html",
     controller: "managerBlogController"
    
   })
-  .when("/artist-profile/:id", {
+  .when("/:id/artist-profile", {
     templateUrl : "ArtistProfile.html",
     controller: "profileAccountController"
   })
   .when("/display-slide", {
     templateUrl : "displaySlide.html",
     controller: "displaySlideController"
+  })
+  .when("/notification", {
+    templateUrl : "Notification.html",
+    controller: "notificationController"
   })
   .when("/mood", {
     templateUrl : "Categories/Mood.html",
@@ -54,6 +60,10 @@ app.config(function($routeProvider,$cookiesProvider) {
     templateUrl : "Categories/Genre.html",
     controller: "genreController"
   })
+  .when("/tag", {
+    templateUrl : "Categories/tag.html",
+    controller: "tagController"
+  })
   .when("/manage-report", {
     templateUrl : "ManageReport.html",
   })
@@ -68,7 +78,16 @@ app.config(function($routeProvider,$cookiesProvider) {
   .when("/statistical_managerment", {
     templateUrl : "statistical_managerment.html",
     controller: "ChartController"
-  }).when("/approve-role", {
+  })
+  .when("/music-content", {
+    templateUrl : "statistical/MusicContentStatistics.html",
+    controller: "musicStatistics"
+  })
+  .when("/subscription-content", {
+    templateUrl : "statistical/SubscriptionStatistics.html",
+    controller: "SubscriptionStatisticsController" 
+  })
+  .when("/approve-role", {
     templateUrl : "approveRoles.html",
     controller: "approveRolesController"
   })
@@ -80,8 +99,11 @@ app.config(function($routeProvider,$cookiesProvider) {
     templateUrl : "SubscriptionsStatistics.html",
     controller: "subscriptionController"
   })
+  .when("/ads", {
+    templateUrl : "ads.html",
+    controller: "advertisementController"
+  })
   .otherwise({ templateUrl : "404.html"});
-  
 });
 
 app.service('graphqlService',function ($http) {
@@ -183,3 +205,51 @@ app.directive('formatTime', function () {
   };
 });
 
+app.directive('pagination', function() {
+  return {
+    restrict: 'E',
+    scope: {
+      currentPage: '=',
+      totalPages: '=',
+      onPageChange: '&'
+    },
+    templateUrl: 'pagination-template.html',
+    controller: function($scope) {
+      $scope.getPages = function() {
+        var pages = [];
+        var currentPage = $scope.currentPage;
+        var totalPages = $scope.totalPages;
+
+        var startPage = Math.max(1, currentPage - 2);
+        var endPage = Math.min(totalPages, currentPage + 2);
+
+        if (startPage > 1) {
+          pages.push(1);
+          if (startPage > 2) {
+            pages.push('...');
+          }
+        }
+
+        for (var i = startPage; i <= endPage; i++) {
+          pages.push(i);
+        }
+
+        if (endPage < totalPages) {
+          if (endPage < totalPages - 1) {
+            pages.push('...');
+          }
+          pages.push(totalPages);
+        }
+
+        return pages;
+      };
+
+      $scope.goToPage = function(page) {
+        if (page !== '...') {
+          $scope.currentPage = page;
+          $scope.onPageChange({ page: page });
+        }
+      };
+    }
+  };
+});

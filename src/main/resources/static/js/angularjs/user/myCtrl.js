@@ -1,5 +1,6 @@
 var host = "http://localhost:8080/api/";
-app.controller('myCtrl', function ($scope, $http, $route, audioService, queueService, graphqlService, $sce) {
+var token ="token";
+app.controller('myCtrl', function ($scope, $http, $route, audioService, queueService, graphqlService, $sce,$cookies) {
     $('#myModal').modal('show');
     //variable of sidebar
     $scope.account = {};
@@ -28,18 +29,17 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
             $scope.account = resp.data.data;
-            $scope.account.userType.forEach(e => {
-                $scope.findMyPlaylist(e.userTypeId)
-            });
+            $scope.findMyPlaylist($scope.account.email);
             $scope.findMyListFollow();
         })
     }
-    $scope.Owner();
-
-    $scope.findMyPlaylist = function (userTypeId) {
-        let url = host + "v1/my-playlist/" + userTypeId;
+    if($cookies.get(token)){
+        $scope.Owner();
+    }
+    $scope.findMyPlaylist = function (email) {
+        let url = host + "v1/my-playlist/" + email;
         $http.get(url).then(resp => {
-            $scope.listPlaylist.push(...resp.data.data);
+            $scope.listPlaylist=resp.data.data;
         })
     }
 

@@ -48,7 +48,7 @@ public class Artist implements Serializable {
 	@Column(name = "FULLNAME",columnDefinition = "nvarchar(55)")
 	private String fullName;
 
-	@Column(name = "PLACEOFBIRTH",columnDefinition = "nvarchar(55)")
+	@Column(name = "PLACEOFBIRTH",columnDefinition = "nvarchar(100)")
 	private String placeOfBirth;
 
 	@Column(name = "BIO",columnDefinition = "nvarchar(max)")

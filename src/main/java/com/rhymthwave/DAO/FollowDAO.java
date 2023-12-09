@@ -31,4 +31,11 @@ public interface FollowDAO extends JpaRepository<Follow, Long>{
 			+ "where f.account_a in :accountFans and f.account_b in (select authorid from author where idrole= :idRole) "
 			+ "and acc.country = :country",nativeQuery = true)
 	List<Long> getListFansLiked(@Param("accountFans") List<Long> accountFans,@Param("idRole") Integer idRole,@Param("country") String country);
+	
+	@Query(value="SELECT followdate, COUNT(*) AS soLuongFollow "
+			+ "FROM follower "
+			+ "WHERE account_b = :authId AND followdate BETWEEN DATEADD(DAY, -:date, GETDATE()) AND GETDATE() "
+			+ "GROUP BY account_b, followdate "
+			+ "ORDER BY followdate;",nativeQuery = true)
+	List<Object[]> monitorFollower(@Param("authId") Long authId,@Param("date") Integer date);
 }

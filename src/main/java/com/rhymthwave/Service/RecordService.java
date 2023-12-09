@@ -29,4 +29,6 @@ public interface RecordService {
 	List<Recording> findListPopularByArtist(Long artistId);
 	
 	List<Recording> findAppearOn(Long artistId);
+	
+	List<Recording> statisticsByDate(String email, Integer date);
 }

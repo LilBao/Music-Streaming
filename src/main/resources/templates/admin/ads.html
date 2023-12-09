@@ -1,100 +1,1089 @@
 <!DOCTYPE html>
 <html lang="en">
- 
+
 
 <body>
-   <div class="content-wrapper">
 
+   <div class="content-wrapper">
+      <style>
+         @media (min-width: 576px) {
+            .rounded-nav {
+               border-radius: 50rem !important;
+            }
+         }
+
+         @media (min-width: 576px) {
+            .rounded-nav .nav-link {
+               border-radius: 50rem !important;
+            }
+         }
+
+         /* With arrow tabs */
+
+         .with-arrow .nav-link.active {
+            position: relative;
+         }
+
+         .with-arrow .nav-link.active::after {
+            content: '';
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid #2b90d9;
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: block;
+         }
+
+         /* lined tabs */
+
+         .lined .nav-link {
+            border: none;
+            border-bottom: 3px solid transparent;
+         }
+
+         .lined .nav-link:hover {
+            border: none;
+            border-bottom: 3px solid transparent;
+         }
+
+         .lined .nav-link.active {
+            background: none;
+            color: #555;
+            border-color: #2b90d9;
+         }
+
+         /*
+*
+* ==========================================
+* FOR DEMO PURPOSE
+* ==========================================
+*
+*/
+
+
+
+         .nav-pills .nav-link {
+            color: #555;
+         }
+
+         .text-uppercase {
+            letter-spacing: 0.1em;
+         }
+         .fieldADS {
+            font-weight: 600;
+            color: rgb(110, 107, 107);
+            font-size:.9rem;           
+         }
+      </style>
       <section class="dashboard-top-sec">
 
          <div class="container-fluid">
-
-
             <div class="row profile-content">
-
                <div class="col-12 col-md-12 col-lg-12">
-
-                
-
                   <div class="row">
                      <div class="col-md-12">
                         <div class="iq-card iq-card-block iq-card-stretch iq-card-height  mb-0">
-                           <div class="iq-card-header text-center">
-                              <div class="iq-header-title">
-                                 <h4 class="card-title mb-0 ">ADS</h4>
-                              </div>
-                           </div>
-                           <div class="iq-card-body ">
+                           <!-- Rounded tabs -->
+                           <ul id="myTab" role="tablist"
+                              class="nav nav-tabs nav-pills flex-column flex-sm-row text-center bg-light border-0 rounded-nav">
+                              <li class="nav-item flex-sm-fill">
+                                 <a id="home-tab" data-toggle="tab" href="" id="pills-user-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                                    aria-selected="true"
+                                    class="nav-link border-0 text-uppercase font-weight-bold active">Advertisement
+                                    On</a>
+                              </li>
+                              <li class="nav-item flex-sm-fill">
+                                 <a id="profile-tab" id="pills-artist-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-profile" type="button" role="tab"
+                                    aria-controls="pills-profile" aria-selected="false"
+                                    class="nav-link border-0 text-uppercase font-weight-bold">Advertisement Pending</a>
+                              </li>
+                              <li class="nav-item flex-sm-fill">
+                                 <a id="pills-podcast-tab" data-bs-toggle="pill" data-bs-target="#pills-podcast"
+                                    type="button" role="tab" aria-controls="pills-podcast" aria-selected="false"
+                                    class="nav-link border-0 text-uppercase font-weight-bold">Advertisement Reject</a>
+                              </li>
+                           </ul>
 
-                              <div class="row">
-                             <div>
-                              <style>.custab{
-                                 border: 1px solid #ccc;
-                                 padding: 5px;
-                                 margin: 5% 0;
-                                 box-shadow: 3px 3px 2px #ccc;
-                                 transition: 0.5s;
-                                 }
-                             .custab:hover{
-                                 box-shadow: 3px 3px 0px transparent;
-                                 transition: 0.5s;
-                                 }</style>
-                             </div>
-                           
-                                 <div class="container">
-                                    <div class="row col-md-offset-2 custyle">
-                                    <table class="table table-striped custab">
-                                    <thead>
-                                    <a href="#" class="btn btn-primary btn-xs pull-right"><b>+</b> Add new categories</a>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Title</th>
-                                            <th>Parent ID</th>
-                                            <th class="text-center">Action</th>
-                                        </tr>
-                                    </thead>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>News</td>
-                                                <td>News Cate</td>
-                                                <td class="text-center"><a class='btn btn-info btn-xs' href="#"><span class="bi bi-pencil-square"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="bi bi-trash3"></span> Del</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Products</td>
-                                                <td>Main Products</td>
-                                                <td class="text-center"><a class='btn btn-info btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Blogs</td>
-                                                <td>Parent Blogs</td>
-                                                <td class="text-center"><a class='btn btn-info btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
-                                            </tr>
-                                    </table>
+
+                           <div id="myTabContent" class="tab-content">
+
+                              <!-- START ADVERTISEMENT ON -->
+                              <div id="pills-home" role="tabpanel" aria-labelledby="pills-user-tab" tabindex="0"
+                                 class="tab-pane fade px-4 py-5 show active">
+
+
+                                 <div class="iq-card-body ">
+
+                                    <!-- START FILTER ADS ADVERTISEMENT ON -->
+
+                                    <div class="row mb-1 border-bottom pb-3">
+
+                                       <div class="col-md-8 filter-ads d-flex">
+                                          <div class="form col-md-4 mx-2">
+                                             <i class="fa fa-search"></i>
+                                             <input type="text" class="form-control form-input" placeholder="Search">
+
+                                          </div>
+
+                                          <div class=" col-md-4 mx-2">
+                                             <select class="form-select" style="font-size: 16px;" ng-model="status">
+                                                <option value="">All</option>
+                                                <option value="2">Running</option>
+                                                <option value="3">Completed</option>
+                                             </select>
+                                          </div>
+
+                                          <div class="col-md-2 pt-1">
+
+                                             <a href="" class=" d-inline text-primary" type="reset">Remove</a>
+                                          </div>
+                                         
+                                       </div>
+                                       <div class="col-md-2 pt-1">
+
+                                         
+                                       </div>
+                                       <div class="col-md-2 pt-1 fs-4" >
+
+                                          <a href="" class=" d-inline text-dark fw-4 " type="button" data-bs-toggle="modal" data-bs-target="#addADS"><i class="bi bi-plus-circle"></i></a>
+                                       </div>
                                     </div>
-                                </div>
+                                    <!-- START ADD ADS -->
+                                    <!-- Modal -->
+                                       <div class="modal fade" id="addADS" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                          <div class="modal-dialog modal-lg modal-dialog-centered">
+                                          <div class="modal-content ">
+                                             <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Create Advertisement</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                             </div>
+                                             <div class="modal-body">
+                                               <div class="container">
+                                                <div class="row">
+                                                   <div class="col-md-4">
+                                                      <div class="">
+                                                         <img src="../../static/img/ab1.webp" alt="" class="img-fluid w-100 image-cover">
+                                                         <input type="file" class="form-control mt-2" name="fileImage" />
+                                                      </div>
+                                                   </div>
+                                                   <div class="col-md-8">
+                                                    
+                                                         <div class="mb-2">
+                                                            <label for="" class="form-label">Title Ads</label>
+                                                            <input
+                                                               type="text"
+                                                               class="form-control"
+                                                               name=""
+                                                               id=""
+                                                               placeholder=""
+                                                            />
+                                                          
+                                                         </div>
+
+                                                         <div class="mb-2">
+                                                            <label for="" class="form-label">Tag Ads</label>
+                                                            <input
+                                                               type="text"
+                                                               class="form-control"
+                                                               name=""
+                                                               id=""
+                                                               placeholder=""
+                                                            />
+                                                          
+                                                         </div>
+                                                         <div class="mb-2">
+                                                            <label for="" class="form-label">Content Ads</label>
+                                                          <textarea class="form-control" name="" id="" cols="30" rows="3"></textarea>
+                                                          
+                                                         </div>
+                                                   
+                                                   </div>
+                                                </div>
+                                                <div class="row">
+                                                   <div class="mb-2">
+                                                      <label for="" class="form-label">File Audio</label>
+                                                      <input
+                                                         type="file"
+                                                         class="form-control"
+                                                         name=""
+                                                         id=""
+                                                         placeholder="asd"
+                                                      />
+                                                    
+                                                   </div>
+
+                                                </div>
+                                               </div>
+                                             </div>
+                                             <div class="modal-footer">
+
+                                                <button type="button" class="btn btn-success" data-bs-dismiss="modal">Run</button>
+                                             
+                                             </div>
+                                          </div>
+                                          </div>
+                                       </div>
+
+                                          <!-- END ADD ADS -->
+
+                                    <!-- END FILTER ADS  ADVERTISEMENT ON-->
+                                    <div class="row">
+
+                                       <div class="container">
+                                          <div class="table-responsive">
+                                             <table class="table table-hover">
+                                                <thead>
+                                                   <tr>
+                                                      <th scope="col">#</th>
+                                                      <th scope="col">Advertisement</th>
+                                                      <th scope="col">Clicked</th>
+                                                      <th scope="col">Listened</th>
+                                                      <th scope="col">Budget</th>
+                                                      <th scope="col"></th>
+                                                   </tr>
+                                                </thead>
+                                                <tbody>
+                                                   <tr class="align-middle"
+                                                      ng-repeat="ads in allAdvertisementRunAndComplete | filter: { status: status }">
+                                                      <th>{{$index + 1}}</th>
+                                                      <td>
+                                                         <div>
+                                                            <img class=" rounded img-fluid "
+                                                               src="../../static/img/ab1.webp" alt="img"
+                                                               style="width: 10%;">
+                                                            <span>{{ads.title}}</span>
+                                                            
+                                                            <span ng-class="ads.status === 2 ? 'badge rounded-pill text-bg-warning' : 'badge rounded-pill text-bg-success'">{{ads.status === 2 ? 'running' : 'completed'}}</span>
+                                                              
+                                                         </div>
+
+                                                      </td>
+                                                      <td>{{ads.clicked}}</td>
+                                                      <td>{{ads.listened}}</td>
+                                                      <td>{{ads.budget}}</td>
+                                                      <td>
+                                                         <button class="btn btn-secondary" type="button"
+                                                            data-bs-toggle="modal" data-bs-target="#adsModal"  ng-click="statisticsDetail(ads.adId)">
+                                                            See results
+                                                         </button>
+                                                      </td>
+                                                   </tr>
+
+                                                </tbody>
+                                             </table>
+
+                                             <!-- START  MODAL ADS DETAIL ADVERTISEMENT ON-->
+                                             <!-- Modal -->
+                                             <div class="modal fade" id="adsModal" tabindex="-1"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-scrollable modal-xl">
+                                                   <div class="modal-content">
+                                                      <div class="modal-header">
+
+                                                         <h1 class="modal-title fs-5" id="exampleModalLabel"> See
+                                                            results</h1>
+
+                                                            <div>
+                                                            <button type="button" class="btn btn-success" style="margin-right: 1rem;"
+                                                               data-bs-dismiss="modal"><span>Send result</span><i class="bi bi-send-check-fill ms-2"></i>
+                                                            </button>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                               aria-label="Close">
+                                                            </button>
+                                                            </div>
+                                                         
+                                                            
+                                                      </div>
+                                                      <div class="modal-body bg-body-secondary">
+                                                         <div class="row">
+                                                            <div class="col-md-6">
+                                                               <div class="shadow-sm p-3 mb-5 bg-body-tertiary rounded "
+                                                                  style="margin-bottom: 10px !important;">
+                                                                  <div class="row">
+                                                                     <h6>Effective</h6>
+                                                                     <div class="col-md-12">
+                                                                        <div class="container mt-2">
+                                                                           <div class="row">
+
+                                                                              <div class="col-md-6">
+
+                                                                                 <div
+                                                                                    class="rounded p-3 mb-2 lh-lg d-flex justify-content-between align-items-center"
+                                                                                    style="min-height: 40px; background-color: rgb(234, 234, 234);">
+                                                                                    <b>Listening figures</b>
+                                                                                    <span
+                                                                                       style="font-size: 20px; font-weight: 600;">{{statisticsON.listened}}</span>
+                                                                                 </div>
+                                                                                 <div
+                                                                                    class="rounded p-3 mb-2 lh-lg d-flex justify-content-between align-items-center"
+                                                                                    style="min-height: 40px; background-color: rgb(234, 234, 234);">
+                                                                                    <b>View the article</b>
+                                                                                    <span
+                                                                                       style="font-size: 20px; font-weight: 600;">{{statisticsON.clicked}}</span>
+                                                                                 </div>
+                                                                              </div>
+
+                                                                              <div class="col-md-6 ">
+                                                                                 <div
+                                                                                    class="rounded p-3 mb-2 lh-lg d-flex justify-content-between align-items-center"
+                                                                                    style="min-height: 40px; background-color: rgb(234, 234, 234);">
+                                                                                    <b>Approach</b>
+                                                                                    <span
+                                                                                       style="font-size: 20px; font-weight: 600;">{{statisticsON.listened + statisticsON.clicked}}</span>
+                                                                                 </div>
+                                                                              </div>
+
+                                                                           </div>
+
+                                                                        </div>
+                                                                     </div>
+
+                                                                     <!-- START Operation -->
+
+                                                                     <h6 class="mt-2">Operation</h6>
+                                                                     <div class="col-md-12">
+                                                                        <div class="container mt-2">
+
+                                                                           <div class="row lh-sm mb-3">
+                                                                              <span>Ad impressions</span>
+                                                                              <div class="col-md-11 align-items-center">
+
+                                                                                 <div class="mt-1">
+                                                                                    <div class="progress"
+                                                                                       role="progressbar"
+                                                                                       aria-label="Basic example"
+                                                                                       aria-valuenow="25"
+                                                                                       aria-valuemin="0"
+                                                                                       aria-valuemax="100">
+                                                                                       <div class="progress-bar"
+                                                                                          style="width: 1%"></div>
+                                                                                    </div>
+                                                                                 </div>
+
+
+
+                                                                              </div>
+                                                                              <div class="col-md-1 mt-1">
+                                                                                 1
+                                                                              </div>
+                                                                           </div>
+                                                                          
+                                                                           <div class="row lh-sm mb-3">
+                                                                              <span>Number of clicks on the link</span>
+                                                                              <div class="col-md-11 align-items-center">
+                                                                                 <div class="mt-1" >
+                                                                                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="{{resultsADS.resultsClicked}}" aria-valuemin="0" aria-valuemax="100">
+                                                                                        <div class="progress-bar" ng-style="{ 'width': resultsADS.resultsClicked + '%' }"></div>
+                                                                                    </div>
+                                                                                </div>
+                                                                             </div>
+                                                                              <div class="col-md-1 mt-1">
+                                                                                 {{statisticsON.clicked}}
+                                                                              </div>
+                                                                           </div>
+
+                                                                           <div class="row lh-sm mb-3">
+                                                                              <span>Ad listens</span>
+                                                                                 
+                                                                              <div class="col-md-11 align-items-center">
+                                                                                 <div class="mt-1" >
+                                                                                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="{{resultsADS.resultsListened}}" aria-valuemin="0" aria-valuemax="100">
+                                                                                        <div class="progress-bar" ng-style="{ 'width': resultsADS.resultsListened + '%' }"></div>
+                                                                                    </div>
+                                                                                </div>
+                                                                              </div>
+                                                                              <div class="col-md-1 mt-1">
+                                                                                 {{statisticsON.listened }}
+                                                                              </div>
+                                                                           </div>
+                                                                        </div>
+                                                                     </div>
+                                                                     <!-- START Operation -->
+                                                                  </div>
+
+
+                                                               </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+
+
+                                                               <!-- START DETAIL ADS -->
+                                                               <div class="col-md-12">
+                                                                  <div
+                                                                     class="shadow-sm p-3 mb-5 bg-body-tertiary rounded"
+                                                                     style="margin-bottom: 10px !important;">
+                                                                     <div class="row">
+                                                                        <h6>Details</h6>
+                                                                        <div class="col-md-12">
+
+                                                                        </div>
+                                                                     </div>
+
+                                                                     <!-- START DETAIL ADS -->
+                                                                     <div class="row">
+                                                                        <div class="all-detail">
+                                                                           <div class="detail-ads mb-2">
+
+                                                                              <div
+                                                                                 class="border-bottom pb-1 mt-2 d-flex align-items-start ">
+
+                                                                                 <span><i
+                                                                                       class="icon-detail bi bi-person-fill"></i></span>
+                                                                                 <div class="ms-2 lh-sm">
+
+                                                                                    <span
+                                                                                       class="start-date-detail">Creator</span>
+                                                                                    <br>
+                                                                                    <span class="fs-6">{{statisticsON.account.email}}</span>
+
+                                                                                 </div>
+                                                                              </div>
+                                                                              <div
+                                                                                 class="border-bottom pb-1 mt-2 d-flex align-items-start">
+
+                                                                                 <span><i
+                                                                                       class="icon-detail bi bi-currency-exchange"></i></span>
+                                                                                 <div class="ms-2 lh-sm">
+
+                                                                                    <span
+                                                                                       class="start-date-detail">Daily
+                                                                                       budget</span>
+                                                                                    <br>
+                                                                                    <span class="fs-6">{{statisticsON.budget}}</span>
+
+                                                                                 </div>
+                                                                              </div>
+
+                                                                              <div
+                                                                                 class="border-bottom pb-1 mt-2 d-flex align-items-start">
+                                                                                 <span><i
+                                                                                       class="icon-detail bi bi-stopwatch-fill"></i></span>
+                                                                                 <div class="ms-2 lh-sm">
+                                                                                    <span
+                                                                                       class="start-date-detail">Period</span>
+                                                                                    <br>
+                                                                                    <span class="fs-6">{{statisticsON.priority}}</span>
+                                                                                 </div>
+                                                                              </div>
+                                                                           </div>
+
+                                                                           <div class="accordion accordion-flush"
+                                                                              id="accordionFlushExample">
+                                                                              <div class="accordion-item ">
+
+                                                                                 <h2
+                                                                                    class="accordion-header text-center">
+                                                                                    <button
+                                                                                       class="accordion-button collapsed "
+                                                                                       type="button"
+                                                                                       data-bs-toggle="collapse"
+                                                                                       data-bs-target="#flush-collapseOne"
+                                                                                       aria-expanded="false"
+                                                                                       aria-controls="flush-collapseOne">
+                                                                                       Show more
+                                                                                    </button>
+                                                                                 </h2>
+                                                                                 <div id="flush-collapseOne"
+                                                                                    class="accordion-collapse collapse"
+                                                                                    data-bs-parent="#accordionFlushExample">
+                                                                                    <div class="accordion-body"
+                                                                                       style="padding-left: 5px;">
+
+
+
+                                                                                       <div
+                                                                                          class="border-bottom pb-1 mt-2 d-flex align-items-start">
+                                                                                          <span><i
+                                                                                                class="icon-detail bi bi-calendar-plus-fill"></i></span>
+
+                                                                                          <div class="ms-2 lh-sm">
+                                                                                              <span class="start-date-detail">Start date</span> <br>
+                                                                                            
+                                                                                              <span   class="fs-6">{{statisticsON.startDate | date:'dd-MM-yyyy HH:mm:ss'}}</span>
+                                                                                          </div>
+                                                                                       </div>
+
+
+                                                                                       <div
+                                                                                          class="border-bottom pb-1 mt-2 d-flex align-items-start">
+                                                                                          <span><i
+                                                                                                class="icon-detail bi bi-calendar-minus-fill"></i></span>
+                                                                                          <div class="ms-2 lh-sm">
+
+                                                                                             <span
+                                                                                                class="start-date-detail">End
+                                                                                                date</span> <br>
+                                                                                             <span
+                                                                                                class="fs-6">{{statisticsON.endDate | date:'dd-MM-yyyy HH:mm:ss'}}</span>
+                                                                                          </div>
+                                                                                       </div>
+
+
+                                                                                    </div>
+                                                                                 </div>
+                                                                              </div>
+
+                                                                           </div>
+                                                                        </div>
+                                                                     </div>
+                                                                     <!-- END DETAIL ADS -->
+                                                                  </div>
+                                                               </div>
+                                                               <!-- END DETAIL ADS -->
+                                                               <div class="col-md-12">
+                                                                  <div
+                                                                     class="shadow-sm p-3 mb-5 bg-body-tertiary rounded">
+
+                                                                     <h6>Target</h6>
+
+                                                                  </div>
+                                                               </div>
+
+
+
+                                                            </div>
+
+                                                         </div>
+                                                      </div>
+                                                     <!-- <div class="modal-footer">
+                                                            <button type="button" class="btn btn-success"
+                                                               data-bs-dismiss="modal"><span>Send result</span><i class="bi bi-send-check-fill ms-2"></i></button>
+                                                          
+                                                         </div>  -->
+                                                   </div>
+                                                </div>
+                                             </div>
+
+                                             <!-- END  MODAL ADS DETAIL -->
+                                          </div>
+                                       </div>
+                                    </div>
+                                  
+
+                                  
+
+                                 </div>
+
+
                               </div>
-                              
 
+                              <!-- END ADVERTISEMENT ON -->
+
+                              <!--START ADVERTISEMENT PENDING -->
+                              <div id="pills-profile" role="tabpanel" aria-labelledby="pills-artist-tab" tabindex="0"
+                                 class="tab-pane fade px-4 py-5  ">
+                                 <div class="iq-card-body ">
+
+                                    <!-- START FILTER ADS -->
+
+                                    <div class="row mb-1 border-bottom pb-3">
+
+                                       <div class="col-md-8 filter-ads d-flex">
+                                          <div class="form col-5 mx-2">
+                                             <i class="fa fa-search"></i>
+                                             <input type="text" class="form-control form-input" placeholder="Search">
+
+                                          </div>
+
+                                          <div class=" col-5 mx-2">
+                                             <select class="form-select" style="font-size: 16px;" ng-model="createDateFilter">
+                                                <option value selected >All</option>
+                                                <option value="createDate" >ASC</option>
+                                                <option value="-createDate">DESC</option>
+                                             </select>
+                                          </div>
+
+                                          <div class="col-2 pt-1">
+
+                                             <a href="" class=" d-inline text-primary" type="reset">Reset</a>
+                                          </div>
+                                       </div>
+                                    </div>
+
+                                    <!-- END FILTER ADS -->
+
+                                    <div class="row">
+
+                                       <div class="container">
+                                          <div class="table-responsive">
+                                             <table class="table table-hover">
+                                                <thead>
+                                                   <tr>
+                                                      <th scope="col">#</th>
+                                                      <th scope="col">Advertisement</th>
+                                                      <th scope="col">Account</th>
+                                                      <th scope="col">Target Audience</th>
+                                                      <th scope="col">Budget</th>
+                                                      <th scope="col"></th>
+                                                   </tr>
+                                                </thead>
+                                                <tbody class="text-center">
+                                                   <tr class="align-middle"
+                                                      ng-repeat="ads in allAdvertisementPendingAndReject |filter :{ status:'1'} | orderBy : createDateFilter ">
+                                                      <th>{{$index + 1}}</th>
+                                                      <td class="text-start">
+                                                         <div>
+                                                            <img class=" rounded img-fluid "
+                                                               src="../../static/img/ab1.webp" alt="img"
+                                                               style="width: 10%;">
+                                                            <span>{{ads.title}}</span>
+                                                            <span class="badge rounded-pill text-bg-info">{{ads.status
+                                                               ===1 ? 'pending':'reject'}}</span>
+                                                         </div>
+
+                                                      </td>
+                                                      <td class="text-start">
+                                                         <span class=" col-5 text-truncate">{{ads.account.email}}</span>
+
+                                                        
+                                                           <span  class="badge rounded-pill text-bg-danger">{{ads.numberOfAds.advertisement.length}}</span>
+
+
+                                                      </td>
+                                                      <td>{{ads.targetAudience}}</td>
+                                                      <td>{{ads.budget}}</td>
+                                                      <td>
+                                                         <button class="btn btn-secondary" type="button"
+                                                            data-bs-toggle="modal" data-bs-target="#adsModal-pending" ng-click="statisticsDetail(ads.adId)">
+                                                            See Detail
+                                                         </button>
+                                                      </td>
+                                                   </tr>
+
+                                                </tbody>
+                                             </table>
+
+                                             <!-- START  MODAL ADS DETAIL -->
+                                             <!-- Modal -->
+                                             <div class="modal fade" id="adsModal-pending" tabindex="-1"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-scrollable modal-xl">
+                                                   <div class="modal-content">
+                                                      <div class="modal-header">
+
+                                                         <h1 class="modal-title fs-5" id="exampleModalLabel"> See Detail
+                                                         </h1>
+
+
+                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                      </div>
+                                                      <div class="modal-body bg-body-secondary">
+                                                         <div class="row">
+                                                            <div class="col-md-6">
+                                                               <div class="shadow-sm p-3 mb-5 bg-body-tertiary rounded "
+                                                                  style="margin-bottom: 10px !important;">
+                                                                  <div class="row">
+                                                                     <h6>Details</h6>
+                                                                     <div class="col-md-12">
+                                                                        <div class="container mt-2">
+                                                                           <div class="row">
+                                                                              <div class="col-md-12 text-center">
+                                                                                 
+                                                                                    <div class="w-100 h-75">
+                                                                                         <img src="../../static/img/ab2.webp"
+                                                                                       alt="" class="img-fluid" style="object-fit: cover;">
+                                                                                    </div>
+                                                                                
+                                                                              </div>
+                                                                             
+                                                                           </div>
+                                                                          
+                                                                        </div>
+                                                                     </div>
+                                                                           <!-- START Audio -->
+                                                                     <h6 class="mt-2">Audio</h6>
+                                                                     <div class="col-md-12">
+                                                                        <div class="container mt-2">
+                                                                           <div class="row lh-sm mb-3">
+                                                                                       
+                                                                              <div class="audio-test">
+                                                                                
+                                                                                <audio controls   ng-src="{{statisticsON.audioFile}}"></audio>
+
+                                                                              </div>
+                                                                           </div>
+                                                                        </div>
+                                                                     </div>
+                                                                      <!-- START Audio -->
+                                                                  </div>
+
+
+
+
+                                                               </div>
+                                                              
+                                                            </div>
+                                                            <div class="col-md-6">
+
+
+                                                               <!-- START Audio ADS -->
+                                                               <div class="col-md-12">
+                                                                  <div
+                                                                     class="shadow-sm p-3 mb-5 bg-body-tertiary rounded"
+                                                                     style="margin-bottom: 10px !important;">
+                                                                     <div class="row">
+                                                                        <h6> Main Content</h6>
+                                                                        <div class="mt-1">
+                                                                           <div class="row mx-1">
+                                                                              <div class="col-md-4 fieldADS">Title:</div>
+                                                                              <div class="col-md-8 text-break">{{statisticsON.title}}</div>
+                                                                           </div>
+                                                                           <div class="row mx-1">
+                                                                              <div class="col-md-4 fieldADS">Account:</div>
+                                                                             <div class="col-md-8 text-break">{{statisticsON.account.email}}</div>
+                                                                           </div>
+                                                                           <div class="row mx-1">
+                                                                              <div class="col-md-4 fieldADS">Tag:</div>
+                                                                             <div class="col-md-8 text-break">{{statisticsON.tag}}</div>
+                                                                           </div>
+                                                                           <div class="row mx-1">
+                                                                              <div class="col-md-4 fieldADS">Currency:</div>
+                                                                              <div class="col-md-8 text-break">{{statisticsON.currency}}</div>
+                                                                           </div>
+                                                                           <div class="row mx-1">
+                                                                              <div class="col-md-4 fieldADS">Budget:</div>
+                                                                             <div class="col-md-8 text-break">{{statisticsON.budget}}</div>
+                                                                           </div>
+                                                                           <div class="row mx-1">
+                                                                              <div class="col-md-4 fieldADS">Target audience:</div>
+                                                                             <div class="col-md-8 text-break">{{statisticsON.targetAudience}}</div>
+                                                                           </div>
+                                                                           <div class="row mx-1">
+                                                                              <div class="col-md-4 fieldADS">URL:</div>
+                                                                             <div class="col-md-8 text-break">{{statisticsON.url}}</div>
+                                                                           </div>
+                                                                     </div>
+                                                                        <div class="row mt-2">
+                                                                           <h6>Content</h6>
+                                                                           <div class="text-break mx-3">
+                                                                              {{statisticsON.content}}
+                                                                           </div>
+                                                                        </div>
+
+                                                                   </div>
+
+                                                                     <!-- START Audio ADS -->
+                                                                   
+                                                                     <!-- END DETAIL ADS -->
+                                                                  </div>
+                                                               </div>
+                                                               <!-- END DETAIL ADS -->
+                    
+                                                            </div>
+                                                           
+                                                         </div>
+                                                      </div>
+
+                                                      <div class="modal-footer p-2 ">
+                                                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Reject</button>
+                                                         <button type="button" class="btn btn-success"  data-bs-dismiss="modal" ng-click="setStatus(statisticsON.adId,2)">Run</button>
+                                                      </div>
+                                                      
+
+                                                   <!-- END  MODAL ADS DETAIL -->
+                                                </div>
+                                             </div>
+                                             </div>
+
+
+                                                      <!-- Modal -->
+                                                      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                         <div class="modal-dialog modal-sm modal-dialog-centered">
+                                                            <div class="modal-content">
+                                                               <div class="modal-header modal-header-delete">
+                                                                  <div>
+                                                                  
+                                                                  </div>
+                                                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                               </div>
+                                                               <div class="modal-body">
+                                                                  <div class="icon-close-bodyModal">
+                                                                     <i class="bi bi-x-circle"></i>
+                                                                  </div>
+                                                                  <div style="text-align: center;" class="m-2">
+                                                                     <h5> Are you sure ? </h5>
+                                                                  
+                                                                  </div>
+                                                               
+                                                               </div>
+                                                               <div class="modal-footer btn-event-deleteModal">
+                                                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                  <button type="button" class="btn btn-danger"    data-bs-dismiss="modal" ng-click="setStatus(statisticsON.adId,4)">Reject</button>
+                                                               </div>
+                                                            </div>
+                                                            </div>
+                                                      </div>
+                                        
+                                    
+                                           <!-- <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                                             <div class="modal-dialog modal-dialog-centered">
+                                               <div class="modal-content">
+                                                 <div class="modal-header ">
+                                                   <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Reason for refusal</h1>
+                                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                 </div>
+                                                 <div class="modal-body ">
+                                                   <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"  placeholder="Reason"></textarea>
+                                                 </div>
+                                                 <div class="modal-footer border-top-0">
+                                                   <button class="btn btn-success " data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Save</button>
+                                                 </div>
+                                               </div>
+                                             </div>
+                                           </div> -->
+
+                                       </div>
+
+                                    </div>
+
+                                    <!--END ADVERTISEMENT PENDING -->                                 
+                                
+                                 </div>
+                                 <!-- End rounded tabs -->
+
+
+                              </div> 
+                         
                            </div>
-                        </div>
+                                <!-- START ADVERTISEMENT REJECT -->
+                                <div id="pills-podcast" role="tabpanel" aria-labelledby="pills-podcast-tab"
+                                tabindex="0" class="tab-pane fade px-4 py-5">
+                                <div class="iq-card-body ">
+                                <!-- START FILTER ADS -->
 
+                                <div class="row mb-1 border-bottom pb-3">
+
+                                   <div class="col-md-8 filter-ads d-flex">
+                                      <div class="form col-5 mx-2">
+                                         <i class="fa fa-search"></i>
+                                         <input type="text" class="form-control form-input" placeholder="Search">
+
+                                      </div>
+
+                                      <div class=" col-5 mx-2">
+                                         <select class="form-select" style="font-size: 16px;" ng-model="budgetFilter">
+                                            <option value="" selected >All</option>
+                                            <option value="budget"  >ASC</option>
+                                            <option value="-budget">DESC</option>
+                                         </select>
+                                      </div>
+
+                                      <div class="col-2 pt-1">
+
+                                         <a href="" class=" d-inline text-primary" type="reset">Reset</a>
+                                      </div>
+                                   </div>
+                                </div>
+
+                                <!-- END FILTER ADS -->
+
+                                <div class="row">
+
+                                   <div class="container">
+                                      <div class="table-responsive">
+                                         <table class="table table-hover">
+                                            <thead>
+                                               <tr>
+                                                  <th scope="col">#</th>
+                                                  <th scope="col">Advertisement</th>
+                                                  <th scope="col">Account</th>
+                                                  <th scope="col">Target Audience</th>
+                                                  <th scope="col">Budget</th>
+                                                  <th scope="col"></th>
+                                               </tr>
+                                            </thead>
+                                            <tbody class="text-center">
+                                               <tr class="align-middle"
+                                                  ng-repeat="ads in allAdvertisementPendingAndReject  |filter :{ status:'4'} | orderBy : budgetFilter ">
+                                                  <th>{{$index + 1}}</th>
+                                                  <td class="text-start">
+                                                     <div>
+                                                        <img class=" rounded img-fluid "
+                                                           src="../../static/img/ab1.webp" alt="img"
+                                                           style="width: 10%;">
+                                                        <span>{{ads.title}}</span>
+                                                        <span class="badge rounded-pill text-bg-danger">{{ads.status
+                                                           ===1 ? 'pending':'reject'}}</span>
+                                                     </div>
+
+                                                  </td>
+                                                  <td class="text-start">
+                                                     <span class=" col-5 text-truncate">{{ads.account.email}}</span>
+
+                                                     <span
+                                                        class="badge rounded-pill text-bg-danger">{{ads.account.advertisement.length}}</span>
+
+
+                                                  </td>
+                                                  <td>{{ads.targetAudience}}</td>
+                                                  <td>{{ads.budget}}</td>
+                                                  <td>
+                                                     <button class="btn btn-secondary" type="button"
+                                                        data-bs-toggle="modal" data-bs-target="#adsModal-reject"  ng-click="statisticsDetail(ads.adId)">
+                                                        See Detail
+                                                     </button>
+                                                  </td>
+                                               </tr>
+
+                                            </tbody>
+                                         </table>
+
+                                         <!-- START  MODAL ADS DETAIL -->
+                                         <!-- Modal -->
+                                         <div class="modal fade" id="adsModal-reject" tabindex="-1"
+                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                         <div class="modal-dialog modal-dialog-scrollable modal-xl">
+                                            <div class="modal-content">
+                                               <div class="modal-header">
+
+                                                  <h1 class="modal-title fs-5" id="exampleModalLabel"> See Detail
+                                                  </h1>
+
+
+                                                  <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                     aria-label="Close"></button>
+                                               </div>
+                                               <div class="modal-body bg-body-secondary">
+                                                  <div class="row">
+                                                     <div class="col-md-6">
+                                                        <div class="shadow-sm p-3 mb-5 bg-body-tertiary rounded "
+                                                           style="margin-bottom: 10px !important;">
+                                                           <div class="row">
+                                                              <h6>Details</h6>
+                                                              <div class="col-md-12">
+                                                                 <div class="container mt-2">
+                                                                    <div class="row">
+                                                                       <div class="col-md-12 text-center">
+                                                                          
+                                                                             <div class="w-100 h-75">
+                                                                                  <img src="../../static/img/ab2.webp"
+                                                                                alt="" class="img-fluid" style="object-fit: cover;">
+                                                                             </div>
+                                                                         
+                                                                       </div>
+                                                                      
+                                                                    </div>
+                                                                   
+                                                                 </div>
+                                                              </div>
+                                                                    <!-- START Audio -->
+                                                              <h6 class="mt-2">Audio</h6>
+                                                              <div class="col-md-12">
+                                                                 <div class="container mt-2">
+                                                                    <div class="row lh-sm mb-3">
+                                                                                
+                                                                       <div class="audio-test">
+                                                                         
+                                                                         <audio controls   ng-src="{{statisticsON.audioFile}}"></audio>
+
+                                                                       </div>
+                                                                    </div>
+                                                                 </div>
+                                                              </div>
+                                                               <!-- START Audio -->
+                                                           </div>
+
+
+
+
+                                                        </div>
+                                                       
+                                                     </div>
+                                                     <div class="col-md-6">
+
+
+                                                        <!-- START Audio ADS -->
+                                                        <div class="col-md-12">
+                                                           <div
+                                                              class="shadow-sm p-3 mb-5 bg-body-tertiary rounded"
+                                                              style="margin-bottom: 10px !important;">
+                                                              <div class="row">
+                                                                 <h6> Main Content</h6>
+                                                                 <div class="mt-1">
+                                                                    <div class="row mx-1">
+                                                                       <div class="col-md-4 fieldADS">Title:</div>
+                                                                       <div class="col-md-8 text-break">{{statisticsON.title}}</div>
+                                                                    </div>
+                                                                    <div class="row mx-1">
+                                                                       <div class="col-md-4 fieldADS">Account:</div>
+                                                                      <div class="col-md-8 text-break">{{statisticsON.account.email}}</div>
+                                                                    </div>
+                                                                    <div class="row mx-1">
+                                                                       <div class="col-md-4 fieldADS">Tag:</div>
+                                                                      <div class="col-md-8 text-break">{{statisticsON.tag}}</div>
+                                                                    </div>
+                                                                    <div class="row mx-1">
+                                                                       <div class="col-md-4 fieldADS">Currency:</div>
+                                                                       <div class="col-md-8 text-break">{{statisticsON.currency}}</div>
+                                                                    </div>
+                                                                    <div class="row mx-1">
+                                                                       <div class="col-md-4 fieldADS">Budget:</div>
+                                                                      <div class="col-md-8 text-break">{{statisticsON.budget}}</div>
+                                                                    </div>
+                                                                    <div class="row mx-1">
+                                                                       <div class="col-md-4 fieldADS">Target audience:</div>
+                                                                      <div class="col-md-8 text-break">{{statisticsON.targetAudience}}</div>
+                                                                    </div>
+                                                                    <div class="row mx-1">
+                                                                       <div class="col-md-4 fieldADS">URL:</div>
+                                                                      <div class="col-md-8 text-break">{{statisticsON.url}}</div>
+                                                                    </div>
+                                                              </div>
+                                                                 <div class="row mt-2">
+                                                                    <h6>Content</h6>
+                                                                    <div class="text-break mx-3">
+                                                                       {{statisticsON.content}}
+                                                                    </div>
+                                                                 </div>
+
+                                                            </div>
+
+                                                              <!-- START Audio ADS -->
+                                                            
+                                                              <!-- END DETAIL ADS -->
+                                                           </div>
+                                                        </div>
+                                                        <!-- END DETAIL ADS -->
+             
+                                                     </div>
+                                                    
+                                                  </div>
+                                               </div>
+
+                                               <div class="modal-footer p-2 " ng-show="statusShow">
+                                                  <button type="button" class="btn btn-success"  data-bs-dismiss="modal" ng-click="setStatus(statisticsON.adId,2)">Run</button>
+                                               </div>
+                                               
+
+                                            <!-- END  MODAL ADS DETAIL -->
+                                         </div>
+                                      </div>
+                                      </div>
+
+                                      </div>
+
+
+                                   </div>
+
+                                </div>
+
+                                <!--END ADVERTISEMENT PENDING -->
+                                                      
+                             </div>
+
+                            </div>                        
+                          <!-- END ADVERTISEMENT REJECT -->
+                        </div>
                      </div>
                   </div>
-               </div>
-            </div>
 
-         </div>
+               </div>            
       </section>
-
    </div>
-
-
-   <script src="../../static/js/jscustom/UI-Js-Admin/cdn.jsdelivr.net_npm_bootstrap@5.3.1_dist_js_bootstrap.bundle.min.js"></script>
-   <script src="../../static/js/jscustom/UI-Js-Admin/code.jquery.com_jquery-3.7.1.min.js"></script>
-   <script src="../../static/js/jscustom/UI-Js-Admin/admin.js"></script>
- 
 </body>
-
 </html>

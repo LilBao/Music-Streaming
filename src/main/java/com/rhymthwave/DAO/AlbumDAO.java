@@ -26,4 +26,7 @@ public interface AlbumDAO extends JpaRepository<Album, Long> {
 
 	@Query(value = "SELECT AL.*, IMGAL.URL FROM ALBUM AL LEFT JOIN IMAGES IMGAL ON AL.COVERIMAGE = IMGAL.ACCESSID WHERE AL.ALBUMNAME LIKE %:keyword% AND AL.RELEASEDATE < GETDATE()", nativeQuery = true)
 	List<Object> findByName(@Param("keyword") String keyword);
+
+	@Query("select count(a.albumId) from  Album  a")
+	int countAlbum();
 }

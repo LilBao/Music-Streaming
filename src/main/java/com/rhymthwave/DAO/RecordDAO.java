@@ -26,6 +26,9 @@ public interface RecordDAO extends JpaRepository<Recording, Long> {
 
 	@Query("Select o from Recording o where o.isDeleted = true and o.emailCreate = :creater")
 	List<Recording> getRecordDelete(@Param("creater") String creater);
+	
+	@Query("Select o from Recording o where o.emailCreate = :creater and o.recordingdate >= GETDATE() - :date")
+	List<Recording> statisticsByDate(@Param("creater") String creater, @Param("date") Integer date);
 
 	@Query(value = "SELECT r.* FROM RECORDING r join SONGS s on r.SONGSID = s.SONGSID ORDER BY NEWID()", nativeQuery = true)
 	List<Recording> findListRandom();
@@ -83,4 +86,10 @@ public interface RecordDAO extends JpaRepository<Recording, Long> {
 			+ "join artist a on a.artistid = w.artistid "
 			+ "where a.artistid= :artistid and a.artistid != songs.artistcreate and songs.realeaseday < GETDATE() and RECORDING.isdeleted = 0",nativeQuery = true)
 	List<Recording> findListAppearOn(@Param("artistid") Long artistid);
+
+	@Query("select count(r.recordingId) from  Recording  r")
+	int countRecording();
+
+	@Query(value = "select top 100 * from recording order by listened desc", nativeQuery = true)
+	List<Recording> findTop100ByOrderByListenedDesc();
 }

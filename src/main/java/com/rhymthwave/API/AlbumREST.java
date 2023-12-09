@@ -58,7 +58,7 @@ public class AlbumREST {
 	}
 
 	@GetMapping("/api/v1/album/{id}")
-	public ResponseEntity<MessageResponse> getAllAlbumByID(@PathVariable("id") Long id) {
+	public ResponseEntity<MessageResponse> getAlbumByID(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudAlbum.findOne(id)));
 	}
 

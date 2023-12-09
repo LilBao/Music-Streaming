@@ -4,7 +4,6 @@ var cookieName = "token";
 
 app.controller("subscriptionController", function (graphqlService, $scope, $http) {
 
-
     $scope.form = {};
     $scope.item = [];
     $scope.statistics = []
