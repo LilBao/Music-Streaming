@@ -49,6 +49,11 @@ public class RecordingGraphQL {
 		return recordSer.findRecordByCreater(email);
 	}
 	
+	@QueryMapping("findSongPl")
+	public List<Recording> findSongPl(@Argument("songName") String songName){
+		return recordSer.findSongPl(songName);
+	}
+	
 	@QueryMapping("getListRecordByFavorite")
 	public List<Recording> getListRecordByFavorite(@Argument("genre") Optional<String> genre,
 			@Argument("culture") Optional<String> culture, @Argument("instrument") Optional<String> instrument,
@@ -65,5 +70,10 @@ public class RecordingGraphQL {
 	@QueryMapping("findRecordingAppearOnByArtist")
 	public List<Recording> findAppearOnByArtist(@Argument("artistId") Long artist){
 		return recordSer.findAppearOn(artist);
+	}
+	
+	@QueryMapping("findRecordingBySongId")
+	public Recording findRecordingBySongId(@Argument("songId") Long id) {
+		return crudRecording.findOne(id);
 	}
 }

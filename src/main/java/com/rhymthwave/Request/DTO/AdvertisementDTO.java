@@ -11,9 +11,11 @@ public class AdvertisementDTO {
     private String title;
     private String content;
     private String tag;
+    private String target;
     private String url;
     private Integer subscription;
     private  MultipartFile image;
     private  MultipartFile audio;
-
+    private Integer priority;
+    private Integer subscriptionId;
 }

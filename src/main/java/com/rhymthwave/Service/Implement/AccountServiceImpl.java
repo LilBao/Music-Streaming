@@ -70,7 +70,6 @@ public class AccountServiceImpl implements AccountService{
 		return admin;
 	}
 
-
 	public Account update(AccountDTO accountRequest, HttpServletRequest req, Account account) {
 		account.setUsername(accountRequest.newusername());
 		account.setGender(accountRequest.newgender());
@@ -107,37 +106,19 @@ public class AccountServiceImpl implements AccountService{
 		
 	}
 
-
-
-	@Override
-	public List<Object> search(String keyword) {
-		return dao.search(keyword);
-	}
-
 	public Account findAccountByUsername(String username) {
 		Account account = dao.findByUsername(username);
 		return account;
 	}
 
 	@Override
-	public List<Object> searchArt(long id) {
-		return dao.searchArt(id);
-	}
-
-	@Override
-	public List<Object> searchPl(long id) {
-		return dao.searchPl(id);
-	}
-
-	@Override
-	public List<Object> searchAl(int id) {
-		return dao.searchAl(id);
+	public List<Object> search(String keyword) {
+		return dao.search(keyword);
 	}
 
 	@Override
 	public List<Object> searchGr(String keyword) {
 		return dao.searchGr(keyword);
 	}
-
 
 }

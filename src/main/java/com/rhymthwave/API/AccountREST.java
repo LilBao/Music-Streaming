@@ -40,13 +40,12 @@ public class AccountREST {
 
 	private final AccountService accountService;
 
-	
-	private final CRUD<Image,String> crudImage;
-	
+	private final CRUD<Image, String> crudImage;
+
 	private final CloudinaryService cloudinary;
-	
+
 	private final ImageService imgSer;
-	
+
 	private final GetHostByRequest host;
 
 	@GetMapping("/api/v1/account")
@@ -67,49 +66,32 @@ public class AccountREST {
 	}
 
 	@Transactional
-	@GetMapping("/api/v1/search/art/{id}")
-	public ResponseEntity<MessageResponse> searchArt(@PathVariable("id") long id) {
-		return ResponseEntity.ok(new MessageResponse(true, "success", accountService.searchArt(id)));
-	}
-
-	@Transactional
-	@GetMapping("/api/v1/search/pl/{id}")
-	public ResponseEntity<MessageResponse> searchPl(@PathVariable("id") long id) {
-		return ResponseEntity.ok(new MessageResponse(true, "success", accountService.searchPl(id)));
-	}
-
-	@Transactional
-	@GetMapping("/api/v1/search/al/{id}")
-	public ResponseEntity<MessageResponse> searchAl(@PathVariable("id") int id) {
-		return ResponseEntity.ok(new MessageResponse(true, "success", accountService.searchAl(id)));
-	}
-
-	@Transactional
 	@GetMapping("/api/v1/search/gr/{keyword}")
 	public ResponseEntity<MessageResponse> searchGr(@PathVariable("keyword") String keyword) {
 		return ResponseEntity.ok(new MessageResponse(true, "success", accountService.searchGr(keyword)));
 	}
-	
-	@PutMapping(value="/api/v1/account")
-	public ResponseEntity<MessageResponse> updateProfile(@RequestBody Account account){
+
+	@PutMapping(value = "/api/v1/account")
+	public ResponseEntity<MessageResponse> updateProfile(@RequestBody Account account) {
 		return ResponseEntity.ok(new MessageResponse(true, "succeess", crudAccount.update(account)));
 	}
-		
-	@PutMapping(value="/api/v1/account-image",consumes = { "multipart/form-data" })
-	public ResponseEntity<MessageResponse> updateImageAccount(HttpServletRequest req,@PathParam("avatar") MultipartFile avatar) {
-		String owner =host.getEmailByRequest(req);
-		Account account =crudAccount.findOne(owner);
+
+	@PutMapping(value = "/api/v1/account-image", consumes = { "multipart/form-data" })
+	public ResponseEntity<MessageResponse> updateImageAccount(HttpServletRequest req,
+			@PathParam("avatar") MultipartFile avatar) {
+		String owner = host.getEmailByRequest(req);
+		Account account = crudAccount.findOne(owner);
 		Image imgOld = account.getImage();
-		if(avatar !=null) {
-			Map<String,Object> respAvatar = cloudinary.Upload(avatar,"ProfilePicture",account.getUsername());
+		if (avatar != null) {
+			Map<String, Object> respAvatar = cloudinary.Upload(avatar, "ProfilePicture", account.getUsername());
 			Image imgAvatar = imgSer.getEntity(respAvatar);
 			crudImage.create(imgAvatar);
 			account.setImage(imgAvatar);
 			cloudinary.deleteFile(imgOld.getPublicId());
-		}	
+		}
 		return ResponseEntity.ok(new MessageResponse(true, "succeess", crudAccount.update(account)));
 	}
-	
+
 //	@PutMapping("/api/v1/account/updateprofile")
 //    public ResponseEntity<MessageResponse> updateProfile(@RequestBody AccountDTO accountRequest,HttpServletRequest req) {
 //		String owner = host.getEmailByRequest(req);
@@ -118,10 +100,10 @@ public class AccountREST {
 //        return ResponseEntity.ok(new MessageResponse(true, "Profile updated successfully"));
 //    }
 	@PutMapping("/api/v1/account/logout")
-    public ResponseEntity<MessageResponse> logout(HttpServletRequest req) {
+	public ResponseEntity<MessageResponse> logout(HttpServletRequest req) {
 		String owner = host.getEmailByRequest(req);
 		Account account = accountServiceImpl.findOne(owner);
-		accountServiceImpl.logout(req,account);	
-        return ResponseEntity.ok(new MessageResponse(true, "Logout account successfully"));
-    }
+		accountServiceImpl.logout(req, account);
+		return ResponseEntity.ok(new MessageResponse(true, "Logout account successfully"));
+	}
 }

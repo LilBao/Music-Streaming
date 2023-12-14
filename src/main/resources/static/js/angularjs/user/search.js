@@ -1,6 +1,6 @@
 var host = "http://localhost:8080/api/";
 
-app.controller('SearchController', function ($scope, $http) {
+app.controller('SearchController', function ($scope, $http, $cookies, $window) {
   // data search bar
   $scope.searchKeyword = '';
   $scope.data = {};
@@ -14,6 +14,8 @@ app.controller('SearchController', function ($scope, $http) {
   $scope.dataGr = {};
   $scope.interface1 = true;
   $scope.interface2 = false;
+  $scope.hiden = false;
+  $scope.profile = {};
 
   $scope.$watch('searchKeyword', function (keyword) {
     if (keyword) {
@@ -74,12 +76,12 @@ app.controller('SearchController', function ($scope, $http) {
               $scope.dataGr[element[22]] = element;
             }
           });
-          console.log( $scope.dataArt);
+          console.log($scope.dataArt);
         })
         .catch(function (error) {
           console.error('Error searching');
         });
-       
+
     } else {
       $scope.interface1 = true;
       $scope.interface2 = false;
@@ -116,11 +118,47 @@ app.controller('SearchController', function ($scope, $http) {
   $scope.getListPodcast();
 
   // btn back and forward
-  $("#back").on("click", function() {
+  $("#back").on("click", function () {
     history.back();
   });
-  
-  $("#forward").on("click", function() {
+
+  $("#forward").on("click", function () {
     history.forward();
   });
+
+  $http.get(host + "v1/account", {
+    headers: { 'Authorization': 'Bearer ' + $cookies.get('token') }
+  }).then(resp => {
+    $scope.hiden = true;
+    $scope.profile = resp.data.data;
+    console.log($scope.profile);
+  }).catch(error => {
+    console.log(error)
+  })
+
+  $scope.logout = function () {
+    var now = new Date();
+    now.setUTCFullYear(1970);
+    now.setUTCMonth(0);
+    now.setUTCDate(1);
+    now.setUTCHours(0);
+    now.setUTCMinutes(0);
+    now.setUTCSeconds(0);
+
+    $cookies.put('token', '', { expires: now, path: '/' })
+    $window.location.href = 'http://127.0.0.1:5500/src/main/resources/templates/user/login.html';
+  }
+
+  $scope.signin = function () {
+    $window.location.href = 'http://127.0.0.1:5500/src/main/resources/templates/user/login.html';
+  }
+
+  $scope.account = function () {
+    $window.location.href = 'http://127.0.0.1:5500/src/main/resources/templates/user/account.html';
+  }
+
+  $scope.redirectToProfile = function (username) {
+    var newUrl = '#!/profile/user/' + username;
+    $window.location.href = newUrl;
+  };
 });

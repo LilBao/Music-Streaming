@@ -94,6 +94,7 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location,
                     }).map(function (item) {
                         return item.episode;
                     })];
+                    console.log($scope.listAudioPlaylist);
                 } catch (error) {
 
                 }
@@ -524,21 +525,48 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location,
         }
     });
 
-    $scope.songData = {};
+    $scope.songData = [];
+    $scope.lSongData = [];
     $scope.episodeData = {};
     $scope.artData = {};
     $scope.alData = {};
     $scope.$watch('searchSE', function (keyword) {
         if (keyword) {
             clap.css("display", "block");
-            $http.get(host + 'v1/song-pl/' + keyword)
-                .then(function (resp) {
-                    $scope.songData = resp.data.data;
-                    console.log("song");
-                    console.log($scope.songData);
-                }).catch(function (error) {
-                    console.error('Error searching');
-                });
+
+            let query = `{
+                findSongPl(songName: "${String(keyword)}"){
+                recordingId
+                recordingName
+                duration
+                audioFileUrl
+                song{
+                  songId
+                  songName
+                  image{
+                    url
+                  }
+                  writters{
+                    artist{
+                      artistId
+                      artistName
+                    }
+                  }
+                }
+              }
+            }`
+            graphqlService.executeQuery(query).then(data => {
+                $scope.songData = data.findSongPl;
+                console.log("song");
+                console.log($scope.songData);
+                //   $scope.listAlb = $scope.alDetail.albums;
+                //   if ($scope.songData) {
+                //     $scope.songData.forEach(item => {            
+                //         $scope.lSongData.push(item.recording);
+                //     });
+                //   }
+            })
+
 
             $http.get(host + 'v1/episode-pl/' + keyword)
                 .then(function (resp) {
@@ -596,26 +624,26 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location,
     });
 
     $("#sas").click(function () {
-        if (fn.hasClass("visible")) {         
+        if (fn.hasClass("visible")) {
             fn.removeClass("visible").addClass("hidden");
             showsas.removeClass("hidden").addClass("visible");
         }
     });
 
     $("#saaback").click(function () {
-        if (fn.hasClass("hidden")) {         
+        if (fn.hasClass("hidden")) {
             fn.removeClass("hidden").addClass("visible");
             showsaa.removeClass("visible").addClass("hidden");
         }
     });
     $("#saalback").click(function () {
-        if (fn.hasClass("hidden")) {         
+        if (fn.hasClass("hidden")) {
             fn.removeClass("hidden").addClass("visible");
             showsaal.removeClass("visible").addClass("hidden");
         }
     });
     $("#sasback").click(function () {
-        if (fn.hasClass("hidden")) {         
+        if (fn.hasClass("hidden")) {
             fn.removeClass("hidden").addClass("visible");
             showsas.removeClass("visible").addClass("hidden");
         }

@@ -66,19 +66,19 @@
                 <div class="container-fluid">
                     <div class="text-title mb-3">
                         <div class="row">
-                            <div class="col-xxl-3">
-                                <div class="card" style="width: 300px; height: 300px; object-fit: cover !important ;">
-                                    <div class="card-img">
-                                        <img ng-src="{{ alDetail[0][4] }}" alt="Sunset Over the Sea"
-                                            style="width: 300px; height: 300px;" />
+                            <div class="col-sm-3">
+                                <div class="card">
+                                    <div class="card-img" style="width: 100%; height: 100%;object-fit: cover;">
+                                        <img ng-src="{{ alDetail.image.url }}" alt="Sunset Over the Sea"
+                                        style="width: 100%; height: 100%;object-fit: cover;"/>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xxl-9">
+                            <div class="tt-pct col-sm-9">
                                 <h4>Single</h4>
-                                <h1 style="font-size: 120px;">{{alDetail[0][3] | limitTo: 13}}</h1> <br>
-                                <a href="#!artist/{{alDetail[0][0]}}">
-                                    <h2>{{alDetail[0][1]}}</h2>
+                                <h1>{{alDetail.albumName | limitTo: 13}}</h1> <br>
+                                <a href="#!artist/{{alDetail.artist.artistId}}">
+                                    <h2>{{alDetail.artist.artistName}}</h2>
                                 </a>
                             </div>
                         </div>
@@ -114,22 +114,25 @@
                             <th class="text-center"><i class="bi bi-stopwatch"></i></th>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="item in alDetail | limitTo: 10"
-                                ng-dblclick="item[5] ? selectAudio(item,'song',alDetail,$index) : selectAudio(item,'episode',alDetail,$index)"
+                            <tr ng-repeat="item in alDetail.tracks track by $index"
+                                ng-dblclick="selectAudio(item.recording,'song',listSong,$index)"
                                 class="audio align-items-center">
                                 <!-- Col 1 -->
                                 <td class="text-white">
                                     {{$index+1}}
                                 </td>
                                 <!-- Col 2 -->
-                                <td ng-if="item[5]">
+                                <td ng-if="item.recording.recordingId">
                                     <div class="d-flex align-items-center">
                                         <div class="d-flex">
-                                            <img class="rounded-2 mx-3" src="{{item[15]}}"
+                                            <img class="rounded-2 mx-3" ng-src="{{item.recording.song.image.url}}"
                                                 style="width: 50px; height: 50px; object-fit: cover;" alt="">
                                             <div>
-                                                <h6 class="text-white">{{item[6]}}</h6>
-                                                <span class="small text-white">{{item[1]}}</span>
+                                                <h6 class="text-white">{{item.recording.recordingName}}</h6>
+                                                <span class="small text-white" ng-repeat="a in item.recording.song.writters">
+                                                    <a class="text-white"
+                                                        href="#!artist/{{a.artist.artistId}}">{{a.artist.artistName}}</a>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -149,13 +152,14 @@
                                 <!-- Col 5 -->
                                 <td>
                                     <div class="d-flex justify-content-center align-items-center">
-                                        <button ng-click="checkExisted(item,$event)"
+                                        <!-- <p>{{item.recording.recordingId}}</p> -->
+                                        <button ng-click="checkExisted(item.recording,$event)"
                                             class="btn border-0 playlist-liked text-white">
-                                            <i ng-style="{'color': isLiked(item) ? 'green' : 'white'}"
-                                                class="{{isLiked(item) ? 'bi bi-heart-fill' : 'bi bi-heart'}}"></i>
+                                            <i ng-style="{'color': isLiked(item.recording) ? 'green' : 'white'}"
+                                                class="{{isLiked(item.recording) ? 'bi bi-heart-fill' : 'bi bi-heart'}}"></i>
                                         </button>
                                         <h6 class="p-0 m-0 text-white"><format-time
-                                                seconds="item[7]"></format-time></h6>
+                                                seconds="item.recording.duration"></format-time></h6>
                                         <button class="btn border-0 text-white"><i
                                                 class="bi bi-three-dots"></i></button>
                                     </div>

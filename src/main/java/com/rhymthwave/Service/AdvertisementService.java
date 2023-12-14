@@ -24,4 +24,6 @@ public interface AdvertisementService extends CRUD<Advertisement, Long> {
     Map<String,Object> getResultsADS(Integer idADS);
 
     Advertisement setStatus(Integer advertisementID, Integer status, HttpServletRequest request);
+    
+    Advertisement buyAds(AdvertisementDTO advertisementDTO,HttpServletRequest request);
 }

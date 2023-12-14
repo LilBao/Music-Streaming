@@ -97,14 +97,19 @@ type Query {
  findPlaylistFeaturingByArtist(artistId: Int, roleId: [Int]): [Playlist]
  
  findPlaylistDiscoverByArtist(artistId: Int, roleId: [Int]): [Playlist]
-  
+
  findRecordingAppearOnByArtist(artistId: Int): [Recording]
- 
+
+ #Nam
+ findAlbum(id: ID!): Album
+ findAlByArtist(idArist: ID!): Artist
+ findSongPl(songName: String!): [Recording]
+ findRecordingBySongId(songId: Int!): Recording
+
  getNewListened(recordingId: Int, duration: Int): [Monitor]
- 
  getNewListenedEpisode(episodeId: Int, duration: Int): [MonitorEpisode]
  
-  #Khoa
+ #Khoa
  findAllReport : [Report]
  findAllReportStatusTrue : [Report]
 

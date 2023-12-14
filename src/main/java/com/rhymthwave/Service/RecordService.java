@@ -24,6 +24,8 @@ public interface RecordService {
 
 	List<Recording> findMyProject(Long artistId);
 	
+	List<Recording> findSongPl(String songName);
+	
 	List<Recording> findListPopularByArtist(Long artistId);
 	
 	List<Recording> findAppearOn(Long artistId);

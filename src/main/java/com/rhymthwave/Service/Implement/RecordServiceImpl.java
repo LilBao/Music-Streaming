@@ -103,6 +103,11 @@ public class RecordServiceImpl implements RecordService, CRUD<Recording, Long>{
 	}
 
 	@Override
+	public List<Recording> findSongPl(String songName) {
+		List<Recording> list = dao.findSongPl(songName);
+		return list;
+	}
+
 	public List<Recording> findListPopularByArtist(Long artistId) {
 		return dao.findListPopularByArtist(artistId);
 	}

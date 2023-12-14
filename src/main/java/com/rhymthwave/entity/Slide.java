@@ -29,7 +29,7 @@ public class Slide implements Serializable {
 	@Column(name = "POSITION",columnDefinition = "nvarchar(55)")
 	private String position;
 
-	@Column(name = "LISTIMAGE",columnDefinition = "varchar(55)")
+	@Column(name = "LISTIMAGE",columnDefinition = "varchar(max)")
 	private String listImage;
 	
 	@Column(name = "CREATEBY",columnDefinition = "nvarchar(255)")
