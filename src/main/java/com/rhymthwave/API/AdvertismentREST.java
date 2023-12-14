@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.rhymthwave.DTO.AdvertismentDTO;
 import com.rhymthwave.DTO.MessageResponse;
+import com.rhymthwave.Request.DTO.AdvertisementDTO;
 import com.rhymthwave.Service.AdvertisementService;
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.Service.CloudinaryService;
@@ -24,6 +25,7 @@ import com.rhymthwave.Service.ImageService;
 import com.rhymthwave.entity.Advertisement;
 import com.rhymthwave.entity.Image;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 
@@ -84,7 +86,7 @@ public class AdvertismentREST {
 		return ResponseEntity.ok(new MessageResponse(true,"success", crudAds.delete(id)));
 	}
 
-	@PutMapping(value = "/api/v1/ads-file", consumes = {})
+	@PutMapping(value = "/api/v1/ads-file", consumes = { "multipart/form-data" })
 	public ResponseEntity<MessageResponse> putAdsFile(@RequestParam("id") Long id,
 			@PathParam("bannerFile") MultipartFile banner, @PathParam("audio") MultipartFile audio) {
 		Advertisement ads = crudAds.findOne(id);
@@ -107,5 +109,10 @@ public class AdvertismentREST {
 	@GetMapping("/api/v1/ads-running")
 	public ResponseEntity<MessageResponse> findAllAdsRunning() {
 		return ResponseEntity.ok(new MessageResponse(true, "success", adsSer.findAdsRunning(true,2)));
+	}
+	
+	@PostMapping(value = "/api/v1/buy-ads", consumes = {"multipart/form-data"})
+	public ResponseEntity<MessageResponse> buyAds(@ModelAttribute AdvertisementDTO ads,HttpServletRequest req) {
+		return ResponseEntity.ok(new MessageResponse(true, "success", adsSer.buyAds(ads, req)));
 	}
 }

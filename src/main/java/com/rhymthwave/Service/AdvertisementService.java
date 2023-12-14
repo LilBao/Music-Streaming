@@ -26,4 +26,6 @@ public interface AdvertisementService extends CRUD<Advertisement, Long> {
 	List<Advertisement> findAdsByEmail(String email);
 	
 	List<Advertisement> findAdsRunning(Boolean active,Integer status);
+
+    Advertisement buyAds(AdvertisementDTO advertisementDTO,HttpServletRequest request);
 }

@@ -36,7 +36,6 @@ public class ForgotPasswordAPI {
 	@Autowired
 	private JavaMailSender mailSender;
 	
-	private Account account;
 
 	@PostMapping("/forgotpassword")
 	public ResponseEntity<?> forgotPassword(@RequestBody ForgotPasswordDTO forgotPasswordDTO) throws UnsupportedEncodingException {
@@ -70,7 +69,7 @@ public class ForgotPasswordAPI {
 				+ "" + "<br> Please change new password</p>"  ;
 		MimeMessage message = mailSender.createMimeMessage();
 		var messageHelper = new MimeMessageHelper(message);
-		messageHelper.setFrom("nguyenkhoalolm@gmail.com", senderName);
+		messageHelper.setFrom("musicstreaming2023@gmail.com", senderName);
 		messageHelper.setTo(email);
 		messageHelper.setSubject(subject);
 		messageHelper.setText(mailContent, true);

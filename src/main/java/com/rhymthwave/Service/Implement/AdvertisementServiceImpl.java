@@ -106,6 +106,10 @@ public class AdvertisementServiceImpl implements CRUD<Advertisement, Long>, Adve
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
+
+	@Override
+	public Advertisement buyAds(AdvertisementDTO advertisementDTO, HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

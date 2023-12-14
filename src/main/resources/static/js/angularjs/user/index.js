@@ -37,6 +37,14 @@ app.config(function ($routeProvider,$httpProvider) {
             templateUrl: "User/search-episodes.html",
             controller: "episode"
         })
+        .when("/discography/:id", {
+            templateUrl: "User/profile-discography.html",
+            controller: 'discography'
+        })
+        .when("/report/:option/:id", {
+            templateUrl: "User/report.html",
+            controller: 'report'
+        })
         .when("/karaoke", {
             templateUrl: "User/Karaoke.html",
             controller: 'karaokeCtrl'
@@ -62,13 +70,14 @@ app.config(function ($routeProvider,$httpProvider) {
             controller: 'playlistCtrl'
         })
         .when("/song/:id", {
-            templateUrl: "User/playlist.html",
-            controller: 'playlistCtrl'
+            templateUrl: "song.html",
+            controller: 'song'
         })
         .when("/queue", {
             templateUrl: "User/Queue.html",
             controller: 'queueCtrl'
-        }).otherwise({ templateUrl : "User/404.html"});;
+        })
+        .otherwise({ templateUrl : "User/404.html"});;
         $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 });
 

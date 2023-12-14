@@ -77,6 +77,12 @@ public class SendMailTemplateService {
 
 		return templateEngine.process(templateName, context);
 	}
+	
+	public String getContentForReport(String templateName) {
+		final Context context = new Context();
+
+		return templateEngine.process(templateName, context);
+	}
 
 	public String getContentForArtist(String artistName, String string) {
 		final Context context = new Context();

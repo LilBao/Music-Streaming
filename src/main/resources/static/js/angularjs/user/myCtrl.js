@@ -1459,7 +1459,6 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
             return `${minutesStr}:${secondsStr}`;
         }
     }
-
     //tracking click of user
 
     $scope.$on('$locationChangeSuccess', function (event, newUrl, oldUrl) {
@@ -1685,4 +1684,30 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
             return rangeArray;
         }
     }
+
+      $scope.logout = function () {
+        var now = new Date();
+        now.setUTCFullYear(1970);
+        now.setUTCMonth(0);
+        now.setUTCDate(1);
+        now.setUTCHours(0);
+        now.setUTCMinutes(0);
+        now.setUTCSeconds(0);
+    
+        $cookies.put('token', '', { expires: now, path: '/' })
+        $window.location.href = 'http://127.0.0.1:5500/src/main/resources/templates/user/login.html';
+      }
+    
+      $scope.signin = function () {
+        $window.location.href = 'http://127.0.0.1:5500/src/main/resources/templates/user/login.html';
+      }
+    
+      $scope.account = function () {
+        $window.location.href = 'http://127.0.0.1:5500/src/main/resources/templates/user/account.html';
+      }
+    
+      $scope.redirectToProfile = function (username) {
+        var newUrl = '#!/profile/user/' + username;
+        $window.location.href = newUrl;
+      };
 })

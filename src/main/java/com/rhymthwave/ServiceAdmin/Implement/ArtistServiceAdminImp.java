@@ -97,5 +97,18 @@ public class ArtistServiceAdminImp implements IArtistService, INotification<Arti
 			mailService.enqueue(email);
 		}
 
+
+	@Override
+	public void sendEmailWarring(String email) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void sendEmailBan(String email, String message) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
 

@@ -37,6 +37,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../../static/js/angularjs/user/index.js"></script>
     <link rel="stylesheet" href="../../static/css/cssUser/profile.css" />
+    <link rel="stylesheet" href="../../static/css/report.css" />
 </head>
 
 <body ng-app="myApp" ng-controller="myCtrl">
@@ -111,9 +112,7 @@
                                             href="#!artist/{{item.authorsAccountB.account.artist.artistId}}">
                                             <div class="d-flex align-items-center">
                                                 <img class="m-2 rounded-2 thumbnail-playlist"
-                                                    src="{{item.authorsAccountB.account.artist.imagesProfile !==null ? 
-                                                        item.authorsAccountB.account.artist.imagesProfile.url :
-                                                    'https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png'}}" alt="">
+                                                    src="{{item.authorsAccountB.account.artist.imagesProfile!==null?item.authorsAccountB.account.artist.imagesProfile.url:'https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png'}}" alt="">
                                                 <div class="d-flex justify-content-between flex-column">
                                                     <p class="p-0 m-0">
                                                         {{item.authorsAccountB.account.artist.artistName}}
@@ -165,7 +164,7 @@
                                         <a href="#!playlist/{{item.playlistId}}">
                                             <div class="d-flex align-items-center">
                                                 <img class="m-2 rounded-2 thumbnail-playlist"
-                                                    src="{{item.image !==null ? item.image.url:'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}"
+                                                    src="{{item.image!==null?item.image.url:'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}"
                                                     alt="">
                                                 <div>
                                                     <p class="p-0 m-0">{{item.playlistName}}</p>
@@ -500,6 +499,12 @@
     <script src="../../static/js/angularjs/user/episode.js"></script>
 
     <script src="../../static/js/angularjs/user/dashboard.js"></script>
+
+    <script src="../../static/js/angularjs/user/discography.js"></script>
+
+    <script src="../../static/js/angularjs/user/report.js"></script>
+
+    <script src="../../static/js/angularjs/user/song.js"></script>
 </body>
 
 </html>

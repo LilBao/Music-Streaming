@@ -97,9 +97,9 @@ type Query {
  findPlaylistFeaturingByArtist(artistId: Int, roleId: [Int]): [Playlist]
  
  findPlaylistDiscoverByArtist(artistId: Int, roleId: [Int]): [Playlist]
-  
+
  findRecordingAppearOnByArtist(artistId: Int): [Recording]
- 
+
  getNewListened(recordingId: Int, duration: Int): [Monitor]
  
  getNewListenedEpisode(episodeId: Int, duration: Int): [MonitorEpisode]
@@ -111,6 +111,18 @@ type Query {
  top50SongByAreaListened(country: String) : [Recording]
  
  top50SongByDate(country: String): [Recording]
+
+ #Nam
+ findAlbum(id: ID!): Album
+ findAlByArtist(idArist: ID!): Artist
+ findSongPl(songName: String!): [Recording]
+ findRecordingBySongId(songId: Int!): Recording
+
+ 
+ #Khoa
+ findAllReport : [Report]
+ findAllReportStatusTrue : [Report]
+
 }
 
 type Mutation{

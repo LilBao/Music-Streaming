@@ -49,6 +49,11 @@ public class RecordingGraphQL {
 		return recordSer.findRecordByCreater(email);
 	}
 	
+	@QueryMapping("findSongPl")
+	public List<Recording> findSongPl(@Argument("songName") String songName){
+		return recordSer.findSongPl(songName);
+	}
+	
 	@QueryMapping("getListRecordByFavorite")
 	public List<Recording> getListRecordByFavorite(@Argument("genre") Optional<String> genre,
 			@Argument("culture") Optional<String> culture, @Argument("instrument") Optional<String> instrument,
@@ -75,5 +80,10 @@ public class RecordingGraphQL {
 	@QueryMapping("top50SongByDate")
 	public List<Recording> top50SongByDate(@Argument("country") String country){
 		return recordSer.top50SongByDate(country,false);
+	}
+	
+	@QueryMapping("findRecordingBySongId")
+	public Recording findRecordingBySongId(@Argument("songId") Long id) {
+		return crudRecording.findOne(id);
 	}
 }

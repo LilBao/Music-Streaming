@@ -1,6 +1,6 @@
 var app = angular.module('myApp', []);
 var host = "http://localhost:8080/api";
-app.controller('loginCtrl', function ($scope, $http) {
+app.controller('loginCtrl', function ($scope, $http, $window) {
   $scope.loginRequest = {};
   $('#login').click(function () {
 
@@ -18,6 +18,7 @@ app.controller('loginCtrl', function ($scope, $http) {
     $http.post(url, data).then(function (resp) {
       setCookie("token", resp.data.data.accessToken,30);
       showStickyNotification('Login success', 'success', 3000);
+      $window.location.href = '/home';
     }).catch(function (error) {
       showStickyNotification('Login fail', 'danger', 3000);
       console.log(error)

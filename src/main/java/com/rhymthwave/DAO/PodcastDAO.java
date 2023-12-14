@@ -28,6 +28,12 @@ public interface PodcastDAO extends JpaRepository<Podcast, Long>{
 			+ "order by sum(ep.listened) desc",nativeQuery = true)
 	List<Podcast> top50PodcastPopular(@Param("country") String country);
 
+	
+	@Query(value = "select * from podcast where podcastid = :podcastId", nativeQuery = true)
+	Podcast findByID(Long podcastId);
+
+
 	@Query("select count(p.podcastId) from  Podcast  p")
 	int countPodcast();
+
 }
