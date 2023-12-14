@@ -110,20 +110,26 @@ app.controller('accountCtrl', function ($scope, $http, $cookies) {
     });
   };
 
-  $scope.logout = function () {
-    $http.put(apiAccount + `/logout`, {
-      headers: {
-        'Authorization': 'Bearer ' + $cookies.get(cookieName)
-      }
-    }).then(function (response) {
-      var data = response.data;
+  $scope.logout = async function () {
+    try {
+      const response = await $http.put(apiAccount + `/logout`, {}, {
+        headers: {
+          'Authorization': 'Bearer ' + $cookies.get(cookieName)
+        }
+      });
+  
+      const data = response.data;
+  
       if (data.success) {
         $scope.success = true;
+        // Xóa cookie có tên là "token"
+        document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         showStickyNotification('Logout success', 'success', 3000);
       }
-    }).catch(function (error) {
+    } catch (error) {
       console.error('Error', error);
       showStickyNotification('Logout fail', 'danger', 3000);
-    });
+    }
   };
+  
 })

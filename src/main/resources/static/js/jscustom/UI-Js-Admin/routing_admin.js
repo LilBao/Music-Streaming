@@ -104,6 +104,9 @@ app.config(function($routeProvider,$cookiesProvider) {
     templateUrl : "ads.html",
     controller: "advertisementController"
   })
+  .when("/logout", {
+    templateUrl : "login.html",
+  })
   .otherwise({ templateUrl : "404.html"});
 });
 

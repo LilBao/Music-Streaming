@@ -102,7 +102,7 @@ public class AccountServiceImpl implements AccountService, CRUD<Account, String>
 	}
 
 	public Account logout(HttpServletRequest req, Account account) {
-		account.setRefreshToken("");
+		account.setRefreshToken(null);
 		return dao.save(account);
 		
 	}

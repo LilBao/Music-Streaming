@@ -50,19 +50,21 @@
                         <span class="fas fa-bars"></span>
                     </a>
                 </div>
-                <ul class="navbar-item flex-row ml-auto"  ng-controller="ReportController">
+                <ul class="navbar-item flex-row ml-auto" ng-controller="ReportController">
                     <li class="nav-item dropdown user-profile-dropdown">
                         <a href="" class="nav-link user" id="Notify" data-bs-toggle="dropdown">
                             <img src="../../static/img/bell.png" class="icon" alt="">
-                            <p class="count purple-gradient">{{ totalNumberOfReports > 3 ? '9+' : totalNumberOfReports }}</p>
+                            <p class="count purple-gradient">{{ totalNumberOfReports > 3 ? '9+' : totalNumberOfReports
+                                }}</p>
                         </a>
                         <div class="dropdown-menu ">
                             <div class="dp-main-menu">
-                                <a href="#!manage-report" class="dropdown-item message-item responsives" ng-repeat="notification in notifications | limitTo: 3">
+                                <a href="#!manage-report" class="dropdown-item message-item responsives"
+                                    ng-repeat="notification in notifications | limitTo: 3">
                                     <img src="../../static/img/bell.png" alt="" class="user-note">
                                     <div class="note-info-desmis">
                                         <div class="user-notify-info">
-                                            <p class="note-name">Report ID :  {{ notification.reportId }}</p>
+                                            <p class="note-name">Report ID : {{ notification.reportId }}</p>
                                             <p class="note-time">{{ formatTime(notification.minutesAgo) }}</p>
                                         </div>
                                         <p href="" class="status-link">
@@ -72,16 +74,17 @@
                                 </a>
                             </div>
 
-                            <div class="container-fluid text-center border-top" >
-                                <a href="#!/approve-role" class="text-primary">Show more</a>
-                             </div>
+                            <div class="container-fluid text-center border-top">
+                                <a href="#!manage-report" class="text-primary">Show more</a>
+                            </div>
                         </div>
                     </li>
 
                     <li class="nav-item dropdown user-profile-dropdown">
                         <a href="" class="nav-link user" id="Notify" data-bs-toggle="dropdown">
                             <img src="../../static/img/email.png" class="icon" alt="">
-                            <p class="count bg-clc">{{listArtistIsVerify.length >= 4 ? '9+' : listArtistIsVerify.length }}</p>
+                            <p class="count bg-clc">{{listArtistIsVerify.length >= 4 ? '9+' : listArtistIsVerify.length
+                                }}</p>
                         </a>
                         <div class="dropdown-menu">
                             <div class="dp-main-menu" ng-repeat=" artist in listArtistIsVerify | limitTo : 4 ">
@@ -99,18 +102,18 @@
                                 </a>
                             </div>
                             <div class="container-fluid text-center border-top" ng-if="listArtistIsVerify.length >= 4 ">
-                               <a href="#!/approve-role" class="text-primary">Show more</a>
+                                <a href="#!/approve-role" class="text-primary">Show more</a>
                             </div>
                         </div>
-                        
+
                     </li>
-                  
-                    <li class="nav-item dropdown user-profile-dropdown" >
-                        <a href="" class="nav-link user " id="Notify" data-bs-toggle="dropdown" >
+
+                    <li class="nav-item dropdown user-profile-dropdown">
+                        <a href="" class="nav-link user " id="Notify" data-bs-toggle="dropdown">
                             <img ng-src="{{infoAdmin.image.url}}" class="icon rounded" alt="">
                         </a>
                         <div class="dropdown-menu">
-                            <div class="user-profile-section " >
+                            <div class="user-profile-section ">
                                 <div class="media mx-auto ">
                                     <img ng-src="{{infoAdmin.image.url}}" alt="" class="img-fluid mr-2">
                                     <div class="media-body">
@@ -120,11 +123,11 @@
                                 </div>
                             </div>
                             <div class="dp-profile-menu">
-                                <a href="" class="dropdown-item">
+                                <a href="../user/account.html" class="dropdown-item">
                                     <span class="fas fa-user"></span>
                                     Profile
                                 </a>
-                                <a href="" class="dropdown-item">
+                                <a href="" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                     <span class="fas fa-inbox"></span>
                                     Change password
                                 </a>
@@ -132,7 +135,7 @@
                                     <span class="fas fa-lock-open"></span>
                                     Mapping
                                 </a>
-                                <a href="" class="dropdown-item">
+                                <a href="" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal">
                                     <span class="fas fa-outdent"></span>
                                     Logout
                                 </a>
@@ -166,6 +169,62 @@
             </header>
         </div>
 
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Change PassWord</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" ng-controller="navbarAdmin">
+                        <form ng-submit="changepassword()">
+                            <div class="mb-3">
+                                <label for="currentPassword" class="form-label">Current Password</label>
+                                <input type="password" class="form-control" id="currentPassword"
+                                    ng-model="passwordCurrent">
+                            </div>
+                            <div class="mb-3">
+                                <label for="newPassword" class="form-label">New Password</label>
+                                <input type="password" class="form-control" id="newPassword" ng-model="newpass">
+                            </div>
+                            <div class="mb-3">
+                                <label for="repeatPassword" class="form-label">Repeat New Password</label>
+                                <input type="password" class="form-control" id="repeatPassword" ng-model="confirmpass">
+                            </div>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" ng-click="">Save changes</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered">
+                <div class="modal-content" ng-controller="navbarAdmin">
+                    <div class="modal-header modal-header-delete">
+                        <div>
+
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="icon-close-bodyModal">
+                            <i class="bi bi-x-circle"></i>
+                        </div>
+                        <div style="text-align: center;" class="m-2">
+                            <h5> Are you sure ? </h5>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer btn-event-deleteModal">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" ng-click="logout()">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
         <!-- NAVBAR END -->
@@ -185,15 +244,17 @@
                         </li>
                         <li class="sub-menu">
                             <a href=""><i class="bi bi-graph-up"></i>Statistical Management
-                               
+
                                 <div class="fa fa-caret-down right"></div>
                             </a>
                             <ul class="left-menu-dp">
-                                <li><a href="#!music-content"><i class="bi bi-music-note-beamed"></i>Music content</a></li>
-                                <li><a href="#!subscription-content"><i class="bi bi-bar-chart-fill"></i>Subscription content</a></li>
+                                <li><a href="#!music-content"><i class="bi bi-music-note-beamed"></i>Music content</a>
+                                </li>
+                                <li><a href="#!subscription-content"><i class="bi bi-bar-chart-fill"></i>Subscription
+                                        content</a></li>
                             </ul>
                         </li>
-                       
+
                         <li class="sub-menu">
                             <a href=""> <i class="bi bi-newspaper"></i>Manager News
                                 <div class="fa fa-caret-down right"></div>
@@ -221,10 +282,11 @@
                             </a>
                             <ul class="left-menu-dp">
                                 <li><a href="#!ads"><i class="bi bi-music-note-beamed"></i>All advertising</a></li>
-                                <li><a href="#!subscriptions-statistic"><i class="bi bi-music-note-list"></i>Statistics</a></li>
+                                <li><a href="#!subscriptions-statistic"><i
+                                            class="bi bi-music-note-list"></i>Statistics</a></li>
                             </ul>
                         </li>
-                     
+
                         <li>
                             <a href="#!approve-role"><i class="bi bi-person-lines-fill"></i>Approve Role</a>
                         </li>
@@ -252,11 +314,13 @@
                                 <div class="fa fa-caret-down right"></div>
                             </a>
                             <ul class="left-menu-dp">
-                                <li><a href="#!subscriptions-package"><i class="bi bi-music-note-beamed"></i>Package</a></li>
-                                <li><a href="#!subscriptions-statistic"><i class="bi bi-music-note-list"></i>Statistics</a></li>
+                                <li><a href="#!subscriptions-package"><i class="bi bi-music-note-beamed"></i>Package</a>
+                                </li>
+                                <li><a href="#!subscriptions-statistic"><i
+                                            class="bi bi-music-note-list"></i>Statistics</a></li>
                             </ul>
                         </li>
-                       
+
                         <li>
                             <a href="#"><i class="bi bi-house-door-fill"></i>font-awesome icon</a>
                         </li>
@@ -320,7 +384,8 @@
     <script src="../../static/js/angularjs/BE-Admin/statistical/mucsicStatistic.js"></script>
     <script src="../../static/js/angularjs/BE-Admin/statistical/SubscriptionStatistic.js"></script>
     <script src="../../static/js/angularjs/BE-Admin/notification.js"></script>
-    <script  src="../../static/js/jscustom/UI-Js-Admin/cdn.jsdelivr.net_npm_bootstrap@5.3.1_dist_js_bootstrap.bundle.min.js"></script>
+    <script
+        src="../../static/js/jscustom/UI-Js-Admin/cdn.jsdelivr.net_npm_bootstrap@5.3.1_dist_js_bootstrap.bundle.min.js"></script>
     <script src="../../static/js/jscustom/toasts.js"></script>
     <script src="../../static/js/jscustom/UI-Js-Admin/dirPagination.js"></script>
     <script src="../../static/js/jscustom/UI-Js-Admin/admin.js"></script>
@@ -328,6 +393,7 @@
     <script type="text/javascript" src="https://code.jscharting.com/latest/modules/maps.js"></script>
     <!-- <script src="../../static/js/jscustom/UI-Js-Admin/subscriptionUI.js"></script> -->
     <script src="../../static/js/jscustom/UI-Js-Admin/dirPagination.js"></script>
+
 
     <script>
 

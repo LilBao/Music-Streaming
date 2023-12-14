@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../../static/css/accountcss.css">
     <script src="../../static/js/angularjs/user/account.js"></script>
+    <link rel="stylesheet" href="../../static/css/content.css">
 
     <script src="../../static/js/jscustom/UI-Js-Admin/bootstrap-show-notification.js"></script>
     <link rel="stylesheet" href="../../static/css/toasts.css">
@@ -173,20 +174,45 @@
                     <div class="in"><i class="bi bi-chevron-right"></i></div>
                 </div>
             </div> -->
-            <div class="list-chose" data-page="page-8">
+            <div data-bs-toggle="modal" data-bs-target="#deleteModal">
                 <div class="chose">
                     <div class="logo-conten ms-3 "><i class="bi bi-box-arrow-right"></i></div>
                     <div class="conten-text ms-3 mt-3">
                         <p>Sign out everywhere</p>
                     </div>
-                    <div class="in"><i class="bi bi-chevron-right"></i></div>
+                    <!-- <div class="in"><i class="bi bi-chevron-right"></i></div> -->
                 </div>
             </div>
         </div>
     </div>
 
 </div>
+        <!-- Modal -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-delete">
+                        <div>
 
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="icon-close-bodyModal">
+                            <i class="bi bi-x-circle"></i>
+                        </div>
+                        <div style="text-align: center;" class="m-2">
+                            <h5> Are you sure ? </h5>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer btn-event-deleteModal">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" ng-click="logout()">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 <!-- Giao diện riêng lẻ cho từng mục -->
 <div class="page" id="page-0">
@@ -300,7 +326,7 @@
     
     <button onclick="goBack()"><i class="bi bi-chevron-left"></i></button>
 </div> -->
-<div class="page" id="page-8">
+<!-- <div class="page" id="page-8">
     <div class="container signout mt-5 mb-5">
         <button class="btn-back" onclick="goBack()"><i class="bi bi-chevron-left"></i></button>
         <h1 class="text-chose mt-5 mb-5">Sign out everywhere</h1>
@@ -312,7 +338,7 @@
         <button type="submit" class="btn btn-outline-dark ms-3" style="color: white;"><a href="./login.html">Log in</a></p></button>
         
     </div>
-</div>
+</div> -->
 
 
 
