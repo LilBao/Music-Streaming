@@ -45,7 +45,7 @@ public class PaymentREST {
 		String email = host.getEmailByRequest(req);
 		pathReturn = "/complete-payment-paypal?email=" + email + "&total=" + total + "&subcriptionId=" + subscription
 				+ "&paymentName=paypal"+"&packages="+packages+"&ads="+adsId;
-		pathCancel = "/";
+		pathCancel = "/home";
 
 		return ResponseEntity.ok(paymentSer.createPaypal(total, subscription, email, req, pathReturn, pathCancel,packages));
 	}
@@ -56,7 +56,7 @@ public class PaymentREST {
 		String owner = host.getEmailByRequest(req);
 		String pathReturn = "/completed-payment-stripe?subscription=" + subscription.getSubscriptionId() + "&email="
 				+ owner + "&total=" + subscription.getPrice() + "&paymentName=stripe"+"&packages="+packages+"&ads="+adsId;
-		String pathCancel = "/cancelled-payment-stripe";
+		String pathCancel = "/home";
 		return ResponseEntity.ok(paymentSer.checkoutStripe(subscription, owner, req, pathReturn, pathCancel,packages));
 	}
 

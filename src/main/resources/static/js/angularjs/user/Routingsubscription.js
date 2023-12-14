@@ -1,16 +1,12 @@
 var app = angular.module("myApp", ["ngRoute"]);
 app.config(function ($routeProvider) {
     $routeProvider
-        .when("/", {
-            templateUrl: "subscription.html",
-            controller:"subscriptionCtrl"
-        })
         .when("/premium", {
-            templateUrl: "subscription.html",
+            templateUrl: "User/subscription.html",
             controller:"subscriptionCtrl"
         })
         .when("/premium/:id", {
-            templateUrl: "subscriptionDetail.html",
+            templateUrl: "User/subscriptionDetail.html",
             controller:"subscriptionCtrl"
         })
 });
