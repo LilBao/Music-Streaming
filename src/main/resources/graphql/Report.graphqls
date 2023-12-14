@@ -9,6 +9,7 @@ type Report{
 	reportId: ID
 	reportDate: String
 	description: String
+	status: Boolean
 	artist: Artist
 	recording: Recording
 	podcast: Podcast

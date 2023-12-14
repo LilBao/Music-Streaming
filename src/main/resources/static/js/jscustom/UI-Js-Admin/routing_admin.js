@@ -66,6 +66,9 @@ app.config(function($routeProvider,$cookiesProvider) {
   })
   .when("/manage-report", {
     templateUrl : "admin/ManageReport.html",
+    controller: "ReportController"
+
+
   })
   .when("/manage-playlist", {
     templateUrl : "admin/managerPlaylist.html",
@@ -103,7 +106,9 @@ app.config(function($routeProvider,$cookiesProvider) {
     templateUrl : "admin/ads.html",
     controller: "advertisementController"
   })
+
   .otherwise({ templateUrl : "admin/404.html"});
+
 });
 
 app.service('graphqlService',function ($http) {

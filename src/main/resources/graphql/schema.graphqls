@@ -103,6 +103,11 @@ type Query {
  getNewListened(recordingId: Int, duration: Int): [Monitor]
  
  getNewListenedEpisode(episodeId: Int, duration: Int): [MonitorEpisode]
+ 
+  #Khoa
+ findAllReport : [Report]
+ findAllReportStatusTrue : [Report]
+
 }
 
 type Mutation{

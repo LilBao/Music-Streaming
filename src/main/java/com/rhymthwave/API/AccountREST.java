@@ -6,10 +6,15 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import com.rhymthwave.DTO.MessageResponse;
+import com.rhymthwave.Request.DTO.AccountDTO;
 import com.rhymthwave.Service.AccountService;
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.Service.CloudinaryService;
@@ -28,9 +33,13 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin("*")
 @RequiredArgsConstructor
 public class AccountREST {
+
 	private final CRUD<Account, String> crudAccount;
 
+	private final AccountServiceImpl accountServiceImpl;
+
 	private final AccountService accountService;
+
 	
 	private final CRUD<Image,String> crudImage;
 	
@@ -100,4 +109,19 @@ public class AccountREST {
 		}	
 		return ResponseEntity.ok(new MessageResponse(true, "succeess", crudAccount.update(account)));
 	}
+	
+//	@PutMapping("/api/v1/account/updateprofile")
+//    public ResponseEntity<MessageResponse> updateProfile(@RequestBody AccountDTO accountRequest,HttpServletRequest req) {
+//		String owner = host.getEmailByRequest(req);
+//		Account account = accountService.findOne(owner);
+//		accountService.update(accountRequest,req,account);	
+//        return ResponseEntity.ok(new MessageResponse(true, "Profile updated successfully"));
+//    }
+	@PutMapping("/api/v1/account/logout")
+    public ResponseEntity<MessageResponse> logout(HttpServletRequest req) {
+		String owner = host.getEmailByRequest(req);
+		Account account = accountServiceImpl.findOne(owner);
+		accountServiceImpl.logout(req,account);	
+        return ResponseEntity.ok(new MessageResponse(true, "Logout account successfully"));
+    }
 }

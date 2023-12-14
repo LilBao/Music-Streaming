@@ -80,20 +80,15 @@ public class RecordREST {
 			@PathParam("fileRecord") MultipartFile fileRecord, @PathParam("fileLyrics") MultipartFile fileLyrics) {
 		String owner =host.getEmailByRequest(req);
 		Account account = crudAccount.findOne(owner);
-//		Map<String, Object> respRecord = cloudinary.Upload(fileRecord, "Records", account.getArtist().getArtistName());
+		Map<String, Object> respRecord = cloudinary.Upload(fileRecord, "Records", account.getArtist().getArtistName());
 		if (fileLyrics != null) {
 			Map<String, Object> respLyrics = cloudinary.Upload(fileLyrics, "Lyrics", account.getArtist().getArtistName());
 			record.setLyricsUrl((String) respLyrics.get("url"));
 			record.setPublicIdLyrics((String) respLyrics.get("public_id"));
-		}
-		if(fileRecord != null) {
-			Map<String, Object> respRecord = cloudinary.Upload(fileRecord, "Records", account.getArtist().getArtistName());
-			record.setAudioFileUrl((String) respRecord.get("url"));
-			record.setPublicIdAudio((String) respRecord.get("public_id"));
-		}
+		}		
 		
-//		record.setAudioFileUrl((String) respRecord.get("url"));
-//		record.setPublicIdAudio((String) respRecord.get("public_id"));
+		record.setAudioFileUrl((String) respRecord.get("url"));
+		record.setPublicIdAudio((String) respRecord.get("public_id"));
 		record.setEmailCreate(owner);
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudRecord.create(record)));
 	}

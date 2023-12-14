@@ -1,4 +1,4 @@
-package com.rhymthwave.DAO;
+	package com.rhymthwave.DAO;
 
 import com.rhymthwave.Request.DTO.Top10ArtistDTO;
 import com.rhymthwave.entity.Artist;
@@ -21,6 +21,10 @@ public interface ArtistDAO extends JpaRepository<Artist, Long>{
 	List<Artist> findAllArtistVerify(@Param("id") Long id, @Param("artistName") String artistName);
 	
 
+	@Query(value = "select * from artist where artistid= :artistId", nativeQuery = true)
+	Artist findbyID(@Param("artistId") Long artistId);
+
+
 	@Query(value = "select art.*, imgart.url from Artist art left join images imgart on art.profileimage = imgart.accessid where art.artistName like %:keyword%",nativeQuery = true)
 	List<Object> findByName(@Param("keyword") String keyword);
 
@@ -35,6 +39,7 @@ public interface ArtistDAO extends JpaRepository<Artist, Long>{
 	
 	@Query("SELECT COUNT(*) FROM Follow f WHERE f.authorsAccountB.authorId = ?1")
 	int countFollowerArtist(Long author);
+
 
 	@Query(value = "SELECT top 10  a.artistid, a.artistname,a.profileimage, a.email, SUM(r.listened) AS totalListened \n" +
 			"       FROM Recording r \n" +

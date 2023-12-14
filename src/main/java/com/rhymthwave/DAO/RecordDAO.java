@@ -33,6 +33,9 @@ public interface RecordDAO extends JpaRepository<Recording, Long> {
 	@Query(value = "SELECT r.* FROM RECORDING r join SONGS s on r.SONGSID = s.SONGSID ORDER BY NEWID()", nativeQuery = true)
 	List<Recording> findListRandom();
 
+	@Query(value = "select * from recording where recordingid = :recordingId", nativeQuery = true)
+	Recording findAllById(@Param("recordingId") Long recordingId);
+
 	@Query(value = "select top 50 r.* from recording r "
 			+ "join songs s on r.songsid = s.songsid "
 			+ "join songgenre sg on r.recordingid = sg.idrecord join genre g on g.id = sg.idgenre "
@@ -84,9 +87,11 @@ public interface RecordDAO extends JpaRepository<Recording, Long> {
 			+ "where a.artistid= :artistid and a.artistid != songs.artistcreate and songs.realeaseday < GETDATE() and RECORDING.isdeleted = 0",nativeQuery = true)
 	List<Recording> findListAppearOn(@Param("artistid") Long artistid);
 
+
 	@Query("select count(r.recordingId) from  Recording  r")
 	int countRecording();
 
 	@Query(value = "select top 100 * from recording order by listened desc", nativeQuery = true)
 	List<Recording> findTop100ByOrderByListenedDesc();
+
 }
