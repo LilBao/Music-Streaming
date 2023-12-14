@@ -21,10 +21,12 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfig implements WebMvcConfigurer {
 
 	@Autowired
     private CustomUserDetailsService customUserDetailsService;
@@ -85,17 +87,12 @@ public class SecurityConfig {
         http.oauth2Login()
         //        .loginPage("/api/v1/accounts/login")
 //                .defaultSuccessUrl("/api/v1/home",  true)
-//                .defaultSuccessUrl("/api/v1/auth/success",  true)
-                .successHandler(successHandler())
+                .defaultSuccessUrl("/api/v1/auth/success",  true)
+//                .successHandler(successHandler())
                 .failureUrl("/api/v1/auth/fail")
                 .authorizationEndpoint().baseUri("/oauth2");
 //                .and().userInfoEndpoint().userService(customOAuth2UserService);
         return http.build();
     }
 
-    private AuthenticationSuccessHandler successHandler() {
-        SimpleUrlAuthenticationSuccessHandler successHandler = new SimpleUrlAuthenticationSuccessHandler();
-        successHandler.setDefaultTargetUrl("http://127.0.0.1:5501/templates/admin/index.html#!/");
-        return successHandler;
-    }
 }

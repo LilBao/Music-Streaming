@@ -13,4 +13,8 @@ public class IndexController {
         return "/user/index";
     }
 
+    @GetMapping("/index")
+    public String home(){
+        return "/admin/index";
+    }
 }
