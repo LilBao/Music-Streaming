@@ -12,4 +12,8 @@ public interface ArtistService {
 	List<Artist> findAllArtistNameisVerify(Long id,String artistName);
 	
 	List<Object> findByName(String keyword);
+	
+	List<Artist> top50ArtistByListener(String country, Boolean active, Boolean verify);
+	
+	List<Artist> top50ArtistByFollow(Integer role, String country, Boolean verify);
 }

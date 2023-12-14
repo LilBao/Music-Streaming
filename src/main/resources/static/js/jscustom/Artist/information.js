@@ -51,6 +51,9 @@ function validateForm() {
             valid = false;
         }
     }
+    if($('#option-tag').val()==="" || $('#option-country').val()===""){
+        valid = false;
+    }
     if (valid) { document.getElementsByClassName("step")[currentTab].className += " finish"; }
     return valid;
 }

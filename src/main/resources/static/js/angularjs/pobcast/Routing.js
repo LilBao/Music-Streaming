@@ -2,37 +2,37 @@ var app = angular.module("myApp", ["ngRoute"]);
 app.config(function ($routeProvider) {
     $routeProvider
         .when("/", {
-            templateUrl: "homePobcast.html"
+            templateUrl: "Podcaster/homePobcast.html"
         })
         .when("/home", {
-            templateUrl: "HomePobcast.html"
+            templateUrl: "Podcaster/HomePobcast.html"
         })
         .when("/analytics/:id", {
-            templateUrl: "Analysics.html",
+            templateUrl: "Podcaster/Analysics.html",
             controller: "analysisCtrl"
         })
         .when("/episodes", {
-            templateUrl: "Episode.html",
+            templateUrl: "Podcaster/Episode.html",
             controller: "episodeCtrl"
         })
         .when("/archives", {
-            templateUrl: "Archieves.html",
+            templateUrl: "Podcaster/Archieves.html",
             controller: "myArchiveCtrl"
         })
         .when("/podcast-settings", {
-            templateUrl: "SettingPodcast.html",
+            templateUrl: "Podcaster/SettingPodcast.html",
             controller: "myPodcastCtrl"
         })
         .when("/new-episode", {
-            templateUrl: "dashboard.html",
+            templateUrl: "Podcaster/dashboard.html",
             controller: "dashboardCtrl"
         })
         .when("/episode-infor", {
-            templateUrl: "EpisodeInfor.html",
+            templateUrl: "Podcaster/EpisodeInfor.html",
             controller: "episodeInforCtrl"
         })
         .when("/campaign", {
-            templateUrl : "Marketing.html",
+            templateUrl : "Podcaster/Marketing.html",
             controller :"marketingCtrl"
         })
 })

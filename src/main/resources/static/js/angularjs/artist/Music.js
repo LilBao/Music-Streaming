@@ -815,6 +815,7 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService) {
     $scope.deleteCloudinary = function (publicId) {
         let url = host + "/v1/cloudinary?public_id=" + publicId;
         $http.delete(url).then(resp => {
+            
         }).catch(error => {
         })
     }
@@ -1018,5 +1019,6 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService) {
         lyricsContainer.value = "";
         afterGenerate.innerText = "";
         audioLyrics.src = "";
+        $('#fileAudio').val(null)
     })
 })

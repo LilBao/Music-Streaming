@@ -84,7 +84,7 @@ app.controller('episodeCtrl', function ($scope, $http) {
             $('#close-episode-remove').click();
             $scope.episode={};
             $scope.findListEpisodeByPC();
-            showStickyNotification('Episode was removed to archive.\n After 30days it will be deleted', 'success', 3000)
+            showStickyNotification('Episode was removed to archive.', 'success', 3000)
         }).catch(error => {
 
         })

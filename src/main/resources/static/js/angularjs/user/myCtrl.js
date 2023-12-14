@@ -1,12 +1,15 @@
 var host = "http://localhost:8080/api/";
-var token ="token";
-app.controller('myCtrl', function ($scope, $http, $route, audioService, queueService, graphqlService, $sce,$cookies) {
+var token = "token";
+app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioService, queueService, graphqlService, $sce, $cookies) {
     $('#myModal').modal('show');
     //variable of sidebar
     $scope.account = {};
     $scope.playlist = {};
     $scope.listPlaylist = [];
     $scope.listFollow = [];
+    $scope.notify = {};
+    $scope.recent = {};
+    $scope.history = {};
 
     //variable of current audio
     $scope.audioItem = {};
@@ -22,6 +25,7 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
     $scope.officalAds = [];
     var audioAds = new Audio();
     var currentAds = 0;
+    $scope.AdsNotification = [];
 
     $scope.Owner = function () {
         let url = host + "v1/account";
@@ -31,15 +35,16 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
             $scope.account = resp.data.data;
             $scope.findMyPlaylist($scope.account.email);
             $scope.findMyListFollow();
+            $scope.findAdsRunning();
         })
     }
-    if($cookies.get(token)){
+    if ($cookies.get(token)) {
         $scope.Owner();
     }
     $scope.findMyPlaylist = function (email) {
         let url = host + "v1/my-playlist/" + email;
         $http.get(url).then(resp => {
-            $scope.listPlaylist=resp.data.data;
+            $scope.listPlaylist = resp.data.data;
         })
     }
 
@@ -80,7 +85,8 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
             buttons: {
                 confirm: function () {
                     $http.delete(url).then(resp => {
-                        showStickyNotification("Unfollow successfull", 'danger', 3000);
+                        showStickyNotification("Unfollow successfull", 'success', 3000);
+                        $scope.findMyListFollow();
                     }).catch(err => {
                         console.log(err);
                     })
@@ -100,6 +106,7 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
         }).then(resp => {
             if (resp.data.success === true) {
                 $scope.playlist = resp.data.data;
+                $scope.findMyPlaylist($scope.account.email);
                 showStickyNotification('Create playlist success', 'success', 2000);
             } else {
                 showStickyNotification(resp.data.data, 'warning', 2000);
@@ -119,6 +126,7 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
             buttons: {
                 confirm: function () {
                     $http.delete(url).then(resp => {
+                        $scope.findMyPlaylist($scope.account.email);
                         showStickyNotification("Delete playlist success", 'success', 3000);
                     }).catch(err => {
                         showStickyNotification("Delete playlist fail", 'danger', 3000);
@@ -129,6 +137,13 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
                 },
             }
         });
+    }
+
+    $scope.findNotiLatest = function () {
+        let url = host + "";
+        $http.get(url).then(resp => {
+            $scope.notify = resp.data.data
+        })
     }
 
     document.getElementById('create-playlist').addEventListener('click', function () {
@@ -156,9 +171,10 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
     var prev = document.getElementById('prev');
     var shuffle = document.getElementById('shuffle');
     var btnWishlist = document.getElementById('btn-wishlist');
-    var listHistoryAudio = [];
+    $scope.listHistoryAudio = [];
     volumeAudio.value = audio.volume;
 
+    //find item select
     $scope.getCurrentAudio = function (id, type) {
         if (type === 'song') {
             var query = `{
@@ -195,6 +211,12 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
                         }
                     }
                 }
+                songGenres{
+                    genre{
+                      id
+                      nameGenre
+                    }
+                }
               }
         }`} else {
             var query = `{
@@ -221,6 +243,10 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
                       podcastId
                       authorName
                       podcastName
+                      tag{
+                        tagId
+                        tagName
+                      }
                     }
                 }
             }`
@@ -235,8 +261,54 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
                     if ($scope.audioItem.idMv !== null) {
                         $scope.trustedUrl = $sce.trustAsResourceUrl('https://www.youtube.com/embed/' + $scope.audioItem.idMv);
                     }
+                    if ($cookies.get('recent')) {
+                        $scope.recent = JSON.parse($cookies.get('recent'));
+                        $scope.audioItem.songGenres.forEach(e => {
+                            if (!$scope.recent.idGenre.includes(e.genre.id)) {
+                                $scope.recent.idGenre.push(e.genre.id)
+                            }
+                            if (!$scope.recent.genre.match(e.genre.nameGenre)) {
+                                $scope.recent.genre += `'` + e.genre.nameGenre + `'` + ',';
+                            }
+                        })
+                        $scope.recent.instrument = removeDuplicateWords($scope.recent.instrument + " " + $scope.audioItem.instrument.trim());
+                        $scope.recent.mood = removeDuplicateWords($scope.recent.mood + " " + $scope.audioItem.mood.trim());
+                        $scope.recent.songStyle = removeDuplicateWords($scope.recent.songStyle + " " + $scope.audioItem.songStyle.trim());
+                        $scope.recent.versions = removeDuplicateWords($scope.recent.versions + " " + $scope.audioItem.versions.trim());
+                        $scope.recent.culture = removeDuplicateWords($scope.recent.culture + " " + $scope.audioItem.culture.trim());
+                        setCookie("recent", JSON.stringify($scope.recent), 30);
+                    } else {
+                        var idGenre = [];
+                        $scope.audioItem.songGenres.forEach(e => {
+                            idGenre.push(e.genre.id)
+                            $scope.recent.genre = `'` + e.genre.nameGenre + `'` + ',';
+                        })
+                        $scope.recent.idGenre = idGenre;
+                        $scope.recent.instrument = $scope.audioItem.instrument.trim();
+                        $scope.recent.mood = $scope.audioItem.mood.trim();
+                        $scope.recent.songStyle = $scope.audioItem.songStyle.trim();
+                        $scope.recent.versions = $scope.audioItem.versions.trim();
+                        $scope.recent.culture = $scope.audioItem.culture.trim();
+                        setCookie("recent", JSON.stringify($scope.recent), 30);
+                    }
                 } else {
                     $scope.audioItem = data.episodeById;
+                    if ($cookies.get('recent')) {
+                        if ($scope.recent.tag && !$scope.recent.tag.includes($scope.audioItem.podcast.tag.tagId)) {
+                            $scope.recent.tag.push($scope.audioItem.podcast.tag.tagId);
+                            setCookie("recent", JSON.stringify($scope.recent), 30);
+                        } else {
+                            let tag = [];
+                            tag.push($scope.audioItem.podcast.tag.tagId)
+                            $scope.recent.tag = tag
+                            setCookie("recent", JSON.stringify($scope.recent), 30);
+                        }
+                    } else {
+                        let tag = [];
+                        tag.push($scope.audioItem.podcast.tag.tagId)
+                        $scope.recent.tag = tag
+                        setCookie("recent", JSON.stringify($scope.recent), 30);
+                    }
                 }
             })
             .catch(error => {
@@ -244,25 +316,28 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
             });
     }
 
+    //select item audio
     $scope.selectAudio = function (item, type, list, index) {
         listened = 0;
+        $scope.history = {};
+        $scope.listHistoryAudio = $cookies.get('history') ? JSON.parse($cookies.get('history')) : [];
         if (type === 'song') {
             audioService.setAudio(item.audioFileUrl);
             $scope.getCurrentAudio(item.recordingId, 'song')
+            $scope.history.song = Number(item.recordingId)
+            $scope.listHistoryAudio.push(JSON.stringify($scope.history));
         } else {
             audioService.setAudio(item.fileUrl);
             $scope.getCurrentAudio(item.episodeId, 'episode');
+            $scope.history.episode = Number(item.episodeId)
+            $scope.listHistoryAudio.push(JSON.stringify($scope.history));
         }
         $scope.isLikeExist = audioService.isLiked(item);
         audioService.setListPlay(list);
         audioService.setCurrentAudio(index);
         audio.src = audioService.getAudio();
         currentAudioIndex = audioService.getCurrentAudio();
-
-        listHistoryAudio.push(item);
-
-        var encryptedData = CryptoJS.AES.encrypt(JSON.stringify(listHistoryAudio), "whoami").toString();
-        setCookie("history", encodeURIComponent(encryptedData), 30);
+        setCookie("history", JSON.stringify($scope.listHistoryAudio).toString(), 30);
 
         if (resume.hidden === false && play.hidden === true) {
             audio.play();
@@ -276,17 +351,105 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
         audio.src = audioService.getAudio();
     } else {
         try {
-            if (getCookie("history")) {
-                var decryptedData = CryptoJS.AES.decrypt(decodeURIComponent(getCookie("history")), "whoami");
-                var decryptedString = decryptedData.toString(CryptoJS.enc.Utf8);
-                listHistoryAudio = JSON.parse(decryptedString);
-                if (listHistoryAudio[listHistoryAudio.length - 1].recordingId) {
-                    $scope.selectAudio(listHistoryAudio[listHistoryAudio.length - 1], 'song', listHistoryAudio, listHistoryAudio.length - 1);
-                } else {
-                    $scope.selectAudio(listHistoryAudio[listHistoryAudio.length - 1], 'episode', listHistoryAudio, listHistoryAudio.length - 1);
-                }
+            if ($cookies.get("history")) {
+                var list = [];
+                var promises = [];
+                JSON.parse($cookies.get("history").split(',')).forEach(e => {
+                    var promise = new Promise((resolve, reject) => {
+                        if ('song' in JSON.parse(e)) {
+                            var query = `{
+                            recordingById(recordingId:`+ JSON.parse(e).song + `) {
+                                recordingId
+                                recordingName
+                                audioFileUrl
+                                publicIdAudio
+                                lyricsUrl
+                                publicIdLyrics
+                                duration
+                                songStyle
+                                listened
+                                mood
+                                culture
+                                instrument
+                                versions
+                                studio
+                                idMv
+                                produce
+                                recordingdate
+                                isDeleted
+                                emailCreate
+                                song{
+                                    songId
+                                    image{
+                                        accessId
+                                        url
+                                    }
+                                    writters{
+                                        artist{
+                                            artistId
+                                            artistName
+                                        }
+                                    }
+                                }
+                              }
+                        }`
+                            graphqlService.executeQuery(query).then(data => {
+                                list.push(data.recordingById);
+                                resolve();
+                            }).catch(error => {
+                                console.log(error);
+                                reject(error);
+                            });
+                        } else {
+                            var query = `{
+                            episodeById(episodeId: `+ JSON.parse(e).episode + `) {
+                                episodeId
+                                publicIdFile
+                                fileUrl
+                                episodeTitle
+                                description
+                                publishDate
+                                sessionNumber
+                                episodeNumber
+                                episodeType
+                                content
+                                isPublic
+                                isDelete
+                                listened
+                                duration
+                                image {
+                                  accessId
+                                  url
+                                }
+                                podcast {
+                                  podcastId
+                                  authorName
+                                  podcastName
+                                }
+                            }
+                        }`
+                            graphqlService.executeQuery(query).then(data => {
+                                list.push(data.episodeById);
+                                resolve();
+                            }).catch(error => {
+                                console.log(error);
+                                reject(error);
+                            });
+                        }
+                    });
+                    promises.push(promise);
+                })
+                Promise.all(promises).then(() => {
+                    if (list[list.length - 1].recordingId) {
+                        $scope.selectAudio(list[list.length - 1], 'song', list, list.length - 1);
+                    } else {
+                        $scope.selectAudio(list[list.length - 1], 'episode', list, list.length - 1);
+                    }
+                }).catch(error => {
+                    console.log('Đã có lỗi xảy ra:', error);
+                });
             } else {
-                listHistoryAudio = [];
+                $scope.listHistoryAudio = [];
             }
         } catch (error) {
 
@@ -313,8 +476,8 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
             listened = 0;
             currentAds = 0;
             if ($scope.account.userType) {
-                if (($scope.account.userType.length === 1 || new Date($scope.account.userType[1].endDate) < new Date())
-                    && (Math.floor(Math.random() * 3) + 1 === 3) && $scope.officalAds.length > 0) {
+                if ((($scope.account.userType.length === 1 || new Date($scope.account.userType[1].endDate) < new Date())
+                    && (Math.floor(Math.random() * 3) + 1 === 3) && $scope.officalAds.length > 0) || !$cookies.get(token)) {
                     resume.click();
                     play.disabled = true;
                     resume.disabled = true;
@@ -371,9 +534,10 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
         $scope.countTime = setInterval(function () {
             listened++;
             if (listened === (Math.floor($scope.audioItem.duration / 3))) {
-                // if ($scope.audioItem.recordingId) {
-                $scope.Monitoring();
-                // } else {
+                if ($cookies.get(token)) {
+                    $scope.Monitoring();
+                }
+                //else {
                 //     $scope.Monitoring();
                 // }
             }
@@ -461,7 +625,7 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
                     $scope.selectAudio(item, 'episode', audioService.getListPlay(), currentAudioIndex)
                 }
             } catch (error) {
-                
+
             }
         }
 
@@ -605,10 +769,17 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
 
     //download
     download.addEventListener('click', function () {
-        var audioLink = document.createElement("a");
-        audioLink.href = audio.getAttribute('src');
-        audioLink.download = "file.mp3";
-        audioLink.click();
+        // var audioLink = document.createElement("a");
+        // audioLink.href = audio.getAttribute('src');
+        // audioLink.download = "file.mp3";
+        // audioLink.click();
+
+        var downloadLink = document.createElement("a");
+        downloadLink.href = audio.getAttribute('src');
+        downloadLink.download = "downloaded_audio.mp3";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
     })
 
     function reloadKaraoke() {
@@ -634,12 +805,21 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
     }
 
     $scope.getRecordByFavorite = function () {
-        var genre = "'Rap'";
+        var genre = "";
         var culture = "";
         var instrument = "";
         var mood = "";
         var songstyle = "";
         var versions = "";
+        if ($cookies.get('recent')) {
+            $scope.recent = JSON.parse($cookies.get('recent'));
+            genre = $scope.recent.genre
+            culture = $scope.recent.culture
+            instrument = $scope.recent.instrument
+            mood = $scope.recent.mood
+            songstyle = $scope.recent.songStyle
+            versions = $scope.recent.versions
+        }
         return new Promise((resolve, reject) => {
             const query = `
                 {
@@ -854,6 +1034,64 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
             }
         }
     }
+
+    $scope.findAdsRunning = function () {
+        let url = host + "v1/ads-running";
+        $http.get(url).then(resp => {
+            $scope.ratioNotificationAds(resp.data.data);
+        }).catch(err => {
+            console.log(err)
+        })
+    }
+
+    $scope.ratioNotificationAds = function (list) {
+        if (list.length > 0) {
+            $scope.AdsNotification.push(list[0]);
+            var priority1Ads = list.filter(ad => ad.priority === 1);
+            var ads2 = list.find(item => {
+                return item.priority == 2;
+            })
+            var ads3 = list.find(item => {
+                return item.priority == 3;
+            })
+            var ads4 = list.find(item => {
+                return item.priority == 4;
+            })
+            var ads5 = list.find(item => {
+                return item.priority == 5;
+            })
+            var ads6 = list.find(item => {
+                return item.priority == 6;
+            })
+
+            var random = Math.floor(Math.random() * (priority1Ads.length - 1)) + 1;
+            //skip ads 0
+            var ads1 = priority1Ads[random];
+            var p1 = 0.4;
+            var p2 = 0.2;
+            var p3 = 0.15;
+            var p4 = 0.1;
+            var p5 = 0.08;
+            var p6 = 0.07;
+            for (let index = 0; index < 2; index++) {
+                var ratio = Math.random();
+                if ((1 - p1) <= ratio && priority1Ads.length > 0 && ads1 !== undefined) {
+                    $scope.AdsNotification.push(ads1);
+                } else if ((p1 + p2) < ratio && ratio < (1 - p1) && priority1Ads.length > 0 && ads2 !== undefined) {
+                    $scope.AdsNotification.push(ads2);
+                } else if ((1 - (p1 + p2 + p3) <= ratio && ratio < (1 - (p1 + p2)) && ads3 !== undefined)) {
+                    $scope.AdsNotification.push(ads3);
+                } else if ((1 - (p1 + p2 + p3 + p4) <= ratio && ratio < (1 - (p1 + p2 + p3)) && ads4 !== undefined)) {
+                    $scope.AdsNotification.push(ads4);
+                } else if ((1 - (p1 + p2 + p3 + p4 + p5) <= ratio && ratio < (1 - (p1 + p2 + p4)) && ads5 !== undefined)) {
+                    $scope.AdsNotification.push(ads5);
+                } else if (ads6 !== undefined) {
+                    $scope.AdsNotification.push(ads6);
+                }
+            }
+        }
+    }
+
     $scope.findAllListAdsAudio();
 
     $scope.insertAds = function () {
@@ -895,6 +1133,13 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
         }).catch(err => {
 
         })
+    }
+
+    $scope.updateClickAds = function (item) {
+        item.clicked += 1;
+        var data = angular.copy(item);
+        $scope.updateAds(data);
+        window.open(item.url);
     }
 
     /*------------------------------*/
@@ -997,7 +1242,6 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
 
     $scope.addOtherPlaylistOrQueue = function (idOld, idNew, type) {
         $scope.getPlaylistById(idOld).then(data => {
-            console.log(data.playlistById)
             try {
                 var listAudioPlaylist = [...data.playlistById.playlistRecords.map(function (item) {
                     return { recording: item.recording };
@@ -1008,11 +1252,12 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
                 }).map(function (item) {
                     return item.episode;
                 })];
-
-                $scope.getPlaylistById(idNew).then(data => {
-                    var value = {};
-                    value.playlist = data.playlistById
-                    if (type === 'playlist') {
+                if (type === 'playlist') {
+                    $scope.getPlaylistById(idNew).then(data => {
+                        var value = {};
+                        value.playlist = data.playlistById;
+                        console.log(data.playlistById)
+                        var result = false;
                         listAudioPlaylist.some(item => {
                             if (item.recordingId) {
                                 var url = host + "v1/playlist-record";
@@ -1021,25 +1266,33 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
                                 var url = host + "v1/playlist-episode";
                                 value.episode = item;
                             }
-                            $http.post(url, value,{
+
+                            $http.post(url, value, {
                                 headers: { 'Authorization': 'Bearer ' + getCookie('token') }
                             }).then(resp => {
-                                if(resp.data.success == false){
-                                    showStickyNotification(resp.data.message, 'warning', 3000);
+                                if (resp.data.success == false) {
                                     return true;
-                                }else{
+                                } else {
+                                    result = true;
                                     return false;
                                 }
                             }).catch(err => {
                                 console.log(err)
                             })
                         })
-                    } else {
-                        listAudioPlaylist.forEach(item => {
-                            queueService.enQueue(item);
-                        })
-                    }
-                })
+                        if (result) {
+                            showStickyNotification(resp.data.message, 'warning', 3000);
+                        } else {
+                            showStickyNotification('Add to success', 'success', 3000);
+                        }
+
+                    })
+                } else {
+                    listAudioPlaylist.forEach(item => {
+                        queueService.enQueue(item);
+                    })
+                    showStickyNotification("Added to Queue", 'success', 3000);
+                }
             } catch (error) {
 
             }
@@ -1132,6 +1385,7 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
         }).then(resp => {
             if (resp.data.success === true) {
                 showStickyNotification('Create playlist success', 'success', 2000);
+                $scope.findMyPlaylist($scope.account.email);
             } else {
                 showStickyNotification(resp.data.data, 'warning', 2000);
             }
@@ -1155,7 +1409,8 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
                 headers: { 'Authorization': 'Bearer ' + getCookie('token') }
             }).then(resp => {
                 if (resp.data.success === true) {
-                    showStickyNotification("Create playlist fail", 'danger', 3000);
+                    showStickyNotification("Create playlist success", 'success', 3000);
+                    $scope.findMyPlaylist($scope.account.email);
                 } else {
                     showStickyNotification(resp.data.data, 'warning', 2000);
                 }
@@ -1202,6 +1457,232 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
             return `${hoursStr}:${minutesStr}:${secondsStr}`;
         } else {
             return `${minutesStr}:${secondsStr}`;
+        }
+    }
+
+    //tracking click of user
+
+    $scope.$on('$locationChangeSuccess', function (event, newUrl, oldUrl) {
+        var lastSlashIndex = newUrl.lastIndexOf('/');
+        if ($cookies.get("tracking")) {
+            var tracking = JSON.parse($cookies.get("tracking"));
+        } else {
+            var tracking = [];
+        }
+        $scope.obj = {};
+
+        if (lastSlashIndex !== -1) {
+            var result = newUrl.substring(lastSlashIndex + 1);
+            if (newUrl.indexOf("#!/podcast/") !== -1) {
+                let url = host + "v1/podcast/" + result;
+                $http.get(url).then(resp => {
+                    $scope.obj.type = "podcast"
+                    $scope.obj.podcastId = resp.data.data.podcastId;
+                    $scope.obj.name = resp.data.data.podcastName
+                    $scope.obj.image = resp.data.data.image.url;
+                    $scope.checkObjExist($scope.obj, tracking, false, newUrl);
+                }).catch(err => {
+                    console.log(err)
+                })
+            } else if (newUrl.indexOf("artist") !== -1) {
+                let url = host + "v1/artist/" + result;
+                $http.get(url).then(resp => {
+                    $scope.obj.type = "artist"
+                    $scope.obj.artistId = resp.data.data.artistId;
+                    $scope.obj.name = resp.data.data.artistName
+                    $scope.obj.image = resp.data.data.imagesProfile.url !== null ? resp.data.data.imagesProfile.url : "https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png";
+                    $scope.checkObjExist($scope.obj, tracking, false, newUrl);
+                }).catch(err => {
+                    console.log(err)
+                })
+            } else if (newUrl.indexOf("playlist") !== -1) {
+                let url = host + "v1/playlist/" + result;
+                $http.get(url).then(resp => {
+                    $scope.obj.type = "playlist"
+                    $scope.obj.playlistId = resp.data.data.playlistId;
+                    $scope.obj.name = resp.data.data.playlistName
+                    $scope.obj.image = resp.data.data.image.url !== null ? resp.data.data.image.url : "https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg";
+                    $scope.checkObjExist($scope.obj, tracking, false, newUrl);
+                }).catch(err => {
+                    console.log(err)
+                })
+            } else if (newUrl.indexOf("profile/user") !== -1) {
+                var query = `{
+                    accountByUsername(username: "`+ result + `") {
+                      email
+                      username
+                      birthday
+                      gender
+                      country
+                      author {
+                        authorId
+                        role {
+                          roleId
+                        }
+                      }
+                      image{
+                        url
+                      }
+                    }
+                }`
+                graphqlService.executeQuery(query).then(data => {
+                    $scope.obj.type = "user"
+                    $scope.obj.username = data.accountByUsername.username;
+                    $scope.obj.name = data.accountByUsername.username;
+                    $scope.obj.image = data.accountByUsername.image.url !== null ? data.accountByUsername.image.url : "https://res.cloudinary.com/div9ldpou/image/upload/v1699632134/Avatar/System/user_oujyrp.png";
+                    $scope.checkObjExist($scope.obj, tracking, false, newUrl);
+                }).catch(err => {
+                    console.log(err)
+                })
+            }
+        }
+
+    });
+
+    $scope.checkObjExist = function (item, list, check, url) {
+        var isObjectExist = check;
+        for (var i = 0; i < list.length; i++) {
+            var currentItem = list[i];
+            if (url.indexOf("profile/user") !== -1 && currentItem.username === item.username) {
+                isObjectExist = true;
+                break;
+            } else if (url.indexOf("artist") !== -1 && currentItem.artistId === item.artistId) {
+                isObjectExist = true;
+                break;
+            } else if (url.indexOf("playlist") !== -1 && currentItem.playlistId === item.playlistId) {
+                isObjectExist = true;
+                break;
+            } else if (url.indexOf("#!/podcast/") !== -1 && currentItem.podcastId === item.podcastId) {
+                isObjectExist = true;
+                break;
+            }
+        }
+        if (!isObjectExist) {
+            list.push(item);
+            setCookie("tracking", JSON.stringify(list).toString(), 30);
+        }
+    }
+
+    // Share   
+    $scope.link = "fsdfdsfdsfds";
+    $scope.typeShare = function (link) {
+        console.log(link)
+        $scope.link = $scope.link.trim() + link;
+    }
+
+    $scope.copyToClipboard = function (text) {
+        navigator.clipboard.writeText(text).then(function () {
+            showStickyNotification('Copied to Clickboard', 'success', 2000);
+        }).catch(function (err) {
+            console.error('Lỗi khi sao chép vào clipboard: ', err);
+        });
+    }
+
+    $scope.share = function (type) {
+        const link = encodeURI($scope.link);
+        const msg = encodeURIComponent('Hey, I found this article');
+        const title = encodeURIComponent('Article or Post Title Here');
+        const imageUrl = encodeURIComponent('https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg');
+        if (type === 'fb') {
+            const fb = document.querySelector('.facebook');
+            fb.href = `https://www.facebook.com/share.php?u=${link}&title=${title}&quote=${msg}&og:image=${imageUrl}`;
+        } else if (type === 'twitter') {
+            const twitter = document.querySelector('.twitter');
+            twitter.href = `http://twitter.com/share?&url=${link}&text=${msg}&hashtags=javascript,programming`;
+        } else if (type === 'linkedIn') {
+            const linkedIn = document.querySelector('.linkedin');
+            linkedIn.href = `https://www.linkedin.com/sharing/share-offsite/?url=${link}`;
+        } else if (type === 'reddit') {
+            const reddit = document.querySelector('.reddit');
+            reddit.href = `http://www.reddit.com/submit?url=${link}&title=${title}`;
+        } else if (type === 'tele') {
+            const telegram = document.querySelector('.telegram');
+            telegram.href = `https://telegram.me/share/url?url=${link}&text=${msg}`;
+        } else {
+            const whatsapp = document.querySelector('.whatsapp');
+            whatsapp.href = `https://api.whatsapp.com/send?text=${msg}: ${link}`;
+
+        }
+    }
+
+    //Sort
+    $scope.sort = function (list, field) {
+        $scope.direction = $scope.direction === "asc" ? "desc" : "asc";
+        if (field !== 'title') {
+            if ($scope.direction === "asc") {
+                list.sort((a, b) => a[field].localeCompare(b[field]))
+            } else {
+                list.sort((a, b) => b[field].localeCompare(a[field]))
+            }
+        } else {
+            list.sort((a, b) => {
+                $scope.valueA = $scope.getTitle(a);
+                $scope.valueB = $scope.getTitle(b);
+                $scope.direction === "asc" ? $scope.valueA.localeCompare($scope.valueB) : $scope.valueB.localeCompare($scope.valueA);
+                console.log(a)
+
+            })
+        }
+
+    }
+
+    $scope.sortNumber = function (list, field) {
+        $scope.direction = $scope.direction === "asc" ? "desc" : "asc";
+        if ($scope.direction === "asc") {
+            list.sort((a, b) => a[field] - (b[field]))
+        } else {
+            list.sort((a, b) => b[field] - (a[field]))
+        }
+    }
+    $scope.getTitle = function (obj) {
+        if (obj.recording) {
+            return obj.recording.recordingName;
+        } else if (obj.episode) {
+            return obj.episode.episodeTitle;
+        }
+        return null;
+    }
+    //Pagination
+    $scope.pagination = {
+        page: 0,
+        size: 10,
+        setPageSize: function (newSize) {
+            this.size = newSize;
+        },
+        setPageNo: function (newPageNo) {
+            this.page = newPageNo
+        },
+        items(list) {
+            if (list) {
+                var start = this.page * this.size;
+                return list.slice(start, start + this.size)
+            }
+        },
+        count(list) {
+            if (list) {
+                return Math.ceil(1.0 * list.length / this.size)
+            }
+        },
+        prev() {
+            this.page--;
+            if (this.page < 0) {
+                this.page = 0;
+            }
+        },
+        next(list) {
+            if (list) {
+                this.page++;
+                if (this.page >= this.count(list)) {
+                    this.page = this.count(list) - 1;
+                }
+            }
+        },
+        getNumbers(n) {
+            var rangeArray = [];
+            for (var i = 1; i <= n; i++) {
+                rangeArray.push(i);
+            }
+            return rangeArray;
         }
     }
 })

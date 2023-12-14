@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -185,5 +186,15 @@ public class ArtistREST {
 	@GetMapping("/api/v1/artist-pl/{keyword}")
 	public ResponseEntity<MessageResponse> getArtByName(@PathVariable("keyword") String keyword) {
 		return ResponseEntity.ok(new MessageResponse(true, "succeess", artistSer.findByName(keyword)));
+	}
+	
+	@GetMapping("/api/v1/top-artist-listen")
+	public ResponseEntity<MessageResponse> findTopArtistByListen(@RequestParam("country") String country) {
+		return ResponseEntity.ok(new MessageResponse(true, "succeess", artistSer.top50ArtistByListener(country, true, true)));
+	}
+	
+	@GetMapping("/api/v1/top-artist-follow")
+	public ResponseEntity<MessageResponse> findTopArtistByFollow(@RequestParam("country") String country) {
+		return ResponseEntity.ok(new MessageResponse(true, "succeess", artistSer.top50ArtistByFollow(2,country,true)));
 	}
 }

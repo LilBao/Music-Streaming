@@ -103,4 +103,9 @@ public class AdvertismentREST {
 		}
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudAds.update(ads)));
 	}
+	
+	@GetMapping("/api/v1/ads-running")
+	public ResponseEntity<MessageResponse> findAllAdsRunning() {
+		return ResponseEntity.ok(new MessageResponse(true, "success", adsSer.findAdsRunning(true,2)));
+	}
 }

@@ -71,13 +71,13 @@ public class Recording implements Serializable {
 	private String versions;
 
 	@Column(name = "STUDIO",columnDefinition = "nvarchar(55)")
-	private String studio;
+	private String studio="";
 
 	@Column(name = "IDMV",columnDefinition = "varchar(200)")
-	private String idMv;
+	private String idMv="";
 
 	@Column(name = "PRODUCE",columnDefinition = "nvarchar(55)")
-	private String produce;
+	private String produce="";
 
 	@Column(name = "RECORDINGDATE")
 	private Date recordingdate = new Date();

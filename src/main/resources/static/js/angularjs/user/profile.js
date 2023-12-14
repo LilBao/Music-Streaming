@@ -123,7 +123,7 @@ app.controller('profileCtrl', function ($scope, $http, $location, $routeParams, 
         $http.post(url, data, {
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
-
+            $scope.findMyListFollow();
         }).catch(err => {
 
         });
@@ -135,6 +135,7 @@ app.controller('profileCtrl', function ($scope, $http, $location, $routeParams, 
         $http.delete(url, {
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
+            $scope.findMyListFollow();
             console.log("success")
         }).catch(err => {
             console.log(err)
@@ -291,7 +292,9 @@ app.controller('profileCtrl', function ($scope, $http, $location, $routeParams, 
             $scope.listFollower.forEach(item => {
                 $scope.listAccountFan.push(Number(item.authorsAccountA.authorId));
             })
-            $scope.findListArtistFanLiked();
+            if($scope.isArtist){
+                $scope.findListArtistFanLiked();
+            }
         })
     }
 

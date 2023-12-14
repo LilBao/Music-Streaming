@@ -30,22 +30,44 @@
                 <button id="btn-wishlist-shuffle" class="btn text-white border-0 py-0"><i
                         class="display-6 bi bi-shuffle"></i></button>
             </div>
-            <div class="d-flex align-items-center">
-                <div class="input-group me-3">
-                    <span class="input-group-text" style="background-color: transparent;"><i
-                            class="text-white bi bi-search-heart"></i></span>
-                    <input type="text" class="text-white form-control" placeholder="Search in playlist"
-                        style="background-color: transparent;">
-                </div>
+            <div class="d-flex">
                 <div>
-                    <select name="" id="" class="border-0 text-white" style="background-color: transparent;">
-                        <option value="">Custom order</option>
-                        <option value="">Title</option>
-                        <option value="">Artist</option>
-                        <option value="">Album</option>
-                        <option value="">Date added</option>
-                        <option value="">Duration</option>
-                    </select>
+                    <div class="input-group me-3">
+                        <span class="input-group-text" style="background-color: transparent;"><i
+                                class="text-white bi bi-search-heart"></i></span>
+                        <input type="text" class="text-white form-control" placeholder="Search in playlist"
+                            style="background-color: transparent;">
+                    </div>
+                </div>
+                <div class="product_sorting_container product_sorting_container_top">
+                    <ul class="product_sorting">
+                        <li>
+                            <span class="type_sorting_text">Default Sorting</span>
+                            <i class="fa fa-angle-down"></i>
+                            <ul class="sorting_type p-0" style="z-index: 2;">
+                                <li class="type_sorting_btn">
+                                    <span>Default Sorting</span>
+                                </li>
+                                <li class="type_sorting_btn"><span>Custom order</span></li>
+                                <li class="type_sorting_btn"><span>Title</span></li>
+                                <li class="type_sorting_btn"><span>Artist</span></li>
+                                <li class="type_sorting_btn"><span>Album</span></li>
+                                <li class="type_sorting_btn"><span>Date added</span></li>
+                                <li class="type_sorting_btn"><span>Duration</span></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span>Show</span>
+                            <span class="num_sorting_text">{{pagination.size}}</span>
+                            <i class="fa fa-angle-down"></i>
+                            <ul class="sorting_num  p-0" style="z-index: 2;">
+                                <li ng-click="pagination.setPageSize(10)" class="num_sorting_btn"><span>10</span></li>
+                                <li ng-click="pagination.setPageSize(15)" class="num_sorting_btn"><span>25</span></li>
+                                <li ng-click="pagination.setPageSize(35)" class="num_sorting_btn"><span>35</span></li>
+                                <li ng-click="pagination.setPageSize(50)" class="num_sorting_btn"><span>50</span></li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -60,7 +82,7 @@
                     <th class="text-center"><i class="bi bi-stopwatch"></i></th>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="item in listLikedSongs"
+                    <tr ng-repeat="item in pagination.items(listLikedSongs)"
                         ng-dblclick="item.recordingId ? selectAudio(item,'song',listLikedSongs,$index) : selectAudio(item,'episode',listLikedSongs,$index)"
                         class="audio align-items-center">
                         <!-- Col 1 -->
@@ -109,6 +131,31 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="product_sorting_container product_sorting_container_bottom clearfix">
+                <span class="showing_results">Showing {{pagination.page +1}} – {{pagination.count(listLikedSongs)}} of
+                    {{pagination.items(listLikedSongs).length}} results</span>
+                <div class="pages d-flex flex-row align-items-center">
+                    <div ng-show="pagination.page > 0" ng-click="pagination.prev(listLikedSongs)" id="next_page_1" class="page_prev">
+                        <a>
+                            <i class="bi bi-arrow-left text-white"></i>
+                        </a>
+                    </div>
+                    <div class="page_current">
+                        <span>{{pagination.page +1}}</span>
+                        <ul class="page_selection ps-0 pe-4 bg-black" style="z-index: 200000;">
+                            <li ng-repeat="i in pagination.getNumbers(pagination.count(listLikedSongs))">
+                                <a ng-click="pagination.setPageNo($index)" class="text-white">{{$index+1}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="page_total"><span>of</span> {{pagination.count(listLikedSongs)}}</div>
+                    <div ng-show="pagination.page < pagination.count(listLikedSongs)-1" ng-click="pagination.next(listLikedSongs)" id="next_page_1" class="page_next">
+                        <a>
+                            <i class="bi bi-arrow-right text-white"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
     <div></div>

@@ -95,12 +95,12 @@
         
         <section>
             <ul id="myTab" role="tablist" class="nav nav-tabs nav-pills d-flex text-center border-0 rounded-nav">
-                <button id="singles-tab" data-toggle="tab" id="pills-user-tab" data-bs-toggle="pill"
+                <button ng-show="listSong.length > 0" id="singles-tab" data-toggle="tab" id="pills-user-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-singles" type="button" role="tab" aria-controls="pills-singles"
                     aria-selected="true" class="btn border-0 rounded-pill bg-white text-dark px-3 font-weight-bold active">Singles
                 </button>
     
-                <button id="pills-albums-tab" data-bs-toggle="pill" data-bs-target="#pills-albums" type="button" role="tab"
+                <button ng-show="listAlbum.length > 0" id="pills-albums-tab" data-bs-toggle="pill" data-bs-target="#pills-albums" type="button" role="tab"
                     aria-controls="pills-albums" aria-selected="false"
                     class="btn border-0 rounded-pill bg-white text-dark px-3 mx-3 font-weight-bold">Albums
                 </button>
@@ -182,6 +182,7 @@
             </div>
             <div class="row">
                 <div class="col-2 mt-3" ng-repeat="item in listArtistFanLiked | limitTo : 6">
+                    <a class="text-white" href="#!artist/{{item.account.artist.artistId}}">
                     <div class="card card-play-list-profile">
                         <div class="img-car-profile">
                             <img src="{{item.account.artist.imagesProfile.url}}" class="card-img-top w-100"
@@ -195,6 +196,7 @@
                             </div>
                         </div>
                     </div>
+                    </a>
                 </div>
             </div>
         </section>

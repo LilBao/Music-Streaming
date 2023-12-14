@@ -61,4 +61,9 @@ public class AdvertisementServiceImpl implements CRUD<Advertisement, Long>, Adve
 	public List<Advertisement> findAdsByEmail(String email) {
 		return dao.findAdsByEmail(email);
 	}
+
+	@Override
+	public List<Advertisement> findAdsRunning(Boolean active, Integer status) {
+		return dao.findAdsRunning(active, status);
+	}
 }

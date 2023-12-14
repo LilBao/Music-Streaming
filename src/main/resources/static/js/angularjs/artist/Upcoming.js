@@ -42,7 +42,7 @@ app.controller('upComingCtrl', function ($scope, $http) {
             },
             transformRequest: angular.identity
         }).then(resp => {
-            $scope.upcoming = {};
+            $scope.reset();
             $scope.findListAlbumUpcoming();
             showStickyNotification('Create upcoming success', 'success', 3000);
         }).catch(error => {
@@ -66,7 +66,7 @@ app.controller('upComingCtrl', function ($scope, $http) {
         }).then(resp => {
             var writters = $('input[name="writter"]:checked')
             var song = resp.data.data;
-            $scope.upcoming = {};
+            $scope.reset();
             //check xem có thêm người ft chung không
             if (writters.length > 0) {
                 writters.each(function () {
@@ -104,6 +104,14 @@ app.controller('upComingCtrl', function ($scope, $http) {
         })
     }
 
+    $scope.reset=function(){
+        $scope.upcoming = {};
+        $('input[name="writter"]').prop('checked', false);
+        $scope.coverImg = undefined;
+        $('input[type="file"]').val(undefined);
+        $('.coverImg').attr('src', 'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg');
+    }
+
     $scope.findArist = function (id) {
         var url = host + "/v1/artist/" + id;
         $http.get(url).then(resp => {
@@ -114,10 +122,14 @@ app.controller('upComingCtrl', function ($scope, $http) {
     }
 
     $('#create-song').click(function () {
-        if ($('#opt').val() === "single") {
-            $scope.createSong();
-        } else {
-            $scope.createAlbum();
+        if(!$scope.coverImg){
+            $('#err-image').text('Choose picture cover')
+        }else{
+            if ($('#opt').val() === "single") {
+                $scope.createSong();
+            } else {
+                $scope.createAlbum();
+            }
         }
     });
 

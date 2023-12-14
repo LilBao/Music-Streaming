@@ -1,6 +1,8 @@
 package com.rhymthwave.Service.Implement;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,23 +19,23 @@ import com.rhymthwave.entity.UserType;
 import jakarta.transaction.Transactional;
 
 @Service
-public class PlaylistServiceImpl implements PlaylistService, CRUD<Playlist, Long>{
-	
+public class PlaylistServiceImpl implements PlaylistService, CRUD<Playlist, Long> {
+
 	@Autowired
 	PlaylistDAO dao;
-	
+
 	@Autowired
 	PlaylistRecordDAO daoPR;
 
 	@Override
 	@Transactional
 	public Playlist create(Playlist entity) {
-		if(entity.getQuantity() > 0 || entity.getPlaylistName() != null) {
+		if (entity.getQuantity() > 0 || entity.getPlaylistName() != null) {
 			return dao.save(entity);
 		}
 		Playlist playlist = entity;
 		playlist.setQuantity(0);
-		if(playlist.getPlaylistName()==null) {
+		if (playlist.getPlaylistName() == null) {
 			playlist.setPlaylistName("My Playlist");
 		}
 		return dao.save(playlist);
@@ -70,7 +72,7 @@ public class PlaylistServiceImpl implements PlaylistService, CRUD<Playlist, Long
 
 	@Override
 	@Transactional
-	public Playlist createSimilarPodcast(Playlist playlist, List<Recording> list) {
+	public Playlist createSimilarPlaylist(Playlist playlist, List<Recording> list) {
 		for (Recording recording : list) {
 			PlaylistRecord playlistRecord = new PlaylistRecord();
 			playlistRecord.setPlaylist(playlist);
@@ -94,6 +96,17 @@ public class PlaylistServiceImpl implements PlaylistService, CRUD<Playlist, Long
 	public List<Playlist> findDiscoverArtist(Long artistId, List<Integer> roleId) {
 		return dao.findPlaylistDiscoverByArtist(artistId, roleId);
 	}
-	
-	
+
+	@Override
+	public List<Playlist> top50PlaylistLatest(List<Integer> listRole, Boolean isPublic) {
+		return dao.top50PlaylistLatest(listRole, isPublic);
+	}
+
+	@Override
+	public List<Playlist> top50PlaylistRecentListen(List<Integer> listRole, Boolean isPublic,
+			Optional<List<String>> nameGenre, Optional<String> culture, Optional<String> instrument,
+			Optional<String> mood, Optional<String> songstyle, Optional<String> versions) {
+		return dao.top50PlaylistRecentListen(listRole, isPublic, nameGenre.orElse(Arrays.asList("%%")),
+				culture.orElse("%%"), instrument.orElse("%%"), mood.orElse("%%"), songstyle.orElse("%%"),versions.orElse("%%"));
+	}
 }

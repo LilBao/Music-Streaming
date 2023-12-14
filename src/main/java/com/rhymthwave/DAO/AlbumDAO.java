@@ -26,4 +26,18 @@ public interface AlbumDAO extends JpaRepository<Album, Long> {
 
 	@Query(value = "SELECT AL.*, IMGAL.URL FROM ALBUM AL LEFT JOIN IMAGES IMGAL ON AL.COVERIMAGE = IMGAL.ACCESSID WHERE AL.ALBUMNAME LIKE %:keyword% AND AL.RELEASEDATE < GETDATE()", nativeQuery = true)
 	List<Object> findByName(@Param("keyword") String keyword);
+	
+	@Query(value="SELECT top 50 a.* FROM ALBUM a "
+			+ "WHERE a.releasedate <= GETDATE() and EXISTS (SELECT 1 FROM TRACK t WHERE t.ALBUMID = a.ALBUMID) "
+			+ "order by a.releasedate desc",nativeQuery = true)
+	List<Album> top50AlbumLatest();
+	
+	
+	@Query(value="SELECT top 50 a.* FROM ALBUM a join track tr on tr.albumid = a.albumid "
+			+ "join recording r on tr.recordingid = r.recordingid "
+			+ "WHERE a.releasedate <= GETDATE() "
+			+ "group by a.albumid, a.albumname, a.artistid, a.coverimage, a.descriptions, a.releasedate "
+			+ "order by sum(r.listened) desc",nativeQuery = true)
+	List<Album> top50AlbumListenest();
+	
 }

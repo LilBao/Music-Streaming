@@ -83,4 +83,22 @@ public interface RecordDAO extends JpaRepository<Recording, Long> {
 			+ "join artist a on a.artistid = w.artistid "
 			+ "where a.artistid= :artistid and a.artistid != songs.artistcreate and songs.realeaseday < GETDATE() and RECORDING.isdeleted = 0",nativeQuery = true)
 	List<Recording> findListAppearOn(@Param("artistid") Long artistid);
+	
+	@Query(value= "select top 50 r.* from artist a "
+			+ "join accounts acc on a.email = acc.email "
+			+ "join writter w on w.artistid = a.artistid "
+			+ "join songs s on s.songsid = w.songsid "
+			+ "join recording r on r.songsid = s.songsid "
+			+ "where acc.country like :country and r.isdeleted = :deleted and s.realeaseday <= GETDATE() "
+			+ "order by r.listened desc",nativeQuery = true)
+	List<Recording> top50SongByAreaListened(@Param("country") String country,@Param("deleted") Boolean deleted);
+	
+	@Query(value= "select top 50 r.* from artist a "
+			+ "join accounts acc on a.email = acc.email "
+			+ "join writter w on w.artistid = a.artistid "
+			+ "join songs s on s.songsid = w.songsid "
+			+ "join recording r on r.songsid = s.songsid "
+			+ "where acc.country like :country and r.isdeleted = :deleted and s.realeaseday <= GETDATE() "
+			+ "order by s.realeaseday desc",nativeQuery = true)
+	List<Recording> top50SongByDate(@Param("country") String country,@Param("deleted") Boolean deleted);
 }

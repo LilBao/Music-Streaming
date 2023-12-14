@@ -4,7 +4,7 @@ app.controller('episodeInforCtrl', function ($scope, $http, FileService) {
     var fileAudio = FileService.getFile();
     $scope.audioFile = fileAudio;
     if (fileAudio === null) {
-        window.location.href = "./PodcastControl.html#!/new-episode"
+        window.location.href = "podcaster#!/new-episode"
     } else {
         $('#audioFile').attr('src', URL.createObjectURL(fileAudio));
         let audio = new Audio();
@@ -17,6 +17,10 @@ app.controller('episodeInforCtrl', function ($scope, $http, FileService) {
         
     }
     
+    $scope.deleteFile = function(){
+        FileService.setFile(null);
+    }
+
     $scope.createEpisode = function () {
         let url = host + "/v1/episode";
         var data = new FormData();
@@ -38,6 +42,8 @@ app.controller('episodeInforCtrl', function ($scope, $http, FileService) {
             transformRequest: angular.identity
         }).then(resp => {
             showStickyNotification('Create successfully. Let discover', 'success', 3000)
+        }).catch(err => {
+            showStickyNotification('Create fail.', 'success', 3000)
         })
     }
 

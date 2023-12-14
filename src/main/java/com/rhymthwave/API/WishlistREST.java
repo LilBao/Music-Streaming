@@ -141,7 +141,7 @@ public class WishlistREST {
 		if (wlb!= null) {
 			return ResponseEntity.ok(new MessageResponse(true, "success", wlb));
 		}else if(wlp!=null) {
-			return ResponseEntity.ok(new MessageResponse(true, "Existed", wlp));
+			return ResponseEntity.ok(new MessageResponse(true, "success", wlp));
 		}
 		return ResponseEntity.ok(new MessageResponse(false, "Existed", null));
 	}

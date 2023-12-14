@@ -8,4 +8,6 @@ public interface AdvertisementService {
 	Advertisement updateStatusAds(Long id, Boolean active, Integer status);
 	
 	List<Advertisement> findAdsByEmail(String email);
+	
+	List<Advertisement> findAdsRunning(Boolean active,Integer status);
 }
