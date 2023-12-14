@@ -42,7 +42,8 @@ app.controller("navbarAdmin", function (graphqlService,$scope, $http, $cookies )
             throw error; // Rethrow the error to be handled by the calling code
         }
     };  
-  
+
+
 	$scope.getAllArtistIsVerify ();
     $scope.getInfoAdmin();
 })

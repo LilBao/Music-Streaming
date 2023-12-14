@@ -32,78 +32,73 @@ import com.rhymthwave.entity.Account;
 @RequestMapping(value = "/api/v1/accounts")
 public class LoginAPI {
 
-	@Autowired
-	private AuthenticationManager authenticationManager;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
-	@Autowired
-	private ILoginService loginService;
+    @Autowired
+    private ILoginService loginService;
 
-	@Autowired
-	private JwtTokenCreate jwtTokenCreate;
+    @Autowired
+    private JwtTokenCreate jwtTokenCreate;
 
-	@Autowired
-	private AccountServiceImpl accountService;
-	
-	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody LoginDTO loginRequest) {
+    @Autowired
+    private AccountServiceImpl accountService;
 
-		int checkUserLogin = loginService.checkIsVerified(loginRequest);
-		
-		if(checkUserLogin == 0) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-					.body(new MessageResponse(false, "Error Login", null));
-		}
-		if (checkUserLogin == 1) {
-			Authentication authentication = authenticationManager.authenticate(
-					new UsernamePasswordAuthenticationToken(loginRequest.email(), loginRequest.password()));
-			System.out.println(authentication);
-				SecurityContextHolder.getContext().setAuthentication(authentication);
-			
-				CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginDTO loginRequest) {
 
-				Account user = accountService.findOne(customUserDetails.getEmail());
-				customUserDetails.setEmail(user.getEmail());
-				user.setRefreshToken(jwtTokenCreate.createRefreshToken(customUserDetails));
-				accountService.update(user);
+        int checkUserLogin = loginService.checkIsVerified(loginRequest);
 
-				String jwt = jwtTokenCreate.createToken(customUserDetails);
+        if (checkUserLogin == 0) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new MessageResponse(false, "Error Login", null));
+        }
+        if (checkUserLogin == 1) {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginRequest.email(), loginRequest.password()));
+            System.out.println(authentication);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-				Map<String, String> list = new HashMap<>();
-				list.put("accessToken", jwt);
-				list.put("refreshToken", user.getRefreshToken());
-				return ResponseEntity.ok(new MessageResponse(true, "User Tokens", list));
-			
+            CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
 
-		}
-		
-		if(checkUserLogin ==2) {
+            Account user = accountService.findOne(customUserDetails.getEmail());
+            customUserDetails.setEmail(user.getEmail());
+            user.setRefreshToken(jwtTokenCreate.createRefreshToken(customUserDetails));
+            accountService.update(user);
 
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body(new MessageResponse(false, "Confirmation has been sent to your email", null));
-		}
-		
+            String jwt = jwtTokenCreate.createToken(customUserDetails);
 
-		if(checkUserLogin == 3 ) {
+            Map<String, String> list = new HashMap<>();
+            list.put("accessToken", jwt);
+            list.put("refreshToken", user.getRefreshToken());
+            return ResponseEntity.ok(new MessageResponse(true, "User Tokens", list));
+        }
 
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body(new MessageResponse(false, "Your account has been locked", null));
-		}
-		
-		
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-				.body(new MessageResponse(false, "Error Login", null));
-	}
-	
-	@GetMapping("/loginGG")
-	public ResponseEntity<String> hello(){
-		return ResponseEntity.ok("Hello");
-	}
-	
-	@GetMapping
-	public ResponseEntity<?> login() {
-		return ResponseEntity.status(HttpStatus.OK)
-				.body(new MessageResponse(true, "Error Login", accountService.findAll()));
-	}
-	
+        if (checkUserLogin == 2) {
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new MessageResponse(false, "Confirmation has been sent to your email", null));
+        }
+
+        if (checkUserLogin == 3) {
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new MessageResponse(false, "Your account has been locked", null));
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new MessageResponse(false, "Error Login", null));
+    }
+
+//	@GetMapping("/loginGG")
+//	public ResponseEntity<String> hello(){
+//		return ResponseEntity.ok("Hello");
+//	}
+
+//	@GetMapping
+//	public ResponseEntity<?> login() {
+//		return ResponseEntity.status(HttpStatus.OK)
+//				.body(new MessageResponse(true, "Error Login", accountService.findAll()));
+//	}
+
 
 }

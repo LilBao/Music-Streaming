@@ -2,6 +2,7 @@ package com.rhymthwave.API_Admin;
 
 import com.rhymthwave.DAO.AdvertismentDAO;
 import com.rhymthwave.DTO.MessageResponse;
+import com.rhymthwave.Request.DTO.AdvertisementDTO;
 import com.rhymthwave.Service.AdvertisementService;
 import com.rhymthwave.ServiceAdmin.IRole;
 import com.rhymthwave.entity.Advertisement;
@@ -22,7 +23,8 @@ public class API_Advertisement {
     private final AdvertisementService advertisementService;
 
     @PostMapping
-    public ResponseEntity<?> createAdvertisement() {
+    public ResponseEntity<?> createAdvertisement(@ModelAttribute AdvertisementDTO advertisementDTO, HttpServletRequest request) {
+        Advertisement advertisement = advertisementService.save(advertisementDTO,request);
         return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully"));
     }
 

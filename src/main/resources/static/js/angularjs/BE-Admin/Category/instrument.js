@@ -1,7 +1,7 @@
 
 var apiInstrument = "http://localhost:8080/api/v1/admin/category/instrument";
 var cookieName = "token";
-app.controller("instrumentController", function ($scope, $http, $cookies,$log) {
+app.controller("instrumentController", function ($scope, $http, $cookies,$log,graphqlService) {
 
 	$scope.form = {};
 	$scope.items = [];
@@ -13,41 +13,39 @@ app.controller("instrumentController", function ($scope, $http, $cookies,$log) {
 	}
 
 	$scope.load_all = () => {
-		$http.get(apiInstrument).then(resp => {
-			$scope.items = resp.data.data.content;
-			$scope.utilitiesPage.totalPages(resp.data.data.totalPages);
-		}).catch(error => {
-			console.log("Error", error)
-		});
-	}
-
-	$scope.goToPage = function (pageNumber) {
-		// Gửi yêu cầu đến máy chủ Spring Boot để lấy dữ liệu trang mới
-		$http.get(apiInstrument + "?page=" + pageNumber)
-			.then(resp =>{
-				$scope.items = resp.data.data.content;			
-				$scope.currentPage = pageNumber;	
-			}).catch(error => {
-				console.log("Error", error)
-			});
-	};
-
-	$scope.utilitiesPage = {
-
-		totalPages(totalPages) {
-			for (var i = 0; i <= totalPages - 1; i++) {
-				$scope.page.push(i);
+		const query = `{
+			getAllInstrument {
+			  instrumentId
+			  instrumentName
+			  createBy
+			  createDate
+			  modifiedBy
+			  modifiDate
 			}
-		},
+		   }`;
+        graphqlService.executeQuery(query)
+            .then(data => {
 
-		firstPage(){
-			$scope.goToPage($scope.page[0]);
-		},
-		endPage(){
-			$scope.goToPage($scope.page[$scope.page.length - 1]);
-		}
+                $scope.items = data.getAllInstrument;
+            })
+            .catch(error => {
+                console.log(error);
+
+            });
 	}
 
+	$scope.sortColumn="instrumentName";
+	$scope.revertSort = false;
+	$scope.sortData = function(column){
+		$scope.revertSort = ($scope.sortColumn == column) ? !$scope.revertSort : false;
+		$scope.sortColumn = column;
+	}
+	$scope.getSortClass = function(column){
+		if($scope.sortColumn == column){
+			return $scope.revertSort ?"bi bi-sort-down mx-1":"bi bi-sort-up mx-1"
+		}
+		return "";
+	}
 
 	$scope.create = function () {
 		var item = angular.copy($scope.form);
@@ -58,8 +56,9 @@ app.controller("instrumentController", function ($scope, $http, $cookies,$log) {
 		}).then(resp => {
 			$scope.load_all();
 			$scope.reset();
-			
+			showStickyNotification("successful", "success", 2000);
 		}).catch(error => {
+			showStickyNotification("Create fail", "danger", 2000);
 			console.log("Error", error)
 		});
 	}
@@ -75,7 +74,9 @@ app.controller("instrumentController", function ($scope, $http, $cookies,$log) {
 			var index = $scope.items.findIndex(item => item.id == $scope.form.instrumentId);
 			$scope.items[index] = resp.data;
 			$scope.load_all();
+			showStickyNotification("successful", "success", 2000);
 		}).catch(error => {
+			showStickyNotification("Update fail", "danger", 2000);
 			$log.error(error.data);
 		});
 	}
@@ -91,8 +92,9 @@ app.controller("instrumentController", function ($scope, $http, $cookies,$log) {
 			$scope.items.splice(index, 1);
 			$scope.load_all();
 			$scope.reset();
-			
+			showStickyNotification("successful", "success", 2000);
 		}).catch(error => {
+			showStickyNotification("Instrument dose not exist", "danger", 2000);
 			console.log("Error", error)
 		});
 	}
