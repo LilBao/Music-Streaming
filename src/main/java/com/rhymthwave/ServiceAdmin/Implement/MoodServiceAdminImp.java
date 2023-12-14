@@ -37,7 +37,7 @@ public class MoodServiceAdminImp implements IMoodServiceAdmin {
 		try {
 			Sort sort = sortService.sortBy(sortBy, sortField);
 
-			Pageable pageable = PageRequest.of(page, 6, sort);
+			Pageable pageable = PageRequest.of(page, 12, sort);
 
 			Page<Mood> pageMood = moodDAO.findAll(pageable);
 			return pageMood;

@@ -3,6 +3,7 @@ package com.rhymthwave.Service.Implement;
 import com.rhymthwave.DAO.AccountDAO;
 import com.rhymthwave.DAO.AdvertismentDAO;
 import com.rhymthwave.DAO.ImageDAO;
+import com.rhymthwave.DAO.SubscriptionDAO;
 import com.rhymthwave.Request.DTO.AdvertisementDTO;
 import com.rhymthwave.Service.AdvertisementService;
 import com.rhymthwave.Service.CloudinaryService;
@@ -34,6 +35,8 @@ public class AdvertisementImpl implements AdvertisementService {
 
     private final ImageDAO imageDAO;
 
+    private final SubscriptionDAO subscriptionDAO;
+
     private static String FOLDER_CONTAINING_IMAGE_NEWS  = "ImageManager";
 
     @Override
@@ -59,9 +62,13 @@ public class AdvertisementImpl implements AdvertisementService {
         advertisement.setTag(dto.getTag());
         advertisement.setStartDate(GetCurrentTime.getTimeNow());
         advertisement.setContent(dto.getContent());
+        advertisement.setPriority(subscriptionDAO.findById(dto.getSubscription()).orElse(null).getPriority());
         advertisement.setAudioFile(urlAudio);
         advertisement.setImage(image);
+        advertisement.setListened(0L);
+        advertisement.setClicked(0L);
         advertisement.setAccount(accountDAO.findById(getIdByRequest.getEmailByRequest(request)).orElse(null));
+        advertisement.setSubscription(subscriptionDAO.findById(dto.getSubscription()).orElse(null));
         return advertisementDAO.save(advertisement);
     }
 

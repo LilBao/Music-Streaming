@@ -76,6 +76,17 @@
             color: rgb(110, 107, 107);
             font-size:.9rem;           
          }
+       
+         #choose-image {
+            height: 250px;
+            width: 400px;
+            border: 2px dashed rgb(152, 152, 152); 
+            color: rgb(152, 152, 152);
+            font-size: 70px; 
+            cursor: pointer;
+            
+         }
+  
       </style>
       <section class="dashboard-top-sec">
 
@@ -147,7 +158,7 @@
 
                                          
                                        </div>
-                                       <div class="col-md-2 pt-1 fs-4" >
+                                       <div class="col-md-2 pt-1 fs-4" ng-show="statusShow">
 
                                           <a href="" class=" d-inline text-dark fw-4 " type="button" data-bs-toggle="modal" data-bs-target="#addADS"><i class="bi bi-plus-circle"></i></a>
                                        </div>
@@ -163,67 +174,112 @@
                                              </div>
                                              <div class="modal-body">
                                                <div class="container">
+                                                <form name="validate" novalidate>
                                                 <div class="row">
                                                    <div class="col-md-4">
                                                       <div class="">
-                                                         <img src="../../static/img/ab1.webp" alt="" class="img-fluid w-100 image-cover">
-                                                         <input type="file" class="form-control mt-2" name="fileImage" />
+                                                         <div class="d-flex justify-content-center">
+                                                            <div id="choose-image"  class="d-flex justify-content-center  align-items-center ">
+                                                              <i class="bi bi-plus-circle-dotted"></i>
+                                                            </div>
+                                                            <img id="image-ads" src="" class="img-fluid image-cover " alt="" style=" cursor: pointer;">
+                                                          </div>
+                                                         <input type="file" class="form-control mt-2" name="img-ads" id="img-file" accept=".png ,.jpg, .webp"/>
                                                       </div>
                                                    </div>
                                                    <div class="col-md-8">
                                                     
                                                          <div class="mb-2">
-                                                            <label for="" class="form-label">Title Ads</label>
-                                                            <input
+                                                            <label for="" class="form-label d-inline">Title Ads</label>
+                                                            <input ng-model="form.title"
                                                                type="text"
                                                                class="form-control"
-                                                               name=""
+                                                               name="title"
                                                                id=""
                                                                placeholder=""
+                                                               required ng-minlength="10" 
                                                             />
-                                                          
+                                                            <div ng-messages="validate.title.$touched && validate.title.$error">
+                                                               <div ng-messages-include="../admin/ng-Utilities/messages_error.html">
+                                                               </div>
+                                                             </div>
                                                          </div>
 
                                                          <div class="mb-2">
-                                                            <label for="" class="form-label">Tag Ads</label>
-                                                            <input
+                                                            <label for="" class="form-label d-inline">Tag Ads</label>
+                                                            <input ng-model="form.tag"
                                                                type="text"
                                                                class="form-control"
-                                                               name=""
+                                                               name="tag"
                                                                id=""
                                                                placeholder=""
+                                                               required ng-minlength="2" 
                                                             />
-                                                          
+                                                            <div ng-messages="validate.tag.$touched && validate.tag.$error">
+                                                               <div ng-messages-include="../admin/ng-Utilities/messages_error.html">
+                                                               </div>
+                                                             </div>
                                                          </div>
-                                                         <div class="mb-2">
-                                                            <label for="" class="form-label">Content Ads</label>
-                                                          <textarea class="form-control" name="" id="" cols="30" rows="3"></textarea>
-                                                          
-                                                         </div>
-                                                   
+                                                         <div class="mb-3">
+                                                            <label for="basic-url" class="form-label d-inline">URL</label>
+                                                            <div class="input-group">
+                                                              <span style="font-size: 13px;" class="input-group-text " id="basic-addon3">https://example.com/...</span>
+                                                              <input name="url"   required ng-minlength="2"  ng-model="form.url" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4">
+                                                              <div ng-messages="validate.url.$touched && validate.url.$error">
+                                                               <div ng-messages-include="../admin/ng-Utilities/messages_error.html">
+                                                               </div>
+                                                             </div>
+                                                            </div>
+                                                          </div>
+
+                                                          <select  name="subscriptionName" required  class="form-select mt-4" ng-model="form.subscription">
+                                                            <option ng-repeat="subscriptions in subscription" ng-value="subscriptions.subscriptionId" >{{subscriptions.subscriptionType}}</option>
+                                                          </select>
+                                                          <div ng-messages="validate.subscriptionName.$touched && validate.subscriptionName.$error">
+                                                            <div ng-messages-include="../admin/ng-Utilities/messages_error.html">
+                                                            </div>
+                                                          </div>
                                                    </div>
                                                 </div>
+
                                                 <div class="row">
+                                                   <div class="mb-2 mt-3 form-floating" >
+                                                   
+                                                    <textarea  required ng-minlength="10"  ng-model="form.content" class="form-control" name="content" id="" cols="30" rows="3" placeholder="Content" style="min-height: 100px;"></textarea>
+                                                    <label for="floatingTextarea " class="mx-3">Content</label>
+                                                    <div ng-messages="validate.content.$touched && validate.content.$error">
+                                                      <div ng-messages-include="../admin/ng-Utilities/messages_error.html">
+                                                      </div>
+                                                    </div>
+                                                   </div>
                                                    <div class="mb-2">
-                                                      <label for="" class="form-label">File Audio</label>
+                                                      <label for="" class="form-label d-inline">File Audio</label>
                                                       <input
                                                          type="file"
                                                          class="form-control"
-                                                         name=""
-                                                         id=""
+                                                         name="audioAds"
+                                                         id="audio-ads"
                                                          placeholder="asd"
+                                                         required  validate-file
+                                                         ng-model="fileInput" 
+                                                       
                                                       />
-                                                    
+                                                      <div ng-messages="validate.audioAds.$error" ng-show="validate.audioAds.$dirty || validate.$submitted">
+                                                         <div ng-message="required">File is required.</div>
+                                                         <div ng-message="valid">File is not valid.</div>
+                                                         <!-- Add more validation messages as needed -->
+                                                       </div>
                                                    </div>
 
                                                 </div>
                                                </div>
                                              </div>
                                              <div class="modal-footer">
-
-                                                <button type="button" class="btn btn-success" data-bs-dismiss="modal">Run</button>
+                                                
+                                                <button type="button" ng-disabled="!validate.$valid" class="btn btn-success" data-bs-dismiss="modal"  ng-click="createAds()">Run</button>
                                              
                                              </div>
+                                          </form>
                                           </div>
                                           </div>
                                        </div>
@@ -253,7 +309,7 @@
                                                       <td>
                                                          <div>
                                                             <img class=" rounded img-fluid "
-                                                               src="../../static/img/ab1.webp" alt="img"
+                                                               src="{{ads.image.url}}" alt="img"
                                                                style="width: 10%;">
                                                             <span>{{ads.title}}</span>
                                                             
@@ -262,8 +318,8 @@
                                                          </div>
 
                                                       </td>
-                                                      <td>{{ads.clicked}}</td>
-                                                      <td>{{ads.listened}}</td>
+                                                      <td>{{ads.clicked == null ? 0 : ads.clicked }}</td>
+                                                      <td>{{ads.listened == null ? 0 : ads.listened }}</td>
                                                       <td>{{ads.budget}}</td>
                                                       <td>
                                                          <button class="btn btn-secondary" type="button"
@@ -628,8 +684,8 @@
                                                       <td class="text-start">
                                                          <div>
                                                             <img class=" rounded img-fluid "
-                                                               src="../../static/img/ab1.webp" alt="img"
-                                                               style="width: 10%;">
+                                                            src="{{ads.image.url}}" alt="img"
+                                                            style="width: 10%;">
                                                             <span>{{ads.title}}</span>
                                                             <span class="badge rounded-pill text-bg-info">{{ads.status
                                                                ===1 ? 'pending':'reject'}}</span>
@@ -903,9 +959,9 @@
                                                   <th>{{$index + 1}}</th>
                                                   <td class="text-start">
                                                      <div>
-                                                        <img class=" rounded img-fluid "
-                                                           src="../../static/img/ab1.webp" alt="img"
-                                                           style="width: 10%;">
+                                                      <img class=" rounded img-fluid "
+                                                      src="{{ads.image.url}}" alt="img"
+                                                      style="width: 10%;">
                                                         <span>{{ads.title}}</span>
                                                         <span class="badge rounded-pill text-bg-danger">{{ads.status
                                                            ===1 ? 'pending':'reject'}}</span>

@@ -6,7 +6,6 @@ app.controller("notificationController", function (graphqlService, $scope, $http
     $(document).ready(function () {
    
         $("#image-file").change(function () {
-         console.log(this.files)
             if (this.files && this.files[0]) {
            
                 var reader = new FileReader();

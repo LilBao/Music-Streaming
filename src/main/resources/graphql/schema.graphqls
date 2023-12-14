@@ -48,6 +48,7 @@ type Query {
  getAllSongStyle:[SongStyle]
  getAllCulture:[Culture] 
  getAllGener:[Genre]
+ getAllCountry:[Country]
  getAllTag:[Tag]
  getAllPlaylist:[Playlist]
  getAllPodcastPlaylist:[Playlist]
