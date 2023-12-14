@@ -2,7 +2,7 @@ package com.rhymthwave.API;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rhymthwave.Service.NotiService;
+import com.rhymthwave.Service.NotificationService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -10,5 +10,5 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class NotificationREST {
 	
-	private final NotiService notifySer;
+	private final NotificationService notifySer;
 }

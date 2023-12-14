@@ -1,10 +1,5 @@
 package com.rhymthwave.ServiceAdmin.Implement;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.stereotype.Service;
-
 import com.rhymthwave.DAO.AccountDAO;
 import com.rhymthwave.DAO.ReportDAO;
 import com.rhymthwave.DAO.WishlistDAO;
@@ -12,9 +7,12 @@ import com.rhymthwave.ServiceAdmin.IAccountServiceAdmin;
 import com.rhymthwave.Utilities.SortBy;
 import com.rhymthwave.entity.Account;
 import com.rhymthwave.entity.TypeEnum.EROLE;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,9 +34,7 @@ public class AccountServiceAdminImp implements IAccountServiceAdmin{
 //			Sort sort = sortService.sortBy(sortBy, sortField);
 //
 //			Pageable pageable = PageRequest.of(page, 6,sort);
-
-			List<Account> pageAccount = accountDAO.findAllAccountRole( role);
-		//	log.info(">>>>>>>>>>> AccountServiceAdminImp:findAllAccountByRole |  Page findAllAccountByRole: {}",pageAccount);
+			List<Account> pageAccount = accountDAO.findAllAccountRole(role);
 			return pageAccount;
 		} catch (Exception e) {
 			log.error(">>>>>>>>>>> AccountServiceAdminImp:findAllAccountByRole | Error findAllAccount: {}",e.getMessage());

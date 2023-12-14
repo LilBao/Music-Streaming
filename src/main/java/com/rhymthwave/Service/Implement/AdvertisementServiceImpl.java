@@ -1,14 +1,18 @@
 package com.rhymthwave.Service.Implement;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rhymthwave.DAO.AdvertismentDAO;
+import com.rhymthwave.Request.DTO.AdvertisementDTO;
 import com.rhymthwave.Service.AdvertisementService;
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.entity.Advertisement;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class AdvertisementServiceImpl implements CRUD<Advertisement, Long>, AdvertisementService{
@@ -66,4 +70,42 @@ public class AdvertisementServiceImpl implements CRUD<Advertisement, Long>, Adve
 	public List<Advertisement> findAdsRunning(Boolean active, Integer status) {
 		return dao.findAdsRunning(active, status);
 	}
+
+	@Override
+	public Advertisement save(AdvertisementDTO advertisementDTO, HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Advertisement> getAllAdvertisementRunningAndCompleted() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Advertisement> getAllAdvertisementPendingAndReject() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Advertisement getById(Integer idAdvertisementService) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> getResultsADS(Integer idADS) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Advertisement setStatus(Integer advertisementID, Integer status, HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 }

@@ -11,7 +11,7 @@ public class index {
 		return "User/index";
 	}
 	
-	@GetMapping("/login")
+	@GetMapping("/logins")
 	public String loginLayout() {
 		return "User/login";
 	}

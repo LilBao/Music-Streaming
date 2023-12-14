@@ -101,4 +101,10 @@ public interface RecordDAO extends JpaRepository<Recording, Long> {
 			+ "where acc.country like :country and r.isdeleted = :deleted and s.realeaseday <= GETDATE() "
 			+ "order by s.realeaseday desc",nativeQuery = true)
 	List<Recording> top50SongByDate(@Param("country") String country,@Param("deleted") Boolean deleted);
+
+	@Query("select count(r.recordingId) from  Recording  r")
+	int countRecording();
+
+	@Query(value = "select top 100 * from recording order by listened desc", nativeQuery = true)
+	List<Recording> findTop100ByOrderByListenedDesc();
 }

@@ -43,7 +43,7 @@
                         <div class="iq-card iq-card-block iq-card-stretch iq-card-height  mb-0">
                            <div class="iq-card-header text-center">
                               <div class="iq-header-title">
-                                 <h4 class="card-title mb-0 ">Manager Blog</h4>
+                                 <h4 class="card-title mb-0 ">Manager News</h4>
                               </div>
                            </div>
                            <div class="iq-card-body ">
@@ -66,7 +66,8 @@
                                        <div class="col-lg-6">
                                           <div class="mb-3">
                                              <select ng-change="loadAllNews()" class="form-select  font-select" name="" ng-model="yearSelect">
-                                             <option   ng-repeat="year in year" value="{{year}}">{{year}}</option> 
+                                                <option  value="">Default</option> 
+                                                <option   ng-repeat="year in year" value="{{year}}">{{year}}</option> 
                                              </select>
                                           </div>
                                        </div>

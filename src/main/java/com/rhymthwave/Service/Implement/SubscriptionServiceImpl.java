@@ -14,7 +14,7 @@ import com.rhymthwave.Utilities.GetCurrentTime;
 import com.rhymthwave.entity.Subscription;
 
 @Service
-public class SubscriptionServiceImpl implements SubscriptionService, CRUD<Subscription, Integer> {
+public class SubscriptionServiceImpl implements SubscriptionService {
 
 	@Autowired
 	SubscriptionDAO dao;

@@ -26,7 +26,7 @@ public class Notification implements Serializable {
 	@Column(name = "NOTIFICATIONID")
 	private Integer notificationId;
 	
-	@Column(name = "TITILE",columnDefinition = "nvarchar(55)")
+	@Column(name = "TITLE",columnDefinition = "nvarchar(255)")
 	private String title;
 	
 	@Column(name = "CONTENT",columnDefinition = "varchar(max)")
@@ -46,4 +46,13 @@ public class Notification implements Serializable {
 	
 	@Column(name = "MODIFIDATE")
 	private Date modifiDate;
+
+	@Column(name = "TO_URL" ,columnDefinition = "nvarchar(255)")
+	private String toURL;
+
+	@Column(name = "Public_IDImage" ,columnDefinition = "nvarchar(255)")
+	private String publicIdImage;
+
+	@Column(name = "URLIDImage",columnDefinition = "nvarchar(255)")
+	private String urlImage;
 }

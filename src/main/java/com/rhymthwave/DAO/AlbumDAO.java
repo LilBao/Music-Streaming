@@ -40,4 +40,6 @@ public interface AlbumDAO extends JpaRepository<Album, Long> {
 			+ "order by sum(r.listened) desc",nativeQuery = true)
 	List<Album> top50AlbumListenest();
 	
+	@Query("select count(a.albumId) from  Album  a")
+	int countAlbum();
 }

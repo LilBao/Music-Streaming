@@ -61,7 +61,7 @@ public class SignUpServiceImpl implements ISignUpService {
 		newAccount.setBirthday(request.birthday());
 		newAccount.setCountry(request.country());
 		newAccount.setGender(request.gender());
-		newAccount.setVerify(false);
+        newAccount.setVerify(request.birthday() == null ? true : false);
 		newAccount.setRemainingVerification(3);
 		newAccount.setBlocked(false);
 		dao.save(newAccount);

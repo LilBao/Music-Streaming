@@ -62,6 +62,9 @@ public class Account implements Serializable {
 	@Column(name = "ISBLOCKED")
 	private boolean isBlocked;
 
+	@Column(name = "CREATEAT")
+	private Date createAt = new Date();
+
 	@Column(name = "REFRESHTOKEN",columnDefinition = "varchar(max)")
 	private String refreshToken;
 

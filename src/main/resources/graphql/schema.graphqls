@@ -3,6 +3,7 @@
 #import "./Access.graphqls"
 #import "./Account.graphqls"
 #import "./Advertisement.graphqls"
+#import "./AdvertisementStatistics.graphqls"
 #import "./Album.graphqls"
 #import "./Artist.graphqls"
 #import "./Author.graphqls"
@@ -47,12 +48,17 @@ type Query {
  getAllSongStyle:[SongStyle]
  getAllCulture:[Culture] 
  getAllGener:[Genre]
+ getAllCountry:[Country]
  getAllTag:[Tag]
  getAllPlaylist:[Playlist]
  getAllPodcastPlaylist:[Playlist]
  getPlayListById(idPlaylist: Int):Playlist
-
- 
+ getAllRecord: [Recording]
+ getAllEpisode: [Episode]
+ findAllAdvertisementPendingAndRejectByStatus:[AdvertisementStatistics]
+ findAccountByEmail(id: String): Account
+ getAllRecordTop100:[Recording]
+ getAllEpisodeTop100: [Episode]
  #VanBao
  recordingById(recordingId: ID!):Recording
  
@@ -107,3 +113,6 @@ type Query {
  top50SongByDate(country: String): [Recording]
 }
 
+type Mutation{
+  lockAccount(id: String!, block:Boolean):Boolean
+}

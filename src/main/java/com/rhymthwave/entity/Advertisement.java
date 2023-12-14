@@ -50,7 +50,7 @@ public class Advertisement implements Serializable {
 
     @Column(name = "ACTIVE")
     private Boolean active;
-    
+
     @Column(name = "STATUS")
     private Integer status;
 
@@ -92,7 +92,6 @@ public class Advertisement implements Serializable {
     private Image image;
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "ACCOUNTID")
     private Account account;
 

@@ -60,8 +60,7 @@ public interface PlaylistDAO extends JpaRepository<Playlist, Long> {
 			+ "where w.artistid = :artistId and auth.idrole in :roleId and pl.ispublic = 1 "
 			+ "group by pl.playlistid, pl.playlistname,pl.createdate,pl.description,pl.ispublic,pl.quantity,pl.image,pl.usertypeid "
 			+ "order by NEWID()", nativeQuery = true)
-	List<Playlist> findPlaylistDiscoverByArtist(@Param("artistId") Long artistId,
-			@Param("roleId") List<Integer> roleId);
+	List<Playlist> findPlaylistDiscoverByArtist(@Param("artistId") Long artistId,@Param("roleId") List<Integer> roleId);
 
 	@Query(value = "select top 50 pl.* from playlists pl " + "join usertype ust on pl.usertypeid = ust.usertypeid "
 			+ "join accounts acc on acc.email = ust.accountid " + "join author auth on auth.email = acc.email "
@@ -87,4 +86,7 @@ public interface PlaylistDAO extends JpaRepository<Playlist, Long> {
 			@Param("public") Boolean isPublic, @Param("nameGenre") List<String> nameGenre,
 			@Param("culture") String culture, @Param("instrument") String instrument, @Param("mood") String mood,
 			@Param("songstyle") String songstyle,@Param("versions") String versions);
+
+	@Query("select count(p.playlistId) from  Playlist  p")
+	int countPlaylist();
 }

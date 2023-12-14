@@ -21,4 +21,7 @@ public interface SongDAO extends JpaRepository<Song, Long> {
 
 	@Query(value = "select s.* from songs s where s.songname like %:keyword% and s.isdeleted = 0 and s.realeaseday < GETDATE()", nativeQuery = true)
 	List<Song> findByName(@Param("keyword") String keyword);
+
+	@Query("Select count(s.songId) from Song s")
+	int countSong();
 }

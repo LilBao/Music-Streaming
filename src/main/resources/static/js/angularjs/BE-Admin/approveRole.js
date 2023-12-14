@@ -1,4 +1,4 @@
-
+var apiApproveRole = "https://localhost:8080/api/v1/admin/approve-roles"
 var cookieName = "token";
 
 app.controller("approveRolesController", function (graphqlService, $scope, $http) {
@@ -7,7 +7,16 @@ app.controller("approveRolesController", function (graphqlService, $scope, $http
     $scope.form = {};
     $scope.item = [];
 
+    $scope.verifyArtist = (id) => {
+      console.log(id)
+      $http.post(apiSubscription, `/${id}`).then(resp => {
+      
+          showStickyNotification("successful", "success", 2000 );
 
+      }).catch(error => {
+          showStickyNotification("Create subscription fail", "danger", 2000);
+      })
+  }
 
     $scope.getAllApproveRoles = function () {
         const query = `{
@@ -36,7 +45,7 @@ app.controller("approveRolesController", function (graphqlService, $scope, $http
         graphqlService.executeQuery(query)
             .then(data => {
                 $scope.item = data.getAllIsVerifyArtist;
-                console.log($scope.item)
+              
             })
             .catch(error => {
                 console.log(error);

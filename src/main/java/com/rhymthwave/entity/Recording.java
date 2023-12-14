@@ -34,7 +34,7 @@ public class Recording implements Serializable {
 	@Column(name = "RECORDINGID")
 	private Long recordingId;
 
-	@Column(name = "RECORDINGNAME",columnDefinition = "nvarchar(55)")
+	@Column(name = "RECORDINGNAME",columnDefinition = "nvarchar(max)")
 	private String recordingName;
 
 	@Column(name = "AUDIOFILEURL",columnDefinition = "varchar(max)")

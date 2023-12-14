@@ -2,6 +2,7 @@ package com.rhymthwave.DAO;
 
 import java.util.List;
 
+import com.rhymthwave.entity.Recording;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -33,4 +34,10 @@ public interface EpisodeDAO extends JpaRepository<Episode, Long>{
 			+ "and ep.podcastid in :tags "
 			+ "order by NEWID()",nativeQuery = true)
 	List<Episode> top50EpForYou(@Param("ispublic") Boolean ispublic,@Param("tags") List<Integer> tags);
+
+	@Query("select count(e.episodeId) from  Episode e")
+	int countEpisode();
+
+	List<Episode> findTop100ByOrderByListenedDesc();
+
 }
