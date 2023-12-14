@@ -1204,4 +1204,39 @@ app.controller('myCtrl', function ($scope, $http, $route, audioService, queueSer
             return `${minutesStr}:${secondsStr}`;
         }
     }
+    $http.get(host + "v1/account", {
+        headers: { 'Authorization': 'Bearer ' + $cookies.get('token') }
+      }).then(resp => {
+        $scope.hiden = true;
+        $scope.profile = resp.data.data;
+        console.log($scope.profile);
+      }).catch(error => {
+        console.log(error)
+      })
+    
+      $scope.logout = function () {
+        var now = new Date();
+        now.setUTCFullYear(1970);
+        now.setUTCMonth(0);
+        now.setUTCDate(1);
+        now.setUTCHours(0);
+        now.setUTCMinutes(0);
+        now.setUTCSeconds(0);
+    
+        $cookies.put('token', '', { expires: now, path: '/' })
+        $window.location.href = 'http://127.0.0.1:5500/src/main/resources/templates/user/login.html';
+      }
+    
+      $scope.signin = function () {
+        $window.location.href = 'http://127.0.0.1:5500/src/main/resources/templates/user/login.html';
+      }
+    
+      $scope.account = function () {
+        $window.location.href = 'http://127.0.0.1:5500/src/main/resources/templates/user/account.html';
+      }
+    
+      $scope.redirectToProfile = function (username) {
+        var newUrl = '#!/profile/user/' + username;
+        $window.location.href = newUrl;
+      };
 })

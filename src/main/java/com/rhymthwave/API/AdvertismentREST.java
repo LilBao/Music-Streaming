@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.rhymthwave.DTO.AdvertismentDTO;
 import com.rhymthwave.DTO.MessageResponse;
+import com.rhymthwave.Request.DTO.AdvertisementDTO;
 import com.rhymthwave.Service.AdvertisementService;
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.Service.CloudinaryService;
@@ -24,6 +25,7 @@ import com.rhymthwave.Service.ImageService;
 import com.rhymthwave.entity.Advertisement;
 import com.rhymthwave.entity.Image;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 
@@ -102,5 +104,10 @@ public class AdvertismentREST {
 			ads.setPublicIdAudio((String) respAudio.get("public_id"));
 		}
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudAds.update(ads)));
+	}
+	
+	@PostMapping(value = "/api/v1/buy-ads", consumes = { "multipart/form-data" })
+	public ResponseEntity<MessageResponse> buyAds(@ModelAttribute AdvertisementDTO ads,HttpServletRequest req) {
+		return ResponseEntity.ok(new MessageResponse(true, "success", adsSer.buyAds(ads, req)));
 	}
 }

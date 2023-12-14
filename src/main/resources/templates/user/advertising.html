@@ -19,6 +19,12 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
     <script src="../../static/js/angularjs/user/ads.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-cookies.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <link rel="stylesheet" href="../../static/css/toasts.css">
+    <script src="../../static/js/jscustom/UI-Js-Admin/bootstrap-show-notification.js"></script>
+    <script src="../../static/js/jscustom/toasts.js"></script>
 </head>
 
 <body ng-app="myApp" ng-controller="ads">
@@ -86,43 +92,79 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="pr-pick-column col-md-4 col-sm-4">
-                        <div class="card card-content shadow">
+                    <div ng-repeat="sub in bas" class="pr-pick-column col-md-4 col-sm-4">
+                        <div class="card card-content shadow" >
                             <div class="card-body">
                                 <div class="pr-pick-columnp-tt1">One-time payment</div>
-                                <h3 class="card-title">Bronze</h3>
-                                <p class="card-text">From 500₫/ 5 day</p>
+                                <h3 class="card-title">{{sub.subscriptionType}}</h3>
+                                <p class="card-text">From {{sub.price}}₫/{{sub.duration}} day</p>
                                 <hr>
-                                <button class="pr-pick-btn" ng-click="startAdvertising('Bronze')" data-bs-toggle="modal" data-bs-target="#myModal">Get Started</button>
+                                <button class="pr-pick-btn" ng-click="startAdvertising(sub.priority) ; findSubById(sub.subscriptionId)" 
+                                    data-bs-toggle="modal" data-bs-target="#myModal">Get Started</button>
                                 <p class="pr-pick-column-term"><a href="">Terms and conditions apply.</a></p>
                             </div>
                         </div>
-                    </div>
-                    <div class="pr-pick-column col-md-4 col-sm-4">
-                        <div class="card card-content shadow">
-                            <div class="card-body ">
-                                <div class="pr-pick-columnp-tt1">One-time payment</div>
-                                <h3 class="card-title">Silver </h3>
-                                <p class="card-text">From 700₫/ 7 day</p>
-                                <hr>
-                                <button class="pr-pick-btn" ng-click="startAdvertising('Silver')" data-bs-toggle="modal" data-bs-target="#myModal">Get Started</button>
-                                <p class="pr-pick-column-term"><a href="">Terms and conditions apply.</a></p>
+                
+                        <!-- <div class="modal" id="myModal-{{sub.subscriptionId}}">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                               
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Buy ads</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                
+                               
+                                    <form ng-submit="buyads()" enctype="multipart/form-data">
+                                        <div class="modal-body">
+                                            <div class="mb-3">
+                                                <label class="form-label">Title</label>
+                                                <input ng-model="req.title" type="text" class="form-control" id="title">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Url</label>
+                                                <input ng-model="req.url" type="url" class="form-control" id="url">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Tag</label>
+                                                <input ng-model="req.tag" type="text" class="form-control" id="tag">
+                                            </div>
+                                            <div hidden>
+                                                <input type="text" id="subscriptionId" value="{{sub.subscriptionId}}">
+                                            </div>
+                                            <div hidden>
+                                                <input type="text" id="priority" value="{{sub.priority}}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Target Audience</label>
+                                                <input ng-model="req.target" type="text" class="form-control" id="target">
+                                            </div>
+                                            <div class="mb-3" ng-show="!hiden">
+                                                <label class="form-label">Content</label>
+                                                <textarea ng-model="req.content" class="form-control" id="content" rows="3"></textarea>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Banner</label>
+                                                <input class="form-control" type="file" id="banner">
+                                            </div>
+                                            <div class="mb-3" ng-show="!hiden">
+                                                <label class="form-label">Audio</label>
+                                                <input class="form-control" type="file" id="audio"  >
+                                            </div>
+                                        </div>
+                
+                                   
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-success">Submit</button>
+                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="pr-pick-column col-md-4 col-sm-4">
-                        <div class="card card-content shadow">
-                            <div class="card-body">
-                                <div class="pr-pick-columnp-tt1">One-time payment</div>
-                                <h3 class="card-title">Gold</h3>
-                                <p class="card-text">From 900₫/ 9 day</p>
-                                <hr>
-                                <button class="pr-pick-btn" ng-click="startAdvertising('Gold')" data-bs-toggle="modal" data-bs-target="#myModal">Get Started</button>
-                                <p class="pr-pick-column-term"><a href="">Terms and conditions apply.</a></p>
-                            </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
+                
             </div>
         </div>
     </div>
@@ -135,38 +177,15 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="pr-pick-column col-md-4 col-sm-4">
+                    <div ng-repeat="sub in pre" class="pr-pick-column col-md-4 col-sm-4">
                         <div class="card card-content shadow">
                             <div class="card-body">
                                 <div class="pr-pick-columnp-tt1">One-time payment</div>
-                                <h3 class="card-title">Platinum</h3>
-                                <p class="card-text">From 1000₫/ 5 day</p>
+                                <h3 class="card-title">{{sub.subscriptionType}}</h3>
+                                <p class="card-text">From {{sub.price}}₫/ {{sub.duration}} day</p>
                                 <hr>
-                                <button class="pr-pick-btn" ng-click="startAdvertising('Platinum')" data-bs-toggle="modal" data-bs-target="#myModal">Get Started</button>
-                                <p class="pr-pick-column-term"><a href="">Terms and conditions apply.</a></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="pr-pick-column col-md-4 col-sm-4">
-                        <div class="card card-content shadow">
-                            <div class="card-body ">
-                                <div class="pr-pick-columnp-tt1">One-time payment</div>
-                                <h3 class="card-title">Diamond </h3>
-                                <p class="card-text">From 1500₫/ 10 day</p>
-                                <hr>
-                                <button class="pr-pick-btn" ng-click="startAdvertising('Diamond')" data-bs-toggle="modal" data-bs-target="#myModal">Get Started</button>
-                                <p class="pr-pick-column-term"><a href="">Terms and conditions apply.</a></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="pr-pick-column col-md-4 col-sm-4">
-                        <div class="card card-content shadow">
-                            <div class="card-body">
-                                <div class="pr-pick-columnp-tt1">One-time payment</div>
-                                <h3 class="card-title">Ruby </h3>
-                                <p class="card-text">From 2000₫/ 15 day</p>
-                                <hr>
-                                <button class="pr-pick-btn" ng-click="startAdvertising('Ruby')" data-bs-toggle="modal" data-bs-target="#myModal">Get Started</button>
+                                <button class="pr-pick-btn"  ng-click="startAdvertising(sub.priority); findSubById(sub.subscriptionId)" 
+                                    data-bs-toggle="modal" data-bs-target="#myModal">Get Started</button>
                                 <p class="pr-pick-column-term"><a href="">Terms and conditions apply.</a></p>
                             </div>
                         </div>
@@ -267,35 +286,44 @@
                 </div>
 
                 <!-- Modal body -->
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label">Title</label>
-                        <input ng-model="req.title" type="text" class="form-control" id="title">
+                <form ng-submit="buyads()" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Title</label>
+                            <input ng-model="req.title" type="text" class="form-control" id="title">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Url</label>
+                            <input ng-model="req.url" type="url" class="form-control" id="url">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Tag</label>
+                            <input ng-model="req.tag" type="text" class="form-control" id="tag">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Target Audience</label>
+                            <input ng-model="req.target" type="text" class="form-control" id="target">
+                        </div>
+                        <div class="mb-3" ng-show="!hiden">
+                            <label class="form-label">Content</label>
+                            <textarea ng-model="req.content" class="form-control" id="content" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Banner</label>
+                            <input class="form-control" type="file" id="banner">
+                        </div>
+                        <div class="mb-3" ng-show="!hiden">
+                            <label class="form-label">Audio</label>
+                            <input class="form-control" type="file" id="audio"  >
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Url</label>
-                        <input ng-model="req.url" type="url" class="form-control" id="url">
-                    </div>
-                    <div class="mb-3" ng-show="!hiden">
-                        <label class="form-label">Content</label>
-                        <textarea ng-model="req.content" class="form-control" id="content" rows="3"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Banner</label>
-                        <input ng-model="req.image" id="banner" class="form-control" type="file" id="formFile">
-                    </div>
-                    <div class="mb-3" ng-show="!hiden">
-                        <label class="form-label">Audio</label>
-                        <input ng-model="req.audioFile" id="audio" class="form-control" type="file" id="formFile">
-                    </div>
-                </div>
 
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Submit</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                </div>
-
+               
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
