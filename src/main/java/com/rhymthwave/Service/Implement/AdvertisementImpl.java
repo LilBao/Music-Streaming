@@ -38,11 +38,10 @@ public class AdvertisementImpl implements AdvertisementService {
 
 	private final ImageDAO imageDAO;
 
-	private static String FOLDER_CONTAINING_IMAGE_NEWS = "ImageManager";
+    private static String FOLDER_CONTAINING_IMAGE_NEWS  = "ImageManager";
 
 	@Override
 	public Advertisement save(AdvertisementDTO dto, HttpServletRequest request) {
-
 		Map<String, Object> mapCloudinary = cloudinaryService.Upload(dto.getImage(), FOLDER_CONTAINING_IMAGE_NEWS,
 				"Advertisement");
 		Map<String, Object> map = cloudinaryService.Upload(dto.getAudio(), "Audio", "Advertisement");
@@ -55,19 +54,22 @@ public class AdvertisementImpl implements AdvertisementService {
 		image.setPublicId(public_id);
 		image.setAccessId(accessId);
 		imageDAO.save(image);
-
-		Advertisement advertisement = new Advertisement();
-		advertisement.setActive(true);
-		advertisement.setStatus(2);
-		advertisement.setUrl(dto.getUrl());
-		advertisement.setTitle(dto.getTitle());
-		advertisement.setTag(dto.getTag());
-		advertisement.setStartDate(GetCurrentTime.getTimeNow());
-		advertisement.setContent(dto.getContent());
-		advertisement.setAudioFile(urlAudio);
-		advertisement.setImage(image);
-		advertisement.setAccount(accountDAO.findById(getIdByRequest.getEmailByRequest(request)).orElse(null));
-		return advertisementDAO.save(advertisement);
+        Advertisement advertisement = new Advertisement();
+        advertisement.setActive(true);
+        advertisement.setStatus(2);
+        advertisement.setUrl(dto.getUrl());
+        advertisement.setTitle(dto.getTitle());
+        advertisement.setTag(dto.getTag());
+        advertisement.setStartDate(GetCurrentTime.getTimeNow());
+        advertisement.setContent(dto.getContent());
+        advertisement.setPriority(subscriptionDAO.findById(dto.getSubscription()).orElse(null).getPriority());
+        advertisement.setAudioFile(urlAudio);
+        advertisement.setImage(image);
+        advertisement.setListened(0L);
+        advertisement.setClicked(0L);
+        advertisement.setAccount(accountDAO.findById(getIdByRequest.getEmailByRequest(request)).orElse(null));
+        advertisement.setSubscription(subscriptionDAO.findById(dto.getSubscription()).orElse(null));
+        return advertisementDAO.save(advertisement);
 	}
 
 	@Override

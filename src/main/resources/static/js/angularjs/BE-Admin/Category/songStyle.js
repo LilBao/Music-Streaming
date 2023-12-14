@@ -1,56 +1,52 @@
 
 var apiSongStyle = "http://localhost:8080/api/v1/admin/category/song-style";
 var cookieName = "token";
-app.controller("songStyleController", function ($scope, $http, $cookies,$log , $timeout) {
+app.controller("songStyleController", function ($scope, $http, $cookies,$log , graphqlService) {
 
 	$scope.form = {};
 	$scope.itemCountries = [];
-	$scope.page = [];
-	$scope.currentPage = 0;
-	$scope.success = false;
+	
 
 	$scope.reset = function () {
 		$scope.form = {};
 		$scope.key = null;
 	}
 
-	$scope.load_all = () => {
-		$http.get(apiSongStyle).then(resp => {
-			$scope.itemCountries = resp.data.data.content;
-			$scope.utilitiesPage.totalPages(resp.data.data.totalPages);
-		}).catch(error => {
-			console.log("Error", error)
-		});
-	}
-
-	$scope.goToPage = function (pageNumber) {
-		// Gửi yêu cầu đến máy chủ Spring Boot để lấy dữ liệu trang mới
-		$http.get(apiSongStyle + "?page=" + pageNumber)
-			.then(resp =>{
-				$scope.itemCountries = resp.data.data.content;			
-				$scope.currentPage = pageNumber;	
-			}).catch(error => {
-				console.log("Error", error)
-			});
-	};
-
-	$scope.utilitiesPage = {
-
-		totalPages(totalPages) {
-			for (var i = 0; i <= totalPages - 1; i++) {
-				$scope.page.push(i);
+	$scope.load_all = function() {
+		const query = `
+		{
+			getAllSongStyle {
+			  songStyleId
+			  songStyleName
+			  createBy
+			  createDate
+			  modifiedBy
+			  modifiDate
 			}
-		},
+		  }`;
+        graphqlService.executeQuery(query)
+            .then(data => {
+                $scope.itemCountries = data.getAllSongStyle;
+            })
+            .catch(error => {
+                console.log(error);
 
-		firstPage(){
-			$scope.goToPage($scope.page[0]);
-		},
-		endPage(){
-			$scope.goToPage($scope.page[$scope.page.length - 1]);
-		}
+            });
 	}
 
 
+	$scope.sortColumn="songStyleName";
+	$scope.revertSort = false;
+	$scope.sortData = function(column){
+		$scope.revertSort = ($scope.sortColumn == column) ? !$scope.revertSort : false;
+		$scope.sortColumn = column;
+	}
+	$scope.getSortClass = function(column){
+		if($scope.sortColumn == column){
+			return $scope.revertSort ?"bi bi-sort-down mx-1":"bi bi-sort-up mx-1"
+		}
+		return "";
+	}
 	$scope.create = function () {
 		var item = angular.copy($scope.form);
 		$http.post(apiSongStyle, item, {
@@ -60,11 +56,9 @@ app.controller("songStyleController", function ($scope, $http, $cookies,$log , $
 		}).then(resp => {
 			$scope.load_all();
 			$scope.reset();
-			$scope.success = true
-			$timeout( function(){
-				$scope.closeAlert();
-			}, 2000 );
+			showStickyNotification("successful", "success", 2000);
 		}).catch(error => {
+			showStickyNotification("Create fail", "danger", 2000);
 			console.log("Error", error)
 		});
 	}
@@ -84,11 +78,9 @@ app.controller("songStyleController", function ($scope, $http, $cookies,$log , $
 			var index = $scope.itemCountries.findIndex(item => item.songStyleId == $scope.form.songStyleId);
 			$scope.itemCountries[index] = resp.data;
 			$scope.load_all();
-			$scope.success = true
-			$timeout( function(){
-				$scope.closeAlert();
-			}, 2000 );
+			showStickyNotification("successful", "success", 2000);
 		}).catch(error => {
+			showStickyNotification("Update fail", "danger", 2000);
 			$log.error(error.data);
 		});
 	}
@@ -104,11 +96,9 @@ app.controller("songStyleController", function ($scope, $http, $cookies,$log , $
 			$scope.itemCountries.splice(index, 1);
 			$scope.load_all();
 			$scope.reset();
-			$scope.success = true
-			$timeout( function(){
-				$scope.closeAlert();
-			}, 2000 );
+			showStickyNotification("successful", "success", 2000);
 		}).catch(error => {
+			showStickyNotification("Delete fail", "danger", 2000);
 			console.log("Error", error);
 		});
 	}

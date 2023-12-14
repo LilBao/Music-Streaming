@@ -26,30 +26,30 @@
                </div>
 
                <div class="card-bodyPerShadow">        
-
-                
-
+                  <form name="validate" novalidate>
                   <div class="mb-3 row">
                      <label class="col-sm-2 col-form-label">Name Song Style:</label>
                      <div class="col-sm-10">
-                        <input  ng-model="form.songStyleName" type="text" class="form-control">
+                        <input  required ng-minlength="2"  ng-maxlength="55" name="song" ng-model="form.songStyleName" type="text" class="form-control">
+                        <div ng-messages="validate.song.$touched && validate.song.$error ">
+                           <div ng-messages-include="../admin/ng-Utilities/messages_error.html">
+                           </div>
+                      </div>
                      </div>
                   </div>
 
                   <div class="row">
-
                      <div class="col-sm-2"></div>
                      <div class="col-sm-10">
                         <div class="event-createCountry">
-                           <button class="btn btn-success" ng-click="create()">Save</button>
-                           <button class="btn btn-success" ng-click="update()">Update</button>
-                           <button class="btn btn-success"  ng-click="delete(form.songStyleId)">Delete</button>                          
+                           <button class="btn btn-success" ng-disabled="!validate.$valid" ng-click="create()">Save</button>
+                           <button class="btn btn-success" ng-disabled="!validate.$valid" ng-click="update()">Update</button>
+                           <button class="btn btn-success" ng-disabled="!validate.$valid" ng-click="delete(form.songStyleId)">Delete</button>                          
                           
                         </div>
                      </div>
-
                   </div>
-
+               </form>
                </div>
 
             </div>
@@ -77,16 +77,28 @@
                         <div class="row">
                            <div class="col-sm-12 ">
                               <table class="table table-bordered ">
-                                 <thead style="border-bottom: 2px solid rgb(212, 212, 212);">
+                                 <thead style="border-bottom: 2px solid rgb(212, 212, 212); cursor: pointer;">
                                     <tr>
-
-                                       <th scope="col" style="width: 145.333px;">Id</th>
-                                       <th scope="col" style="width: 218.333px;">Song Style</th>
-                                       <th scope="col" style="width: 218.333px;">Create By</th>
-                                       <th scope="col" style="width: 218.333px;">Create Date</th>
-                                       <th scope="col" style="width: 218.333px;">Modified By</th>
-                                       <th scope="col" style="width: 218.333px;">Modified Date</th>
-                                       <th scope="col" style="width: 218.333px;">Action</th>
+                                       <th scope="col" style="width: 145.333px;" ng-click="sortData('songStyleId')">
+                                          ID 
+                                          <a class="fs-6" href=""  ><i  ng-class="getSortClass('songStyleId')"></i></a>
+                                      </th>
+                                       <th scope="col" style="width: 218.333px;" ng-click="sortData('songStyleName')">Genre  
+                                          <a class="fs-6" href=""  ><i  ng-class="getSortClass('songStyleName')"></i></a>
+                                       </th>
+                                       <th scope="col" style="width: 218.333px;"  ng-click="sortData('createBy')">Create By
+                                          <a class="fs-6" href=""  ><i  ng-class="getSortClass('createBy')"></i></a>
+                                       </th>
+                                       <th scope="col" style="width: 218.333px;"  ng-click="sortData('createDate')">Create Date
+                                          <a class="fs-6" href=""  ><i  ng-class="getSortClass('createDate')"></i></a>
+                                       </th>
+                                       <th scope="col" style="width: 218.333px;"  ng-click="sortData('modifiedBy')">Modified By
+                                          <a class="fs-6" href=""  ><i  ng-class="getSortClass('modifiedBy')"></i></a>
+                                       </th>
+                                       <th scope="col" style="width: 218.333px;"  ng-click="sortData('modifiDate')">Modified Date
+                                          <a class="fs-6" href=""  ><i  ng-class="getSortClass('modifiDate')"></i></a>
+                                       </th>
+                                       <th scope="col" style="width: 218.333px;">action</th>
                                     </tr>
                                  </thead>
                                  <tfoot>
@@ -102,7 +114,7 @@
                                  </tfoot>
                                  <tbody>
 
-                                    <tr class="odd" ng-repeat=" songStyle in itemCountries">
+                                    <tr class="odd"  dir-paginate=" songStyle in itemCountries | itemsPerPage: 12 | orderBy: sortColumn:revertSort">
                                        <td class="sorting_1">{{songStyle.songStyleId}}</td>
                                        <td>{{songStyle.songStyleName}}</td>
                                        <td>{{songStyle.createBy}}</td>
@@ -118,22 +130,9 @@
                            </div>
                         </div>
 
-                        <div class="row"> 
-                           <div class="col-sm-12 col-md-5">
-                              <!-- <div class="dataTables_info" id="DataTables_Table_0_info" role="status"
-                                 aria-live="polite">Đang xem 1 đến 1 trong
-                                 tổng số 1 mục</div> -->
-                           </div>
-                           <div class="col-sm-12 col-md-7">
-                              <div class="pagination  d-flex justify-content-end align-content-center mb-3">
-                                 <a href="" ng-click="utilitiesPage.firstPage()" >&laquo;</a>
-
-                                 <a href=""  ng-repeat="pageNo in page" ng-click="goToPage(pageNo)" ng-class="{ 'active': currentPage === pageNo }">
-                                    {{pageNo + 1}}
-                                 </a>                           
-                                 <a href="" ng-click="utilitiesPage.endPage()" >&raquo;</a>
-                              </div>
-
+                        <div class="row">
+                           <div class="d-flex justify-content-end">
+                                 <dir-pagination-controls class="dir-pagination-controls"></dir-pagination-controls>
                            </div>
                         </div>
                      </div>

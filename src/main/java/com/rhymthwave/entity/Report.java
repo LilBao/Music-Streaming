@@ -36,7 +36,7 @@ public class Report implements Serializable{
 	
 	@Column(name = "STATUS")
 	private boolean status;
-
+	
 	@ManyToOne
 	@JoinColumn(name = "ARTISTID")
 	private Artist artist;

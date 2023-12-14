@@ -32,12 +32,12 @@
         <div class="bl-form-container bl2-form-container">
           <h1 class="bl-title2 bl2-title2">Log in to Rhymthwave</h1>
           <ul class="bl-option bl2-option">
-            <li class="bl-li"><button class="bl-btn">
+            <li class="bl-li"><a id="loginGoogleId" ng-click="loginWithGoogle()" class="bl-btn" type="button" href="" style="text-decoration: none;">
                 <span class="bl-google"></span>
-                <span class="bl-title-google">Continue using Google</span></button></li>
-            <li class="bl-li"><button class="bl-btn">
+                <span class="bl-title-google">Continue using Google</span></a></li>
+            <li class="bl-li"><a id="loginFacebookId" ng-click="loginWithFacebook()" class="bl-btn"type="button" href="" style="text-decoration: none;">
                 <span class="bl-fb"></span>
-                <span class="bl-title-fb">Continue with Facebook</span></button></li>
+                <span class="bl-title-fb">Continue with Facebook</span></a></li>
             <li class="bl-li"><button class="bl-btn">
                 <span class="bl-apple"></span>
                 <span class="bl-title-apple">Continue with Apple</span></button></li>
@@ -66,11 +66,11 @@
             </div>
           </form>
           <div class="bl-fogot ">
-            <a href="http://127.0.0.1:5500/Music-Streaming/src/main/resources/templates/user/fogotpassword.html" ng-click="navigateToForgotPassword()">Forgot your password</a>
+            <a href="./fogotpassword.html" ng-click="navigateToForgotPassword()">Forgot your password</a>
           </div>
           <hr class="bl-hr">
           <div class="bl-sign-up">
-            <p>Don't have account? <a href="">Sign up for Rhymthwave</a></p>
+            <p>Don't have account? <a href="./signup.html">Sign up for Rhymthwave</a></p>
 
           </div>
         </div>

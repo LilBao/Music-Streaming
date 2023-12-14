@@ -48,4 +48,25 @@ public class SendNotificationOfNews implements INotification<NewDTO> {
 		}
 
 	}
+	
+	@Override
+	public void sendEmailBan(String email,String message) {
+		Account accounts = accountDAO.findByEmail(email);
+		Email emails = new Email();
+		emails.setFrom("musicstreaming2023@gmail.com");
+		emails.setTo(email);
+		emails.setSubject(message);
+		emails.setBody(sendMailTemplateSer.getContentForReport("templateReportAdmin"));
+		mailService.enqueue(emails);
+	}
+	@Override
+	public void sendEmailWarring(String email) {
+		Account accounts = accountDAO.findByEmail(email);
+		Email emails = new Email();
+		emails.setFrom("musicstreaming2023@gmail.com");
+		emails.setTo(email);
+		emails.setSubject("Warring Account");
+		emails.setBody(sendMailTemplateSer.getContentForReport("templateWarring"));
+		mailService.enqueue(emails);
+	}
 }

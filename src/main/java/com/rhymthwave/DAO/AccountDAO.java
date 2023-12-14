@@ -22,10 +22,11 @@ public interface AccountDAO extends JpaRepository<Account, String>{
 	
 	Account findByEmail(String email);
 
-	Account findByVerificationCode(String verificationCode);
-	
+	Account findByVerificationCode(String verificationCode);	
+
 	@Procedure(name = "SEARCH")
 	List<Object> search(String keyword);
+
 	
 	@Query(value = "EXEC SP_SEARCH_GR :keyword",nativeQuery = true)
 	List<Object> searchGr(String keyword);

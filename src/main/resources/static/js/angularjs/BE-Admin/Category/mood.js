@@ -1,7 +1,7 @@
 
 var apiMood = "http://localhost:8080/api/v1/admin/category/mood";
 var cookieName = "token";
-app.controller("moodController", function ($scope, $http, $cookies, $log, $timeout) {
+app.controller("moodController", function ($scope, $http, $cookies, $log, graphqlService) {
 
 	$scope.form = {};
 	$scope.items = [];
@@ -15,14 +15,41 @@ app.controller("moodController", function ($scope, $http, $cookies, $log, $timeo
 	}
 
 	$scope.load_all = () => {
-		$http.get(apiMood).then(resp => {
-			$scope.items = resp.data.data.content;
-			$scope.utilitiesPage.totalPages(resp.data.data.totalPages );
-		}).catch(error => {
-			console.log("Error", error)
-		});
 
+		const query = `{
+			getAllMood {
+			  moodid
+			  moodname
+			  createBy
+			  createDate
+			  modifiedBy
+			  modifiDate
+			}
+		  }`;
+        graphqlService.executeQuery(query)
+            .then(data => {
+
+                $scope.items = data.getAllMood;
+            })
+            .catch(error => {
+                console.log(error);
+
+            });
 	}
+
+	$scope.sortColumn="moodname";
+	$scope.revertSort = false;
+	$scope.sortData = function(column){
+		$scope.revertSort = ($scope.sortColumn == column) ? !$scope.revertSort : false;
+		$scope.sortColumn = column;
+	}
+	$scope.getSortClass = function(column){
+		if($scope.sortColumn == column){
+			return $scope.revertSort ?"bi bi-sort-down mx-1":"bi bi-sort-up mx-1"
+		}
+		return "";
+	}
+
 
 	$scope.exportToExcel = function () {
 		$http.get(apiMood + '/export-excel', { responseType: 'arraybuffer' })
@@ -40,32 +67,6 @@ app.controller("moodController", function ($scope, $http, $cookies, $log, $timeo
 			});
 	};
 
-	$scope.goToPage = function (pageNumber) {
-		// Gửi yêu cầu đến máy chủ Spring Boot để lấy dữ liệu trang mới
-		$http.get(apiMood + "?page=" + pageNumber)
-			.then(resp =>{
-				$scope.items = resp.data.data.content;			
-				$scope.currentPage = pageNumber;	
-			}).catch(error => {
-				console.log("Error", error)
-			});
-	};
-
-	$scope.utilitiesPage = {
-
-		totalPages(totalPages) {
-			for (var i = 0; i <= totalPages - 1; i++) {
-				$scope.page.push(i);
-			}
-		},
-
-		firstPage(){
-			$scope.goToPage($scope.page[0]);
-		},
-		endPage(){
-			$scope.goToPage($scope.page[$scope.page.length - 1]);
-		}
-	}
 
 
 
@@ -78,18 +79,13 @@ app.controller("moodController", function ($scope, $http, $cookies, $log, $timeo
 		}).then(resp => {
 			$scope.load_all();
 			$scope.reset();
-			$scope.success = true
-			$timeout( function(){
-				$scope.closeAlert();
-			}, 2000 );
+			showStickyNotification("successful", "success", 2000);
+
 		}).catch(error => {
+			showStickyNotification("Create Mood fail", "danger", 2000);
 			console.log("Error", error)
 		});
 	}
-
-	$scope.closeAlert = function(){
-        $scope.success = false;
-    }
 
 
 	$scope.update = function (key) {
@@ -104,7 +100,10 @@ app.controller("moodController", function ($scope, $http, $cookies, $log, $timeo
 			$scope.items[index] = resp.data;
 			$scope.load_all();
 			$scope.reset();
+			showStickyNotification("successful", "success", 2000);
+
 		}).catch(error => {
+			showStickyNotification("Mood dose not exist", "danger", 2000);
 			$log.error(error.data);
 		});
 	}
@@ -120,9 +119,10 @@ app.controller("moodController", function ($scope, $http, $cookies, $log, $timeo
 			$scope.items.splice(index, 1);
 			$scope.load_all();
 			$scope.reset();
+            showStickyNotification("successful", "success", 2000);
 
 		}).catch(error => {
-			console.log("Error", error)
+			showStickyNotification("Mood dose not exist", "danger", 2000);
 		});
 	}
 
@@ -138,4 +138,30 @@ app.controller("moodController", function ($scope, $http, $cookies, $log, $timeo
 	}
 
 	$scope.load_all();
+
+	// $(document).ready(function(){
+	// 	$('#sort-down').hide();
+	// 	$('#sort-up').show()
+	// 	$('#sort-down').click(function () {
+	// 		$('#sort-up').show()
+	// 		$('#sort-down').hide()
+	// 	})
+	// 	$('#sort-up').click(function () {
+	// 		$('#sort-down').show()
+	// 		$('#sort-up').hide()
+	// 	})	
+	// });
+
+	// $(document).ready(function(){
+	// 	$('#sort-down-mood').hide();
+	// 	$('#sort-up-mood').show()
+	// 	$('#sort-down-mood').click(function () {
+	// 		$('#sort-up-mood').show()
+	// 		$('#sort-down-mood').hide()
+	// 	})
+	// 	$('#sort-up-mood').click(function () {
+	// 		$('#sort-down-mood').show()
+	// 		$('#sort-up-mood').hide()
+	// 	})	
+	// });
 })

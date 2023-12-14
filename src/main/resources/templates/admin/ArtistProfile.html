@@ -224,8 +224,8 @@
                            <div class=" col-3 mx-0">
                               <select class="form-select" style="font-size: 16px;" ng-model="sortFilter">
                                  <option value="" selected >Default</option>
-                                 <option value="-song.songName"  >ASC</option>
-                                 <option value="song.songName">DESC</option>
+                                 <option ng-value="song.songName"  >ASC</option>
+                                 <option  ng-value="-song.songName">DESC</option>
                               </select>
                            </div>
                         </div>
@@ -243,7 +243,7 @@
                                  </tr>
                               </thead>
                               <tbody ng-repeat=" itemSong in album.writters" >
-                                 <tr ng-repeat=" itemRecording in itemSong.song.recordings  | filter: search | orderBy: 'song.songName'"  >
+                                 <tr ng-repeat=" itemRecording in itemSong.song.recordings  | filter: search | orderBy: true"  >
                                    
                                     <td >
                                        <div class="d-flex align-items-center " style="cursor:pointer">

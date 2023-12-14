@@ -26,6 +26,29 @@ app.controller('loginCtrl', function ($scope, $http, $window) {
 
 
   })
+  
+  $scope.loginWithGoogle = function(){
+    var url = host + "/v1/auth/success";
+    $('#loginGoogleId').attr("href","http://localhost:8080/oauth2/google");
+    $http.get(url).then(function (resp) {
+      if(resp.data.data == true){
+        console.log("ádra")
+        window.location="https://viblo.asia.vn";
+      }
+    })
+  }
+
+  $scope.loginWithFacebook = function(){
+    var url = host + "/v1/auth/success";
+    $('#loginFacebookId').attr("href","http://localhost:8080/oauth2/facebook");
+    $http.get(url).then(function (resp) {
+      if(resp.data.data == true){
+        console.log("ádra")
+        window.location="https://viblo.asia.vn";
+      }
+    })
+  }
+
 })
 function showCaptchaDialog(event) {
   event.preventDefault(); // Prevent form submission

@@ -87,6 +87,7 @@ public class RecordREST {
 			record.setLyricsUrl((String) respLyrics.get("url"));
 			record.setPublicIdLyrics((String) respLyrics.get("public_id"));
 		}
+
 		record.setAudioFileUrl((String) respRecord.get("url"));
 		record.setPublicIdAudio((String) respRecord.get("public_id"));
 		record.setEmailCreate(owner);
@@ -145,10 +146,11 @@ public class RecordREST {
 	public ResponseEntity<MessageResponse> findListRecordRandom() {
 		return ResponseEntity.ok(new MessageResponse(true, "success", recordSer.findListRecordRandom()));
 	}
-	
+
 	@GetMapping("/api/v1/record-statistics")
-	public ResponseEntity<MessageResponse> statisticsRecord(HttpServletRequest req,@RequestParam("duration") Integer duration){
-		String owner =host.getEmailByRequest(req);
-		return ResponseEntity.ok(new MessageResponse(true,"success",recordSer.statisticsByDate(owner,duration)));
+	public ResponseEntity<MessageResponse> statisticsRecord(HttpServletRequest req,
+			@RequestParam("duration") Integer duration) {
+		String owner = host.getEmailByRequest(req);
+		return ResponseEntity.ok(new MessageResponse(true, "success", recordSer.statisticsByDate(owner, duration)));
 	}
 }

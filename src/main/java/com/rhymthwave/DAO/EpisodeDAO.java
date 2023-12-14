@@ -29,9 +29,15 @@ public interface EpisodeDAO extends JpaRepository<Episode, Long>{
 			+ "					ORDER BY NEWID()",nativeQuery = true)
 	List<Episode> getRandomPodcasts(@Param("tags") List<String> tags);
 
+	
+	@Query(value = "select * from episodes where episodesid= :episodeId", nativeQuery = true)
+	Episode findAllById(@Param("episodeId") Long episodeId);
+
+
 	@Query("select count(e.episodeId) from  Episode e")
 	int countEpisode();
 
 	List<Episode> findTop100ByOrderByListenedDesc();
+
 
 }

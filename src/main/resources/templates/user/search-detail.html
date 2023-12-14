@@ -53,7 +53,7 @@
                   </svg>                
                   <ul class="dropdown-menu dropdown-menu-dark">
                     <li ng-show="hiden"><a class="dropdown-item" ng-click="account()"> <i class="bi bi-box-arrow-up-right"></i> Account</a></li>
-                    <li ng-show="hiden"><a class="dropdown-item" href="!#profile//{{profile.username}}"> <i class="bi bi-person-circle"></i> Profile</a></li>
+                    <li ng-show="hiden"><a class="dropdown-item" ng-click="redirectToProfile(profile.username)"> <i class="bi bi-person-circle"></i> Profile</a></li>
                     <li ng-show="!hiden"><a class="dropdown-item" ng-click="signin()"> <i class="bi bi-box-arrow-in-left"></i> Sign in</a></li>
                     <li ng-show="hiden"><hr class="dropdown-divider"></li>
                     <li ng-show="hiden"><a class="dropdown-item" ng-click="logout()"> <i class="bi bi-box-arrow-right"></i> Log out</a></li>

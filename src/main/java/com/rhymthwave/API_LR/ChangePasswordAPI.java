@@ -11,12 +11,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.rhymthwave.DAO.AccountDAO;
 import com.rhymthwave.DTO.MessageResponse;
+import com.rhymthwave.Request.DTO.AccountDTO;
 import com.rhymthwave.Request.DTO.ChangePasswordDTO;
+import com.rhymthwave.Service.Implement.AccountServiceImpl;
+import com.rhymthwave.Utilities.GetHostByRequest;
 import com.rhymthwave.entity.Account;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping(value = "/api/v1/accounts")
+@RequestMapping(value = "/api/v1/account")
 public class ChangePasswordAPI {
 
 	@Autowired
@@ -24,36 +29,24 @@ public class ChangePasswordAPI {
 
 	@Autowired
 	private AccountDAO accountDAO;
-
+	@Autowired
+	private AccountServiceImpl accountServiceImpl;
+	@Autowired
+	private GetHostByRequest host;
+	
 	@PutMapping("/changepassword")
-	public ResponseEntity<?> changePassword(@RequestBody ChangePasswordDTO changepasswordDTO) {
-		// Lấy email từ request
-		String email = changepasswordDTO.email();
-
-		// Kiểm tra xác thực email và mật khẩu
-		Account account = accountDAO.findByEmail(email);
-
-		if (account == null) {
-			return ResponseEntity.ok(new MessageResponse(true, "This email does not exist"));
-		}
-
-		String password = changepasswordDTO.password();
-		if (!encoder.matches(password, account.getPassword())) {
-			return ResponseEntity.ok(new MessageResponse(true, "Incorrect password"));
-		}
-
-		// Kiểm tra mật khẩu mới và xác nhận mật khẩu mới
-		String newPassword = changepasswordDTO.newpass();
-		String confirmPassword = changepasswordDTO.confirmpass();
-
-		if (!newPassword.equals(confirmPassword)) {
-			return ResponseEntity.ok(new MessageResponse(true, "New password and confirm password do not match"));
-
-		}
-
-		String encodedNewPassword = encoder.encode(newPassword);
-		account.setPassword(encodedNewPassword);
-		accountDAO.save(account);
+	public ResponseEntity<?> changePassword(@RequestBody ChangePasswordDTO changepasswordDTO,final HttpServletRequest req) {
+		String owner = host.getEmailByRequest(req);
+		Account account = accountServiceImpl.findOne(owner);
+		accountServiceImpl.changePass(changepasswordDTO,req,account);
 		return ResponseEntity.ok(new MessageResponse(true, "Password changed successfully"));
 	}
+	
+	@PutMapping("/updateprofile")
+    public ResponseEntity<MessageResponse> updateProfile(@RequestBody AccountDTO accountRequest,HttpServletRequest req) {
+		String owner = host.getEmailByRequest(req);
+		Account account = accountServiceImpl.findOne(owner);
+		accountServiceImpl.update(accountRequest,req,account);	
+        return ResponseEntity.ok(new MessageResponse(true, "Profile updated successfully"));
+    }
 }

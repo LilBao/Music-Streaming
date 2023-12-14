@@ -1,7 +1,7 @@
 
 var apitag = "http://localhost:8080/api/v1/admin/category/tag";
 var cookieName = "token";
-app.controller("tagController", function ($scope, $http, $cookies,$log , $timeout) {
+app.controller("tagController", function ($scope, $http, $cookies,$log ,graphqlService) {
 
 	$scope.form = {};
 	$scope.items = [];
@@ -11,13 +11,26 @@ app.controller("tagController", function ($scope, $http, $cookies,$log , $timeou
 		$scope.key = null;
 	}
 
-	$scope.load_all = () => {
-		$http.get(apitag).then(resp => {
-			$scope.items = resp.data.data;
-			
-		}).catch(error => {
-			console.log("Error", error)
-		});
+	$scope.load_all = function() {
+		const query = `
+		{
+			getAllTag {
+			  tagId
+			  tagName
+			  createBy
+			  createDate
+			  modifiedBy
+			  modifiDate
+			}
+		  }`;
+        graphqlService.executeQuery(query)
+            .then(data => {
+                $scope.items = data.getAllTag;
+            })
+            .catch(error => {
+                console.log(error);
+
+            });
 	}
 
 
@@ -32,17 +45,24 @@ app.controller("tagController", function ($scope, $http, $cookies,$log , $timeou
 			$scope.load_all();
 			$scope.reset();
             showStickyNotification("successful", "success", 2000);
-
-
 		}).catch(error => {
             showStickyNotification(error, "danger", 2000);
 			console.log("Error", error)
 		});
 	}
 
-	$scope.closeAlert = function(){
-        $scope.success = false;
-    }
+	$scope.sortColumn="nameGenre";
+	$scope.revertSort = false;
+	$scope.sortData = function(column){
+		$scope.revertSort = ($scope.sortColumn == column) ? !$scope.revertSort : false;
+		$scope.sortColumn = column;
+	}
+	$scope.getSortClass = function(column){
+		if($scope.sortColumn == column){
+			return $scope.revertSort ?"bi bi-sort-down mx-1":"bi bi-sort-up mx-1"
+		}
+		return "";
+	}
 
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
