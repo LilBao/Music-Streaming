@@ -101,7 +101,7 @@
                                             href="#!profile/{{item.authorsAccountB.role.role.toLowerCase()}}/{{item.authorsAccountB.account.username}}">
                                             <div class="d-flex align-items-center">
                                                 <img class="m-2 rounded-2 thumbnail-playlist"
-                                                    src="{{item.authorsAccountB.account.image !==null ? item.authorsAccountB.account.image.url:'https://res.cloudinary.com/div9ldpou/image/upload/v1699632134/Avatar/System/user_oujyrp.png'}}" alt="">
+                                                    ng-src="{{item.authorsAccountB.account.image !==null?item.authorsAccountB.account.image.url:'https://res.cloudinary.com/div9ldpou/image/upload/v1699632134/Avatar/System/user_oujyrp.png'}}" alt="">
                                                 <div class="d-flex justify-content-between flex-column">
                                                     <p class="p-0 m-0">{{item.authorsAccountB.account.username}}</p>
                                                     <span class="small">{{item.authorsAccountB.role.role}}</span>
@@ -112,7 +112,7 @@
                                             href="#!artist/{{item.authorsAccountB.account.artist.artistId}}">
                                             <div class="d-flex align-items-center">
                                                 <img class="m-2 rounded-2 thumbnail-playlist"
-                                                    src="{{item.authorsAccountB.account.artist.imagesProfile!==null?item.authorsAccountB.account.artist.imagesProfile.url:'https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png'}}" alt="">
+                                                    ng-src="{{item.authorsAccountB.account.artist.imagesProfile!==null?item.authorsAccountB.account.artist.imagesProfile.url:'https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png'}}" alt="">
                                                 <div class="d-flex justify-content-between flex-column">
                                                     <p class="p-0 m-0">
                                                         {{item.authorsAccountB.account.artist.artistName}}
@@ -148,7 +148,7 @@
                                                     <hr class="dropdown-divider">
                                                 </li>
                                                 <li class="li-dropdown-end">
-                                                    <a ng-click="typeShare(item.authorsAccountB.role.role === 'ARTIST' ? '#!artist/'+item.authorsAccountB.account.artist.artistId : '#!profile/'+item.authorsAccountB.role.role.toLowerCase()+'/'+item.authorsAccountB.account.username)" data-bs-toggle="modal" data-bs-target="#sharing"
+                                                    <a ng-click="typeShare(item.authorsAccountB.role.role === 'ARTIST' ? '#!/artist/'+item.authorsAccountB.account.artist.artistId : '#!/profile/'+item.authorsAccountB.role.role.toLowerCase()+'/'+item.authorsAccountB.account.username)" data-bs-toggle="modal" data-bs-target="#sharing"
                                                         class="btn text-white dropdown-item py-2 px-3">
                                                         <i class="bi bi-share"></i>
                                                         Share</a>
@@ -164,11 +164,11 @@
                                         <a href="#!playlist/{{item.playlistId}}">
                                             <div class="d-flex align-items-center">
                                                 <img class="m-2 rounded-2 thumbnail-playlist"
-                                                    src="{{item.image!==null?item.image.url:'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}"
+                                                    ng-src="{{item.image!==null?item.image.url:'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}"
                                                     alt="">
                                                 <div>
                                                     <p class="p-0 m-0">{{item.playlistName}}</p>
-                                                    <span>{{item.quantity}}</span>
+                                                    <span>Playlist</span>
                                                 </div>
                                             </div>
                                         </a>
@@ -263,7 +263,7 @@
                                                 </li>
 
                                                 <li class="li-dropdown-end">
-                                                    <a ng-click="typeShare('playlist/'+item.playlistId)" data-bs-toggle="modal" data-bs-target="#sharing"
+                                                    <a ng-click="typeShare('!#/playlist/'+item.playlistId)" data-bs-toggle="modal" data-bs-target="#sharing"
                                                         class="btn text-white dropdown-item py-2 px-3">
                                                         <i class="bi bi-share"></i>
                                                         Share</a>
@@ -400,7 +400,9 @@
                     <div id="notify" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <!-- <img src="{{notify.}}" alt="Los Angeles" class="d-block w-100"> -->
+                                <a href="{{notify.toURL}}">
+                                    <img src="{{notify.urlImage}}" alt="Los Angeles" class="d-block w-100">
+                                </a>
                             </div>
                             <div class="carousel-item" ng-repeat="item in AdsNotification track by $index">
                                 <a ng-click="updateClickAds(item)">
@@ -489,8 +491,6 @@
     <script src="../../static/js/angularjs/user/profile.js"></script>
 
     <script src="../../static/js/angularjs/user/show-podcast.js"></script>
-
-    <script src="../../static/js/angularjs/user/playlist-art.js"></script>
 
     <script src="../../static/js/angularjs/user/album.js"></script>
 

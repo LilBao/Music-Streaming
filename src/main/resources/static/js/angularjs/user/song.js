@@ -36,7 +36,6 @@ app.controller('song', function ($scope, $http, $routeParams, graphqlService) {
       $scope.s.song.writters.forEach(element => {
         $scope.artId = element.artist.artistId;
       });
-
       var url = host + "v1/cloudinary/read-lyrics";
       $http.get(url, {
         params: { url: $scope.s.lyricsUrl },

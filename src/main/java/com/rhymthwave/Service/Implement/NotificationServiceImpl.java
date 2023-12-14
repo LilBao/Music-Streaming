@@ -91,6 +91,6 @@ public class NotificationServiceImpl implements NotificationService {
     
     @Override
 	public Notification notifyLatest() {
-		return null;
+		return notificationDAO.findNotificationLatest();
 	}
 }

@@ -70,7 +70,7 @@ app.config(function ($routeProvider,$httpProvider) {
             controller: 'playlistCtrl'
         })
         .when("/song/:id", {
-            templateUrl: "song.html",
+            templateUrl: "User/song.html",
             controller: 'song'
         })
         .when("/queue", {

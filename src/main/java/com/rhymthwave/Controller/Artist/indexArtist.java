@@ -15,4 +15,9 @@ public class indexArtist {
 	public String claimArtist() {
 		return "Artist/Information";
 	}
+	
+	@GetMapping("artist/home")
+	public String layoutArtistHome() {
+		return "Artist/Artist";
+	}
 }

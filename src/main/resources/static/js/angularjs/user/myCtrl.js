@@ -140,11 +140,12 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
     }
 
     $scope.findNotiLatest = function () {
-        let url = host + "";
+        let url = host + "v1/notify-latest";
         $http.get(url).then(resp => {
             $scope.notify = resp.data.data
         })
     }
+    $scope.findNotiLatest();
 
     document.getElementById('create-playlist').addEventListener('click', function () {
         $scope.createPlaylist();
@@ -1563,10 +1564,9 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
     }
 
     // Share   
-    $scope.link = "fsdfdsfdsfds";
+    $scope.link = window.location.origin;
     $scope.typeShare = function (link) {
-        console.log(link)
-        $scope.link = $scope.link.trim() + link;
+        $scope.link = window.location.origin+"/" + link;
     }
 
     $scope.copyToClipboard = function (text) {
@@ -1618,8 +1618,6 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
                 $scope.valueA = $scope.getTitle(a);
                 $scope.valueB = $scope.getTitle(b);
                 $scope.direction === "asc" ? $scope.valueA.localeCompare($scope.valueB) : $scope.valueB.localeCompare($scope.valueA);
-                console.log(a)
-
             })
         }
 

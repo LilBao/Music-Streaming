@@ -61,7 +61,7 @@ public class PlaylistPodcastREST {
 
 	}
 
-	@DeleteMapping("/api/playlist-episode/{id}")
+	@DeleteMapping("/api/v1/playlist-episode/{id}")
 	public ResponseEntity<MessageResponse> deleteEpisodeFromPlaylist(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudPlaylistPodcast.delete(id)));
 	}

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class index {
 	
-	@GetMapping("home")
+	@GetMapping("")
 	public String layoutUser() {
 		return "User/index";
 	}
@@ -14,5 +14,10 @@ public class index {
 	@GetMapping("/logins")
 	public String loginLayout() {
 		return "User/login";
+	}
+	
+	@GetMapping("/subscription")
+	public String premium() {
+		return "User/layoutSub";
 	}
 }

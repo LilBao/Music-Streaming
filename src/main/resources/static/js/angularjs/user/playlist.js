@@ -94,7 +94,6 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location,
                     }).map(function (item) {
                         return item.episode;
                     })];
-                    console.log($scope.listAudioPlaylist);
                 } catch (error) {
 
                 }

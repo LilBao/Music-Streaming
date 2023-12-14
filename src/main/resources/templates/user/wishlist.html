@@ -35,8 +35,8 @@
                     <div class="input-group me-3">
                         <span class="input-group-text" style="background-color: transparent;"><i
                                 class="text-white bi bi-search-heart"></i></span>
-                        <input type="text" class="text-white form-control" placeholder="Search in playlist"
-                            style="background-color: transparent;">
+                        <input type="text" class="text-white form-control" placeholder="Search in liked song"
+                            style="background-color: transparent;" ng-model="searchWishlist">
                     </div>
                 </div>
                 <div class="product_sorting_container product_sorting_container_top">
@@ -82,7 +82,7 @@
                     <th class="text-center"><i class="bi bi-stopwatch"></i></th>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="item in pagination.items(listLikedSongs)"
+                    <tr ng-repeat="item in pagination.items(listLikedSongs) | filter: searchWishlist"
                         ng-dblclick="item.recordingId ? selectAudio(item,'song',listLikedSongs,$index) : selectAudio(item,'episode',listLikedSongs,$index)"
                         class="audio align-items-center">
                         <!-- Col 1 -->
