@@ -2,27 +2,27 @@
     <section>
         <h1>Music</h1>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item me-3 pb-3">
+            <li ng-click="pagination.setPageNo(0)" class="nav-item me-3 pb-3">
                 <button class="tab-button-p nav-link active" id="click-tab-1" role="tab"
                     onclick="openTabProfile(event, 'tab1-p')">Record</button>
             </li>
-            <li class="nav-item me-3 pb-3">
+            <li ng-click="pagination.setPageNo(0)" class="nav-item me-3 pb-3">
                 <button class="tab-button-p nav-link" id="click-tab-2" role="tab"
                     onclick="openTabProfile(event, 'tab2-p')">Releases</button>
             </li>
-            <li class="nav-item me-3 pb-3">
+            <li ng-click="pagination.setPageNo(0)" class="nav-item me-3 pb-3">
                 <button class="tab-button-p nav-link" id="click-tab-3" role="tab"
                     onclick="openTabProfile(event, 'tab3-p')">Project</button>
             </li>
-            <li class="nav-item me-3 pb-3">
+            <li ng-click="pagination.setPageNo(0)" class="nav-item me-3 pb-3">
                 <button class="tab-button-p nav-link" id="click-tab-4" role="tab"
                     onclick="openTabProfile(event, 'tab4-p')">Upcoming</button>
             </li>
-            <li class="nav-item me-3 pb-3">
+            <li ng-click="pagination.setPageNo(0)" class="nav-item me-3 pb-3">
                 <button class="tab-button-p nav-link" id="click-tab-5" role="tab"
                     onclick="openTabProfile(event, 'tab5-p')">Garbage</button>
             </li>
-            <li class="nav-item me-3 pb-3">
+            <li ng-click="pagination.setPageNo(0)" class="nav-item me-3 pb-3">
                 <button class="tab-button-p nav-link" id="click-tab-5" role="tab"
                     onclick="openTabProfile(event, 'tab6-p')">Generate lyrics</button>
             </li>
@@ -30,11 +30,42 @@
         <div class="tab-content" id="myTabContent">
             <div class="tab-p tab-pane active " id="tab1-p">
                 <div class="d-flex justify-content-between">
-                    <div class="input-group w-25">
-                        <span class="input-group-text "><i class="bi bi-search"></i></span>
-                        <input type="text" class=" form-control" placeholder="search">
+                    <div class="d-flex">
+                        <div>
+                            <div class="input-group me-3">
+                                <span class="input-group-text"><i class="bi bi-search-heart"></i></span>
+                                <input type="text" class="form-control" placeholder="Search in playlist">
+                            </div>
+                        </div>
+                        <div class="product_sorting_container product_sorting_container_top">
+                            <ul class="product_sorting">
+                                <li>
+                                    <span class="type_sorting_text">Default Sorting</span>
+                                    <i class="fa fa-angle-down"></i>
+                                    <ul class="sorting_type p-0" style="z-index: 2;">
+                                        <li class="type_sorting_btn" ng-click="sortNumber(listRecord,'recordingId')"> 
+                                            <span>Default Sorting</span>
+                                        </li>
+                                        <li ng-click="sort(listRecord,'recordingName')" class="type_sorting_btn"><span>Title</span></li>
+                                        <li ng-click="sort(listRecord,'recordingdate')" class="type_sorting_btn"><span>Create date</span></li>
+                                        <li ng-click="sortNumber(listRecord,'duration')" class="type_sorting_btn"><span>Duration</span></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <span>Show</span>
+                                    <span class="num_sorting_text">{{pagination.size}}</span>
+                                    <i class="fa fa-angle-down"></i>
+                                    <ul class="sorting_num  p-0" style="z-index: 2;">
+                                        <li ng-click="pagination.setPageSize(10)" class="num_sorting_btn"><span>10</span></li>
+                                        <li ng-click="pagination.setPageSize(15)" class="num_sorting_btn"><span>25</span></li>
+                                        <li ng-click="pagination.setPageSize(35)" class="num_sorting_btn"><span>35</span></li>
+                                        <li ng-click="pagination.setPageSize(50)" class="num_sorting_btn"><span>50</span></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="dropdown">
+                    <!-- <div class="dropdown">
                         <button type="button options" class="btn dropdown-toggle" data-bs-toggle="dropdown">
                             Last 24 hours
                         </button>
@@ -43,28 +74,26 @@
                             <li><a class="dropdown-item" href="#">Last 6 months</a></li>
                             <li><a class="dropdown-item" href="#">Last 1 years</a></li>
                         </ul>
-                    </div>
+                    </div> -->
                 </div>
                 <div>
                     <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th ng-click="sort(listRecord,'recordingName')">Name Record</th>
+                                <th ng-click="sortNumber(listRecord,'listened')">Listeners</th>
+                                <th ng-click="sort(listRecord,'recordingdate')">Uploaded date </th>
                                 <th>
-                                    Name Record
-                                </th>
-                                <th>Listeners</th>
-                                <th>Uploaded date </th>
-                                <th>
-                                    <button ng-click="resetRecord()" id="btn-upload-record" class="btn border-0 p-0" data-bs-toggle="modal"
-                                        data-bs-target="#record">
+                                    <button ng-click="resetRecord()" id="btn-upload-record" class="btn border-0 p-0"
+                                        data-bs-toggle="modal" data-bs-target="#record">
                                         <i class="bi bi-plus-circle"></i>
                                     </button>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="item in listRecord" class="align-items-start">
+                            <tr ng-repeat="item in pagination.items(listRecord)" class="align-items-start">
                                 <td>{{$index+1}}
                                     <i ng-if="item.song ==null" class="ms-1 bi bi-filetype-raw"></i>
                                     <i ng-if="item.song !=null" class="ms-1 bi bi-file-music"></i>
@@ -84,6 +113,9 @@
                                                 <a ng-click="getRecordDetail(item.recordingId)" data-bs-toggle="modal"
                                                     data-bs-target="#recordDetail" class="dropdown-item">Review</a>
                                             </li>
+                                            <li>
+                                                <a href="#!artist-audience/{{item.recordingId}}" class="dropdown-item">Analytics</a>
+                                            </li>
                                             <li><a ng-show="item.song ==null" ng-click="changeTab()"
                                                     class="dropdown-item">Pitch</a></li>
                                         </ul>
@@ -92,61 +124,215 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div class="product_sorting_container product_sorting_container_bottom clearfix">
+                        <span class="showing_results">Showing {{pagination.page +1}} – {{pagination.count(listRecord)}} of
+                            {{pagination.items(listRecord).length}} results</span>
+                        <div class="pages d-flex flex-row align-items-center">
+                            <div ng-show="pagination.page > 0" ng-click="pagination.prev(listRecord)" id="next_page_1" class="page_prev">
+                                <a>
+                                    <i class="bi bi-arrow-left"></i>
+                                </a>
+                            </div>
+                            <div class="page_current">
+                                <span>{{pagination.page +1}}</span>
+                                <ul class="page_selection ps-0 pe-4 bg-black" style="z-index: 200000;">
+                                    <li ng-repeat="i in pagination.getNumbers(pagination.count(listRecord))">
+                                        <a ng-click="pagination.setPageNo($index)" class="text-white">{{$index+1}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="page_total"><span>of</span> {{pagination.count(listRecord)}}</div>
+                            <div ng-show="pagination.page < pagination.count(listRecord)-1" ng-click="pagination.next(listRecord)" id="next_page_1" class="page_next">
+                                <a>
+                                    <i class="bi bi-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div ng-include="'Recording.html'"></div>
                 <div ng-include="'RecordDetail.html'"></div>
             </div>
             <div class="tab-p tab-pane" id="tab2-p">
-                <div class="d-flex justify-content-end">
-                    <div class="dropdown">
-                        <button type="button options" class="btn dropdown-toggle" data-bs-toggle="dropdown">
-                            Last 24 hours
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Last 1 month</a></li>
-                            <li><a class="dropdown-item" href="#">Last 6 months</a></li>
-                            <li><a class="dropdown-item" href="#">Last 1 years</a></li>
-                        </ul>
-                    </div>
-                </div>
                 <div class="row">
-                    <div ng-show="listAlbumReleased.length > 0" class="col-3" id="album-release">
-                        <div ng-repeat="item in listAlbumReleased">
-                            <a type="button" ng-click="detail(item.albumId,'album')" data-bs-toggle="modal"
-                                data-bs-target="#detail">
-                                <div class="card mx-4 my-2" style="width:250px">
-                                    <img class="cover-release rounded-4 card-img-top" src="{{item.image.url}}" alt="">
-                                    <div
-                                        class="w-100 total-song rounded-top-4 d-flex align-items-center justify-content-between">
-                                        <i class="bi bi-music-note mx-2"></i>
-                                        <p class="py-0 my-0 mx-2">{{item.tracks.length}}</p>
-                                    </div>
-                                    <div class="card-body realease-card">
-                                        <h6 class="my-2 card-title">{{item.albumName}}</h6>
-                                        <p class="card-text py-0 ">{{item.artist.artistName}}</p>
+                    <ul id="myTab" role="tablist"
+                        class="nav nav-tabs nav-pills d-flex text-center border-0 rounded-nav mb-4">
+                        <button id="singles-tab" data-toggle="tab" id="pills-user-tab" data-bs-toggle="pill"
+                            data-bs-target="#pills-singles" type="button" role="tab" aria-controls="pills-singles"
+                            aria-selected="true"
+                            class="btn border-0 rounded-pill bg-black text-white px-3 font-weight-bold active">Singles
+                        </button>
+
+                        <button ng-click="pagination.setPageNo(0)" id="pills-albums-tab" data-bs-toggle="pill" data-bs-target="#pills-albums" type="button"
+                            role="tab" aria-controls="pills-albums" aria-selected="false"
+                            class="btn border-0 rounded-pill bg-black text-white px-3 mx-3 font-weight-bold">Albums
+                        </button>
+                    </ul>
+                    <div id="myTabContent" class="tab-content">
+                        <div id="pills-singles" role="tabpanel" aria-labelledby="pills-user-tab" tabindex="0"
+                            class="tab-pane fade show active">
+                            <div class="d-flex">
+                                <div>
+                                    <div class="input-group me-3">
+                                        <span class="input-group-text"><i class="bi bi-search-heart"></i></span>
+                                        <input type="text" class="form-control" placeholder="Search">
                                     </div>
                                 </div>
-                            </a>
+                                <div class="product_sorting_container product_sorting_container_top">
+                                    <ul class="product_sorting">
+                                        <li>
+                                            <span class="type_sorting_text">Default Sorting</span>
+                                            <i class="fa fa-angle-down"></i>
+                                            <ul class="sorting_type p-0" style="z-index: 2;">
+                                                <li ng-click="sortNumber(listSongReleased,'songId')" class="type_sorting_btn">
+                                                    <span>Default Sorting</span>
+                                                </li>
+                                                <li ng-click="sort(listSongReleased,'songName')" class="type_sorting_btn"><span>Name</span></li>
+                                                <li ng-click="sort(listSongReleased,'releaseDay')" class="type_sorting_btn"><span>Release</span></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <span>Show</span>
+                                            <span class="num_sorting_text">{{pagination.size}}</span>
+                                            <i class="fa fa-angle-down"></i>
+                                            <ul class="sorting_num  p-0" style="z-index: 2;">
+                                                <li ng-click="pagination.setPageSize(10)" class="num_sorting_btn"><span>10</span></li>
+                                                <li ng-click="pagination.setPageSize(15)" class="num_sorting_btn"><span>25</span></li>
+                                                <li ng-click="pagination.setPageSize(35)" class="num_sorting_btn"><span>35</span></li>
+                                                <li ng-click="pagination.setPageSize(50)" class="num_sorting_btn"><span>50</span></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3" id="song-release" ng-repeat="item in pagination.items(listSongReleased)">
+                                    <a type="button" ng-click="detail(item.songId,'song')" data-bs-toggle="modal"
+                                        data-bs-target="#detail">
+                                        <div class="card mx-4 my-2" style="width:250px">
+                                            <img class="cover-release rounded-4 card-img-top" src="{{item.image.url}}"
+                                                alt="">
+                                            <div
+                                                class="w-100 total-song rounded-top-4 d-flex align-items-center justify-content-between">
+                                                <i class="bi bi-music-note mx-2"></i>
+                                                <p class="py-0 my-0 mx-2">{{item.tracks.length}}</p>
+                                            </div>
+                                            <div class="card-body realease-card">
+                                                <h6 class="my-2 card-title">{{item.songName}}</h6>
+                                                <p class="card-text py-0">
+                                                    {{item.artist.artistName}}</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="product_sorting_container product_sorting_container_bottom clearfix">
+                                <span class="showing_results">Showing {{pagination.page +1}} – {{pagination.count(listSongReleased)}} of
+                                    {{pagination.items(listSongReleased).length}} results</span>
+                                <div class="pages d-flex flex-row align-items-center">
+                                    <div ng-show="pagination.page > 0" ng-click="pagination.prev(listSongReleased)" id="next_page_1" class="page_prev">
+                                        <a>
+                                            <i class="bi bi-arrow-left"></i>
+                                        </a>
+                                    </div>
+                                    <div class="page_current">
+                                        <span>{{pagination.page +1}}</span>
+                                        <ul class="page_selection ps-0 pe-4 bg-black" style="z-index: 200000;">
+                                            <li ng-repeat="i in pagination.getNumbers(pagination.count(listSongReleased))">
+                                                <a ng-click="pagination.setPageNo($index)" class="text-white">{{$index+1}}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="page_total"><span>of</span> {{pagination.count(listSongReleased)}}</div>
+                                    <div ng-show="pagination.page < pagination.count(listSongReleased)-1" ng-click="pagination.next(listSongReleased)" id="next_page_1" class="page_next">
+                                        <a>
+                                            <i class="bi bi-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-3" id="song-release" ng-repeat="item in listSongReleased">
-                        <div>
-                            <a type="button" ng-click="detail(item.songId,'song')" data-bs-toggle="modal"
-                                data-bs-target="#detail">
-                                <div class="card mx-4 my-2" style="width:250px">
-                                    <img class="cover-release rounded-4 card-img-top" src="{{item.image.url}}" alt="">
-                                    <div
-                                        class="w-100 total-song rounded-top-4 d-flex align-items-center justify-content-between">
-                                        <i class="bi bi-music-note mx-2"></i>
-                                        <p class="py-0 my-0 mx-2">{{item.tracks.length}}</p>
-                                    </div>
-                                    <div class="card-body realease-card">
-                                        <h6 class="my-2 card-title">{{item.songName}}</h6>
-                                        <p class="card-text py-0">
-                                            {{item.artist.artistName}}</p>
+                        <div id="pills-albums" role="tabpanel" aria-labelledby="pills-albums-tab" tabindex="0"
+                            class="tab-pane fade">
+                            <div class="d-flex">
+                                <div>
+                                    <div class="input-group me-3">
+                                        <span class="input-group-text"><i class="bi bi-search-heart"></i></span>
+                                        <input type="text" class="form-control" placeholder="Search in playlist">
                                     </div>
                                 </div>
-                            </a>
+                                <div class="product_sorting_container product_sorting_container_top">
+                                    <ul class="product_sorting">
+                                        <li>
+                                            <span class="type_sorting_text">Default Sorting</span>
+                                            <i class="fa fa-angle-down"></i>
+                                            <ul class="sorting_type p-0" style="z-index: 2;">
+                                                <li ng-click="sortNumber(listAlbumReleased,'albumId')" class="type_sorting_btn">
+                                                    <span>Default Sorting</span>
+                                                </li>
+                                                <li ng-click="sort(listAlbumReleased,'albumName')" class="type_sorting_btn"><span>Name Album</span></li>
+                                                <li ng-click="sort(listAlbumReleased,'releaseDate')" class="type_sorting_btn"><span>Create date</span></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <span>Show</span>
+                                            <span class="num_sorting_text">{{pagination.size}}</span>
+                                            <i class="fa fa-angle-down"></i>
+                                            <ul class="sorting_num  p-0" style="z-index: 2;">
+                                                <li ng-click="pagination.setPageSize(10)" class="num_sorting_btn"><span>10</span></li>
+                                                <li ng-click="pagination.setPageSize(15)" class="num_sorting_btn"><span>25</span></li>
+                                                <li ng-click="pagination.setPageSize(35)" class="num_sorting_btn"><span>35</span></li>
+                                                <li ng-click="pagination.setPageSize(50)" class="num_sorting_btn"><span>50</span></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div ng-show="listAlbumReleased.length > 0" class="row" id="album-release">
+                                <div class="col-3" ng-repeat="item in pagination.items(listAlbumReleased)">
+                                    <a type="button" ng-click="detail(item.albumId,'album')" data-bs-toggle="modal"
+                                        data-bs-target="#detail">
+                                        <div class="card mx-4 my-2" style="width:250px">
+                                            <img class="cover-release rounded-4 card-img-top" src="{{item.image.url}}"
+                                                alt="">
+                                            <div
+                                                class="w-100 total-song rounded-top-4 d-flex align-items-center justify-content-between">
+                                                <i class="bi bi-music-note mx-2"></i>
+                                                <p class="py-0 my-0 mx-2">{{item.tracks.length}}</p>
+                                            </div>
+                                            <div class="card-body realease-card">
+                                                <h6 class="my-2 card-title">{{item.albumName}}</h6>
+                                                <p class="card-text py-0 ">{{item.artist.artistName}}</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="product_sorting_container product_sorting_container_bottom clearfix">
+                                <span class="showing_results">Showing {{pagination.page +1}} – {{pagination.count(listAlbumReleased)}} of
+                                    {{pagination.items(listAlbumReleased).length}} results</span>
+                                <div class="pages d-flex flex-row align-items-center">
+                                    <div ng-show="pagination.page > 0" ng-click="pagination.prev(listAlbumReleased)" id="next_page_1" class="page_prev">
+                                        <a>
+                                            <i class="bi bi-arrow-left"></i>
+                                        </a>
+                                    </div>
+                                    <div class="page_current">
+                                        <span>{{pagination.page +1}}</span>
+                                        <ul class="page_selection ps-0 pe-4 bg-black" style="z-index: 200000;">
+                                            <li ng-repeat="i in pagination.getNumbers(pagination.count(listAlbumReleased))">
+                                                <a ng-click="pagination.setPageNo($index)" class="text-white">{{$index+1}}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="page_total"><span>of</span> {{pagination.count(listAlbumReleased)}}</div>
+                                    <div ng-show="pagination.page < pagination.count(listAlbumReleased)-1" ng-click="pagination.next(listAlbumReleased)" id="next_page_1" class="page_next">
+                                        <a>
+                                            <i class="bi bi-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="modal fade" id="detail">
@@ -232,7 +418,7 @@
                                                             style="object-fit: cover; width: 300px; height: 200px;"
                                                             src="{{typeDetail === 'album' ? album.image.url : song.image.url}}"
                                                             alt="">
-                                                        <input id="fileCoverImg" type="file" hidden>
+                                                        <input accept="image/*" id="fileCoverImg" type="file" hidden>
                                                     </div>
 
                                                     <div class="mx-4">
@@ -301,7 +487,9 @@
                                                                             <h6>{{typeDetail === 'album' ?
                                                                                 item.recording.song.songName :
                                                                                 item.recordingName}}</h6>
-                                                                            <span>{{typeDetail === 'album' ? item.recording.listened : item.listened}} listened</span>
+                                                                            <span>{{typeDetail === 'album' ?
+                                                                                item.recording.listened :
+                                                                                item.listened}} listened</span>
                                                                         </div>
                                                                     </div>
                                                                     <div>
@@ -326,7 +514,42 @@
             </div>
             <div class="tab-p tab-pane" id="tab3-p">
                 <div class="row">
-                    <div class="col-3" ng-repeat="item in listRecordProject">
+                    <div class="d-flex">
+                        <div>
+                            <div class="input-group me-3">
+                                <span class="input-group-text"><i class="bi bi-search-heart"></i></span>
+                                <input type="text" class="form-control" placeholder="Search">
+                            </div>
+                        </div>
+                        <div class="product_sorting_container product_sorting_container_top">
+                            <ul class="product_sorting">
+                                <li>
+                                    <span class="type_sorting_text">Default Sorting</span>
+                                    <i class="fa fa-angle-down"></i>
+                                    <ul class="sorting_type p-0" style="z-index: 2;">
+                                        <li class="type_sorting_btn" ng-click="sortNumber(listRecordProject,'recordingId')"> 
+                                            <span>Default Sorting</span>
+                                        </li>
+                                        <li ng-click="sort(listRecordProject,'recordingName')" class="type_sorting_btn"><span>Title</span></li>
+                                        <li ng-click="sort(listRecordProject,'recordingdate')" class="type_sorting_btn"><span>Create date</span></li>
+                                        <li ng-click="sortNumber(listRecordProject,'duration')" class="type_sorting_btn"><span>Duration</span></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <span>Show</span>
+                                    <span class="num_sorting_text">{{pagination.size}}</span>
+                                    <i class="fa fa-angle-down"></i>
+                                    <ul class="sorting_num  p-0" style="z-index: 2;">
+                                        <li ng-click="pagination.setPageSize(10)" class="num_sorting_btn"><span>10</span></li>
+                                        <li ng-click="pagination.setPageSize(15)" class="num_sorting_btn"><span>25</span></li>
+                                        <li ng-click="pagination.setPageSize(35)" class="num_sorting_btn"><span>35</span></li>
+                                        <li ng-click="pagination.setPageSize(50)" class="num_sorting_btn"><span>50</span></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-3" ng-repeat="item in pagination.items(listRecordProject)">
                         <div class="card w-100" style="border: 1px !important">
                             <div data-bs-toggle="collapse" data-bs-target="#project-{{item.recordingId}}">
                                 <img class="card-img-top rounded-4" src="{{item.song.image.url}}" alt="Card image">
@@ -335,7 +558,8 @@
                                 <h6 class="card-title">{{item.recordingName}}</h6>
                                 <div id="project-{{item.recordingId}}" class="collapse">
                                     <div class="d-flex">
-                                        <h6 class="me-2" ng-repeat="a in item.song.writters">{{a.artist.artistName}}</h6>
+                                        <h6 class="me-2" ng-repeat="a in item.song.writters">{{a.artist.artistName}}
+                                        </h6>
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <p>{{item.song.releaseDay | date:'dd/MM/yyyy'}}</p>
@@ -343,31 +567,61 @@
                                     </div>
                                     <audio class="mt-2" controls src="{{item.audioFileUrl}}"></audio>
                                     <div class="d-flex justify-content-end">
-                                        <button class="btn border-0" data-bs-toggle="modal" data-bs-target="#out-project-{{item.recordingId}}"><i class="bi bi-door-open"></i></button>
+                                        <button class="btn border-0" data-bs-toggle="modal"
+                                            data-bs-target="#out-project-{{item.recordingId}}"><i
+                                                class="bi bi-door-open"></i></button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="modal fade" id="out-project-{{item.recordingId}}">
                             <div class="modal-dialog">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h4 class="modal-title">Out project</h4>
-                                  <button id="btn-out-song-{{item.recordingId}}" type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                </div>
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Out project</h4>
+                                        <button id="btn-out-song-{{item.recordingId}}" type="button" class="btn-close"
+                                            data-bs-dismiss="modal"></button>
+                                    </div>
 
-                                <div class="modal-body d-flex align-items-center">
-                                    <img class="w-50 rounded-4 m-3" src="{{item.song.image.url}}" alt="Card image">
-                                    <h5 class="card-title">{{item.recordingName}}</h5>
-                                </div>
+                                    <div class="modal-body d-flex align-items-center">
+                                        <img class="w-50 rounded-4 m-3" src="{{item.song.image.url}}" alt="Card image">
+                                        <h5 class="card-title">{{item.recordingName}}</h5>
+                                    </div>
 
-                                <div class="modal-footer">
-                                  <button ng-show="artist.artistId !== item.song.artistCreate" type="button" class="btn btn-outline-dark" ng-click="outSong(item.song.writters,item.song.songId,artist.artistId,item.recordingId)">Yes</button>
+                                    <div class="modal-footer">
+                                        <button ng-show="artist.artistId !== item.song.artistCreate" type="button"
+                                            class="btn btn-outline-dark"
+                                            ng-click="outSong(item.song.writters,item.song.songId,artist.artistId,item.recordingId)">Yes</button>
+                                    </div>
+
                                 </div>
-                          
-                              </div>
                             </div>
-                          </div>
+                        </div>
+                    </div>
+                    <div class="product_sorting_container product_sorting_container_bottom clearfix">
+                        <span class="showing_results">Showing {{pagination.page +1}} – {{pagination.count(listRecordProject)}} of
+                            {{pagination.items(listRecordProject).length}} results</span>
+                        <div class="pages d-flex flex-row align-items-center">
+                            <div ng-show="pagination.page > 0" ng-click="pagination.prev(listRecordProject)" id="next_page_1" class="page_prev">
+                                <a>
+                                    <i class="bi bi-arrow-left"></i>
+                                </a>
+                            </div>
+                            <div class="page_current">
+                                <span>{{pagination.page +1}}</span>
+                                <ul class="page_selection ps-0 pe-4 bg-black" style="z-index: 200000;">
+                                    <li ng-repeat="i in pagination.getNumbers(pagination.count(listRecordProject))">
+                                        <a ng-click="pagination.setPageNo($index)" class="text-white">{{$index+1}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="page_total"><span>of</span> {{pagination.count(listRecordProject)}}</div>
+                            <div ng-show="pagination.page < pagination.count(listRecordProject)-1" ng-click="pagination.next(listRecordProject)" id="next_page_1" class="page_next">
+                                <a>
+                                    <i class="bi bi-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -422,11 +676,42 @@
             </div>
             <div class="tab-p tab-pane" id="tab5-p">
                 <div class="d-flex justify-content-between">
-                    <div class="input-group w-25">
-                        <span class="input-group-text "><i class="bi bi-search"></i></span>
-                        <input type="text" class=" form-control" placeholder="search">
+                    <div class="d-flex">
+                        <div>
+                            <div class="input-group me-3">
+                                <span class="input-group-text"><i class="bi bi-search-heart"></i></span>
+                                <input type="text" class="form-control" placeholder="Search">
+                            </div>
+                        </div>
+                        <div class="product_sorting_container product_sorting_container_top">
+                            <ul class="product_sorting">
+                                <li>
+                                    <span class="type_sorting_text">Default Sorting</span>
+                                    <i class="fa fa-angle-down"></i>
+                                    <ul class="sorting_type p-0" style="z-index: 2;">
+                                        <li class="type_sorting_btn" ng-click="sortNumber(garbageRecord,'recordingId')"> 
+                                            <span>Default Sorting</span>
+                                        </li>
+                                        <li ng-click="sort(garbageRecord,'recordingName')" class="type_sorting_btn"><span>Title</span></li>
+                                        <li ng-click="sort(garbageRecord,'recordingdate')" class="type_sorting_btn"><span>Create date</span></li>
+                                        <li ng-click="sortNumber(garbageRecord,'duration')" class="type_sorting_btn"><span>Duration</span></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <span>Show</span>
+                                    <span class="num_sorting_text">{{pagination.size}}</span>
+                                    <i class="fa fa-angle-down"></i>
+                                    <ul class="sorting_num  p-0" style="z-index: 2;">
+                                        <li ng-click="pagination.setPageSize(10)" class="num_sorting_btn"><span>10</span></li>
+                                        <li ng-click="pagination.setPageSize(15)" class="num_sorting_btn"><span>25</span></li>
+                                        <li ng-click="pagination.setPageSize(35)" class="num_sorting_btn"><span>35</span></li>
+                                        <li ng-click="pagination.setPageSize(50)" class="num_sorting_btn"><span>50</span></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="dropdown">
+                    <!-- <div class="dropdown">
                         <button type="button options" class="btn dropdown-toggle" data-bs-toggle="dropdown">
                             Last 24 hours
                         </button>
@@ -435,29 +720,26 @@
                             <li><a class="dropdown-item" href="#">Last 6 months</a></li>
                             <li><a class="dropdown-item" href="#">Last 1 years</a></li>
                         </ul>
-                    </div>
+                    </div> -->
                 </div>
                 <div>
                     <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>
+                                <th ng-click="sort(garbageRecord,'recordingName')">
                                     Name Record
                                 </th>
-                                <th>Listeners</th>
-                                <th>Version</th>
+                                <th ng-click="sortNumber(garbageRecord,'listened')">Listeners</th>
+                                <th ng-click="sort(garbageRecord,'versions')">Version</th>
                                 <th>Audio</th>
-                                <th>Uploaded date </th>
+                                <th ng-click="sort(garbageRecord,'recordingdate')">Uploaded date </th>
                                 <th>
-                                    <button class="btn border-0">
-                                        <i class="bi bi-plus-circle"></i>
-                                    </button>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="item in garbageRecord" class="align-items-start">
+                            <tr ng-repeat="item in pagination.items(garbageRecord)" class="align-items-start">
                                 <td>{{$index+1}}
                                     <i class="ms-1 bi bi-filetype-raw"></i>
                                 </td>
@@ -488,6 +770,31 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div class="product_sorting_container product_sorting_container_bottom clearfix">
+                        <span class="showing_results">Showing {{pagination.page +1}} – {{pagination.count(garbageRecord)}} of
+                            {{pagination.items(garbageRecord).length}} results</span>
+                        <div class="pages d-flex flex-row align-items-center">
+                            <div ng-show="pagination.page > 0" ng-click="pagination.prev(garbageRecord)" id="next_page_1" class="page_prev">
+                                <a>
+                                    <i class="bi bi-arrow-left"></i>
+                                </a>
+                            </div>
+                            <div class="page_current">
+                                <span>{{pagination.page +1}}</span>
+                                <ul class="page_selection ps-0 pe-4 bg-black" style="z-index: 200000;">
+                                    <li ng-repeat="i in pagination.getNumbers(pagination.count(garbageRecord))">
+                                        <a ng-click="pagination.setPageNo($index)" class="text-white">{{$index+1}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="page_total"><span>of</span> {{pagination.count(garbageRecord)}}</div>
+                            <div ng-show="pagination.page < pagination.count(garbageRecord)-1" ng-click="pagination.next(garbageRecord)" id="next_page_1" class="page_next">
+                                <a>
+                                    <i class="bi bi-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="tab-p tab-pane" id="tab6-p">
@@ -502,7 +809,7 @@
                         <audio class="w-100" controls id="audio-lyrics" src=""></audio>
                         <div class="row mt-3 align-items-center">
                             <div class="col-5">
-                                <input class="form-control" type="file" id="fileAudio">
+                                <input accept="audio/*" class="form-control" type="file" id="fileAudio">
                             </div>
 
                             <div class="col-7">

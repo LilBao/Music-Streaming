@@ -82,7 +82,7 @@ app.controller('myCtrl', function ($scope, $http, $cookies, $window) {
     $scope.getAccess = function () {
         if (Object.keys($scope.artist).length === 0) {
             //redirect tới href template information
-            $window.location.href = 'http://127.0.0.1:5500/src/main/resources/templates/Artist/Information.html';
+            $window.location.href = '/claim';
         } else if ($scope.artist.isVerify === false) {
             //thông báo tài khoản đang trong quá trình xác nhận
             showStickyNotification('Delete record successfully.', 'success', 3000);
@@ -97,7 +97,7 @@ app.controller('myCtrl', function ($scope, $http, $cookies, $window) {
                         data.active = true;
                         data.expirePermission = null
                         $http.put(url, data).then(resp => {
-                            $window.location.href = 'http://127.0.0.1:5500/src/main/resources/templates/Artist/ArtistControl.html';
+                            $window.location.href = '/artist';
                         }).catch(error => {
                             console.log(error)
                         })
@@ -112,7 +112,7 @@ app.controller('myCtrl', function ($scope, $http, $cookies, $window) {
         }
         else {
             //chuyển đến trang artist controle
-            $window.location.href = 'http://127.0.0.1:5500/src/main/resources/templates/Artist/ArtistControl.html';
+            $window.location.href = '/artist';
         }
     }
 

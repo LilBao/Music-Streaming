@@ -153,4 +153,14 @@ public class RecordREST {
 		String owner = host.getEmailByRequest(req);
 		return ResponseEntity.ok(new MessageResponse(true, "success", recordSer.statisticsByDate(owner, duration)));
 	}
+	
+	@GetMapping("/api/v1/top-record-listen")
+	public ResponseEntity<MessageResponse> findTopRecordListen(@RequestParam("country") String country){
+		return ResponseEntity.ok(new MessageResponse(true,"success",recordSer.top50SongByAreaListened(country, false)));
+	}
+	
+	@GetMapping("/api/v1/top-new-record")
+	public ResponseEntity<MessageResponse> findTopNewRecord(@RequestParam("country") String country){
+		return ResponseEntity.ok(new MessageResponse(true,"success",recordSer.top50SongByDate(country, false)));
+	}
 }

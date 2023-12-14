@@ -41,13 +41,13 @@ public class ArtistServiceImpl implements ArtistService, CRUD<Artist, Long> {
 
 	@Override
 	public Artist findOne(Long key) {
-		
+
 		Optional<Artist> artist = dao.findById(key);
-		
-		if(artist.isEmpty()) {
+
+		if (artist.isEmpty()) {
 			return null;
 		}
-		
+
 		return artist.get();
 	}
 
@@ -65,15 +65,25 @@ public class ArtistServiceImpl implements ArtistService, CRUD<Artist, Long> {
 	public List<Artist> findIsVerify(Boolean verify) {
 		return dao.findAllIsVerify(verify);
 	}
-	
+
 	@Override
-	public List<Artist> findAllArtistNameisVerify(Long id,String artistName) {
-		return dao.findAllArtistVerify(id,artistName);
+	public List<Artist> findAllArtistNameisVerify(Long id, String artistName) {
+		return dao.findAllArtistVerify(id, artistName);
 	}
 
 	@Override
 	public List<Object> findByName(String keyword) {
 		return dao.findByName(keyword);
+	}
+
+	@Override
+	public List<Artist> top50ArtistByListener(String country, Boolean active, Boolean verify) {
+		return dao.top50ArtistByListener(country, active, verify);
+	}
+
+	@Override
+	public List<Artist> top50ArtistByFollow(Integer role, String country, Boolean verify) {
+		return dao.top50ArtistByFollow(role, country, verify);
 	}
 
 }

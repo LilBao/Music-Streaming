@@ -36,14 +36,14 @@
         <div class="tab">
           <h6>1/5</h6>
           <h1>Claim an artist profile</h1>
-          <p>If you already have music on Spotify, you can get access to stats, pitch tracks to our editors, and more.
+          <p>If you already have music on Rhythm Wave, you can get access to stats, pitch tracks to our editors, and more.
           </p>
         </div>
 
         <div class="tab">
           <h6>2/5</h6>
-          <h1>Is this the right Spotify account?</h1>
-          <p>You’ll use this to log in to Spotify for Artists.</p>
+          <h1>Is this the right Rhythm Wave account?</h1>
+          <p>You’ll use this to log in to Rhythm Wave for Artists.</p>
           <div class="my-5 d-flex flex-column align-items-center">
             <img class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" 
             ng-src="{{account.image == null ? 'https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png' : account.image.url}}"  alt="Cinque Terre">
@@ -73,11 +73,11 @@
             <div class="row mt-3">
               <div class="col-4">
                 <img ng-click="selectFile('avatar')" class="img-thumbnail w-100 h-100 avatar" src="https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png" alt="">
-                <input hidden ng-model="avatarFile" id="avatar" type="file">
+                <input hidden ng-model="avatarFile" accept="image/*" id="avatar" type="file">
               </div>
               <div class="col-8">
                 <img ng-click="selectFile('background')" class="img-thumbnail w-100 h-100 background" src="https://res.cloudinary.com/div9ldpou/image/upload/v1696341682/Background/System/ilikeU_bgvlyy.png" alt="">
-                <input hidden ng-model="backgroundFile" id="background" type="file">
+                <input hidden ng-model="backgroundFile" accept="image/*" id="background" type="file">
               </div>
             </div>
             <div class="mt-3">

@@ -12,4 +12,8 @@ public interface AlbumService {
 	List<Album> findAlbumByArtist(Long artistId);
 	
 	List<Object> findByName(String keyword);
+	
+	List<Album> top50AlbumLatest();
+	
+	List<Album> top50AlbumListenest();
 }

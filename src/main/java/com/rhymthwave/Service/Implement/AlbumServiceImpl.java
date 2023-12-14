@@ -80,5 +80,15 @@ public class AlbumServiceImpl implements AlbumService, CRUD<Album, Long> {
 	@Override
 	public List<Album> findAlbumByArtist(Long artistId) {
 		return dao.getListAlbumByArtist(artistId);
+	}
+
+	@Override
+	public List<Album> top50AlbumLatest() {
+		return dao.top50AlbumLatest();
+	}
+
+	@Override
+	public List<Album> top50AlbumListenest() {
+		return dao.top50AlbumListenest();
 	}	
 }

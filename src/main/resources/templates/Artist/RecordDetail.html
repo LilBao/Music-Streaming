@@ -4,7 +4,7 @@
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <button type="button" ng-click="closeDetail()" class="btn-close-record-detail" data-bs-dismiss="modal"></button>
+                    <button type="button" ng-click="closeDetail()" class="btn-close btn-close-record-detail" data-bs-dismiss="modal"></button>
                 </div>
 
                 <div class="modal-body">
@@ -26,12 +26,12 @@
                                         <div>
                                             <label for="">File lyrics</label>
                                             <input ng-click="changeFileRecord('change-lyrics')" class="form-control"
-                                                type="file" name="" id="change-lyrics">
+                                                type="file" name="" id="change-lyrics" accept=".lrc" >
                                         </div>
                                         <div>
                                             <label for="">File record</label>
                                             <input ng-click="changeFileRecord('change-record')" class="form-control"
-                                                type="file" id="change-record" placeholder="record">
+                                                type="file" id="change-record" accept="audio/*" placeholder="record">
                                         </div>
                                     </div> 
                                 </div>
@@ -187,7 +187,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-danger" ng-click="MoveRecordToGarbage()">Remove</button>
+                    <button ng-show="record.song == null" type="button" class="btn btn-outline-danger" ng-click="MoveRecordToGarbage()">Remove</button>
                     <button class="btn btn-outline-success" ng-click="SaveRecord()" id="save-record">Save</button>
                 </div>
             </div>

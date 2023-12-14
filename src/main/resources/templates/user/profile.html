@@ -1,7 +1,7 @@
 <body ng-controller="profileCtrl">
     <div class="container-fluid m-0 p-0">
-        <div class="row py-5" id="container-profile" 
-        style="background: linear-gradient(to bottom, rgb(26, 118, 198), rgb(87, 134, 178))">
+        <div class="row py-5" id="container-profile"
+            style="background: linear-gradient(to bottom, rgb(26, 118, 198), rgb(87, 134, 178))">
             <div class="col-2 ms-3 mb-3 me-3">
                 <img style="width: 200px; height: 200px;object-fit: cover!important;" src="{{profile.image.url}}"
                     class="rounded-circle" alt="...">
@@ -11,7 +11,7 @@
                     <h6 class="text-white">{{role ==='podcast' ? 'Podcaster' : 'Profile'}}</h6>
                     <h1 class="display-1 text-bold fw-bolder">{{profile.username}}</h1>
                 </div>
-                <p>11 Public Playlist - 4,607 Followers</p>
+                <!-- <p>11 Public Playlist - 4,607 Followers</p> -->
             </div>
         </div>
         <div class="flow d-flex align-items-center">
@@ -28,26 +28,27 @@
             </div>
         </div>
     </div>
-    <section class="mx-3">
-        <div ng-if="listPlaylistPublic.length > 0 || listPodcast.length > 0" class="container">
-            <div class="title tile-playlist-profile mt-5">
+    <section class="mx-3 container">
+        <div ng-if="listPlaylistPublic.length > 0 || listPodcast.length > 0" class="row">
+            <div class="title tile-playlist-profile">
                 <p class="prf-name-title">{{type === 1 ? 'Public Playlists' : 'Public Podcast'}}</p>
                 <p class="show-all-playlist-profile">Show All</p>
             </div>
-            <div ng-repeat=" item in type===1 ? listPlaylistPublic : listPodcast" class="row mt-3">
-                <div class="col-2">
+            <div class="col-2" ng-repeat=" item in type===1 ? listPlaylistPublic : listPodcast">
+                <a href="{{type===1 ? '#!playlist/'+item.playlistId : '#!show/'+item.podcastId}}">
                     <div class="card card-play-list-profile">
                         <div class="img-car-profile">
                             <img src="{{item.image.url}}" class="card-img-top" alt="...">
                             <i class="bi bi-play-circle-fill icon-play-card-playlist-profile"></i>
                         </div>
                         <div class="card-body card-body-playlist-profile">
-                            <p class="card-text card-text-playlist-profile-namesong">{{type === 1 ? item.playlistName :
+                            <p class="card-text card-text-playlist-profile-namesong">{{type === 1 ?
+                                item.playlistName :
                                 item.podcastName}}</p>
-                            <p class="card-text-playlist-profile-folow">9,999 Followers</p>
+                            <p class="card-text-playlist-profile-folow">Playlist</p>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
         <div ng-if="listFollower.length > 0" class="container-fluid mb-5">
@@ -118,7 +119,7 @@
                             <img src="{{account.image ? account.image.url : 'https://res.cloudinary.com/div9ldpou/image/upload/v1699632134/Avatar/System/user_oujyrp.png'}}"
                                 class="img-my-profile" style="width: 200px; height: 200px; object-fit: cover;"
                                 alt="...">
-                            <input id="img-my-profile" type="file" hidden>
+                            <input accept="image/*" id="img-my-profile" type="file" hidden>
                         </div>
                         <div>
                             <input type="text" class="form-control" ng-model="account.username" />

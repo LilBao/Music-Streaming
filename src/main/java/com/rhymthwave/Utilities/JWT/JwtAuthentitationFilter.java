@@ -40,7 +40,6 @@ public class JwtAuthentitationFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
 		try {
-			System.out.println("doFilterInternal start");
 			// Lấy thông tin từ request
 			String jwt = getJwtFromRequest(request);
 			if (StringUtils.hasText(jwt) && JwtTokenCreate.validateToken(jwt)) {

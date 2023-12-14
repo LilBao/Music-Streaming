@@ -3,7 +3,7 @@
         <div class="row pt-5 background-playlist" data-bs-toggle="modal" data-bs-target="#infor-playlist">
             <div class="col-2 ms-3 mb-3">
                 <img class="w-100 rounded-2 img-playlist" style="height: 200px; object-fit: cover;"
-                    src="{{playlist.image !== null ? playlist.image.url : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}"
+                    ng-src="{{playlist.image !== null ? playlist.image.url : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}"
                     alt="">
             </div>
             <div class="col-9 d-flex flex-column justify-content-center">
@@ -30,6 +30,46 @@
                 <button id="btn-playlist-shuffle" class="btn text-white border-0 py-0"><i
                         class="display-6 bi bi-shuffle"></i></button>
             </div>
+            <div class="d-flex">
+                <div>
+                    <div class="input-group me-3">
+                        <span class="input-group-text" style="background-color: transparent;"><i
+                                class="text-white bi bi-search-heart"></i></span>
+                        <input type="text" class="text-white form-control" placeholder="Search in playlist"
+                            style="background-color: transparent;" ng-model="searchPlaylist">
+                    </div>
+                </div>
+                <div class="product_sorting_container product_sorting_container_top">
+                    <ul class="product_sorting">
+                        <li>
+                            <span class="type_sorting_text">Default Sorting</span>
+                            <i class="fa fa-angle-down"></i>
+                            <ul class="sorting_type p-0" style="z-index: 2;">
+                                <li class="type_sorting_btn">
+                                    <span>Default Sorting</span>
+                                </li>
+                                <li class="type_sorting_btn"><span>Custom order</span></li>
+                                <li class="type_sorting_btn"><span>Title</span></li>
+                                <li class="type_sorting_btn"><span>Artist</span></li>
+                                <li class="type_sorting_btn"><span>Album</span></li>
+                                <li class="type_sorting_btn"><span>Date added</span></li>
+                                <li class="type_sorting_btn"><span>Duration</span></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span>Show</span>
+                            <span class="num_sorting_text">{{pagination.size}}</span>
+                            <i class="fa fa-angle-down"></i>
+                            <ul class="sorting_num  p-0" style="z-index: 2;">
+                                <li ng-click="pagination.setPageSize(10)" class="num_sorting_btn"><span>10</span></li>
+                                <li ng-click="pagination.setPageSize(15)" class="num_sorting_btn"><span>25</span></li>
+                                <li ng-click="pagination.setPageSize(35)" class="num_sorting_btn"><span>35</span></li>
+                                <li ng-click="pagination.setPageSize(50)" class="num_sorting_btn"><span>50</span></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
         </div>
         <div class="mx-4">
@@ -37,13 +77,13 @@
                 style="background-color: transparent!important;">
                 <thead class="border-bottom">
                     <th>#</th>
-                    <th>Title</th>
-                    <th>Album</th>
-                    <th>Date added</th>
+                    <th ng-click="sort(playlistRE,'title')">Title</th>
+                    <th ng-click="sort(playlistRE,'recordingName')">Album</th>
+                    <th ng-click="sort(playlistRE,'dateAdded')">Date added</th>
                     <th class="text-center"><i class="bi bi-stopwatch"></i></th>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="item in playlistRE track by $index"
+                    <tr ng-repeat="item in pagination.items(playlistRE) | filter: searchPlaylist track by $index "
                         ng-dblclick="item.recording ? selectAudio(item.recording,'song',listAudioPlaylist,$index) : selectAudio(item.episode,'episode',listAudioPlaylist,$index)"
                         class="audio align-items-center">
                         <!-- Col 1 -->
@@ -54,7 +94,7 @@
                         <td ng-if="item.recording.recordingId">
                             <div class="d-flex align-items-center">
                                 <div class="d-flex">
-                                    <img class="rounded-2 mx-3" src="{{item.recording.song.image.url}}"
+                                    <img class="rounded-2 mx-3" ng-src="{{item.recording.song.image.url}}"
                                         style="width: 50px; height: 50px; object-fit: cover;" alt="">
                                     <div>
                                         <h6 class="text-white">{{item.recording.recordingName}}</h6>
@@ -69,7 +109,7 @@
                         <td ng-if="item.episode.episodeId">
                             <div class="d-flex align-items-center">
                                 <div class="d-flex">
-                                    <img class="rounded-2 mx-3" src="{{item.episode.image.url}}"
+                                    <img class="rounded-2 mx-3" ng-src="{{item.episode.image.url}}"
                                         style="width: 50px; height: 50px; object-fit: cover;" alt="">
                                     <div>
                                         <h6 class="text-white">{{item.episode.episodeTitle}}</h6>
@@ -150,9 +190,8 @@
                                         </li>
                                         <li class="li-dropdown-start-end">
                                             <a class="btn text-white dropdown-item py-2"
-                                                ng-click="checkExisted(item,$event)"><i
-                                                    class="bi bi-hearts"></i>{{isLiked(item) ? 'Remove from liked songs'
-                                                : 'Save to your liked songs' }} </a>
+                                                ng-click="checkExisted(item.recording ? item.recording : item.episode,$event)"><i
+                                                    class="bi bi-hearts"></i>{{isLiked(item.recording ? item.recording : item.episode) ? 'Remove from liked songs':'Save to your liked songs'}} </a>
                                         </li>
                                         <li class="li-dropdown-start-end">
                                             <a class="btn text-white dropdown-item py-2"
@@ -174,12 +213,14 @@
                                             </ul>
                                         </li>
                                         <li class="li-dropdown-start-end">
-                                            <a class="btn text-white dropdown-item py-2"><i
-                                                    class="bi bi-journal-album"></i> Go to album</a>
+                                            <a href="{{item.episode ? '#!episode/'+item.episode.episodeId : item.recording.tracks.length>0 ? '#!album/'+item.recording.tracks[0].album.albumId : '#!song/'+item.recording.recordingId}}"
+                                                class="btn text-white dropdown-item py-2">
+                                                <i class="bi bi-journal-album"></i> Go to album
+                                            </a>
                                         </li>
-                                        <li class="li-dropdown-start-end" ng-if="item.recordingId">
+                                        <li class="li-dropdown-start-end" ng-if="item.recording">
                                             <a class="btn text-white dropdown-item py-2" data-bs-toggle="modal"
-                                                data-bs-target="#credits-{{item.recordingId}}"><i
+                                                data-bs-target="#credits-{{item.recording.recordingId}}"><i
                                                     class="bi bi-share"></i> Show
                                                 credits</a>
                                         </li>
@@ -187,7 +228,7 @@
                                             <hr class="dropdown-divider">
                                         </li>
                                         <li class="li-dropdown-start-end">
-                                            <a class="btn text-white dropdown-item py-2"><i class="bi bi-share"></i>
+                                            <a ng-click="item.recording ? typeShare('#!/song/'+item.recording.recordingId) : typeShare('#!/episode/'+item.episode.episodeId)" data-bs-toggle="modal" data-bs-target="#sharing" class="btn text-white dropdown-item py-2"><i class="bi bi-share"></i>
                                                 Share</a>
                                         </li>
                                     </ul>
@@ -216,68 +257,52 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
-        <div class="d-flex justify-content-end" style="margin-right: 30px;">
-            <h6 id="toggle">Find more</h6>
-        </div>
-        <div class="mx-4 visible" id="f1">
-            <table class="table table-hover" style="background-color: transparent!important;">
-                <thead class="">
-                    <tr>
-                        <th class="text-white-50" colspan="3">
-                            <h5 class="text-white">Recommended</h5>
-                            <p class="text-white font-weight-bold">List songs are random >.< </p>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="item in listRecommended | limitTo: 10" class="audio align-items-center">
-                        <td ng-dblclick="selectAudio(item,'song',listRecommended,$index)">
-                            <div class="d-flex align-items-center">
-                                <div class="d-flex">
-                                    <img class="rounded-2 mx-3" src="{{item.song.image.url}}"
-                                        style="width: 50px; height: 50px; object-fit: cover;" alt="">
-                                    <div>
-                                        <h6 class="text-white">{{item.recordingName}}</h6>
-                                        <a class="text-white" ng-repeat="a in item.song.writters" href="">
-                                            <h6>{{a.artist.artistName}}</h6>
-                                        </a>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <h6 class="mt-3 p-0 m-0 text-white">{{item.recordingName}}</h6>
-                        </td>
-                        <td>
-                            <button ng-click="addition('record',item,$index)"
-                                class="px-3 btn rounded-pill border-white text-white">Add</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="d-flex justify-content-end">
-                <a class="my-2 btn text-white border-0" id="refresh">
-                    <h6>Refresh</h6>
-                </a>
-            </div>
-        </div>
-        <div class="mx-4 hidden" id="f2">
-            <h5 class="text-white">Let's find something for your playlist</h5>
-            <div class="d-flex col-3">
-                <div class="input-group me-3">
-                    <span class="input-group-text" style="background-color: gray;"><i
-                            class="text-white bi bi-search-heart"></i></span>
-                    <input ng-model="searchSE" type="text" class="text-white form-control"
-                        placeholder="Search in playlist" style="background-color: rgb(82, 80, 80);">
+            <div class="product_sorting_container product_sorting_container_bottom clearfix">
+                <span class="showing_results">Showing {{pagination.page +1}} – {{pagination.count(playlistRE)}} of
+                    {{pagination.items(playlistRE).length}} results</span>
+                <div class="pages d-flex flex-row align-items-center">
+                    <div ng-show="pagination.page > 0" ng-click="pagination.prev(playlistRE)" id="next_page_1"
+                        class="page_prev">
+                        <a>
+                            <i class="bi bi-arrow-left text-white"></i>
+                        </a>
+                    </div>
+                    <div class="page_current">
+                        <span>{{pagination.page +1}}</span>
+                        <ul class="page_selection ps-0 pe-4 bg-black" style="z-index: 200000;">
+                            <li ng-repeat="i in pagination.getNumbers(pagination.count(playlistRE))">
+                                <a ng-click="pagination.setPageNo($index)" class="text-white">{{$index+1}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="page_total"><span>of</span> {{pagination.count(playlistRE)}}</div>
+                    <div ng-show="pagination.page < pagination.count(playlistRE)-1"
+                        ng-click="pagination.next(playlistRE)" id="next_page_1" class="page_next">
+                        <a>
+                            <i class="bi bi-arrow-right text-white"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
-            <div class="mt-3 visible" id="fn">
-                <table class="table table-hover" style="background-color: transparent!important;">
+        </div>
+        </div>
+        <section class="mt-3">
+            <div class="d-flex justify-content-end" style="margin-right: 30px;">
+                <h6 id="toggle">Find more</h6>
+            </div>
+            <div class="mx-4 visible" id="f1">
+                <table class="table table-hover table-borderless" style="background-color: transparent!important;">
+                    <thead class="">
+                        <tr>
+                            <th class="text-white-50" colspan="3">
+                                <h5 class="text-white">Recommended</h5>
+                                <p class="text-white font-weight-bold">List songs are random >.< </p>
+                            </th>
+                        </tr>
+                    </thead>
                     <tbody>
-                        <tr ng-repeat="item in songData " class="audio align-items-center">
-                            <td ng-dblclick="selectAudio(item,'song',songData,$index)">
+                        <tr ng-repeat="item in listRecommended | limitTo: 10" class="audio align-items-center">
+                            <td ng-dblclick="selectAudio(item,'song',listRecommended,$index)">
                                 <div class="d-flex align-items-center">
                                     <div class="d-flex">
                                         <img class="rounded-2 mx-3" src="{{item.song.image.url}}"
@@ -300,140 +325,195 @@
                                     class="px-3 btn rounded-pill border-white text-white">Add</button>
                             </td>
                         </tr>
-                        <tr ng-repeat="item in episodeData " class="audio align-items-center">
-                            <td ng-dblclick="selectAudio(item,'episode',episodeData,$index)">
-                                <div class="d-flex align-items-center">
-                                    <div class="d-flex">
-                                        <img class="rounded-2 mx-3" src="{{item.image.url}}"
-                                            style="width: 50px; height: 50px; object-fit: cover;" alt="">
-                                        <div>
-                                            <h6 class="text-white">{{item.episodeTitle | limitTo : 20}}...</h6>
-                                            <a class="text-white" ng-repeat="a in item.song.writters" href="">
-                                                <h6>{{a.artist.artistName}}</h6>
-                                            </a>
-                                            <a class="text-white"
-                                                href="#!profile/podcast/{{item.podcast.account.username}}">
-                                                {{item.podcast.authorName}}
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <h6 class="mt-3 p-0 m-0 text-white">{{item.recordingName}}</h6>
-                            </td>
-                            <td>
-                                <button ng-click="addition('record',item,$index)"
-                                    class="px-3 btn rounded-pill border-white text-white">Add</button>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
-                <div class="audio">
-                    <div class="clap py-3 ms-3">
-                        <h6 id="saa" class="text-white">See All Artists</h6>
-                    </div>
-                </div>
-                <div class="audio align-items-center">
-                    <div class="clap py-3 ms-3">
-                        <h6 id="saal" class="text-white">See All Albums</h6>
-                    </div>
-                </div>
-                <div class="audio align-items-center">
-                    <div class="clap py-3 ms-3">
-                        <h6 id="sas" class="text-white">See All Songs</h6>
-                    </div>
+                <div class="d-flex justify-content-end">
+                    <a class="my-2 btn text-white border-0" id="refresh">
+                        <h6>Refresh</h6>
+                    </a>
                 </div>
             </div>
-        </div>
-        <div class="saa hidden" id="showsaa">
-            <h5 class="text-white mt-3" id="saaback" style="margin-left: 30px;"><i class="bi bi-back"></i>See All
-                Artists</h5>
-            <div class="mt-3 visible">
-                <table class="table table-hover" style="background-color: transparent!important;">
-                    <tbody>
-                        <tr ng-repeat="item in artData " class="audio align-items-center">
-                            <td ng-dblclick="selectAudio(item,'song',artData,$index)">
-                                <a href="#!artist/{{item[0]}}">
+            <div class="mx-4 hidden" id="f2">
+                <h5 class="text-white">Let's find something for your playlist</h5>
+                <div class="d-flex col-3">
+                    <div class="input-group me-3">
+                        <span class="input-group-text" style="background-color: gray;"><i
+                                class="text-white bi bi-search-heart"></i></span>
+                        <input ng-model="searchSE" type="text" class="text-white form-control"
+                            placeholder="Search in playlist" style="background-color: rgb(82, 80, 80);">
+                    </div>
+                </div>
+                <div class="mt-3 visible" id="fn">
+                    <table class="table table-hover" style="background-color: transparent!important;">
+                        <tbody>
+                            <tr ng-repeat="item in songData " class="audio align-items-center">
+                                <td ng-dblclick="selectAudio(item,'song',songData,$index)">
                                     <div class="d-flex align-items-center">
                                         <div class="d-flex">
-                                            <img class="rounded-2 mx-3" src="{{item[15] !== null ? item[15] : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}"
+                                            <img class="rounded-2 mx-3" src="{{item.song.image.url}}"
                                                 style="width: 50px; height: 50px; object-fit: cover;" alt="">
                                             <div>
-                                                <h6 class="text-white">{{item[2]}}</h6>
+                                                <h6 class="text-white">{{item.recordingName}}</h6>
+                                                <a class="text-white" ng-repeat="a in item.song.writters" href="">
+                                                    <h6>{{a.artist.artistName}}</h6>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
-                                </a>
-                            </td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="saal hidden" id="showsaal">
-            <h5 class="text-white mt-3" id="saalback" style="margin-left: 30px;"><i class="bi bi-back"></i>See All
-                Albums</h5>
-            <div class="mt-3 visible">
-                <table class="table table-hover" style="background-color: transparent!important;">
-                    <tbody ng-repeat="item in alData ">
-                        <tr class="audio align-items-center">
-                            <td ng-dblclick="selectAudio(item,'song',alData,$index)">
-                                <a href="#!album/{{item[0]}}">
+                                </td>
+                                <td>
+                                    <h6 class="mt-3 p-0 m-0 text-white">{{item.recordingName}}</h6>
+                                </td>
+                                <td>
+                                    <button ng-click="addition('record',item,$index)"
+                                        class="px-3 btn rounded-pill border-white text-white">Add</button>
+                                </td>
+                            </tr>
+                            <tr ng-repeat="item in episodeData " class="audio align-items-center">
+                                <td ng-dblclick="selectAudio(item,'episode',episodeData,$index)">
                                     <div class="d-flex align-items-center">
                                         <div class="d-flex">
-                                            <img class="rounded-2 mx-3" src="{{item[6] !== null ? item[6] : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}"
+                                            <img class="rounded-2 mx-3" src="{{item.image.url}}"
                                                 style="width: 50px; height: 50px; object-fit: cover;" alt="">
                                             <div>
-                                                <h6 class="text-white">{{item[1]}}</h6>
+                                                <h6 class="text-white">{{item.episodeTitle | limitTo : 20}}...</h6>
+                                                <a class="text-white" ng-repeat="a in item.song.writters" href="">
+                                                    <h6>{{a.artist.artistName}}</h6>
+                                                </a>
+                                                <a class="text-white"
+                                                    href="#!profile/podcast/{{item.podcast.account.username}}">
+                                                    {{item.podcast.authorName}}
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
-                                </a>
-                            </td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
+                                </td>
+                                <td>
+                                    <h6 class="mt-3 p-0 m-0 text-white">{{item.recordingName}}</h6>
+                                </td>
+                                <td>
+                                    <button ng-click="addition('record',item,$index)"
+                                        class="px-3 btn rounded-pill border-white text-white">Add</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="audio">
+                        <div class="clap py-3 ms-3">
+                            <h6 id="saa" class="text-white">See All Artists</h6>
+                        </div>
+                    </div>
+                    <div class="audio align-items-center">
+                        <div class="clap py-3 ms-3">
+                            <h6 id="saal" class="text-white">See All Albums</h6>
+                        </div>
+                    </div>
+                    <div class="audio align-items-center">
+                        <div class="clap py-3 ms-3">
+                            <h6 id="sas" class="text-white">See All Songs</h6>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="saas hidden" id="showsas">
-            <h5 class="text-white mt-3" id="sasback" style="margin-left: 30px;"><i class="bi bi-back"></i>See All Songs
-            </h5>
-            <div class="mt-3 visible">
-                <table class="table table-hover" style="background-color: transparent!important;">
-                    <tbody>
-                        <tr ng-repeat="item in songData " class="audio align-items-center">
-                            <td ng-dblclick="selectAudio(item,'song',songData,$index)">
-                                <div class="d-flex align-items-center">
-                                    <div class="d-flex">
-                                        <img class="rounded-2 mx-3" src="{{item.song.image.url !== null ? item.song.image.url : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}"
-                                            style="width: 50px; height: 50px; object-fit: cover;" alt="">
-                                        <div>
-                                            <h6 class="text-white">{{item.recordingName}}</h6>
-                                            <a class="text-white" ng-repeat="a in item.song.writters" href="">
-                                                <h6>{{a.artist.artistName}}</h6>
-                                            </a>
-
+            <div class="saa hidden" id="showsaa">
+                <h5 class="text-white mt-3" id="saaback" style="margin-left: 30px;"><i class="bi bi-back"></i>See All
+                    Artists</h5>
+                <div class="mt-3 visible">
+                    <table class="table table-hover" style="background-color: transparent!important;">
+                        <tbody>
+                            <tr ng-repeat="item in artData " class="audio align-items-center">
+                                <td ng-dblclick="selectAudio(item,'song',artData,$index)">
+                                    <a href="#!artist/{{item[0]}}">
+                                        <div class="d-flex align-items-center">
+                                            <div class="d-flex">
+                                                <img class="rounded-2 mx-3"
+                                                    src="{{item[15] !== null ? item[15] : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}"
+                                                    style="width: 50px; height: 50px; object-fit: cover;" alt="">
+                                                <div>
+                                                    <h6 class="text-white">{{item.songName}}</h6>
+                                                    <a class="text-white" ng-repeat="a in item.song.writters" href="">
+                                                        <h6>{{a.artist.artistName}}</h6>
+                                                    </a>
+                                                    <h6 class="text-white">{{item[2]}}</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="saal hidden" id="showsaal">
+                <h5 class="text-white mt-3" id="saalback" style="margin-left: 30px;"><i class="bi bi-back"></i>See All
+                    Albums</h5>
+                <div class="mt-3 visible">
+                    <table class="table table-hover" style="background-color: transparent!important;">
+                        <tbody ng-repeat="item in alData ">
+                            <tr class="audio align-items-center">
+                                <td ng-dblclick="selectAudio(item,'song',alData,$index)">
+                                    <a href="#!album/{{item[0]}}">
+                                        <div class="d-flex align-items-center">
+                                            <div class="d-flex">
+                                                <img class="rounded-2 mx-3"
+                                                    src="{{item[6] !== null ? item[6] : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}"
+                                                    style="width: 50px; height: 50px; object-fit: cover;" alt="">
+                                                <div>
+                                                    <h6 class="text-white">{{item.episodeTitle | limitTo : 20}}...</h6>
+                                                    <a class="text-white" ng-repeat="a in item.song.writters" href="">
+                                                        <h6>{{a.artist.artistName}}</h6>
+                                                    </a>
+                                                    <h6 class="text-white">{{item[1]}}</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="saas hidden" id="showsas">
+                <h5 class="text-white mt-3" id="sasback" style="margin-left: 30px;"><i class="bi bi-back"></i>See All
+                    Songs </h5>
+                <div class="mt-3 visible">
+                    <table class="table table-hover" style="background-color: transparent!important;">
+                        <tbody>
+                            <tr ng-repeat="item in songData " class="audio align-items-center">
+                                <td ng-dblclick="selectAudio(item,'song',songData,$index)">
+                                    <div class="d-flex align-items-center">
+                                        <div class="d-flex">
+                                            <img class="rounded-2 mx-3"
+                                                src="{{item.song.image.url !== null ? item.song.image.url : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}"
+                                                style="width: 50px; height: 50px; object-fit: cover;" alt="">
+                                            <div>
+                                                <h6 class="text-white">{{item.recordingName}}</h6>
+                                                <a class="text-white" ng-repeat="a in item.song.writters" href="">
+                                                    <h6>{{a.artist.artistName}}</h6>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td>
-                                <h6 class="mt-3 p-0 m-0 text-white">{{item.recordingName}}</h6>
-                            </td>
-                            <td>
-                                <button ng-click="addition('record',item,$index)"
-                                    class="px-3 btn rounded-pill border-white text-white">Add</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                </td>
+                                <td>
+                                    <h6 class="mt-3 p-0 m-0 text-white">{{item.recordingName}}</h6>
+                                </td>
+                                <td>
+                                    <button ng-click="addition('record',item,$index)"
+                                        class="px-3 btn rounded-pill border-white text-white">Add</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
+        </section>
     </section>
     <div class="modal fade " id="infor-playlist">
         <div class="modal-dialog bg-black text-white">
@@ -449,7 +529,7 @@
                         <img class="w-100 img-playlist" style="height: 180px; object-fit: cover;"
                             src="{{playlist.image !== null ? playlist.image.url : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}"
                             alt="">
-                        <input type="file" id="img-playlist" hidden>
+                        <input type="file" accept="image/*" id="img-playlist" hidden>
                     </div>
                     <div class="col-7">
                         <input ng-model="playlist.playlistName" class="form-control" type="text">

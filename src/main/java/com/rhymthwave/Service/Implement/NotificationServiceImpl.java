@@ -1,5 +1,11 @@
 package com.rhymthwave.Service.Implement;
 
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.rhymthwave.DAO.ImageDAO;
 import com.rhymthwave.DAO.NotificationDAO;
 import com.rhymthwave.Service.CloudinaryService;
@@ -8,13 +14,9 @@ import com.rhymthwave.Utilities.GetCurrentTime;
 import com.rhymthwave.Utilities.GetHostByRequest;
 import com.rhymthwave.entity.Image;
 import com.rhymthwave.entity.Notification;
+
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -86,4 +88,9 @@ public class NotificationServiceImpl implements NotificationService {
         notificationDAO.save(notification);
         return true;
     }
+    
+    @Override
+	public Notification notifyLatest() {
+		return notificationDAO.findNotificationLatest();
+	}
 }

@@ -31,4 +31,8 @@ public interface RecordService {
 	List<Recording> findAppearOn(Long artistId);
 	
 	List<Recording> statisticsByDate(String email, Integer date);
+	
+	List<Recording> top50SongByAreaListened(String country,Boolean deleted);
+	
+	List<Recording> top50SongByDate(String country,Boolean deleted);
 }

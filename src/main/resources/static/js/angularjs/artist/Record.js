@@ -4,7 +4,11 @@ app.controller('recordCtrl', function ($scope, $http) {
     $scope.songGenre = {};
     //Call API => create Record
     $('#create-record').click(function () {
-        $scope.createRecord()
+        if($scope.validate()){
+            $scope.createRecord()
+        }else{
+            $('#err').text("Fill in the important information");
+        }
     })
 
     $scope.createRecord = function () {
@@ -12,9 +16,9 @@ app.controller('recordCtrl', function ($scope, $http) {
         var url = host + "/v1/record";
         var data = new FormData();
         data.append('recordingName', $scope.record.name);
-        data.append('studio', $scope.record.studio);
-        data.append('produce', $scope.record.proceduce);
-        data.append('idMv', $scope.record.idMv);
+        data.append('studio', $scope.record.studio ? $scope.record.studio : "");
+        data.append('produce', $scope.record.proceduce ? $scope.record.proceduce : "");
+        data.append('idMv', $scope.record.idMv ? $scope.record.idMv : "");
         data.append('mood', $scope.moods);
         data.append('songStyle', $scope.styles);
         data.append('culture', $scope.cultures);
@@ -272,6 +276,21 @@ app.controller('recordCtrl', function ($scope, $http) {
                 countS--;
             }
         });
-
     })
+
+    $scope.validate = function(){
+        if($scope.record.name == undefined){
+            return false;
+        }
+        if(!$scope.recordFile){
+            return false;
+        }
+        if(!$scope.record.version){
+            return false;
+        }
+        if($('input[name="genre"]:checked').length===0){
+            return false;
+        }
+        return true;
+    }
 })

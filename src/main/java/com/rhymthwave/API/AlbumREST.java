@@ -127,4 +127,14 @@ public class AlbumREST {
 	public ResponseEntity<MessageResponse> getAlbumByName(@PathVariable("keyword") String keyword) {
 		return ResponseEntity.ok(new MessageResponse(true, "success", albumSer.findByName(keyword)));
 	}
+	
+	@GetMapping("/api/v1/top-album-latest")
+	public ResponseEntity<MessageResponse> findTopAlbumLatest() {
+		return ResponseEntity.ok(new MessageResponse(true, "success", albumSer.top50AlbumLatest()));
+	}
+	
+	@GetMapping("/api/v1/top-album-popular")
+	public ResponseEntity<MessageResponse> findTopAlbumPopular() {
+		return ResponseEntity.ok(new MessageResponse(true, "success", albumSer.top50AlbumListenest()));
+	}
 }

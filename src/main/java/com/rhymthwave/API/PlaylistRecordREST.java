@@ -37,8 +37,13 @@ public class PlaylistRecordREST {
 		Account account = crudAccount.findOne(owner);
 		UserType basic = account.getUserType().get(0);
 		UserType premium = account.getUserType().get(1);
-		Integer lengthPlaylist = playlistRecord.getPlaylist().getPlaylistPodcast().toArray().length
-				+ playlistRecord.getPlaylist().getPlaylistRecords().toArray().length;
+		Integer lengthPlaylist=0;
+		if(playlistRecord.getPlaylist().getPlaylistPodcast()!=null) {
+			lengthPlaylist += playlistRecord.getPlaylist().getPlaylistPodcast().toArray().length;
+		}
+		if(playlistRecord.getPlaylist().getPlaylistRecords()!=null) {
+			lengthPlaylist += playlistRecord.getPlaylist().getPlaylistRecords().toArray().length;
+		}
 		if (lengthPlaylist <= basic.getSubscription().getNip()) {
 			return ResponseEntity.ok(new MessageResponse(true, "success", crudPlaylistRecord.create(playlistRecord)));
 		} else {

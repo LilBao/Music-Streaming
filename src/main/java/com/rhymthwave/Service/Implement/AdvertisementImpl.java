@@ -91,11 +91,11 @@ public class AdvertisementImpl implements AdvertisementService {
 	@Override
 	public Advertisement updateStatusAds(Long id, Boolean active, Integer status) {
 		Advertisement ads = findOne(id);
-		if (ads != null) {
+		if(ads!=null) {
 			ads.setActive(false);
 			ads.setStatus(1);
 			return update(ads);
-		} else {
+		}else {
 			return null;
 		}
 	}
@@ -138,7 +138,6 @@ public class AdvertisementImpl implements AdvertisementService {
 
 	@Override
 	public Advertisement create(Advertisement entity) {
-
 		return advertisementDAO.save(entity);
 	}
 
@@ -209,5 +208,12 @@ public class AdvertisementImpl implements AdvertisementService {
 
 		return advertisementDAO.save(advertisement);
 	}
+
+	@Override
+	public List<Advertisement> findAdsRunning(Boolean active, Integer status) {
+		return advertisementDAO.findAdsRunning(active, status);
+	}
+    
+    
 
 }

@@ -72,6 +72,16 @@ public class RecordingGraphQL {
 		return recordSer.findAppearOn(artist);
 	}
 	
+	@QueryMapping("top50SongByAreaListened")
+	public List<Recording> top50SongByAreaListened(@Argument("country") String country){
+		return recordSer.top50SongByAreaListened(country,false);
+	}
+	
+	@QueryMapping("top50SongByDate")
+	public List<Recording> top50SongByDate(@Argument("country") String country){
+		return recordSer.top50SongByDate(country,false);
+	}
+	
 	@QueryMapping("findRecordingBySongId")
 	public Recording findRecordingBySongId(@Argument("songId") Long id) {
 		return crudRecording.findOne(id);

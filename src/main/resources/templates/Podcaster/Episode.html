@@ -2,7 +2,43 @@
     <section class="container">
         <div class="row mt-5">
             <h3 class="mx-3">Episodes</h3>
-            <div ng-repeat="item in listEpisodes">
+            <div class="d-flex">
+                <div>
+                    <div class="input-group me-3">
+                        <span class="input-group-text"><i class="bi bi-search-heart"></i></span>
+                        <input type="text" class="form-control" placeholder="Search" ng-model="searchEpisode" >
+                    </div>
+                </div>
+                <div class="product_sorting_container product_sorting_container_top">
+                    <ul class="product_sorting">
+                        <li>
+                            <span class="type_sorting_text">Default Sorting</span>
+                            <i class="fa fa-angle-down"></i>
+                            <ul class="sorting_type p-0" style="z-index: 2;">
+                                <li ng-click="sortNumber(listEpisodes,'episodeId')" class="type_sorting_btn">
+                                    <span>Default Sorting</span>
+                                </li>
+                                <li ng-click="sort(listEpisodes,'episodeTitle')" class="type_sorting_btn"><span>Title</span></li>
+                                <li ng-click="sort(listEpisodes,'publishDate')" class="type_sorting_btn"><span>Create date</span></li>
+                                <li ng-click="sortNumber(listEpisodes,'duration')" class="type_sorting_btn"><span>Duration</span></li>
+                                <li ng-click="sortNumber(listEpisodes,'listened')" class="type_sorting_btn"><span>listened</span></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span>Show</span>
+                            <span class="num_sorting_text">{{pagination.size}}</span>
+                            <i class="fa fa-angle-down"></i>
+                            <ul class="sorting_num  p-0" style="z-index: 2;">
+                                <li ng-click="pagination.setPageSize(10)" class="num_sorting_btn"><span>10</span></li>
+                                <li ng-click="pagination.setPageSize(15)" class="num_sorting_btn"><span>25</span></li>
+                                <li ng-click="pagination.setPageSize(35)" class="num_sorting_btn"><span>35</span></li>
+                                <li ng-click="pagination.setPageSize(50)" class="num_sorting_btn"><span>50</span></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div ng-repeat="item in pagination.items(listEpisodes) | filter: searchEpisode">
                 <div class="rounded-3 row border border-dark m-3">
                     <div class="col-2 my-3">
                         <a href="">
@@ -65,6 +101,31 @@
 
                 </div>
             </div>
+            <div class="product_sorting_container product_sorting_container_bottom clearfix">
+                <span class="showing_results">Showing {{pagination.page +1}} – {{pagination.count(listEpisodes)}} of
+                    {{pagination.items(listEpisodes).length}} results</span>
+                <div class="pages d-flex flex-row align-items-center">
+                    <div ng-show="pagination.page > 0" ng-click="pagination.prev(listEpisodes)" id="next_page_1" class="page_prev">
+                        <a>
+                            <i class="bi bi-arrow-left"></i>
+                        </a>
+                    </div>
+                    <div class="page_current">
+                        <span class="text-black">{{pagination.page +1}}</span>
+                        <ul class="page_selection ps-0 pe-4 bg-black" style="z-index: 200000;">
+                            <li ng-repeat="i in pagination.getNumbers(pagination.count(listEpisodes))">
+                                <a ng-click="pagination.setPageNo($index)" class="text-white">{{$index+1}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="page_total"><span>of</span> {{pagination.count(listEpisodes)}}</div>
+                    <div ng-show="pagination.page < pagination.count(listEpisodes)-1" ng-click="pagination.next(listEpisodes)" id="next_page_1" class="page_next">
+                        <a>
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
     <div class="modal fade" id="edit-episode">
@@ -78,7 +139,7 @@
                         <audio id="audio-change" controls class="w-100 me-5" src="{{episode.fileUrl}}"></audio>
                         <div>
                             <button id="change-file-audio" class="btn border-dark rounded-pill text-black">Change</button>
-                            <input id="change-audio" type="file" hidden>
+                            <input accept="audio/*" id="change-audio" type="file" hidden>
                         </div>
                     </div>
                     <div class="title mt-3">
@@ -183,7 +244,7 @@
                             <img id="change-image-episode" class="ms-5 w-100 img-podcast"
                                 src="{{episode.image.url}}"
                                 alt="">
-                            <input type="file" id="change-FileImage-episode" hidden>
+                            <input accept="image/*" type="file" id="change-FileImage-episode" hidden>
                         </div>
                     </div>
                 </div>

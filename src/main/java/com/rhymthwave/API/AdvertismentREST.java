@@ -86,7 +86,7 @@ public class AdvertismentREST {
 		return ResponseEntity.ok(new MessageResponse(true,"success", crudAds.delete(id)));
 	}
 
-	@PutMapping(value = "/api/v1/ads-file", consumes = {})
+	@PutMapping(value = "/api/v1/ads-file", consumes = { "multipart/form-data" })
 	public ResponseEntity<MessageResponse> putAdsFile(@RequestParam("id") Long id,
 			@PathParam("bannerFile") MultipartFile banner, @PathParam("audio") MultipartFile audio) {
 		Advertisement ads = crudAds.findOne(id);
@@ -106,7 +106,12 @@ public class AdvertismentREST {
 		return ResponseEntity.ok(new MessageResponse(true, "success", crudAds.update(ads)));
 	}
 	
-	@PostMapping(value = "/api/v1/buy-ads", consumes = { "multipart/form-data" })
+	@GetMapping("/api/v1/ads-running")
+	public ResponseEntity<MessageResponse> findAllAdsRunning() {
+		return ResponseEntity.ok(new MessageResponse(true, "success", adsSer.findAdsRunning(true,2)));
+	}
+	
+	@PostMapping(value = "/api/v1/buy-ads", consumes = {"multipart/form-data"})
 	public ResponseEntity<MessageResponse> buyAds(@ModelAttribute AdvertisementDTO ads,HttpServletRequest req) {
 		return ResponseEntity.ok(new MessageResponse(true, "success", adsSer.buyAds(ads, req)));
 	}

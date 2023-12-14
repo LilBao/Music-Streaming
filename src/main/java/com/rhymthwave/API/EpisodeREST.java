@@ -1,6 +1,8 @@
 package com.rhymthwave.API;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -120,5 +123,10 @@ public class EpisodeREST {
 	@GetMapping("/api/v1/episode-pl/{keyword}")
 	public ResponseEntity<MessageResponse> findEpisodeByName(@PathVariable("keyword") String keyword) {
 		return ResponseEntity.ok(new MessageResponse(true, "successs", episodeSer.findByName(keyword)));
+	}
+	
+	@GetMapping("/api/v1/episode-for-you")
+	public ResponseEntity<MessageResponse> findEpisodeForYou(@RequestParam("tag") Optional<List<Integer>> tag) {
+		return ResponseEntity.ok(new MessageResponse(true, "successs", episodeSer.top50EpForYou(true, tag)));
 	}
 }

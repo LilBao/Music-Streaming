@@ -1,6 +1,7 @@
 package com.rhymthwave.Service.Implement;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,5 +65,14 @@ public class PodcastServiceImpl implements PodcastService,CRUD<Podcast,Long>{
 	public List<Podcast> findMyPodcast(String email) {
 		return dao.findMyPobcast(email);
 	}
-	
+
+	@Override
+	public List<Podcast> top50NewPodcast(Optional<String> country) {
+		return dao.top50NewPodcast(country.orElse("%%"));
+	}
+
+	@Override
+	public List<Podcast> top50PodcastPopular(Optional<String> country) {
+		return dao.top50PodcastPopular(country.orElse("%%"));
+	}
 }

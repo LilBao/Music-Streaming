@@ -100,14 +100,24 @@ type Query {
 
  findRecordingAppearOnByArtist(artistId: Int): [Recording]
 
+ getNewListened(recordingId: Int, duration: Int): [Monitor]
+ 
+ getNewListenedEpisode(episodeId: Int, duration: Int): [MonitorEpisode]
+
+ top50ArtistByListener(country: String) : [Artist]
+ 
+ top50ArtistByFollow(country: String): [Artist]
+ 
+ top50SongByAreaListened(country: String) : [Recording]
+ 
+ top50SongByDate(country: String): [Recording]
+
  #Nam
  findAlbum(id: ID!): Album
  findAlByArtist(idArist: ID!): Artist
  findSongPl(songName: String!): [Recording]
  findRecordingBySongId(songId: Int!): Recording
 
- getNewListened(recordingId: Int, duration: Int): [Monitor]
- getNewListenedEpisode(episodeId: Int, duration: Int): [MonitorEpisode]
  
  #Khoa
  findAllReport : [Report]

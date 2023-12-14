@@ -1,5 +1,6 @@
 package com.rhymthwave.Service.Implement;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -84,5 +85,10 @@ public class EpisodeServiceImpl implements EpisodeService, CRUD<Episode, Long>{
 	@Override
 	public List<Episode> findByName(String keyword) {
 		return dao.findByName(keyword);
+	}
+
+	@Override
+	public List<Episode> top50EpForYou(Boolean ispublic, Optional<List<Integer>> tags) {
+		return dao.top50EpForYou(ispublic, tags.orElse(Arrays.asList(1)));
 	}	
 }

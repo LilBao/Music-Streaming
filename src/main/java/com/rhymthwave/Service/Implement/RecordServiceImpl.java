@@ -121,4 +121,14 @@ public class RecordServiceImpl implements RecordService, CRUD<Recording, Long>{
 	public List<Recording> statisticsByDate(String email, Integer date) {
 		return dao.statisticsByDate(email, date);
 	}
+
+	@Override
+	public List<Recording> top50SongByAreaListened(String country, Boolean deleted) {
+		return dao.top50SongByAreaListened(country,deleted);
+	}
+
+	@Override
+	public List<Recording> top50SongByDate(String country, Boolean deleted) {
+		return dao.top50SongByDate(country,deleted);
+	}
 }

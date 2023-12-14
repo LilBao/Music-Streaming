@@ -5,7 +5,7 @@ app.controller('analysisCtrl', function ($scope, $http, graphqlService, $routePa
         $(this).tab('show')
     })
 
-    $scope.selectedTime = 30;
+    $scope.selectedTime = 7;
     $scope.currentDate = $filter('date')(new Date(), 'yyyy-MM-dd');
     $scope.daysAgo = new Date(Date.now() - $scope.selectedTime * 24 * 60 * 60 * 1000);
     $scope.listCountries = [];
@@ -43,19 +43,23 @@ app.controller('analysisCtrl', function ($scope, $http, graphqlService, $routePa
         })
     }
 
-
     const ctx = $('#chartFollower');
+    var chartFollow;
     const age = $('#age');
+    var chartAge;
     const record = $('#record');
+    var chartRecord;
     const gender = $('#gender');
+    var chartGender;
+    var mapChart;
     
     $scope.monitorFollow = function () {
         $http.get(host + "/v1/profile", {
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
             let url = host + "/v1/monitor-follow";
-            $http.get(url,{
-                params: {email: resp.data.data.account.email, role: 2, duration: $scope.selectedTime}
+            $http.get(url, {
+                params: { email: resp.data.data.account.email, role: 2, duration: $scope.selectedTime }
             }).then(respChart => {
                 var listDate = [];
                 var listQuantity = [];
@@ -63,33 +67,39 @@ app.controller('analysisCtrl', function ($scope, $http, graphqlService, $routePa
                     listDate.push($filter('date')(new Date(item[0]), 'yyyy-MM-dd'));
                     listQuantity.push(item[1])
                 })
-                new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: listDate, 
-                        datasets: [{
-                            data: listQuantity,
-                            borderWidth: 1,
-                            fill: true,
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            y: {
-                                beginAtZero: true,      
-                            }
+                if (chartFollow) {
+                    chartFollow.data.labels = listDate;
+                    chartFollow.data.datasets[0].data = listQuantity;
+                    chartFollow.update();
+                } else {
+                    chartFollow = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: listDate,
+                            datasets: [{
+                                data: listQuantity,
+                                borderWidth: 1,
+                                fill: true,
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                            }]
                         },
-                        plugins: {
-                            legend: {
-                                display: false,
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                }
                             },
+                            plugins: {
+                                legend: {
+                                    display: false,
+                                },
+                            }
                         }
-                    }
-                });
+                    });
+                }
             })
         }).catch(error => {
             console.log("Not found artist profile")
@@ -125,42 +135,48 @@ app.controller('analysisCtrl', function ($scope, $http, graphqlService, $routePa
                 }
             });
             aAge = [under18, between18To22, between23To27, between28To34, between35To44, between45To60, over60];
-            new Chart(age, {
-                type: 'bar',
-                data: {
-                    labels: ['<18', '18-22', '23-27', '28-34', '35-44', '45-60', '60+'],
-                    datasets: [{
-                        data: aAge,
-                        borderWidth: 1,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.5)',
-                            'rgba(75, 192, 192, 0.5)',
-                            'rgba(255, 205, 86, 0.5)',
-                            'rgba(54, 162, 235, 0.5)'
-                        ],
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: {
-                            beginAtZero: true,
-                        },
-                        y: {
-                            display: false, // Ẩn thanh y
-                            beginAtZero: true,
-                        }
+            if (chartAge) {
+                chartAge.data.labels = ['<18', '18-22', '23-27', '28-34', '35-44', '45-60', '60+'];
+                chartAge.data.datasets[0].data = aAge;
+                chartAge.update();
+            } else {
+                chartAge = new Chart(age, {
+                    type: 'bar',
+                    data: {
+                        labels: ['<18', '18-22', '23-27', '28-34', '35-44', '45-60', '60+'],
+                        datasets: [{
+                            data: aAge,
+                            borderWidth: 1,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.5)',
+                                'rgba(75, 192, 192, 0.5)',
+                                'rgba(255, 205, 86, 0.5)',
+                                'rgba(54, 162, 235, 0.5)'
+                            ],
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
                     },
-                    plugins: {
-                        legend: {
-                            display: false, // Ẩn chú thích
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                            },
+                            y: {
+                                display: false, // Ẩn thanh y
+                                beginAtZero: true,
+                            }
                         },
+                        plugins: {
+                            legend: {
+                                display: false, // Ẩn chú thích
+                            },
+                        }
                     }
-                }
-            });
+                });
+            }
         })
     }
 
@@ -184,30 +200,36 @@ app.controller('analysisCtrl', function ($scope, $http, graphqlService, $routePa
                 }
             })
             aGender = [female, male, nonBinary, notSpecific];
-            new Chart(gender, {
-                type: 'doughnut',
-                data: {
-                    //0         //1         //2           //3   
-                    labels: ['Female', 'Male', 'Non-binary', 'Not specific'],
-                    datasets: [{
-                        data: aGender,
-                        borderWidth: 1,
-                        fill: true,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.5)',
-                            'rgba(75, 192, 192, 0.5)',
-                            'rgba(255, 205, 86, 0.5)',
-                            'rgba(54, 162, 235, 0.5)'
-                        ],
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                }
-            });
+            if (chartGender) {
+                chartGender.data.labels = ['Female', 'Male', 'Non-binary', 'Not specific'];
+                chartGender.data.datasets[0].data = aGender;
+                chartGender.update();
+            } else {
+                chartGender = new Chart(gender, {
+                    type: 'doughnut',
+                    data: {
+                        //0         //1         //2           //3   
+                        labels: ['Female', 'Male', 'Non-binary', 'Not specific'],
+                        datasets: [{
+                            data: aGender,
+                            borderWidth: 1,
+                            fill: true,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.5)',
+                                'rgba(75, 192, 192, 0.5)',
+                                'rgba(255, 205, 86, 0.5)',
+                                'rgba(54, 162, 235, 0.5)'
+                            ],
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                    }
+                });
+            }
         })
     }
 
@@ -216,22 +238,29 @@ app.controller('analysisCtrl', function ($scope, $http, graphqlService, $routePa
             $http.get(host + '/v1/monitor/country', {
                 params: { id: listId, duration: $scope.selectedTime }
             }).then(resp => {
-                var map = anychart.map();
-                map.geoData('anychart.maps.world');
-                map.interactivity().selectionMode('none');
-                map.padding(0);
                 $scope.listCountries = resp.data.data;
                 resp.data.data.forEach(e => {
                     var obj = { id: e.country, density: e.quantity }
                     aCountries.push(obj);
                 });
 
+                if (!mapChart) {
+                    mapChart = anychart.map();
+                    mapChart.geoData('anychart.maps.world');
+                    mapChart.interactivity().selectionMode('none');
+                    mapChart.padding(0);
+                    var zoomController = anychart.ui.zoom();
+                    zoomController.render(mapChart);
+                    mapChart.container('world');
+                } else {
+                    dataSet = anychart.data.set(aCountries);
+                    densityData = dataSet.mapAs({ value: 'density' });
+                    series = mapChart.choropleth(densityData);
+                }
                 var dataSet = anychart.data.set(aCountries);
                 var densityData = dataSet.mapAs({ value: 'density' });
-                var series = map.choropleth(densityData);
+                var series = mapChart.choropleth(densityData);
 
-                // ... Các cấu hình và tùy chỉnh khác như ví dụ trước ...
-                //Phạm vi chỉnh lại lượt nghe
                 var scale = anychart.scales.ordinalColor([
                     { less: 1000 },
                     { from: 1000, to: 10000 },
@@ -243,6 +272,7 @@ app.controller('analysisCtrl', function ($scope, $http, graphqlService, $routePa
                     { from: 100000000, to: 500000000 },
                     { greater: 500000000 }
                 ]);
+
                 scale.colors([
                     '#81d4fa',
                     '#4fc3f7',
@@ -254,7 +284,8 @@ app.controller('analysisCtrl', function ($scope, $http, graphqlService, $routePa
                     '#014377',
                     '#000000'
                 ]);
-                var colorRange = map.colorRange();
+
+                var colorRange = mapChart.colorRange();
                 colorRange.enabled(true).padding([0, 0, 20, 0]);
                 colorRange
                     .ticks()
@@ -283,19 +314,12 @@ app.controller('analysisCtrl', function ($scope, $http, graphqlService, $routePa
 
                 series.colorScale(scale);
                 try {
-                    // create zoom controls
-                    var zoomController = anychart.ui.zoom();
-                    zoomController.render(map);
-                    // Khởi tạo biểu đồ
-                    map.container('world');
-                    map.draw();
+                    mapChart.draw();
                     var zoom = anychart.ui.zoom();
                     zoom.renderTo('zoom-controls');
-
-                    // Kết nối thanh thu phóng với biểu đồ
-                    zoom.target(map);
+                    zoom.target(mapChart);
                 } catch (error) {
-
+                    console.error(error);
                 }
             })
         })
@@ -340,37 +364,44 @@ app.controller('analysisCtrl', function ($scope, $http, graphqlService, $routePa
                     '0.5)';
                 colors.push(randomColor);
             })
-            new Chart(record, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        data: data,
-                        borderWidth: 1,
-                        backgroundColor: colors,
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: {
-                            beginAtZero: true,
-                        },
-                        y: {
-                            display: false, // Ẩn thanh y
-                            beginAtZero: true,
-                        }
+            if (chartRecord) {
+                chartRecord.data.labels = labels;
+                chartRecord.data.datasets[0].data = data;
+                chartRecord.data.datasets[0].backgroundColor = colors;
+                chartRecord.update();
+            } else {
+                chartRecord = new Chart(record, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: data,
+                            borderWidth: 1,
+                            backgroundColor: colors,
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
                     },
-                    plugins: {
-                        legend: {
-                            display: false, // Ẩn chú thích
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                            },
+                            y: {
+                                display: false, // Ẩn thanh y
+                                beginAtZero: true,
+                            }
                         },
+                        plugins: {
+                            legend: {
+                                display: false, // Ẩn chú thích
+                            },
+                        }
                     }
-                }
-            });
+                });
+            }
         })
     }
 
@@ -384,13 +415,19 @@ app.controller('analysisCtrl', function ($scope, $http, graphqlService, $routePa
     }
 
     $scope.changeTime = function () {
-        var allCanvases = document.querySelectorAll('canvas');
-        allCanvases.forEach(function (canvas) {
-            canvas.remove();
-        });
-        $scope.Recording();
+        if (Number($routeParams.id) > 0) {
+            $scope.recordingId = $routeParams.id;
+            $scope.Recording();
+        } else {
+            $scope.findAllFanAlsoLike($scope.listRecordId);
+            $scope.analysicAge([...$scope.listRecordId]);
+            $scope.analysicGender([...$scope.listRecordId]);
+            $scope.analysicCountry([...$scope.listRecordId]);
+            $scope.monitorFollow();
+            $scope.statisticsRecord();
+        }
+        $scope.daysAgo = new Date(Date.now() - $scope.selectedTime * 24 * 60 * 60 * 1000);
     }
-    //Char Map
 
     if (Number($routeParams.id) > 0) {
         $scope.recordingId = $routeParams.id;
@@ -400,15 +437,15 @@ app.controller('analysisCtrl', function ($scope, $http, graphqlService, $routePa
         $http.get(url, {
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
-            var listRecordId = [];
+            $scope.listRecordId = [];
             resp.data.data.forEach(item => {
-                listRecordId.push(item.recordingId)
+                $scope.listRecordId.push(item.recordingId)
                 $scope.listened += item.listened
             })
-            $scope.findAllFanAlsoLike(listRecordId);
-            $scope.analysicAge([...listRecordId]);
-            $scope.analysicGender([...listRecordId]);
-            $scope.analysicCountry([...listRecordId]);
+            $scope.findAllFanAlsoLike($scope.listRecordId);
+            $scope.analysicAge([...$scope.listRecordId]);
+            $scope.analysicGender([...$scope.listRecordId]);
+            $scope.analysicCountry([...$scope.listRecordId]);
             $scope.monitorFollow();
         }).catch(error => {
             console.log(error)

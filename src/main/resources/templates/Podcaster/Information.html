@@ -40,15 +40,15 @@
         <div class="tab">
           <h6>1/4</h6>
           <h1>Claim an podcaster profile</h1>
-          <p>If you already have episode on Spotify, you can get access to stats.</p>
+          <p>If you already have episode on Rhythm Wave, you can get access to stats.</p>
         </div>
 
         <div class="tab">
           <h6>2/4</h6>
-          <h1>Is this the right Spotify account?</h1>
-          <p>You’ll use this to log in to Spotify for Artists.</p>
+          <h1>Is this the right Rhythm Wave account?</h1>
+          <p>You’ll use this to log in to Rhythm Wave for Artists.</p>
           <div class="my-5 d-flex flex-column align-items-center">
-            <img class="rounded-circle w-25" ng-src="{{account.image == null ? 'https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png' : account.image.url}}"  alt="Cinque Terre">
+            <img style="width: 150px; height: 150px; object-fit: cover;" class="rounded-circle" ng-src="{{account.image == null ? 'https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png' : account.image.url}}"  alt="Cinque Terre">
             <p>{{account.email}}</p>
             <p>{{account.username}}</p>
             <a href="">Change account</a>
@@ -67,7 +67,7 @@
               <img ng-click="selectImg('podcast-img')" class="podcast-img w-100 img-podcast"
                 src="https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png"
                 alt="">
-              <input id="podcast-img" type="file" hidden required>
+              <input accept="image/*" id="podcast-img" type="file" hidden required>
             </div>
             <div class="col-7">
               <div class="my-3">
@@ -76,14 +76,14 @@
               </div>
               <div class="my-3">
                 <label for="">Podcast category</label>
-                <select ng-model="podcast.tag.tagId" class="text-white inputCss form-control ip" name="" id="" required>
+                <select ng-model="podcast.tag.tagId" class="text-white inputCss form-control ip" name="" id="option-tag" required>
                   <option ng-repeat="item in listTag" value="{{item.tagId}}" class="text-black">{{item.tagName}}
                   </option>
                 </select>
               </div>
               <div class="my-3">
                 <label for="">Podcast language</label>
-                <select ng-model="podcast.language" class="text-white inputCss form-control ip" name="" id="" required>
+                <select ng-model="podcast.language" class="text-white inputCss form-control ip" name="" id="option-country" required>
                   <option ng-repeat="item in listCountries" value="{{item.id}}" class="text-black">{{item.nameCountry}}
                   </option>
                 </select>

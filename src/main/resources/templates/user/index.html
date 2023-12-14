@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -24,6 +24,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+        integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../../static/css/style.css">
     <link rel="stylesheet" href="../../static/css/cssUser/profile.css" />
 
@@ -98,10 +101,7 @@
                                             href="#!profile/{{item.authorsAccountB.role.role.toLowerCase()}}/{{item.authorsAccountB.account.username}}">
                                             <div class="d-flex align-items-center">
                                                 <img class="m-2 rounded-2 thumbnail-playlist"
-                                                    src="{{item.authorsAccountB.account.image !==null ? 
-                                                    item.authorsAccountB.account.image.url:
-                                                    'https://res.cloudinary.com/div9ldpou/image/upload/v1699632134/Avatar/System/user_oujyrp.png'}}" alt="">
-
+                                                    ng-src="{{item.authorsAccountB.account.image !==null?item.authorsAccountB.account.image.url:'https://res.cloudinary.com/div9ldpou/image/upload/v1699632134/Avatar/System/user_oujyrp.png'}}" alt="">
                                                 <div class="d-flex justify-content-between flex-column">
                                                     <p class="p-0 m-0">{{item.authorsAccountB.account.username}}</p>
                                                     <span class="small">{{item.authorsAccountB.role.role}}</span>
@@ -112,9 +112,7 @@
                                             href="#!artist/{{item.authorsAccountB.account.artist.artistId}}">
                                             <div class="d-flex align-items-center">
                                                 <img class="m-2 rounded-2 thumbnail-playlist"
-                                                    src="{{item.authorsAccountB.account.artist.imagesProfile !==null ? 
-                                                        item.authorsAccountB.account.artist.imagesProfile.url :
-                                                    'https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png'}}" alt="">
+                                                    ng-src="{{item.authorsAccountB.account.artist.imagesProfile!==null?item.authorsAccountB.account.artist.imagesProfile.url:'https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png'}}" alt="">
                                                 <div class="d-flex justify-content-between flex-column">
                                                     <p class="p-0 m-0">
                                                         {{item.authorsAccountB.account.artist.artistName}}
@@ -126,7 +124,7 @@
                                         <div class="element-menu" id="{{menuPlaylistId}}">
                                             <ul class="p-0 bg-dark ul-dropdown-end">
                                                 <li class="li-dropdown-end">
-                                                    <a ng-click="Unfollow(item.followerId)"
+                                                    <a ng-click="deleteFollow(item.followerId)"
                                                         class="btn text-white dropdown-item py-2 px-3">
                                                         <i class="bi bi-x-lg"></i> Unfollow
                                                     </a>
@@ -150,8 +148,9 @@
                                                     <hr class="dropdown-divider">
                                                 </li>
                                                 <li class="li-dropdown-end">
-                                                    <a class="btn text-white dropdown-item py-2 px-3"  data-bs-toggle="modal" data-bs-target="#sharing"><i
-                                                            class="bi bi-share"></i>
+                                                    <a ng-click="typeShare(item.authorsAccountB.role.role === 'ARTIST' ? '#!/artist/'+item.authorsAccountB.account.artist.artistId : '#!/profile/'+item.authorsAccountB.role.role.toLowerCase()+'/'+item.authorsAccountB.account.username)" data-bs-toggle="modal" data-bs-target="#sharing"
+                                                        class="btn text-white dropdown-item py-2 px-3">
+                                                        <i class="bi bi-share"></i>
                                                         Share</a>
                                                 </li>
                                             </ul>
@@ -165,11 +164,11 @@
                                         <a href="#!playlist/{{item.playlistId}}">
                                             <div class="d-flex align-items-center">
                                                 <img class="m-2 rounded-2 thumbnail-playlist"
-                                                    src="{{item.image !==null ? item.image.url:'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}"
+                                                    ng-src="{{item.image!==null?item.image.url:'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}"
                                                     alt="">
                                                 <div>
                                                     <p class="p-0 m-0">{{item.playlistName}}</p>
-                                                    <span>{{item.quantity}}</span>
+                                                    <span>Playlist</span>
                                                 </div>
                                             </div>
                                         </a>
@@ -264,14 +263,14 @@
                                                 </li>
 
                                                 <li class="li-dropdown-end">
-                                                    <a class="btn text-white dropdown-item py-2 px-3"><i
-                                                            class="bi bi-share"></i>
+                                                    <a ng-click="typeShare('!#/playlist/'+item.playlistId)" data-bs-toggle="modal" data-bs-target="#sharing"
+                                                        class="btn text-white dropdown-item py-2 px-3">
+                                                        <i class="bi bi-share"></i>
                                                         Share</a>
                                                 </li>
                                             </ul>
                                         </div>
                                     </li>
-                                    <button class="btn" data-bs-toggle="modal" data-bs-target="#sharing">dsfjldskfjsdl</button>
                                 </div>
                             </div>
                         </div>
@@ -309,7 +308,7 @@
                                     ng-repeat="item in audioItem.song.writters">{{item.artist.artistName}} | </a>
                                 <a class="text-white">{{audioItem.podcast.authorName}}</a>
                             </div>
-                            <a ng-show="ads.adId" href="{{ads.url}}" class="text-white">Learn more</a>
+                            <a ng-show="ads.adId" ng-click="updateClickAds(item)" class="text-white">Learn more</a>
                         </div>
                     </div>
 
@@ -363,12 +362,13 @@
                 </div>
                 <div class="time-line w-100 d-flex align-items-center flex-fill">
                     <span style="font-size: x-small;" id="current-time">00:00</span>
-                    <input id="duration-audio" class="duration-bar w-100 mx-2" type="range" min="0" value="0" step="0.1" name="">
+                    <input id="duration-audio" class="duration-bar w-100 mx-2" type="range" min="0" value="0" step="0.1"
+                        name="">
                     <audio id="audio" src=""></audio>
                     <div class="line-first"></div>
                     <div class="line-current"></div>
                     <div class="circle"></div>
-                    <span style="font-size: x-small;" id="total-time">duration</span>
+                    <span style="font-size: x-small;" id="total-time">00:00</span>
                 </div>
             </div>
             <div class="col-md-3 d-none d-md-block player-controls-right ">
@@ -397,7 +397,27 @@
                         <span class="btn" type="button" aria-hidden="true" data-bs-dismiss="modal"
                             aria-label="Close">&times;</span>
                     </div>
-                    <p>This is the body of the modal.</p>
+                    <div id="notify" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <a href="{{notify.toURL}}">
+                                    <img src="{{notify.urlImage}}" alt="Los Angeles" class="d-block w-100">
+                                </a>
+                            </div>
+                            <div class="carousel-item" ng-repeat="item in AdsNotification track by $index">
+                                <a ng-click="updateClickAds(item)">
+                                    <img style="height: 500px; object-fit: cover;" src="{{item.image.url}}" alt="Chicago" class="d-block w-100">
+                                </a>
+                            </div>
+                        </div>
+
+                        <button class="carousel-control-prev" type="button" data-bs-target="#notify" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#notify" data-bs-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -429,19 +449,24 @@
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                   <div class="d-flex">
-
-                   </div>
-                   <div>
-                        <p></p>
-                        <button class="btn bg-white text-dark rounded-pill">Copy</button>
-                   </div>
+                    <div class="d-flex">
+                        <input ng-model="link" type="text" ng-click="copyToClipboard(link)"
+                        readonly class="text-white form-control" style="background-color: transparent;">
+                    </div>
+                    <div class="d-flex mt-4 justify-content-between">
+                        <a ng-click="share('fb')" class="facebook" target="blank"><i class="display-6 bi bi-facebook"></i></a>
+                        <!-- twitter -->
+                        <a ng-click="share('twitter')" class="twitter" target="blank"><i class="display-6 bi bi-twitter"></i></a>
+                        <!-- linkedin -->
+                        <a ng-click="share('linkedIn')" class="linkedin" target="blank"><i class="display-6 bi bi-linkedin"></i></a>
+                        <!-- reddit -->
+                        <a ng-click="share('reddit')" class="reddit" target="blank"><i class="display-6 bi bi-reddit"></i></a>
+                        <!-- whatsapp-->
+                        <a ng-click="share('whasapp')" class="whatsapp" target="blank"><i class="display-6 bi bi-whatsapp"></i></i></a>
+                        <!-- telegram-->
+                        <a ng-click="share('tele')" class="telegram" target="blank"><i class="display-6 bi bi-telegram"></i></a>
+                    </div>
                 </div>
-
-                <div class="modal-footer">
-                    
-                </div>
-
             </div>
         </div>
     </div>
@@ -454,19 +479,32 @@
     <script src="../../static/js/jscustom/UI-Js-Admin/bootstrap-show-notification.js"></script>
     <script src="../../static/js/jscustom/toasts.js"></script>
     <script src="../../static/js/angularjs/user/myCtrl.js"></script>
+
     <script src="../../static/js/angularjs/user/Karaoke.js"></script>
+
     <script src="../../static/js/angularjs/user/Queue.js"></script>
+
     <script src="../../static/js/angularjs/user/search.js"></script>
+
     <script src="../../static/js/angularjs/user/playlist.js"></script>
+
     <script src="../../static/js/angularjs/user/profile.js"></script>
+
     <script src="../../static/js/angularjs/user/show-podcast.js"></script>
+
     <script src="../../static/js/angularjs/user/album.js"></script>
+
     <script src="../../static/js/angularjs/user/mood.js"></script>
+
     <script src="../../static/js/angularjs/user/episode.js"></script>
+
+    <script src="../../static/js/angularjs/user/dashboard.js"></script>
+
     <script src="../../static/js/angularjs/user/discography.js"></script>
+
     <script src="../../static/js/angularjs/user/report.js"></script>
+
     <script src="../../static/js/angularjs/user/song.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-cookies.js"></script>
 </body>
 
 </html>

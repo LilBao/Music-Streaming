@@ -39,6 +39,22 @@ public interface ArtistDAO extends JpaRepository<Artist, Long>{
 	
 	@Query("SELECT COUNT(*) FROM Follow f WHERE f.authorsAccountB.authorId = ?1")
 	int countFollowerArtist(Long author);
+	
+	@Query(value="select top 50 a.* from artist a "
+			+ "join accounts acc on a.email = acc.email "
+			+ "join writter w on w.artistid = a.artistid "
+			+ "join songs s on s.songsid = w.songsid "
+			+ "join recording r on r.songsid = s.songsid "
+			+ "where acc.country like :country and a.active = :active and a.verify = :verify "
+			+ "group by a.active, a.artistid ,a.artistname,a.backgroudimage,a.bio, a.dateofbirth, a.datestarted, a.email, a.expirepermission, a.fullname, "
+			+ "a.imagegallery, a.placeofbirth, a.profileimage, a.publicidimagegallery, a.socialmedialinks, a.verify "
+			+ "order by sum(r.listened) desc",nativeQuery=true)
+	List<Artist> top50ArtistByListener(@Param("country") String country, @Param("active") Boolean active, @Param("verify") Boolean verify);
+	
+	@Query("SELECT f.authorsAccountB.account.artist FROM Follow f "
+			+ "where f.authorsAccountB.role.roleId = :role and f.authorsAccountB.account.country like :country and f.authorsAccountB.account.artist.isVerify = :verify "
+			+ "ORDER BY COUNT(f.authorsAccountB) desc")
+	List<Artist> top50ArtistByFollow(@Param("role") Integer role, @Param("country") String country, @Param("verify") Boolean verify);
 
 
 	@Query(value = "SELECT top 10  a.artistid, a.artistname,a.profileimage, a.email, SUM(r.listened) AS totalListened \n" +

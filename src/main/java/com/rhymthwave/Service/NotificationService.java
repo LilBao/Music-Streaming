@@ -8,4 +8,6 @@ public interface NotificationService extends CRUD<Notification,Integer>{
     Notification save(Notification notification, MultipartFile multipartFile, HttpServletRequest request);
 
     boolean update(Notification notification,HttpServletRequest request);
+    
+	Notification notifyLatest();
 }

@@ -1,28 +1,28 @@
-var app = angular.module("myApp", ["ngRoute"]);
+var app = angular.module("myApp", ["ngRoute","ngMessages"]);
 app.config(function($routeProvider) {
   $routeProvider
   .when("/", {
-    templateUrl : "Home.html",
+    templateUrl : "Artist/Home.html",
     controller:"homeArtistCtrl"
   })
   .when("/artist-home", {
-    templateUrl : "Home.html",
+    templateUrl : "Artist/Home.html",
     controller:"homeArtistCtrl"
   })
   .when("/artist-music", {
-    templateUrl : "Music.html",
+    templateUrl : "Artist/Music.html",
     controller: "musicCtrl"
   })
   .when("/artist-audience/:id", {
-    templateUrl : "Audience.html",
+    templateUrl : "Artist/Audience.html",
     controller: "analysisCtrl",
   })
   .when("/artist-marketing", {
-    templateUrl : "Marketing.html",
+    templateUrl : "Artist/Marketing.html",
     controller :"marketingCtrl"
   })
   .when("/artist-profile", {
-    templateUrl : "Profile.html",
+    templateUrl : "Artist/Profile.html",
     controller :"profileArtistCtrl"
   })
 });

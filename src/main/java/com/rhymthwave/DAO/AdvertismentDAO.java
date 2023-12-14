@@ -13,7 +13,7 @@ import com.rhymthwave.entity.Advertisement;
 @Repository
 public interface AdvertismentDAO extends JpaRepository<Advertisement, Long>{
 	
-	@Query("Select o from Advertisement o where o.audioFile is not null and o.endDate > CURRENT_DATE and o.active=true order by o.priority asc, o.listened asc")
+	@Query("Select o from Advertisement o where o.audioFile is not null and o.endDate > CURRENT_DATE and o.active=true and o.status=2 order by o.priority asc, o.listened asc")
 	List<Advertisement> findAdsAudioNotNull();
 
 	//2. running
@@ -33,6 +33,9 @@ public interface AdvertismentDAO extends JpaRepository<Advertisement, Long>{
 
 	@Query("Select o from Advertisement o where o.account.email=:email order by o.endDate asc")
 	List<Advertisement> findAdsByEmail(@Param("email") String email);
+	
+	@Query("Select o from Advertisement o where o.status = :status and o.endDate > CURRENT_DATE and o.active= :active order by o.priority asc, o.listened, o.clicked asc")
+	List<Advertisement> findAdsRunning(@Param("active") Boolean active,@Param("status") Integer status);
 
 	@Query("select a.subscription.subscriptionId from Advertisement a where year(a.startDate) = :year")
 	List<Integer> findIdSubscriptionByYearFromAds( @Param(("year")) int year);

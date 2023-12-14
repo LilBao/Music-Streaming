@@ -139,7 +139,7 @@ public class PlaylistREST {
 				.getPlaylistAllow()) {
 			playlist.setUsertype(account.getUserType().get(0));
 			Playlist playlistData = crudPlaylist.create(playlist);
-			return ResponseEntity.ok(new MessageResponse(true, "success", playlistSer.createSimilarPodcast(playlistData, listRecord)));
+			return ResponseEntity.ok(new MessageResponse(true, "success", playlistSer.createSimilarPlaylist(playlistData, listRecord)));
 		} else {
 			if (account.getUserType().toArray().length > 1) {
 				if (account.getUserType().get(1).getEndDate().before(new Date())) {
@@ -147,7 +147,7 @@ public class PlaylistREST {
 				} else {
 					playlist.setUsertype(account.getUserType().get(1));
 					Playlist playlistData = crudPlaylist.create(playlist);
-					return ResponseEntity.ok(new MessageResponse(true, "success",  playlistSer.createSimilarPodcast(playlistData, listRecord)));
+					return ResponseEntity.ok(new MessageResponse(true, "success",  playlistSer.createSimilarPlaylist(playlistData, listRecord)));
 				}
 			} else {
 				return ResponseEntity
@@ -155,5 +155,18 @@ public class PlaylistREST {
 			}
 
 		}
+	}
+	
+	@GetMapping("/api/v1/top-playlist-new")
+	public ResponseEntity<MessageResponse> findTopNewPlaylist(@RequestParam("role") List<Integer> role) {
+		return ResponseEntity.ok(new MessageResponse(true, "success", playlistSer.top50PlaylistLatest(role, true)));
+	}
+	
+	@GetMapping("/api/v1/top-playlist-recent-listen")
+	public ResponseEntity<MessageResponse> findTopRecentPlaylist(@RequestParam("role") List<Integer> role,@RequestParam("genre") Optional<List<String>> genre,
+			@RequestParam("culture") Optional<String> culture, @RequestParam("instrument") Optional<String> instrument,
+			@RequestParam("mood") Optional<String> mood, @RequestParam("songstyle") Optional<String> songstyle, 
+			@RequestParam("versions") Optional<String> versions) {
+		return ResponseEntity.ok(new MessageResponse(true, "success", playlistSer.top50PlaylistRecentListen(role, true, genre, culture, instrument, mood, songstyle, versions)));
 	}
 }

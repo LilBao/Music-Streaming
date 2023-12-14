@@ -27,11 +27,11 @@ public class PaymentController {
 	private final UserTypeService usertypeSer;
 
 	private final CRUD<Payment, Long> crudPayment;
-	
+
 	private final CRUD<Advertisement, Long> crudAds;
 
 	private final HistoryPaymentService historyPayment;
-	
+
 	private final AdvertisementService adsSer;
 
 	@GetMapping("/payment")
@@ -47,15 +47,20 @@ public class PaymentController {
 	@GetMapping("/complete-payment-vnpay")
 	public String completePaymentVNPay(@RequestParam("subcriptionId") Integer subcriptionId,
 			@RequestParam("paymentName") String paymentName, @RequestParam("email") String email,
-			@RequestParam("ads") Optional<Long> ads, @RequestParam("packages") String packages) {
-		if (packages.equalsIgnoreCase("ACCOUNT")) {
-			crudUserType.create(usertypeSer.generateEntity(email, subcriptionId, 1));
-			crudPayment.create(historyPayment.payment(email, subcriptionId, paymentName));
+			@RequestParam("ads") Optional<Long> ads, @RequestParam("packages") String packages,
+			@RequestParam("vnp_ResponseCode") String vnp_ResponseCode) {
+		if (vnp_ResponseCode.equals("00")) {
+			if (packages.equalsIgnoreCase("ACCOUNT")) {
+				crudUserType.create(usertypeSer.generateEntity(email, subcriptionId, 1));
+				crudPayment.create(historyPayment.payment(email, subcriptionId, paymentName));
+			} else {
+				adsSer.updateStatusAds(ads.orElse(null), false, 1);
+			}
+			return "redirect:/payment";
 		} else {
-			adsSer.updateStatusAds(ads.orElse(null),false,1);
+			return "redirect:/cancelled";
 		}
-
-		return "redirect:/payment";
+		
 	}
 
 	@GetMapping("/complete-payment-paypal")
@@ -68,7 +73,7 @@ public class PaymentController {
 			crudUserType.create(usertypeSer.generateEntity(email, subscriptionId, 1));
 			crudPayment.create(historyPayment.payment(email, subscriptionId, paymentName));
 		} else {
-			adsSer.updateStatusAds(adsId.orElse(null),false,1);
+			adsSer.updateStatusAds(adsId.orElse(null), false, 1);
 		}
 		return "redirect:/payment";
 	}
@@ -82,7 +87,7 @@ public class PaymentController {
 			crudUserType.create(usertypeSer.generateEntity(email, subscriptionId, 1));
 			crudPayment.create(historyPayment.payment(email, subscriptionId, paymentName));
 		} else {
-			adsSer.updateStatusAds(adsId.orElse(null),false,1);
+			adsSer.updateStatusAds(adsId.orElse(null), false, 1);
 		}
 		return "redirect:/payment";
 	}

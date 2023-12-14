@@ -14,7 +14,7 @@
             alt="">
         <div class="change-bg">
             <button class="btn" id="modified-background"><i class="bi bi-pencil-fill text-white"></i></button>
-            <input id="background" type="file" hidden>
+            <input accept="image/*" id="background" type="file" hidden>
         </div>
         <div class="m-0 name-artist d-flex align-items-center">
             <div class="dropdown">
@@ -65,7 +65,7 @@
                                 <img ng-click="selectFile('avatars')" class="select-image avatars profile-picture"
                                     ng-src="{{artist.imagesProfile ==null ? 'https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png':artist.imagesProfile.url}}"
                                     alt="">
-                                <input id="avatars" type="file" hidden>
+                                <input accept="image/*" id="avatars" type="file" hidden>
                             </div>
 
                         </div>

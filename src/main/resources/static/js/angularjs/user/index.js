@@ -1,81 +1,84 @@
 var app = angular.module("myApp", ["ngRoute","ngCookies"]);
-app.config(function ($routeProvider, $cookiesProvider) {
+app.config(function ($routeProvider,$httpProvider) {
     $routeProvider
         .when("/", {
-            templateUrl: "discover.html",
-            //controller: "myCtrl"
+            templateUrl: "User/discover.html",
+            controller: "dashboardCtrl"
         })
         .when("/main", {
-            templateUrl: "discover.html"
+            templateUrl: "User/discover.html",
+            controller: "dashboardCtrl"
         })
         .when("/search", {
-            templateUrl: "search-detail.html",
+            templateUrl: "User/search-detail.html",
             controller: "SearchController"
         })
         .when("/browse-podcast", {
-            templateUrl: "browse-podcast.html",
+            templateUrl: "User/browse-podcast.html",
             controller: "SearchController"
         })
         .when("/show/:id", {
-            templateUrl: "show-podcast.html",
+            templateUrl: "User/show-podcast.html",
             controller: "ShowPodcast"
         })
         .when("/playlist-art/:id", {
-            templateUrl: "search-playlist-art.html",
+            templateUrl: "User/search-playlist-art.html",
             controller: "playlistCtrl"
         })
         .when("/album/:id", {
-            templateUrl: "search-album.html",
+            templateUrl: "User/search-album.html",
             controller: "album"
         })
         .when("/mood/:id", {
-            templateUrl: "search-mood.html",
+            templateUrl: "User/search-mood.html",
             controller: "mood"
         })
         .when("/episode/:id", {
-            templateUrl: "search-episodes.html",
+            templateUrl: "User/search-episodes.html",
             controller: "episode"
         })
         .when("/discography/:id", {
-            templateUrl: "profile-discography.html",
+            templateUrl: "User/profile-discography.html",
             controller: 'discography'
         })
         .when("/report/:option/:id", {
-            templateUrl: "report.html",
+            templateUrl: "User/report.html",
             controller: 'report'
         })
         .when("/karaoke", {
-            templateUrl: "Karaoke.html",
+            templateUrl: "User/Karaoke.html",
             controller: 'karaokeCtrl'
         })
         .when("/wishlist", {
-            templateUrl: "wishlist.html",
+            templateUrl: "User/wishlist.html",
             controller: 'playlistCtrl'
         })
         .when("/playlist/:id", {
-            templateUrl: "playlist.html",
+            templateUrl: "User/playlist.html",
             controller: 'playlistCtrl'
         })
         .when("/profile/:profile/:id", {
-            templateUrl: "profile.html",
+            templateUrl: "User/profile.html",
             controller: 'profileCtrl'
         })
         .when("/artist/:id", {
-            templateUrl: "profileArtist.html",
+            templateUrl: "User/profileArtist.html",
             controller: 'profileCtrl'
         })
         .when("/podcast/:id", {
-            templateUrl: "playlist.html",
+            templateUrl: "User/playlist.html",
             controller: 'playlistCtrl'
         })
         .when("/song/:id", {
-            templateUrl: "song.html",
+            templateUrl: "User/song.html",
             controller: 'song'
         })
         .when("/queue", {
-            templateUrl: "Queue.html",
+            templateUrl: "User/Queue.html",
             controller: 'queueCtrl'
-        });
+        })
+        .otherwise({ templateUrl : "User/404.html"});;
+        $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 });
 
 app.service('queueService', function () {
@@ -194,57 +197,4 @@ app.directive('formatTime', function () {
     };
 });
 
-app.service('sortService', function () {
-    this.sort = function (list, field) {
-        this.direction = this.direction === "asc" ? "desc" : "asc";
-        if (this.direction === "asc") {
-            list.sort((a, b) => a[field].localeCompare(b[field]))
-        } else {
-            list.sort((a, b) => b[field].localeCompare(a[field]))
-        }
-    }
-    this.sortNumber = function (list, field) {
-        this.direction = this.direction === "asc" ? "desc" : "asc";
-        if (this.direction === "asc") {
-            list.sort((a, b) => a[field] - (b[field]))
-        } else {
-            list.sort((a, b) => b[field] - (a[field]))
-        }
-    }
-})
 
-app.service('pageService', function () {
-    this.pager = {
-        page: 0,
-        size: 5,
-        setPageSize: function (newSize) {
-            this.size = newSize;
-        },
-        items(list) {
-            var start = this.page * this.size;
-            return list.slice(start, start + this.size)
-        },
-        count(list) {
-            return Math.ceil(1.0 * list.length / this.size)
-        },
-        prev() {
-            this.page--;
-            if (this.page < 0) {
-                this.page = 0;
-            }
-        },
-        next(list) {
-            this.page++;
-            if (this.page >= this.count(list)) {
-                this.page = this.count(list) - 1;
-            }
-        },
-        getNumbers(n) {
-            var rangeArray = [];
-            for (var i = 1; i <= n; i++) {
-                rangeArray.push(i);
-            }
-            return rangeArray;
-        }
-    }
-})

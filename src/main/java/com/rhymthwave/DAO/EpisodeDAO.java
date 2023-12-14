@@ -28,6 +28,12 @@ public interface EpisodeDAO extends JpaRepository<Episode, Long>{
 			+ "					and episodes.ispublic = 1  and episodes.publishdate < GETDATE()\r\n"
 			+ "					ORDER BY NEWID()",nativeQuery = true)
 	List<Episode> getRandomPodcasts(@Param("tags") List<String> tags);
+	
+	@Query(value = "select top 50 ep.* from episodes ep "
+			+ "where ep.publishdate <= GETDATE() and ep.ispublic = :ispublic "
+			+ "and ep.podcastid in :tags "
+			+ "order by NEWID()",nativeQuery = true)
+	List<Episode> top50EpForYou(@Param("ispublic") Boolean ispublic,@Param("tags") List<Integer> tags);
 
 	
 	@Query(value = "select * from episodes where episodesid= :episodeId", nativeQuery = true)
