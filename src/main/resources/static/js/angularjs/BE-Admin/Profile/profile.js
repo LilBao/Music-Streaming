@@ -44,6 +44,7 @@ app.controller("navbarAdmin", function (graphqlService,$scope, $http, $cookies, 
     };  
 
 
+
 	$scope.changepassword = function () {
 		var changepass = {
 		  passwordCurrent: $scope.passwordCurrent,
@@ -90,9 +91,6 @@ app.controller("navbarAdmin", function (graphqlService,$scope, $http, $cookies, 
 		}
 	  };
 	  
-	  
-
-
 	$scope.getAllArtistIsVerify ();
     $scope.getInfoAdmin();
 })

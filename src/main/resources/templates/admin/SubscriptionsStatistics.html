@@ -167,7 +167,7 @@
                                         <tbody>
 
                                           
-                                            <tr ng-repeat="statistics in statistics | filter: { subscriptionCategory: 'ACCOUNT' } | orderBy: 'userTypes.length':'false'">
+                                            <tr ng-repeat="statistics in statistics | filter: { subscriptionCategory: 'ACCOUNT', subscriptionType: '!MASTER' } | orderBy: 'userTypes.length':false">
                                            
                                                 <th class="text-center" scope="row">{{$index + 1}}</th>
 
@@ -178,7 +178,7 @@
 
                                                 </td>
                                                 <td class="text-center">{{statistics.price}}</td>
-                                                <td class="text-center">{{statistics.duration }} day</td>
+                                                <td class="text-center">{{statistics.duration }} Days</td>
                                                 <td class="text-center">
                                                     {{statistics.playlistAllow }}
                                                 </td>
@@ -234,11 +234,11 @@
                                                 <td class="text-center">
 
                                                   
-                                                    <span   class="badge text-bg-danger p-2">{{statistics.subscriptionCategory}}</span>
+                                                    <span   class="badge text-bg-danger p-2">{{statistics.subscriptionType}}</span>
 
                                                 </td>
                                                 <td class="text-center">{{statistics.price}}</td>
-                                                <td class="text-center">{{statistics.duration }}</td>
+                                                <td class="text-center">{{statistics.duration }} Days</td>
                                                 <td class="text-center">
                                                     {{statistics.userTypes.length }}
                                                 </td>

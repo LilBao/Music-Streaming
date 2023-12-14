@@ -271,7 +271,7 @@ $scope.unbanPodcast = function (podcastId) {
 
         // Trả về thông tin cần thiết của báo cáo
         return {
-            reportId: report.reportId,
+            reportDescription: report.description,
             minutesAgo: minutesAgo,
             // Thêm các thông tin khác của báo cáo nếu cần
         };

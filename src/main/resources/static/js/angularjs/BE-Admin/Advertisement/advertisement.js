@@ -1,6 +1,6 @@
 var cookieName = "token";
 var apiAds = "http://localhost:8080/api/v1/admin/advertisement";
-
+var apiSub = "http://localhost:8080/api/v1/admin/subscription";
 app.controller( "advertisementController", function (graphqlService, $scope, $http,$cookies,jwtHelper) {
  
  
@@ -9,6 +9,60 @@ app.controller( "advertisementController", function (graphqlService, $scope, $ht
     $scope.statisticsON = {};
     $scope.resultsADS = {};
     $scope.numberAds = [];
+    $scope.subscription = [];
+    $scope.form = {};
+
+
+    $scope.reset = ()=>{
+      $scope.form = {};
+    }
+
+    $scope.getAllSubscriptionsForADS = function(){
+
+      let params = {
+          'category':'ADVERTISEMENT',
+          'active':true
+      }
+
+      $http.get(apiSub+"/type",{params}).then(function(response){
+        $scope.subscription = response.data.data;
+      }).catch( error =>{
+        console.log(error);
+      })
+    }
+
+    $scope.createAds = function(){
+
+      var image = document.getElementById('img-ads');
+      var audio = document.getElementById('audio-ads');
+
+      var imageFile = image.files[0];
+      var audioFile = audio.files[0];
+      var formData = new FormData();
+      formData.append("title",  $scope.form.title);
+      formData.append("content",  $scope.form.content);
+      formData.append("tag",  $scope.form.tag);
+      formData.append("subscription", $scope.form.subscription);
+      formData.append("image", imageFile);
+      formData.append("audio", audioFile);
+
+      var config = {
+          headers: {
+              'Authorization': 'Bearer ' + $cookies.get(cookieName),
+              'Content-Type': undefined
+          }
+      };
+
+      $http.post(apiAds, formData, config).then(function (response) {
+        
+      showStickyNotification("successful", "success", 2000);
+      $scope.reset();
+      $scope.getAllAdvertisementRunningAndCompleted();
+    }).catch(function (error) {
+        showStickyNotification("Fail created new", "danger", 2000);
+        console.error("Error", error);
+    });
+    };
 
     $scope.getAllAdvertisementRunningAndCompleted = async function () {
       
@@ -96,10 +150,11 @@ app.controller( "advertisementController", function (graphqlService, $scope, $ht
     });
   };
 
+
+  // Only administrators have permissions
   $scope.statusShow = false;
 
-  $scope.getRoleAccount = function () {
-
+  $scope.getAuthor = function () {
     var token = $cookies.get("token");
     var decodeToken = jwtHelper.decodeToken(token);
     decodeToken.role.forEach(element => {
@@ -109,10 +164,35 @@ app.controller( "advertisementController", function (graphqlService, $scope, $ht
     
   };
 
-
-    $scope.getRoleAccount();
-
+    $scope.getAuthor();
     $scope.getAllAdvertisementRunningAndCompleted();
     $scope.getAllAdvertisementPendingAndReject();
-  }
-);
+    $scope.getAllSubscriptionsForADS();
+
+
+    // Choose the image
+  $(document).ready(function () {
+   
+        $("#img-file").change(function () {
+
+
+            if (this.files && this.files[0]) {
+           
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#image-ads").attr("src", e.target.result);
+                    $("#choose-image").attr("style","display:none !important;");
+                    $("#image-ads").show();
+                    
+                };
+                reader.readAsDataURL(this.files[0]);
+            } else {
+               
+                $("#image-ads").hide();
+                $("#choose-image").show();
+            }
+        });
+
+
+  });
+});

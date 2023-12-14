@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class AccountServiceImpl implements AccountService, CRUD<Account, String> {
+public class AccountServiceImpl implements AccountService{
 
 	private final AccountDAO dao;
 

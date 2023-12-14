@@ -64,7 +64,7 @@
                                     <img src="../../static/img/bell.png" alt="" class="user-note">
                                     <div class="note-info-desmis">
                                         <div class="user-notify-info">
-                                            <p class="note-name">Report ID : {{ notification.reportId }}</p>
+                                            <p class="note-name d-inline-block text-truncate" style="max-width: 150px;">{{ notification.reportDescription }}</p>
                                             <p class="note-time">{{ formatTime(notification.minutesAgo) }}</p>
                                         </div>
                                         <p href="" class="status-link">
@@ -128,6 +128,7 @@
                                     Profile
                                 </a>
                                 <a href="" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <a href="" class="dropdown-item" >
                                     <span class="fas fa-inbox"></span>
                                     Change password
                                 </a>
@@ -347,7 +348,6 @@
 
         </div>
         <!-- SIDEBAR END -->
-
 
         <!-- CONTENT START  -->
         <div ng-view></div>

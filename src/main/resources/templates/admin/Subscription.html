@@ -340,7 +340,7 @@
                                         <div class="col-lg-4 mb-3" ng-repeat="item in item | filter:{active: true}">
                                             <div class="card mb-5 mb-lg-0">
                                                 <div class="card-body">
-                                                    <h5 class="card-title text-muted text-uppercase text-center">
+                                                    <h5 class="card-title text-muted text-uppercase text-center" >
                                                         {{item.subscriptionType}}
                                                     </h5>
                                                     <h6 class="card-price text-center">${{item.price}}<span
@@ -544,70 +544,130 @@
                         <div id="pills-profile" role="tabpanel" aria-labelledby="pills-artist-tab" tabindex="0"
                             class="tab-pane fade px-4  ">
                             <div class="container">
+                             <form name="validateSub" novalidate>
                                 <div class="mb-3">
                                     <label for="formGroupExampleInput" class="form-label mb-0">Subscription Category:</label>
                                       
-                                    <select class="form-select form-select mb-3" ng-model="form.subscriptionCategory">
+                                    <select name="category" class="form-select form-select mb-3" ng-model="form.subscriptionCategory" required>
                                         <option value="ADVERTISEMENT">Advertisement</option>
                                         <option value="ACCOUNT">Account</option>
                                     </select>
+                                      <!-- VALIDATION FORM -->
+                                      <div
+                                      ng-messages="validateSub.category.$touched && validateSub.category.$error ">
+                                      <div ng-messages-include="../admin/ng-Utilities/messages_error.html">
+                                      </div>
+                                   </div>
+                                </div>
+
+                                <div class="mb-3"  ng-if="form.subscriptionCategory ==='ADVERTISEMENT'">
+                                    <label for="formGroupExampleInput" class="form-label mb-0">Name:</label>
+                                    <input ng-model="form.subscriptionType" type="text" name="name" class="form-control"
+                                        placeholder="Name Subscription" required ng-minlength="10"   >
+                                    <!-- VALIDATION FORM -->
+                                    <div ng-messages="validateSub.name.$dirty && validateSub.name.$error ">
+                                        <div ng-messages-include="../admin/ng-Utilities/messages_error.html">
+                                        </div>
+                                      </div>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="formGroupExampleInput" class="form-label mb-0">Price:</label>
-                                    <input ng-model="form.price" type="number" name="title" class="form-control"
-                                        placeholder="Price">
+                                    <input ng-model="form.price" type="number" name="price" class="form-control"
+                                        placeholder="Price" required ng-minlength="1" >
+                                        <!-- !-- VALIDATION FORM --> 
+                                             <div ng-messages="validateSub.price.$dirty && validateSub.price.$error ">
+                                                    <div ng-messages-include="../admin/ng-Utilities/messages_error.html">
+                                                </div>
+                                             </div>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="formGroupExampleInput" class="form-label mb-0">Description:</label>
-                                    <input ng-model="form.description" type="text" name="title" class="form-control"
-                                        placeholder="Description">
+                                    <input ng-model="form.description" type="text" name="des" class="form-control"
+                                        placeholder="Description" required ng-minlength="10 " >
+                                     <!-- VALIDATION FORM -->
+                                    <div ng-messages="validateSub.des.$dirty && validateSub.des.$error ">
+                                        <div ng-messages-include="../admin/ng-Utilities/messages_error.html">
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="formGroupExampleInput" class="form-label mb-0">Duration day:</label>
-                                    <input ng-model="form.duration" type="number" name="title" class="form-control"
-                                        placeholder="Subscription expiration time">
+                                    <input ng-model="form.duration" type="number" name="duration" class="form-control"
+                                        placeholder="Subscription expiration time" required ng-minlength="1" >
+                                     <!-- VALIDATION FORM -->
+                                     <div ng-messages="validateSub.duration.$dirty && validateSub.duration.$error ">
+                                        <div ng-messages-include="../admin/ng-Utilities/messages_error.html">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3" ng-if="form.subscriptionCategory ==='ADVERTISEMENT'">
+                                    <label for="formGroupExampleInput" class="form-label mb-0">Priority:</label>
+                                    <input ng-model="form.priority" type="number" name="priority" class="form-control"
+                                        placeholder="Priority for Ads" required ng-minlength="1" >
+                                       <!-- VALIDATION FORM -->
+                                    <div ng-messages="validateSub.priority.$dirty && validateSub.priority.$error ">
+                                        <div ng-messages-include="../admin/ng-Utilities/messages_error.html">
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="formGroupExampleInput" class="form-label mb-0">Product Stripe Id:
                                     </label>
-
-                                    <input ng-model="form.prdStripeId" type="text" name="title" class="form-control"
-                                        placeholder="Payment id">
+                                    <input ng-model="form.prdStripeId" type="text" name="stripeId" class="form-control"
+                                        placeholder="Payment id"  required ng-minlength="1" >
+                                         <!-- VALIDATION FORM -->
+                                    <div ng-messages="validateSub.stripeId.$dirty && validateSub.stripeId.$error ">
+                                        <div ng-messages-include="../admin/ng-Utilities/messages_error.html">
+                                        </div>
+                                    </div>
                                 </div>
 
 
                                 <div class="mb-3">
                                     <label for="formGroupExampleInput" class="form-label mb-0">Product Paypal Id:
                                     </label>
-                                    <input ng-model="form.prdPaypalId" type="text" name="title" class="form-control"
-                                        placeholder="Payment id">
+                                    <input ng-model="form.prdPaypalId" type="text" name="paypalId" class="form-control"
+                                        placeholder="Payment id"  required ng-minlength="1" >
+                                    <div ng-messages="validateSub.paypalId.$dirty && validateSub.paypalId.$error ">
+                                        <div ng-messages-include="../admin/ng-Utilities/messages_error.html">
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="mb-3" ng-if="form.subscriptionCategory ==='ACCOUNT'">
                                     <label for="formGroupExampleInput" class="form-label mb-0">Playlist Allow:</label>
-                                    <input ng-model="form.playlistAllow" type="number" name="title" class="form-control"
-                                        placeholder="Limit playlist">
+                                    <input ng-model="form.playlistAllow" type="number" name="playlistAllow" class="form-control"
+                                        placeholder="Limit playlist" required ng-minlength="1">
+                                    <div ng-messages="validateSub.playlistAllow.$dirty && validateSub.playlistAllow.$error ">
+                                        <div ng-messages-include="../admin/ng-Utilities/messages_error.html">
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="mb-4" ng-if="form.subscriptionCategory ==='ACCOUNT'">
                                     <label for="formGroupExampleInput" class="form-label mb-0 font-label">Number song in
                                         playlist:</label>
-                                    <input ng-model="form.nip" type="number" name="title" class="form-control"
-                                        placeholder="Limit songs in playlist">
+                                    <input ng-model="form.nip" type="number" name="nip" class="form-control"
+                                        placeholder="Limit songs in playlist" required ng-minlength="1">
+                                    <div ng-messages="validateSub.nip.$dirty && validateSub.nip.$error ">
+                                        <div ng-messages-include="../admin/ng-Utilities/messages_error.html">
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="row justify-content-center mt-2">
                                     <div class=" col-10">
                                         <button ng-click="createSubscription()" class="btn btn-success w-100"
-                                            type="button">Save</button>
+                                            type="button" ng-disabled="!validateSub.$valid">Save</button>
                                     </div>
 
                                 </div>
-
+                             </form>
                             </div>
 
 
@@ -632,7 +692,7 @@
                                 </div>
                                 <div class="modal-body" style="padding-top: 0px;">
                                     <div class="container" style="padding-top: 0px;">
-                                        <div class="mb-3">
+                                        <div class="mb-3" ng-if="form.subscriptionCategory ==='ACCOUNT'">
                                             <label for="formGroupExampleInput" class="form-label mb-0">Subscription
                                                 Type:</label>
                                             <select class="form-select form-select mb-3"
@@ -645,20 +705,28 @@
                                         <div class="mb-3">
                                             <label for="formGroupExampleInput" class="form-label mb-0">Active:</label>
                                             <select class="form-select form-select mb-3" ng-model="form.active">
-                                                <option value="true">Active</option>
-                                                <option value="false">Inactive</option>
+                                                <option ng-value="true">Active</option>
+                                                <option ng-value="false">Inactive</option>
 
                                             </select>
                                         </div>
 
-
+                                        <div class="mb-3"  ng-if="form.subscriptionCategory ==='ADVERTISEMENT'">
+                                            <label for="formGroupExampleInput" class="form-label mb-0">Name:</label>
+                                            <input ng-model="form.subscriptionType" type="text" name="title" class="form-control"
+                                                placeholder="Name Subscription">
+                                        </div>
 
                                         <div class="mb-3">
                                             <label for="formGroupExampleInput" class="form-label mb-0">Price:</label>
                                             <input ng-model="form.price" type="number" name="title" class="form-control"
                                                 placeholder="Price">
                                         </div>
-
+                                        <div class="mb-3" ng-if="form.subscriptionCategory ==='ADVERTISEMENT'">
+                                            <label for="formGroupExampleInput" class="form-label mb-0">Priority:</label>
+                                            <input ng-model="form.priority" type="number" name="title" class="form-control"
+                                                placeholder="Priority for Ads">
+                                        </div>
                                         <div class="mb-3">
                                             <label for="formGroupExampleInput"
                                                 class="form-label mb-0">Description:</label>
@@ -690,14 +758,14 @@
                                                 class="form-control" placeholder="Payment id">
                                         </div>
 
-                                        <div class="mb-3">
+                                        <div class="mb-3" ng-if="form.subscriptionCategory ==='ACCOUNT'">
                                             <label for="formGroupExampleInput" class="form-label mb-0">Playlist
                                                 Allow:</label>
                                             <input ng-model="form.playlistAllow" type="number" name="title"
                                                 class="form-control" placeholder="Limit playlist">
                                         </div>
 
-                                        <div class="mb-4">
+                                        <div class="mb-4" ng-if="form.subscriptionCategory ==='ACCOUNT'">
                                             <label for="formGroupExampleInput" class="form-label mb-0 font-label">Number
                                                 song in
                                                 playlist:</label>
