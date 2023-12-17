@@ -410,6 +410,10 @@ app.controller(
       location.href = `#!/playlist/${id}/detail`;
     };
 
+    $scope.forwardE = function (id) {
+      location.href = `#!/playlist/${id}/detailE`;
+    };
+
 
     $scope.searchPodcast();
     $scope.getAllPlaylist();

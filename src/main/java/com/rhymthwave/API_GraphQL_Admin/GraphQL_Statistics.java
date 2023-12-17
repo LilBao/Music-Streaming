@@ -5,6 +5,7 @@ import com.rhymthwave.DAO.RecordDAO;
 import com.rhymthwave.entity.Episode;
 import com.rhymthwave.entity.Recording;
 import lombok.RequiredArgsConstructor;
+import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
@@ -24,5 +25,10 @@ public class GraphQL_Statistics {
     @QueryMapping("getAllEpisodeTop100")
     public List<Episode> getAllEpisodeTop100() {
         return episodeDAO.findTop100ByOrderByListenedDesc();
+    }
+
+    @QueryMapping("top10Trending")
+    public List<Recording> top10Trending( @Argument("day") int day) {
+        return recordDAO.findTop10Trending(day);
     }
 }

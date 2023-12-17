@@ -1177,3 +1177,7 @@ td {
 .switchToggle label:active:after {
     width: 60px;
 }
+
+.form-select{
+    border: 1px solid #c0c0c0;
+}

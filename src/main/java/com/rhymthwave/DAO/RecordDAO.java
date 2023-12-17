@@ -1,14 +1,14 @@
 package com.rhymthwave.DAO;
 
-import java.util.List;
-
+import com.rhymthwave.DTO.NumberCreateRecordAndEpisodeByDate;
+import com.rhymthwave.entity.Recording;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.rhymthwave.entity.Recording;
-import com.rhymthwave.entity.Song;
+import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface RecordDAO extends JpaRepository<Recording, Long> {
@@ -115,5 +115,18 @@ public interface RecordDAO extends JpaRepository<Recording, Long> {
 
 	@Query(value = "select top 100 * from recording order by listened desc", nativeQuery = true)
 	List<Recording> findTop100ByOrderByListenedDesc();
+
+
+	@Query(value = """
+		    SELECT TOP 10 *
+			FROM recording
+			WHERE DATEDIFF(day, recordingdate, GETDATE()) <= :day
+			AND songsid IS NOT NULL
+			ORDER BY listened DESC
+									""", nativeQuery = true)
+	List<Recording> findTop10Trending( @Param("day") int day );
+
+	@Query(value = "exec sp_getRecordingsCount :datetime", nativeQuery = true)
+	List<NumberCreateRecordAndEpisodeByDate> countCreateRecordsByDay(@Param("datetime") String datetime );
 
 }

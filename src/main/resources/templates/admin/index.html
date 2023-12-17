@@ -127,8 +127,7 @@
                                     <span class="fas fa-user"></span>
                                     Profile
                                 </a>
-                                <a href="" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                <a href="" class="dropdown-item" >
+                                <a href="" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#changePass" >
                                     <span class="fas fa-inbox"></span>
                                     Change password
                                 </a>
@@ -171,7 +170,7 @@
         </div>
 
         <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="changePass" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -336,12 +335,10 @@
                 </nav>
 
                 <div class="">
-                    <nav class="navbar fixed-bottom bg-primary nav-song">
-
-
+                    <nav class="navbar fixed-bottom bg-secondary nav-song">
+                        <input type="range" step="any" id="seekbar" class="w-100" >
                         <audio style="color: red;" id="music"
                             src="https://cdn.pixabay.com/audio/2023/01/18/audio_43b48c0a90.mp3" controls></audio>
-
                     </nav>
                 </div>
             </div>

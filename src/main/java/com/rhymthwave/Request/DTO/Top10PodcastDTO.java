@@ -5,5 +5,7 @@ public interface Top10PodcastDTO {
 
     String getAuthorName();
 
+    String getUrl();
+
     Long getTotalListened();
 }

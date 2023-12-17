@@ -31,6 +31,9 @@ public class Slide implements Serializable {
 
 	@Column(name = "LISTIMAGE",columnDefinition = "varchar(max)")
 	private String listImage;
+
+	@Column(name = "TOURL",columnDefinition = "varchar(max)")
+	private String toUrl;
 	
 	@Column(name = "CREATEBY",columnDefinition = "nvarchar(255)")
 	private String createBy;

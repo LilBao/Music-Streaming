@@ -67,15 +67,17 @@ app.config(function($routeProvider,$cookiesProvider) {
   .when("/manage-report", {
     templateUrl : "admin/ManageReport.html",
     controller: "ReportController"
-
-
   })
   .when("/manage-playlist", {
     templateUrl : "admin/managerPlaylist.html",
     controller: "managerPlaylistController"
   })
   .when("/playlist/:id/detail", {
-    templateUrl : "admin/PlaylistDetail.html",
+    templateUrl : "admin/PlaylistDetailRecord.html",
+    controller: "playlistDetailController"
+  })
+  .when("/playlist/:id/detailE", {
+    templateUrl : "admin/PlaylistDetailEpisode.html",
     controller: "playlistDetailController"
   })
   .when("/statistical_managerment", {

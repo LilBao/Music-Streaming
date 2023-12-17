@@ -1,5 +1,7 @@
 package com.rhymthwave.Utilities.Cookie;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import jakarta.servlet.http.Cookie;
@@ -7,16 +9,20 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Component
+@RequiredArgsConstructor
 public class CookiesUntils {
-	
-	public static Cookie add(String name, String value, int hours, HttpServletResponse resp) {
-		Cookie cookie =new Cookie(name,value);
-		cookie.setMaxAge(hours*60*60);
+
+	private  final HttpServletResponse response;
+    @Value("${jwt.expiration}")
+    private int JWT_EXPIRATION;
+    public  Cookie add(String value) {
+		Cookie cookie =new Cookie("token",value);
+		cookie.setMaxAge(JWT_EXPIRATION);
 		cookie.setPath("/");
-		resp.addCookie(cookie);
+		response.addCookie(cookie);
 		return cookie;
 	}
-	
+
 	public static String get(String name,  HttpServletRequest req) {
 		Cookie[] cookies = req.getCookies();
 		if(cookies!=null) {
