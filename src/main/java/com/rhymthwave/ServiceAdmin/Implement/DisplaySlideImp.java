@@ -98,6 +98,7 @@ private final SlideDAO slideDAO;
 			newslide.setPosition(slideRequest.position());
 			newslide.setModifiedBy(account.getEmail());
 			newslide.setModifiDate(getTimeNow());
+			newslide.setUrl(slideRequest.urlSlide());
 			create(newslide);
 			
 			return newslide;
@@ -147,7 +148,7 @@ private final SlideDAO slideDAO;
 			slides.setModifiedBy(email);
 			slides.setModifiDate(getTimeNow());
 			slides.setPosition(slideRequest.position());
-			update(slides); 
+			slideDAO.save(slides); 
 			}else {
 				Image img = findImgByID(idAccess);
 				Map<String, Object> mapCloudinary = cloudinaryService.Upload(slideRequest.img(),FOLDER_CONTAINING_IMAGE_NEWS , "Slide Image");
@@ -160,7 +161,8 @@ private final SlideDAO slideDAO;
 				slides.setModifiedBy(email);
 				slides.setModifiDate(getTimeNow());
 				slides.setPosition(slideRequest.position());
-				update(slides);
+				slides.setUrl(slideRequest.urlSlide());
+				slideDAO.save(slides); 
 			}
 			
 		return slides;
@@ -172,10 +174,7 @@ private final SlideDAO slideDAO;
 	}
 
 
-	private void update(Slide slides) {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 
 	public Slide findOne(Integer key) {

@@ -43,4 +43,7 @@ public class Slide implements Serializable {
 	
 	@Column(name = "MODIFIDATE")
 	private Date modifiDate;
+	
+	@Column(name = "URL",columnDefinition = "varchar(max)")
+	private String url;
 }
