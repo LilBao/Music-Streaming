@@ -12,11 +12,13 @@ import com.rhymthwave.Utilities.GetHostByRequest;
 import com.rhymthwave.entity.Advertisement;
 import com.rhymthwave.entity.Image;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -106,20 +108,29 @@ public class AdvertisementImpl implements AdvertisementService {
 	}
 
 	@Override
-	public Map<String, Object> getResultsADS(Integer idADS) {
+	public List<ResultsADS_DTO> getResultsADS(Integer idADS) {
 		Advertisement advertisement = getById(idADS);
 		double resultsListened = advertisement.getListened();
 		double resultsClicked = advertisement.getClicked();
-		Map<String, Object> list = new HashMap<>();
-
+		List<ResultsADS_DTO> list = new ArrayList<>();
+		ResultsADS_DTO resultsADSDto = new ResultsADS_DTO();
 		if (resultsListened > advertisement.getClicked()) {
-			list.put("resultsListened", Math.round((resultsListened / resultsListened * 100)));
-			list.put("resultsClicked", Math.round((resultsClicked / resultsListened * 100)));
+			resultsADSDto.setResultsListened(Math.round((resultsListened / resultsListened * 100)));
+			resultsADSDto.setResultsClicked(Math.round((resultsClicked / resultsListened * 100)));
+			list.add(resultsADSDto);
 		} else {
-			list.put("resultsListened", Math.round((resultsListened / resultsClicked * 100)));
-			list.put("resultsClicked", Math.round((resultsClicked / resultsClicked * 100)));
+			resultsADSDto.setResultsListened(Math.round((resultsListened / resultsClicked * 100)));
+			resultsADSDto.setResultsClicked(Math.round((resultsClicked / resultsClicked * 100)));
+			list.add(resultsADSDto);
 		}
 		return list;
+	}
+
+	@Override
+	public void sendResultsADS(Integer idADS,HttpServletResponse response) {
+
+
+
 	}
 
 	@Override

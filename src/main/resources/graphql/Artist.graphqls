@@ -5,10 +5,6 @@
 #import "./Album.graphqls"
 #import "./Writter.graphqls"
 
-type query{
-	findOneArtist(emailArtist: String):Artist
-}
-
 
 type Artist{
 	artistId: ID

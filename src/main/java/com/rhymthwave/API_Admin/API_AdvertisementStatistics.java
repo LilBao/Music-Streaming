@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rhymthwave.DAO.AccountDAO;
 import com.rhymthwave.DTO.MessageResponse;
 import com.rhymthwave.Service.AdvertisementService;
+import com.rhymthwave.Service.Implement.ResultsADS_DTO;
 import com.rhymthwave.entity.Account;
 import com.rhymthwave.entity.Advertisement;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,7 @@ public class API_AdvertisementStatistics {
 	@GetMapping("/{id}/results")
 	public ResponseEntity<?> getResults(@PathVariable("id") Integer idADS) {
 
-		Map<String,Object> resultsADS = advertisementService.getResultsADS(idADS);
+		List<ResultsADS_DTO> resultsADS = advertisementService.getResultsADS(idADS);
 
 		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully",resultsADS));
 	}

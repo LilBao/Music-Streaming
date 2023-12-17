@@ -58,6 +58,39 @@ app.controller("tableAccountController", function (graphqlService, $scope, $http
 			
 	}
 
+	$scope.getFollowingAccount = (id) => {
+		const queryAccountByRole = `{
+			myListFollow(email: "${id}") {
+			  followerId
+			}
+		  }`;
+		graphqlService.executeQuery(queryAccountByRole).then(data => {
+
+			$scope.following = data.myListFollow;
+			
+		}).catch(error => {
+			console.log(error);
+		});
+			
+	}
+
+
+	$scope.getFollowAccount = (id) => {
+		const queryAccountByRole = `{
+			findYourFollow(roleId: 1, email: "${id}") {
+			  followerId
+			}
+		  }`;
+		graphqlService.executeQuery(queryAccountByRole).then(data => {
+
+			$scope.follow = data.findYourFollow;
+			
+		}).catch(error => {
+			console.log(error);
+		});
+			
+	}
+
 
 	$scope.profileById = (idUser) => {
 		$http.get(apiAccount + `/${idUser}`).then(resp => {
@@ -65,6 +98,8 @@ app.controller("tableAccountController", function (graphqlService, $scope, $http
 			console.log(resp.data)
 			$scope.countRp(idUser);
 			$scope.countWl(idUser);
+			$scope.getFollowAccount(idUser);
+			$scope.getFollowingAccount(idUser);
 		}).catch(error => {
 			console.log("Error", error)
 		});

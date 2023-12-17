@@ -1,22 +1,23 @@
 package com.rhymthwave.Utilities;
 
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
-
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
-import jakarta.servlet.http.HttpServletResponse;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class ExcelExportService {
+
+    public  static  String nameFile = "";
+
 	public <T> void exportToExcel(List<T> data, HttpServletResponse response) throws IOException {
         // Tạo một workbook mới
         Workbook workbook = new XSSFWorkbook();
@@ -64,9 +65,16 @@ public class ExcelExportService {
             }
             rowNum++;
         }
+        String excelFilePath = "data.xlsx";
+        try (FileOutputStream fileOut = new FileOutputStream(excelFilePath)) {
+            workbook.write(fileOut);
+            workbook.write(response.getOutputStream());
+        } finally {
+            workbook.close();
+        }
 //        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 //		response.setHeader("Content-Disposition", "attachment; filename="+ "data" + ".xlsx");
-        workbook.write(response.getOutputStream());
-        workbook.close();
+//        workbook.write(response.getOutputStream());
+//        workbook.close();
     }
 }

@@ -5,7 +5,7 @@ public interface Top10ArtistDTO {
 
     String getArtistName();
 
-    String getProfileImage();
+    String getUrl();
 
     Long getTotalListened();
 

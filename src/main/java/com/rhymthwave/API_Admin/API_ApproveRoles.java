@@ -24,9 +24,7 @@ public class API_ApproveRoles {
 	
 	@PostMapping("/{idUser}")
 	public ResponseEntity<?> approveRoles(@PathVariable("idUser") Long idUser){
-		
 		Artist artist = artistService.approveRolesArtist(idUser);
-		
-		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully",artist));
+		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully"));
 	}
 }

@@ -8,10 +8,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -67,5 +64,15 @@ public class API_Dashboard {
     @GetMapping("/count-account")
     public ResponseEntity<?> getCountAccount() {
         return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", dashboardService.countAllAccount()));
+    }
+
+    @GetMapping("/count-account/current")
+    public ResponseEntity<?> getCountAccountCreatedCurren() {
+        return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", dashboardService.countAccountCreatedCurren()));
+    }
+
+    @GetMapping("/create-byday")
+    public ResponseEntity<?> getCountCreateRecordsAndEpisodeByDay(@RequestParam("date") String date) {
+        return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", dashboardService.numberCreateRecordsAndEpisodesByDay(date)));
     }
 }
