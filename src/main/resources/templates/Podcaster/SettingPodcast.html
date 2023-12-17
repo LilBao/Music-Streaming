@@ -52,7 +52,7 @@
                 <div>
                     <h6>Podcast category</h6>
                     <select ng-model="podcast.tag" class="text-white inputCss form-control ip">
-                        <option ng-repeat="item in listTag" value="{{item.tagId}}" class="text-black">
+                        <option ng-repeat="item in listTag" selected value="{{item.tagId}}" class="text-black">
                             {{item.tagName}}
                         </option>
                     </select>
@@ -60,7 +60,7 @@
                 <div class="mt-2">
                     <h6>Podcast language</h6>
                     <select ng-model="podcast.language" class="text-white inputCss form-control ip">
-                        <option ng-repeat="item in listCountries" value="{{item.id}}" class="text-black">
+                        <option ng-repeat="item in listCountries" selected value="{{item.id}}" class="text-black">
                             {{item.nameCountry}}
                         </option>
                     </select>

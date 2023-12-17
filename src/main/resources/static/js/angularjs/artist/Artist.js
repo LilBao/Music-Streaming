@@ -1,15 +1,15 @@
 var host = "http://localhost:8080/api";
-app.controller('myCtrl', function ($scope, $http) {
+app.controller('myCtrl', function ($scope, $http,$cookies) {
     $scope.artist = {};
-    $http.get(host + "/v1/profile", {
-        headers: { 'Authorization': 'Bearer ' + getCookie('token') }
-    }).then(resp => {
-        $scope.artist = resp.data.data;
-    }).catch(error => {
-        console.log(error)
-    })
-
-
+    if($cookies.get('token')){
+        $http.get(host + "/v1/profile", {
+            headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+        }).then(resp => {
+            $scope.artist = resp.data.data;
+        }).catch(error => {
+            console.log(error)
+        })
+    }
     //Slide feature
     var img = ["carousel1.jpg", "carousel2.jpg", "carousel3.jpg"]
     var color = ["#b49bc8", "#ed7e7e", "#a0c3d2"]

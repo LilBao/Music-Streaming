@@ -1,5 +1,5 @@
 var host = "http://localhost:8080/api";
-app.controller('episodeCtrl', function ($scope, $http) {
+app.controller('episodeCtrl', function ($scope, $http,$filter) {
     $scope.pobcast = JSON.parse(localStorage.getItem('podcast'));
     $scope.listEpisodes = [];
     $scope.episode = {};
@@ -120,5 +120,9 @@ app.controller('episodeCtrl', function ($scope, $http) {
             }
         })
     })
+
+    $scope.isPublishDateExpired = function() {
+        return new Date($scope.episode.publishDate) > new Date();
+    };
     $scope.findListEpisodeByPC();
 })

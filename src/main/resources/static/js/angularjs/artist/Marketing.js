@@ -1,5 +1,5 @@
 var host = "http://localhost:8080/api";
-app.controller('marketingCtrl', function ($scope, $http, graphqlService) {
+app.controller('marketingCtrl', function ($scope, $http, graphqlService,$cookies) {
     $scope.artist = {};
     $scope.ads = {};
     $scope.subscription = {};
@@ -19,7 +19,11 @@ app.controller('marketingCtrl', function ($scope, $http, graphqlService) {
             console.log(error)
         })
     }
-    $scope.me();
+    if($cookies.get('token')){
+        $scope.me();
+    }else{
+        window.location.href="/signin"
+    }
 
 
     //Song

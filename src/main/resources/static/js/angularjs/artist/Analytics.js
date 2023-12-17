@@ -1,9 +1,15 @@
 var host = "http://localhost:8080/api";
-app.controller('analysisCtrl', function ($scope, $http, graphqlService, $routeParams, $filter) {
+app.controller('analysisCtrl', function ($scope, $http, graphqlService, $routeParams, $filter,$cookies) {
     $('#myTab a').click(function (e) {
         e.preventDefault()
         $(this).tab('show')
     })
+
+    if($cookies.get('token')){
+
+    }else{
+        window.location.href="/signin"
+    }
 
     $scope.selectedTime = 7;
     $scope.currentDate = $filter('date')(new Date(), 'yyyy-MM-dd');
