@@ -5,4 +5,8 @@ app.controller('queueCtrl', function ($scope, $http,queueService,audioService) {
     $scope.clearQueue = function(){
         queueService.clearQueue()
     }
+    
+    $scope.removeFromQueue = function(index){
+        queueService.getQueue().splice(index, 1);
+    }
 })

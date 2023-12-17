@@ -1,5 +1,5 @@
 var host = "http://localhost:8080/api";
-app.controller('homeArtistCtrl', function ($scope, $http,graphqlService,$filter) {
+app.controller('homeArtistCtrl', function ($scope, $http,graphqlService,$filter,$cookies) {
     $scope.artist = {};
     $scope.image = {};
     $scope.listSong = {};
@@ -26,7 +26,12 @@ app.controller('homeArtistCtrl', function ($scope, $http,graphqlService,$filter)
             console.log("Not found artist profile")
         })
     }
-    $scope.me();
+    if($cookies.get('token')){
+        $scope.me();
+    }else{
+        window.location.href="/signin"
+    }
+    
     //Top 5 Record listened
     $scope.getListSongReleased = function (email) {
         const query = `{

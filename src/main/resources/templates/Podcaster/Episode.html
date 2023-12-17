@@ -6,7 +6,7 @@
                 <div>
                     <div class="input-group me-3">
                         <span class="input-group-text"><i class="bi bi-search-heart"></i></span>
-                        <input type="text" class="form-control" placeholder="Search" ng-model="searchEpisode" >
+                        <input type="text" class="form-control" placeholder="Search" ng-model="searchEpisode">
                     </div>
                 </div>
                 <div class="product_sorting_container product_sorting_container_top">
@@ -18,10 +18,17 @@
                                 <li ng-click="sortNumber(listEpisodes,'episodeId')" class="type_sorting_btn">
                                     <span>Default Sorting</span>
                                 </li>
-                                <li ng-click="sort(listEpisodes,'episodeTitle')" class="type_sorting_btn"><span>Title</span></li>
-                                <li ng-click="sort(listEpisodes,'publishDate')" class="type_sorting_btn"><span>Create date</span></li>
-                                <li ng-click="sortNumber(listEpisodes,'duration')" class="type_sorting_btn"><span>Duration</span></li>
-                                <li ng-click="sortNumber(listEpisodes,'listened')" class="type_sorting_btn"><span>listened</span></li>
+                                <li ng-click="sort(listEpisodes,'episodeTitle')" class="type_sorting_btn">
+                                    <span>Title</span>
+                                </li>
+                                <li ng-click="sort(listEpisodes,'publishDate')" class="type_sorting_btn"><span>Create
+                                        date</span></li>
+                                <li ng-click="sortNumber(listEpisodes,'duration')" class="type_sorting_btn">
+                                    <span>Duration</span>
+                                </li>
+                                <li ng-click="sortNumber(listEpisodes,'listened')" class="type_sorting_btn">
+                                    <span>listened</span>
+                                </li>
                             </ul>
                         </li>
                         <li>
@@ -50,7 +57,8 @@
                             <h6>{{item.episodeTitle}}</h6>
                             <div class="d-flex">
                                 <p class="p-0 m-0 me-2">{{item.publishDate | date:'dd/MM/yyyy, hh:mm a'}}</p>
-                                <button ng-click="detailEpisode(item.episodeId)" class="btn py-0 border-0" data-bs-toggle="modal" data-bs-target="#edit-episode">
+                                <button ng-click="detailEpisode(item.episodeId)" class="btn py-0 border-0"
+                                    data-bs-toggle="modal" data-bs-target="#edit-episode">
                                     <i class="bi bi-pencil-fill"></i>
                                 </button>
                             </div>
@@ -65,38 +73,47 @@
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" ng-change="updateStatus(item.episodeId)" type="checkbox" id="mySwitch" ng-model="item.public" >
-                                <input class="form-check-input bg-dark border-0" ng-change="updateStatus(item.episodeId)" type="checkbox" id="mySwitch" ng-model="item.public" ng-if="item.public === true" checked>
-                                <label class="form-check-label" for="mySwitch">{{item.public === true ? 'Public' : 'Private'}}</label>
+                                <input class="form-check-input" ng-change="updateStatus(item.episodeId)" type="checkbox"
+                                    id="mySwitch" ng-model="item.public">
+                                <input class="form-check-input bg-dark border-0"
+                                    ng-change="updateStatus(item.episodeId)" type="checkbox" id="mySwitch"
+                                    ng-model="item.public" ng-if="item.public === true" checked>
+                                <label class="form-check-label" for="mySwitch">{{item.public === true ? 'Public' :
+                                    'Private'}}</label>
                             </div>
                             <div>
-                                <button ng-click="detailEpisode(item.episodeId)" class="btn border-0" data-bs-toggle="modal" data-bs-target="#remove-episode"><i class="bi bi-trash3"></i></button>
+                                <button ng-click="detailEpisode(item.episodeId)" class="btn border-0"
+                                    data-bs-toggle="modal" data-bs-target="#remove-episode"><i
+                                        class="bi bi-trash3"></i></button>
                             </div>
                             <div class="modal fade" id="remove-episode">
                                 <div class="modal-dialog">
-                                  <div class="modal-content">
-                              
-                                    <div class="modal-header">
-                                        <h6>Do you want to remove episode?</h6>
-                                      <button id="close-episode-remove" type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                    </div>
-                              
-                                    <div class="modal-body">
-                                        <div class="d-flex align-items-center justify-content-center">
-                                            <img class="w-25 h-100" style="object-fit: cover;" src="{{episode.image.url}}" alt="">
-                                            <h6>{{episode.episodeTitle}}</h6>
+                                    <div class="modal-content">
+
+                                        <div class="modal-header">
+                                            <h6>Do you want to remove episode?</h6>
+                                            <button id="close-episode-remove" type="button" class="btn-close"
+                                                data-bs-dismiss="modal"></button>
                                         </div>
+
+                                        <div class="modal-body">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <img class="w-25 h-100" style="object-fit: cover;"
+                                                    src="{{episode.image.url}}" alt="">
+                                                <h6>{{episode.episodeTitle}}</h6>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button ng-click="removeEpisode()" type="button" class="btn btn-danger"
+                                                data-bs-dismiss="modal">Remove</button>
+                                        </div>
+
                                     </div>
-                              
-                                    <div class="modal-footer">
-                                      <button ng-click="removeEpisode()" type="button" class="btn btn-danger" data-bs-dismiss="modal">Remove</button>
-                                    </div>
-                              
-                                  </div>
                                 </div>
-                              </div>
+                            </div>
                         </div>
-                        
+
                     </div>
 
                 </div>
@@ -105,7 +122,8 @@
                 <span class="showing_results">Showing {{pagination.page +1}} – {{pagination.count(listEpisodes)}} of
                     {{pagination.items(listEpisodes).length}} results</span>
                 <div class="pages d-flex flex-row align-items-center">
-                    <div ng-show="pagination.page > 0" ng-click="pagination.prev(listEpisodes)" id="next_page_1" class="page_prev">
+                    <div ng-show="pagination.page > 0" ng-click="pagination.prev(listEpisodes)" id="next_page_1"
+                        class="page_prev">
                         <a>
                             <i class="bi bi-arrow-left"></i>
                         </a>
@@ -119,7 +137,8 @@
                         </ul>
                     </div>
                     <div class="page_total"><span>of</span> {{pagination.count(listEpisodes)}}</div>
-                    <div ng-show="pagination.page < pagination.count(listEpisodes)-1" ng-click="pagination.next(listEpisodes)" id="next_page_1" class="page_next">
+                    <div ng-show="pagination.page < pagination.count(listEpisodes)-1"
+                        ng-click="pagination.next(listEpisodes)" id="next_page_1" class="page_next">
                         <a>
                             <i class="bi bi-arrow-right"></i>
                         </a>
@@ -138,7 +157,8 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <audio id="audio-change" controls class="w-100 me-5" src="{{episode.fileUrl}}"></audio>
                         <div>
-                            <button id="change-file-audio" class="btn border-dark rounded-pill text-black">Change</button>
+                            <button id="change-file-audio"
+                                class="btn border-dark rounded-pill text-black">Change</button>
                             <input accept="audio/*" id="change-audio" type="file" hidden>
                         </div>
                     </div>
@@ -154,8 +174,15 @@
                     </div>
                     <div class="mt-3">
                         <label for="">Publish date:</label>
-                        <input ng-model="episode.publishDate | date:'dd/MM/yyyy, hh:mm a'" type="text" class="form-control my-1">
-                        
+                        <div class="d-flex">
+                            <p class="p-0 m-0 me-2">{{episode.publishDate | date:'dd/MM/yyyy, hh:mm a'}}</p>
+                            <button ng-show="isPublishDateExpired()" class="btn border-0" data-bs-toggle="collapse" data-bs-target="#publish-change"><i
+                                class="bi bi-recycle"></i></button>
+                        </div>                        
+                    </div>
+                    <div id="publish-change" class="collapse">
+                        <input ng-model="episode.publishDate" name="publish" class="form-control my-1"
+                            type="datetime-local" required>
                     </div>
                     <div class="my-3">
                         <hr>
@@ -241,8 +268,7 @@
                             </table>
                         </div>
                         <div class="col-4 d-flex justify-content-between">
-                            <img id="change-image-episode" class="ms-5 w-100 img-podcast"
-                                src="{{episode.image.url}}"
+                            <img id="change-image-episode" class="ms-5 w-100 img-podcast" src="{{episode.image.url}}"
                                 alt="">
                             <input accept="image/*" type="file" id="change-FileImage-episode" hidden>
                         </div>
