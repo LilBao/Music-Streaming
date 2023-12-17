@@ -72,8 +72,14 @@
                                             <i class="bi bi-plus-circle"></i>
                                         </button>
                                         <ul class="dropdown-menu drop-playlist ">
-                                            <li><a class="dropdown-item" id="create-playlist"><i
-                                                        class="bi bi-music-note-beamed"></i> Create a new Playlist</a>
+                                            <li>
+                                                <a ng-if="!account.email" href="./signin" class="dropdown-item">
+                                                    <i class="bi bi-music-note-beamed"></i>
+                                                    Create a new Playlist
+                                                </a>
+                                                <a ng-if="account.email" class="dropdown-item" id="create-playlist">
+                                                    <i class="bi bi-music-note-beamed"></i> Create a new Playlist
+                                                </a>
                                             </li>
                                         </ul>
                                     </div>
@@ -81,7 +87,7 @@
                                 <div class="playlist">
                                     <!-- Wishlist -->
                                     <li>
-                                        <a class="" href="#!wishlist">
+                                        <a class="" ng-show="!account.email" href="./signin">
                                             <div class="d-flex align-items-center">
                                                 <img class="m-2 rounded-2 thumbnail-playlist"
                                                     src="https://res.cloudinary.com/div9ldpou/image/upload/v1699455162/Background/System/liked-songs-640_mhrtwz.png"
@@ -91,7 +97,16 @@
                                                 </div>
                                             </div>
                                         </a>
-
+                                        <a class="" ng-show="account.email" href="#!wishlist">
+                                            <div class="d-flex align-items-center">
+                                                <img class="m-2 rounded-2 thumbnail-playlist"
+                                                    src="https://res.cloudinary.com/div9ldpou/image/upload/v1699455162/Background/System/liked-songs-640_mhrtwz.png"
+                                                    alt="">
+                                                <div>
+                                                    <h6 class="p-0 m-0">Liked songs</h6>
+                                                </div>
+                                            </div>
+                                        </a>
                                     </li>
                                     <!-- list follow -->
                                     <li ng-repeat="item in listFollow"
@@ -101,7 +116,8 @@
                                             href="#!profile/{{item.authorsAccountB.role.role.toLowerCase()}}/{{item.authorsAccountB.account.username}}">
                                             <div class="d-flex align-items-center">
                                                 <img class="m-2 rounded-2 thumbnail-playlist"
-                                                    ng-src="{{item.authorsAccountB.account.image !==null?item.authorsAccountB.account.image.url:'https://res.cloudinary.com/div9ldpou/image/upload/v1699632134/Avatar/System/user_oujyrp.png'}}" alt="">
+                                                    ng-src="{{item.authorsAccountB.account.image !==null?item.authorsAccountB.account.image.url:'https://res.cloudinary.com/div9ldpou/image/upload/v1699632134/Avatar/System/user_oujyrp.png'}}"
+                                                    alt="">
                                                 <div class="d-flex justify-content-between flex-column">
                                                     <p class="p-0 m-0">{{item.authorsAccountB.account.username}}</p>
                                                     <span class="small">{{item.authorsAccountB.role.role}}</span>
@@ -112,7 +128,8 @@
                                             href="#!artist/{{item.authorsAccountB.account.artist.artistId}}">
                                             <div class="d-flex align-items-center">
                                                 <img class="m-2 rounded-2 thumbnail-playlist"
-                                                    ng-src="{{item.authorsAccountB.account.artist.imagesProfile!==null?item.authorsAccountB.account.artist.imagesProfile.url:'https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png'}}" alt="">
+                                                    ng-src="{{item.authorsAccountB.account.artist.imagesProfile!==null?item.authorsAccountB.account.artist.imagesProfile.url:'https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png'}}"
+                                                    alt="">
                                                 <div class="d-flex justify-content-between flex-column">
                                                     <p class="p-0 m-0">
                                                         {{item.authorsAccountB.account.artist.artistName}}
@@ -140,7 +157,10 @@
                                                     </a>
                                                 </li>
                                                 <li class="li-dropdown-end">
-                                                    <a class="btn text-white dropdown-item py-2 px-3">
+                                                    <a ng-show="item.authorsAccountB.role.role === 'ARTIST'" href="#!report/artist/{{item.artistId}}" class="btn text-white dropdown-item py-2 px-3">
+                                                        <i class="bi bi-exclamation-octagon"></i> Report
+                                                    </a>
+                                                    <a ng-show="item.authorsAccountB.role.role !== 'ARTIST'" href="#!report/user/{{item.email}}" class="btn text-white dropdown-item py-2 px-3">
                                                         <i class="bi bi-exclamation-octagon"></i> Report
                                                     </a>
                                                 </li>
@@ -148,7 +168,8 @@
                                                     <hr class="dropdown-divider">
                                                 </li>
                                                 <li class="li-dropdown-end">
-                                                    <a ng-click="typeShare(item.authorsAccountB.role.role === 'ARTIST' ? '#!/artist/'+item.authorsAccountB.account.artist.artistId : '#!/profile/'+item.authorsAccountB.role.role.toLowerCase()+'/'+item.authorsAccountB.account.username)" data-bs-toggle="modal" data-bs-target="#sharing"
+                                                    <a ng-click="typeShare(item.authorsAccountB.role.role === 'ARTIST' ? '#!/artist/'+item.authorsAccountB.account.artist.artistId : '#!/profile/'+item.authorsAccountB.role.role.toLowerCase()+'/'+item.authorsAccountB.account.username)"
+                                                        data-bs-toggle="modal" data-bs-target="#sharing"
                                                         class="btn text-white dropdown-item py-2 px-3">
                                                         <i class="bi bi-share"></i>
                                                         Share</a>
@@ -263,10 +284,17 @@
                                                 </li>
 
                                                 <li class="li-dropdown-end">
-                                                    <a ng-click="typeShare('!#/playlist/'+item.playlistId)" data-bs-toggle="modal" data-bs-target="#sharing"
+                                                    <a ng-click="typeShare('!#/playlist/'+item.playlistId)"
+                                                        data-bs-toggle="modal" data-bs-target="#sharing"
                                                         class="btn text-white dropdown-item py-2 px-3">
                                                         <i class="bi bi-share"></i>
                                                         Share</a>
+                                                </li>
+                                                <li class="li-dropdown-start-end">
+                                                    <a href="#!report/playlist/{{item.playlistId}}" class="btn text-white dropdown-item py-2">
+                                                        <i class="bi bi-flag-fill"></i></i>
+                                                        Report
+                                                    </a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -314,25 +342,75 @@
 
                     <div class="media-right d-flex">
                         <div class="level-item">
-                            <span>
+                            <span ng-show="account.email">
                                 <button id="btn-wishlist" class="btn button-control border-0"
                                     ng-click="checkExisted(audioItem,$event)" data-bs-hover="tooltip"
                                     title="Thêm vào yêu thích!">
                                     <i ng-style="{'color': isLiked(audioItem) ? 'green' : 'white'}"
                                         class="{{isLiked(audioItem) ? 'bi bi-heart-fill' : 'bi bi-heart'}}"></i>
-                                </button></span>
+                                </button>
+                            </span>
+                            <span ng-show="!account.email">
+                                <a href="./singin" class="btn button-control border-0" data-bs-hover="tooltip"
+                                    title="Thêm vào yêu thích!">
+                                    <i class="bi bi-heart"></i>
+                                </a>
+                            </span>
                         </div>
                         <div class="level-item d-none d-md-block">
-
                             <div class="dropdown">
                                 <button type="button" class="btn button-control" data-bs-toggle="dropdown">
                                     <i class="bi bi-three-dots"></i>
                                 </button>
-                                <ul class="dropdown-menu drop-playlist ">
-                                    <li><a class="dropdown-item" href="#"><i class="bi bi-music-note-beamed"></i> Create
-                                            a new Playlist</a></li>
-                                    <li><a class="dropdown-item" href="#"><i class="bi bi-folder2-open"></i> Create a
-                                            new folder playlist</a></li>
+                                <ul class="dropdown-menu p-0 bg-dark ul-dropdown-start-end">
+                                    <li class="li-dropdown-start-end">
+                                        <a class="btn text-white dropdown-item py-2" ng-click="enqueue(audioItem)"><i
+                                                class="bi bi-hdd-stack"></i> Add to queue</a>
+                                    </li>
+                                    <li class="li-dropdown-start-end">
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li class="li-dropdown-start-end">
+                                        <a class="btn text-white dropdown-item py-2"><i
+                                                class="bi bi-person-lines-fill"></i> Go to artist</a>
+                                        <ul class="nav bg-dark w-100">
+                                            <li class="nav-item" ng-repeat="a in audioItem.song.writters">
+                                                <a href="#!artist/{{a.artist.artistId}}" class="nav-link text-white">
+                                                    {{a.artist.artistName}}</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="li-dropdown-start-end">
+                                        <a href="{{audioItem.episodeId ? '#!episode/'+audioItem.episode.episodeId : audioItem.tracks.length>0 ? '#!album/'+audioItem.tracks[0].album.albumId : '#!song/'+audioItem.recordingId}}"
+                                            class="btn text-white dropdown-item py-2">
+                                            <i class="bi bi-journal-album"></i> Go to album
+                                        </a>
+                                    </li>
+                                    <li class="li-dropdown-start-end" ng-if="item.recording">
+                                        <a class="btn text-white dropdown-item py-2" data-bs-toggle="modal"
+                                            data-bs-target="#credits-{{audioItem.recordingId}}"><i
+                                                class="bi bi-share"></i> Show
+                                            credits</a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li class="li-dropdown-start-end">
+                                        <a ng-show="audioItem.episodeId" href="#!report/episode/{{audioItem.episodeId}}" class="btn text-white dropdown-item py-2">
+                                            <i class="bi bi-flag-fill"></i></i>
+                                            Report
+                                        </a>
+                                        <a ng-show="audioItem.recordingId" href="#!report/recording/{{audioItem.recordingId}}" class="btn text-white dropdown-item py-2">
+                                            <i class="bi bi-flag-fill"></i></i>
+                                            Report
+                                        </a>
+                                    </li>
+                                    <li class="li-dropdown-start-end">
+                                        <a ng-click="audioItem.recordingId ? typeShare('#!/song/'+audioItem.recordingId) : typeShare('#!/episode/'+audioItem.episodeId)"
+                                            data-bs-toggle="modal" data-bs-target="#sharing"
+                                            class="btn text-white dropdown-item py-2"><i class="bi bi-share"></i>
+                                            Share</a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -406,15 +484,18 @@
                             </div>
                             <div class="carousel-item" ng-repeat="item in AdsNotification track by $index">
                                 <a ng-click="updateClickAds(item)">
-                                    <img style="height: 500px; object-fit: cover;" src="{{item.image.url}}" alt="Chicago" class="d-block w-100">
+                                    <img style="height: 500px; object-fit: cover;" src="{{item.image.url}}"
+                                        alt="Chicago" class="d-block w-100">
                                 </a>
                             </div>
                         </div>
 
-                        <button class="carousel-control-prev" type="button" data-bs-target="#notify" data-bs-slide="prev">
+                        <button class="carousel-control-prev" type="button" data-bs-target="#notify"
+                            data-bs-slide="prev">
                             <span class="carousel-control-prev-icon"></span>
                         </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#notify" data-bs-slide="next">
+                        <button class="carousel-control-next" type="button" data-bs-target="#notify"
+                            data-bs-slide="next">
                             <span class="carousel-control-next-icon"></span>
                         </button>
                     </div>
@@ -450,21 +531,27 @@
                 <!-- Modal body -->
                 <div class="modal-body">
                     <div class="d-flex">
-                        <input ng-model="link" type="text" ng-click="copyToClipboard(link)"
-                        readonly class="text-white form-control" style="background-color: transparent;">
+                        <input ng-model="link" type="text" ng-click="copyToClipboard(link)" readonly
+                            class="text-white form-control" style="background-color: transparent;">
                     </div>
                     <div class="d-flex mt-4 justify-content-between">
-                        <a ng-click="share('fb')" class="facebook" target="blank"><i class="display-6 bi bi-facebook"></i></a>
+                        <a ng-click="share('fb')" class="facebook" target="blank"><i
+                                class="display-6 bi bi-facebook"></i></a>
                         <!-- twitter -->
-                        <a ng-click="share('twitter')" class="twitter" target="blank"><i class="display-6 bi bi-twitter"></i></a>
+                        <a ng-click="share('twitter')" class="twitter" target="blank"><i
+                                class="display-6 bi bi-twitter"></i></a>
                         <!-- linkedin -->
-                        <a ng-click="share('linkedIn')" class="linkedin" target="blank"><i class="display-6 bi bi-linkedin"></i></a>
+                        <a ng-click="share('linkedIn')" class="linkedin" target="blank"><i
+                                class="display-6 bi bi-linkedin"></i></a>
                         <!-- reddit -->
-                        <a ng-click="share('reddit')" class="reddit" target="blank"><i class="display-6 bi bi-reddit"></i></a>
+                        <a ng-click="share('reddit')" class="reddit" target="blank"><i
+                                class="display-6 bi bi-reddit"></i></a>
                         <!-- whatsapp-->
-                        <a ng-click="share('whasapp')" class="whatsapp" target="blank"><i class="display-6 bi bi-whatsapp"></i></i></a>
+                        <a ng-click="share('whasapp')" class="whatsapp" target="blank"><i
+                                class="display-6 bi bi-whatsapp"></i></i></a>
                         <!-- telegram-->
-                        <a ng-click="share('tele')" class="telegram" target="blank"><i class="display-6 bi bi-telegram"></i></a>
+                        <a ng-click="share('tele')" class="telegram" target="blank"><i
+                                class="display-6 bi bi-telegram"></i></a>
                     </div>
                 </div>
             </div>

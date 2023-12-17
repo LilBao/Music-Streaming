@@ -14,37 +14,42 @@ app.controller('episodeInforCtrl', function ($scope, $http, FileService) {
             $scope.duration = time;
             URL.revokeObjectURL(audio.src);
         };
-        
+
     }
-    
-    $scope.deleteFile = function(){
+
+    $scope.deleteFile = function () {
+        window.location.href = "podcaster#!/new-episode"
         FileService.setFile(null);
     }
 
     $scope.createEpisode = function () {
-        let url = host + "/v1/episode";
-        var data = new FormData();
-        data.append('coverImg', $scope.coverImg);
-        data.append('fileAudio', $scope.audioFile);
-        data.append('episodeTitle', $scope.episode.episodeTitle);
-        data.append('description', $scope.episode.description);
-        data.append('publishDate', $scope.episode.publishDate);
-        data.append('sessionNumber', $scope.episode.sessionNumber);
-        data.append('episodeNumber', $scope.episode.episodeNumber);
-        data.append('episodeType', $scope.episode.episodeType);
-        data.append('content', $scope.episode.content);
-        data.append('podcast', $scope.podcast.podcastId);
-        data.append('duration', $scope.duration);
-        $http.post(url, data, {
-            headers: {
-                'Content-Type': undefined, 'Authorization': 'Bearer ' + getCookie('token')
-            },
-            transformRequest: angular.identity
-        }).then(resp => {
-            showStickyNotification('Create successfully. Let discover', 'success', 3000)
-        }).catch(err => {
-            showStickyNotification('Create fail.', 'success', 3000)
-        })
+        if (!$scope.coverImg) {
+            $('#err-image').text('Choose picture cover')
+        } else {
+            let url = host + "/v1/episode";
+            var data = new FormData();
+            data.append('coverImg', $scope.coverImg);
+            data.append('fileAudio', $scope.audioFile);
+            data.append('episodeTitle', $scope.episode.episodeTitle);
+            data.append('description', $scope.episode.description);
+            data.append('publishDate', $scope.episode.publishDate);
+            data.append('sessionNumber', $scope.episode.sessionNumber);
+            data.append('episodeNumber', $scope.episode.episodeNumber);
+            data.append('episodeType', $scope.episode.episodeType);
+            data.append('content', $scope.episode.content);
+            data.append('podcast', $scope.podcast.podcastId);
+            data.append('duration', $scope.duration);
+            $http.post(url, data, {
+                headers: {
+                    'Content-Type': undefined, 'Authorization': 'Bearer ' + getCookie('token')
+                },
+                transformRequest: angular.identity
+            }).then(resp => {
+                showStickyNotification('Create successfully. Let discover', 'success', 3000)
+            }).catch(err => {
+                showStickyNotification('Create fail.', 'success', 3000)
+            })
+        }
     }
 
     $('#img-ep').click(function () {

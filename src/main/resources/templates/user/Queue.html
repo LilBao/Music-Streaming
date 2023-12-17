@@ -2,13 +2,13 @@
     <div>
         <h4>Queue</h4>
         <section>
-            <table class="table">
+            <table class="table table-borderless">
                 <thead>
                     <th class="text-white-50" colspan="4">Now playing</th>
                 </thead>
                 <tbody>
-                    <tr ng-dblclick="selectAudio(item,'song',listPlay,$index)"
-                        ng-repeat="item in listPlay | limitTo: 1" class="audio">
+                    <tr ng-dblclick="selectAudio(item,'song',listPlay,$index)" ng-repeat="item in listPlay | limitTo: 1"
+                        class="audio">
                         <!-- Col 1 -->
                         <td class="text-white">
                             {{$index+1}}
@@ -39,32 +39,95 @@
                                 </div>
                             </div>
                         </td>
-    
+
                         <!-- Col 3 -->
                         <td>
                             <h6 class="p-0 m-0 text-white">{{item.tracks[0].album.albumName}}</h6>
                             <h6 class="p-0 m-0 text-white">{{item.podcast.podcastName}}</h6>
                         </td>
-    
+
                         <!-- Col 4 -->
                         <td>
                             <div class="d-flex justify-content-center align-items-center">
-                                <button ng-click="checkExisted(item,$event)" class="btn border-0 playlist-liked text-white">
+                                <button ng-click="checkExisted(item,$event)"
+                                    class="btn border-0 playlist-liked text-white">
                                     <i ng-style="{'color': isLiked(item) ? 'green' : 'white'}"
                                         class="{{isLiked(item) ? 'bi bi-heart-fill' : 'bi bi-heart'}}"></i>
                                 </button>
                                 <h6 class="p-0 m-0 text-white"><format-time seconds="item.duration"></format-time></h6>
-                                <button ng-click="enqueue(item)" class="btn border-0 text-white"><i
-                                        class="bi bi-three-dots"></i></button>
+                                <button type="button" class="btn button-control" data-bs-toggle="dropdown">
+                                    <i class="bi bi-three-dots"></i>
+                                </button>
+                                <ul class="dropdown-menu p-0 bg-dark ul-dropdown-start-end">
+                                    <li ng-show="!account.email" class="li-dropdown-start-end">
+                                        <a href="./signin"
+                                            class="btn text-white dropdown-item py-2"><i class="bi bi-plus-lg"></i>
+                                            Add to Wishlist
+                                        </a>
+                                    </li>
+                                    <li ng-show="account.email" class="li-dropdown-start-end">
+                                        <a class="btn text-white dropdown-item py-2"
+                                            ng-click="checkExisted(item,$event)"><i
+                                                class="bi bi-hearts"></i>{{isLiked(item) ? 'Remove from liked songs':'Save to your liked songs'}} </a>
+                                    </li>
+                                    <li class="li-dropdown-start-end">
+                                        <a class="btn text-white dropdown-item py-2" ng-click="enqueue(item)"><i
+                                                class="bi bi-hdd-stack"></i> Add to queue</a>
+                                    </li>
+                                    <li class="li-dropdown-start-end">
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li class="li-dropdown-start-end">
+                                        <a class="btn text-white dropdown-item py-2"><i
+                                                class="bi bi-person-lines-fill"></i> Go to artist</a>
+                                        <ul class="nav bg-dark w-100">
+                                            <li class="nav-item" ng-repeat="a in item.song.writters">
+                                                <a href="#!artist/{{a.artist.artistId}}" class="nav-link text-white">
+                                                    {{a.artist.artistName}}</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="li-dropdown-start-end">
+                                        <a href="{{item.episodeId ? '#!episode/'+item.episode.episodeId : item.tracks.length>0 ? '#!album/'+item.tracks[0].album.albumId : '#!song/'+item.recordingId}}"
+                                            class="btn text-white dropdown-item py-2">
+                                            <i class="bi bi-journal-album"></i> Go to album
+                                        </a>
+                                    </li>
+                                    <li class="li-dropdown-start-end" ng-if="item.recording">
+                                        <a class="btn text-white dropdown-item py-2" data-bs-toggle="modal"
+                                            data-bs-target="#credits-{{item.recordingId}}"><i
+                                                class="bi bi-share"></i> Show
+                                            credits</a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li class="li-dropdown-start-end">
+                                        <a ng-click="item.recordingId ? typeShare('#!/song/'+item.recordingId) : typeShare('#!/episode/'+item.episodeId)"
+                                            data-bs-toggle="modal" data-bs-target="#sharing"
+                                            class="btn text-white dropdown-item py-2"><i class="bi bi-share"></i>
+                                            Share</a>
+                                    </li>
+                                    <li class="li-dropdown-start-end">
+                                        <a ng-show="item.episodeId" href="#!report/episode/{{item.episodeId}}" class="btn text-white dropdown-item py-2">
+                                            <i class="bi bi-flag-fill"></i></i>
+                                            Report
+                                        </a>
+                                        <a ng-show="item.recordingId" href="#!report/recording/{{item.recordingId}}" class="btn text-white dropdown-item py-2">
+                                            <i class="bi bi-flag-fill"></i></i>
+                                            Report
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </section>
-        
+
         <section>
-            <table ng-if="queue.length > 0" class="mt-5 table" style="background-color: transparent;">
+            <table ng-if="queue.length > 0" class="mt-5 table table-borderless" style="background-color: transparent;">
                 <thead>
                     <th class="text-white-50" colspan="4">Next in queue</th>
                 </thead>
@@ -93,22 +156,94 @@
                         </td>
                         <!-- Col 3 -->
                         <td>
-                            <h6 ng-show="item.tracks.length === 0" class="p-0 m-0 text-white">{{item.recordingName}}</h6>
+                            <h6 ng-show="item.tracks.length === 0" class="p-0 m-0 text-white">{{item.recordingName}}
+                            </h6>
                             <h6 ng-show="item.tracks.length > 0" class="p-0 m-0 text-white">
                                 {{item.tracks[0].album.albumName}}
                             </h6>
                             <h6 class="p-0 m-0 text-white">{{item.podcast.podcastName}}</h6>
                         </td>
-    
+
                         <!-- Col 4 -->
                         <td>
                             <div class="d-flex justify-content-center align-items-center">
-                                <button ng-click="checkExisted(item,$event)" class="btn border-0 playlist-liked text-white">
+                                <button ng-click="checkExisted(item,$event)"
+                                    class="btn border-0 playlist-liked text-white">
                                     <i ng-style="{'color': isLiked(item) ? 'green' : 'white'}"
                                         class="{{isLiked(item) ? 'bi bi-heart-fill' : 'bi bi-heart'}}"></i>
                                 </button>
                                 <h6 class="p-0 m-0 text-white"><format-time seconds="item.duration"></format-time></h6>
-                                <button class="btn border-0 text-white"><i class="bi bi-three-dots"></i></button>
+                                <button type="button" class="btn button-control" data-bs-toggle="dropdown">
+                                    <i class="bi bi-three-dots"></i>
+                                </button>
+                                <ul class="dropdown-menu p-0 bg-dark ul-dropdown-start-end">
+                                    <li ng-show="!account.email" class="li-dropdown-start-end">
+                                        <a href="./signin"
+                                            class="btn text-white dropdown-item py-2"><i class="bi bi-plus-lg"></i>
+                                            Add to Wishlist
+                                        </a>
+                                    </li>
+                                    <li ng-show="account.email" class="li-dropdown-start-end">
+                                        <a class="btn text-white dropdown-item py-2"
+                                            ng-click="checkExisted(item,$event)"><i
+                                                class="bi bi-hearts"></i>{{isLiked(item) ? 'Remove from liked songs':'Save to your liked songs'}} </a>
+                                    </li>
+                                    <li class="li-dropdown-start-end">
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li class="li-dropdown-start-end">
+                                        <a class="btn text-white dropdown-item py-2" ng-click="enqueue(item)"><i
+                                                class="bi bi-hdd-stack"></i> Add to queue</a>
+                                    </li>
+                                    <li class="li-dropdown-start-end">
+                                        <a class="btn text-white dropdown-item py-2" ng-click="removeFromQueue($index)"><i
+                                                class="bi bi-hdd-stack"></i> Remove from queue</a>
+                                    </li>
+                                    <li class="li-dropdown-start-end">
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li class="li-dropdown-start-end">
+                                        <a class="btn text-white dropdown-item py-2"><i
+                                                class="bi bi-person-lines-fill"></i> Go to artist</a>
+                                        <ul class="nav bg-dark w-100">
+                                            <li class="nav-item" ng-repeat="a in item.song.writters">
+                                                <a href="#!artist/{{a.artist.artistId}}" class="nav-link text-white">
+                                                    {{a.artist.artistName}}</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="li-dropdown-start-end">
+                                        <a href="{{item.episodeId ? '#!episode/'+item.episode.episodeId : item.tracks.length>0 ? '#!album/'+item.tracks[0].album.albumId : '#!song/'+item.recordingId}}"
+                                            class="btn text-white dropdown-item py-2">
+                                            <i class="bi bi-journal-album"></i> Go to album
+                                        </a>
+                                    </li>
+                                    <li class="li-dropdown-start-end" ng-if="item.recording">
+                                        <a class="btn text-white dropdown-item py-2" data-bs-toggle="modal"
+                                            data-bs-target="#credits-{{item.recordingId}}"><i
+                                                class="bi bi-share"></i> Show
+                                            credits</a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li class="li-dropdown-start-end">
+                                        <a ng-click="item.recordingId ? typeShare('#!/song/'+item.recordingId) : typeShare('#!/episode/'+item.episodeId)"
+                                            data-bs-toggle="modal" data-bs-target="#sharing"
+                                            class="btn text-white dropdown-item py-2"><i class="bi bi-share"></i>
+                                            Share</a>
+                                    </li>
+                                    <li class="li-dropdown-start-end">
+                                        <a ng-show="item.episodeId" href="#!report/episode/{{item.episodeId}}" class="btn text-white dropdown-item py-2">
+                                            <i class="bi bi-flag-fill"></i></i>
+                                            Report
+                                        </a>
+                                        <a ng-show="item.recordingId" href="#!report/recording/{{item.recordingId}}" class="btn text-white dropdown-item py-2">
+                                            <i class="bi bi-flag-fill"></i></i>
+                                            Report
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
                         </td>
                     </tr>
@@ -116,8 +251,8 @@
             </table>
         </section>
 
-        <section>
-            <table class="table">
+        <section ng-show="listPlay.length > 1">
+            <table class="table table-borderless">
                 <thead>
                     <th class="text-white-50" colspan="4">Next</th>
                 </thead>
@@ -154,23 +289,83 @@
                                 </div>
                             </div>
                         </td>
-    
+
                         <!-- Col 3 -->
                         <td>
                             <h6 class="p-0 m-0 text-white">{{item.tracks[0].album.albumName}}</h6>
                             <h6 class="p-0 m-0 text-white">{{item.podcast.podcastName}}</h6>
                         </td>
-    
+
                         <!-- Col 4 -->
                         <td>
                             <div class="d-flex justify-content-center align-items-center">
-                                <button ng-click="checkExisted(item,$event)" class="btn border-0 playlist-liked text-white">
+                                <button ng-click="checkExisted(item,$event)"
+                                    class="btn border-0 playlist-liked text-white">
                                     <i ng-style="{'color': isLiked(item) ? 'green' : 'white'}"
                                         class="{{isLiked(item) ? 'bi bi-heart-fill' : 'bi bi-heart'}}"></i>
                                 </button>
                                 <h6 class="p-0 m-0 text-white"><format-time seconds="item.duration"></format-time></h6>
-                                <button ng-click="enqueue(item)" class="btn border-0 text-white"><i
-                                        class="bi bi-three-dots"></i></button>
+                                <button type="button" class="btn button-control" data-bs-toggle="dropdown">
+                                    <i class="bi bi-three-dots"></i>
+                                </button>
+                                <ul class="dropdown-menu p-0 bg-dark ul-dropdown-start-end">
+                                    <li ng-show="!account.email" class="li-dropdown-start-end">
+                                        <a href="./signin"
+                                            class="btn text-white dropdown-item py-2"><i class="bi bi-plus-lg"></i>
+                                            Add to Wishlist
+                                        </a>
+                                    </li>
+                                    <li ng-show="account.email" class="li-dropdown-start-end">
+                                        <a class="btn text-white dropdown-item py-2"
+                                            ng-click="checkExisted(item,$event)"><i
+                                                class="bi bi-hearts"></i>{{isLiked(item) ? 'Remove from liked songs':'Save to your liked songs'}} </a>
+                                    </li>
+                                    <li class="li-dropdown-start-end">
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li class="li-dropdown-start-end">
+                                        <a class="btn text-white dropdown-item py-2" ng-click="enqueue(item)"><i
+                                                class="bi bi-hdd-stack"></i> Add to queue</a>
+                                    </li>
+                                    <li class="li-dropdown-start-end">
+                                        <a class="btn text-white dropdown-item py-2" ng-click="removeFromQueue($index)"><i
+                                                class="bi bi-hdd-stack"></i> Remove from queue</a>
+                                    </li>
+                                    <li class="li-dropdown-start-end">
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li class="li-dropdown-start-end">
+                                        <a class="btn text-white dropdown-item py-2"><i
+                                                class="bi bi-person-lines-fill"></i> Go to artist</a>
+                                        <ul class="nav bg-dark w-100">
+                                            <li class="nav-item" ng-repeat="a in item.song.writters">
+                                                <a href="#!artist/{{a.artist.artistId}}" class="nav-link text-white">
+                                                    {{a.artist.artistName}}</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="li-dropdown-start-end">
+                                        <a href="{{item.episodeId ? '#!episode/'+item.episode.episodeId : item.tracks.length>0 ? '#!album/'+item.tracks[0].album.albumId : '#!song/'+item.recordingId}}"
+                                            class="btn text-white dropdown-item py-2">
+                                            <i class="bi bi-journal-album"></i> Go to album
+                                        </a>
+                                    </li>
+                                    <li class="li-dropdown-start-end" ng-if="item.recording">
+                                        <a class="btn text-white dropdown-item py-2" data-bs-toggle="modal"
+                                            data-bs-target="#credits-{{item.recordingId}}"><i
+                                                class="bi bi-share"></i> Show
+                                            credits</a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li class="li-dropdown-start-end">
+                                        <a ng-click="item.recordingId ? typeShare('#!/song/'+item.recordingId) : typeShare('#!/episode/'+item.episodeId)"
+                                            data-bs-toggle="modal" data-bs-target="#sharing"
+                                            class="btn text-white dropdown-item py-2"><i class="bi bi-share"></i>
+                                            Share</a>
+                                    </li>
+                                </ul>
                             </div>
                         </td>
                     </tr>

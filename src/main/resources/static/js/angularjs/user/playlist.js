@@ -1,5 +1,5 @@
 var host = "http://localhost:8080/api/";
-app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location, graphqlService, audioService) {
+app.controller('playlistCtrl', function ($scope, $http, $routeParams, $cookies, graphqlService, audioService) {
     // var params = $location.search();
     // $scope.paramA = params.a;
     // $scope.paramB = params.b;
@@ -11,6 +11,7 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location,
     $scope.listAudioPlaylist = [];
     $scope.wishList = [];
     $scope.listLikedSongs = [];
+    $scope.checkOwnPl = false;
 
     $scope.findPlaylist = function () {
         if ($scope.playlistId !== undefined) {
@@ -81,22 +82,34 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location,
             }
         }`
             graphqlService.executeQuery(query).then(data => {
-                try {
-                    $scope.playlist = data.playlistById;
-                    $scope.playlistRE = [...data.playlistById.playlistRecords, ...data.playlistById.playlistPodcast];
-
-                    $scope.listAudioPlaylist = [...data.playlistById.playlistRecords.map(function (item) {
-                        return { recording: item.recording };
-                    }).map(function (item) {
-                        return item.recording;
-                    }), ...data.playlistById.playlistPodcast.map(function (item) {
-                        return { episode: item.episode };
-                    }).map(function (item) {
-                        return item.episode;
-                    })];
-                } catch (error) {
-
+                if ($cookies.get('token') && data.playlistById !== null) {
+                    var check = $scope.account.userType.find(e => e.userTypeId == $scope.playlist.usertype.userTypeId);
                 }
+                if (data.playlistById == null || ($scope.playlist.isPublic === false && (!check || !$cookies.get('token')))) {
+                    window.location.href = "./#!/404";
+                } else {
+                    if (!check || !($cookies.get('token'))) {
+                        $('#cotainer-playlist-infor').removeAttr('data-bs-toggle')
+                        $('#cotainer-playlist-infor').removeAttr('data-bs-target')
+                        $scope.checkOwnPl = false;
+                    } else {
+                        $('#cotainer-playlist-infor').attr('data-bs-toggle', 'modal');
+                        $('#cotainer-playlist-infor').attr('data-bs-target', '#infor-playlist');
+                        $scope.checkOwnPl = true;
+                    }
+                }
+                $scope.playlist = data.playlistById;
+                $scope.playlistRE = [...data.playlistById.playlistRecords, ...data.playlistById.playlistPodcast];
+                $scope.listAudioPlaylist = [...data.playlistById.playlistRecords.map(function (item) {
+                    return { recording: item.recording };
+                }).map(function (item) {
+                    return item.recording;
+                }), ...data.playlistById.playlistPodcast.map(function (item) {
+                    return { episode: item.episode };
+                }).map(function (item) {
+                    return item.episode;
+                })];
+                
             }).catch(error => {
                 console.log(error);
             });
@@ -223,14 +236,14 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location,
         let data = angular.copy($scope.playlistRecord);
         data.recording = item;
         data.playlist = playlist;
-        $http.post(url, data,{
+        $http.post(url, data, {
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
             $scope.findPlaylist();
-            if(resp.data.success==true){
+            if (resp.data.success == true) {
                 $scope.findPlaylist();
                 showStickyNotification('Addition successfull', 'success', 3000);
-            }else{
+            } else {
                 showStickyNotification(resp.data.message, 'warning', 3000);
             }
         })
@@ -241,16 +254,16 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $location,
         let data = angular.copy($scope.playlistPodcast);
         data.episode = item;
         data.playlist = playlist;
-        $http.post(url, data,{
+        $http.post(url, data, {
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
-            if(resp.data.success==true){
+            if (resp.data.success == true) {
                 $scope.findPlaylist();
                 showStickyNotification('Addition successfull', 'success', 3000);
-            }else{
+            } else {
                 showStickyNotification(resp.data.message, 'warning', 3000);
             }
-           
+
         })
     }
 

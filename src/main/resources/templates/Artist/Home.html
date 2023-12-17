@@ -15,7 +15,7 @@
                             <a style="text-decoration: none;" href="#!artist-music"><h5>Pitch songs</h5></a>
                         </div>
                     </div>
-                    <div ng-repeat="item in listNews" class="col-6 bg-white border-1">
+                    <div ng-repeat="item in listNews | limitTo : 8" class="col-6 bg-white border-1">
                         <img class="w-100" src="{{item.image.url}}" alt="">
                         <h4 class="col-12 text-truncate">{{item.title}}</h4>
                         <p class="text-truncate" style="width: 350px;">{{item.content}}</p>
