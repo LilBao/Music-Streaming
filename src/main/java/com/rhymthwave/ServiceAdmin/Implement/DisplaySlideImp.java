@@ -148,6 +148,7 @@ private final SlideDAO slideDAO;
 			slides.setModifiedBy(email);
 			slides.setModifiDate(getTimeNow());
 			slides.setPosition(slideRequest.position());
+			slides.setUrl(slideRequest.urlSlide());
 			slideDAO.save(slides); 
 			}else {
 				Image img = findImgByID(idAccess);
