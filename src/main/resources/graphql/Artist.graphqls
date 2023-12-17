@@ -5,7 +5,6 @@
 #import "./Album.graphqls"
 #import "./Writter.graphqls"
 
-
 type Artist{
 	artistId: ID
 	artistName: String

@@ -59,7 +59,7 @@
         </div>
         <div class="row mt-5">
             <h6 class="">Hightlights</h6>
-            <div class="col-4" ng-repeat="item in listNews">
+            <div class="col-4" ng-repeat="item in listNews | limitTo : 3">
                 <div class="card">
                     <img class="card-img-top image-new img-thumbnail"
                         src="{{item.image.url}}"
@@ -107,7 +107,7 @@
 
         <section ng-show="listArtical.length > 0" class="row mt-5">
             <h6>Article</h6>
-            <div class="col-6" ng-repeat="item in listArtical">
+            <div class="col-6" ng-repeat="item in listArtical | limitTo: 3">
                 <div class="card">
                     <img class="card-img-top image-new img-thumbnail"
                         src="{{item.image.url}}"

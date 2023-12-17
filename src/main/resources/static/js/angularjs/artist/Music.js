@@ -1,5 +1,5 @@
 var host = "http://localhost:8080/api";
-app.controller('musicCtrl', function ($scope, $http, graphqlService) {
+app.controller('musicCtrl', function ($scope, $http, graphqlService,$cookies) {
     $scope.listSongUpcoming = [];
     $scope.listAlbumUpcoming = [];
     $scope.listRecord = [];
@@ -22,13 +22,17 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService) {
     $scope.currentDate = new Date();
 
     //find artist by token email account
-    $http.get(host + "/v1/profile", {
-        headers: { 'Authorization': 'Bearer ' + getCookie('token') }
-    }).then(resp => {
-        $scope.artist = resp.data.data;
-    }).catch(error => {
-        console.log(error)
-    })
+    if($cookies.get('token')){
+        $http.get(host + "/v1/profile", {
+            headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+        }).then(resp => {
+            $scope.artist = resp.data.data;
+        }).catch(error => {
+            console.log(error)
+        })
+    }else{
+        window.location.href="/signin"
+    }
 
     //update arrtist
     $scope.updateArtist = function (data, avatar, background) {
