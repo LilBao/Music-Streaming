@@ -81,6 +81,9 @@ app.controller("subscriptionController", function (graphqlService, $scope, $http
               userTypes {
                 userTypeId
               }
+              advertisement {
+                adId
+              }
             }
           }`;
         graphqlService.executeQuery(query)

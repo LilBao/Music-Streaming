@@ -26,7 +26,7 @@ public class ArtistServiceAdminImp implements IArtistService, INotification<Arti
 	private final RoleDAO roleDAO;
 	private final EmailService mailService;
 	private final SendMailTemplateService sendMailTemplateSer;
-	public static final String TEMPLATE = "templateRoleArtist";
+	public static final String TEMPLATE = "templateApproveRoles";
 	
 	@Override
 	public Artist getOneArtistByEmail(String id) {

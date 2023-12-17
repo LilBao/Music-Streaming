@@ -59,6 +59,7 @@ type Query {
  findAccountByEmail(id: String): Account
  getAllRecordTop100:[Recording]
  getAllEpisodeTop100: [Episode]
+ top10Trending(day: Int):[Recording]
  #VanBao
  recordingById(recordingId: ID!):Recording
  

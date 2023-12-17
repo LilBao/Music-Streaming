@@ -12,6 +12,13 @@ app.controller("dashboardController", function (graphqlService, $scope, $http) {
     $scope.top10Artist = [];
     $scope.top10Podcast = [];
     $scope.visitor = 0;
+
+    $scope.myChart = null;
+    $scope.numberDay = [];
+    $scope.dataRecords = [];
+    $scope.dataEpisode = [];
+    
+
     $scope.getCount = function () {
       $http.get(apiDashboard+"/count").then(function (response) {
         $scope.countSongAndEpisode = response.data.data;
@@ -20,6 +27,7 @@ app.controller("dashboardController", function (graphqlService, $scope, $http) {
         console.log(error);
       })
     }
+
 
     $scope.getCountVisitor = function () {
 
@@ -40,11 +48,13 @@ app.controller("dashboardController", function (graphqlService, $scope, $http) {
         })
     }    
    
-    $scope.getTop1Country = async function () {
+    $scope.getDashboardAccount = async function () {
 
       try {
         const top1 = await  $http.get(apiDashboard+"/top1-country");
         const countAccount = await $http.get(apiDashboard+"/count-account");
+        const accountCurrent = await $http.get(apiDashboard+"/count-account/current");
+        $scope.accountCurrent = accountCurrent.data.data;
         $scope.top1Country = top1.data.data;
         $scope.totalAccount = countAccount.data.data
       } catch (error) {
@@ -53,40 +63,64 @@ app.controller("dashboardController", function (graphqlService, $scope, $http) {
 
     } 
 
-    $scope.chartLine = function(){
+
+    $scope.getCountCreateRecordsAndEpisodeByDay = function (date) {
+      $http.get(apiDashboard + "/create-byday", { params: { date: date } }).then(function (response) {
+          $scope.countCreateRecordsAndEpisodeByDay = response.data.data;
+          $scope.numberDay = [];
+          $scope.dataRecords = [];
+          $scope.dataEpisode = [];
+          $scope.countCreateRecordsAndEpisodeByDay.record.forEach(element => {
+              $scope.numberDay.push(element.dates)
+              $scope.dataRecords.push(element.countOfTable);
+          });
+          $scope.countCreateRecordsAndEpisodeByDay.episode.forEach(element => {
+              $scope.dataEpisode.push(element.countOfTable);
+          });
+  
+          if ($scope.myChart) {
+              $scope.myChart.destroy();
+          }
+  
+          $scope.chartLine();
+      }).catch(error => {
+          console.log(error);
+      })
+    }
+  
+    $scope.chartLine = function () {
         const ctx = document.getElementById('chartline').getContext('2d');
-        const myChart = new Chart(ctx, {
+        $scope.myChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['sad', 'asd','vcxv','hig'],
+                labels: $scope.numberDay,
                 datasets: [
                     {
-                    label: 'Number',
-                    data: [123,23,54,32],
-                    backgroundColor: [
-                        "#0074D9",
-                    ],
-                    borderColor: [
-                        "#0074D9",
-                    ],
-                    // borderWidth: 1
-                      },
-                      {
-                        label: 'thang',
-                        data: [321,32,45,200],
+                        label: 'Records',
+                        data: $scope.dataRecords,
                         backgroundColor: [
-                           "#999900"
+                            "#0074D9",
+                        ],
+                        borderColor: [
+                            "#0074D9",
+                        ],
+                    },
+                    {
+                        label: 'Episodes',
+                        data: $scope.dataEpisode,
+                        backgroundColor: [
+                            "#999900"
                         ],
                         borderColor: [
                             "#999900"
                         ],
-                        // borderWidth: 1
-                          }
+                    }
                 ]
             },
         });
     }
-    $scope.chartLine();
+
+ 
 
     // START TOP GENRE
     $scope.getTop4Genre = async function () {
@@ -127,11 +161,11 @@ app.controller("dashboardController", function (graphqlService, $scope, $http) {
     $scope.getTop10Artist = function(){
       $http.get(apiDashboard+"/top10-artist").then(function (response) {
         $scope.top10Artist = response.data.data;
-     
       }).catch(error => {
         console.log(error);
       })
     };
+
     $scope.getTop10Podcast = function(){
       $http.get(apiDashboard+"/top10-podcast").then(function (response) {
         $scope.top10Podcast = response.data.data;
@@ -141,12 +175,55 @@ app.controller("dashboardController", function (graphqlService, $scope, $http) {
       })
     };
 
+
+    $scope.getTop10RecordTrending = function(day) {
+      let query =`{
+        top10Trending(day: ${day}) {
+          recordingName
+          audioFileUrl
+          duration
+          listened
+          recordingdate
+          emailCreate
+          song {
+            image {
+              url
+            }
+            writters {
+              artist {
+                artistName
+              }
+            }
+          }
+          tracks {
+            album {
+              albumName
+            }
+          }
+        }
+      }`;
+        graphqlService.executeQuery(query).then(resp=>{
+          $scope.top10TrendingByRecord = resp.top10Trending;
+         }).catch(error => {
+          console.log(error);
+        });
+    }
+
+    $scope.runMusic = function (audioFileUrl) {
+      $("#music").attr("src",audioFileUrl);
+      $("#music")[0].load();
+      $("#music")[0].play();
+  }
+
+
+    $scope.getTop10RecordTrending(1);
     $scope.getCountVisitor();
     $scope.getTop10Podcast();
     $scope.getTop10Artist();
-    $scope.getTop1Country ();
+    $scope.getDashboardAccount ();
     $scope.getTop4Genre();
     $scope.getCount();
     $scope.getCountSubscription();
+    $scope.getCountCreateRecordsAndEpisodeByDay('month');
 })
 

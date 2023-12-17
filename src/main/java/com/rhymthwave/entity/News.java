@@ -86,8 +86,10 @@ public class News implements Serializable {
 	
 	@Column(name = "MODIFIDATE")
 	private Date modifiDate;
-	
-	
+
+	@Column(name = "TOURL",columnDefinition = "nvarchar(255)")
+	private String toUrl;
+
 	@OneToOne( cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "IMAGE")
 	private Image image;

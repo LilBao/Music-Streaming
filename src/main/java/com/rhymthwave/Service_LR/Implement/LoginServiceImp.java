@@ -7,6 +7,7 @@ import com.rhymthwave.Service.Implement.CustomUserDetails;
 import com.rhymthwave.Service.Implement.CustomUserDetailsService;
 import com.rhymthwave.Service_LR.ILoginService;
 import com.rhymthwave.Service_LR.ISignUpService;
+import com.rhymthwave.Utilities.Cookie.CookiesUntils;
 import com.rhymthwave.Utilities.GetCurrentTime;
 import com.rhymthwave.Utilities.JWT.JwtTokenCreate;
 import com.rhymthwave.entity.Account;
@@ -37,6 +38,10 @@ public class LoginServiceImp implements ILoginService {
 
     private final ISignUpService signUpService;
 
+    private  final CookiesUntils cookiesUntils;
+
+    private final CustomUserDetailsService customUserDetailsService;
+
     @Override
     public int checkIsVerified(LoginDTO loginRequest) {
         Account user = accountService.findOne(loginRequest.email());
@@ -57,8 +62,6 @@ public class LoginServiceImp implements ILoginService {
         return 4;
     }
 
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
 
     @Override
     public Object checkLoginWithSocial(OAuth2AuthenticationToken token) {
@@ -79,11 +82,8 @@ public class LoginServiceImp implements ILoginService {
             account.setRefreshToken(jwtTokenCreate.createRefreshToken(customUserDetails));
             accountService.update(account);
             String jwt = jwtTokenCreate.createToken(customUserDetails);
-            Map<String, String> list = new HashMap<>();
-            list.put("accessToken", jwt);
-            list.put("refreshToken", account.getRefreshToken());
-            System.out.println("Token when new account" + jwt);
-            return list;
+            cookiesUntils.add(jwt);
+            return jwt;
         } else {
             UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
             // Neu user hop le thong tin cho security context
@@ -95,11 +95,8 @@ public class LoginServiceImp implements ILoginService {
             account.setRefreshToken(jwtTokenCreate.createRefreshToken(customUserDetails));
             accountService.update(account);
             String jwt = jwtTokenCreate.createToken(customUserDetails);
-            Map<String, String> list = new HashMap<>();
-            list.put("accessToken", jwt);
-            list.put("refreshToken", account.getRefreshToken());
-            System.out.println(jwt);
-            return list;
+            cookiesUntils.add(jwt);
+            return jwt;
         }
     }
 
