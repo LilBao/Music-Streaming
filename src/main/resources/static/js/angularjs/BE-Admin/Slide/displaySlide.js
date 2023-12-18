@@ -24,7 +24,6 @@ app.controller("displaySlideController", function ($scope, $http, $cookies, $log
 				// Trích xuất giá trị 'url' và lưu vào mảng 'imageUrls'
 				$scope.imageUrls = selectedImages.map(slide => slide.url);
 				$scope.accessIds = selectedImages.map(slide => slide.accessId);
-				$scope.sildeUrl = selectedImages.data.sildeUrl;
 			})
 			.catch(error => {
 
@@ -68,7 +67,7 @@ app.controller("displaySlideController", function ($scope, $http, $cookies, $log
 
 		var formData = new FormData();
 		formData.append('img', file);
-		formData.append('urlSlide',items.urlSlideupdate)
+		formData.append('urlSlide',items.urlSlide)
 
 		var config = {
 			headers: {
