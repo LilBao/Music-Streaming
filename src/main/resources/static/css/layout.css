@@ -297,11 +297,11 @@ ul#sidebar li:hover {
     border-left: 4px solid var(--second-color);
 }
 
-li.active {
+li.activeslidebar {
     border-left: 4px solid var(--second-color) !important;
 }
 
-li.active a {
+li.activeslidebar a {
     color: var(--second-color) !important;
     background: #f4f4f4;
 }

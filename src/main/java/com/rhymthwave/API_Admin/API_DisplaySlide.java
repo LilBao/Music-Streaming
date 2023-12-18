@@ -59,6 +59,7 @@ public class API_DisplaySlide {
 	public ResponseEntity<?> getPositionSlidesShowing(@PathVariable("positon") String positon) {
 		List<String> list = displaySlide.getAccessIDInImage(positon);
 		List<Image> listUrl = displaySlide.getURLImage(list);
+		
 		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", listUrl));
 	}
 

@@ -1,6 +1,6 @@
 // active sidebar
 $(document).on('click','#sidebar li',function(){
-    $(this).addClass('active').siblings().removeClass('active');
+    $(this).addClass('activeslidebar').siblings().removeClass('activeslidebar');
 });
 
 // left menu sidebar toggle
