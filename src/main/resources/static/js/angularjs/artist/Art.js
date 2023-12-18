@@ -22,7 +22,8 @@ app.controller('myCtrl', function ($scope, $http, $cookies, $window) {
         $http.get(host + "/v1/display/" + position).then(resp => {
             $scope.dataDisplayImage = resp.data.data;
             // console.log($scope.dataDisplayImage);
-            $scope.listImage = $scope.dataDisplayImage.map(element => element.url);
+            $scope.listImage = $scope.dataDisplayImage.map(element => element.urlImage);
+            $scope.listSlide = $scope.dataDisplayImage.map(element => ({ url: element.url, urlImage: element.urlImage }));
             setUpImageSlider();
         }).catch(error => {
             console.log(error);
@@ -119,15 +120,15 @@ app.controller('myCtrl', function ($scope, $http, $cookies, $window) {
     }
 
     $scope.login = function () {
-        $window.location.href = '/logins';
+        $window.location.href = '/signin';
     }
 
     $scope.newsPage = function (id) {
-        $window.location.href = '/news/home/'+ `${id}`;
+        $window.location.href = '/news/home/' + `${id}`;
         localStorage.setItem('newsId', id);
-        localStorage.setItem('op', 'art'); 
+        localStorage.setItem('op', 'art');
     }
-    
+
     $http.get(host + "/v1/top3-artist").then(resp => {
         $scope.top3 = resp.data.data;
         // console.log($scope.top3);

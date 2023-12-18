@@ -59,7 +59,11 @@ app.controller('selectPodcastCtrl', function($scope,$http){
     }
     //Event save record
     $('#save').click(function(){
-        $scope.creatPodcast();
+        if($scope.validate()){
+            $scope.creatPodcast();
+        }else{
+            $scope.error ="Fill in information"
+        }
     })
     
     //Event find list tag
@@ -93,4 +97,23 @@ app.controller('selectPodcastCtrl', function($scope,$http){
     }
 
     $scope.findMyListPodcast();
+
+    $scope.validate = function(){
+        if($scope.podcast.podcastName == undefined){
+            return false;
+        }
+        if(!$scope.coverImg){
+            return false;
+        }
+        if(!$scope.record.version){
+            return false;
+        }
+        if(!podcast.tag.tagId){
+            return false;
+        }
+        if(!podcast.language){
+            return false;
+        }
+        return true;
+    }
 })

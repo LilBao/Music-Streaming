@@ -148,9 +148,11 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
     }
     $scope.findNotiLatest();
 
-    document.getElementById('create-playlist').addEventListener('click', function () {
-        $scope.createPlaylist();
-    })
+    if (document.getElementById('create-playlist')) {
+        document.getElementById('create-playlist').addEventListener('click', function () {
+            $scope.createPlaylist();
+        })
+    }
 
     //Playlist
     var playlistChild = document.getElementsByClassName('playlist-child');
@@ -1045,6 +1047,7 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
             console.log(err)
         })
     }
+    $scope.findAdsRunning();
 
     $scope.ratioNotificationAds = function (list) {
         if (list.length > 0) {
@@ -1464,6 +1467,7 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
     //tracking click of user
 
     $scope.$on('$locationChangeSuccess', function (event, newUrl, oldUrl) {
+        $('#modal-show-all').click();
         var lastSlashIndex = newUrl.lastIndexOf('/');
         if ($cookies.get("tracking")) {
             var tracking = JSON.parse($cookies.get("tracking"));
@@ -1477,33 +1481,39 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
             if (newUrl.indexOf("#!/podcast/") !== -1) {
                 let url = host + "v1/podcast/" + result;
                 $http.get(url).then(resp => {
-                    $scope.obj.type = "podcast"
-                    $scope.obj.podcastId = resp.data.data.podcastId;
-                    $scope.obj.name = resp.data.data.podcastName
-                    $scope.obj.image = resp.data.data.image.url;
-                    $scope.checkObjExist($scope.obj, tracking, false, newUrl);
+                    if (resp.data.data) {
+                        $scope.obj.type = "podcast"
+                        $scope.obj.podcastId = resp.data.data.podcastId;
+                        $scope.obj.name = resp.data.data.podcastName
+                        $scope.obj.image = resp.data.data.image.url;
+                        $scope.checkObjExist($scope.obj, tracking, false, newUrl);
+                    }
                 }).catch(err => {
                     console.log(err)
                 })
             } else if (newUrl.indexOf("artist") !== -1) {
                 let url = host + "v1/artist/" + result;
                 $http.get(url).then(resp => {
-                    $scope.obj.type = "artist"
-                    $scope.obj.artistId = resp.data.data.artistId;
-                    $scope.obj.name = resp.data.data.artistName
-                    $scope.obj.image = resp.data.data.imagesProfile.url !== null ? resp.data.data.imagesProfile.url : "https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png";
-                    $scope.checkObjExist($scope.obj, tracking, false, newUrl);
+                    if (resp.data.data) {
+                        $scope.obj.type = "artist"
+                        $scope.obj.artistId = resp.data.data.artistId;
+                        $scope.obj.name = resp.data.data.artistName
+                        $scope.obj.image = resp.data.data.imagesProfile.url !== null ? resp.data.data.imagesProfile.url : "https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png";
+                        $scope.checkObjExist($scope.obj, tracking, false, newUrl);
+                    }
                 }).catch(err => {
                     console.log(err)
                 })
             } else if (newUrl.indexOf("playlist") !== -1) {
                 let url = host + "v1/playlist/" + result;
                 $http.get(url).then(resp => {
-                    $scope.obj.type = "playlist"
-                    $scope.obj.playlistId = resp.data.data.playlistId;
-                    $scope.obj.name = resp.data.data.playlistName
-                    $scope.obj.image = resp.data.data.image.url !== null ? resp.data.data.image.url : "https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg";
-                    $scope.checkObjExist($scope.obj, tracking, false, newUrl);
+                    if (resp.data.data) {
+                        $scope.obj.type = "playlist"
+                        $scope.obj.playlistId = resp.data.data.playlistId;
+                        $scope.obj.name = resp.data.data.playlistName
+                        $scope.obj.image = resp.data.data.image.url !== null ? resp.data.data.image.url : "https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg";
+                        $scope.checkObjExist($scope.obj, tracking, false, newUrl);
+                    }
                 }).catch(err => {
                     console.log(err)
                 })
@@ -1527,11 +1537,13 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
                     }
                 }`
                 graphqlService.executeQuery(query).then(data => {
-                    $scope.obj.type = "user"
-                    $scope.obj.username = data.accountByUsername.username;
-                    $scope.obj.name = data.accountByUsername.username;
-                    $scope.obj.image = data.accountByUsername.image.url !== null ? data.accountByUsername.image.url : "https://res.cloudinary.com/div9ldpou/image/upload/v1699632134/Avatar/System/user_oujyrp.png";
-                    $scope.checkObjExist($scope.obj, tracking, false, newUrl);
+                    if (data.accountByUsername) {
+                        $scope.obj.type = "user"
+                        $scope.obj.username = data.accountByUsername.username;
+                        $scope.obj.name = data.accountByUsername.username;
+                        $scope.obj.image = data.accountByUsername.image.url !== null ? data.accountByUsername.image.url : "https://res.cloudinary.com/div9ldpou/image/upload/v1699632134/Avatar/System/user_oujyrp.png";
+                        $scope.checkObjExist($scope.obj, tracking, false, newUrl);
+                    }
                 }).catch(err => {
                     console.log(err)
                 })
@@ -1693,11 +1705,11 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
         now.setUTCMinutes(0);
         now.setUTCSeconds(0);
         $cookies.put('token', '', { expires: now, path: '/' })
-        $window.location.href = '/logins';
+        $window.location.href = '/signin';
     }
 
     $scope.signin = function () {
-        $window.location.href = '/logins';
+        $window.location.href = '/signin';
     }
 
     $scope.accountInfo = function () {
@@ -1743,6 +1755,7 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
         }
     });
     $scope.searchHiden = true;
+    
     $scope.searchKeyword = '';
     $scope.data = {};
     $scope.dataArt = {};

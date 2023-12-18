@@ -94,6 +94,8 @@ public class EpisodeREST {
 			Map<?, ?> respImg = cloudinarySer.UploadResizeImage(coverImg, "EpisodeImage", account.getUsername(), 350,350);
 			image = imgSer.getEntity(respImg);
 			crudImage.create(image);
+			episode.setImage(image);
+			crudEpisode.update(episode);
 		}
 		if (fileAudio !=null) {
 			Map<?, ?> respAudio = cloudinarySer.Upload(fileAudio, "EpisodeRecord", account.getUsername());

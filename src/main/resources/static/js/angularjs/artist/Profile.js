@@ -1,5 +1,5 @@
 var host = "http://localhost:8080/api";
-app.controller('profileArtistCtrl', function ($scope, $http,graphqlService) {
+app.controller('profileArtistCtrl', function ($scope, $http,graphqlService,$cookies) {
     $scope.artist = {};
     $scope.image = {};
     $scope.listSong = {};
@@ -18,7 +18,11 @@ app.controller('profileArtistCtrl', function ($scope, $http,graphqlService) {
             console.log("Not found artist profile")
         })
     }
-    $scope.me();
+    if($cookies.get('token')){
+        $scope.me();
+    }else{
+        window.location.href="/signin"
+    }
 
     //update artist
     $scope.updateArtist = function (data) {

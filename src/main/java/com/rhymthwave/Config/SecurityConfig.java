@@ -86,12 +86,9 @@ public class SecurityConfig implements WebMvcConfigurer {
 
         http.oauth2Login()
         //        .loginPage("/api/v1/accounts/login")
-//                .defaultSuccessUrl("/api/v1/home",  true)
                 .defaultSuccessUrl("/api/v1/auth/success",  true)
-//                .successHandler(successHandler())
                 .failureUrl("/api/v1/auth/fail")
                 .authorizationEndpoint().baseUri("/oauth2");
-//                .and().userInfoEndpoint().userService(customOAuth2UserService);
         return http.build();
     }
 

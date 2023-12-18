@@ -108,7 +108,7 @@ app.controller('newsController', function ($scope, $cookies, $http, $window) {
         now.setUTCSeconds(0);
 
         $cookies.put('token', '', { expires: now, path: '/' })
-        $window.location.href = '/logins';
+        $window.location.href = '/signin';
     }
 
     $scope.newsPage = function (id) {

@@ -38,9 +38,9 @@ public class SendNotificationOfNews implements INotification<NewDTO> {
 		for (Account account : listAccounts) {
 			log.info(">>>>>>>>> Email: {} accout with role: {}",account.getEmail(),noti.role());
 			Email email = new Email();
-			email.setFrom("ngonhien3103@gmail.com");
+			email.setFrom("musicstreaming2023@gmail.com");
 			email.setTo(account.getEmail());
-			email.setSubject(noti.title().toUpperCase());
+			email.setSubject(noti.summary().toUpperCase());
 			email.setBody(sendMailTemplateSer.getContentForNews(noti.title(), "templateNews", noti.summary(),
 					urlImg));
 			log.info(">>>>>>>>> Email dang hoat dong");

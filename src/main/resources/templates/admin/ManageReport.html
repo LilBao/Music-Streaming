@@ -379,7 +379,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr
-                                                            dir-paginate="report in reports | itemsPerPage: 1 | filter: { status: false, podcast: { podcastId: '!null' } }">
+                                                            dir-paginate="report in reports | itemsPerPage: 5 | filter: { status: false, podcast: { podcastId: '!null' } }">
                                                             <!-- Các thông tin của bản báo cáo với podcast -->
                                                             <td>{{ report.reportId }}</td>
                                                             <td>{{ report.podcast.podcastName }}</td>
@@ -499,9 +499,69 @@
                                                             <td>
                                                                 <div class="btn-group">
                                                                     <button data-bs-toggle="modal"
-                                                                        data-bs-target="#myModal{{$index}}">Detail</button>
+                                                                        data-bs-target="#reportRecording{{report.reportId}}">Detail</button>
                                                                 </div>
                                                             </td>
+                                                            <div ng-repeat="report in reports" class="modal"
+                                                                id="reportRecording{{report.reportId}}">
+                                                                <div
+                                                                    class="modal-dialog modal-dialog-centered modal-lg">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h4 class="modal-title">Report detail</h4>
+                                                                            <button type="button" class="btn-close"
+                                                                                data-bs-dismiss="modal"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="row">
+
+                                                                                <div class="col-sm-12">
+                                                                                    <div class="mb-3 mt-3">
+                                                                                        <label class="form-label">Full Name User
+                                                                                            Report:</label>
+                                                                                        <input class="form-control"
+                                                                                            ng-model="report.usertype.account.username"
+                                                                                            readonly>
+                                                                                    </div>
+                                                                                    <div class="mb-3 mt-3">
+                                                                                        <label class="form-label">Email User Report:</label>
+                                                                                        <input class="form-control"
+                                                                                            ng-model="report.usertype.account.email"
+                                                                                            readonly>
+                                                                                    </div>
+                                                                                    <div class="mb-3 mt-3">
+                                                                                        <label class="form-label">Email Recording:</label>
+                                                                                        <input class="form-control"
+                                                                                            ng-model="report.recording.emailCreate"
+                                                                                            readonly>
+                                                                                    </div>
+                                                                                    <div class="mb-3 mt-3">
+                                                                                        <label class="form-label">Name Recording:</label>
+                                                                                        <input class="form-control"
+                                                                                            ng-model="report.recording.recordingName"
+                                                                                            readonly>
+                                                                                    </div>
+                                                                                    <div class="mb-3 mt-3">
+                                                                                        <label for="comment">Report content:</label>
+                                                                                        <textarea class="form-control" rows="5" id="comment"
+                                                                                            name="text" ng-model="report.description"
+                                                                                            readonly></textarea>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button class="btn btn-success"
+                                                                                    data-bs-dismiss="modal">Cancel</button>
+                                                                                <button ng-click="seenReport(report.reportId)"
+                                                                                    class="btn btn-success" data-bs-dismiss="modal">Seen</button>
+                                                                                <button
+                                                                                    ng-click="sendEmailWarring(report.recording.emailCreate,report.reportId)"
+                                                                                    class="btn btn-warning" data-bs-dismiss="modal">Warning
+                                                                                    Email</button>
+                                                                                <button
+                                                                                    ng-click="banRecording(report.recording.recordingId,report.reportId)"
+                                                                                    class="btn btn-danger" data-bs-dismiss="modal">Ban</button>
+                                                                            </div>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -512,261 +572,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-
-
                                         </div>
-                                    </div>
-
-
-
-                                    <div ng-repeat="report in reports" class="modal" id="myModal{{$index}}">
-                                        <div class="modal-dialog modal-dialog-centered modal-lg">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h4 class="modal-title">Report detail</h4>
-                                                    <button type="button" class="btn-close"
-                                                        data-bs-dismiss="modal"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div ng-if="report.artist">
-                                                        <div class="row">
-                                                            <div class="col-sm-6">
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Avartar Artist :</label>
-                                                                    <div class="card" style="height: 250px;">
-                                                                        <img class="card-img-top"
-                                                                            ng-src="{{ report.artist.imagesProfile.url }}"
-                                                                            style="height: 250px;min-width: 300px;min-height: 250px;"
-                                                                            alt="Card image">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Full Name Artist:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.artist.fullName" readonly>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Email Artist:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.artist.account.email" readonly>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-6">
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Full Name User
-                                                                        Report:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.usertype.account.username"
-                                                                        readonly>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Email User Report:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.usertype.account.email"
-                                                                        readonly>
-                                                                </div>
-
-                                                                <div class="mb-3 mt-3">
-                                                                    <label for="comment">Report content:</label>
-                                                                    <textarea class="form-control" rows="5" id="comment"
-                                                                        name="text" ng-model="report.description"
-                                                                        readonly></textarea>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div ng-if="report.episode">
-                                                        <div class="row">
-                                                            <div class="col-sm-6">
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Image Episodes</label>
-                                                                    <div class="card" style="height: 250px;">
-                                                                        <img class="card-img-top"
-                                                                            ng-src="{{ report.episode.image.url }}"
-                                                                            style="height: 250px;min-width: 300px;min-height: 250px;"
-                                                                            alt="Card image">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Name Episodes:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.episode.episodeTitle" readonly>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Email Episodes:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.episode.podcast.account.email"
-                                                                        readonly>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-6">
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Full Name User
-                                                                        Report:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.usertype.account.username"
-                                                                        readonly>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Email User Report:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.usertype.account.email"
-                                                                        readonly>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label for="comment">Report content:</label>
-                                                                    <textarea class="form-control" rows="5" id="comment"
-                                                                        name="text" ng-model="report.description"
-                                                                        readonly></textarea>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div ng-if="report.podcast">
-                                                        <div class="row">
-                                                            <div class="col-sm-6">
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Image Podcast</label>
-                                                                    <div class="card" style="height: 250px;">
-                                                                        <img class="card-img-top"
-                                                                            ng-src="{{ report.podcast.image.url }}"
-                                                                            style="height: 250px;min-width: 300px;min-height: 250px;"
-                                                                            alt="Card image">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Name Podcast:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.podcast.podcastName" readonly>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Email Podcast:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.podcast.account.email"
-                                                                        readonly>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-6">
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Full Name User
-                                                                        Report:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.usertype.account.username"
-                                                                        readonly>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Email User Report:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.usertype.account.email"
-                                                                        readonly>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label for="comment">Report content:</label>
-                                                                    <textarea class="form-control" rows="5" id="comment"
-                                                                        name="text" ng-model="report.description"
-                                                                        readonly></textarea>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div ng-if="report.recording">
-                                                        <div class="row">
-
-                                                            <div class="col-sm-12">
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Full Name User
-                                                                        Report:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.usertype.account.username"
-                                                                        readonly>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Email User Report:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.usertype.account.email"
-                                                                        readonly>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Email Recording:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.recording.emailCreate"
-                                                                        readonly>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Name Recording:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.recording.recordingName"
-                                                                        readonly>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label for="comment">Report content:</label>
-                                                                    <textarea class="form-control" rows="5" id="comment"
-                                                                        name="text" ng-model="report.description"
-                                                                        readonly></textarea>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                                <div class="modal-footer" ng-if="report.artist">
-                                                    <button class="btn btn-success"
-                                                        data-bs-dismiss="modal">Cancel</button>
-                                                    <button ng-click="seenReport(report.reportId)"
-                                                        class="btn btn-success" data-bs-dismiss="modal">Seen</button>
-                                                    <button
-                                                        ng-click="sendEmailWarring(report.artist.account.email,report.reportId)"
-                                                        class="btn btn-danger" data-bs-dismiss="modal">Warning
-                                                        Email</button>
-                                                    <button ng-click="banArtist(report.reportId,report.reportId)"
-                                                        class="btn btn-danger" data-bs-dismiss="modal">Ban</button>
-                                                </div>
-                                                <div class="modal-footer" ng-if="report.episode">
-                                                    <button class="btn btn-success"
-                                                        data-bs-dismiss="modal">Cancel</button>
-                                                    <button ng-click="seenReport(report.reportId)"
-                                                        class="btn btn-success" data-bs-dismiss="modal">Seen</button>
-                                                    <button
-                                                        ng-click="sendEmailWarring(report.episode.podcast.account.email,report.reportId)"
-                                                        class="btn btn-warning" data-bs-dismiss="modal">Warning
-                                                        Email</button>
-                                                    <button
-                                                        ng-click="banEpisodes(report.episode.episodeId,report.reportId)"
-                                                        class="btn btn-danger" data-bs-dismiss="modal">Ban</button>
-                                                </div>
-                                                <div class="modal-footer" ng-if="report.podcast">
-                                                    <button class="btn btn-success"
-                                                        data-bs-dismiss="modal">Cancel</button>
-                                                    <button ng-click="seenReport(report.reportId)"
-                                                        class="btn btn-success" data-bs-dismiss="modal">Seen</button>
-                                                    <button
-                                                        ng-click="sendEmailWarring(report.podcast.podcastId,report.reportId)"
-                                                        class="btn btn-warning" data-bs-dismiss="modal">Warning
-                                                        Email</button>
-                                                    <button
-                                                        ng-click="banPodcast(report.podcast.podcastId,report.reportId)"
-                                                        class="btn btn-danger" data-bs-dismiss="modal">Ban</button>
-                                                </div>
-                                                <div class="modal-footer" ng-if="report.recording">
-                                                    <button class="btn btn-success"
-                                                        data-bs-dismiss="modal">Cancel</button>
-                                                    <button ng-click="seenReport(report.reportId)"
-                                                        class="btn btn-success" data-bs-dismiss="modal">Seen</button>
-                                                    <button
-                                                        ng-click="sendEmailWarring(report.recording.emailCreate,report.reportId)"
-                                                        class="btn btn-warning" data-bs-dismiss="modal">Warning
-                                                        Email</button>
-                                                    <button
-                                                        ng-click="banRecording(report.recording.recordingId,report.reportId)"
-                                                        class="btn btn-danger" data-bs-dismiss="modal">Ban</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
+                                    </div>  
                                 </div>
 
 
@@ -819,8 +626,8 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr dir-paginate="report in reportTrues | itemsPerPage: 1"
-                                                            ng-if="report.artist">
+                                                        <tr
+                                                            dir-paginate="report in reportTrues | itemsPerPage: 5 | filter: { status: true, artist: { artistId: '!null' } }">
                                                             <!-- Các thông tin của bản báo cáo với artist -->
                                                             <td>{{ report.reportId }}</td>
                                                             <td>{{ report.artist.artistName }}</td>
@@ -829,18 +636,93 @@
                                                             <td>
                                                                 <div class="btn-group">
                                                                     <button data-bs-toggle="modal"
-                                                                        data-bs-target="#myModal1{{$index}}">Detail</button>
+                                                                        data-bs-target="#reportArtisted{{report.reportId}}">Detail</button>
                                                                 </div>
                                                             </td>
+                                                            <div ng-repeat="report in reportTrues" class="modal"
+                                                                id="reportArtisted{{report.reportId}}">
+                                                                <div
+                                                                    class="modal-dialog modal-dialog-centered modal-lg">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h4 class="modal-title">Report detail</h4>
+                                                                            <button type="button" class="btn-close"
+                                                                                data-bs-dismiss="modal"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="row">
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="mb-3 mt-3">
+                                                                                        <label
+                                                                                            class="form-label">Avartar
+                                                                                            Artist :</label>
+                                                                                        <div class="card"
+                                                                                            style="height: 250px;">
+                                                                                            <img class="card-img-top"
+                                                                                                ng-src="{{ report.artist.imagesProfile.url }}"
+                                                                                                style="height: 250px;min-width: 300px;min-height: 250px;"
+                                                                                                alt="Card image">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mb-3 mt-3">
+                                                                                        <label class="form-label">Full
+                                                                                            Name Artist:</label>
+                                                                                        <input class="form-control"
+                                                                                            ng-model="report.artist.fullName"
+                                                                                            readonly>
+                                                                                    </div>
+                                                                                    <div class="mb-3 mt-3">
+                                                                                        <label class="form-label">Email
+                                                                                            Artist:</label>
+                                                                                        <input class="form-control"
+                                                                                            ng-model="report.artist.account.email"
+                                                                                            readonly>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="mb-3 mt-3">
+                                                                                        <label class="form-label">Full
+                                                                                            Name User
+                                                                                            Report:</label>
+                                                                                        <input class="form-control"
+                                                                                            ng-model="report.usertype.account.username"
+                                                                                            readonly>
+                                                                                    </div>
+                                                                                    <div class="mb-3 mt-3">
+                                                                                        <label class="form-label">Email
+                                                                                            User Report:</label>
+                                                                                        <input class="form-control"
+                                                                                            ng-model="report.usertype.account.email"
+                                                                                            readonly>
+                                                                                    </div>
+
+                                                                                    <div class="mb-3 mt-3">
+                                                                                        <label for="comment">Report
+                                                                                            content:</label>
+                                                                                        <textarea class="form-control"
+                                                                                            rows="5" id="comment"
+                                                                                            name="text"
+                                                                                            ng-model="report.description"
+                                                                                            readonly></textarea>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button class="btn btn-success"
+                                                                                data-bs-dismiss="modal">Cancel</button>
+                                                                            <button ng-click="unbanArtist(report.reportId)"
+                                                                                class="btn btn-danger" data-bs-dismiss="modal">UnBan</button>
+                                                                        </div>
                                                         </tr>
-                                                        <div class="row">
-                                                            <div class="d-flex justify-content-end">
-                                                                <dir-pagination-controls
-                                                                    class="dir-pagination-controls"></dir-pagination-controls>
-                                                            </div>
-                                                        </div>
                                                     </tbody>
                                                 </table>
+                                                <div class="row">
+                                                    <div class="d-flex justify-content-end">
+                                                        <dir-pagination-controls
+                                                            class="dir-pagination-controls"></dir-pagination-controls>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -858,28 +740,90 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr dir-paginate="report in reportTrues | itemsPerPage: 1"
-                                                            ng-if="report.episode">
-                                                            <!-- Các thông tin của bản báo cáo với episode -->
-                                                            <td>{{ report.reportId }}</td>
-                                                            <td>{{ report.episode.episodeTitle }}</td>
-                                                            <td>{{ report.reportDate }}</td>
-                                                            <td>{{ report.description }}</td>
-                                                            <td>
-                                                                <div class="btn-group">
-                                                                    <button data-bs-toggle="modal"
-                                                                        data-bs-target="#myModal1{{$index}}">Detail</button>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <div class="row">
-                                                            <div class="d-flex justify-content-end">
-                                                                <dir-pagination-controls
-                                                                    class="dir-pagination-controls"></dir-pagination-controls>
+                                                        <tr
+                                                        dir-paginate="report in reportTrues | itemsPerPage: 5 | filter: { status: true, episode: { episodeId: '!null' } }">
+                                                        <!-- Các thông tin của bản báo cáo với episode -->
+                                                        <td>{{ report.reportId }}</td>
+                                                        <td>{{ report.episode.episodeTitle }}</td>
+                                                        <td>{{ report.reportDate }}</td>
+                                                        <td>{{ report.description }}</td>
+                                                        <td>
+                                                            <div class="btn-group">
+                                                                <button data-bs-toggle="modal"
+                                                                    data-bs-target="#reportEpisoded{{report.reportId}}">Detail</button>
                                                             </div>
-                                                        </div>
+                                                        </td>
+                                                        <div ng-repeat="report in reportTrues" class="modal"
+                                                            id="reportEpisoded{{report.reportId}}">
+                                                            <div
+                                                                class="modal-dialog modal-dialog-centered modal-lg">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h4 class="modal-title">Report detail</h4>
+                                                                        <button type="button" class="btn-close"
+                                                                            data-bs-dismiss="modal"></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="row">
+                                                                            <div class="col-sm-6">
+                                                                                <div class="mb-3 mt-3">
+                                                                                    <label class="form-label">Image Episodes</label>
+                                                                                    <div class="card" style="height: 250px;">
+                                                                                        <img class="card-img-top"
+                                                                                            ng-src="{{ report.episode.image.url }}"
+                                                                                            style="height: 250px;min-width: 300px;min-height: 250px;"
+                                                                                            alt="Card image">
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="mb-3 mt-3">
+                                                                                    <label class="form-label">Name Episodes:</label>
+                                                                                    <input class="form-control"
+                                                                                        ng-model="report.episode.episodeTitle" readonly>
+                                                                                </div>
+                                                                                <div class="mb-3 mt-3">
+                                                                                    <label class="form-label">Email Episodes:</label>
+                                                                                    <input class="form-control"
+                                                                                        ng-model="report.episode.podcast.account.email"
+                                                                                        readonly>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-sm-6">
+                                                                                <div class="mb-3 mt-3">
+                                                                                    <label class="form-label">Full Name User
+                                                                                        Report:</label>
+                                                                                    <input class="form-control"
+                                                                                        ng-model="report.usertype.account.username"
+                                                                                        readonly>
+                                                                                </div>
+                                                                                <div class="mb-3 mt-3">
+                                                                                    <label class="form-label">Email User Report:</label>
+                                                                                    <input class="form-control"
+                                                                                        ng-model="report.usertype.account.email"
+                                                                                        readonly>
+                                                                                </div>
+                                                                                <div class="mb-3 mt-3">
+                                                                                    <label for="comment">Report content:</label>
+                                                                                    <textarea class="form-control" rows="5" id="comment"
+                                                                                        name="text" ng-model="report.description"
+                                                                                        readonly></textarea>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button class="btn btn-success"
+                                                                                data-bs-dismiss="modal">Cancel</button>
+                                                                            <button ng-click="unbanEpisodes(report.episode.episodeId)"
+                                                                                class="btn btn-danger" data-bs-dismiss="modal">UnBan</button>
+                                                                        </div>
+                                                        </tr>
                                                     </tbody>
                                                 </table>
+                                                <div class="row">
+                                                    <div class="d-flex justify-content-end">
+                                                        <dir-pagination-controls
+                                                            class="dir-pagination-controls"></dir-pagination-controls>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -898,28 +842,90 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr dir-paginate="report in reportTrues | itemsPerPage: 1"
-                                                            ng-if="report.podcast">
-                                                            <!-- Các thông tin của bản báo cáo với podcast -->
-                                                            <td>{{ report.reportId }}</td>
-                                                            <td>{{ report.podcast.podcastName }}</td>
-                                                            <td>{{ report.reportDate }}</td>
-                                                            <td>{{ report.description }}</td>
-                                                            <td>
-                                                                <div class="btn-group">
-                                                                    <button data-bs-toggle="modal"
-                                                                        data-bs-target="#myModal1{{$index}}">Detail</button>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <div class="row">
-                                                            <div class="d-flex justify-content-end">
-                                                                <dir-pagination-controls
-                                                                    class="dir-pagination-controls"></dir-pagination-controls>
+                                                        <tr
+                                                        dir-paginate="report in reportTrues | itemsPerPage: 5 | filter: { status: true, podcast: { podcastId: '!null' } }">
+                                                        <!-- Các thông tin của bản báo cáo với podcast -->
+                                                        <td>{{ report.reportId }}</td>
+                                                        <td>{{ report.podcast.podcastName }}</td>
+                                                        <td>{{ report.reportDate }}</td>
+                                                        <td>{{ report.description }}</td>
+                                                        <td>
+                                                            <div class="btn-group">
+                                                                <button data-bs-toggle="modal"
+                                                                    data-bs-target="#reportPodcasted{{report.reportId}}">Detail</button>
                                                             </div>
-                                                        </div>
+                                                        </td>
+                                                        <div ng-repeat="report in reportTrues" class="modal"
+                                                            id="reportPodcasted{{report.reportId}}">
+                                                            <div
+                                                                class="modal-dialog modal-dialog-centered modal-lg">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h4 class="modal-title">Report detail</h4>
+                                                                        <button type="button" class="btn-close"
+                                                                            data-bs-dismiss="modal"></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="row">
+                                                                            <div class="col-sm-6">
+                                                                                <div class="mb-3 mt-3">
+                                                                                    <label class="form-label">Image Podcast</label>
+                                                                                    <div class="card" style="height: 250px;">
+                                                                                        <img class="card-img-top"
+                                                                                            ng-src="{{ report.podcast.image.url }}"
+                                                                                            style="height: 250px;min-width: 300px;min-height: 250px;"
+                                                                                            alt="Card image">
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="mb-3 mt-3">
+                                                                                    <label class="form-label">Name Podcast:</label>
+                                                                                    <input class="form-control"
+                                                                                        ng-model="report.podcast.podcastName" readonly>
+                                                                                </div>
+                                                                                <div class="mb-3 mt-3">
+                                                                                    <label class="form-label">Email Podcast:</label>
+                                                                                    <input class="form-control"
+                                                                                        ng-model="report.podcast.account.email"
+                                                                                        readonly>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-sm-6">
+                                                                                <div class="mb-3 mt-3">
+                                                                                    <label class="form-label">Full Name User
+                                                                                        Report:</label>
+                                                                                    <input class="form-control"
+                                                                                        ng-model="report.usertype.account.username"
+                                                                                        readonly>
+                                                                                </div>
+                                                                                <div class="mb-3 mt-3">
+                                                                                    <label class="form-label">Email User Report:</label>
+                                                                                    <input class="form-control"
+                                                                                        ng-model="report.usertype.account.email"
+                                                                                        readonly>
+                                                                                </div>
+                                                                                <div class="mb-3 mt-3">
+                                                                                    <label for="comment">Report content:</label>
+                                                                                    <textarea class="form-control" rows="5" id="comment"
+                                                                                        name="text" ng-model="report.description"
+                                                                                        readonly></textarea>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button class="btn btn-success"
+                                                                                data-bs-dismiss="modal">Cancel</button>
+                                                                            <button ng-click="unbanPodcast(report.podcast.podcastId)"
+                                                                                class="btn btn-danger" data-bs-dismiss="modal">UnBan</button>
+                                                                        </div>
+                                                        </tr>
                                                     </tbody>
                                                 </table>
+                                                <div class="row">
+                                                    <div class="d-flex justify-content-end">
+                                                        <dir-pagination-controls
+                                                            class="dir-pagination-controls"></dir-pagination-controls>
+                                                    </div>
+                                                </div>
                                             </div>
 
                                         </div>
@@ -940,8 +946,8 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr dir-paginate="report in reportTrues | itemsPerPage: 1"
-                                                            ng-if="report.recording">
+                                                        <tr
+                                                            dir-paginate="report in reportTrues | itemsPerPage: 5 | filter: { status: true, recording: { recordingId: '!null' } }">
                                                             <!-- Các thông tin của bản báo cáo với recording -->
                                                             <td>{{ report.reportId }}</td>
                                                             <td>{{ report.recording.recordingName }}</td>
@@ -950,244 +956,75 @@
                                                             <td>
                                                                 <div class="btn-group">
                                                                     <button data-bs-toggle="modal"
-                                                                        data-bs-target="#myModal1{{$index}}">Detail</button>
+                                                                        data-bs-target="#reportRecordinged{{report.reportId}}">Detail</button>
                                                                 </div>
                                                             </td>
-                                                        </tr>
-                                                        <div class="row">
-                                                            <div class="d-flex justify-content-end">
-                                                                <dir-pagination-controls
-                                                                    class="dir-pagination-controls"></dir-pagination-controls>
-                                                            </div>
-                                                        </div>
+                                                            <div ng-repeat="report in reportTrues" class="modal"
+                                                                id="reportRecordinged{{report.reportId}}">
+                                                                <div
+                                                                    class="modal-dialog modal-dialog-centered modal-lg">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h4 class="modal-title">Report detail</h4>
+                                                                            <button type="button" class="btn-close"
+                                                                                data-bs-dismiss="modal"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="row">
+
+                                                                                <div class="col-sm-12">
+                                                                                    <div class="mb-3 mt-3">
+                                                                                        <label class="form-label">Full Name User
+                                                                                            Report:</label>
+                                                                                        <input class="form-control"
+                                                                                            ng-model="report.usertype.account.username"
+                                                                                            readonly>
+                                                                                    </div>
+                                                                                    <div class="mb-3 mt-3">
+                                                                                        <label class="form-label">Email User Report:</label>
+                                                                                        <input class="form-control"
+                                                                                            ng-model="report.usertype.account.email"
+                                                                                            readonly>
+                                                                                    </div>
+                                                                                    <div class="mb-3 mt-3">
+                                                                                        <label class="form-label">Email Recording:</label>
+                                                                                        <input class="form-control"
+                                                                                            ng-model="report.recording.emailCreate"
+                                                                                            readonly>
+                                                                                    </div>
+                                                                                    <div class="mb-3 mt-3">
+                                                                                        <label class="form-label">Name Recording:</label>
+                                                                                        <input class="form-control"
+                                                                                            ng-model="report.recording.recordingName"
+                                                                                            readonly>
+                                                                                    </div>
+                                                                                    <div class="mb-3 mt-3">
+                                                                                        <label for="comment">Report content:</label>
+                                                                                        <textarea class="form-control" rows="5" id="comment"
+                                                                                            name="text" ng-model="report.description"
+                                                                                            readonly></textarea>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button class="btn btn-success"
+                                                                                    data-bs-dismiss="modal">Cancel</button>
+                                                                                <button ng-click="unbanRecording(report.recording.recordingId)"
+                                                                                    class="btn btn-danger" data-bs-dismiss="modal">UnBan</button>
+                                                                            </div>
+                                                        </tr>                                
                                                     </tbody>
                                                 </table>
+                                                <div class="row">
+                                                    <div class="d-flex justify-content-end">
+                                                        <dir-pagination-controls
+                                                            class="dir-pagination-controls"></dir-pagination-controls>
+                                                    </div>
+                                                </div>
                                             </div>
 
 
 
-                                        </div>
-                                    </div>
-
-
-
-                                    <div ng-repeat="report in reportTrues" class="modal" id="myModal1{{$index}}">
-                                        <div class="modal-dialog modal-dialog-centered modal-lg">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h4 class="modal-title">Report detail</h4>
-                                                    <button type="button" class="btn-close"
-                                                        data-bs-dismiss="modal"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div ng-if="report.artist">
-                                                        <div class="row">
-                                                            <div class="col-sm-6">
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Avartar Artist :</label>
-                                                                    <div class="card" style="height: 250px;">
-                                                                        <img class="card-img-top"
-                                                                            ng-src="{{ report.artist.imagesProfile.url }}"
-                                                                            style="height: 250px;min-width: 300px;min-height: 250px;"
-                                                                            alt="Card image">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Full Name Artist:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.artist.fullName" readonly>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Email Artist:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.artist.account.email" readonly>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-6">
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Full Name User
-                                                                        Report:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.usertype.account.username"
-                                                                        readonly>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Email User Report:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.usertype.account.email"
-                                                                        readonly>
-                                                                </div>
-
-                                                                <div class="mb-3 mt-3">
-                                                                    <label for="comment">Report content:</label>
-                                                                    <textarea class="form-control" rows="5" id="comment"
-                                                                        name="text" ng-model="report.description"
-                                                                        readonly></textarea>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div ng-if="report.episode">
-                                                        <div class="row">
-                                                            <div class="col-sm-6">
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Image Episodes</label>
-                                                                    <div class="card" style="height: 250px;">
-                                                                        <img class="card-img-top"
-                                                                            ng-src="{{ report.episode.image.url }}"
-                                                                            style="height: 250px;min-width: 300px;min-height: 250px;"
-                                                                            alt="Card image">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Name Episodes:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.episode.episodeTitle" readonly>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Email Episodes:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.episode.podcast.account.email"
-                                                                        readonly>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-6">
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Full Name User
-                                                                        Report:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.usertype.account.username"
-                                                                        readonly>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Email User Report:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.usertype.account.email"
-                                                                        readonly>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label for="comment">Report content:</label>
-                                                                    <textarea class="form-control" rows="5" id="comment"
-                                                                        name="text" ng-model="report.description"
-                                                                        readonly></textarea>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div ng-if="report.podcast">
-                                                        <div class="row">
-                                                            <div class="col-sm-6">
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Image Podcast</label>
-                                                                    <div class="card" style="height: 250px;">
-                                                                        <img class="card-img-top"
-                                                                            ng-src="{{ report.podcast.image.url }}"
-                                                                            style="height: 250px;min-width: 300px;min-height: 250px;"
-                                                                            alt="Card image">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Name Podcast:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.podcast.podcastName" readonly>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Email Podcast:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.podcast.account.email"
-                                                                        readonly>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-6">
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Full Name User
-                                                                        Report:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.usertype.account.username"
-                                                                        readonly>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Email User Report:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.usertype.account.email"
-                                                                        readonly>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label for="comment">Report content:</label>
-                                                                    <textarea class="form-control" rows="5" id="comment"
-                                                                        name="text" ng-model="report.description"
-                                                                        readonly></textarea>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div ng-if="report.recording">
-                                                        <div class="row">
-
-                                                            <div class="col-sm-12">
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Full Name User
-                                                                        Report:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.usertype.account.username"
-                                                                        readonly>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Email User Report:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.usertype.account.email"
-                                                                        readonly>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Email Recording:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.recording.emailCreate"
-                                                                        readonly>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label class="form-label">Name Recording:</label>
-                                                                    <input class="form-control"
-                                                                        ng-model="report.recording.recordingName"
-                                                                        readonly>
-                                                                </div>
-                                                                <div class="mb-3 mt-3">
-                                                                    <label for="comment">Report content:</label>
-                                                                    <textarea class="form-control" rows="5" id="comment"
-                                                                        name="text" ng-model="report.description"
-                                                                        readonly></textarea>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                                <div class="modal-footer" ng-if="report.artist">
-                                                    <button class="btn btn-success"
-                                                        data-bs-dismiss="modal">Cancel</button>
-                                                    <button ng-click="unbanArtist(report.reportId)"
-                                                        class="btn btn-danger" data-bs-dismiss="modal">UnBan</button>
-                                                </div>
-                                                <div class="modal-footer" ng-if="report.episode">
-                                                    <button class="btn btn-success"
-                                                        data-bs-dismiss="modal">Cancel</button>
-                                                    <button ng-click="unbanEpisodes(report.episode.episodeId)"
-                                                        class="btn btn-danger" data-bs-dismiss="modal">UnBan</button>
-                                                </div>
-                                                <div class="modal-footer" ng-if="report.podcast">
-                                                    <button class="btn btn-success"
-                                                        data-bs-dismiss="modal">Cancel</button>
-                                                    <button ng-click="unbanPodcast(report.podcast.podcastId)"
-                                                        class="btn btn-danger" data-bs-dismiss="modal">UnBan</button>
-                                                </div>
-                                                <div class="modal-footer" ng-if="report.recording">
-                                                    <button class="btn btn-success"
-                                                        data-bs-dismiss="modal">Cancel</button>
-                                                    <button ng-click="unbanRecording(report.recording.recordingId)"
-                                                        class="btn btn-danger" data-bs-dismiss="modal">UnBan</button>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
 

@@ -42,6 +42,8 @@ public class NewServiceImp implements NewService, CRUD<News, Integer>{
 	private final INotification<NewDTO> notification;
 	
 	private String FOLDER_CONTAINING_IMAGE_NEWS  = "ImageManager";
+
+	private String toURL  = "http://localhost:8080/new/home/";
 	
 	@Transactional
 	@Override
@@ -126,8 +128,10 @@ public class NewServiceImp implements NewService, CRUD<News, Integer>{
 			news.setModifiDate(getTimeNow());
 			news.setModifiedBy(email);
 			create(news);
-			
-			notification.sendNotification(newDTO,urlImage);
+			News newUpdateUrl =	findOne(news.getNewsId());
+			news.setToUrl(toURL+newUpdateUrl.getNewsId());
+			update(newUpdateUrl);
+//			notification.sendNotification(newDTO,urlImage);
 			
 			return news;
 		} catch (Exception e) {

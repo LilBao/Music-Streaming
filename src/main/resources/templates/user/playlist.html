@@ -1,9 +1,9 @@
 <body ng-controller="playlistCtrl">
     <section class="w-100 h-100">
-        <div class="row pt-5 background-playlist" data-bs-toggle="modal" data-bs-target="#infor-playlist">
+        <div id="cotainer-playlist-infor" class="row pt-5 background-playlist">
             <div class="col-2 ms-3 mb-3">
                 <img class="w-100 rounded-2 img-playlist" style="height: 200px; object-fit: cover;"
-                    ng-src="{{playlist.image !== null ? playlist.image.url : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}"
+                    ng-src="{{playlist.image?playlist.image.url:'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}"
                     alt="">
             </div>
             <div class="col-9 d-flex flex-column justify-content-center">
@@ -19,7 +19,7 @@
                 </div>
             </div>
         </div>
-        <div ng-show="listAudioPlaylist.length > 0" class="d-flex justify-content-between align-items-center">
+        <div ng-show="playlistRE.length > 0" class="d-flex justify-content-between align-items-center">
             <div>
                 <button id="btn-playlist-play" class="btn border-0">
                     <i class="display-3 bi bi-play-circle" style="color: green;"></i>
@@ -153,9 +153,14 @@
                                     <button class="btn border-0 text-white" data-bs-toggle="dropdown"
                                         aria-expanded="false"><i class="bi bi-three-dots"></i></button>
                                     <ul class="dropdown-menu p-0 bg-dark ul-dropdown-start-end">
-                                        <li class="li-dropdown-start-end">
-                                            <a ng-click="test(playlistRE[$index].playlistRecordingId)"
+                                        <li ng-show="!account.email" class="li-dropdown-start-end">
+                                            <a href="./signin"
                                                 class="btn text-white dropdown-item py-2"><i class="bi bi-plus-lg"></i>
+                                                Add to playlist
+                                            </a>
+                                        </li>
+                                        <li ng-show="account.email" class="li-dropdown-start-end">
+                                            <a class="btn text-white dropdown-item py-2"><i class="bi bi-plus-lg"></i>
                                                 Add to playlist
                                             </a>
                                             <ul class="nav bg-dark w-100">
@@ -178,17 +183,23 @@
                                                     </a>
                                                 </li>
                                                 <hr class="dropdown-divider">
-                                                <li ng-repeat="item in listPlaylist" class="nav-item">
-                                                    <a class="nav-link text-white">{{item.playlistName}}</a>
+                                                <li ng-repeat="pl in listPlaylist" class="nav-item">
+                                                    <a ng-click="addAnotherPlaylist(item,pl)" class="nav-link text-white">{{pl.playlistName}}</a>
                                                 </li>
                                             </ul>
                                         </li>
-                                        <li class="li-dropdown-start-end">
+                                        <li ng-show="checkOwnPl === true" class="li-dropdown-start-end">
                                             <a class="btn text-white dropdown-item py-2"
                                                 ng-click="item.recording ? removeRecordFromPlaylist(item.playlistRecordingId) : removeEpisodeFromPlaylist(item.playlistPodcastId)"><i
                                                     class="bi bi-trash3"></i> Remove from this playlist</a>
                                         </li>
-                                        <li class="li-dropdown-start-end">
+                                        <li ng-show="!account.email" class="li-dropdown-start-end">
+                                            <a href="./signin"
+                                                class="btn text-white dropdown-item py-2"><i class="bi bi-plus-lg"></i>
+                                                Add to Wishlist
+                                            </a>
+                                        </li>
+                                        <li ng-show="account.email" class="li-dropdown-start-end">
                                             <a class="btn text-white dropdown-item py-2"
                                                 ng-click="checkExisted(item.recording ? item.recording : item.episode,$event)"><i
                                                     class="bi bi-hearts"></i>{{isLiked(item.recording ? item.recording : item.episode) ? 'Remove from liked songs':'Save to your liked songs'}} </a>
@@ -226,6 +237,16 @@
                                         </li>
                                         <li>
                                             <hr class="dropdown-divider">
+                                        </li>
+                                        <li class="li-dropdown-start-end">
+                                            <a ng-show="item.episode" href="#!report/episode/{{item.episode.episodeId}}" class="btn text-white dropdown-item py-2">
+                                                <i class="bi bi-flag-fill"></i></i>
+                                                Report
+                                            </a>
+                                            <a ng-show="item.recording" href="#!report/recording/{{item.recording.recordingId}}" class="btn text-white dropdown-item py-2">
+                                                <i class="bi bi-flag-fill"></i></i>
+                                                Report
+                                            </a>
                                         </li>
                                         <li class="li-dropdown-start-end">
                                             <a ng-click="item.recording ? typeShare('#!/song/'+item.recording.recordingId) : typeShare('#!/episode/'+item.episode.episodeId)" data-bs-toggle="modal" data-bs-target="#sharing" class="btn text-white dropdown-item py-2"><i class="bi bi-share"></i>
@@ -286,7 +307,7 @@
             </div>
         </div>
         </div>
-        <section class="mt-3">
+        <section ng-show="checkOwnPl === true" class="mt-3">
             <div class="d-flex justify-content-end" style="margin-right: 30px;">
                 <h6 id="toggle">Find more</h6>
             </div>

@@ -5,6 +5,7 @@ app.controller("SubscriptionStatisticsController",function($scope,graphqlService
     $scope.statistics = {};
     $scope.statisticsYear = {};
     $scope.rate = [];
+    $scope.statisticsSubDetail = []
     // START
     $scope.getTotalSumPriceSubscription = async function() {
  
@@ -77,7 +78,6 @@ app.controller("SubscriptionStatisticsController",function($scope,graphqlService
 		try {
 			const resp = await $http.get(api+"/sumprice-year-subscription");
 			$scope.statisticsYear = resp.data.data;
-            console.log($scope.statisticsYear)
 		   $scope.chartBarSumPriceSubscriptionByYear();
 		} catch(error){
 			console.log(error);
@@ -163,8 +163,41 @@ app.controller("SubscriptionStatisticsController",function($scope,graphqlService
             },
         });
      }
+
+     $scope.totalSubscriptionsUsing = function () {
+        const query = `{
+            totalSubscriptionsUsing {
+              subscriptionId
+              subscriptionType
+              subscriptionCategory
+              price
+              description
+              playlistAllow
+              nip
+              duration
+              userTypes {
+                userTypeId
+              }
+              advertisement {
+                adId
+              }
+            }
+          }`;
+        graphqlService.executeQuery(query)
+            .then(data => {
+
+                $scope.statisticsSubDetail = data.totalSubscriptionsUsing;
+                console.log( $scope.statisticsSubDetail)
+            })
+            .catch(error => {
+                console.log(error);
+
+            });
+    }
+
      $scope.chartPieSumPriceSubscription2()
      $scope.getTotalSumPriceSubscriptionByYear();
      $scope.getTotalSumPriceSubscription();
      $scope.getRateSubscription();
+     $scope.totalSubscriptionsUsing();
 });

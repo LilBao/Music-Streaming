@@ -34,7 +34,7 @@
                         <div>
                             <div class="input-group me-3">
                                 <span class="input-group-text"><i class="bi bi-search-heart"></i></span>
-                                <input type="text" class="form-control" placeholder="Search in playlist">
+                                <input type="text" class="form-control" placeholder="Search" ng-model="searchRecord">
                             </div>
                         </div>
                         <div class="product_sorting_container product_sorting_container_top">
@@ -93,7 +93,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="item in pagination.items(listRecord)" class="align-items-start">
+                            <tr ng-repeat="item in pagination.items(listRecord) | filter: searchRecord" class="align-items-start">
                                 <td>{{$index+1}}
                                     <i ng-if="item.song ==null" class="ms-1 bi bi-filetype-raw"></i>
                                     <i ng-if="item.song !=null" class="ms-1 bi bi-file-music"></i>
@@ -150,8 +150,8 @@
                         </div>
                     </div>
                 </div>
-                <div ng-include="'Recording.html'"></div>
-                <div ng-include="'RecordDetail.html'"></div>
+                <div ng-include="'Artist/Recording.html'"></div>
+                <div ng-include="'Artist/RecordDetail.html'"></div>
             </div>
             <div class="tab-p tab-pane" id="tab2-p">
                 <div class="row">
@@ -175,7 +175,7 @@
                                 <div>
                                     <div class="input-group me-3">
                                         <span class="input-group-text"><i class="bi bi-search-heart"></i></span>
-                                        <input type="text" class="form-control" placeholder="Search">
+                                        <input type="text" class="form-control" placeholder="Search" ng-model="searchSongRelease">
                                     </div>
                                 </div>
                                 <div class="product_sorting_container product_sorting_container_top">
@@ -206,7 +206,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-3" id="song-release" ng-repeat="item in pagination.items(listSongReleased)">
+                                <div class="col-3" id="song-release" ng-repeat="item in pagination.items(listSongReleased) | filter: searchSongRelease">
                                     <a type="button" ng-click="detail(item.songId,'song')" data-bs-toggle="modal"
                                         data-bs-target="#detail">
                                         <div class="card mx-4 my-2" style="width:250px">
@@ -258,7 +258,7 @@
                                 <div>
                                     <div class="input-group me-3">
                                         <span class="input-group-text"><i class="bi bi-search-heart"></i></span>
-                                        <input type="text" class="form-control" placeholder="Search in playlist">
+                                        <input type="text" class="form-control" placeholder="Search" ng-model="searchAlbumRelease">
                                     </div>
                                 </div>
                                 <div class="product_sorting_container product_sorting_container_top">
@@ -289,7 +289,7 @@
                                 </div>
                             </div>
                             <div ng-show="listAlbumReleased.length > 0" class="row" id="album-release">
-                                <div class="col-3" ng-repeat="item in pagination.items(listAlbumReleased)">
+                                <div class="col-3" ng-repeat="item in pagination.items(listAlbumReleased) | filter:searchAlbumRelease">
                                     <a type="button" ng-click="detail(item.albumId,'album')" data-bs-toggle="modal"
                                         data-bs-target="#detail">
                                         <div class="card mx-4 my-2" style="width:250px">
@@ -518,7 +518,7 @@
                         <div>
                             <div class="input-group me-3">
                                 <span class="input-group-text"><i class="bi bi-search-heart"></i></span>
-                                <input type="text" class="form-control" placeholder="Search">
+                                <input type="text" class="form-control" placeholder="Search" ng-model="searchProject">
                             </div>
                         </div>
                         <div class="product_sorting_container product_sorting_container_top">
@@ -549,7 +549,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-3" ng-repeat="item in pagination.items(listRecordProject)">
+                    <div class="col-3" ng-repeat="item in pagination.items(listRecordProject) | filter: searchProject">
                         <div class="card w-100" style="border: 1px !important">
                             <div data-bs-toggle="collapse" data-bs-target="#project-{{item.recordingId}}">
                                 <img class="card-img-top rounded-4" src="{{item.song.image.url}}" alt="Card image">
@@ -672,7 +672,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <div ng-include="'Upcoming.html'"></div>
+                <div ng-include="'Artist/Upcoming.html'"></div>
             </div>
             <div class="tab-p tab-pane" id="tab5-p">
                 <div class="d-flex justify-content-between">
@@ -680,7 +680,7 @@
                         <div>
                             <div class="input-group me-3">
                                 <span class="input-group-text"><i class="bi bi-search-heart"></i></span>
-                                <input type="text" class="form-control" placeholder="Search">
+                                <input type="text" class="form-control" placeholder="Search" ng-model="searchGarbage">
                             </div>
                         </div>
                         <div class="product_sorting_container product_sorting_container_top">
@@ -739,7 +739,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="item in pagination.items(garbageRecord)" class="align-items-start">
+                            <tr ng-repeat="item in pagination.items(garbageRecord) | filter: searchGarbage" class="align-items-start">
                                 <td>{{$index+1}}
                                     <i class="ms-1 bi bi-filetype-raw"></i>
                                 </td>

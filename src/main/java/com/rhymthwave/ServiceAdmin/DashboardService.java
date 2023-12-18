@@ -1,6 +1,7 @@
 package com.rhymthwave.ServiceAdmin;
 
 import com.rhymthwave.DAO.*;
+import com.rhymthwave.DTO.NumberCreateRecordAndEpisodeByDate;
 import com.rhymthwave.Request.DTO.Top10ArtistDTO;
 import com.rhymthwave.Request.DTO.Top10PodcastDTO;
 import com.rhymthwave.entity.*;
@@ -25,6 +26,10 @@ public class DashboardService {
     private  final AdvertismentDAO advertismentDAO;
 
     private  final  AccountDAO accountDAO;
+
+    private final RecordDAO recordDAO;
+
+    private final EpisodeDAO episodeDAO;
 
     private Set<String> uniqueVisitors = new HashSet<>();
 
@@ -86,10 +91,22 @@ public class DashboardService {
         return accountDAO.countAll();
     }
 
+    public int countAccountCreatedCurren(){ return  accountDAO.countAccountCreatedToday();}
+
     public int incrementCounts(HttpSession session) {
         String sessionId = session.getId();
         uniqueVisitors.add(sessionId);
         return uniqueVisitors.size();
     }
+
+    public Map<String,List<NumberCreateRecordAndEpisodeByDate>> numberCreateRecordsAndEpisodesByDay(String date){
+        Map<String,List<NumberCreateRecordAndEpisodeByDate>> map = new HashMap<>();
+        List<NumberCreateRecordAndEpisodeByDate> recordByDates = recordDAO.countCreateRecordsByDay(date);
+        List<NumberCreateRecordAndEpisodeByDate> episodeByDatesByDates = episodeDAO.countCreateEpisodeByDay(date);
+        map.put("record",recordByDates);
+        map.put("episode",episodeByDatesByDates);
+        return map;
+    }
+
 
 }

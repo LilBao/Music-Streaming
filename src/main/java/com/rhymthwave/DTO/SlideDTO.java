@@ -9,5 +9,6 @@ public interface SlideDTO {
 	String getCreateBy();
 	Date getCreateDate();
 	Date getModifiDate();
+	String getUrlImage();
 	String getUrl();
 }

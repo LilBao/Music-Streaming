@@ -33,6 +33,6 @@ public interface SlideDAO extends JpaRepository<Slide, Integer> {
     @Query(value = "select * from slide where listimage = ?1", nativeQuery = true)
 	Slide findIDSlideByAccessIDToUpdate(String idAccess);
     
-    @Query(value = "select s.slideid, s.createby, s.createdate, s.modifidate, s.modifiedby, s.position, s.listimage, img.url from slide s inner join images img on s.listimage = img.accessid where s.position = :position", nativeQuery = true)
+    @Query(value = "select s.slideid, s.createby, s.createdate, s.modifidate, s.modifiedby, s.position, s.listimage, s.url, img.url as 'urlImage' from slide s inner join images img on s.listimage = img.accessid where s.position = :position", nativeQuery = true)
 	List<SlideDTO> getByPosition(@Param("position") String position);
 }
