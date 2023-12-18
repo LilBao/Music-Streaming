@@ -1,4 +1,9 @@
 <body ng-controller="dashboardCtrl">
+    <!-- search -->
+    <div class="bl-search">
+        <div class="bl-search-box"></div>
+    </div>
+    <!-- end search -->
     <!-- part slider -->
     <div class="container mt-5">
         <div id="carouselExampleControls1" class="carousel slide" data-bs-ride="carousel1">
@@ -191,7 +196,7 @@
                                                 </ul>
                                             </li>
                                             <li class="li-dropdown-start-end">
-                                                <a href="{{item.tracks.length>0 ? '#!album/'+item.tracks[0].album.albumId : '#!song/'+item.recordingId}}"
+                                                <a href="{{item.tracks.length>0 ? '#!album/album/'+item.tracks[0].album.albumId : '#!song/'+item.recordingId}}"
                                                     class="btn text-white dropdown-item py-2">
                                                     <i class="bi bi-journal-album"></i> Go to album
                                                 </a>
@@ -323,7 +328,7 @@
                                                 </ul>
                                             </li>
                                             <li class="li-dropdown-start-end">
-                                                <a href="{{item.tracks.length>0 ? '#!album/'+item.tracks[0].album.albumId : '#!song/'+item.recordingId}}"
+                                                <a href="{{item.tracks.length>0 ? '#!album/album/'+item.tracks[0].album.albumId : '#!song/'+item.recordingId}}"
                                                     class="btn text-white dropdown-item py-2">
                                                     <i class="bi bi-journal-album"></i> Go to album
                                                 </a>
@@ -452,7 +457,7 @@
                                                 </ul>
                                             </li>
                                             <li class="li-dropdown-start-end">
-                                                <a href="{{item.tracks.length>0 ? '#!album/'+item.tracks[0].album.albumId : '#!song/'+item.recordingId}}"
+                                                <a href="{{item.tracks.length>0 ? '#!album/album/'+item.tracks[0].album.albumId : '#!song/'+item.recordingId}}"
                                                     class="btn text-white dropdown-item py-2">
                                                     <i class="bi bi-journal-album"></i> Go to album
                                                 </a>
@@ -868,7 +873,7 @@
         </div>
         <div class="row mb-3">
             <div class="col-2" ng-repeat="item in topAlbumPopular | limitTo: 5">
-                <a href="#!album/{{item.albumId}}">
+                <a href="#!album/album/{{item.albumId}}">
                     <div class="card card-play-list-profile">
                         <div class="img-car-profile">
                             <img src="{{item.image.url}}" class="card-img-top w-100"
@@ -1097,7 +1102,7 @@
         </div>
         <div class="row mb-3">
             <div class="col-2" ng-repeat="item in topNewAlbum | limitTo: 6">
-                <a href="#!album/{{item.albumId}}">
+                <a href="#!album/album/{{item.albumId}}">
                     <div class="card card-play-list-profile">
                         <div class="img-car-profile">
                             <img src="{{item.image.url}}" class="card-img-top w-100"
@@ -1215,7 +1220,7 @@
 
                     <div ng-show="show == 4" class="row">
                         <h3 class="text-white text-center">Top song trending</h3>
-                        <div class="col-sm-2 mb-3" ng-repeat="item in top50SongListen">
+                        <div class="col-sm-2 mb-3 trending-a" ng-repeat="item in top50SongListen">
                             <a href="#!song/{{item.recordingId}}">
                                 <div class="card card-play-list-profile">
                                     <div class="img-car-profile">
@@ -1260,7 +1265,7 @@
                     <div ng-show="show == 7" class="row mb-3">
                         <h3 class="text-white text-center">Album popular</h3>
                         <div class="col-2" ng-repeat="item in topAlbumPopular">
-                            <a href="#!album/{{item.albumId}}">
+                            <a href="#!album/album/{{item.albumId}}">
                                 <div class="card card-play-list-profile">
                                     <div class="img-car-profile">
                                         <img src="{{item.image.url}}" class="card-img-top w-100"
@@ -1377,7 +1382,7 @@
                     <div ng-show="show == 12" class="row mb-3">
                         <h3 class="text-white text-center">New Album</h3>
                         <div class="col-2" ng-repeat="item in topNewAlbum">
-                            <a href="#!album/{{item.albumId}}">
+                            <a href="#!album/album/{{item.albumId}}">
                                 <div class="card card-play-list-profile">
                                     <div class="img-car-profile">
                                         <img src="{{item.image.url}}" class="card-img-top w-100"

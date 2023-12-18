@@ -25,7 +25,7 @@ app.config(function ($routeProvider,$httpProvider) {
             templateUrl: "User/search-playlist-art.html",
             controller: "playlistCtrl"
         })
-        .when("/album/:id", {
+        .when("/album/:option/:id", {
             templateUrl: "User/search-album.html",
             controller: "album"
         })

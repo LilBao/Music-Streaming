@@ -163,4 +163,9 @@ public class RecordREST {
 	public ResponseEntity<MessageResponse> findTopNewRecord(@RequestParam("country") String country){
 		return ResponseEntity.ok(new MessageResponse(true,"success",recordSer.top50SongByDate(country, false)));
 	}
+	
+	@GetMapping("/api/v1/record-byart/{email}")
+	public ResponseEntity<MessageResponse> findListRecordByEmailArtist(@PathVariable("email") String email) {
+		return ResponseEntity.ok(new MessageResponse(true, "success", recordSer.findRecordByCreater(email)));
+	}
 }

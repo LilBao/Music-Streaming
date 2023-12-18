@@ -31,13 +31,4 @@ app.controller('ShowPodcast', function ($scope, $http, $routeParams) {
             });
     };
     $scope.getAllEpisode();
-
-    // btn back and forward
-  $("#back").on("click", function() {
-    history.back();
-  });
-  
-  $("#forward").on("click", function() {
-    history.forward();
-  });
 });

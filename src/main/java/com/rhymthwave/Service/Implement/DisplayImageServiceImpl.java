@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rhymthwave.DAO.SlideDAO;
+import com.rhymthwave.DTO.SlideDTO;
 import com.rhymthwave.Service.DisplayImageService;
-import com.rhymthwave.entity.Slide;
 
 @Service
 public class DisplayImageServiceImpl implements DisplayImageService{
@@ -16,8 +16,8 @@ public class DisplayImageServiceImpl implements DisplayImageService{
 	SlideDAO dao;
 	
 	@Override
-	public List<Slide> displayImageByPosition(String position) {
-		return dao.getImageByPosition(position);
+	public List<SlideDTO> displayImageByPosition(String position) {
+		return dao.getByPosition(position);
 	}
 
 }

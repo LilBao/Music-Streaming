@@ -122,7 +122,14 @@ footer {
     width: 100%;
     z-index: 100;
 }
-
+.bl-search-box-ss {
+    position: absolute;
+    padding: 1rem;
+    top: 0;
+    left: 20%;
+    right: 0;
+    
+}
 .bl-back-next .bl-back-next-btn {
     -webkit-box-pack: center;
     -ms-flex-pack: center;
@@ -680,7 +687,7 @@ input[type="range"]:hover {
 
 @media (min-width: 1248px) {
     .tt-pct h1{
-        font-size: 110px;
+        font-size: 70px;
     }
 }
 
@@ -984,3 +991,6 @@ input[type="range"]:hover {
 	margin-right: 34px;
 }
 
+.carousel-inner a{
+    color: white !important;
+}

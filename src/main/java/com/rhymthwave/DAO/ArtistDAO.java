@@ -66,4 +66,14 @@ public interface ArtistDAO extends JpaRepository<Artist, Long>{
 			"       GROUP BY a.artistid, a.artistname,a.profileimage, a.email" +
 			"       ORDER BY totalListened DESC",nativeQuery = true)
 	List<Top10ArtistDTO> top10ArtistByListened();
+	
+	@Query(value = "SELECT top 3  a.artistid, a.artistname,a.profileimage, a.email, SUM(r.listened) AS totalListened \n" +
+			"       FROM Recording r \n" +
+			"       JOIN songs s on s.songsid = r.songsid\n" +
+			"       JOIN writter w on w.songsid = s.songsid\n" +
+			"\t     JOIN artist a on a.artistid = w.artistid\n" +
+			"       WHERE r.isDeleted = 0\n" +
+			"       GROUP BY a.artistid, a.artistname,a.profileimage, a.email" +
+			"       ORDER BY totalListened DESC",nativeQuery = true)
+	List<Top10ArtistDTO> top3ArtistByListened();
 }
