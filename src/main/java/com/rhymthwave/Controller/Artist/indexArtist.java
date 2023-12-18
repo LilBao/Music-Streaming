@@ -20,4 +20,5 @@ public class indexArtist {
 	public String layoutArtistHome() {
 		return "Artist/Artist";
 	}
+	
 }

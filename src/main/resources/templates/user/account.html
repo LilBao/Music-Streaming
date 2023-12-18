@@ -41,13 +41,10 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item me-2">
-                        <a class="nav-link me-2" href="#">Premium</a>
+                        <a class="nav-link me-2" href="/subscription">Premium</a>
                     </li>
                     <li class="nav-item me-2">
                         <a class="nav-link" href="#">Hỗ trợ </a>
-                    </li>
-                    <li class="nav-item me-2">
-                        <a class="nav-link" href="#">Tải xuống |</a>
                     </li>
                     <li class="nav-item dropdown ms-3">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
@@ -55,8 +52,7 @@
                             <i class="bi bi-person-circle"></i> Hồ sơ
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
-                            <li><a class="dropdown-item" href="#">Tài khoản</a></li>
+                            <li><a class="dropdown-item" ng-click="logout()">Đăng xuất</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -109,50 +105,7 @@
                         <div class="in"><i class="bi bi-chevron-right"></i></div>
                     </div>
                 </div>
-                <!-- <div class="list-chose" data-page="page-2">
-                <div class="chose">
-                    <div class="logo-conten ms-3 "><i class="bi bi-arrow-repeat"></i></div>
-                    <div class="conten-text ms-3 mt-3">
-                        <p>Recover playlists</p>
-                    </div>
-                    <div class="in"><i class="bi bi-chevron-right"></i></div>
-                </div>
-            </div> -->
             </div>
-
-            <!-- <div class="account mt-5">
-            <div class="title ms-3 mt-3">
-                <h4>Payment</h4>
-            </div>
-
-            <div class="list-chose" data-page="page-3">
-                <div class="chose">
-                    <div class="logo-conten ms-3 "><i class="bi bi-file-earmark-music"></i></div>
-                    <div class="conten-text ms-3 mt-3">
-                        <p>Order history</p>
-                    </div>
-                    <div class="in"><i class="bi bi-chevron-right"></i></div>
-                </div>
-            </div>
-            <div class="list-chose" data-page="page-4">
-                <div class="chose">
-                    <div class="logo-conten ms-3 "><i class="bi bi-credit-card-fill"></i></div>
-                    <div class="conten-text ms-3 mt-3">
-                        <p>Saved payment cards</p>
-                    </div>
-                    <div class="in"><i class="bi bi-chevron-right"></i></div>
-                </div>
-            </div>
-            <div class="list-chose" data-page="page-5">
-                <div class="chose">
-                    <div class="logo-conten ms-3 "><i class="bi bi-tag-fill"></i></div>
-                    <div class="conten-text ms-3 mt-3">
-                        <p>Redeem your code</p>
-                    </div>
-                    <div class="in"><i class="bi bi-chevron-right"></i></div>
-                </div>
-            </div>
-        </div> -->
 
             <div class="account mt-5">
                 <div class="title ms-3 mt-3">
@@ -168,22 +121,13 @@
                         <div class="in"><i class="bi bi-chevron-right"></i></div>
                     </div>
                 </div>
-                <!-- <div class="list-chose" data-page="page-7">
-                <div class="chose">
-                    <div class="logo-conten ms-3 "><i class="bi bi-app"></i></div>
-                    <div class="conten-text ms-3 mt-3">
-                        <p>Manage Apps</p>
-                    </div>
-                    <div class="in"><i class="bi bi-chevron-right"></i></div>
-                </div>
-            </div> -->
+
                 <div data-bs-toggle="modal" data-bs-target="#deleteModal">
                     <div class="chose">
                         <div class="logo-conten ms-3 "><i class="bi bi-box-arrow-right"></i></div>
                         <div class="conten-text ms-3 mt-3">
                             <p>Sign out everywhere</p>
                         </div>
-                        <!-- <div class="in"><i class="bi bi-chevron-right"></i></div> -->
                     </div>
                 </div>
             </div>
@@ -242,71 +186,43 @@
 
         <!-- Thêm nội dung và thành phần HTML khác cho trang Manage Plan tại đây -->
 
+        </div>
     </div>
 
     <div class="page" id="page-1">
         <div class="container edit-profile mt-5 mb-5">
             <button class="btn-back" onclick="goBack()"><i class="bi bi-chevron-left"></i></button>
             <h1 class="text-chose mt-5 mb-5">Edit profile</h1>
-            <div class="inforaccount">
-                <form ng-submit="updateProfile()">
-                    <div class="mb-3">
-                        <label class="form-label">Username</label>
-                        <input class="form-control" id="username" ng-model="newusername">
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" ng-model="email" ng-readonly="true">
-                    </div>
-                    <div class="mb-3">
-                        <label for="gender" class="form-label">Gender</label>
-                        <select id="gender" class="form-select" ng-model="newgender"
-                            ng-options="gender.id as gender.name for gender in genders"></select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="birthdate" class="form-label">Date of birth</label>
-                        <input class="form-control" id="birthday" ng-model="newbirthday"
-                            ng-pattern="/^\d{4}-\d{2}-\d{2}$/" required ng-model-options="{ allowInvalid: true }">
-                    </div>
-                    <div class="mb-3">
-                        <label for="country" class="form-label">Country or region</label>
-                        <input type="text" class="form-control" id="country" placeholder="Nhập quốc gia"
-                            ng-model="newcountry">
-                    </div>
-                    <div class="btnaccount mb-5">
-                        <button type="submit" class="btn btn-outline-dark ms-3 btnacc" style="color: white;">Save
-                            profile</button>
-                        <button class="btn btn-outline-dark btnacc" style="color: white;">Cancel</button>
-                    </div>
-                </form>
-            </div>
+            <form ng-submit="updateProfile()">
+                <div class="mb-3">
+                    <label class="form-label">Username</label>
+                    <input class="form-control" id="username" ng-model="newusername">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" ng-model="email" ng-readonly="true">
+                </div>
+                <div class="mb-3">
+                    <label for="gender" class="form-label">Gender</label>
+                    <select id="gender" class="form-select" ng-model="newgender"
+                        ng-options="gender.id as gender.name for gender in genders"></select>
+                </div>
+                <div class="mb-3">
+                    <label for="birthdate" class="form-label">Date of birth</label>
+                    <input class="form-control" id="birthday" ng-model="newbirthday" ng-pattern="/^\d{4}-\d{2}-\d{2}$/"
+                        required ng-model-options="{ allowInvalid: true }">
+                </div>
+                <div class="mb-3">
+                    <label for="country" class="form-label">Country or region</label>
+                    <input type="text" class="form-control" id="country" placeholder="Nhập quốc gia"
+                        ng-model="newcountry">
+                </div>
+
+                <button type="submit" class="btn btn-outline-dark ms-3" style="color: white;">Save profile</button>
+                <button class="btn btn-outline-dark" style="color: white;">Cancel</button>
+            </form>
         </div>
     </div>
-
-
-    <!-- <div class="page" id="page-2">
-    <h1>Trang quản lý gói dịch vụ</h1>
-    
-    <button onclick="goBack()"><i class="bi bi-chevron-left"></i></button>
-</div> -->
-
-    <!-- <div class="page" id="page-3">
-    <h1>Trang quản lý gói dịch vụ</h1>
-    
-    <button onclick="goBack()"><i class="bi bi-chevron-left"></i></button>
-</div>
-
-<div class="page" id="page-4">
-    <h1>Trang quản lý gói dịch vụ</h1>
-   
-    <button onclick="goBack()"><i class="bi bi-chevron-left"></i></button>
-</div>
-
-<div class="page" id="page-5">
-    <h1>Trang quản lý gói dịch vụ</h1>
-   
-    <button onclick="goBack()"><i class="bi bi-chevron-left"></i></button>
-</div> -->
 
     <div class="page" id="page-6">
         <div class="container change-pass mt-5 mb-5">
@@ -325,147 +241,122 @@
                     <label for="repeatPassword" class="form-label">Repeat New Password</label>
                     <input type="password" class="form-control" id="repeatPassword" ng-model="confirmpass">
                 </div>
-                <button type="submit" class="btn btn-outline-dark ms-3 btnacc" style="color: white;">Set new password</button>
-                <button class="btn btn-outline-dark btnacc" style="color: white;">Cancel</button>
+                <button type="submit" class="btn btn-outline-dark ms-3" style="color: white;">Set new password</button>
+                <button class="btn btn-outline-dark" style="color: white;">Cancel</button>
             </form>
 
         </div>
     </div>
 
-    <!-- <div class="page" id="page-7">
-    <h1>Trang quản lý gói dịch vụ</h1>
-    
-    <button onclick="goBack()"><i class="bi bi-chevron-left"></i></button>
-</div> -->
-    <!-- <div class="page" id="page-8">
-    <div class="container signout mt-5 mb-5">
-        <button class="btn-back" onclick="goBack()"><i class="bi bi-chevron-left"></i></button>
-        <h1 class="text-chose mt-5 mb-5">Sign out everywhere</h1>
-        <form ng-submit="logout()">
-           
-            <button type="submit" class="btn btn-outline-dark ms-3" style="color: white;">Logout everywhere</button>
-            
-        </form>
-        <button type="submit" class="btn btn-outline-dark ms-3" style="color: white;"><a href="./login.html">Log in</a></p></button>
-        
-    </div>
-</div> -->
-
-
-
-
     <!-- Footer -->
-    <div class="footeraccpunt mt-5">
-        <footer class="text-center text-lg-start bg-dark-custom text-white mt-5">
-            <!-- Section: Social media -->
-            <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
-                <!-- Left -->
-                <div class="me-5 d-none d-lg-block">
-                    <span>Get connected with us on social networks:</span>
-                </div>
-                <!-- Left -->
+    <footer class="text-center text-lg-start bg-dark-custom text-white mt-5">
+        <!-- Section: Social media -->
+        <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+            <!-- Left -->
+            <div class="me-5 d-none d-lg-block">
+                <span>Get connected with us on social networks:</span>
+            </div>
+            <!-- Left -->
 
-                <!-- Right -->
-                <div>
-                    <a href="#" class="me-4 text-reset">
-                        <i class="bi bi-facebook"></i>
-                    </a>
-                    <a href="#" class="me-4 text-reset">
-                        <i class="bi bi-twitter"></i>
-                    </a>
-                    <a href="#" class="me-4 text-reset">
-                        <i class="bi bi-google"></i>
-                    </a>
-                    <a href="#" class="me-4 text-reset">
-                        <i class="bi bi-instagram"></i>
-                    </a>
-                </div>
-                <!-- Right -->
-            </section>
-            <!-- Section: Social media -->
+            <!-- Right -->
+            <div>
+                <a href="#" class="me-4 text-reset">
+                    <i class="bi bi-facebook"></i>
+                </a>
+                <a href="#" class="me-4 text-reset">
+                    <i class="bi bi-twitter"></i>
+                </a>
+                <a href="#" class="me-4 text-reset">
+                    <i class="bi bi-google"></i>
+                </a>
+                <a href="#" class="me-4 text-reset">
+                    <i class="bi bi-instagram"></i>
+                </a>
+            </div>
+            <!-- Right -->
+        </section>
+        <!-- Section: Social media -->
 
-            <!-- Section: Links  -->
-            <section class="">
-                <div class="container text-center text-md-start mt-5">
-                    <!-- Grid row -->
-                    <div class="row mt-3">
-                        <!-- Grid column -->
-                        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-                            <!-- Content -->
-                            <h6 class="text-uppercase fw-bold mb-4">
-                                <img src="../../static/img/logo.png" alt="" width="117">
-                            </h6>
+        <!-- Section: Links  -->
+        <section class="">
+            <div class="container text-center text-md-start mt-5">
+                <!-- Grid row -->
+                <div class="row mt-3">
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                        <!-- Content -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            <img src="../../static/img/logo.png" alt="" width="117">
+                        </h6>
 
-                        </div>
-                        <!-- Grid column -->
-
-                        <!-- Grid column -->
-                        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                            <!-- Links -->
-                            <h6 class="text-uppercase fw-bold mb-4">
-                                Công ty
-                            </h6>
-                            <p>
-                                <a href="#!" class="text-reset text-decoration-none">Giới thiệu</a>
-                            </p>
-                            <p>
-                                <a href="#!" class="text-reset text-decoration-none">Việc làm</a>
-                            </p>
-                            <p>
-                                <a href="#!" class="text-reset text-decoration-none">For the Record</a>
-                            </p>
-
-                        </div>
-                        <!-- Grid column -->
-
-                        <!-- Grid column -->
-                        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-                            <!-- Links -->
-                            <h6 class="text-uppercase fw-bold mb-4">
-                                Cộng đồng
-                            </h6>
-                            <p>
-                                <a href="#!" class="text-reset text-decoration-none">Dành cho các Nghệ sĩ</a>
-                            </p>
-                            <p>
-                                <a href="#!" class="text-reset text-decoration-none">Nhà phát triển</a>
-                            </p>
-                            <p>
-                                <a href="#!" class="text-reset text-decoration-none">Quảng cáo</a>
-                            </p>
-                            <p>
-                                <a href="#!" class="text-reset text-decoration-none">Nhà đầu tư </a>
-                            </p>
-                            <p>
-                                <a href="#!" class="text-reset text-decoration-none ">Nhà cung cấp</a>
-                            </p>
-                        </div>
-
-                        <!-- Grid column -->
-
-                        <!-- Grid column -->
-                        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-                            <!-- Links -->
-                            <h6 class="text-uppercase fw-bold mb-4">liên kết hữu ích</h6>
-                            <p>
-                                <a href="#!" class="text-reset text-decoration-none">Hỗ trợ</a>
-                            </p>
-                            <p>
-                                <a href="#!" class="text-reset text-decoration-none">Trình phát web</a>
-                            </p>
-                            <p>
-                                <a href="#!" class="text-reset text-decoration-none ">Ứng dụng di động miễn phí</a>
-                            </p>
-                        </div>
-                        <!-- Grid column -->
                     </div>
-                    <!-- Grid row -->
-                </div>
-            </section>
-            <!-- Section: Links  -->
-        </footer>
-    </div>
+                    <!-- Grid column -->
 
+                    <!-- Grid column -->
+                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            Công ty
+                        </h6>
+                        <p>
+                            <a href="#!" class="text-reset text-decoration-none">Giới thiệu</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset text-decoration-none">Việc làm</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset text-decoration-none">For the Record</a>
+                        </p>
+
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            Cộng đồng
+                        </h6>
+                        <p>
+                            <a href="#!" class="text-reset text-decoration-none">Dành cho các Nghệ sĩ</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset text-decoration-none">Nhà phát triển</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset text-decoration-none">Quảng cáo</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset text-decoration-none">Nhà đầu tư </a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset text-decoration-none ">Nhà cung cấp</a>
+                        </p>
+                    </div>
+
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4">liên kết hữu ích</h6>
+                        <p>
+                            <a href="#!" class="text-reset text-decoration-none">Hỗ trợ</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset text-decoration-none">Trình phát web</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset text-decoration-none ">Ứng dụng di động miễn phí</a>
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+                </div>
+                <!-- Grid row -->
+            </div>
+        </section>
+        <!-- Section: Links  -->
+    </footer>
     <!-- Footer -->
 
 

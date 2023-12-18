@@ -6,6 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import com.rhymthwave.DTO.checkPodcastRole;
+import com.rhymthwave.Request.DTO.Top3PodcastDTO;
 import com.rhymthwave.entity.Podcast;
 @Repository
 public interface PodcastDAO extends JpaRepository<Podcast, Long>{
@@ -36,4 +39,18 @@ public interface PodcastDAO extends JpaRepository<Podcast, Long>{
 	@Query("select count(p.podcastId) from  Podcast  p")
 	int countPodcast();
 
+	@Query(value="select au.authorid, au.idrole\r\n"
+			+ "from author au \r\n"
+			+ "inner join accounts a on a.email = au.email\r\n"
+			+ "where a.email = :email and au.idrole = 3 and a.isblocked = 0 and a.isverify = 1", nativeQuery = true)
+	checkPodcastRole CheckPodcastRole(String email);
+	
+	@Query(value="select top 3  a.email, a.usename, a.imageid, sum(e.listened) as totallistened \r\n"
+			+ "from episodes e\r\n"
+			+ "join podcast p on p.podcastid = e.podcastid\r\n"
+			+ "join accounts a on a.email = p.accountid\r\n"
+			+ "where e.isdeleted = 0\r\n"
+			+ "group by a.email, a.usename, a.imageid\r\n"
+			+ "order by totallistened desc",nativeQuery = true)
+	List<Top3PodcastDTO> top3Podcast();
 }

@@ -4,64 +4,7 @@
       <div class="table-responsive">
         <!-- search -->
         <div class="bl-search">
-          <div class="bl-search-box">
-            <div class="bl-search-hilden" style="opacity: 0"></div>
-            <div class="bl-back-next">
-              <button class="bl-back-next-btn" id="back">
-                <svg role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16" data-encore-id="icon">
-                  <path
-                    d="M11.03.47a.75.75 0 0 1 0 1.06L4.56 8l6.47 6.47a.75.75 0 1 1-1.06 1.06L2.44 8 9.97.47a.75.75 0 0 1 1.06 0z">
-                  </path>
-                </svg>
-              </button>
-              <button class="bl-back-next-btn" id="forward">
-                <svg role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16" data-encore-id="icon">
-                  <path
-                    d="M4.97.47a.75.75 0 0 0 0 1.06L11.44 8l-6.47 6.47a.75.75 0 1 0 1.06 1.06L13.56 8 6.03.47a.75.75 0 0 0-1.06 0z">
-                  </path>
-                </svg>
-              </button>
-            </div>
-            <div class="bl-input-search">
-              <div class="bl-input-search-box">
-                <div class="bl-input-search-f">
-                  <form id="searchform">
-                    <input ng-model="searchKeyword" class="bl-input-search-f-in" maxlength="800" autocorrect="off"
-                      autocapitalize="off" spellcheck="false" placeholder="What do you want to listen to?"
-                      data-testid="search-input" data-encore-id="type" value="" style="color: rgb(0, 0, 0)" />
-                  </form>
-                  <div class="bl-input-search-f-icon">
-                    <span class="H6jh9Xd7DNOq3NsLDmCB"><svg role="img" height="16" width="16" aria-hidden="true"
-                        class="Svg-sc-ytk21e-0 haNxPq mOLTJ2mxkzHJj6Y9_na_" viewBox="0 0 16 16" data-encore-id="icon">
-                        <path
-                          d="M7 1.75a5.25 5.25 0 1 0 0 10.5 5.25 5.25 0 0 0 0-10.5zM.25 7a6.75 6.75 0 1 1 12.096 4.12l3.184 3.185a.75.75 0 1 1-1.06 1.06L11.304 12.2A6.75 6.75 0 0 1 .25 7z">
-                        </path>
-                      </svg></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="dropdown">
-              <div class="bl-install-ring-account-hilden"></div>
-              <button class="bl-install-ring-account-btn" data-bs-toggle="dropdown">
-                <figure>
-                  <svg role="img" height="16" width="16" aria-hidden="true"
-                    class="Svg-sc-ytk21e-0 haNxPq t93PZphItuM19kPhX7tC" viewBox="0 0 16 16">
-                    <path
-                      d="M6.233.371a4.388 4.388 0 0 1 5.002 1.052c.421.459.713.992.904 1.554.143.421.263 1.173.22 1.894-.078 1.322-.638 2.408-1.399 3.316l-.127.152a.75.75 0 0 0 .201 1.13l2.209 1.275a4.75 4.75 0 0 1 2.375 4.114V16H.382v-1.143a4.75 4.75 0 0 1 2.375-4.113l2.209-1.275a.75.75 0 0 0 .201-1.13l-.126-.152c-.761-.908-1.322-1.994-1.4-3.316-.043-.721.077-1.473.22-1.894a4.346 4.346 0 0 1 .904-1.554c.411-.448.91-.807 1.468-1.052zM8 1.5a2.888 2.888 0 0 0-2.13.937 2.85 2.85 0 0 0-.588 1.022c-.077.226-.175.783-.143 1.323.054.921.44 1.712 1.051 2.442l.002.001.127.153a2.25 2.25 0 0 1-.603 3.39l-2.209 1.275A3.25 3.25 0 0 0 1.902 14.5h12.196a3.25 3.25 0 0 0-1.605-2.457l-2.209-1.275a2.25 2.25 0 0 1-.603-3.39l.127-.153.002-.001c.612-.73.997-1.52 1.052-2.442.032-.54-.067-1.097-.144-1.323a2.85 2.85 0 0 0-.588-1.022A2.888 2.888 0 0 0 8 1.5z">
-                    </path>
-                  </svg>                
-                  <ul class="dropdown-menu dropdown-menu-dark">
-                    <li ng-show="hiden"><a class="dropdown-item" ng-click="account()"> <i class="bi bi-box-arrow-up-right"></i> Account</a></li>
-                    <li ng-show="hiden"><a class="dropdown-item" ng-click="redirectToProfile(profile.username)"> <i class="bi bi-person-circle"></i> Profile</a></li>
-                    <li ng-show="!hiden"><a class="dropdown-item" ng-click="signin()"> <i class="bi bi-box-arrow-in-left"></i> Sign in</a></li>
-                    <li ng-show="hiden"><hr class="dropdown-divider"></li>
-                    <li ng-show="hiden"><a class="dropdown-item" ng-click="logout()"> <i class="bi bi-box-arrow-right"></i> Log out</a></li>
-                  </ul>
-                </figure>
-              </button>
-            </div>
-          </div>
+          <div class="bl-search-box"></div>
         </div>
         <!-- end search -->
         <div id="interface1" ng-show="interface1">
@@ -279,14 +222,16 @@
                       </div>
                       <div class="row">
                         <div class="bl-t-s-cart card play-list">
-                          <div class="col-sm-6">
+                          <div>
                             <div class="row">
-                              <div class="col-sm-12 mt-1" ng-repeat="innerArray in dataS | limitTo: 1">
-                                <div class="card-img">
-                                  <img style="height: 64px; width: 64px" ng-src="{{ innerArray[12] !== null ? innerArray[12] : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}"
-                                    class="card-img-top" alt="Sunset Over the Sea" />
-                                  <span class="card-text">{{ innerArray[10] }}</span>
-                                </div>
+                              <div class="col-sm-12 mt-1" ng-repeat="innerArray in dataS | toArray | limitTo:5">
+                                <a href="#!/song/{{innerArray[25]}}">
+                                  <div class="card-img">
+                                    <img style="height: 64px; width: 64px" ng-src="{{ innerArray[12] !== null ? innerArray[12] : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}"
+                                      class="card-img-top" alt="Sunset Over the Sea" />
+                                    <span class="card-text">{{ innerArray[10] }}</span>
+                                  </div>
+                                </a>
                               </div>
                             </div>
                           </div>
@@ -303,7 +248,7 @@
                   <h3>Artist</h3>
                 </div>
                 <div class="row">
-                  <div class="col-sm-2" ng-repeat="innerArray in dataArt | limitTo: 6">
+                  <div class="col-sm-2" ng-repeat="innerArray in dataArt | toArray | limitTo: 6">
                     <div class="card play-list">
                       <a href="#!artist/{{innerArray[3]}}">
                         <div class="card-img" style="width: 100%; height: 150px; overflow: hidden;">
@@ -330,9 +275,9 @@
                   <h3>Albums</h3>
                 </div>
                 <div class="row">
-                  <div class="col-sm-2" ng-repeat="innerArray in dataAlbum | limitTo: 6">
+                  <div class="col-sm-2" ng-repeat="innerArray in dataAlbum | toArray | limitTo: 6">
                     <div class="card play-list">
-                      <a href="#!album/{{innerArray[6]}}">
+                      <a href="#!album/album/{{innerArray[6]}}">
                         <div class="card-img" style="width: 100%; height: 150px; overflow: hidden;">
                           <img style="width: 100%; height: 100%; object-fit: cover;" ng-src="{{ innerArray[8] !== null ? innerArray[8] : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}" class="card-img-top" alt="Sunset Over the Sea"  />
 
@@ -352,7 +297,7 @@
                   <h3>Playlists</h3>
                 </div>
                 <div class="row">
-                  <div class="col-sm-2" ng-repeat="innerArray in dataPl | limitTo: 6">
+                  <div class="col-sm-2" ng-repeat="innerArray in dataPl | toArray | limitTo: 6">
                     <div class="card play-list">
                       <a href="#!playlist-art/{{innerArray[19]}}">
                         <div class="card-img" style="width: 100%; height: 150px; overflow: hidden;">
@@ -378,7 +323,7 @@
                   <h3>Posdcasts</h3>
                 </div>
                 <div class="row">
-                  <div class="col-sm-2" ng-repeat="innerArray in dataP | limitTo: 6">
+                  <div class="col-sm-2" ng-repeat="innerArray in dataP | toArray | limitTo: 6">
                     <a href="#!show/{{innerArray[13]}}">
                       <div class="card play-list">
                         <div class="card-img" style="width: 100%; height: 150px; overflow: hidden;">
@@ -404,7 +349,7 @@
                   <h3>Episodes</h3>
                 </div>
                 <div class="row">
-                  <div class="col-sm-2" ng-repeat="innerArray in dataE | limitTo: 6">
+                  <div class="col-sm-2" ng-repeat="innerArray in dataE | toArray | limitTo: 6">
                     <a href="#!episode/{{innerArray[16]}}">
                       <div class="card play-list">
                         <div class="card-img" style="width: 100%; height: 150px; overflow: hidden;">
@@ -430,7 +375,7 @@
                   <h3>Profiles</h3>
                 </div>
                 <div class="row">
-                  <div class="col-sm-2" ng-repeat="innerArray in dataProfile | limitTo: 6">
+                  <div class="col-sm-2" ng-repeat="innerArray in dataProfile | toArray | limitTo: 6">
                     <div class="card play-list">
                       <div class="card-img" style="width: 100%; height: 150px; overflow: hidden;">
                         <img style="width: 100%; height: 100%; object-fit: cover;" ng-src="{{ innerArray[2] !== null ? innerArray[2] : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}" class="circle-img card-img-top" alt="Sunset Over the Sea" />
@@ -454,7 +399,7 @@
                   <h3>Genres & Moods</h3>
                 </div>
                 <div class="row">
-                  <div class="col-sm-2" ng-repeat="innerArray in dataGr | limitTo: 6">
+                  <div class="col-sm-2" ng-repeat="innerArray in dataGr | toArray | limitTo: 6">
                     <a href="#!mood/{{innerArray[22]}}">
                       <div class="card play-list">
                         <div class="card-img" style="width: 100%; height: 150px; overflow: hidden;">
@@ -552,7 +497,7 @@
               <div class="container-fluid bl-t-s">
                 <div class="row">
                   <div class="col-sm-2" ng-repeat="innerArray in dataAlbum">
-                    <a href="#!album/{{innerArray[6]}}">
+                    <a href="#!album/album/{{innerArray[6]}}">
                       <div class="card play-list">
                         <div class="card-img" style="width: 100%; height: 150px; overflow: hidden;">
                           <img style="width: 100%; height: 100%; object-fit: cover;" ng-src="{{ innerArray[8] !== null ? innerArray[8] : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}" class="card-img-top" alt="Sunset Over the Sea" />

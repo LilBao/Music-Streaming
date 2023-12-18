@@ -20,4 +20,9 @@ public class indexPodcast {
 	public String podcaster() {
 		return "Podcaster/PodcastControl";
 	}
+	
+	@GetMapping("podcast/home")
+	public String layoutPodcastHome() {
+		return "Podcaster/Podcast";
+	}
 }

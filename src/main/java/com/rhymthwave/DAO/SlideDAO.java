@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.rhymthwave.DTO.SlideDTO;
 import com.rhymthwave.entity.Slide;
 
 @Repository
@@ -31,4 +32,7 @@ public interface SlideDAO extends JpaRepository<Slide, Integer> {
 
     @Query(value = "select * from slide where listimage = ?1", nativeQuery = true)
 	Slide findIDSlideByAccessIDToUpdate(String idAccess);
+    
+    @Query(value = "select s.slideid, s.createby, s.createdate, s.modifidate, s.modifiedby, s.position, s.listimage, s.url, img.url as 'urlImage' from slide s inner join images img on s.listimage = img.accessid where s.position = :position", nativeQuery = true)
+	List<SlideDTO> getByPosition(@Param("position") String position);
 }

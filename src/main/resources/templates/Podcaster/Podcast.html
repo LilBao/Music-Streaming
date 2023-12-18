@@ -17,14 +17,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../../static/js/angularjs/artist/Art.js"></script>
+    <script src="../../static/js/angularjs/pobcast/Podcast.js"></script>
 
     <link rel="stylesheet" href="../../static/css/toasts.css">
     <script src="../../static/js/jscustom/UI-Js-Admin/bootstrap-show-notification.js"></script>
     <script src="../../static/js/jscustom/toasts.js"></script>
 </head>
 
-<body ng-app="myApp" ng-controller="myCtrl">
+<body ng-app="myApp" ng-controller="myCtrlPodcast">
     <section>
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
             <div class="container-fluid">
@@ -33,22 +33,23 @@
                 </a>
                 <div>
                     <button class="btn text-white" ng-show="!hiden" ng-click="login()">Login</button>
-                    <button class="btn text-white" ng-show="hiden" ng-click="getAccess()">Get Access</button>
+                    <button class="btn text-white" ng-show="hiden" ng-click="getAccessPodcast()">Get Access</button>
                 </div>
             </div>
         </nav>
     </section>
 
     <section ng-show="listImage.length > 0">
-
+        <!-- Carousel -->
         <div id="demo" class="carousel slide" data-bs-ride="carousel">
-
+            <!-- Indicators/dots -->
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
                 <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
                 <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
             </div>
 
+            <!-- The slideshow/carousel -->
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <a href="{{listSlide[0].url}}"><img src="{{listSlide[0].urlImage}}" alt="Los Angeles"
@@ -64,7 +65,7 @@
                 </div>
             </div>
 
-
+            <!-- Left and right controls/icons -->
             <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon"></span>
             </button>
@@ -120,10 +121,10 @@
             <div class="d-flex m-4">
                 <div class="col-5 ps-3">
                     <p class="my-0">FEATURING</p>
-                    <h1 ng-if="$first">{{top3.artistName}}</h1>
+                    <h1 ng-if="$first">{{top3.usename}}</h1>
                     <div ng-repeat="top3 in top3">
                         <div class="my-4">
-                            <h6>{{top3.artistName}}</h6>
+                            <h6>{{top3.usename}}</h6>
                         </div>
                     </div>
                 </div>
@@ -133,7 +134,7 @@
                         Being able to see that progress and reach in real time is invaluable.
                     </p>
                     <h3>—Gang Starr</h3>
-                    <h6>ARTIST</h6>
+                    <h6>PODCAST</h6>
                 </div>
             </div>
         </div>
@@ -144,14 +145,16 @@
         <p class="mb-4">Our latest stories to get you inspired</p>
         <div class="row">
             <div class="col-6" ng-repeat="news in dataNews | orderBy:'-date' | limitTo:2">
-                <a ng-click="newsPage(news.newsId)"><img class="w-100" ng-src="{{news.image.url}}" alt=""></a>
+                <a ng-click="newsPage(news.newsId)"><img class="w-100" ng-src="{{news.image.url}}" alt=""
+                        style="height: 372px;object-fit: cover;"></a>
                 <h4>{{news.title | limitTo:30}}</h4>
                 <p>{{news.content | limitTo:150}}</p>
             </div>
         </div>
         <div class="row">
             <div class="col-4" ng-repeat="news in dataNews | orderBy:'-date' | limitTo:5:2">
-                <a ng-click="newsPage(news.newsId)"><img class="w-100" ng-src="{{news.image.url}}" alt=""></a>
+                <a ng-click="newsPage(news.newsId)"><img class="w-100" ng-src="{{news.image.url}}" alt=""
+                        style="height: 372px;object-fit: cover;"></a>
                 <h4>{{news.title | limitTo:30}}</h4>
                 <p>{{news.content | limitTo:150}}</p>
             </div>
