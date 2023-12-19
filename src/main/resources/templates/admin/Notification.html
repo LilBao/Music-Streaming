@@ -204,10 +204,10 @@
                           <div class="modal-body">
                             <div class="container">
                               <div class="row">
-                                <div class="col-md-7">
+                                <div class="col-md-6">
                                   <img ng-src="{{form.urlImage}}" alt="" class="img-fluid">
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-6">
                                   <div class="mb-3">
                                     <label for="" class="form-label fs-6">Title:</label>
                                     <input ng-model="form.title" type="text" name="" id="" class="form-control"
@@ -229,14 +229,29 @@
                                   </div>
                                 </div>
                               </div>
-                              <div class="row mt-3">
+                              <div class="row mt-3 fs-6">
                                 <div class="col-md-6" style="border-right: 1px solid rgb(164, 164, 164);">
-                                  <p>{{form.createBy}}</p>
-                                  <p>{{form.createDate}}</p>
-                                  <p>{{form.modifiedBy}}</p>
-                                  <p>{{form.modifiDate}}</p>
-                                  <p>{{form.toURL}}</p>
+                                 <p><i class="bi bi-person-fill-add mx-3 fs-6"></i> {{form.createBy}}</p>
+                                  <p><i class="fa-regular fa-calendar-plus mx-3 fs-6"></i>{{form.createDate | date: 'dd-MM-yyyy HH:ss'}}</p>
+                                  <p><i class="bi bi-person-fill-gear mx-3 fs-6"></i>{{form.modifiedBy}}</p>
+                                  <p><i class="fa-regular fa-calendar-plus mx-3 fs-6"></i>{{form.modifiDate| date: 'dd-MM-yyyy HH:ss'}}</p>
                                 </div>
+                                
+                                <div class="col-md-6">
+                                  <div class="mb-3">
+                                    <label for="" class="form-label fs-6">Url:</label>
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      name=""
+                                      id=""
+                                      aria-describedby="helpId"
+                                      placeholder=""
+                                      ng-model="form.toURL"
+                                    />
+                                  </div>
+                                </div>
+                                
                               </div>
                             </div>
                           </div>

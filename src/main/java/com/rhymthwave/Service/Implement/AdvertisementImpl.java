@@ -5,6 +5,7 @@ import com.rhymthwave.DAO.AdvertismentDAO;
 import com.rhymthwave.DAO.ImageDAO;
 import com.rhymthwave.DAO.SubscriptionDAO;
 import com.rhymthwave.Request.DTO.AdvertisementDTO;
+import com.rhymthwave.Request.DTO.ResultsADS_DTO;
 import com.rhymthwave.Service.AdvertisementService;
 import com.rhymthwave.Service.CloudinaryService;
 import com.rhymthwave.Utilities.GetCurrentTime;
@@ -19,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

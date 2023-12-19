@@ -196,6 +196,10 @@ app.controller("playlistDetailController", function (sortService,graphqlService,
 
     $scope.findByPlaylistId(idPlaylist);
 
+    $("#image-preview").click(function () {
+        $("#imagePlaylist-edit").click();
+    });
+
     // Change Image
     $("#imagePlaylist-edit").change(function () {
         imagePreview(this);

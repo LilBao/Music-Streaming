@@ -148,7 +148,7 @@ app.controller("SubscriptionStatisticsController",function($scope,graphqlService
         const myChart = new Chart(ctx, {
             type: 'pie',
             data: {
-                labels:['12','13'],
+                labels:['Month','Year'],
                 datasets: [{
                     label: 'Series',
                     data:  [12,43],

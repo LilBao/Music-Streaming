@@ -54,9 +54,11 @@ app.controller("dashboardController", function (graphqlService, $scope, $http) {
         const top1 = await  $http.get(apiDashboard+"/top1-country");
         const countAccount = await $http.get(apiDashboard+"/count-account");
         const accountCurrent = await $http.get(apiDashboard+"/count-account/current");
+        const countAccountVerify = await $http.get(apiDashboard+"/count-account/verify");
         $scope.accountCurrent = accountCurrent.data.data;
         $scope.top1Country = top1.data.data;
         $scope.totalAccount = countAccount.data.data
+        $scope.verifyAccount = countAccountVerify.data.data
       } catch (error) {
         console.log(error);
       }
@@ -216,11 +218,11 @@ app.controller("dashboardController", function (graphqlService, $scope, $http) {
   }
 
 
+    $scope.getDashboardAccount();
     $scope.getTop10RecordTrending(1);
     $scope.getCountVisitor();
     $scope.getTop10Podcast();
     $scope.getTop10Artist();
-    $scope.getDashboardAccount ();
     $scope.getTop4Genre();
     $scope.getCount();
     $scope.getCountSubscription();

@@ -18,5 +18,7 @@ public interface IAccountServiceAdmin {
 
 	int countWithlistByAccount(String idAccount);
 
+	void updateRoleStaff(String id);
 	
+	void deleteRoleStaff(String id);
 }

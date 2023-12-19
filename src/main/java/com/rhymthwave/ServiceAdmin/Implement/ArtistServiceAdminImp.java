@@ -78,6 +78,7 @@ public class ArtistServiceAdminImp implements IArtistService, INotification<Arti
 			authorDAO.save(author);
 
 			artist.setIsVerify(true);
+			artist.setActive(true);
 			artistDAO.save(artist);
 			
 			sendNotification(artist, null);

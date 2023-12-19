@@ -56,17 +56,20 @@
                                        <div class="col-lg-6">
                                           <div class="mb-3">
                                              
-                                             <select ng-change="loadAllNews()" name="month" id="monthSelect" class="form-select  font-select" 
+                                             <!-- <select ng-change="loadAllNews()" name="month" id="monthSelect" class="form-select  font-select" 
                                                     ng-options="x for x in month" ng-model="monthSelect" >
+                                             </select> -->
+                                             <select ng-change="loadAllNews()" name="month" id="monthSelect" class="form-select  font-select" ng-model="monthSelect" >
+                                                <option  value="">Month Default</option> 
+                                                <option   ng-repeat="x  in month" value="{{x}}">{{x}}</option> 
                                              </select>
-
                                           </div>
                                        </div>
 
                                        <div class="col-lg-6">
                                           <div class="mb-3">
                                              <select ng-change="loadAllNews()" class="form-select  font-select" name="" ng-model="yearSelect">
-                                                <option  value="">Default</option> 
+                                                <option  value="">Year Default</option> 
                                                 <option   ng-repeat="year in year" value="{{year}}">{{year}}</option> 
                                              </select>
                                           </div>
@@ -84,10 +87,10 @@
                                  </div>
 
                                  <div class="col-md-4 col-sm-6 mb-3" ng-repeat="post in posts">
-                                    <div id="card-managerBlog" class="card" style="width: 18rem;">
+                                    <div id="card-managerBlog" class="card" style="width: 18rem">
                                        <div class="edit-blog">
                                           <a href="{{ post.toUrl }}">
-                                             <img ng-src="{{ post.image }}" alt="Post Image" class="card-img-top">
+                                             <img ng-src="{{ post.image }}" alt="Post Image" class="card-img-top " style="width: 286.76px;height: 156px !important; object-fit: fill;" >
                                           </a>
                                           <div class="dots-edit ">
                                              <a href data-bs-toggle="dropdown" id="Notify" class="nav-link"> <i
