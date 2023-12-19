@@ -172,13 +172,25 @@ public class AdvertisementImpl implements AdvertisementService {
 	public Advertisement setStatus(Integer advertisementID, Integer status, HttpServletRequest request) {
 		String modify = getIdByRequest.getEmailByRequest(request);
 		Advertisement advertisement = getById(advertisementID);
+
+	     Date currentDate = GetCurrentTime.getTimeNow();
+	
+	     long timestampInSeconds = currentDate.getTime() / 1000 + advertisement.getSubscription().getDuration();
+	
+	     long timestampInMillis = timestampInSeconds * 1000L;
+	     
+	     Date calculatedDate = new Date(timestampInMillis);
 		advertisement.setStatus(status);
 		advertisement.setModifiedBy(modify);
 		if (status == 4)
 			advertisement.setActive(false);
-		else
+		else {
+			advertisement.setEndDate(calculatedDate);
 			advertisement.setActive(true);
+		}
+			
 		advertisement.setModifiDate(GetCurrentTime.getTimeNow());
+	
 		return advertisementDAO.save(advertisement);
 	}
 
