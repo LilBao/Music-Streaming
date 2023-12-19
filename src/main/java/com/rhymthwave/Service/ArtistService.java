@@ -2,6 +2,7 @@ package com.rhymthwave.Service;
 
 import java.util.List;
 
+import com.rhymthwave.Request.DTO.Top10ArtistDTO;
 import com.rhymthwave.entity.Artist;
 
 public interface ArtistService {
@@ -16,4 +17,6 @@ public interface ArtistService {
 	List<Artist> top50ArtistByListener(String country, Boolean active, Boolean verify);
 	
 	List<Artist> top50ArtistByFollow(Integer role, String country, Boolean verify);
+	
+	List<Top10ArtistDTO> top3ArtistByByListener();
 }

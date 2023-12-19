@@ -5,8 +5,6 @@ app.controller('report', function ($scope, $http, $routeParams, $cookies) {
     $scope.reportOption = $routeParams.option;
     $scope.reportId = $routeParams.id;
     $scope.createReport = function () {
-        console.log($cookies.get(cookieName));
-
         $http.post(
             host + 'v1/report/' + $scope.reportOption + '/' + $scope.reportId + "?description=" + $scope.description,
             // Pass data as the second parameter and headers as a separate object
@@ -20,7 +18,6 @@ app.controller('report', function ($scope, $http, $routeParams, $cookies) {
             }
         )
             .then(function (response) {
-                console.log(response.data);
                 showStickyNotification("report success", "success", 3000);
                 // history.back();
             })
@@ -29,9 +26,6 @@ app.controller('report', function ($scope, $http, $routeParams, $cookies) {
                 showStickyNotification("report fail", "danger", 3000);
             });
     };
-    console.log($scope.reportOption);
-    console.log($scope.reportId);
-
     // enable button
     var checkbox = document.getElementById('agreeCheckbox');
     var button = document.getElementById('reportButton');

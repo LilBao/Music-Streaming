@@ -32,12 +32,17 @@ app.controller('ShowPodcast', function ($scope, $http, $routeParams) {
     };
     $scope.getAllEpisode();
 
-    // btn back and forward
-  $("#back").on("click", function() {
-    history.back();
-  });
-  
-  $("#forward").on("click", function() {
-    history.forward();
-  });
+    $('#btn-playlist-play').click(function () {
+        $('#btn-playlist-pause').attr('hidden', false);
+        $('#btn-playlist-play').attr('hidden', true);
+        $scope.selectAudio($scope.episodeAll, 'episode', $scope.episodeAll, 0);
+        play.click();
+      })
+    
+      //pause
+      $('#btn-playlist-pause').click(function () {
+        $('#btn-playlist-pause').attr('hidden', true);
+        $('#btn-playlist-play').attr('hidden', false);
+        resume.click();
+      })
 });

@@ -72,6 +72,10 @@
                 .text-uppercase {
                     letter-spacing: 0.1em;
                 }
+                .btn-group-report button{
+                    border: 0;
+                    background-color: transparent;
+                }
             </style>
             <section class="dashboard-top-sec">
                 <div class="container-fluid">
@@ -152,9 +156,9 @@
                                                             <td>{{ report.reportDate }}</td>
                                                             <td>{{ report.description }}</td>
                                                             <td>
-                                                                <div class="btn-group">
+                                                                <div class="btn-group-report">
                                                                     <button data-bs-toggle="modal"
-                                                                        data-bs-target="#reportArtist{{report.reportId}}">Detail</button>
+                                                                        data-bs-target="#reportArtist{{report.reportId}}"><i class="bi bi-pencil-square"></i></button>
                                                                 </div>
                                                             </td>
                                                             <div ng-repeat="report in reports | filter: { status: false, artist: { artistId: '!null' }}" class="modal"
@@ -277,9 +281,9 @@
                                                             <td>{{ report.reportDate }}</td>
                                                             <td>{{ report.description }}</td>
                                                             <td>
-                                                                <div class="btn-group">
+                                                                <div class="btn-group-report">
                                                                     <button data-bs-toggle="modal"
-                                                                        data-bs-target="#reportEpisode{{report.reportId}}">Detail</button>
+                                                                        data-bs-target="#reportEpisode{{report.reportId}}"><i class="bi bi-pencil-square"></i></button>
                                                                 </div>
                                                             </td>
                                                             <div ng-repeat="report in reports" class="modal"
@@ -386,9 +390,9 @@
                                                             <td>{{ report.reportDate }}</td>
                                                             <td>{{ report.description }}</td>
                                                             <td>
-                                                                <div class="btn-group">
+                                                                <div class="btn-group-report">
                                                                     <button data-bs-toggle="modal"
-                                                                        data-bs-target="#reportPodcast{{report.reportId}}">Detail</button>
+                                                                        data-bs-target="#reportPodcast{{report.reportId}}"><i class="bi bi-pencil-square"></i></button>
                                                                 </div>
                                                             </td>
                                                             <div ng-repeat="report in reports" class="modal"
@@ -497,9 +501,9 @@
                                                             <td>{{ report.reportDate }}</td>
                                                             <td>{{ report.description }}</td>
                                                             <td>
-                                                                <div class="btn-group">
+                                                                <div class="btn-group-report">
                                                                     <button data-bs-toggle="modal"
-                                                                        data-bs-target="#reportRecording{{report.reportId}}">Detail</button>
+                                                                        data-bs-target="#reportRecording{{report.reportId}}"><i class="bi bi-pencil-square"></i></button>
                                                                 </div>
                                                             </td>
                                                             <div ng-repeat="report in reports" class="modal"
@@ -634,9 +638,9 @@
                                                             <td>{{ report.reportDate }}</td>
                                                             <td>{{ report.description }}</td>
                                                             <td>
-                                                                <div class="btn-group">
+                                                                <div class="btn-group-report">
                                                                     <button data-bs-toggle="modal"
-                                                                        data-bs-target="#reportArtisted{{report.reportId}}">Detail</button>
+                                                                        data-bs-target="#reportArtisted{{report.reportId}}"><i class="bi bi-pencil-square"></i></button>
                                                                 </div>
                                                             </td>
                                                             <div ng-repeat="report in reportTrues" class="modal"
@@ -748,9 +752,9 @@
                                                         <td>{{ report.reportDate }}</td>
                                                         <td>{{ report.description }}</td>
                                                         <td>
-                                                            <div class="btn-group">
+                                                            <div class="btn-group-report">
                                                                 <button data-bs-toggle="modal"
-                                                                    data-bs-target="#reportEpisoded{{report.reportId}}">Detail</button>
+                                                                    data-bs-target="#reportEpisoded{{report.reportId}}"><i class="bi bi-pencil-square"></i></button>
                                                             </div>
                                                         </td>
                                                         <div ng-repeat="report in reportTrues" class="modal"
@@ -850,9 +854,9 @@
                                                         <td>{{ report.reportDate }}</td>
                                                         <td>{{ report.description }}</td>
                                                         <td>
-                                                            <div class="btn-group">
+                                                            <div class="btn-group-report">
                                                                 <button data-bs-toggle="modal"
-                                                                    data-bs-target="#reportPodcasted{{report.reportId}}">Detail</button>
+                                                                    data-bs-target="#reportPodcasted{{report.reportId}}"><i class="bi bi-pencil-square"></i></button>
                                                             </div>
                                                         </td>
                                                         <div ng-repeat="report in reportTrues" class="modal"
@@ -954,9 +958,9 @@
                                                             <td>{{ report.reportDate }}</td>
                                                             <td>{{ report.description }}</td>
                                                             <td>
-                                                                <div class="btn-group">
+                                                                <div class="btn-group-report">
                                                                     <button data-bs-toggle="modal"
-                                                                        data-bs-target="#reportRecordinged{{report.reportId}}">Detail</button>
+                                                                        data-bs-target="#reportRecordinged{{report.reportId}}"><i class="bi bi-pencil-square"></i></button>
                                                                 </div>
                                                             </td>
                                                             <div ng-repeat="report in reportTrues" class="modal"
