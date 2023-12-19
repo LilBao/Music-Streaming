@@ -33,7 +33,7 @@ app.controller( "advertisementController", function (graphqlService, $scope, $ht
 
     $scope.createAds = function(){
 
-      var image = document.getElementById('img-ads');
+      var image = document.getElementById('img-file');
       var audio = document.getElementById('audio-ads');
 
       var imageFile = image.files[0];
