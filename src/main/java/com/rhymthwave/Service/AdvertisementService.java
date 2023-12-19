@@ -20,7 +20,7 @@ public interface AdvertisementService extends CRUD<Advertisement, Long> {
 
     List<ResultsADS_DTO> getResultsADS(Integer idADS);
 
-    void sendResultsADS(Integer idADS,HttpServletResponse response);
+    void sendResultsADS(Integer idADS,HttpServletRequest response);
 
     Advertisement setStatus(Integer advertisementID, Integer status, HttpServletRequest request);
     

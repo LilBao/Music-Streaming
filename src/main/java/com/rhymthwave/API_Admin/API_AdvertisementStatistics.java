@@ -4,6 +4,8 @@ import com.rhymthwave.DTO.MessageResponse;
 import com.rhymthwave.Service.AdvertisementService;
 import com.rhymthwave.Request.DTO.ResultsADS_DTO;
 import com.rhymthwave.entity.Advertisement;
+
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ import java.util.List;
 public class API_AdvertisementStatistics {
 
 	private  final AdvertisementService advertisementService;
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getAdvertisementRuOrComplete(@PathVariable("id") Integer idAdvertisementService) {
 
@@ -34,5 +37,13 @@ public class API_AdvertisementStatistics {
 		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully",resultsADS));
 	}
 
+
+	@PutMapping("/{id}/send/results")
+	public ResponseEntity<?> getSendResults(@PathVariable("id") Integer id,HttpServletRequest request) {
+
+		advertisementService.sendResultsADS(id, request);
+
+		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully"));
+	}
 
 }
