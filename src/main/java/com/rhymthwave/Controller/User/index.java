@@ -66,7 +66,7 @@ public class index implements ErrorController{
 
 	@GetMapping("/error/404")
 	public String err404() {
-		return "User/404";
+		return "Artist/404";
 	}
 	
 	public String getErrorPath() {

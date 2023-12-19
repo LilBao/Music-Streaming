@@ -34,7 +34,7 @@ app.config(function ($routeProvider) {
         .when("/campaign", {
             templateUrl : "Podcaster/Marketing.html",
             controller :"marketingCtrl"
-        })
+        }).otherwise({ templateUrl : "Artist/404.html"});
 })
 
 app.service('FileService', function () {

@@ -45,10 +45,10 @@
                         </thead>
                         <tbody>
                             <tr ng-dblclick="selectAudio(item,'song',listPopular,$index)"
-                                ng-repeat="item in listPopular" class="audio">
+                                ng-repeat="item in listPopular | limitTo: 6" class="audio">
                                 <!-- Col 1 -->
                                 <td class="text-white">
-                                    {{$index}}
+                                    {{$index +1}}
                                 </td>
                                 <!-- Col 2 -->
                                 <td>
@@ -107,13 +107,16 @@
                     aria-selected="false"
                     class="btn border-0 rounded-pill bg-white text-dark px-3 mx-3 font-weight-bold">Albums
                 </button>
+                <a href="#!discography/{{profile.artistId}}">
+                    <p class="show-all-playlist-profile">Show All</p>
+                </a>
             </ul>
             <div id="myTabContent" class="tab-content">
                 <div id="pills-singles" role="tabpanel" aria-labelledby="pills-user-tab" tabindex="0"
                     class="tab-pane fade show active">
-                    <div ng-if="listSong.length > 0 | limitTo : 6" class="row">
-                        <div class="col-2 mt-3" ng-repeat="item in listSong">
-                            <a href="#!song/{{item.songId}}" class="text-white">
+                    <div ng-if="listSong.length > 0 " class="row">
+                        <div class="col-2 mt-3" ng-repeat="item in listSong | limitTo : 6">
+                            <a href="#!album/single/{{item.songId}}" class="text-white">
                                 <div class="card card-play-list-profile">
                                     <div class="img-car-profile">
                                         <img src="{{item.image.url}}" class="card-img-top w-100"
@@ -136,8 +139,8 @@
                 </div>
                 <div id="pills-albums" role="tabpanel" aria-labelledby="pills-albums-tab" tabindex="0"
                     class="tab-pane fade">
-                    <div ng-if="listAlbum.length > 0 | limitTo : 6" class="row">
-                        <div class="col-2 mt-3" ng-repeat="item in listAlbum">
+                    <div ng-if="listAlbum.length > 0" class="row">
+                        <div class="col-2 mt-3" ng-repeat="item in listAlbum | limitTo : 6">
                             <a href="#!album/album/{{item.albumId}}" class="text-white">
                                 <div class="card card-play-list-profile">
                                     <div class="img-car-profile">
@@ -165,6 +168,9 @@
         <section ng-show="listFeaturing.length >0">
             <div class="title mt-3">
                 <p class="prf-name-title">Featuring {{profile.artistName}}</p>
+                <a ng-click="showAll(4)" class="text-white show-all-playlist-profile" data-bs-toggle="modal" data-bs-target="#showProfileArtist-4">
+                    Show All
+                </a>
             </div>
             <div class="row">
                 <div class="col-2 mt-3" ng-repeat="item in listFeaturing | limitTo : 6">
@@ -190,6 +196,9 @@
         <section ng-show="listArtistFanLiked.length >0">
             <div class="title mt-3">
                 <p class="prf-name-title">Fans also like</p>
+                <a ng-click="showAll(5)" class="text-white show-all-playlist-profile" data-bs-toggle="modal" data-bs-target="#showProfileArtist-5">
+                    Show All
+                </a>
             </div>
             <div class="row">
                 <div class="col-2 mt-3" ng-repeat="item in listArtistFanLiked | limitTo : 6">
@@ -215,6 +224,9 @@
         <section ng-show="listAppearOn.length > 0">
             <div class="title mt-3">
                 <p class="prf-name-title">Appears on</p>
+                <a ng-click="showAll(6)" class="text-white show-all-playlist-profile" data-bs-toggle="modal" data-bs-target="#showProfileArtist-6">
+                    Show All
+                </a>
             </div>
             <div class="row">
                 <div class="col-2 mt-3" ng-repeat="item in listAppearOn | limitTo : 6">
@@ -246,6 +258,9 @@
         <section ng-show="listDiscover.length >0">
             <div class="title mt-3">
                 <p class="prf-name-title">Discovered on</p>
+                <a ng-click="showAll(7)" class="text-white show-all-playlist-profile" data-bs-toggle="modal" data-bs-target="#showProfileArtist-7">
+                    Show All
+                </a>
             </div>
             <div class="row">
                 <div class="col-2 mt-3" ng-repeat="item in listDiscover | limitTo : 6">
@@ -277,9 +292,7 @@
             <div class="container-fluid">
                 <div class="title tile-playlist-profile mt-5">
                     <p class="prf-name-title">About</p>
-                    <a href="#!discography/{{profile.artistId}}">
-                        <p class="show-all-playlist-profile">Show All</p>
-                    </a>
+
                 </div>
             </div>
             <div class="col-7 mb-5">
@@ -346,5 +359,109 @@
                 </div>
             </div>
         </section>
+
+        <div class="modal fade " id="showProfileArtist-{{show}}">
+            <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                <div class="modal-content bg-dark">
+
+                    <div class="modal-header">
+                        <button id="modal-show-all" type="button" class="btn-close text-white"
+                            data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div ng-show="show == 4" class="row">
+                            <div class="col-2 mt-3" ng-repeat="item in listFeaturing">
+                                <a href="#!playlist/{{item.playlistId}}" class="text-white">
+                                    <div class="card card-play-list-profile">
+                                        <div class="img-car-profile">
+                                            <img src="{{item.image.url}}" class="card-img-top w-100"
+                                                style="height: 150px; object-fit: cover;" alt="...">
+                                            <i class="bi bi-play-circle-fill icon-play-card-playlist-profile"></i>
+                                        </div>
+                                        <div class="card-body card-body-playlist-profile">
+                                            <h6 class="text-truncate">{{item.playlistName}}</h6>
+                                            <div class="d-flex">
+                                                <p class="card-text-playlist-profile-folow text-truncate">{{item.description}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div ng-show="show == 5" class="row">
+                            <div class="col-2 mt-3" ng-repeat="item in listArtistFanLiked">
+                                <a class="text-white" href="#!artist/{{item.account.artist.artistId}}">
+                                    <div class="card card-play-list-profile">
+                                        <div class="img-car-profile">
+                                            <img src="{{item.account.artist.imagesProfile.url}}" class="card-img-top w-100"
+                                                style="height: 150px; object-fit: cover;" alt="...">
+                                            <i class="bi bi-play-circle-fill icon-play-card-playlist-profile"></i>
+                                        </div>
+                                        <div class="card-body card-body-playlist-profile">
+                                            <h6 class="text-truncate">{{item.account.artist.artistName}}</h6>
+                                            <div class="d-flex">
+                                                <p class="card-text-playlist-profile-folow text-truncate">Artist</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div ng-show="show == 6" class="row">
+                            <div class="col-2 mt-3" ng-repeat="item in listAppearOn">
+                                <a href="#!song/{{item.recordingId}}" class="text-white">
+                                    <div class="card card-play-list-profile">
+                                        <div class="img-car-profile">
+                                            <img src="{{item.tracks.length > 0 ? item.tracks[0].album.image.url : item.song.image.url}}"
+                                                class="card-img-top w-100" style="height: 150px; object-fit: cover;" alt="...">
+                                            <i class="bi bi-play-circle-fill icon-play-card-playlist-profile"></i>
+                                        </div>
+                                        <div class="card-body card-body-playlist-profile">
+                                            <h6 class="text-truncate">{{item.tracks.length > 0 ? item.tracks[0].album.albumName :
+                                                item.song.songName}}</h6>
+                                            <div class="d-flex">
+                                                <p class="card-text-playlist-profile-folow text-truncate">{{item.tracks.length > 0 ?
+                                                    item.tracks[0].album.releaseDate | date: 'yyyy' : item.song.releaseDay | date:
+                                                    'yyyy'}}</p>
+                                                <i class="bi bi-dot"></i>
+                                                <p class="card-text-playlist-profile-folow">{{item.tracks.length > 0 ? 'Album' :
+                                                    'Single'}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div ng-show="show == 7" class="row">
+                            <div class="col-2 mt-3" ng-repeat="item in listDiscover">
+                                <a href="#!playlist/{{item.playlistId}}" class="text-white">
+                                    <div class="card card-play-list-profile">
+                                        <div class="card card-play-list-profile">
+                                            <div class="img-car-profile">
+                                                <img src="{{item.image !== null ? item.image.url : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}"
+                                                    class="card-img-top w-100" style="height: 150px; object-fit: cover;" alt="...">
+                                                <i class="bi bi-play-circle-fill icon-play-card-playlist-profile"></i>
+                                            </div>
+                                            <div class="card-body card-body-playlist-profile">
+                                                <h6 class="text-truncate">{{item.playlistName}}</h6>
+                                                <div class="d-flex">
+                                                    <p class="card-text-playlist-profile-folow text-truncate">{{item.description}}
+                                                    </p>
+                                                </div>
+                                                <p class="card-text-playlist-profile-folow text-truncate">By
+                                                    {{item.usertype.account.username}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 </body>

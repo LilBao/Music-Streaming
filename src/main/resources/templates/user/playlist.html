@@ -15,7 +15,7 @@
                     <p class="text-white-50">{{playlist.description}}</p>
                 </div>
                 <div>
-                    <h6>Ng.vanbao</h6>
+                    <h6>{{playlist.usertype[0].username}}</h6>
                 </div>
             </div>
         </div>
@@ -78,9 +78,9 @@
                 <thead class="border-bottom">
                     <th>#</th>
                     <th ng-click="sort(playlistRE,'title')">Title</th>
-                    <th ng-click="sort(playlistRE,'recordingName')">Album</th>
+                    <!-- <th ng-click="sort(playlistRE,'recordingName')">Album</th> -->
                     <th ng-click="sort(playlistRE,'dateAdded')">Date added</th>
-                    <th class="text-center"><i class="bi bi-stopwatch"></i></th>
+                    <!-- <th class="text-center"><i class="bi bi-stopwatch"></i></th> -->
                 </thead>
                 <tbody>
                     <tr ng-repeat="item in pagination.items(playlistRE) | filter: searchPlaylist track by $index "
@@ -322,7 +322,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="item in listRecommended | limitTo: 10" class="audio align-items-center">
+                        <tr ng-repeat="item in listRecommended track by $index | limitTo: 10" class="audio align-items-center">
                             <td ng-dblclick="selectAudio(item,'song',listRecommended,$index)">
                                 <div class="d-flex align-items-center">
                                     <div class="d-flex">

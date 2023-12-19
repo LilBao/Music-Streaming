@@ -24,7 +24,7 @@ app.config(function($routeProvider) {
   .when("/artist-profile", {
     templateUrl : "Artist/Profile.html",
     controller :"profileArtistCtrl"
-  })
+  }).otherwise({ templateUrl : "Artist/404.html"});
 });
 
 app.service('graphqlService', function ($http) {

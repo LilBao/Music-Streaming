@@ -83,6 +83,7 @@ public class PodcastREST {
 
 	@PutMapping(value="/api/v1/podcast")
 	public ResponseEntity<MessageResponse> updateImage(@RequestBody Podcast podcast){
+		System.out.println(podcast.toString());
 		return ResponseEntity.ok(new MessageResponse(true, "successs", crudPobcast.update(podcast)));
 	}
 	

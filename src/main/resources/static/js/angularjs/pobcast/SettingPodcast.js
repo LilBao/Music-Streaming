@@ -83,14 +83,15 @@ app.controller('myPodcastCtrl',function($scope,$http){
         let url = host+"/v1/podcast";
         let data = angular.copy($scope.podcast);
         data.socialMediaLink = $scope.socials.join(" ");
+        data.tag = JSON.parse($scope.podcast.tag)
         $http.put(url,data).then(resp => {
             if($scope.coverImg!==null){
                 $scope.updateImage(resp.data.data.podcastId);
-                showStickyNotification('Update Successfully', 'success', 3000);
-            }      
-            
+            }
+            localStorage.setItem('podcast',JSON.stringify(resp.data.data));
+            showStickyNotification('Update Successfully', 'success', 3000);
         }).catch(error => {
-
+            console.log(error)
         })
     }
 

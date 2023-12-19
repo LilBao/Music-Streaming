@@ -74,7 +74,8 @@ app.controller('profileArtistCtrl', function ($scope, $http,graphqlService,$cook
                 'Authorization': 'Bearer ' + getCookie('token')
             },
             transformRequest: angular.identity
-        }).then(function (response) {
+        }).then(function (resp) {
+            $scope.artist = resp.data.data;
             showStickyNotification('Update image success', 'success', 3000);
         }).catch(function (error) {
             console.log(error);
@@ -101,7 +102,7 @@ app.controller('profileArtistCtrl', function ($scope, $http,graphqlService,$cook
         $('#close-modified-background').click(function () {
             icon.removeClass("bi-check-lg");
             icon.addClass("bi-pencil-fill");
-            $('.background').attr('src', $scope.artist.backgroundImage);
+            $('.background').attr('src', $scope.artist.backgroundImage.url);
             $('#modified-background').removeClass("save");
             $('#close-modified-background').remove();
         })
@@ -418,8 +419,9 @@ app.controller('profileArtistCtrl', function ($scope, $http,graphqlService,$cook
                 confirm: function () {
                     var data = angular.copy($scope.artist);
                     data.active = false;
-                    data.expirePermission = new Date(currentDate.getTime() + (180 * 24 * 60 * 60 * 1000));
+                    data.expirePermission = new Date(Date.now() + (180 * 24 * 60 * 60 * 1000));
                     $scope.updateArtist(data);
+                    window.location.href="/"
                 },
                 cancel: function () {
 

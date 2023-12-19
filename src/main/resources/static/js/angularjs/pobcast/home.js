@@ -56,6 +56,15 @@ app.controller('homeCtrl',function($scope,$http){
         })
     }
 
+    $scope.findSlide = function(){
+        let url = host + "/v1/display/podcast";
+        $http.get(url, {
+            params: { country: "" }
+        }).then(resp => {
+            $scope.slide = resp.data.data;
+        })
+    }
+    $scope.findSlide();
     $scope.findEpisodeLatest(); 
     $scope.findAllArtical();
     $scope.findAllNews();

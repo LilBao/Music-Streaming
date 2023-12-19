@@ -82,9 +82,12 @@
                                     'Private'}}</label>
                             </div>
                             <div>
-                                <button ng-click="detailEpisode(item.episodeId)" class="btn border-0"
-                                    data-bs-toggle="modal" data-bs-target="#remove-episode"><i
-                                        class="bi bi-trash3"></i></button>
+                                <div>
+                                    <a class="text-white" href="#!analytics/{{item.episodeId}}">Analyse</a>
+                                    <button ng-click="detailEpisode(item.episodeId)" class="btn border-0"
+                                        data-bs-toggle="modal" data-bs-target="#remove-episode"><i
+                                            class="bi bi-trash3"></i></button>
+                                </div>
                             </div>
                             <div class="modal fade" id="remove-episode">
                                 <div class="modal-dialog">

@@ -10,40 +10,28 @@
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <div class="row">
-                        <div class="col-sm-4">
-                            <img src="../../static/img/carousel1.jpg" width="100%" alt="">
-                        </div>
-                        <div class="col-sm-4">
-                            <img src="../../static/img/carousel2.jpg" width="100%" alt="">
-                        </div>
-                        <div class="col-sm-4">
-                            <img src="../../static/img/carousel3.jpg" width="100%" alt="">
+                        <div ng-repeat="item in slide | limitTo: 3" class="col-sm-4">
+                            <a href="{{item.url}}">
+                                <img src="{{item.listImage}}" width="100%" height="350px" style="object-fit: cover;" alt="">
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div class="carousel-item">
+                <div  ng-show="slide.length > 5" class="carousel-item">
                     <div class="row">
-                        <div class="col-sm-4">
-                            <img src="../../static/img/carousel1.jpg" width="100%" alt="">
-                        </div>
-                        <div class="col-sm-4">
-                            <img src="../../static/img/carousel2.jpg" width="100%" alt="">
-                        </div>
-                        <div class="col-sm-4">
-                            <img src="../../static/img/carousel3.jpg" width="100%" alt="">
+                        <div ng-repeat="item in slide | limitTo: 3 : 6" class="col-sm-4">
+                            <a href="{{item.url}}">
+                                <img src="{{item.listImage}}" width="100%" height="350px" style="object-fit: cover;" alt="">
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div class="carousel-item">
+                <div ng-show="slide.length > 8" class="carousel-item">
                     <div class="row">
-                        <div class="col-sm-4">
-                            <img src="../../static/img/carousel1.jpg" width="100%" alt="">
-                        </div>
-                        <div class="col-sm-4">
-                            <img src="../../static/img/carousel2.jpg" width="100%" alt="">
-                        </div>
-                        <div class="col-sm-4">
-                            <img src="../../static/img/carousel3.jpg" width="100%" alt="">
+                        <div ng-repeat="item in slide | limitTo: 3 : 9" class="col-sm-4">
+                            <a href="{{item.url}}">
+                                <img src="{{item.listImage}}" width="100%" height="350px" style="object-fit: cover;" alt="">
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -556,7 +544,7 @@
                     </div>
                     <div class="carousel-item">
                         <div class="row">
-                            <div class="col-sm-2" ng-repeat="item in top50ArtistListen | limitTo : 12 : 6">
+                            <div class="col-sm-2" ng-repeat="item in top50ArtistListen | limitTo : 6 : 6">
                                 <a href="#!artist/{{item.artistId}}">
                                     <div class="card mb-3 border-0 " style="max-width: 540px;">
                                         <div class="card card-play-list-profile">
@@ -579,7 +567,7 @@
                     </div>
                     <div class="carousel-item">
                         <div class="row">
-                            <div class="col-sm-2" ng-repeat="item in top50ArtistListen | limitTo : 18 : 12">
+                            <div class="col-sm-2" ng-repeat="item in top50ArtistListen | limitTo : 6 : 12">
                                 <a href="#!artist/{{item.artistId}}">
                                     <div class="card mb-3 border-0 " style="max-width: 540px;">
                                         <div class="card card-play-list-profile">
@@ -672,7 +660,7 @@
                     </div>
                     <div class="carousel-item">
                         <div class="row">
-                            <div class="col-sm-4" ng-repeat="item in top50SongListen | limitTo : 6 : 3">
+                            <div class="col-sm-4" ng-repeat="item in top50SongListen | limitTo : 3 : 3">
                                 <a href="#!song/{{item.recordingId}}">
                                     <div class="card mb-3" style=" background-color: rgb(24,24,24);">
                                         <div class="row g-0">
@@ -699,7 +687,7 @@
                     </div>
                     <div class="carousel-item">
                         <div class="row">
-                            <div class="col-sm-4" ng-repeat="item in top50SongListen | limitTo : 9 : 6">
+                            <div class="col-sm-4" ng-repeat="item in top50SongListen | limitTo : 3 : 6">
                                 <a href="#!song/{{item.recordingId}}">
                                     <div class="card mb-3" style=" background-color: rgb(24,24,24);">
                                         <div class="row g-0">
@@ -772,7 +760,7 @@
                     </div>
                     <div class="carousel-item">
                         <div class="row">
-                            <div class="col-sm-2" ng-repeat="item in topSongForYou | limitTo : 12 : 6">
+                            <div class="col-sm-2" ng-repeat="item in topSongForYou | limitTo : 6 : 6">
                                 <a href="#!song/{{item.recordingId}}">
                                     <div class="card card-play-list-profile">
                                         <div class="img-car-profile">
@@ -793,7 +781,7 @@
                     </div>
                     <div class="carousel-item">
                         <div class="row">
-                            <div class="col-sm-2" ng-repeat="item in topSongForYou | limitTo : 18 : 12">
+                            <div class="col-sm-2" ng-repeat="item in topSongForYou | limitTo : 6 : 12">
                                 <a href="#!song/{{item.recordingId}}">
                                     <div class="card card-play-list-profile">
                                         <div class="img-car-profile">
@@ -872,7 +860,7 @@
             </div>
         </div>
         <div class="row mb-3">
-            <div class="col-2" ng-repeat="item in topAlbumPopular | limitTo: 5">
+            <div class="col-2" ng-repeat="item in topAlbumPopular | limitTo: 6">
                 <a href="#!album/album/{{item.albumId}}">
                     <div class="card card-play-list-profile">
                         <div class="img-car-profile">
@@ -993,7 +981,7 @@
                     </div>
                     <div class="carousel-item">
                         <div class="row">
-                            <div class="col-sm-2" ng-repeat="item in top50ArtistListen | limitTo : 12 : 6">
+                            <div class="col-sm-2" ng-repeat="item in top50ArtistListen | limitTo : 6 : 6">
                                 <a href="#!episode/{{item.episodeId}}">
                                     <div class="card card-play-list-profile">
                                         <div class="img-car-profile">
@@ -1018,7 +1006,7 @@
                     </div>
                     <div class="carousel-item">
                         <div class="row">
-                            <div class="col-sm-2" ng-repeat="item in top50ArtistListen | limitTo : 18 : 12">
+                            <div class="col-sm-2" ng-repeat="item in top50ArtistListen | limitTo : 6 : 12">
                                 <a href="#!episode/{{item.episodeId}}">
                                     <div class="card card-play-list-profile">
                                         <div class="img-car-profile">

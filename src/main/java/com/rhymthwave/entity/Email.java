@@ -20,7 +20,7 @@ public class Email {
 	private List<File> files;
 	
 	public Email(String to, String subject, String body) {
-		this.from ="nguyenkhoalolm@gmail.com";
+		this.from ="musicstreaming2023@gmail.com";
 		this.to = to;
 		this.subject = subject;
 		this.body = body;

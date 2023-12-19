@@ -37,7 +37,10 @@ public class PlaylistPodcastREST {
 		String owner = host.getEmailByRequest(req);
 		Account account = crudAccount.findOne(owner);
 		UserType basic = account.getUserType().get(0);
-		UserType premium = account.getUserType().get(1);
+		UserType premium = null;
+		if(account.getUserType().size() > 1) {
+			premium = account.getUserType().get(1);
+		}
 		Integer lengthPlaylist=0;
 		if(playlistPodcast.getPlaylist().getPlaylistPodcast()!=null) {
 			lengthPlaylist += playlistPodcast.getPlaylist().getPlaylistPodcast().toArray().length;

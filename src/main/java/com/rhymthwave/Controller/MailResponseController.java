@@ -26,12 +26,12 @@ public class MailResponseController {
 
 	@GetMapping("/confirm-success")
 	public String uiresp() {
-		return "";
+		return "Mail/templateComfirmSuccess";
 	}
 
 	@GetMapping("/confirm-fail")
 	public String uirespFail() {
-		return "";
+		return "Mail/templateComfirmFail";
 	}
 
 	// Test ==> Move to controller

@@ -81,3 +81,6 @@ textarea {
 input:focus {
   border: 1px solid white!important; /* Light blue border */
 }
+::placeholder {
+  color: white!important; 
+}
