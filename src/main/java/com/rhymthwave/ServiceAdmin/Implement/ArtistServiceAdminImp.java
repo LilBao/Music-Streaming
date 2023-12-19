@@ -110,5 +110,11 @@ public class ArtistServiceAdminImp implements IArtistService, INotification<Arti
 		
 	}
 
+	@Override
+	public void sendEmailComfirmUser(String url, String email) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
 
