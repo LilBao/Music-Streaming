@@ -299,7 +299,7 @@
                 <div class="row">
                   <div class="col-sm-2" ng-repeat="innerArray in dataPl | toArray | limitTo: 6">
                     <div class="card play-list">
-                      <a href="#!playlist-art/{{innerArray[19]}}">
+                      <a href="#!playlist/{{innerArray[19]}}">
                         <div class="card-img" style="width: 100%; height: 150px; overflow: hidden;">
                           <img style="width: 100%; height: 100%; object-fit: cover;" ng-src="{{ innerArray[21] !== null ? innerArray[21] : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}" class="card-img-top" alt="Sunset Over the Sea" />
                           <div class="icon">
@@ -377,14 +377,18 @@
                 <div class="row">
                   <div class="col-sm-2" ng-repeat="innerArray in dataProfile | toArray | limitTo: 6">
                     <div class="card play-list">
+                      <a href="#!profile/artist/{{innerArray[3]}}">
                       <div class="card-img" style="width: 100%; height: 150px; overflow: hidden;">
-                        <img style="width: 100%; height: 100%; object-fit: cover;" ng-src="{{ innerArray[2] !== null ? innerArray[2] : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}" class="circle-img card-img-top" alt="Sunset Over the Sea" />
+                        
+                          <img style="width: 100%; height: 100%; object-fit: cover;" ng-src="{{ innerArray[2] !== null ? innerArray[2] : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}" class="circle-img card-img-top" alt="Sunset Over the Sea" />
+                        
                         <div class="icon">
                           <div class="icon-play">
                             <i class="bi bi-play-circle"></i>
                           </div>
                         </div>
                       </div>
+                    </a>
                       <div class="card-play-list">
                         <p class="card-text">{{ innerArray[1] | limitTo: 10}}..</p>
                       </div>
@@ -426,7 +430,7 @@
                 <div class="row">
                   <div class="col-sm-2" ng-repeat="innerArray in dataArt">
                     <a href="#!artist/{{innerArray[3]}}">
-                      <div class="card play-list">
+                      <div class="card play-list mb-4">
                         <div class="card-img" style="width: 100%; height: 150px; overflow: hidden;">
                           <img style="width: 100%; height: 100%; object-fit: cover;" ng-src="{{ innerArray[5] !== null ? innerArray[5] : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}" class="circle-img card-img-top" alt="Sunset Over the Sea" />
                           <div class="icon">
@@ -449,8 +453,8 @@
               <div class="container-fluid bl-t-s">
                 <div class="row">
                   <div class="col-sm-2" ng-repeat="innerArray in dataPl">
-                    <a href="#!playlist-art/{{innerArray[19]}}">
-                      <div class="card play-list">
+                    <a href="#!playlist/{{innerArray[19]}}">
+                      <div class="card play-list mb-4">
                         <div class="card-img" style="width: 100%; height: 150px; overflow: hidden;">
                           <img style="width: 100%; height: 100%; object-fit: cover;" ng-src="{{ innerArray[21] !== null ? innerArray[21] : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}" class="card-img-top" alt="Sunset Over the Sea" />
                           <div class="icon">
@@ -470,7 +474,7 @@
             </div>
             <div id="Songs" class=" tab-pane fade"><br>
               <div class="container-fluid bl-t-s">
-                <table class="table text-white">
+                <table class="table text-white table-borderless"> 
                   <thead>
                     <tr>
                       <th scope="col">#</th>
@@ -481,13 +485,14 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr ng-repeat="innerArray in dataS">
+                    <tr ng-repeat="innerArray in dataS" class="audio">                 
                       <th scope="row">{{ innerArray[9] }}</th>
-                      <td><img style="height: 64px; width: 64px" ng-src="{{ innerArray[12] !== null ? innerArray[12] : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}" class="card-img-top" />
+                      <td>
+                        <a href="#!/song/{{innerArray[25]}}"><img style="height: 64px; width: 64px" ng-src="{{ innerArray[12] !== null ? innerArray[12] : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}" class="card-img-top" /></a>
                       </td>
                       <td>{{ innerArray[10] }}</td>
                       <td>{{ innerArray[7] }}</td>
-                      <td>{{ innerArray[11] }}</td>
+                      <td>{{ innerArray[11] }}</td>                  
                     </tr>
                   </tbody>
                 </table>
@@ -573,14 +578,18 @@
                 <div class="row">
                   <div class="col-sm-2" ng-repeat="innerArray in dataProfile">
                     <div class="card play-list">
+                      <a href="#!profile/artist/{{innerArray[3]}}">
                       <div class="card-img" style="width: 100%; height: 150px; overflow: hidden;">
-                        <img style="width: 100%; height: 100%; object-fit: cover;" ng-src="{{ innerArray[2] !== null ? innerArray[2] : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}" class="circle-img card-img-top" alt="Sunset Over the Sea" />
+                        
+                          <img style="width: 100%; height: 100%; object-fit: cover;" ng-src="{{ innerArray[2] !== null ? innerArray[2] : 'https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg'}}" class="circle-img card-img-top" alt="Sunset Over the Sea" />
+                        
                         <div class="icon">
                           <div class="icon-play">
                             <i class="bi bi-play-circle"></i>
                           </div>
                         </div>
                       </div>
+                    </a>
                       <div class="card-play-list">
                         <p class="card-text">{{ innerArray[1] | limitTo: 10}}..</p>
                       </div>

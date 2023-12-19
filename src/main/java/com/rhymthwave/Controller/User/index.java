@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class index implements ErrorController{
 	
-	@GetMapping("/home")
+	@GetMapping("")
 	public String layoutUser() {
 		return "User/index";
 	}

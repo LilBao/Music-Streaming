@@ -12,9 +12,7 @@ app.controller('myCtrlPodcast', function ($scope, $http, $cookies, $window) {
         headers: { 'Authorization': 'Bearer ' + $cookies.get('token') }
     }).then(resp => {
         $scope.podcast = resp.data.data;
-        console.log($scope.podcast.idrole);
         $scope.id = $scope.podcast.idrole;
-        $scope.hiden = true;
     }).catch(error => {
         console.log(error)
     })
@@ -93,6 +91,19 @@ app.controller('myCtrlPodcast', function ($scope, $http, $cookies, $window) {
     } 
 
     $scope.login = function () {
+        $window.location.href = '/signin';
+    }
+
+    $scope.logout = function () {
+        var now = new Date();
+        now.setUTCFullYear(1970);
+        now.setUTCMonth(0);
+        now.setUTCDate(1);
+        now.setUTCHours(0);
+        now.setUTCMinutes(0);
+        now.setUTCSeconds(0);
+
+        $cookies.put('token', '', { expires: now, path: '/' })
         $window.location.href = '/signin';
     }
 

@@ -201,10 +201,11 @@ public class AdvertisementImpl implements AdvertisementService {
 		}
 
 		Advertisement advertisement = new Advertisement();
-		advertisement.setActive(false);
+//		advertisement.setActive(false);
 		advertisement.setStatus(1);
 		advertisement.setClicked(0L);
 		advertisement.setListened(0L);
+        advertisement.setBudget(dto.getBudget());
 		advertisement.setUrl(dto.getUrl());
 		advertisement.setTitle(dto.getTitle());
 		advertisement.setTag(dto.getTag());
