@@ -56,7 +56,8 @@ public class SecurityConfig implements WebMvcConfigurer {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
+//    	http.formLogin().loginPage("/signin").loginProcessingUrl("/api/v1/accounts/login").defaultSuccessUrl("/", false)
+//		.failureUrl("/signin").usernameParameter("username").passwordParameter("password");
 
         http.cors().and().csrf().disable()
                 .authorizeHttpRequests((authz) -> {
@@ -90,7 +91,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                                                 .requestMatchers( "/api/v1/admin/**","/admin").hasAnyAuthority("MANAGER","STAFF")
 
                                          .requestMatchers("/static/**").permitAll().anyRequest().permitAll()
-                                                .and().exceptionHandling().accessDeniedPage("/error/404");
+                                                .and().exceptionHandling().accessDeniedPage("/signin");
                             } catch (Exception e) {
                                 throw new RuntimeException(e);
                             }
@@ -100,7 +101,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                 .addFilterBefore(jwtAuthentitationFilter(), UsernamePasswordAuthenticationFilter.class);
         http.logout().logoutSuccessUrl("/api/v1/auth/logout")
                 .addLogoutHandler(new SecurityContextLogoutHandler())
-                .clearAuthentication(true);;
+                .clearAuthentication(true);
 
         http.oauth2Login()
                 .loginPage("/signin")

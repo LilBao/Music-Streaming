@@ -33,7 +33,6 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
             $scope.account = resp.data.data;
-            console.log($scope.account);
             $scope.findMyPlaylist($scope.account.email);
             $scope.findMyListFollow();
             $scope.findAdsRunning();
@@ -1700,6 +1699,10 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
         $window.location.href = '/signin';
     }
 
+    $scope.logout = function () {
+        $window.location.href = '/api/v1/auth/logout';
+    }
+
     $scope.accountInfo = function () {
         $window.location.href = '/account';
     }
@@ -1865,5 +1868,7 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
         });
 
     };
-    $scope.getAuthor();
+    if($cookies.get('token')){
+        $scope.getAuthor();
+    }
 })

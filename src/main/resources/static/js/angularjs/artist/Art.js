@@ -12,7 +12,6 @@ app.controller('myCtrl', function ($scope, $http, $cookies, $window) {
         headers: { 'Authorization': 'Bearer ' + $cookies.get('token') }
     }).then(resp => {
         $scope.artist = resp.data.data;
-        console.log($scope.artist);
     }).catch(error => {
         console.log(error)
     })
@@ -87,14 +86,14 @@ app.controller('myCtrl', function ($scope, $http, $cookies, $window) {
             $window.location.href = '/claim';
         } else if ($scope.artist.isVerify === false) {
             //thông báo tài khoản đang trong quá trình xác nhận
-            showStickyNotification('Delete record successfully.', 'success', 3000);
+            showStickyNotification('Your account was been confirm.', 'success', 3000);
         } else if (($scope.artist.active === false) && (new Date($scope.artist.expirePermission) > new Date())) {
             $.confirm({
                 title: 'Your profile is been locking!',
                 content: 'Would you like unlock your profile',
                 buttons: {
                     confirm: function () {
-                        let url = host + "v1/artist"
+                        let url = host + "/v1/artist"
                         var data = angular.copy($scope.artist);
                         data.active = true;
                         data.expirePermission = null
