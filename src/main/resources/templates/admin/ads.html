@@ -343,8 +343,8 @@
                                                          <h1 class="modal-title fs-5" id="exampleModalLabel"> See
                                                             results</h1>
 
-                                                            <div>
-                                                            <button type="button" class="btn btn-success" style="margin-right: 1rem;"
+                                                            <div >
+                                                            <button ng-if="statisticsON.active == true" type="button" class="btn btn-success" style="margin-right: 1rem;" ng-click="sendResult(statisticsON.adId)"
                                                                data-bs-dismiss="modal"><span>Send result</span><i class="bi bi-send-check-fill ms-2"></i>
                                                             </button>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal"

@@ -39,6 +39,7 @@ app.controller("playlistDetailController", function (sortService,graphqlService,
                     recordingName
                     audioFileUrl
                     duration
+                    listened
                     song {
                       songName
                       image {

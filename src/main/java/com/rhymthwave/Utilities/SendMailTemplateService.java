@@ -82,6 +82,15 @@ public class SendMailTemplateService {
 		return templateEngine.process(templateName, context);
 	}
 	
+	public String getAdvertisingResults(Long listened ,  Long clicked  , Long approach, String templateName) {
+		final Context context = new Context();
+		context.setVariable("listened", listened);
+		context.setVariable("clicked", clicked);
+		context.setVariable("approach", approach);
+
+		return templateEngine.process(templateName, context);
+	}
+	
 	public String getContentForReport(String templateName) {
 		final Context context = new Context();
 

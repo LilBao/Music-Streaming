@@ -372,7 +372,7 @@
                                             <tr>
                                                 <th scope="col">#</th>
                                                 <th scope="col">Title</th>
-                                                <th scope="col">Last</th>
+                                                <th scope="col">Listened</th>
                                                 <th scope="col" class="text-end font-size-iconPlaylist">
                                                     <i class="bi bi-clock" style="margin-right: 2.7rem;"></i>
                                                 </th>
@@ -397,7 +397,7 @@
                                                 </td>
 
                                               
-                                                <td>Otto</td>
+                                                <td>{{playlistRecord.recording.listened number | 0}}</td>
                                                 <td class="text-end "> 
                                                    <format-time seconds="playlistRecord.recording.duration"></format-time>
 

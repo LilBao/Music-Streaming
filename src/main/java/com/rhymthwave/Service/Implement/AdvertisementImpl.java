@@ -1,5 +1,14 @@
 package com.rhymthwave.Service.Implement;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.rhymthwave.DAO.AccountDAO;
 import com.rhymthwave.DAO.AdvertismentDAO;
 import com.rhymthwave.DAO.ImageDAO;
@@ -8,20 +17,17 @@ import com.rhymthwave.Request.DTO.AdvertisementDTO;
 import com.rhymthwave.Request.DTO.ResultsADS_DTO;
 import com.rhymthwave.Service.AdvertisementService;
 import com.rhymthwave.Service.CloudinaryService;
+import com.rhymthwave.Service.EmailService;
 import com.rhymthwave.Utilities.GetCurrentTime;
 import com.rhymthwave.Utilities.GetHostByRequest;
+import com.rhymthwave.Utilities.SendMailTemplateService;
 import com.rhymthwave.entity.Advertisement;
+import com.rhymthwave.entity.Email;
 import com.rhymthwave.entity.Image;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import com.rhymthwave.entity.Subscription;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -41,6 +47,10 @@ public class AdvertisementImpl implements AdvertisementService {
 	private final ImageDAO imageDAO;
 
     private static String FOLDER_CONTAINING_IMAGE_NEWS  = "ImageManager";
+    
+	private final EmailService mailService;
+
+	private final  SendMailTemplateService sendMailTemplateSer;
 
 	@Override
 	public Advertisement save(AdvertisementDTO dto, HttpServletRequest request) {
@@ -57,20 +67,31 @@ public class AdvertisementImpl implements AdvertisementService {
 		image.setAccessId(accessId);
 		imageDAO.save(image);
         Advertisement advertisement = new Advertisement();
+        Subscription subscription = subscriptionDAO.findById(dto.getSubscription()).orElse(null);
+
+	     Date currentDate = GetCurrentTime.getTimeNow();
+	
+	     long timestampInSeconds = currentDate.getTime() / 1000 + subscription.getDuration();
+	
+	     long timestampInMillis = timestampInSeconds * 1000L;
+	     
+	     Date calculatedDate = new Date(timestampInMillis);
+        
         advertisement.setActive(true);
         advertisement.setStatus(2);
         advertisement.setUrl(dto.getUrl());
         advertisement.setTitle(dto.getTitle());
         advertisement.setTag(dto.getTag());
         advertisement.setStartDate(GetCurrentTime.getTimeNow());
+        advertisement.setEndDate(calculatedDate);
         advertisement.setContent(dto.getContent());
-        advertisement.setPriority(subscriptionDAO.findById(dto.getSubscription()).orElse(null).getPriority());
+        advertisement.setPriority(subscription.getPriority());
         advertisement.setAudioFile(urlAudio);
         advertisement.setImage(image);
         advertisement.setListened(0L);
         advertisement.setClicked(0L);
         advertisement.setAccount(accountDAO.findById(getIdByRequest.getEmailByRequest(request)).orElse(null));
-        advertisement.setSubscription(subscriptionDAO.findById(dto.getSubscription()).orElse(null));
+        advertisement.setSubscription(subscription);
         return advertisementDAO.save(advertisement);
 	}
 
@@ -127,11 +148,25 @@ public class AdvertisementImpl implements AdvertisementService {
 	}
 
 	@Override
-	public void sendResultsADS(Integer idADS,HttpServletResponse response) {
+	public void sendResultsADS(Integer idADS,HttpServletRequest response) {
 
-
-
+		Advertisement advertisement = getById(idADS);	
+		advertisement.setActive(false);
+		advertisementDAO.save(advertisement);
+		Email email = new Email();
+		email.setFrom("musicstreaming2023@gmail.com");
+		email.setTo(advertisement.getAccount().getEmail());
+		email.setSubject("Advertising results");
+				
+		email.setBody(sendMailTemplateSer.getAdvertisingResults(
+				advertisement.getListened(), advertisement.getClicked(),
+				(advertisement.getListened()+ advertisement.getClicked()),
+				"templateResultAds"));
+		
+		mailService.enqueue(email);
 	}
+	
+
 
 	@Override
 	public Advertisement setStatus(Integer advertisementID, Integer status, HttpServletRequest request) {

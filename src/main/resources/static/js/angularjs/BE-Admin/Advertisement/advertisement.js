@@ -164,6 +164,23 @@ app.controller( "advertisementController", function (graphqlService, $scope, $ht
     
   };
 
+  $scope.sendResult = function (id) {
+    let config = {
+      headers: {
+        "Authorization": "Bearer " + $cookies.get("token")
+      }
+    };
+   
+    let url = apiAds + `/statistics/${id}/send/results`;
+    $http.put(url,config).then(resp => {
+      $scope.getAllAdvertisementRunningAndCompleted();
+      showStickyNotification("successful", "success", 2000); 
+    }).catch(error => {
+      showStickyNotification("Send result", "danger", 2000); 
+      console.log("Error", error)
+    });
+  }
+
     $scope.getAuthor();
     $scope.getAllAdvertisementRunningAndCompleted();
     $scope.getAllAdvertisementPendingAndReject();
