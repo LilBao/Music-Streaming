@@ -57,4 +57,7 @@ public interface AccountDAO extends JpaRepository<Account, String>{
 
 	@Query(value = "SELECT count(*) FROM accounts WHERE DAY(createat) = DAY(GETDATE())",nativeQuery = true)
 	int countAccountCreatedToday();
+	
+	@Query(value = "select COUNT(*) from accounts where isverify = 'false'",nativeQuery = true)
+	int countAccountIsNotVerified();
 }

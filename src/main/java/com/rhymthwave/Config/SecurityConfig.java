@@ -13,15 +13,11 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
@@ -75,17 +71,30 @@ public class SecurityConfig implements WebMvcConfigurer {
                                 "/configuration/security").permitAll()
 
                        .requestMatchers(HttpMethod.GET, "/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/**").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/**").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/**").permitAll()
-                        .requestMatchers(HttpMethod.PATCH, "/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/playlist/**").permitAll()
+//                        .requestMatchers(HttpMethod.PUT, "/**").permitAll()
+//                        .requestMatchers(HttpMethod.DELETE, "/**").permitAll()
+//                        .requestMatchers(HttpMethod.PATCH, "/**").permitAll()
+
+                         .requestMatchers( "/signin","/subscription/**", "/",
+                                           "/error/404","/getstarted/**",
+                                           "/podcast-browse/**" ,
+                                            "/api/v1/accounts/**","/api/v1/auth/**"
+                                            ,"/api/v1/search/**",
+                                            "/home","/graphiql/**").permitAll()
+
+                                .requestMatchers( "/podcaster/**").hasAnyAuthority("PODCAST")
+                                .requestMatchers( "/artist/**").hasAnyAuthority("ARTIST")
+                                .requestMatchers( "/api/v1/admin/**","/admin").hasAnyAuthority("MANAGER","STAFF")
+
+                         .requestMatchers("/static/**").permitAll().anyRequest().permitAll()
                 )
                 .authenticationProvider(AuthenticationProvider())
                 .addFilterBefore(jwtAuthentitationFilter(), UsernamePasswordAuthenticationFilter.class);
         http.logout().logoutSuccessUrl("/api/v1/auth/logout");
 
         http.oauth2Login()
-        //        .loginPage("/api/v1/accounts/login")
+                .loginPage("/signin")
                 .defaultSuccessUrl("/api/v1/auth/success",  true)
                 .failureUrl("/api/v1/auth/fail")
                 .authorizationEndpoint().baseUri("/oauth2");

@@ -92,6 +92,8 @@ public class DashboardService {
     }
 
     public int countAccountCreatedCurren(){ return  accountDAO.countAccountCreatedToday();}
+    
+    public int getCountAccountIsNotVerified(){ return  accountDAO.countAccountIsNotVerified();}
 
     public int incrementCounts(HttpSession session) {
         String sessionId = session.getId();
@@ -108,5 +110,6 @@ public class DashboardService {
         return map;
     }
 
+    
 
 }

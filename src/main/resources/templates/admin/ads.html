@@ -136,12 +136,12 @@
                                        <div class="col-md-8 filter-ads d-flex">
                                           <div class="form col-md-4 mx-2">
                                              <i class="fa fa-search"></i>
-                                             <input type="text" class="form-control form-input" placeholder="Search">
+                                             <input type="text" class="form-control form-input" placeholder="Search" ng-model="search1">
 
                                           </div>
 
                                           <div class=" col-md-4 mx-2">
-                                             <select class="form-select" style="font-size: 16px;" ng-model="status">
+                                             <select class="form-select" style="font-size: 16px;" ng-model="status1">
                                                 <option value="">All</option>
                                                 <option value="2">Running</option>
                                                 <option value="3">Completed</option>
@@ -150,7 +150,7 @@
 
                                           <div class="col-md-2 pt-1">
 
-                                             <a href="" class=" d-inline text-primary" type="reset">Remove</a>
+                                             <a href="#!/ads" class=" d-inline text-primary" type="reset">Reset</a>
                                           </div>
                                          
                                        </div>
@@ -304,7 +304,7 @@
                                                 </thead>
                                                 <tbody>
                                                    <tr class="align-middle"
-                                                      ng-repeat="ads in allAdvertisementRunAndComplete | filter: { status: status }">
+                                                      ng-repeat="ads in allAdvertisementRunAndComplete | filter: search1 | filter: { status: status1 }">
                                                       <th>{{$index + 1}}</th>
                                                       <td>
                                                          <div>
@@ -641,7 +641,7 @@
                                        <div class="col-md-8 filter-ads d-flex">
                                           <div class="form col-5 mx-2">
                                              <i class="fa fa-search"></i>
-                                             <input type="text" class="form-control form-input" placeholder="Search">
+                                             <input type="text" class="form-control form-input" placeholder="Search" ng-model="search2">
 
                                           </div>
 
@@ -679,7 +679,7 @@
                                                 </thead>
                                                 <tbody class="text-center">
                                                    <tr class="align-middle"
-                                                      ng-repeat="ads in allAdvertisementPendingAndReject |filter :{ status:'1'} | orderBy : createDateFilter ">
+                                                      ng-repeat="ads in allAdvertisementPendingAndReject |filter :{ status:'1'} | filter : search2 | orderBy : createDateFilter ">
                                                       <th>{{$index + 1}}</th>
                                                       <td class="text-start">
                                                          <div>
@@ -759,7 +759,7 @@
                                                                                        
                                                                               <div class="audio-test">
                                                                                 
-                                                                                <audio controls   ng-src="{{statisticsON.audioFile}}"></audio>
+                                                                                <audio controls  class="w-100"  ng-src="{{statisticsON.audioFile}}"></audio>
 
                                                                               </div>
                                                                            </div>
@@ -917,7 +917,7 @@
                                    <div class="col-md-8 filter-ads d-flex">
                                       <div class="form col-5 mx-2">
                                          <i class="fa fa-search"></i>
-                                         <input type="text" class="form-control form-input" placeholder="Search">
+                                         <input type="text" class="form-control form-input" placeholder="Search" ng-model="search3">
 
                                       </div>
 
@@ -955,7 +955,7 @@
                                             </thead>
                                             <tbody class="text-center">
                                                <tr class="align-middle"
-                                                  ng-repeat="ads in allAdvertisementPendingAndReject  |filter :{ status:'4'} | orderBy : budgetFilter ">
+                                                  ng-repeat="ads in allAdvertisementPendingAndReject  |filter :{ status:'4'} | filter : search3 | orderBy : budgetFilter ">
                                                   <th>{{$index + 1}}</th>
                                                   <td class="text-start">
                                                      <div>
@@ -1033,9 +1033,9 @@
                                                                  <div class="container mt-2">
                                                                     <div class="row lh-sm mb-3">
                                                                                 
-                                                                       <div class="audio-test">
+                                                                       <div class="audio-test ">
                                                                          
-                                                                         <audio controls   ng-src="{{statisticsON.audioFile}}"></audio>
+                                                                         <audio class="w-100" controls ng-src="{{statisticsON.audioFile}}"></audio>
 
                                                                        </div>
                                                                     </div>

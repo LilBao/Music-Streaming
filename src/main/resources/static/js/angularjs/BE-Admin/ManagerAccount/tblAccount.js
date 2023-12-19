@@ -2,8 +2,9 @@
 var apiAccount = "http://localhost:8080/api/v1/admin/account";
 var apiRole = "http://localhost:8080/api/v1/admin/role";
 var api = "http://localhost:8080/api/v1/admin/statistics";
+var apiApRole = "http://localhost:8080/api/v1/admin/approve-roles";
 var cookieName = "token";
-app.controller("tableAccountController", function (graphqlService, $scope, $http) {
+app.controller("tableAccountController", function (graphqlService, $scope, $http,$cookies) {
 
 	$scope.formUser = {};
 	$scope.items = [];
@@ -95,7 +96,6 @@ app.controller("tableAccountController", function (graphqlService, $scope, $http
 	$scope.profileById = (idUser) => {
 		$http.get(apiAccount + `/${idUser}`).then(resp => {
 			$scope.formUser = resp.data.data;
-			console.log(resp.data)
 			$scope.countRp(idUser);
 			$scope.countWl(idUser);
 			$scope.getFollowAccount(idUser);
@@ -210,11 +210,39 @@ app.controller("tableAccountController", function (graphqlService, $scope, $http
 		  }); 
 	 }
 
+	 $scope.updateRoleStaff = function(idUser) {
+		var config = {
+			headers: {
+			  Authorization: "Bearer " + $cookies.get(cookieName),
+			}
+		  };
 
+		$http.put(apiApRole + `/${idUser}`,config).then(resp => {
+            showStickyNotification("successful", "success", 2000);
+		}).catch(error => {
+			showStickyNotification("fail", "warning", 2000);
+			console.log("Error", error)
+		});
+	}
 
-	 $scope.getStatisticAccount();
-	 $scope.chartMapWorld();
-	
+	$scope.deleteRoleStaff = function(idUser) {
+		var config = {
+			headers: {
+			  Authorization: "Bearer " + $cookies.get(cookieName),
+			}
+		  };
+
+		 $http.delete(apiApRole + `/${idUser}`,config).then(resp => {
+			$scope.load_all_AccountByRole('STAFF');
+            showStickyNotification("successful", "success", 2000);
+		}).catch(error => {
+			showStickyNotification("fail", "warning", 2000);
+			console.log("Error", error)
+		});
+	 }
+
+	$scope.getStatisticAccount();
+	$scope.chartMapWorld();
 	$scope.load_all_AccountByRole('USER');
 	
 })

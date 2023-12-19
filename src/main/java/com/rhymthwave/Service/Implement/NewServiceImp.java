@@ -131,7 +131,7 @@ public class NewServiceImp implements NewService, CRUD<News, Integer>{
 			News newUpdateUrl =	findOne(news.getNewsId());
 			news.setToUrl(toURL+newUpdateUrl.getNewsId());
 			update(newUpdateUrl);
-//			notification.sendNotification(newDTO,urlImage);
+//			notification.sendNotification(newDTO,urlImage+";"+news.getToUrl());
 			
 			return news;
 		} catch (Exception e) {

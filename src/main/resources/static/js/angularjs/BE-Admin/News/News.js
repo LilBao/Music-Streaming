@@ -49,6 +49,7 @@ app.controller("newController", function ($scope, $http, $cookies, $log, $timeou
         var formData = new FormData();
         formData.append("title", item.title);
         formData.append("content", item.content);
+        formData.append("summary", item.summary);
         formData.append("ImageLocation", item.ImageLocation);
         formData.append("role",itemsRole.role.role),
         formData.append("img", file);

@@ -1,10 +1,9 @@
 package com.rhymthwave.Service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.rhymthwave.Request.DTO.AdvertisementDTO;
-import com.rhymthwave.Service.Implement.ResultsADS_DTO;
+import com.rhymthwave.Request.DTO.ResultsADS_DTO;
 import com.rhymthwave.entity.Advertisement;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

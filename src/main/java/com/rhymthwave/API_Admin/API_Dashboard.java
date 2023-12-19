@@ -70,6 +70,11 @@ public class API_Dashboard {
     public ResponseEntity<?> getCountAccountCreatedCurren() {
         return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", dashboardService.countAccountCreatedCurren()));
     }
+    
+    @GetMapping("/count-account/verify")
+    public ResponseEntity<?> getCountAccountIsNotVerified() {
+        return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", dashboardService.getCountAccountIsNotVerified()));
+    }
 
     @GetMapping("/create-byday")
     public ResponseEntity<?> getCountCreateRecordsAndEpisodeByDay(@RequestParam("date") String date) {
