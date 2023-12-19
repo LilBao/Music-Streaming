@@ -42,6 +42,7 @@ app.controller( "advertisementController", function (graphqlService, $scope, $ht
       formData.append("title",  $scope.form.title);
       formData.append("content",  $scope.form.content);
       formData.append("tag",  $scope.form.tag);
+      formData.append("url",  $scope.form.url);
       formData.append("subscription", $scope.form.subscription);
       formData.append("image", imageFile);
       formData.append("audio", audioFile);
