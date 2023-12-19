@@ -32,7 +32,6 @@ app.controller('loginCtrl', function ($scope, $http, $window) {
     $('#loginGoogleId').attr("href","http://localhost:8080/oauth2/google");
     $http.get(url).then(function (resp) {
       if(resp.data.data == true){
-        console.log("ádra")
         window.location="https://viblo.asia.vn";
       }
     })
@@ -43,7 +42,6 @@ app.controller('loginCtrl', function ($scope, $http, $window) {
     $('#loginFacebookId').attr("href","http://localhost:8080/oauth2/facebook");
     $http.get(url).then(function (resp) {
       if(resp.data.data == true){
-        console.log("ádra")
         window.location="https://viblo.asia.vn";
       }
     })

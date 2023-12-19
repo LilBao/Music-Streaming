@@ -96,10 +96,11 @@
                                 <li ng-show="hideni">
                                     <hr class="dropdown-divider">
                                 </li>
-                                <a href="/api/v1/auth/logout">
-                                    <li ng-show="hideni"><a class="dropdown-item" ng-click="logout()"> <i
-                                                class="bi bi-box-arrow-right"></i> Log out</a></li>
-                                </a>
+                                <li ng-show="account.email">
+                                    <a class="dropdown-item" ng-click="logout()"> 
+                                        <i class="bi bi-box-arrow-right"></i> Log out
+                                    </a>
+                                </li>
                             </ul>
                         </figure>
                     </button>
@@ -362,7 +363,8 @@
                                                         Share</a>
                                                 </li>
                                                 <li class="li-dropdown-end">
-                                                    <a href="#!report/playlist/{{item.playlistId}}" class="btn text-white dropdown-item py-2 px-3">
+                                                    <a href="#!report/playlist/{{item.playlistId}}"
+                                                        class="btn text-white dropdown-item py-2 px-3">
                                                         <i class="bi bi-flag-fill"></i>
                                                         Report
                                                     </a>

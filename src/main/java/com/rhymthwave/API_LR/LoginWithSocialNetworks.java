@@ -27,7 +27,7 @@ public class LoginWithSocialNetworks {
     @GetMapping("/api/v1/auth/success")
     public String loginSuccess(OAuth2AuthenticationToken token) {
         loginSuccess.checkLoginWithSocial(token);
-        return "redirect:/home";
+        return "redirect:/";
     }
 
     @GetMapping("/api/v1/auth/fail")

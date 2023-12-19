@@ -102,6 +102,7 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService,$cookies) {
     $scope.outSong = function (listWritter, songId, artistId, idrecord) {
         var writter = listWritter.find(item => item.artist.artistId == artistId && item.song.songId == songId);
         $scope.deleteWritter(writter.writterId);
+        $scope.listMyRecordProject();
         $('#btn-out-song-' + idrecord).click();
     }
 
@@ -977,6 +978,10 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService,$cookies) {
         sentence = lyricsContainer.value.split('\n');
     })
 
+    function scrollToBottom() {
+        afterGenerate.scrollTop = afterGenerate.scrollHeight;
+    }
+
     fileAudio.addEventListener('change', function (event) {
         var file = event.target.files[0];
         audioLyrics.src = URL.createObjectURL(file);
@@ -1007,6 +1012,7 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService,$cookies) {
         lyrics += timeLyrics(audioLyrics.currentTime) + sentence[line].trim() + "\n";
         line++;
         afterGenerate.innerHTML = lyrics;
+        scrollToBottom();
         if (line === sentence.length - 1) {
             const blob = new Blob([lyrics], { type: "text/plain" });
             const url = URL.createObjectURL(blob);
@@ -1016,6 +1022,7 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService,$cookies) {
             a.click();
             URL.revokeObjectURL(url);
             line = 0;
+            btnReset.click();
         }
     })
 
