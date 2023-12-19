@@ -78,6 +78,7 @@ public class ArtistServiceAdminImp implements IArtistService, INotification<Arti
 			authorDAO.save(author);
 
 			artist.setIsVerify(true);
+			artist.setActive(true);
 			artistDAO.save(artist);
 			
 			sendNotification(artist, null);
@@ -106,6 +107,12 @@ public class ArtistServiceAdminImp implements IArtistService, INotification<Arti
 
 	@Override
 	public void sendEmailBan(String email, String message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void sendEmailComfirmUser(String url, String email) {
 		// TODO Auto-generated method stub
 		
 	}

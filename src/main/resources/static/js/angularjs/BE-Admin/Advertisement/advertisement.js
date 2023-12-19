@@ -33,7 +33,7 @@ app.controller( "advertisementController", function (graphqlService, $scope, $ht
 
     $scope.createAds = function(){
 
-      var image = document.getElementById('img-ads');
+      var image = document.getElementById('img-file');
       var audio = document.getElementById('audio-ads');
 
       var imageFile = image.files[0];
@@ -42,6 +42,7 @@ app.controller( "advertisementController", function (graphqlService, $scope, $ht
       formData.append("title",  $scope.form.title);
       formData.append("content",  $scope.form.content);
       formData.append("tag",  $scope.form.tag);
+      formData.append("url",  $scope.form.url);
       formData.append("subscription", $scope.form.subscription);
       formData.append("image", imageFile);
       formData.append("audio", audioFile);
@@ -163,6 +164,23 @@ app.controller( "advertisementController", function (graphqlService, $scope, $ht
     });
     
   };
+
+  $scope.sendResult = function (id) {
+    let config = {
+      headers: {
+        "Authorization": "Bearer " + $cookies.get("token")
+      }
+    };
+   
+    let url = apiAds + `/statistics/${id}/send/results`;
+    $http.put(url,config).then(resp => {
+      $scope.getAllAdvertisementRunningAndCompleted();
+      showStickyNotification("successful", "success", 2000); 
+    }).catch(error => {
+      showStickyNotification("Send result", "danger", 2000); 
+      console.log("Error", error)
+    });
+  }
 
     $scope.getAuthor();
     $scope.getAllAdvertisementRunningAndCompleted();

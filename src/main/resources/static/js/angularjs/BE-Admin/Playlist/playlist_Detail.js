@@ -39,6 +39,7 @@ app.controller("playlistDetailController", function (sortService,graphqlService,
                     recordingName
                     audioFileUrl
                     duration
+                    listened
                     song {
                       songName
                       image {
@@ -195,6 +196,10 @@ app.controller("playlistDetailController", function (sortService,graphqlService,
 
 
     $scope.findByPlaylistId(idPlaylist);
+
+    $("#image-preview").click(function () {
+        $("#imagePlaylist-edit").click();
+    });
 
     // Change Image
     $("#imagePlaylist-edit").change(function () {

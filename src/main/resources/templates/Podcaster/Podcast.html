@@ -32,9 +32,9 @@
                     <img src="../../static/img/logo.png" alt="" width="117">
                 </a>
                 <div>
-                    <button class="btn text-white" ng-show="!podcast.podcastId" ng-click="login()">Login</button>
-                    <a href="/api/v1/auth/logout" ng-show="podcast.podcastId"><button class="btn text-white" ng-click="logout()">Logout</button></a> 
-                    <button class="btn text-white" ng-show="podcast.podcastId" ng-click="getAccessPodcast()">Get Access</button>
+                    <button class="btn text-white" ng-show="!podcast.idrole" ng-click="login()">Login</button>
+                    <a href="/api/v1/auth/logout" ng-show="podcast.idrole"><button class="btn text-white" ng-click="logout()">Logout</button></a> 
+                    <button class="btn text-white" ng-show="podcast.idrole" ng-click="getAccessPodcast()">Get Access</button>
                 </div>
             </div>
         </nav>

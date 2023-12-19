@@ -61,16 +61,6 @@ public class SignUpAPI {
 		return ResponseEntity.ok(new MessageResponse(true, "Success! Please, check your email for to complete your signUp"));
 	}
 
-	@GetMapping("/verifyEmail")
-	public ResponseEntity<?> verifyEmail(@RequestParam("token") String verificationToken) {
-		Account account = accountDAO.findByVerificationCode(verificationToken);
-		if(account == null) {
-			return ResponseEntity.ok(new MessageResponse(false, "verificationToken is exist!!!"));
-		}
-		signUpServiceImpl.verifyEmail(account);		
-		return ResponseEntity.ok("Verified successfully");
-	}
-
 	private String applicationUrl(HttpServletRequest request) {
 
 		return "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();

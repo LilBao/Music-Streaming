@@ -4,7 +4,7 @@ var host = "http://localhost:8080/api";
 app.controller('signupCtrl', function($scope, $http) {
     $scope.signupRequest = {};
 
-    var countryList = [
+    $scope.countryList = [
         { name: "Vietnam", code: "VN" },
         { name: "United States", code: "US" },
         { name: "Canada", code: "CA" },
@@ -19,11 +19,46 @@ app.controller('signupCtrl', function($scope, $http) {
         { name: "Russia", code: "RU" },
         { name: "South Korea", code: "KR" },
         { name: "Mexico", code: "MX" },
-        { name: "South Africa", code: "ZA" }
+        { name: "South Africa", code: "ZA" },
+        { name: "Italy", code: "IT" },
+        { name: "Spain", code: "ES" },
+        { name: "Netherlands", code: "NL" },
+        { name: "Belgium", code: "BE" },
+        { name: "Switzerland", code: "CH" },
+        { name: "Sweden", code: "SE" },
+        { name: "Norway", code: "NO" },
+        { name: "Denmark", code: "DK" },
+        { name: "Finland", code: "FI" },
+        { name: "Austria", code: "AT" },
+        { name: "Greece", code: "GR" },
+        { name: "Turkey", code: "TR" },
+        { name: "Israel", code: "IL" },
+        { name: "Saudi Arabia", code: "SA" },
+        { name: "UAE", code: "AE" },
+        { name: "Egypt", code: "EG" },
+        { name: "Nigeria", code: "NG" },
+        { name: "Kenya", code: "KE" },
+        { name: "Argentina", code: "AR" },
+        { name: "Chile", code: "CL" },
+        { name: "Colombia", code: "CO" },
+        { name: "Peru", code: "PE" },
+        { name: "New Zealand", code: "NZ" },
+        { name: "Thailand", code: "TH" },
+        { name: "Singapore", code: "SG" },
+        { name: "Malaysia", code: "MY" },
+        { name: "Indonesia", code: "ID" },
+        { name: "Philippines", code: "PH" },
+        { name: "Pakistan", code: "PK" },
+        { name: "Bangladesh", code: "BD" },
+        { name: "Sri Lanka", code: "LK" },
+        { name: "Iran", code: "IR" },
+        { name: "Iraq", code: "IQ" },
+        { name: "Vietnam", code: "VN" }
     ];
+    
 
     $scope.mapCountryCode = function(countryName) {
-        var selectedCountry = countryList.find(function(country) {
+        var selectedCountry = $scope.countryList.find(function(country) {
             return country.name.toLowerCase() === countryName.toLowerCase();
         });
         return selectedCountry ? selectedCountry.code : null;

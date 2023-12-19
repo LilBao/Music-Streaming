@@ -1,13 +1,25 @@
 package com.rhymthwave.Controller.User;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.rhymthwave.DAO.AccountDAO;
+import com.rhymthwave.Service_LR.Implement.SignUpServiceImpl;
+import com.rhymthwave.entity.Account;
 
 @Controller
 public class index implements ErrorController{
 	
-	@GetMapping("")
+	@Autowired
+	private AccountDAO accountDAO;
+	
+	@Autowired
+	private SignUpServiceImpl signUpServiceImpl;
+	
+	@GetMapping("/")
 	public String layoutUser() {
 		return "User/index";
 	}
@@ -60,5 +72,15 @@ public class index implements ErrorController{
 	public String getErrorPath() {
         return "/error/404";
     }
+	
+	@GetMapping("/api/v1/accounts/verifyEmail")
+	public String verifyEmail(@RequestParam("token") String verificationToken) {
+		Account account = accountDAO.findByVerificationCode(verificationToken);
+		if(account == null) {
+			return "redirect:/signup";
+		}
+		signUpServiceImpl.verifyEmail(account);		
+		return "redirect:/signin" ;
+	}
 
 }

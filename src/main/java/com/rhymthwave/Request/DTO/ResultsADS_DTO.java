@@ -1,4 +1,4 @@
-package com.rhymthwave.Service.Implement;
+package com.rhymthwave.Request.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

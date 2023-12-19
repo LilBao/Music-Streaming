@@ -1,10 +1,9 @@
 package com.rhymthwave.Service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.rhymthwave.Request.DTO.AdvertisementDTO;
-import com.rhymthwave.Service.Implement.ResultsADS_DTO;
+import com.rhymthwave.Request.DTO.ResultsADS_DTO;
 import com.rhymthwave.entity.Advertisement;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,7 +20,7 @@ public interface AdvertisementService extends CRUD<Advertisement, Long> {
 
     List<ResultsADS_DTO> getResultsADS(Integer idADS);
 
-    void sendResultsADS(Integer idADS,HttpServletResponse response);
+    void sendResultsADS(Integer idADS,HttpServletRequest response);
 
     Advertisement setStatus(Integer advertisementID, Integer status, HttpServletRequest request);
     
