@@ -112,7 +112,7 @@ app.controller('accountCtrl', function ($scope, $http, $cookies) {
 
   $scope.logout = async function () {
     try {
-      const response = await $http.put(apiAccount + `/signin`, {}, {
+      const response = await $http.put(apiAccount + `/logout`, {}, {
         headers: {
           'Authorization': 'Bearer ' + $cookies.get(cookieName)
         }

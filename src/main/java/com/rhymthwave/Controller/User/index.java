@@ -2,16 +2,13 @@ package com.rhymthwave.Controller.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.rhymthwave.DAO.AccountDAO;
-import com.rhymthwave.DTO.MessageResponse;
 import com.rhymthwave.Service_LR.Implement.SignUpServiceImpl;
 import com.rhymthwave.entity.Account;
-import com.stripe.model.billingportal.Session.Flow.AfterCompletion.Redirect;
 
 @Controller
 public class index implements ErrorController{
@@ -22,7 +19,7 @@ public class index implements ErrorController{
 	@Autowired
 	private SignUpServiceImpl signUpServiceImpl;
 	
-	@GetMapping("/home")
+	@GetMapping("/")
 	public String layoutUser() {
 		return "User/index";
 	}

@@ -93,78 +93,21 @@
                 </div>
                 <div class="row">
                     <div ng-repeat="sub in bas" class="pr-pick-column col-md-4 col-sm-4">
-                        <div class="card card-content shadow" >
+                        <div class="card card-content shadow">
                             <div class="card-body">
                                 <div class="pr-pick-columnp-tt1">One-time payment</div>
                                 <h3 class="card-title">{{sub.subscriptionType}}</h3>
                                 <p class="card-text">From {{sub.price}}₫/{{sub.duration}} day</p>
                                 <hr>
-                                <button class="pr-pick-btn" ng-click="startAdvertising(sub.priority) ; findSubById(sub.subscriptionId)" 
+                                <button class="pr-pick-btn"
+                                    ng-click="startAdvertising(sub.priority) ; findSubById(sub.subscriptionId)"
                                     data-bs-toggle="modal" data-bs-target="#myModal">Get Started</button>
                                 <p class="pr-pick-column-term"><a href="">Terms and conditions apply.</a></p>
                             </div>
                         </div>
-                
-                        <!-- <div class="modal" id="myModal-{{sub.subscriptionId}}">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                               
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Buy ads</h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                    </div>
-                
-                               
-                                    <form ng-submit="buyads()" enctype="multipart/form-data">
-                                        <div class="modal-body">
-                                            <div class="mb-3">
-                                                <label class="form-label">Title</label>
-                                                <input ng-model="req.title" type="text" class="form-control" id="title">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Url</label>
-                                                <input ng-model="req.url" type="url" class="form-control" id="url">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Tag</label>
-                                                <input ng-model="req.tag" type="text" class="form-control" id="tag">
-                                            </div>
-                                            <div hidden>
-                                                <input type="text" id="subscriptionId" value="{{sub.subscriptionId}}">
-                                            </div>
-                                            <div hidden>
-                                                <input type="text" id="priority" value="{{sub.priority}}">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Target Audience</label>
-                                                <input ng-model="req.target" type="text" class="form-control" id="target">
-                                            </div>
-                                            <div class="mb-3" ng-show="!hiden">
-                                                <label class="form-label">Content</label>
-                                                <textarea ng-model="req.content" class="form-control" id="content" rows="3"></textarea>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Banner</label>
-                                                <input class="form-control" type="file" id="banner">
-                                            </div>
-                                            <div class="mb-3" ng-show="!hiden">
-                                                <label class="form-label">Audio</label>
-                                                <input class="form-control" type="file" id="audio"  >
-                                            </div>
-                                        </div>
-                
-                                   
-                                        <div class="modal-footer">
-                                            <button type="submit" class="btn btn-success">Submit</button>
-                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div> -->
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -184,7 +127,8 @@
                                 <h3 class="card-title">{{sub.subscriptionType}}</h3>
                                 <p class="card-text">From {{sub.price}}₫/ {{sub.duration}} day</p>
                                 <hr>
-                                <button class="pr-pick-btn"  ng-click="startAdvertising(sub.priority); findSubById(sub.subscriptionId)" 
+                                <button class="pr-pick-btn"
+                                    ng-click="startAdvertising(sub.priority); findSubById(sub.subscriptionId)"
                                     data-bs-toggle="modal" data-bs-target="#myModal">Get Started</button>
                                 <p class="pr-pick-column-term"><a href="">Terms and conditions apply.</a></p>
                             </div>
@@ -286,7 +230,7 @@
                 </div>
 
                 <!-- Modal body -->
-                <form ng-submit="buyads()" enctype="multipart/form-data">
+                <form enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="form-label">Title</label>
@@ -314,14 +258,38 @@
                         </div>
                         <div class="mb-3" ng-show="!hiden">
                             <label class="form-label">Audio</label>
-                            <input class="form-control" type="file" id="audio"  >
+                            <input class="form-control" type="file" id="audio">
                         </div>
                     </div>
-
-               
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Submit</button>
+                    <!-- <div class="modal-footer">
+                        <button type="submit" class="btn btn-success" data-bs-toggle="modal"
+                            data-bs-target="#myModal-bill">Submit</button>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    </div> -->
+
+                    <div class="my-4 d-flex justify-content-end">
+                        <button type="button" class="btn bg-dark text-white" data-bs-toggle="collapse"
+                            data-bs-target="#auto">Payment method</button>
+                        <button id="#btn-close-ads" type="button" class="btn btn-danger mx-4" data-bs-dismiss="modal">Close</button>
+                    </div>
+
+                    <div id="auto" class="collapse mb-4">
+                        <div>
+                            <button ng-click="payment('vnpay')" class="btn w-100 border" id="btn-payment-vnpay"><img
+                                    style="width: 50px; height: 50px; object-fit: cover;"
+                                    src="https://res.cloudinary.com/div9ldpou/image/upload/v1700104153/Background/System/Icon-VNPAY-QR_lmd6lp.webp"
+                                    alt=""></button>
+                        </div>
+                        <div class="mt-3">
+                            <button ng-click="payment('paypal')" class="btn w-100 border" id="btn-payment-paypal">
+                                <i class="display-6 i bi-paypal"></i>
+                            </button>
+                        </div>
+                        <div ng-show="ads.subscription.prdStripeId !==null" class="mt-3">
+                            <button ng-click="payment('stripe')" class="btn w-100 border" id="btn-payment-stripe">
+                                <i class="display-6 bi bi-stripe"></i>
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>

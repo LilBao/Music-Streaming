@@ -1,4 +1,4 @@
-var app = angular.module("myApp", ["ngRoute","ngCookies", "angular.filter"]);
+var app = angular.module("myApp", ["ngRoute","ngCookies", "angular.filter","angular-jwt"]);
 app.config(function ($routeProvider,$httpProvider) {
     $routeProvider
         .when("/", {

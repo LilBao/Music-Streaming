@@ -1,6 +1,6 @@
 var host = "http://localhost:8080/api/";
 var token = "token";
-app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioService, queueService, graphqlService, $sce, $cookies, $window, $location) {
+app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioService, queueService, graphqlService, $sce, $cookies, $window, $location, jwtHelper) {
     $('#myModal').modal('show');
     //variable of sidebar
     $scope.account = {};
@@ -33,6 +33,7 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
             $scope.account = resp.data.data;
+            console.log($scope.account);
             $scope.findMyPlaylist($scope.account.email);
             $scope.findMyListFollow();
             $scope.findAdsRunning();
@@ -1716,6 +1717,18 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
         $window.location.href = '/account';
     }
 
+    $scope.artistPage = function () {
+        $window.location.href = '/artist/home';
+    }
+
+    $scope.podcastPag = function () {
+        $window.location.href = '/podcast/home';
+    }
+
+    $scope.adminPage = function () {
+        $window.location.href = '/admin';
+    }
+
     // $scope.redirectToProfile = function (username) {
     //     var newUrl = '#!/profile/user/' + username;
     //     $window.location.href = newUrl;
@@ -1755,7 +1768,7 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
         }
     });
     $scope.searchHiden = true;
-    
+
     $scope.searchKeyword = '';
     $scope.data = {};
     $scope.dataArt = {};
@@ -1855,4 +1868,15 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
             $scope.dataGr = {};
         }
     });
+
+    $scope.getAuthor = function () {
+        var token = $cookies.get("token");
+        var decodeToken = jwtHelper.decodeToken(token);
+        decodeToken.role.forEach(element => {
+            if (element.authority === "MANAGER" || element.authority === "STAFF")
+                $scope.hidenAdmin = true;
+        });
+
+    };
+    $scope.getAuthor();
 })

@@ -83,10 +83,10 @@ public class SecurityConfig implements WebMvcConfigurer {
                                                            "/error/404","/getstarted/**",
                                                             "/api/v1/accounts/**","/api/v1/auth/**"
                                                             ,"/api/v1/search/**","/podcast/home",
-                                                            "/home","/graphiql/**").permitAll()
+                                                            "/home","/graphiql/**","/artist/home").permitAll()
 
                                                 .requestMatchers( "/podcaster","/podcast-browse" ).hasAnyAuthority("PODCAST")
-                                                .requestMatchers( "/artist","/artist/home").hasAnyAuthority("ARTIST")
+                                                .requestMatchers( "/artist").hasAnyAuthority("ARTIST")
                                                 .requestMatchers( "/api/v1/admin/**","/admin").hasAnyAuthority("MANAGER","STAFF")
 
                                          .requestMatchers("/static/**").permitAll().anyRequest().permitAll()
