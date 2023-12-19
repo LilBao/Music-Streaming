@@ -141,7 +141,7 @@
                     class="tab-pane fade">
                     <div ng-if="listAlbum.length > 0" class="row">
                         <div class="col-2 mt-3" ng-repeat="item in listAlbum | limitTo : 6">
-                            <a href="#!album/{{item.albumId}}" class="text-white">
+                            <a href="#!album/album/{{item.albumId}}" class="text-white">
                                 <div class="card card-play-list-profile">
                                     <div class="img-car-profile">
                                         <img src="{{item.image.url}}" class="card-img-top w-100"

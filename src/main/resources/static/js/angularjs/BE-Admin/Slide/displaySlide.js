@@ -36,9 +36,11 @@ app.controller("displaySlideController", function ($scope, $http, $cookies, $log
 		var fileInput = document.getElementById('img');
 		var file = fileInput.files[0];
 
+		let item = angular.copy($scope.form);
 		var formData = new FormData();
 		formData.append('position', $scope.selectedPosition);
 		formData.append('img', file);
+		formData.append('urlSlide',item.urlSlide)
 
 		var config = {
 			headers: {
@@ -61,9 +63,11 @@ app.controller("displaySlideController", function ($scope, $http, $cookies, $log
 		var url = apiSlidePosition + '/' + accessId;
 		var fileInput = document.getElementById('img');
 		var file = fileInput.files[0];
+		let items = angular.copy($scope.form);
 
 		var formData = new FormData();
 		formData.append('img', file);
+		formData.append('urlSlide',items.urlSlide)
 
 		var config = {
 			headers: {

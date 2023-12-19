@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationListener;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Component;
 
 
 import com.rhymthwave.DAO.AccountDAO;
+import com.rhymthwave.Request.DTO.NewDTO;
+import com.rhymthwave.ServiceAdmin.INotification;
 import com.rhymthwave.Service_LR.Implement.SignUpServiceImpl;
 import com.rhymthwave.entity.Account;
 import com.rhymthwave.event.SignUpCompleteEvent;
@@ -39,6 +42,9 @@ public class SignUpCompleteEventListener implements ApplicationListener<SignUpCo
 	@Autowired
 	private AccountDAO accountDAO;
 	
+	@Qualifier("sendNotificationOfNews")
+	private final INotification<NewDTO> notification;
+	
 	@Override
 	public void onApplicationEvent(SignUpCompleteEvent event) {
 		account = event.getAccount();
@@ -60,20 +66,21 @@ public class SignUpCompleteEventListener implements ApplicationListener<SignUpCo
 	}
 	
 	public void sendVerificationEmail(String url) throws MessagingException, UnsupportedEncodingException {
-		String subject = "Email Verification";
-        String senderName = "User Registration Portal Service";
-        String mailContent = "<p> Hi, "+ account.getUsername()+ ", </p>"+
-                "<p>Thank you for registering with us,"+"" +
-                "Please, follow the link below to complete your registration.</p>"+
-                "<a href=\"" +url+ "\">Verify your email to activate your account</a>"+
-                "<p> Thank you <br> Users Registration Portal Service";
-        MimeMessage message = mailSender.createMimeMessage();
-        var messageHelper = new MimeMessageHelper(message);
-        messageHelper.setFrom("nguyenkhoalolm@gmail.com", senderName);
-        messageHelper.setTo(account.getEmail());
-        messageHelper.setSubject(subject);
-        messageHelper.setText(mailContent, true);
-        mailSender.send(message);
+		notification.sendEmailComfirmUser(url,account.getEmail());
+//		String subject = "Email Verification";
+//        String senderName = "User Registration Portal Service";
+//        String mailContent = "<p> Hi, "+ account.getUsername()+ ", </p>"+
+//                "<p>Thank you for registering with us,"+"" +
+//                "Please, follow the link below to complete your registration.</p>"+
+//                "<a href=\"" +url+ "\">Verify your email to activate your account</a>"+
+//                "<p> Thank you <br> Users Registration Portal Service";
+//        MimeMessage message = mailSender.createMimeMessage();
+//        var messageHelper = new MimeMessageHelper(message);
+//        messageHelper.setFrom("nguyenkhoalolm@gmail.com", senderName);
+//        messageHelper.setTo(account.getEmail());
+//        messageHelper.setSubject(subject);
+//        messageHelper.setText(mailContent, true);
+//        mailSender.send(message);
     }
 
 

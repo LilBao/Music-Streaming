@@ -2,6 +2,7 @@ package com.rhymthwave.DAO;
 
 import java.util.List;
 
+import com.rhymthwave.DTO.NumberCreateRecordAndEpisodeByDate;
 import com.rhymthwave.entity.Recording;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -45,5 +46,6 @@ public interface EpisodeDAO extends JpaRepository<Episode, Long>{
 
 	List<Episode> findTop100ByOrderByListenedDesc();
 
-
+	@Query(value = "exec sp_getEpisodesCount :datetime", nativeQuery = true)
+	List<NumberCreateRecordAndEpisodeByDate> countCreateEpisodeByDay(@Param("datetime") String day );
 }

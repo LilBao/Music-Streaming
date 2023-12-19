@@ -2,9 +2,9 @@ package com.rhymthwave.Service;
 
 import java.util.List;
 
-import com.rhymthwave.entity.Slide;
+import com.rhymthwave.DTO.SlideDTO;
 
 public interface DisplayImageService {
 
-	List<Slide> displayImageByPosition(String position);
+	List<SlideDTO> displayImageByPosition(String position);
 }

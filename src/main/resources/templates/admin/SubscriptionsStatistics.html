@@ -186,7 +186,7 @@
                                                     {{statistics.nip }}
                                                 </td>
                                                 <td class="text-center">
-                                                    {{statistics.userTypes.length }}
+                                                    {{statistics.userTypes.length | number : 0}}
                                                 </td>
                                             </tr>
 
@@ -228,7 +228,7 @@
                                         <tbody>
 
                                            
-                                            <tr ng-repeat="statistics in statistics | filter: { subscriptionCategory: 'ADVERTISEMENT' } | orderBy: 'userTypes.length':'false'">
+                                            <tr ng-repeat="statistics in statistics | filter: { subscriptionCategory: 'ADVERTISEMENT', subscriptionType: '!MASTER' } | orderBy: 'userTypes.length':false">
                                                 <th class="text-center" scope="row">{{$index + 1}}</th>
 
                                                 <td class="text-center">
@@ -240,7 +240,7 @@
                                                 <td class="text-center">{{statistics.price}}</td>
                                                 <td class="text-center">{{statistics.duration }} Days</td>
                                                 <td class="text-center">
-                                                    {{statistics.userTypes.length }}
+                                                    {{statistics.advertisement.length | number : 0}}
                                                 </td>
                                             </tr>
 

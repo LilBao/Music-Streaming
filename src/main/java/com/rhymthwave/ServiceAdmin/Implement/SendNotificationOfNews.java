@@ -38,9 +38,9 @@ public class SendNotificationOfNews implements INotification<NewDTO> {
 		for (Account account : listAccounts) {
 			log.info(">>>>>>>>> Email: {} accout with role: {}",account.getEmail(),noti.role());
 			Email email = new Email();
-			email.setFrom("ngonhien3103@gmail.com");
+			email.setFrom("musicstreaming2023@gmail.com");
 			email.setTo(account.getEmail());
-			email.setSubject(noti.title().toUpperCase());
+			email.setSubject(noti.summary().toUpperCase());
 			email.setBody(sendMailTemplateSer.getContentForNews(noti.title(), "templateNews", noti.summary(),
 					urlImg));
 			log.info(">>>>>>>>> Email dang hoat dong");
@@ -67,6 +67,16 @@ public class SendNotificationOfNews implements INotification<NewDTO> {
 		emails.setTo(email);
 		emails.setSubject("Warring Account");
 		emails.setBody(sendMailTemplateSer.getContentForReport("templateWarring"));
+		mailService.enqueue(emails);
+	}
+	@Override
+	public void sendEmailComfirmUser(String url,String email) {
+		Account accounts = accountDAO.findByEmail(email);
+		Email emails = new Email();
+		emails.setFrom("musicstreaming2023@gmail.com");
+		emails.setTo(email);
+		emails.setSubject("Email comfirm account");
+		emails.setBody(sendMailTemplateSer.getContentForConfirmAccount("templateComfirmUserSuccess",url,email));
 		mailService.enqueue(emails);
 	}
 }

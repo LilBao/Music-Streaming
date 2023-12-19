@@ -8,14 +8,16 @@ app.filter("sortField",function(input){
 
 app.controller("playlistDetailController", function (sortService,graphqlService, $scope, $http, $cookies, $routeParams) {
 
-    $scope.arraySort = ["Song Name","Duration"];
+    $scope.arraySort = ["recording.recordingName","recording.duration"];
 
     var idPlaylist = $routeParams.id;
     var listPlaylist = {};
 
     $scope.field = "#";
-    $scope.setSortField = function(idSortField){
+    $scope.sortFields = "recording.recordingName";
     
+    $scope.setSortField = function(idSortField){
+        $scope.sortFields = idSortField
         $scope.field = idSortField;
     }
 
@@ -37,6 +39,7 @@ app.controller("playlistDetailController", function (sortService,graphqlService,
                     recordingName
                     audioFileUrl
                     duration
+                    listened
                     song {
                       songName
                       image {
@@ -60,9 +63,7 @@ app.controller("playlistDetailController", function (sortService,graphqlService,
                     $scope.listPlaylist.playlistRecords.forEach(element => {
                         $scope.totalDuration += element.recording.duration;
                     });
-
-                 
-                
+                $scope.setFontTitlePlaylist( $scope.listPlaylist.playlistName);
             })
             .catch(error => {
                 console.log(error);
@@ -70,6 +71,53 @@ app.controller("playlistDetailController", function (sortService,graphqlService,
             });
     }
 
+    $scope.setFontTitlePlaylist = function(title) {
+        if (title.length >= 10) {
+            $("#namePlaylist").css("font-size", "30px");
+            $("#playlistDescription").css("font-size", "15px");
+        }
+    }
+
+    $scope.findByPlaylistIdE = function (idPlaylist) {
+
+        const queryPlaylist = `{
+            getPlayListById(idPlaylist: ${idPlaylist}) {
+              playlistName
+              quantity
+              isPublic
+              description
+              playlistPodcast {
+                dateAdded
+                episode {
+                  episodeTitle
+                  fileUrl
+                  duration
+                  podcast {
+                    podcastName
+                    authorName
+                  }
+                  image {
+                    url
+                  }
+                  
+                }
+              }
+            }
+          }`;
+        graphqlService.executeQuery(queryPlaylist)
+            .then(data => {
+
+                $scope.listPlaylistE = data.getPlayListById;
+                $scope.totalDurationE =0;
+                    $scope.listPlaylistE.playlistPodcast.forEach(element => {
+                        $scope.totalDurationE += element.episode.duration;
+                    });
+            })
+            .catch(error => {
+                console.log(error);
+
+            });
+    }
     $scope.removeRecordFromPlaylist = function (id) {
 
         var config = {
@@ -148,6 +196,10 @@ app.controller("playlistDetailController", function (sortService,graphqlService,
 
 
     $scope.findByPlaylistId(idPlaylist);
+
+    $("#image-preview").click(function () {
+        $("#imagePlaylist-edit").click();
+    });
 
     // Change Image
     $("#imagePlaylist-edit").change(function () {

@@ -1,6 +1,6 @@
 var host = "http://localhost:8080/api/";
 var token = "token";
-app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioService, queueService, graphqlService, $sce, $cookies) {
+app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioService, queueService, graphqlService, $sce, $cookies, $window, $location, jwtHelper) {
     $('#myModal').modal('show');
     //variable of sidebar
     $scope.account = {};
@@ -33,9 +33,11 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
             $scope.account = resp.data.data;
+            console.log($scope.account);
             $scope.findMyPlaylist($scope.account.email);
             $scope.findMyListFollow();
-
+            $scope.findAdsRunning();
+            $scope.hideni = true;
         })
     }
     if ($cookies.get(token)) {
@@ -1695,15 +1697,173 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
     }
 
     $scope.signin = function () {
-        $window.location.href = 'http://127.0.0.1:5500/src/main/resources/templates/user/login.html';
+        $window.location.href = '/signin';
     }
 
-    $scope.account = function () {
-        $window.location.href = 'http://127.0.0.1:5500/src/main/resources/templates/user/account.html';
+    $scope.accountInfo = function () {
+        $window.location.href = '/account';
     }
 
-    $scope.redirectToProfile = function (username) {
-        var newUrl = '#!/profile/user/' + username;
-        $window.location.href = newUrl;
+    $scope.artistPage = function () {
+        $window.location.href = '/artist/home';
+    }
+
+    $scope.podcastPag = function () {
+        $window.location.href = '/podcast/home';
+    }
+
+    $scope.adminPage = function () {
+        $window.location.href = '/admin';
+    }
+
+    // $scope.redirectToProfile = function (username) {
+    //     var newUrl = '#!/profile/user/' + username;
+    //     $window.location.href = newUrl;
+    // };
+
+    // btn back and forward
+    $("#back").on("click", function () {
+        history.back();
+    });
+
+    $("#forward").on("click", function () {
+        history.forward();
+    });
+
+    $(window).on('hashchange', function () {
+        // Lấy giá trị hash từ URL
+        var hash = window.location.hash;
+        // Kiểm tra nếu hash là "#/search"
+        if (hash === '#!/search') {
+            // Hiển thị phần tìm kiếm
+            $scope.searchHiden = false;
+        } else {
+            // Ẩn phần tìm kiếm
+            $scope.searchHiden = true;
+            $('#searchform input').val('');
+            $scope.data = {};
+            $scope.dataArt = {};
+            $scope.dataAlbum = {};
+            $scope.dataS = {};
+            $scope.dataPl = {};
+            $scope.dataP = {};
+            $scope.dataE = {};
+            $scope.dataProfile = {};
+            $scope.dataGr = {};
+            $scope.interface1 = true;
+            $scope.interface2 = false;
+        }
+    });
+    $scope.searchHiden = true;
+
+    $scope.searchKeyword = '';
+    $scope.data = {};
+    $scope.dataArt = {};
+    $scope.dataAlbum = {};
+    $scope.dataS = {};
+    $scope.dataPl = {};
+    $scope.dataP = {};
+    $scope.dataE = {};
+    $scope.dataProfile = {};
+    $scope.dataGr = {};
+    $scope.interface1 = true;
+    $scope.interface2 = false;
+    $scope.hiden = false;
+    $scope.profile = {};
+
+    $scope.$watch('searchKeyword', function (keyword) {
+        if (keyword) {
+            $('.has-act')[0].click();
+            $scope.interface1 = false;
+            $scope.interface2 = true;
+            $http.get(host + 'v1/search/' + keyword)
+                .then(function (resp) {
+                    $scope.data = resp.data.data;
+
+                    const uniqueArt = new Set();
+                    const uniqueAlbum = new Set();
+                    const uniqueS = new Set();
+                    const uniquePl = new Set();
+                    const uniqueP = new Set();
+                    const uniqueE = new Set();
+                    const uniqueProfile = new Set();
+                    const uniqueGr = new Set();
+
+                    $scope.data.forEach(element => {
+                        if (element[3] !== null) {
+                            uniqueArt.add(element[3]);
+                            $scope.dataArt[element[3]] = element;
+                        }
+
+                        if (element[6] !== null) {
+                            uniqueAlbum.add(element[6]);
+                            $scope.dataAlbum[element[6]] = element;
+                        }
+
+                        if (element[9] !== null) {
+                            uniqueS.add(element[9]);
+                            $scope.dataS[element[9]] = element;
+                        }
+
+                        if (element[19] !== null) {
+                            uniquePl.add(element[19]);
+                            $scope.dataPl[element[19]] = element;
+                        }
+
+                        if (element[13] !== null) {
+                            uniqueP.add(element[13]);
+                            $scope.dataP[element[13]] = element;
+                        }
+
+                        if (element[16] !== null) {
+                            uniqueE.add(element[16]);
+                            $scope.dataE[element[16]] = element;
+                        }
+
+                        if (element[0] !== null) {
+                            uniqueProfile.add(element[0]);
+                            $scope.dataProfile[element[0]] = element;
+                        }
+
+                        if (element[22] !== null) {
+                            uniqueGr.add(element[22]);
+                            $scope.dataGr[element[22]] = element;
+                        }
+                    });
+                    console.log($scope.dataArt);
+                })
+                .catch(function (error) {
+                    console.error('Error searching');
+                });
+
+        } else {
+            $scope.interface1 = true;
+            $scope.interface2 = false;
+
+            $('.has-act').each(function () {
+                $(this).removeClass('active')
+            });
+
+            $scope.data = {};
+            $scope.dataArt = {};
+            $scope.dataAlbum = {};
+            $scope.dataS = {};
+            $scope.dataPl = {};
+            $scope.dataP = {};
+            $scope.dataE = {};
+            $scope.dataProfile = {};
+            $scope.dataGr = {};
+        }
+    });
+
+    $scope.getAuthor = function () {
+        var token = $cookies.get("token");
+        var decodeToken = jwtHelper.decodeToken(token);
+        decodeToken.role.forEach(element => {
+            if (element.authority === "MANAGER" || element.authority === "STAFF")
+                $scope.hidenAdmin = true;
+        });
+
     };
+    $scope.getAuthor();
 })

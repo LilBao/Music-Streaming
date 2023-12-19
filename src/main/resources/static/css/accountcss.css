@@ -36,8 +36,7 @@ body {
         float: right;
     }
 
-    .btn {
-        float: right;
+    .btnacc {
         bottom: 20px;
         border: 1px solid var(--essential-subdued, #878787);
         justify-content: center;

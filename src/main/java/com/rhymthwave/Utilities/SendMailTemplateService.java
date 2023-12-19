@@ -10,6 +10,8 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
+import java.util.Arrays;
+
 
 @Service
 public class SendMailTemplateService {
@@ -69,11 +71,22 @@ public class SendMailTemplateService {
 	}
 
 	// Send template email  For Role
-	public String getContentForNews(String title, String templateName, String content, String urlImg) {
+	public String getContentForNews(String title, String templateName, String content, String url) {
 		final Context context = new Context();
+		String urls[] = url.split(";");
 		context.setVariable("title", title);
 		context.setVariable("content", content);
-		context.setVariable("img", urlImg);
+		context.setVariable("img", urls[0]);
+		context.setVariable("toUrl", urls[1]);
+
+		return templateEngine.process(templateName, context);
+	}
+	
+	public String getAdvertisingResults(Long listened ,  Long clicked  , Long approach, String templateName) {
+		final Context context = new Context();
+		context.setVariable("listened", listened);
+		context.setVariable("clicked", clicked);
+		context.setVariable("approach", approach);
 
 		return templateEngine.process(templateName, context);
 	}
@@ -88,6 +101,13 @@ public class SendMailTemplateService {
 		final Context context = new Context();
 		context.setVariable("artistName", artistName);
 		return templateEngine.process(string, context);
+	}
+
+	public String getContentForConfirmAccount(String templateName, String url,String email) {
+		final Context context = new Context();
+		context.setVariable("url", url);
+		context.setVariable("email", email);
+		return templateEngine.process(templateName, context);
 	}
     
 

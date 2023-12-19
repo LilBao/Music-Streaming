@@ -197,4 +197,9 @@ public class ArtistREST {
 	public ResponseEntity<MessageResponse> findTopArtistByFollow(@RequestParam("country") String country) {
 		return ResponseEntity.ok(new MessageResponse(true, "succeess", artistSer.top50ArtistByFollow(2,country,true)));
 	}
+	
+	@GetMapping("/api/v1/top3-artist")
+	public ResponseEntity<MessageResponse> top3ArtistByEntityListened(){
+		return ResponseEntity.ok(new MessageResponse(true,"success",artistSer.top3ArtistByByListener()));
+	}
 }

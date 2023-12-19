@@ -18,7 +18,7 @@ app.controller('loginCtrl', function ($scope, $http, $window) {
     $http.post(url, data).then(function (resp) {
       setCookie("token", resp.data.data.accessToken,30);
       showStickyNotification('Login success', 'success', 3000);
-      window.location.href = './home';
+      window.location.href = './';
     }).catch(function (error) {
       showStickyNotification('Login fail', 'danger', 3000);
       console.log(error)

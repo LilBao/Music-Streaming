@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['ngCookies']);
+var app = angular.module('myApp', ["ngCookies"]);
 var host = "http://localhost:8080/api";
 
 app.controller('myCtrl', function ($scope, $http, $cookies, $window) {
@@ -6,12 +6,13 @@ app.controller('myCtrl', function ($scope, $http, $cookies, $window) {
     $scope.dataDisplayImage = {};
     $scope.listImage = [];
     $scope.dataNews = [];
+    $scope.top3 = [];
 
     $http.get(host + "/v1/profile", {
         headers: { 'Authorization': 'Bearer ' + $cookies.get('token') }
     }).then(resp => {
         $scope.artist = resp.data.data;
-        // console.log($scope.artist);
+        console.log($scope.artist);
     }).catch(error => {
         console.log(error)
     })
@@ -19,8 +20,9 @@ app.controller('myCtrl', function ($scope, $http, $cookies, $window) {
     $scope.displayImage = function (position) {
         $http.get(host + "/v1/display/" + position).then(resp => {
             $scope.dataDisplayImage = resp.data.data;
-
-            $scope.listImage = $scope.dataDisplayImage.map(element => element.listImage);
+            // console.log($scope.dataDisplayImage);
+            $scope.listImage = $scope.dataDisplayImage.map(element => element.urlImage);
+            $scope.listSlide = $scope.dataDisplayImage.map(element => ({ url: element.url, urlImage: element.urlImage }));
             setUpImageSlider();
         }).catch(error => {
             console.log(error);
@@ -71,7 +73,7 @@ app.controller('myCtrl', function ($scope, $http, $cookies, $window) {
 
         $http.get(host + "/v1/news", { params: { createfor: role } }).then(resp => {
             $scope.dataNews = resp.data.data;
-            console.log($scope.dataNews);
+            // console.log($scope.dataNews);
         }).catch(error => {
             console.log(error);
         })
@@ -116,6 +118,35 @@ app.controller('myCtrl', function ($scope, $http, $cookies, $window) {
         }
     }
 
+    $scope.login = function () {
+        $window.location.href = '/signin';
+    }
+
+    $scope.logout = function () {
+        var now = new Date();
+        now.setUTCFullYear(1970);
+        now.setUTCMonth(0);
+        now.setUTCDate(1);
+        now.setUTCHours(0);
+        now.setUTCMinutes(0);
+        now.setUTCSeconds(0);
+
+        $cookies.put('token', '', { expires: now, path: '/' })
+        $window.location.href = '/signin';
+    }
+
+    $scope.newsPage = function (id) {
+        $window.location.href = '/news/home/' + `${id}`;
+        localStorage.setItem('newsId', id);
+        localStorage.setItem('op', 'art');
+    }
+
+    $http.get(host + "/v1/top3-artist").then(resp => {
+        $scope.top3 = resp.data.data;
+        // console.log($scope.top3);
+    }).catch(error => {
+        console.log(error);
+    });
 })
 
 

@@ -224,7 +224,7 @@
                                             </ul>
                                         </li>
                                         <li class="li-dropdown-start-end">
-                                            <a href="{{item.episode ? '#!episode/'+item.episode.episodeId : item.recording.tracks.length>0 ? '#!album/'+item.recording.tracks[0].album.albumId : '#!song/'+item.recording.recordingId}}"
+                                            <a href="{{item.episode ? '#!episode/'+item.episode.episodeId : item.recording.tracks.length>0 ? '#!album/album/'+item.recording.tracks[0].album.albumId : '#!song/'+item.recording.recordingId}}"
                                                 class="btn text-white dropdown-item py-2">
                                                 <i class="bi bi-journal-album"></i> Go to album
                                             </a>
@@ -476,7 +476,7 @@
                         <tbody ng-repeat="item in alData ">
                             <tr class="audio align-items-center">
                                 <td ng-dblclick="selectAudio(item,'song',alData,$index)">
-                                    <a href="#!album/{{item[0]}}">
+                                    <a href="#!album/album/{{item[0]}}">
                                         <div class="d-flex align-items-center">
                                             <div class="d-flex">
                                                 <img class="rounded-2 mx-3"

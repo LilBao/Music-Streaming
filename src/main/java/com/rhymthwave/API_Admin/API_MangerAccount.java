@@ -2,6 +2,7 @@ package com.rhymthwave.API_Admin;
 
 import java.util.List;
 
+import com.rhymthwave.DAO.AccountDAO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,7 +26,9 @@ import lombok.RequiredArgsConstructor;
 public class API_MangerAccount {
 		
 	private final IAccountServiceAdmin accountServiceAdmin;
-	
+
+	private final AccountDAO dao;
+
 	@GetMapping()
 	public ResponseEntity<?> getAllUser(
 			@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
@@ -58,6 +61,9 @@ public class API_MangerAccount {
 		int count = accountServiceAdmin.countWithlistByAccount(idAccount);
 		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", count));
 	}
-	
-	
+
+	@GetMapping("/count-country")
+	public ResponseEntity<?> upgradePackageRate() {
+		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", dao.countAccountByCountry()));
+	}
 }

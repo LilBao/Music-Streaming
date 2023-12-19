@@ -3,6 +3,7 @@ package com.rhymthwave.DAO;
 import java.util.List;
 import java.util.Map;
 
+import com.rhymthwave.DTO.AnalysisDTO;
 import com.rhymthwave.Request.DTO.Top10PodcastDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -44,13 +45,23 @@ public interface AccountDAO extends JpaRepository<Account, String>{
 	int countAll();
 
 	@Query(value = """
-			SELECT top 10  a.email, a.imageid, p.authorname , SUM(e.listened) AS totalListened\s
-    			       FROM episodes e\s
-    			       JOIN podcast p on p.podcastid = e.podcastid
-    			       JOIN accounts a on a.email = p.accountid			
-    			       WHERE e.isDeleted = 0 and e.ispublic = 1
-    			 	   GROUP BY a.email, a.imageid,  p.authorname
-    			       ORDER BY totalListened DESC
+			SELECT top 10  a.email, i.url, p.authorname , SUM(e.listened) AS totalListened
+       			       FROM episodes e
+       			       LEFT JOIN podcast p on p.podcastid = e.podcastid
+       			       JOIN accounts a on a.email = p.accountid
+   					   LEFT JOIN images i on i.accessid = a.imageid
+       			       WHERE e.isDeleted = 0 and e.ispublic = 1
+       			 	   GROUP BY a.email, i.url,  p.authorname
+       			       ORDER BY totalListened DESC
 					""",nativeQuery = true)
 	List<Top10PodcastDTO> getTopPodcast();
+
+	@Query(value = "SELECT count(*) FROM accounts WHERE DAY(createat) = DAY(GETDATE())",nativeQuery = true)
+	int countAccountCreatedToday();
+	
+	@Query(value = "select COUNT(*) from accounts where isverify = 'false'",nativeQuery = true)
+	int countAccountIsNotVerified();
+
+	@Query(value = "SELECT COUNTRY,COUNT(*) AS quantity FROM accounts GROUP BY COUNTRY",nativeQuery = true)
+	List<AnalysisDTO> countAccountByCountry();
 }

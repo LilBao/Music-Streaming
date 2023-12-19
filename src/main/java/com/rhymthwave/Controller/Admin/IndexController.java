@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @CrossOrigin("*")
 public class IndexController {
 
-    @GetMapping("/index")
+    @GetMapping("/admin")
     public String home(){
         return "/admin/index";
     }

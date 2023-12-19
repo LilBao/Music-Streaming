@@ -41,6 +41,73 @@
 </head>
 
 <body ng-app="myApp" ng-controller="myCtrl">
+    <div class="bl-search-box-ss" style="z-index: 900;">
+        <!-- search -->
+        <div class="bl-search">
+            <div class="bl-search-box">
+                <div class="bl-search-hilden" style="opacity: 0"></div>
+                <div class="bl-back-next">
+                    <button class="bl-back-next-btn" style="color: white !important;" id="back">
+                        <i class="bi bi-arrow-left"></i>
+                    </button>
+                    <button class="bl-back-next-btn" style="color: white !important;" id="forward">
+                        <i class="bi bi-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="bl-input-search">
+                    <div class="bl-input-search-box">
+                        <div class="bl-input-search-f" ng-show="!searchHiden">
+                            <form id="searchform">
+                                <input ng-model="searchKeyword" class="bl-input-search-f-in" maxlength="800"
+                                    autocorrect="off" autocapitalize="off" spellcheck="false"
+                                    placeholder="What do you want to listen to?" data-testid="search-input"
+                                    data-encore-id="type" value="" style="color: rgb(0, 0, 0)" />
+                            </form>
+                            <div class="bl-input-search-f-icon">
+                                <span class="H6jh9Xd7DNOq3NsLDmCB"><i class="bi bi-search"
+                                        style="color: white;"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bl-install-ring-account">
+                    <div class="bl-install-ring-account-hilden"></div>
+                    <a href="/subscription">
+                        <span class="Type__TypeElement-sc-goli3j-0 eoWRdH ellipsis-one-line"
+                            data-encore-id="type">Premium</span>
+                    </a>
+                </div>
+                <div class="dropdown">
+                    <div class="bl-install-ring-account-hilden"></div>
+                    <button class="bl-install-ring-account-btn" data-bs-toggle="dropdown">
+                        <i class="bi bi-person"></i>
+                        <figure style="color: white !important;">
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li ng-show="hideni"><a class="dropdown-item" ng-click="accountInfo()"> <i
+                                            class="bi bi-box-arrow-up-right"></i> Account</a></li>
+                                <li ng-show="hideni"><a class="dropdown-item" ng-click="artistPage()"> <i
+                                            class="bi bi-cassette"></i> Artist</a></li>
+                                <li ng-show="hideni"><a class="dropdown-item" ng-click="podcastPag()"> <i
+                                            class="bi bi-broadcast"></i> Podcast</a></li>
+                                <li ng-show="hidenAdmin"><a class="dropdown-item" ng-click="adminPage()"> <i
+                                            class="bi bi-person-bounding-box"></i> Admin</a></li>
+                                <li ng-show="!hideni"><a class="dropdown-item" ng-click="signin()"> <i
+                                            class="bi bi-box-arrow-in-left"></i> Sign in</a></li>
+                                <li ng-show="hideni">
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <a href="/api/v1/auth/logout">
+                                    <li ng-show="hideni"><a class="dropdown-item" ng-click="logout()"> <i
+                                                class="bi bi-box-arrow-right"></i> Log out</a></li>
+                                </a>
+                            </ul>
+                        </figure>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- end search -->
+    </div>
     <div class="content d-flex">
         <div class="sidebar container-fluid">
             <div class="row">
@@ -157,10 +224,14 @@
                                                     </a>
                                                 </li>
                                                 <li class="li-dropdown-end">
-                                                    <a ng-show="item.authorsAccountB.role.role === 'ARTIST'" href="#!report/artist/{{item.artistId}}" class="btn text-white dropdown-item py-2 px-3">
+                                                    <a ng-show="item.authorsAccountB.role.role === 'ARTIST'"
+                                                        href="#!report/artist/{{item.artistId}}"
+                                                        class="btn text-white dropdown-item py-2 px-3">
                                                         <i class="bi bi-exclamation-octagon"></i> Report
                                                     </a>
-                                                    <a ng-show="item.authorsAccountB.role.role !== 'ARTIST'" href="#!report/user/{{item.email}}" class="btn text-white dropdown-item py-2 px-3">
+                                                    <a ng-show="item.authorsAccountB.role.role !== 'ARTIST'"
+                                                        href="#!report/user/{{item.email}}"
+                                                        class="btn text-white dropdown-item py-2 px-3">
                                                         <i class="bi bi-exclamation-octagon"></i> Report
                                                     </a>
                                                 </li>
@@ -292,7 +363,7 @@
                                                 </li>
                                                 <li class="li-dropdown-end">
                                                     <a href="#!report/playlist/{{item.playlistId}}" class="btn text-white dropdown-item py-2 px-3">
-                                                        <i class="bi bi-flag-fill"></i></i>
+                                                        <i class="bi bi-flag-fill"></i>
                                                         Report
                                                     </a>
                                                 </li>
@@ -396,11 +467,14 @@
                                         <hr class="dropdown-divider">
                                     </li>
                                     <li class="li-dropdown-start-end">
-                                        <a ng-show="audioItem.episodeId" href="#!report/episode/{{audioItem.episodeId}}" class="btn text-white dropdown-item py-2">
+                                        <a ng-show="audioItem.episodeId" href="#!report/episode/{{audioItem.episodeId}}"
+                                            class="btn text-white dropdown-item py-2">
                                             <i class="bi bi-flag-fill"></i></i>
                                             Report
                                         </a>
-                                        <a ng-show="audioItem.recordingId" href="#!report/recording/{{audioItem.recordingId}}" class="btn text-white dropdown-item py-2">
+                                        <a ng-show="audioItem.recordingId"
+                                            href="#!report/recording/{{audioItem.recordingId}}"
+                                            class="btn text-white dropdown-item py-2">
                                             <i class="bi bi-flag-fill"></i></i>
                                             Report
                                         </a>
@@ -592,6 +666,10 @@
     <script src="../../static/js/angularjs/user/report.js"></script>
 
     <script src="../../static/js/angularjs/user/song.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.17/angular-filter.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/auth0/angular-jwt@0.1.10/dist/angular-jwt.js"></script>
 </body>
 
 </html>

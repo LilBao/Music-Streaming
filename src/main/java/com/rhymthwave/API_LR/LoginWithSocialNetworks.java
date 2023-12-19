@@ -22,25 +22,22 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class LoginWithSocialNetworks {
 
-    private  final ILoginService loginSuccess;
+    private final ILoginService loginSuccess;
+
     @GetMapping("/api/v1/auth/success")
-    public String loginSuccess(  OAuth2AuthenticationToken token){
-        System.out.println(Optional.ofNullable(token.getPrincipal().getAttribute("email")));
-        return "redirect:/index";
+    public String loginSuccess(OAuth2AuthenticationToken token) {
+        loginSuccess.checkLoginWithSocial(token);
+        return "redirect:/home";
     }
 
     @GetMapping("/api/v1/auth/fail")
-    public ResponseEntity<?> loginFail(){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(false, "Login fail"));
+    public String loginFail() {
+        return "";
     }
 
     @GetMapping("/api/v1/auth/logout")
-    public ResponseEntity<?> logout(){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(false, "Successfully"));
+    public String logout() {
+        return "redirect:/signin";
     }
 
-    @GetMapping("/api/v1/auth/logout/success")
-    public ResponseEntity<?> logoutsuscc(){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(false, "logout Successfully"));
-    }
 }

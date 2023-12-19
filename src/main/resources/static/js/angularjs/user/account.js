@@ -125,6 +125,7 @@ app.controller('accountCtrl', function ($scope, $http, $cookies) {
         // Xóa cookie có tên là "token"
         document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         showStickyNotification('Logout success', 'success', 3000);
+        window.location.href = '/signin';
       }
     } catch (error) {
       console.error('Error', error);

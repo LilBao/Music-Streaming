@@ -117,4 +117,15 @@ public class PodcastREST {
 	public ResponseEntity<MessageResponse> findTopPodcastPopular(@RequestParam("country") Optional<String> country){
 		return ResponseEntity.ok(new MessageResponse(true, "successs", podcastSer.top50PodcastPopular(country)));
 	}
+	
+	@GetMapping("/api/v1/profile-podcast")
+	public ResponseEntity<MessageResponse> profilePobcast(HttpServletRequest req) {
+		String owner = host.getEmailByRequest(req);
+		return ResponseEntity.ok(new MessageResponse(true, "successs", podcastSer.checkPocastRole(owner)));
+	}
+	
+	@GetMapping("/api/v1/top3-podcast")
+	public ResponseEntity<MessageResponse> top3Podcast() {
+		return ResponseEntity.ok(new MessageResponse(true, "successs", podcastSer.top3podcast()));
+	}
 }

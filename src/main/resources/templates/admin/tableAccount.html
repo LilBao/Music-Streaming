@@ -8,17 +8,7 @@
       <section class="dashboard-top-sec">
          <div class="container-fluid">
 
-            <!-- START Alert  -->
-
-            <div ng-show="success" class="alert alert-success alert-dismissible fade show " role="alert">
-               <div class="alert-ok">
-                  <strong>Successfully!</strong> Create a Country
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
-                     ng-click="closeAlert()"></button>
-               </div>
-            </div>
-
-            <!-- END Alert  -->
+          
 
             <div class="row">
                <div class="col-md-6">
@@ -66,9 +56,10 @@
                </div>
 
             </div>
-            <div class="row">
-               <div id="chartDiv" style="max-width: 740px;height: 400px;margin: 0px auto">
-               </div>
+            <div class="row" style="height: 400px;">
+               <div id="world"></div>
+             
+               
             </div>
 
             <div class="cardperShadow shadow mb-4">
@@ -124,18 +115,7 @@
                                     </div>
                                  </div>
                                  <div class="col-sm-6 text-right">
-                                    <div class="dt-buttons btn-group mb-2">
-                                       <button class="btn btn-secondary buttons-export" ng-click="exportToExcel()"
-                                          type="button"><span>Excel</span>
-                                       </button>
-                                       <button class="btn btn-secondary buttons-export" type="button"><span>Print</span>
-                                       </button>
-                                       <button class="btn btn-secondary buttons-export" type="button"><span>Excel</span>
-                                       </button>
-                                       <button class="btn btn-secondary buttons-export" type="button"><span>Excel</span>
-                                       </button>
-
-                                    </div>
+                  
                                  </div>
                               </div>
 
@@ -174,7 +154,7 @@
                                                 <td>{{user.gender ? 'Male' : 'Female'}}</td>
                                                 <td>
                                                    <span ng-repeat="userType in user.userType"
-                                                      ng-class="{'badge text-bg-info mx-1': userType.nameType === 'BASIC', 'badge text-bg-warning mx-1': userType.nameType === 'PREMIUM'}">{{userType.nameType}}</span>
+                                                      ng-class="{'badge text-bg-info mx-1': userType.nameType === 'BASIC', 'badge text-bg-warning mx-1': userType.nameType === 'PREMIUM','badge text-bg-secondary mx-1': userType.nameType === 'MASTER'}">{{userType.nameType}}</span>
 
                                                 </td>
                                                 <td>
@@ -231,18 +211,7 @@
                                     </div>
                                  </div>
                                  <div class="col-sm-6 text-right">
-                                    <div class="dt-buttons btn-group mb-2">
-                                       <button class="btn btn-secondary buttons-export" ng-click="exportToExcel()"
-                                          type="button"><span>Excel</span>
-                                       </button>
-                                       <button class="btn btn-secondary buttons-export" type="button"><span>Print</span>
-                                       </button>
-                                       <button class="btn btn-secondary buttons-export" type="button"><span>Excel</span>
-                                       </button>
-                                       <button class="btn btn-secondary buttons-export" type="button"><span>Excel</span>
-                                       </button>
-
-                                    </div>
+                                  
                                  </div>
                               </div>
 
@@ -281,7 +250,7 @@
                                                 <td>{{user.gender ? 'Male' : 'Female'}}</td>
                                                 <td>
                                                    <span ng-repeat="userType in user.userType"
-                                                      ng-class="{'badge text-bg-info mx-1': userType.nameType === 'BASIC', 'badge text-bg-warning mx-1': userType.nameType === 'PREMIUM'}">{{userType.nameType}}</span>
+                                                      ng-class="{'badge text-bg-info mx-1': userType.nameType === 'BASIC', 'badge text-bg-warning mx-1': userType.nameType === 'PREMIUM','badge text-bg-secondary mx-1': userType.nameType === 'MASTER'}">{{userType.nameType}}</span>
 
                                                 </td>
                                                 <td>
@@ -333,18 +302,7 @@
                                     </div>
                                  </div>
                                  <div class="col-sm-6 text-right">
-                                    <div class="dt-buttons btn-group mb-2">
-                                       <button class="btn btn-secondary buttons-export" ng-click="exportToExcel()"
-                                          type="button"><span>Excel</span>
-                                       </button>
-                                       <button class="btn btn-secondary buttons-export" type="button"><span>Print</span>
-                                       </button>
-                                       <button class="btn btn-secondary buttons-export" type="button"><span>Excel</span>
-                                       </button>
-                                       <button class="btn btn-secondary buttons-export" type="button"><span>Excel</span>
-                                       </button>
-
-                                    </div>
+                                  
                                  </div>
                               </div>
 
@@ -383,7 +341,7 @@
                                                 <td>{{user.gender ? 'Male' : 'Female'}}</td>
                                                 <td>
                                                    <span ng-repeat="userType in user.userType"
-                                                      ng-class="{'badge text-bg-info mx-1': userType.nameType === 'BASIC', 'badge text-bg-warning mx-1': userType.nameType === 'PREMIUM'}">{{userType.nameType}}</span>
+                                                      ng-class="{'badge text-bg-info mx-1': userType.nameType === 'BASIC', 'badge text-bg-warning mx-1': userType.nameType === 'PREMIUM','badge text-bg-secondary mx-1': userType.nameType === 'MASTER'}">{{userType.nameType}}</span>
 
                                                 </td>
                                                 <td>
@@ -439,10 +397,10 @@
                                  <div class="col-sm-6 text-right">
                                     <div class="dt-buttons btn-group mb-2">
                                       
-                                       <button class="btn btn-warning text-dark-emphasis">
+                                       <!-- <button class="btn btn-warning text-dark-emphasis">
                                           <i class="bi bi-person-fill-add"></i>
                                         
-                                       </button>
+                                       </button> -->
 
                                     </div>
                                  </div>
@@ -484,7 +442,7 @@
                                                 <td>{{user.gender ? 'Male' : 'Female'}}</td>
                                                 <td>
                                                    <span ng-repeat="userType in user.userType"
-                                                      ng-class="{'badge text-bg-info mx-1': userType.nameType === 'BASIC', 'badge text-bg-warning mx-1': userType.nameType === 'PREMIUM'}">{{userType.nameType}}</span>
+                                                      ng-class="{'badge text-bg-info mx-1': userType.nameType === 'BASIC', 'badge text-bg-warning mx-1': userType.nameType === 'PREMIUM','badge text-bg-secondary mx-1': userType.nameType === 'MASTER'}">{{userType.nameType}}</span>
 
                                                 </td>
                                                 <td>
@@ -494,7 +452,10 @@
                                                          <i class="bi bi-three-dots-vertical"></i>
                                                       </a>
                                                       <ul class="dropdown-menu">
-                                                         <li><button class="dropdown-item" type="button">Detail</button>
+                                                         <li><button class="dropdown-item" type="button" 
+                                                            ng-click="profileById(user.email)"
+                                                              data-bs-toggle="modal"
+                                                            data-bs-target="#upRole">Detail</button>
                                                          </li>
                                                         
                                                       </ul>
@@ -518,41 +479,16 @@
                                     </div>
                                  </div>
                               </div>
-
-
-
                            </div>
                         </div>
-
-
-
-
-                        <!-- pagination -->
 
                         <!-- Pagination -->
 
                         <div class="row">
                            <div class="col-sm-12 col-md-5">
-                              <!-- <div class="dataTables_info" id="DataTables_Table_0_info" role="status"
-                                    aria-live="polite">Đang xem 1 đến 1 trong
-                                    tổng số 1 mục</div> -->
-
                            </div>
                            <div class="col-sm-12 col-md-7">
-
                               <dir-pagination-controls class="dir-pagination-controls"></dir-pagination-controls>
-
-
-                              <!-- <div class="pagination  d-flex justify-content-end align-content-center mb-3">
-                                 <a href="" ng-click="utilitiesPage.firstPage()">&laquo;</a>
-
-                                 <a href="" ng-repeat="pageNo in page" ng-click="goToPage(pageNo)"
-                                    ng-class="{ 'active': currentPage === pageNo }">
-                                    {{pageNo + 1}}
-                                 </a>
-                                 <a href="" ng-click="utilitiesPage.endPage()">&raquo;</a>
-                              </div> -->
-
                            </div>
                         </div>
                      </div>
@@ -593,25 +529,19 @@
                                           </h6>
                                           <p class="proile-rating">User Type : 
                                              <span    ng-repeat="userType in formUser.userType"
-                                                ng-class="{'badge text-bg-info mx-1': userType.nameType === 'BASIC', 'badge text-bg-warning mx-1': userType.nameType === 'PREMIUM'}">{{userType.nameType}}</span>
+                                                ng-class="{'badge text-bg-info mx-1': userType.nameType === 'BASIC', 'badge text-bg-warning mx-1': userType.nameType === 'PREMIUM', 'badge text-bg-secondary mx-1': userType.nameType === 'MASTER'}">{{userType.nameType}}</span>
                                           </p>
                                           <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                             <li class="nav-item">
-                                                <a class="nav-link active" id="home-tab" data-toggle="tab" role="tab"
-                                                   aria-controls="home" aria-selected="true">Profile</a>
+                                             <li class="nav-item" ole="presentation">
+                                                <a class="nav-link active" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="true">Profile</a>
                                              </li>
-                                             <li class="nav-item">
-                                                <a class="nav-link" id="profile-tab" data-toggle="tab" role="tab"
-                                                   aria-controls="profile" aria-selected="false">Other</a>
+                                             <li class="nav-item" ole="presentation">
+                                                <a class="nav-link" id="pills-disabled-tab" data-bs-toggle="pill" data-bs-target="#pills-disabled" type="button" role="tab" aria-controls="pills-disabled" aria-selected="false" >Other</a>
                                              </li>
                                           </ul>
                                        </div>
                                     </div>
 
-
-                                    <!-- <div class="col-md-2">
-                                           <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
-                                       </div> -->
                                  </div>
                                  <div class="row">
                                     <div class="col-md-4">
@@ -623,15 +553,14 @@
                                           <a href="">Report</a> <span class="badge text-bg-danger  ms-2"
                                              style="font-size: 12px;"> {{countWishlist}}</span><br />
                                           <a href="">Follow</a><span class="badge text-bg-danger ms-2"
-                                             style="font-size: 12px;">Danger</span> <br />
-                                          <a href="">Following</a><br />
-
+                                             style="font-size: 12px;">{{follow.length}}</span> <br />
+                                          <a href="">Following</a><span class="badge text-bg-danger ms-2"
+                                             style="font-size: 12px;">{{following.length}}</span> <br />
                                        </div>
                                     </div>
                                     <div class="col-md-8">
                                        <div class="tab-content profile-tab" id="myTabContent">
-                                          <div class="tab-pane fade show active" id="home" role="tabpanel"
-                                             aria-labelledby="home-tab">
+                                          <div class="tab-pane fade show active" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" tabindex="0">
 
                                              <div class="row">
                                                 <div class="col-md-6">
@@ -677,52 +606,17 @@
 
 
                                           </div>
-                                          <div class="tab-pane fade" id="profile" role="tabpanel"
-                                             aria-labelledby="profile-tab">
+                                          <div class="tab-pane fade" id="pills-disabled" role="tabpanel" aria-labelledby="pills-disabled-tab" tabindex="0">
                                              <div class="row">
-                                                <div class="col-md-6">
-                                                   <label>Experience</label>
+                                                <div class="col-md-3">
+                                                  
+                                                   <label>Update roles:</label>
                                                 </div>
-                                                <div class="col-md-6">
-                                                   <p>Expert</p>
-                                                </div>
-                                             </div>
-                                             <div class="row">
-                                                <div class="col-md-6">
-                                                   <label>Hourly Rate</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                   <p>10$/hr</p>
-                                                </div>
-                                             </div>
-                                             <div class="row">
-                                                <div class="col-md-6">
-                                                   <label>Total Projects</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                   <p>230</p>
-                                                </div>
-                                             </div>
-                                             <div class="row">
-                                                <div class="col-md-6">
-                                                   <label>English Level</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                   <p>Expert</p>
-                                                </div>
-                                             </div>
-                                             <div class="row">
-                                                <div class="col-md-6">
-                                                   <label>Availability</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                   <p>6 months</p>
-                                                </div>
-                                             </div>
-                                             <div class="row">
-                                                <div class="col-md-12">
-                                                   <label>Your Bio</label><br />
-                                                   <p>Your detail description</p>
+
+                                                <div class="col-md-9">
+                                                   <div class="d-grid gap-2 d-md-block">
+                                                      <button class="btn btn-secondary" type="button"  data-bs-dismiss="modal" ng-click="updateRoleStaff(formUser.email)"><i class="bi bi-person-vcard-fill mx-1"></i> Staff</button>
+                                                    </div>
                                                 </div>
                                              </div>
                                           </div>
@@ -733,12 +627,159 @@
 
                            </div>
                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                            </div>
                         </div>
                      </div>
                   </div>
 
+                  <div class="modal fade" id="upRole" tabindex="-1" aria-labelledby="exampleModalLabel"
+                  aria-hidden="true">
+
+                  <div class="modal-dialog modal-dialog-centered  modal-lg">
+                     <div class="modal-content">
+                        <div class="modal-header">
+                           <h1 class="modal-title fs-5 " id="exampleModalLabel">Profile By {{formUser.username}}
+                           </h1>
+                           <button type="button" class="btn-close " data-bs-dismiss="modal"
+                              aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                           <div class="container-fluid">
+                              <div class="row">
+                                 <div class="col-md-4">
+                                    <div class="profile-img">
+                                       <img ng-src="{{formUser.image.url}}" alt="" />
+                                       <div class="file btn btn-lg btn-primary">
+                                          Photo
+                                          <input type="file" name="file" />
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="profile-head">
+                                       <h5>
+                                          {{formUser.username}}
+                                       </h5>
+                                       <h6>
+                                          {{formUser.email}}
+                                       </h6>
+                                       <p class="proile-rating">User Type : 
+                                          <span ng-repeat="userType in formUser.userType"
+                                                ng-class="{
+                                                'badge text-bg-info mx-1': userType.nameType === 'BASIC',
+                                                'badge text-bg-warning mx-1': userType.nameType === 'PREMIUM',
+                                                'badge text-bg-secondary mx-1': userType.nameType === 'MASTER'
+                                           }">{{userType.nameType}}</span>
+                                       </p>
+                                       <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                          <li class="nav-item" role="presentation">
+                                             <a class="nav-link active" id="pills-home-tab-profile" data-bs-toggle="pill" data-bs-target="#pills-home-profile" type="button" role="tab" aria-controls="pills-home-profile" aria-selected="true">Profile</a>
+                                          </li>
+                                          <li class="nav-item" role="presentation">
+                                             <a class="nav-link" id="pills-profile-tab-orther" data-bs-toggle="pill" data-bs-target="#pills-profile-orther" type="button" role="tab" aria-controls="pills-profile-orther" aria-selected="false">Other</a>
+                                          </li>
+                                       </ul>
+                                    </div>
+                                 </div>
+
+
+                                 <!-- <div class="col-md-2">
+                                        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+                                    </div> -->
+                              <div class="row">
+                                 <div class="col-md-4">
+                                    <div class="profile-work">
+
+                                       <p>Recent activities</p>
+                                       <a href="">Wishlist</a> <span class="badge text-bg-danger  ms-2"
+                                          style="font-size: 12px;"> {{countReport}}</span> <br />
+                                       <a href="">Report</a> <span class="badge text-bg-danger  ms-2"
+                                          style="font-size: 12px;"> {{countWishlist}}</span><br />
+                                       <a href="">Follow</a><span class="badge text-bg-danger ms-2"
+                                          style="font-size: 12px;">{{follow.length}}</span> <br />
+                                       <a href="">Following</a><span class="badge text-bg-danger ms-2"
+                                          style="font-size: 12px;">{{following.length}}</span> <br />
+
+                                    </div>
+                                 </div>
+                                 <div class="col-md-8">
+                                    <div class="tab-content profile-tab" id="myTabContent">
+                                       <div class="tab-pane fade show active" id="pills-home-profile" role="tabpanel" aria-labelledby="pills-home-tab-profile" tabindex="0">
+
+                                          <div class="row">
+                                             <div class="col-md-6">
+                                                <label>Name</label>
+                                             </div>
+                                             <div class="col-md-6">
+                                                <p> {{formUser.username}}</p>
+                                             </div>
+                                          </div>
+                                          <div class="row">
+                                             <div class="col-md-6">
+                                                <label>Email</label>
+                                             </div>
+                                             <div class="col-md-6">
+                                                <p> {{formUser.email}}</p>
+                                             </div>
+                                          </div>
+                                          <div class="row">
+                                             <div class="col-md-6">
+                                                <label>Birthday</label>
+                                             </div>
+                                             <div class="col-md-6">
+                                                <p> {{formUser.birthday | date:'dd-MM-yyyy'}} </p>
+                                             </div>
+                                          </div>
+                                          <div class="row">
+                                             <div class="col-md-6">
+                                                <label>Country</label>
+                                             </div>
+                                             <div class="col-md-6">
+                                                <p>{{formUser.country}}</p>
+                                             </div>
+                                          </div>
+
+                                          <div class="row">
+                                             <div class="col-md-6">
+                                                <label>Gender</label>
+                                             </div>
+                                             <div class="col-md-6">
+                                                <p>{{formUser.gender === 0 ? "Female" :"Male"}}</p>
+                                             </div>
+                                          </div>
+
+
+                                       </div>
+
+                                       <div class="tab-pane fade" id="pills-profile-orther" role="tabpanel" aria-labelledby="pills-profile-tab-orther" tabindex="0">
+                                          <div class="row">
+                                             <div class="col-md-3">
+                                               
+                                                <label>Delete roles:</label>
+                                             </div>
+
+                                             <div class="col-md-9">
+                                                <div class="d-grid gap-2 d-md-block">
+                                                   <button class="btn btn-secondary"  data-bs-dismiss="modal" type="button" ng-click="deleteRoleStaff(formUser.email)"><i class="bi bi-person-vcard-fill mx-1"></i> Staff</button>
+                                                 </div>
+                                             </div>
+                                          </div>
+                                     
+                                         
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+
+                        </div>
+                        <div class="modal-footer">
+                           <button type="button" class="btn btn-danger mb-0" data-bs-dismiss="modal">Close</button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
 
 
 

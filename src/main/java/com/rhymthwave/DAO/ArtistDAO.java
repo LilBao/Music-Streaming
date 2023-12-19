@@ -57,7 +57,20 @@ public interface ArtistDAO extends JpaRepository<Artist, Long>{
 	List<Artist> top50ArtistByFollow(@Param("role") Integer role, @Param("country") String country, @Param("verify") Boolean verify);
 
 
-	@Query(value = "SELECT top 10  a.artistid, a.artistname,a.profileimage, a.email, SUM(r.listened) AS totalListened \n" +
+	@Query(value = """
+			SELECT top 10  a.artistid, a.artistname,i.url, a.email, SUM(r.listened) AS totalListened\s
+  			       FROM Recording r\s
+  			       JOIN songs s on s.songsid = r.songsid
+  			       JOIN writter w on w.songsid = s.songsid
+  			       JOIN artist a on a.artistid = w.artistid
+  				   left JOIN images i on i.accessid = a.profileimage
+  			      WHERE r.isDeleted = 0
+  			      GROUP BY a.artistid, a.artistname,i.url, a.email
+  			      ORDER BY totalListened DESC
+					""",nativeQuery = true)
+	List<Top10ArtistDTO> top10ArtistByListened();
+	
+	@Query(value = "SELECT top 3  a.artistid, a.artistname,a.profileimage, a.email, SUM(r.listened) AS totalListened \n" +
 			"       FROM Recording r \n" +
 			"       JOIN songs s on s.songsid = r.songsid\n" +
 			"       JOIN writter w on w.songsid = s.songsid\n" +
@@ -65,5 +78,5 @@ public interface ArtistDAO extends JpaRepository<Artist, Long>{
 			"       WHERE r.isDeleted = 0\n" +
 			"       GROUP BY a.artistid, a.artistname,a.profileimage, a.email" +
 			"       ORDER BY totalListened DESC",nativeQuery = true)
-	List<Top10ArtistDTO> top10ArtistByListened();
+	List<Top10ArtistDTO> top3ArtistByListened();
 }

@@ -26,7 +26,7 @@ public class ArtistServiceAdminImp implements IArtistService, INotification<Arti
 	private final RoleDAO roleDAO;
 	private final EmailService mailService;
 	private final SendMailTemplateService sendMailTemplateSer;
-	public static final String TEMPLATE = "templateRoleArtist";
+	public static final String TEMPLATE = "templateApproveRoles";
 	
 	@Override
 	public Artist getOneArtistByEmail(String id) {
@@ -78,6 +78,7 @@ public class ArtistServiceAdminImp implements IArtistService, INotification<Arti
 			authorDAO.save(author);
 
 			artist.setIsVerify(true);
+			artist.setActive(true);
 			artistDAO.save(artist);
 			
 			sendNotification(artist, null);
@@ -106,6 +107,12 @@ public class ArtistServiceAdminImp implements IArtistService, INotification<Arti
 
 	@Override
 	public void sendEmailBan(String email, String message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void sendEmailComfirmUser(String url, String email) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -60,7 +60,7 @@
             }
 
             .edit-playlist-detail:hover {
-                color: rgb(70, 70, 70)(134, 132, 132);
+                color: (134, 132, 132);
             }
 
             .modal-header {
@@ -229,12 +229,12 @@
 
                                 <div class="row mt-2">
                                     <div class="image-palylist-detail shadow mb-5 bg-body-tertiary rounded">
-                                        <img ng-src="{{listPlaylist.image.url}}" class="img-fluid rounded-top" alt="">
+                                        <img ng-src="{{listPlaylist.image.url}}" class="img-fluid rounded" alt="">
                                     </div>
                                     <div class="col-md-8 font-playlist-detail ">
 
                                         <div class="position-relative d-inline p-4">
-                                            <h1 class="d-inline">#{{listPlaylist.playlistName}}</h1>
+                                            <h1 id="namePlaylist" class="d-inline">#{{listPlaylist.playlistName}}</h1>
                                             <div class="position-absolute top-50 start-100 translate-middle">
                                                 <a type="button" class="edit-playlist-detail" data-bs-toggle="modal"
                                                     data-bs-target="#exampleModal"> <i class="bi bi-pen"></i></a>
@@ -244,7 +244,7 @@
 
 
                                         <div class="description-playlist-detail text-break">
-                                            <h5 class="px-4">{{listPlaylist.description}}</h5>
+                                            <h5 class="px-4" id="playlistDescription">{{listPlaylist.description}}</h5>
 
                                         </div>
 
@@ -261,8 +261,7 @@
 
                                         <div class="ms-4">
                                             <p class="fs-7"> <span> Songs: {{listPlaylist.playlistRecords.length}}
-                                                </span> <span>,Time: <format-time style="color: red; font-weight: 600;"
-                                                    seconds="totalDuration"></format-time>
+                                                </span> <span>,Time:3h31p
                                                     is the time it takes to finish the playlist</span> </p>
                                         </div>
 
@@ -285,11 +284,9 @@
 
                                                                     <img id="image-preview"
                                                                         ng-src="{{listPlaylist.image.url}}"
-                                                                        class="img-fluid rounded-top" alt=""
+                                                                        class="img-fluid rounded" alt=""
                                                                         style=" cursor: pointer;">
-                                                                    <input id="imagePlaylist-edit" name="" type="file">
-
-
+                                                                    <input hidden id="imagePlaylist-edit" name="" type="file">
 
                                                                 </div>
 
@@ -349,12 +346,12 @@
                                         <div class="filter-table text-end">
                                           
                                             <div class="btn-group dropstart align-items-center">
-                                                <div class="mx-3 fs-6 " id="fieldSort" >{{field}}</div>
+                                                <div class="mx-3 fs-6 " id="fieldSort" >{{field === 'recording.recordingName' ? 'Song Name' :'Duration'}}</div>
                                                 <a class="mt-2" href="" type="button" data-bs-toggle="dropdown"
                                                     aria-expanded="false"> <i class="bi bi-list-ul"></i></a>
                                                 <ul class="dropdown-menu">
                                                     <li ng-repeat="arraySort in arraySort">
-                                                        <a class="dropdown-item" href=""  ng-click="setSortField(arraySort)">{{arraySort}}</a>
+                                                        <a class="dropdown-item" href=""  ng-click="setSortField(arraySort)" ng-model="sortFields">{{arraySort === 'recording.recordingName' ? 'Song Name' :'Duration'}}</a>
                                                     </li>
                                                    
                                                 </ul>
@@ -375,13 +372,13 @@
                                             <tr>
                                                 <th scope="col">#</th>
                                                 <th scope="col">Title</th>
-                                                <th scope="col">Last</th>
+                                                <th scope="col">Listened</th>
                                                 <th scope="col" class="text-end font-size-iconPlaylist">
                                                     <i class="bi bi-clock" style="margin-right: 2.7rem;"></i>
                                                 </th>
                                         </thead>
                                         <tbody style="border-bottom:1px solid #ffffff;">
-                                            <tr ng-repeat="playlistRecord in listPlaylist.playlistRecords | filter:searchTable ">
+                                            <tr ng-repeat="playlistRecord in listPlaylist.playlistRecords | filter:searchTable | orderBy: sortFields">
                                                 <th scope="row"> {{$index +1}}</th>
                                                 <td>
                                                     <div class="d-flex align-items-center " style="cursor:pointer">
@@ -400,7 +397,7 @@
                                                 </td>
 
                                               
-                                                <td>Otto</td>
+                                                <td>{{playlistRecord.recording.listened number | 0}}</td>
                                                 <td class="text-end "> 
                                                    <format-time seconds="playlistRecord.recording.duration"></format-time>
 

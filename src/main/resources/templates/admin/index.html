@@ -127,8 +127,7 @@
                                     <span class="fas fa-user"></span>
                                     Profile
                                 </a>
-                                <a href="" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                <a href="" class="dropdown-item" >
+                                <a href="" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#changePass" >
                                     <span class="fas fa-inbox"></span>
                                     Change password
                                 </a>
@@ -171,7 +170,7 @@
         </div>
 
         <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="changePass" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -234,7 +233,7 @@
             <div class="menubar-content">
                 <nav class="animated bounceInDown">
                     <ul id="sidebar">
-                        <li class="active">
+                        <li class="activeslidebar">
                             <a href="#/!"><i class="bi bi-speedometer2"></i>Dashboard</a>
                         </li>
                         <li>
@@ -283,8 +282,6 @@
                             </a>
                             <ul class="left-menu-dp">
                                 <li><a href="#!ads"><i class="bi bi-music-note-beamed"></i>All advertising</a></li>
-                                <li><a href="#!subscriptions-statistic"><i
-                                            class="bi bi-music-note-list"></i>Statistics</a></li>
                             </ul>
                         </li>
 
@@ -321,27 +318,14 @@
                                             class="bi bi-music-note-list"></i>Statistics</a></li>
                             </ul>
                         </li>
-
-                        <li>
-                            <a href="#"><i class="bi bi-house-door-fill"></i>font-awesome icon</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="bi bi-house-door-fill"></i>Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="bi bi-house-door-fill"></i>Dashboard</a>
-                        </li>
                     </ul>
 
                 </nav>
 
                 <div class="">
-                    <nav class="navbar fixed-bottom bg-primary nav-song">
-
-
+                    <nav class="navbar fixed-bottom nav-song">                       
                         <audio style="color: red;" id="music"
                             src="https://cdn.pixabay.com/audio/2023/01/18/audio_43b48c0a90.mp3" controls></audio>
-
                     </nav>
                 </div>
             </div>
@@ -394,7 +378,13 @@
     <!-- <script src="../../static/js/jscustom/UI-Js-Admin/subscriptionUI.js"></script> -->
     <script src="../../static/js/jscustom/UI-Js-Admin/dirPagination.js"></script>
 
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-ui.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-map.min.js"></script>
+    <script src="https://cdn.anychart.com/geodata/latest/custom/world/world.js"></script>
+    <link href="https://cdn.anychart.com/releases/v8/css/anychart-ui.min.css" type="text/css" rel="stylesheet">
+    <link href="https://cdn.anychart.com/releases/v8/fonts/css/anychart-font.min.css" type="text/css" rel="stylesheet">
     <script>
 
         $('.newbtn').bind("click", function () {

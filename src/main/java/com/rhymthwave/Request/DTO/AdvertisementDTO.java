@@ -18,4 +18,5 @@ public class AdvertisementDTO {
     private  MultipartFile audio;
     private Integer priority;
     private Integer subscriptionId;
+    private float budget;
 }

@@ -33,6 +33,7 @@ app.controller('song', function ($scope, $http, $routeParams, graphqlService) {
     }`
     graphqlService.executeQuery(query).then(data => {
       $scope.s = data.findRecordingBySongId;
+      $scope.recordingId = $scope.s.recordingId;
       $scope.s.song.writters.forEach(element => {
         $scope.artId = element.artist.artistId;
       });
@@ -128,15 +129,6 @@ app.controller('song', function ($scope, $http, $routeParams, graphqlService) {
     $('#btn-playlist-play').attr('hidden', false);
     resume.click();
   })
-
-  // btn back and forward
-  $("#back").on("click", function () {
-    history.back();
-  });
-
-  $("#forward").on("click", function () {
-    history.forward();
-  });
 
   function getRandomColor() {
     const letters = '0123456789ABCDEF';

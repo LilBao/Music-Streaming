@@ -61,11 +61,25 @@
                            <div class="iq-card-body ">
 
                               <div class="row">
+                                 <div class="col-md-4 col-sm-6 mb-3">
+                                    <div class="edit-blog addSlideImage" id="test">
+                                       <input hidden="true" id="img" type="file" style="font-size: 10px;"
+                                          ng-model="slideDTO.img" accept="image/*" required />
+                                       <div class="iconAddSlideImage" ng-click="openFileInput()">
+                                          <i class="bi bi-plus-circle-dotted" id="addImage"></i>
+                                       </div>
+                                    </div>
+                                    <div class="inputurlsidle mt-3">
+                                       <input ng-model="form.urlSlide" type="text" class="form-control" id="exampleInputUrl" placeholder="Url address Slide">
+                                    </div>
+                                    
+                                    <!-- <img ng-src="{{imagePreview}}" alt="Preview Image" /> -->
+                                 </div>
                                  <div class="col-md-4 col-sm-6 mb-3" ng-repeat="imageUrl in imageUrls">
                                     <div class="edit-blog">
 
 
-                                       <img ng-src="{{imageUrl}}" style="height: 200px; width: 400px; object-fit: cover;" class="card-img-top" alt="...">
+                                       <img ng-src="{{imageUrl}}" style="max-width: 100%; height: auto; object-fit: cover;" class="card-img-top" alt="...">
 
 
                                        <!-- Dots Edit Dropdown -->
@@ -169,6 +183,10 @@
                                                                </div>
                                                             </div>
                                                          </div>
+                                                         <div class="inputurlsidle mt-3">
+                                                            <label for="exampleInputUrlupdate" class="form-label" style="font-size: 18px;">Url address Slide :</label>
+                                                            <input ng-model="urlSlide" type="text" class="form-control" id="exampleInputUrlupdate" placeholder="Url address Slide">
+                                                         </div>
 
                                                       </div>
                                                    </div>
@@ -187,16 +205,7 @@
 
 
 
-                                 <div class="col-md-4 col-sm-6 mb-3">
-                                    <div class="edit-blog addSlideImage" id="test"  style="height: 200px; width: 400px; object-fit: cover;" >
-                                       <input hidden="true" id="img" type="file" style="font-size: 10px;"
-                                          ng-model="slideDTO.img" accept="image/*" required />
-                                       <div class="iconAddSlideImage" ng-click="openFileInput()">
-                                          <i class="bi bi-plus-circle-dotted" id="addImage"></i>
-                                       </div>
-                                    </div>
-                                    <!-- <img ng-src="{{imagePreview}}" alt="Preview Image" /> -->
-                                 </div>
+                                 
 
                               </div>
 
