@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rhymthwave.DAO.ArtistDAO;
+import com.rhymthwave.Request.DTO.Top10ArtistDTO;
 import com.rhymthwave.Service.ArtistService;
 import com.rhymthwave.Service.CRUD;
 import com.rhymthwave.entity.Artist;
@@ -84,6 +85,11 @@ public class ArtistServiceImpl implements ArtistService, CRUD<Artist, Long> {
 	@Override
 	public List<Artist> top50ArtistByFollow(Integer role, String country, Boolean verify) {
 		return dao.top50ArtistByFollow(role, country, verify);
+	}
+
+	@Override
+	public List<Top10ArtistDTO> top3ArtistByByListener() {
+		return dao.top3ArtistByListened();
 	}
 
 }

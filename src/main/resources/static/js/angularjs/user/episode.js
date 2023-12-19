@@ -31,13 +31,4 @@ app.controller('episode', function ($scope, $http, $routeParams) {
     $('#btn-playlist-play').attr('hidden', false);
     resume.click();
   })
-
-  // btn back and forward
-  $("#back").on("click", function () {
-    history.back();
-  });
-
-  $("#forward").on("click", function () {
-    history.forward();
-  });
 });
