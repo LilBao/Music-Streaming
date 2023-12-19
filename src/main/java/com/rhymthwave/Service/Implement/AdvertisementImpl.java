@@ -90,6 +90,7 @@ public class AdvertisementImpl implements AdvertisementService {
         advertisement.setImage(image);
         advertisement.setListened(0L);
         advertisement.setClicked(0L);
+        advertisement.setBudget(subscription.getPrice());
         advertisement.setAccount(accountDAO.findById(getIdByRequest.getEmailByRequest(request)).orElse(null));
         advertisement.setSubscription(subscription);
         return advertisementDAO.save(advertisement);
