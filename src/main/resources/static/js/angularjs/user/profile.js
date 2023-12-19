@@ -501,4 +501,9 @@ app.controller('profileCtrl', function ($scope, $http, $location, $routeParams, 
     const color1 = getRandomColor();
     const color2 = getRandomColor();
     $('#container-profile').css('background', `linear-gradient(to right, ${color1}, ${color2})`);
+
+    $scope.show = ""
+    $scope.showAll = function (id) {
+        $scope.show = id
+    }
 })

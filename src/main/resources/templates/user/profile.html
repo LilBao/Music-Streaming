@@ -29,12 +29,14 @@
         </div>
     </div>
     <section class="mx-3 container">
-        <div ng-if="listPlaylistPublic.length > 0 || listPodcast.length > 0" class="row">
+        <div ng-show="listPlaylistPublic.length > 0 || listPodcast.length > 0" class="row">
             <div class="title tile-playlist-profile">
                 <p class="prf-name-title">{{type === 1 ? 'Public Playlists' : 'Public Podcast'}}</p>
-                <p class="show-all-playlist-profile">Show All</p>
+                <a ng-click="showAll(1)" class="text-white show-all-playlist-profile" data-bs-toggle="modal" data-bs-target="#showProfile-1">
+                    Show All
+                </a>
             </div>
-            <div class="col-2" ng-repeat=" item in type===1 ? listPlaylistPublic : listPodcast">
+            <div class="col-2" ng-repeat=" item in type===1 ? listPlaylistPublic : listPodcast | limitTo : 6">
                 <a href="{{type===1 ? '#!playlist/'+item.playlistId : '#!show/'+item.podcastId}}">
                     <div class="card card-play-list-profile">
                         <div class="img-car-profile">
@@ -51,13 +53,15 @@
                 </a>
             </div>
         </div>
-        <div ng-if="listFollower.length > 0" class="container-fluid mb-5">
+        <div ng-show="listFollower.length > 0" class="container-fluid mb-5">
             <div class="title tile-playlist-profile mt-5">
                 <p class="prf-name-title">Followers</p>
-                <p class="show-all-playlist-profile">Show All</p>
+                <a ng-click="showAll(2)" class="text-white show-all-playlist-profile" data-bs-toggle="modal" data-bs-target="#showProfile-2">
+                    Show All
+                </a>
             </div>
             <div class="row">
-                <div ng-repeat="item in listFollower" class="col-sm-2">
+                <div ng-repeat="item in listFollower | limitTo: 6" class="col-sm-2">
                     <a class="text-white" href="#!profile/user/{{item.authorsAccountA.account.username}}">
                         <div class="card card-play-list-profile">
                             <div class="img-car-profile-like">
@@ -76,13 +80,15 @@
             </div>
         </div>
 
-        <div ng-if="listFollowing.length > 0" class="container-fluid mb-5">
+        <div ng-show="listFollowing.length > 0" class="container-fluid mb-5">
             <div class="title tile-playlist-profile">
                 <p class="prf-name-title">Following</p>
-                <p class="show-all-playlist-profile">Show All</p>
+                <a ng-click="showAll(3)" class="text-white show-all-playlist-profile" data-bs-toggle="modal" data-bs-target="#showProfile-3">
+                    Show All
+                </a>
             </div>
             <div class="row">
-                <div ng-repeat="item in listFollowing" class="col-sm-2">
+                <div ng-repeat="item in listFollowing | limitTo: 6" class="col-sm-2">
                     <a href="{{item.authorsAccountB.role.roleId == 2 ? '#!/artist/' + item.authorsAccountB.account.artist.artistId : '#!/profile/'+item.authorsAccountB.role.role+'/' + item.authorsAccountB.account.username}}"
                         class="text-white">
                         <div class="card card-play-list-profile">
@@ -133,6 +139,81 @@
                             you have the right to the upload the image.</h6>
                     </div>
 
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade " id="showProfile-{{show}}">
+            <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                <div class="modal-content bg-dark">
+
+                    <div class="modal-header">
+                        <button id="modal-show-all" type="button" class="btn-close text-white"
+                            data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div ng-show="show == 1" class="row">
+                            <div class="col-2"
+                                ng-repeat=" item in type===1 ? listPlaylistPublic : listPodcast">
+                                <a href="{{type===1 ? '#!playlist/'+item.playlistId : '#!show/'+item.podcastId}}">
+                                    <div class="card card-play-list-profile">
+                                        <div class="img-car-profile">
+                                            <img src="{{item.image.url}}" class="card-img-top" alt="...">
+                                            <i class="bi bi-play-circle-fill icon-play-card-playlist-profile"></i>
+                                        </div>
+                                        <div class="card-body card-body-playlist-profile">
+                                            <p class="card-text card-text-playlist-profile-namesong">{{type === 1 ?
+                                                item.playlistName :
+                                                item.podcastName}}</p>
+                                            <p class="card-text-playlist-profile-folow">Playlist</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div ng-show="show == 2" class="row">
+                            <div ng-repeat="item in listFollower" class="col-sm-2">
+                                <a class="text-white" href="#!profile/user/{{item.authorsAccountA.account.username}}">
+                                    <div class="card card-play-list-profile">
+                                        <div class="img-car-profile-like">
+                                            <img style="object-fit: cover!important;"
+                                                src="{{item.authorsAccountA.account.image !== null ? item.authorsAccountA.account.image.url : 'https://res.cloudinary.com/div9ldpou/image/upload/v1699632134/Avatar/System/user_oujyrp.png'}}"
+                                                class="card-img-top" alt="...">
+                                        </div>
+                                        <div class="card-body card-body-playlist-profile">
+                                            <p class="card-text card-text-playlist-profile-namesong">
+                                                {{item.authorsAccountA.account.username}}</p>
+                                            <h6 class="small font-weight-bold">Profile</h6>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div ng-show="show == 3" class="row">
+                            <div ng-repeat="item in listFollowing" class="col-sm-2">
+                                <a href="{{item.authorsAccountB.role.roleId == 2 ? '#!/artist/' + item.authorsAccountB.account.artist.artistId : '#!/profile/'+item.authorsAccountB.role.role+'/' + item.authorsAccountB.account.username}}"
+                                    class="text-white">
+                                    <div class="card card-play-list-profile">
+                                        <div class="img-car-profile-like">
+                                            <img src="{{item.authorsAccountB.account.artist !==null ? item.authorsAccountB.account.artist.imagesProfile.url : item.authorsAccountB.account.image !== null ? item.authorsAccountB.account.image.url : 'https://res.cloudinary.com/div9ldpou/image/upload/v1699632134/Avatar/System/user_oujyrp.png'}}"
+                                                class="card-img-top w-100" alt="...">
+                                        </div>
+                                        <div class="card-body card-body-playlist-profile">
+                                            <p class="card-text card-text-playlist-profile-namesong">
+                                                {{item.authorsAccountB.account.artist!==null ?
+                                                item.authorsAccountB.account.artist.artistName :
+                                                item.authorsAccountB.account.username}}</p>
+                                            <h6 class="small font-weight-bold">{{item.authorsAccountB.role.role === "ARTIST" ?
+                                                "Artist" : item.authorsAccountB.role.role === "USER" ? 'Profile' : 'Podcaster'}}
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

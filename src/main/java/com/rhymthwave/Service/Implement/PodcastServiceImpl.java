@@ -24,7 +24,6 @@ public class PodcastServiceImpl implements PodcastService,CRUD<Podcast,Long>{
 	public Podcast create(Podcast entity) {
 		if(entity!=null) {
 			entity.setRate(0);
-			
 			dao.save(entity);
 			return entity;
 		}

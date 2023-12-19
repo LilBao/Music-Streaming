@@ -28,6 +28,9 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $cookies, 
                 usertype {
                     userTypeId
                     nameType
+                    account{
+                        username
+                    }
                 }
                 playlistRecords {
                     playlistRecordingId
@@ -82,6 +85,7 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $cookies, 
             }
         }`
             graphqlService.executeQuery(query).then(data => {
+                $scope.playlist = data.playlistById;
                 if ($cookies.get('token') && data.playlistById !== null) {
                     var check = $scope.account.userType.find(e => e.userTypeId == $scope.playlist.usertype.userTypeId);
                 }
@@ -98,7 +102,7 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $cookies, 
                         $scope.checkOwnPl = true;
                     }
                 }
-                $scope.playlist = data.playlistById;
+               
                 $scope.playlistRE = [...data.playlistById.playlistRecords, ...data.playlistById.playlistPodcast];
                 $scope.listAudioPlaylist = [...data.playlistById.playlistRecords.map(function (item) {
                     return { recording: item.recording };
@@ -167,11 +171,10 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $cookies, 
             if ($scope.coverImg !== undefined) {
                 $scope.updateImage();
             } else {
+                $scope.findMyPlaylist($scope.account.email);
                 showStickyNotification('Update successfull', 'success', 3000);
             }
-            $scope.account.userType.forEach(e => {
-                $scope.findMyPlaylist(e.userTypeId);
-            });
+            
         }).catch(err => {
             console.log("")
         })
@@ -189,6 +192,7 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $cookies, 
             },
             transformRequest: angular.identity
         }).then(resp => {
+            $scope.findMyPlaylist($scope.account.email);
             showStickyNotification('Update successfull', 'success', 3000);
             $scope.coverImg = undefined;
         }).catch(err => {
@@ -244,8 +248,10 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $cookies, 
                 $scope.findPlaylist();
                 showStickyNotification('Addition successfull', 'success', 3000);
             } else {
-                showStickyNotification(resp.data.message, 'warning', 3000);
+                showStickyNotification(resp.data.data, 'warning', 3000);
             }
+        }).catch(err => {
+
         })
     }
 
@@ -263,7 +269,6 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $cookies, 
             } else {
                 showStickyNotification(resp.data.message, 'warning', 3000);
             }
-
         })
     }
 
@@ -287,7 +292,7 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $cookies, 
         if (type === 'record') {
             $scope.additionRecord(item, $scope.playlist);
         } else {
-            $scope.additionEpisode(id, $scope.playlist);
+            $scope.additionEpisode(item, $scope.playlist);
         }
         $scope.listRecommended.splice(index, 1)
     }

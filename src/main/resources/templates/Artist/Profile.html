@@ -139,7 +139,7 @@
                             <div class="Albums">
 
                             </div>
-                            <div class="playlist">
+                            <div ng-show="listAlbum.length > 0" class="playlist">
                                 <h5>Artist Album</h5>
                                 <div>
                                     <div class="row">
@@ -150,8 +150,8 @@
                                                         class="card-img-top w-100" alt="...">
                                                 </div>
                                                 <div class="card-body card-body-playlist-profile">
-                                                    <p class="card-text card-text-playlist-profile-namesong">Album name: {{item.albumName}}</p>
-                                                    <h6 class="small font-weight-bold">Release: {{item.releaseDate |date:'yyyy-MM-dd'}}</h6>
+                                                    <p class="card-text card-text-playlist-profile-namesong text-truncate">{{item.albumName}}</p>
+                                                    <h6 class="small font-weight-bold text-truncate">Release: {{item.releaseDate |date:'yyyy-MM-dd'}}</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -265,6 +265,7 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="tab-p tab-pane" id="tab3-p">
                     <div id="accordion" class="my-5">
                         <div class="card">

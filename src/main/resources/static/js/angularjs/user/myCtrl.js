@@ -1388,8 +1388,8 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
             transformRequest: angular.identity
         }).then(resp => {
             if (resp.data.success === true) {
-                showStickyNotification('Create playlist success', 'success', 2000);
                 $scope.findMyPlaylist($scope.account.email);
+                showStickyNotification('Create playlist success', 'success', 2000);
             } else {
                 showStickyNotification(resp.data.data, 'warning', 2000);
             }
@@ -1413,14 +1413,13 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
                 headers: { 'Authorization': 'Bearer ' + getCookie('token') }
             }).then(resp => {
                 if (resp.data.success === true) {
-                    showStickyNotification("Create playlist success", 'success', 3000);
                     $scope.findMyPlaylist($scope.account.email);
+                    showStickyNotification("Create playlist success", 'success', 3000); 
                 } else {
                     showStickyNotification(resp.data.data, 'warning', 2000);
                 }
             }).catch(err => {
                 showStickyNotification("Create playlist fail", 'danger', 3000);
-                console.log(err);
             })
         }).catch(err => {
             console.log(err)
@@ -1433,7 +1432,7 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
         const elementMenu = document.getElementById(angular.element(menuPlaylistId).children('.element-menu').attr('id'));
 
         elementMenu.style.left = `${e.clientX}px`;
-        elementMenu.style.top = '40%';
+        elementMenu.style.top = '30%';
         elementMenu.style.zIndex = '1000';
         elementMenu.style.display = 'block';
         elementMenu.style.position = 'fixed';
@@ -1497,7 +1496,7 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
                         $scope.obj.type = "artist"
                         $scope.obj.artistId = resp.data.data.artistId;
                         $scope.obj.name = resp.data.data.artistName
-                        $scope.obj.image = resp.data.data.imagesProfile.url !== null ? resp.data.data.imagesProfile.url : "https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png";
+                        $scope.obj.image = resp.data.data.imagesProfile !== null ? resp.data.data.imagesProfile.url : "https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png";
                         $scope.checkObjExist($scope.obj, tracking, false, newUrl);
                     }
                 }).catch(err => {
@@ -1693,19 +1692,6 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
             }
             return rangeArray;
         }
-    }
-
-    $scope.logout = function () {
-        var now = new Date();
-        now.setUTCFullYear(1970);
-        now.setUTCMonth(0);
-        now.setUTCDate(1);
-        now.setUTCHours(0);
-        now.setUTCMinutes(0);
-        now.setUTCSeconds(0);
-
-        $cookies.put('token', '', { expires: now, path: '/' })
-        $window.location.href = 'http://127.0.0.1:5500/src/main/resources/templates/user/login.html';
     }
 
     $scope.signin = function () {

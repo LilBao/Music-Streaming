@@ -73,11 +73,11 @@
                                         </button>
                                         <ul class="dropdown-menu drop-playlist ">
                                             <li>
-                                                <a ng-if="!account.email" href="./signin" class="dropdown-item">
+                                                <a ng-show="!account.email" href="./signin" class="dropdown-item">
                                                     <i class="bi bi-music-note-beamed"></i>
                                                     Create a new Playlist
                                                 </a>
-                                                <a ng-if="account.email" class="dropdown-item" id="create-playlist">
+                                                <a ng-show="account.email" class="dropdown-item" id="create-playlist">
                                                     <i class="bi bi-music-note-beamed"></i> Create a new Playlist
                                                 </a>
                                             </li>
@@ -290,8 +290,8 @@
                                                         <i class="bi bi-share"></i>
                                                         Share</a>
                                                 </li>
-                                                <li class="li-dropdown-start-end">
-                                                    <a href="#!report/playlist/{{item.playlistId}}" class="btn text-white dropdown-item py-2">
+                                                <li class="li-dropdown-end">
+                                                    <a href="#!report/playlist/{{item.playlistId}}" class="btn text-white dropdown-item py-2 px-3">
                                                         <i class="bi bi-flag-fill"></i></i>
                                                         Report
                                                     </a>
@@ -469,7 +469,7 @@
     <!-- Modal thông báo  -->
     <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="popup modal-dialog">
-            <div class="popup-message modal-content">
+            <div class="popup-message modal-content bg-dark">
                 <div class="modal-body">
                     <div class="d-flex justify-content-end">
                         <span class="btn" type="button" aria-hidden="true" data-bs-dismiss="modal"

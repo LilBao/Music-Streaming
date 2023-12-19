@@ -104,10 +104,7 @@ app.controller('selectPodcastCtrl', function($scope,$http){
         }
         if(!$scope.coverImg){
             return false;
-        }
-        if(!$scope.record.version){
-            return false;
-        }
+        }   
         if(!podcast.tag.tagId){
             return false;
         }

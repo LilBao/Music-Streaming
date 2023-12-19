@@ -31,7 +31,7 @@ app.controller('verifyCtrl', function ($scope, $http) {
     }
 
     $scope.sendMailConfirm = function () {
-        let url = host + "/v1/email-confirm-podcast"
+        let url = host + "/v1/email-confirm-podcast/"+$scope.account.email;
         $http.post(url, {
             headers: {
                 'Authorization': 'Bearer ' + getCookie('token')

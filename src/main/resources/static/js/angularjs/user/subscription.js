@@ -103,7 +103,6 @@ app.controller('subscriptionCtrl', function ($scope, $http, $routeParams) {
     }
 
     $('#btn-payment-paypal').click(function () {
-        console.log(checkSubscription());
         if (checkSubscription()) {
             $.confirm({
                 title: 'Confirm!',

@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="../../static/css/cssArtist/music.css">
     <link rel="stylesheet" href="../../static/css/cssArtist/record.css">
     <link rel="stylesheet" href="../../static/css/toasts.css">
-    
+
 </head>
 
 <body ng-app="myApp" ng-controller="myCtrl">
@@ -31,13 +31,21 @@
                 data-bs-target="#offcanvasExample" aria-controls=" offcanvasExample">
                 <span class="navbar-toggler-icon" style="color: snow;"></span>
             </button>
-                <button class="btn">
-                    <img src="{{artist.image.imagesProfile.url}}" alt="" class="rounded-circle" height="22" loading="lazy">
-                    <span class="text-white">Lilbaor</span>
-                </button>  
+            <div class="dropdown">
+                <button class="btn dropdown-item" data-bs-toggle="dropdown">
+                    <img src="{{artist.imagesProfile.url}}" alt="" class="rounded-circle" height="22"
+                        loading="lazy">
+                    <span class="text-white">{{artist.artistName}}</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item p-3" href="./">Rthyme Wave</a>
+                    </li>
+                    <li><a class="dropdown-item p-3" href="./api/v1/auth/logout">Log out</a></li>
+                </ul>
+            </div>
             <!-- offcanvas -->
-            <div class=" offcanvas offcanvas-start " tabindex="-1"
-                id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class=" offcanvas offcanvas-start " tabindex="-1" id="offcanvasExample"
+                aria-labelledby="offcanvasExampleLabel">
                 <div class="offcanvas-header">
 
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
@@ -59,14 +67,14 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" href="#!artist-profile">Profile</a>
-                        </li>              
+                        </li>
                     </ul>
                 </div>
             </div>
     </nav>
     <section class="container">
         <main class="" ng-view>
-            
+
         </main>
     </section>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -91,7 +99,7 @@
 
     <!-- tab profile -->
     <script src="../../static/js/angularjs/artist/Profile.js"></script>
-    
+
     <script src="../../static/js/jscustom/Artist/profile.js"></script>
     <link rel="stylesheet" href="../../static/css/cssArtist/profile.css">
 

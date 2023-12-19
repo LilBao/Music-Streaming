@@ -13,6 +13,7 @@ app.controller('dashboardCtrl', function ($scope, $http, $routeParams, graphqlSe
     $scope.topPodcastPopular = [];
     $scope.topNewPodcast = [];
     $scope.topSongForYou = [];
+    $scope.slide = [];
 
     $scope.findTopArtistListen = function (country) {
         const query = `{
@@ -227,6 +228,15 @@ app.controller('dashboardCtrl', function ($scope, $http, $routeParams, graphqlSe
 
     }
 
+    $scope.findSlide = function(){
+        let url = host + "v1/display/user";
+        $http.get(url, {
+            params: { country: "" }
+        }).then(resp => {
+            $scope.slide = resp.data.data;
+        })
+    }
+
     if ($cookies.get('tracking')) {
         $scope.tracking = JSON.parse($cookies.get("tracking"));
     }
@@ -234,6 +244,7 @@ app.controller('dashboardCtrl', function ($scope, $http, $routeParams, graphqlSe
     $scope.findTopArtistListen('%%');
     $scope.findTopSongListen('%%');
     $scope.findTopNewSong('%%');
+    $scope.findSlide();
 
     // $scope.findTopArtistFollow();
 
