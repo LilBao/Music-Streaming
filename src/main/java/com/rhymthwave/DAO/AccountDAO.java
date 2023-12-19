@@ -3,6 +3,7 @@ package com.rhymthwave.DAO;
 import java.util.List;
 import java.util.Map;
 
+import com.rhymthwave.DTO.AnalysisDTO;
 import com.rhymthwave.Request.DTO.Top10PodcastDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -60,4 +61,7 @@ public interface AccountDAO extends JpaRepository<Account, String>{
 	
 	@Query(value = "select COUNT(*) from accounts where isverify = 'false'",nativeQuery = true)
 	int countAccountIsNotVerified();
+
+	@Query(value = "SELECT COUNTRY,COUNT(*) AS quantity FROM accounts GROUP BY COUNTRY",nativeQuery = true)
+	List<AnalysisDTO> countAccountByCountry();
 }
