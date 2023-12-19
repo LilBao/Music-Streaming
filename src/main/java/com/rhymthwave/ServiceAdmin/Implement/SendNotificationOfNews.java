@@ -69,4 +69,14 @@ public class SendNotificationOfNews implements INotification<NewDTO> {
 		emails.setBody(sendMailTemplateSer.getContentForReport("templateWarring"));
 		mailService.enqueue(emails);
 	}
+	@Override
+	public void sendEmailComfirmUser(String url,String email) {
+		Account accounts = accountDAO.findByEmail(email);
+		Email emails = new Email();
+		emails.setFrom("musicstreaming2023@gmail.com");
+		emails.setTo(email);
+		emails.setSubject("Email comfirm account");
+		emails.setBody(sendMailTemplateSer.getContentForConfirmAccount("templateComfirmUserSuccess",url,email));
+		mailService.enqueue(emails);
+	}
 }
