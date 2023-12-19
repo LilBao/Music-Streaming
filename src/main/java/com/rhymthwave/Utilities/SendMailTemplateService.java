@@ -89,6 +89,13 @@ public class SendMailTemplateService {
 		context.setVariable("artistName", artistName);
 		return templateEngine.process(string, context);
 	}
+
+	public String getContentForConfirmAccount(String templateName, String url,String email) {
+		final Context context = new Context();
+		context.setVariable("url", url);
+		context.setVariable("email", email);
+		return templateEngine.process(templateName, context);
+	}
     
 
 }

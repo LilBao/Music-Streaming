@@ -8,4 +8,6 @@ public interface INotification<T> {
 
 	void sendEmailWarring(String email);
 
+	void sendEmailComfirmUser(String url, String email);
+
 }
