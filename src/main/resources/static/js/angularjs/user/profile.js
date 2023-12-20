@@ -83,6 +83,7 @@ app.controller('profileCtrl', function ($scope, $http, $location, $routeParams, 
                 $scope.findListAlbumArtist();
                 $scope.findPlaylistFeaturing();
                 $scope.findPlaylistDiscover();
+                $scope.findListAppearOn();
             } else if ($scope.role === 'podcast') {
                 $scope.type = 3;
                 $scope.profile = data.accountByUsername;
@@ -488,7 +489,7 @@ app.controller('profileCtrl', function ($scope, $http, $location, $routeParams, 
             $scope.listAppearOn = data.findRecordingAppearOnByArtist;
         })
     }
-
+    
     //JS
     function getRandomColor() {
         const letters = '0123456789ABCDEF';
