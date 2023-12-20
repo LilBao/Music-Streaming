@@ -1,12 +1,14 @@
 package com.rhymthwave.API.GraphQL;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.rhymthwave.DTO.MessageResponse;
 import com.rhymthwave.Service.CRUD;
@@ -72,4 +74,16 @@ public class PlaylistGraphQL {
 		return playlistSer.findDiscoverArtist(artistId, roleId);
 	}
 	
+	@QueryMapping("findTopNewPlaylist")
+	public List<Playlist> findTopNewPlaylist(){
+		return playlistSer.top50PlaylistLatest(true);
+	}
+	
+	@QueryMapping("findTopRecentPlaylist")
+	public List<Playlist> top50PlaylistRecentListen(@Argument("genre") Optional<List<String>> genre,
+			@Argument("culture") Optional<String> culture, @Argument("instrument") Optional<String> instrument,
+			@Argument("mood") Optional<String> mood, @Argument("songstyle") Optional<String> songstyle, 
+			@Argument("versions") Optional<String> versions){
+		return playlistSer.top50PlaylistRecentListen(true, genre, culture, instrument, mood, songstyle, versions);
+	}
 }

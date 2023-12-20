@@ -35,7 +35,6 @@ app.controller('confirmCtrl', function ($scope, $http) {
         formData.append('avatar', $scope.avatarFile);
         formData.append('background', $scope.backgroundFile);
         formData.append('bio', $scope.artist.bio); 
-        formData.append('active', false); 
         $http({
             method: 'POST',
             url: url,

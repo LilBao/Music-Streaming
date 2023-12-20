@@ -98,15 +98,15 @@ public class PlaylistServiceImpl implements PlaylistService, CRUD<Playlist, Long
 	}
 
 	@Override
-	public List<Playlist> top50PlaylistLatest(List<Integer> listRole, Boolean isPublic) {
-		return dao.top50PlaylistLatest(listRole, isPublic);
+	public List<Playlist> top50PlaylistLatest(Boolean isPublic) {
+		return dao.top50PlaylistLatest(isPublic);
 	}
 
 	@Override
-	public List<Playlist> top50PlaylistRecentListen(List<Integer> listRole, Boolean isPublic,
+	public List<Playlist> top50PlaylistRecentListen(Boolean isPublic,
 			Optional<List<String>> nameGenre, Optional<String> culture, Optional<String> instrument,
 			Optional<String> mood, Optional<String> songstyle, Optional<String> versions) {
-		return dao.top50PlaylistRecentListen(listRole, isPublic, nameGenre.orElse(Arrays.asList("%%")),
+		return dao.top50PlaylistRecentListen(isPublic, nameGenre.orElse(Arrays.asList("%%")),
 				culture.orElse("%%"), instrument.orElse("%%"), mood.orElse("%%"), songstyle.orElse("%%"),versions.orElse("%%"));
 	}
 }

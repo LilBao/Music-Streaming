@@ -39,7 +39,6 @@ app.controller('SearchController', function ($scope, $http, $cookies, $window,gr
 			  }
               $scope.historyItems.unshift(data.artistById);
               localStorage.setItem('artist_info', JSON.stringify($scope.historyItems));
-              console.log($scope.historyItems);
           })
           .catch(err => {
               console.error("Error fetching artist information:", err);
