@@ -74,7 +74,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                                                 "/configuration/security").permitAll()
 
                 //                       .requestMatchers(HttpMethod.GET, "/**").permitAll()
-                                        .requestMatchers(HttpMethod.POST, "/api/v1/playlist/**").permitAll()
+//                                        .requestMatchers(HttpMethod.POST, "/api/v1/playlist/**").permitAll()
                 //                        .requestMatchers(HttpMethod.PUT, "/**").permitAll()
                 //                        .requestMatchers(HttpMethod.DELETE, "/**").permitAll()
                 //                        .requestMatchers(HttpMethod.PATCH, "/**").permitAll()
@@ -85,8 +85,8 @@ public class SecurityConfig implements WebMvcConfigurer {
                                                             ,"/api/v1/search/**","/podcast/home",
                                                             "/home","/graphiql/**","/artist/home").permitAll()
 
-                                                .requestMatchers( "/podcaster","/podcast-browse" ).hasAnyAuthority("PODCAST")
-                                                .requestMatchers( "/artist").hasAnyAuthority("ARTIST")
+                                                .requestMatchers( "/podcaster","/podcast-browse" ).hasAuthority("PODCAST")
+                                                .requestMatchers( "/artist").hasAuthority("ARTIST")
                                                 .requestMatchers( "/api/v1/admin/**","/admin").hasAnyAuthority("MANAGER","STAFF")
 
                                          .requestMatchers("/static/**").permitAll().anyRequest().permitAll()
@@ -96,11 +96,12 @@ public class SecurityConfig implements WebMvcConfigurer {
                             }
                         }
                 )
+                
                 .authenticationProvider(AuthenticationProvider())
                 .addFilterBefore(jwtAuthentitationFilter(), UsernamePasswordAuthenticationFilter.class);
         http.logout().logoutSuccessUrl("/api/v1/auth/logout")
                 .addLogoutHandler(new SecurityContextLogoutHandler())
-                .clearAuthentication(true);;
+                .clearAuthentication(true);
 
         http.oauth2Login()
                 .loginPage("/signin")

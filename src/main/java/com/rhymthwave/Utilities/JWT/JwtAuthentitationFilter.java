@@ -29,8 +29,8 @@ public class JwtAuthentitationFilter extends OncePerRequestFilter {
 
 	public static String getJwtFromRequest(HttpServletRequest request) {
 		String bearerToken = request.getHeader("Authorization");
-
 		// Lấy và check Authorizaton đã có JWT chưa
+		System.out.println("bear"+bearerToken);
 		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
 			return bearerToken.substring(7);
 		}
@@ -43,9 +43,9 @@ public class JwtAuthentitationFilter extends OncePerRequestFilter {
 			// Lấy thông tin từ request
 			String jwt = getJwtFromRequest(request);
 			if (StringUtils.hasText(jwt) && JwtTokenCreate.validateToken(jwt)) {
+				System.out.println("jwt"+jwt);
 				// lay username from String jwt
 				String username = JwtTokenCreate.getUserNameJWT(jwt);
-				
 				UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
 				if (userDetails != null) {
 					// Neu user hop le thong tin cho security context
@@ -53,7 +53,6 @@ public class JwtAuthentitationFilter extends OncePerRequestFilter {
 					 = new UsernamePasswordAuthenticationToken(userDetails,null, userDetails.getAuthorities());
 					authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 					SecurityContextHolder.getContext().setAuthentication(authentication);
-					
 				}
 				
 			}
