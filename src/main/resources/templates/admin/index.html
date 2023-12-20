@@ -131,7 +131,7 @@
                                     <span class="fas fa-inbox"></span>
                                     Change password
                                 </a>
-                                <a href="" class="dropdown-item">
+                                <a href="./" class="dropdown-item">
                                     <span class="fas fa-lock-open"></span>
                                     Mapping
                                 </a>
@@ -139,29 +139,6 @@
                                     <span class="fas fa-outdent"></span>
                                     Logout
                                 </a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown user-profile-dropdown">
-                        <a href="" class="nav-link user" id="Notify" data-bs-toggle="dropdown">
-                            <img src="../../static/img/settings.png" class="icon" alt="">
-                        </a>
-
-                        <div class="dropdown-menu">
-                            <div class="dp-profile-menu">
-                                <a href="" class="dropdown-item">
-                                    <span class="fas fa-plug"></span>
-                                    Design Style
-                                </a>
-                                <a href="" class="dropdown-item">
-                                    <span class="fas fa-object-ungroup"></span>
-                                    Design Style
-                                </a>
-                                <a href="" class="dropdown-item">
-                                    <span class="fas fa-palette"></span>
-                                    {{price}}
-                                </a>
-
                             </div>
                         </div>
                     </li>
@@ -242,7 +219,7 @@
                         <li>
                             <a href="#!account"><i class="bi bi-people-fill"></i>Manager Account</a>
                         </li>
-                        <li class="sub-menu">
+                        <li class="sub-menu" ng-show="statusShow">
                             <a href=""><i class="bi bi-graph-up"></i>Statistical Management
 
                                 <div class="fa fa-caret-down right"></div>

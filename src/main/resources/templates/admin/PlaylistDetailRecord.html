@@ -397,7 +397,7 @@
                                                 </td>
 
                                               
-                                                <td>{{playlistRecord.recording.listened number | 0}}</td>
+                                                <td>{{playlistRecord.recording.listened | number : 0 }}</td>
                                                 <td class="text-end "> 
                                                    <format-time seconds="playlistRecord.recording.duration"></format-time>
 
