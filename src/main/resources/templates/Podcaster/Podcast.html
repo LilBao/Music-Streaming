@@ -18,6 +18,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../../static/js/angularjs/pobcast/Podcast.js"></script>
+    <script src="../../static/js/Utiliez/CookiesUtil.js"></script>
 
     <link rel="stylesheet" href="../../static/css/toasts.css">
     <script src="../../static/js/jscustom/UI-Js-Admin/bootstrap-show-notification.js"></script>
@@ -32,9 +33,9 @@
                     <img src="../../static/img/logo.png" alt="" width="117">
                 </a>
                 <div>
-                    <button class="btn text-white" ng-show="!podcast.idrole" ng-click="login()">Login</button>
-                    <a href="/api/v1/auth/logout" ng-show="podcast.idrole"><button class="btn text-white" ng-click="logout()">Logout</button></a> 
-                    <button class="btn text-white" ng-show="podcast.idrole" ng-click="getAccessPodcast()">Get Access</button>
+                    <button class="btn text-white" ng-show="!account.email" ng-click="login()">Login</button>
+                    <a href="/api/v1/auth/logout" ng-show="account.email"><button class="btn text-white" ng-click="logout()">Logout</button></a> 
+                    <button class="btn text-white" ng-show="account.email" ng-click="getAccessPodcast()">Get Access</button>
                 </div>
             </div>
         </nav>

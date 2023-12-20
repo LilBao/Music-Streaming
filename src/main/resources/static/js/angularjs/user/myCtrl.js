@@ -33,7 +33,6 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
             $scope.account = resp.data.data;
-            console.log($scope.account);
             $scope.findMyPlaylist($scope.account.email);
             $scope.findMyListFollow();
             $scope.findAdsRunning();
@@ -1260,19 +1259,17 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
                 })];
                 if (type === 'playlist') {
                     $scope.getPlaylistById(idNew).then(data => {
-                        var value = {};
-                        value.playlist = data.playlistById;
-                        console.log(data.playlistById)
                         var result = false;
-                        listAudioPlaylist.some(item => {
+                        listAudioPlaylist.forEach(item => {
+                            var value = {};
+                            value.playlist = data.playlistById;
                             if (item.recordingId) {
                                 var url = host + "v1/playlist-record";
                                 value.recording = item;
                             } else {
                                 var url = host + "v1/playlist-episode";
                                 value.episode = item;
-                            }
-
+                            }                  
                             $http.post(url, value, {
                                 headers: { 'Authorization': 'Bearer ' + getCookie('token') }
                             }).then(resp => {
@@ -1478,7 +1475,7 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
 
         if (lastSlashIndex !== -1) {
             var result = newUrl.substring(lastSlashIndex + 1);
-            if (newUrl.indexOf("#!/podcast/") !== -1) {
+            if (newUrl.indexOf("show") !== -1) {
                 let url = host + "v1/podcast/" + result;
                 $http.get(url).then(resp => {
                     if (resp.data.data) {
@@ -1511,7 +1508,7 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
                         $scope.obj.type = "playlist"
                         $scope.obj.playlistId = resp.data.data.playlistId;
                         $scope.obj.name = resp.data.data.playlistName
-                        $scope.obj.image = resp.data.data.image.url !== null ? resp.data.data.image.url : "https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg";
+                        $scope.obj.image = resp.data.data.image !== null ? resp.data.data.image.url : "https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg";
                         $scope.checkObjExist($scope.obj, tracking, false, newUrl);
                     }
                 }).catch(err => {
@@ -1597,7 +1594,7 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
         const imageUrl = encodeURIComponent('https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg');
         if (type === 'fb') {
             const fb = document.querySelector('.facebook');
-            fb.href = `https://www.facebook.com/share.php?u=${link}&title=${title}&quote=${msg}&og:image=${imageUrl}`;
+            fb.href = fb.href = `https://www.facebook.com/share.php?u=${link}`;
         } else if (type === 'twitter') {
             const twitter = document.querySelector('.twitter');
             twitter.href = `http://twitter.com/share?&url=${link}&text=${msg}&hashtags=javascript,programming`;
@@ -1698,6 +1695,10 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
 
     $scope.signin = function () {
         $window.location.href = '/signin';
+    }
+
+    $scope.logout = function () {
+        $window.location.href = '/api/v1/auth/logout';
     }
 
     $scope.accountInfo = function () {
@@ -1865,5 +1866,7 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
         });
 
     };
-    $scope.getAuthor();
+    if($cookies.get('token')){
+        $scope.getAuthor();
+    }
 })

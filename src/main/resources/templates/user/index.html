@@ -96,10 +96,11 @@
                                 <li ng-show="hideni">
                                     <hr class="dropdown-divider">
                                 </li>
-                                <a href="/api/v1/auth/logout">
-                                    <li ng-show="hideni"><a class="dropdown-item" ng-click="logout()"> <i
-                                                class="bi bi-box-arrow-right"></i> Log out</a></li>
-                                </a>
+                                <li ng-show="account.email">
+                                    <a class="dropdown-item" ng-click="logout()"> 
+                                        <i class="bi bi-box-arrow-right"></i> Log out
+                                    </a>
+                                </li>
                             </ul>
                         </figure>
                     </button>
@@ -278,11 +279,13 @@
                                                                     style="background-color: transparent;"><i
                                                                         class="text-white bi bi-search-heart"></i></span>
                                                                 <input ng-model="nameMyPlaylist"
-                                                                    ng-change="searchMyPlaylist(nameMyPlaylist)"
                                                                     type="text" class="text-white form-control"
                                                                     placeholder="Search in playlist"
                                                                     style="background-color: transparent;">
                                                             </div>
+                                                        </li>
+                                                        <li class="li-dropdown-end">
+                                                            <hr class="dropdown-divider">
                                                         </li>
                                                         <li class="nav-item">
                                                             <a ng-click="createSamePlaylist(item.playlistId)"
@@ -293,7 +296,7 @@
                                                         <li class="li-dropdown-end">
                                                             <hr class="dropdown-divider">
                                                         </li>
-                                                        <li ng-repeat="playlist in listPlaylist" class="nav-item">
+                                                        <li ng-repeat="playlist in listPlaylist | filter: nameMyPlaylist" class="nav-item">
                                                             <a ng-click="addOtherPlaylistOrQueue(item.playlistId,playlist.playlistId,'playlist')"
                                                                 class="nav-link text-white">{{playlist.playlistName}}</a>
                                                         </li>
@@ -362,7 +365,8 @@
                                                         Share</a>
                                                 </li>
                                                 <li class="li-dropdown-end">
-                                                    <a href="#!report/playlist/{{item.playlistId}}" class="btn text-white dropdown-item py-2 px-3">
+                                                    <a href="#!report/playlist/{{item.playlistId}}"
+                                                        class="btn text-white dropdown-item py-2 px-3">
                                                         <i class="bi bi-flag-fill"></i>
                                                         Report
                                                     </a>
@@ -407,7 +411,7 @@
                                     ng-repeat="item in audioItem.song.writters">{{item.artist.artistName}} | </a>
                                 <a class="text-white">{{audioItem.podcast.authorName}}</a>
                             </div>
-                            <a ng-show="ads.adId" ng-click="updateClickAds(item)" class="text-white">Learn more</a>
+                            <a ng-show="ads.adId" ng-click="updateClickAds(ads)" class="text-white">Learn more</a>
                         </div>
                     </div>
 

@@ -102,6 +102,7 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService,$cookies) {
     $scope.outSong = function (listWritter, songId, artistId, idrecord) {
         var writter = listWritter.find(item => item.artist.artistId == artistId && item.song.songId == songId);
         $scope.deleteWritter(writter.writterId);
+        $scope.listMyRecordProject();
         $('#btn-out-song-' + idrecord).click();
     }
 
@@ -180,6 +181,7 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService,$cookies) {
     $scope.deleteSong = function (id) {
         let url = host + "/v1/song/" + id
         $http.delete(url).then(resp => {
+            $scope.getListSongReleased();
             showStickyNotification('Delete successfully.', 'success', 3000);
         }).catch(error => {
             showStickyNotification('Delete fail.', 'danger', 3000);
@@ -227,6 +229,7 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService,$cookies) {
     $scope.deleteAlbum = function (idAlbum) {
         let url = host + "/v1/album/" + idAlbum
         $http.delete(url).then(resp => {
+            $scope.listAlbumReleased();
             showStickyNotification('Delete album successfully.', 'success', 3000);
         }).catch(error => {
             showStickyNotification('Delete album fail.', 'danger', 3000);
@@ -410,6 +413,7 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService,$cookies) {
             $http.delete(url).then(resp => {
                 $scope.detail($scope.album.albumId, 'album');
                 $scope.getListAlbumReleased();
+                showStickyNotification('Remove track successfull.', 'success', 3000);
             }).catch(error => {
 
             })
@@ -537,8 +541,8 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService,$cookies) {
     //Elimidate song or album
     $scope.Elimidate = function (id, type) {
         $.confirm({
-            title: 'Disable account!',
-            content: 'Your account will be dissabled.\n If you do not log in your artist profile after 6 months, you will lose access to your account',
+            title: 'Elimidate '+ type,
+            content: 'Your '+type+ ' will be removed.\n Consider before remove',
             buttons: {
                 confirm: function () {
                     if (type === 'song') {
@@ -707,7 +711,6 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService,$cookies) {
         let data = angular.copy($scope.record)
         $scope.updateRecord(data);
         showStickyNotification('Update record successfully.', 'success', 3000);
-
     }
 
     //My project
@@ -765,10 +768,10 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService,$cookies) {
                 confirm: function () {
                     var data = angular.copy($scope.record);
                     data.isDeleted = true;
+                    $('#btn-close-record-detail').click();
                     showStickyNotification('Delete record successfully.\n Record will be moved to garbage', 'success', 3000);
                     $scope.updateRecord(data);
-                    $scope.findListRecordArtist();
-                    $('#btn-close-record-detail').click();
+                    $scope.findListRecordArtist();          
                 },
                 cancel: function () {
 
@@ -977,6 +980,10 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService,$cookies) {
         sentence = lyricsContainer.value.split('\n');
     })
 
+    function scrollToBottom() {
+        afterGenerate.scrollTop = afterGenerate.scrollHeight;
+    }
+
     fileAudio.addEventListener('change', function (event) {
         var file = event.target.files[0];
         audioLyrics.src = URL.createObjectURL(file);
@@ -1007,6 +1014,7 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService,$cookies) {
         lyrics += timeLyrics(audioLyrics.currentTime) + sentence[line].trim() + "\n";
         line++;
         afterGenerate.innerHTML = lyrics;
+        scrollToBottom();
         if (line === sentence.length - 1) {
             const blob = new Blob([lyrics], { type: "text/plain" });
             const url = URL.createObjectURL(blob);
@@ -1016,6 +1024,7 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService,$cookies) {
             a.click();
             URL.revokeObjectURL(url);
             line = 0;
+            btnReset.click();
         }
     })
 

@@ -7,12 +7,24 @@ app.controller('myCtrlPodcast', function ($scope, $http, $cookies, $window) {
     $scope.listImage = [];
     $scope.dataNews = [];
     $scope.top3 = [];
+    $scope.account={};
+
+    $scope.me = function () {
+        $http.get(host + "/v1/account", {
+            headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+        }).then(resp => {
+            $scope.account = resp.data.data;
+        }).catch(error => {
+            console.log("Not found artist profile")
+        })
+    }
+    $scope.me();
 
     $http.get(host + "/v1/profile-podcast", {
         headers: { 'Authorization': 'Bearer ' + $cookies.get('token') }
     }).then(resp => {
         $scope.podcast = resp.data.data;
-        $scope.id = $scope.podcast.idrole;
+        $scope.id = $scope.podcast.idrole ? $scope.podcast.idrole : undefined;       
     }).catch(error => {
         console.log(error)
     })
@@ -69,7 +81,6 @@ app.controller('myCtrlPodcast', function ($scope, $http, $cookies, $window) {
     }
 
     $scope.dataNews = function (role) {
-
         $http.get(host + "/v1/news", { params: { createfor: role } }).then(resp => {
             $scope.dataNews = resp.data.data;
             // console.log($scope.dataNews);
@@ -81,7 +92,6 @@ app.controller('myCtrlPodcast', function ($scope, $http, $cookies, $window) {
 
      //Get access podcast
     $scope.getAccessPodcast = function(){
-        console.log($scope.id);
         var isVerify = $scope.id;
         if(isVerify == 3){
             $window.location.href = '/podcast-browse';

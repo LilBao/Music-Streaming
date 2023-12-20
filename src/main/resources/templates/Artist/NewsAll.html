@@ -56,7 +56,7 @@
     </div>
 
     <div>
-        <div ng-repeat="allNews in allNews | orderBy:'createDate':true">
+        <div ng-repeat="allNews in pagination.items(allNews) | orderBy:'createDate':true">
             <div class="container col-sm-6 mt-5">
                 <div class="text-conten-news justify-content-center align-items-center">
                     <a ng-click="newsPage(allNews.newsId)"><img ng-src="{{allNews.image.url}}" alt="" style="width: 720px;height: 405px;object-fit: cover;"></a>                   
@@ -75,6 +75,31 @@
                 <div class="conten-news">
                     <a ng-click="newsPage(allNews.newsId)"><p>read more</p></a>
                 </div>              
+            </div>
+        </div>
+        <div class="product_sorting_container product_sorting_container_bottom clearfix">
+            <span class="showing_results">Showing {{pagination.page +1}} – {{pagination.count(allNews)}} of
+                {{pagination.items(allNews).length}} results</span>
+            <div class="pages d-flex flex-row align-items-center">
+                <div ng-show="pagination.page > 0" ng-click="pagination.prev(allNews)" id="next_page_1" class="page_prev">
+                    <a>
+                        <i class="bi bi-arrow-left"></i>
+                    </a>
+                </div>
+                <div class="page_current">
+                    <span class="text-black">{{pagination.page +1}}</span>
+                    <ul class="page_selection ps-0 pe-4 bg-black" style="z-index: 200000;">
+                        <li ng-repeat="i in pagination.getNumbers(pagination.count(allNews))">
+                            <a ng-click="pagination.setPageNo($index)" class="text-white">{{$index+1}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="page_total"><span>of</span> {{pagination.count(allNews)}}</div>
+                <div ng-show="pagination.page < pagination.count(allNews)-1" ng-click="pagination.next(allNews)" id="next_page_1" class="page_next">
+                    <a>
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

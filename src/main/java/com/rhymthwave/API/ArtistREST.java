@@ -150,17 +150,7 @@ public class ArtistREST {
 	public ResponseEntity<MessageResponse> findProfile(HttpServletRequest req){
 		String owner = host.getEmailByRequest(req);
 		Artist artist = artistSer.findByEmail(owner);
-		if(artist.getActive()) {
-			return ResponseEntity.ok(new MessageResponse(true,"success", artist));
-		}else {
-			if(artist.getExpirePermission().before(new Date())) {
-				return ResponseEntity.ok(new MessageResponse(false,"You have not permission. Please contact us again to reopen your account", null));
-			}else {
-				artist.setActive(true);
-				artist.setExpirePermission(null);
-				return ResponseEntity.ok(new MessageResponse(true,"success", crud.update(artist)));
-			}
-		}
+		return ResponseEntity.ok(new MessageResponse(true,"success", artist));
 	}
 	
 	@GetMapping("/api/v1/find-artist/{email}")

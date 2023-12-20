@@ -56,7 +56,7 @@ app.controller('newsController', function ($scope, $cookies, $http, $window) {
             $window.location.href = '/claim';
         } else if ($scope.artist.isVerify === false) {
             //thông báo tài khoản đang trong quá trình xác nhận
-            showStickyNotification('Delete record successfully.', 'success', 3000);
+            showStickyNotification('Your account was been confirm.', 'success', 3000);
         } else if (($scope.artist.active === false) && (new Date($scope.artist.expirePermission) > new Date())) {
             $.confirm({
                 title: 'Your profile is been locking!',
@@ -115,5 +115,48 @@ app.controller('newsController', function ($scope, $cookies, $http, $window) {
         $window.location.href = '/news/home/'+ `${id}`;
         localStorage.setItem('newsId', id);
         localStorage.setItem('op', 'art'); 
+    }
+
+    $scope.pagination = {
+        page: 0,
+        size: 10,
+        setPageSize: function (newSize) {
+            this.size = newSize;
+        },
+        setPageNo: function (newPageNo) {
+            this.page = newPageNo
+        },
+        items(list) {
+            if (list) {
+                var start = this.page * this.size;
+                return list.slice(start, start + this.size)
+            }
+        },
+        count(list) {
+            if (list) {
+                return Math.ceil(1.0 * list.length / this.size)
+            }
+        },
+        prev() {
+            this.page--;
+            if (this.page < 0) {
+                this.page = 0;
+            }
+        },
+        next(list) {
+            if (list) {
+                this.page++;
+                if (this.page >= this.count(list)) {
+                    this.page = this.count(list) - 1;
+                }
+            }
+        },
+        getNumbers(n) {
+            var rangeArray = [];
+            for (var i = 1; i <= n; i++) {
+                rangeArray.push(i);
+            }
+            return rangeArray;
+        }
     }
 });
