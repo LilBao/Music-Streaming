@@ -53,6 +53,7 @@ public class SignUpAPI {
 
 	@PostMapping("/signUp")
 	public ResponseEntity<?> signUp(@RequestBody SignUpDTO signUpDTO, final HttpServletRequest request) {
+		System.out.println(signUpDTO.country());
 		Account account = signUpServiceImpl.signUp(signUpDTO);
 		if(account == null) {
 			return ResponseEntity.ok(new MessageResponse(false, "Account is exist!!!"));
