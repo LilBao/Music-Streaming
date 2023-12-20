@@ -429,7 +429,7 @@
                                 </div>
                                 <div ng-show="ads.priority == 1 || ads.priority == 2 || ads.priority == 3" class="my-4">
                                     <span class="">Audio</span>
-                                    <div>
+                                    <div class="d-flex align-items-center">
                                         <audio controls src="{{ads.audioFile}}" class="audio-ads w-100"></audio>
                                         <button ng-show="ads.active == null || (ads.active == false && ads.status==1)"
                                             class="rounded-pill bg-dark text-white py-1"
