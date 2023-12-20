@@ -279,11 +279,13 @@
                                                                     style="background-color: transparent;"><i
                                                                         class="text-white bi bi-search-heart"></i></span>
                                                                 <input ng-model="nameMyPlaylist"
-                                                                    ng-change="searchMyPlaylist(nameMyPlaylist)"
                                                                     type="text" class="text-white form-control"
                                                                     placeholder="Search in playlist"
                                                                     style="background-color: transparent;">
                                                             </div>
+                                                        </li>
+                                                        <li class="li-dropdown-end">
+                                                            <hr class="dropdown-divider">
                                                         </li>
                                                         <li class="nav-item">
                                                             <a ng-click="createSamePlaylist(item.playlistId)"
@@ -294,7 +296,7 @@
                                                         <li class="li-dropdown-end">
                                                             <hr class="dropdown-divider">
                                                         </li>
-                                                        <li ng-repeat="playlist in listPlaylist" class="nav-item">
+                                                        <li ng-repeat="playlist in listPlaylist | filter: nameMyPlaylist" class="nav-item">
                                                             <a ng-click="addOtherPlaylistOrQueue(item.playlistId,playlist.playlistId,'playlist')"
                                                                 class="nav-link text-white">{{playlist.playlistName}}</a>
                                                         </li>

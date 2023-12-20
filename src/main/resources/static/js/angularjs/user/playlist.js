@@ -480,12 +480,12 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $cookies, 
         if (item.recordingId) {
             playlist.playlistName = item.recordingName;
             let url = host + "v1/playlist";
-            console.log(playlist)
             $http.post(url, playlist, {
                 headers: { 'Authorization': 'Bearer ' + getCookie('token') }
             }).then(resp => {
                 if (resp.data.success === true) {
                     $scope.additionRecord(item, resp.data.data);
+                    $scope.findMyPlaylist($scope.account.email);
                 } else {
                     showStickyNotification(resp.data.data, 'warning', 2000);
                 }
@@ -502,6 +502,7 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $cookies, 
             }).then(resp => {
                 if (resp.data.success === true) {
                     $scope.additionEpisode(episodeTitle, resp.data.data);
+                    $scope.findMyPlaylist($scope.account.email);
                 } else {
                     showStickyNotification(resp.data.data, 'warning', 2000);
                 }

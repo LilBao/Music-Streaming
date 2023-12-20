@@ -42,6 +42,7 @@ public class AlbumServiceImpl implements AlbumService, CRUD<Album, Long> {
 	@Override
 	public Boolean delete(Long key) {
 		if (key instanceof Long && key >= 0) {
+			dao.deleteById(key);
 			return true;
 		}
 		return false;

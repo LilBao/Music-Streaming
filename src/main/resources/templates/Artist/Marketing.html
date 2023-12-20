@@ -12,12 +12,13 @@
                         <span class="type_sorting_text">Default Sorting</span>
                         <i class="fa fa-angle-down"></i>
                         <ul class="sorting_type p-0" style="z-index: 2;">
-                            <li class="type_sorting_btn" ng-click="sortNumber(listRecord,'recordingId')"> 
+                            <li class="type_sorting_btn" ng-click="sortNumber(listRecord,'recordingId')">
                                 <span>Default Sorting</span>
                             </li>
                             <li ng-click="sort(listAds,'title')" class="type_sorting_btn"><span>Name</span></li>
                             <li ng-click="sort(listAds,'active')" class="type_sorting_btn"><span>Active</span></li>
-                            <li ng-click="sortNumber(listRecord,'status')" class="type_sorting_btn"><span>Status</span></li>
+                            <li ng-click="sortNumber(listRecord,'status')" class="type_sorting_btn"><span>Status</span>
+                            </li>
                         </ul>
                     </li>
                     <li>
@@ -80,7 +81,8 @@
                 <span class="showing_results">Showing {{pagination.page +1}} – {{pagination.count(listAds)}} of
                     {{pagination.items(listAds).length}} results</span>
                 <div class="pages d-flex flex-row align-items-center">
-                    <div ng-show="pagination.page > 0" ng-click="pagination.prev(listAds)" id="next_page_1" class="page_prev">
+                    <div ng-show="pagination.page > 0" ng-click="pagination.prev(listAds)" id="next_page_1"
+                        class="page_prev">
                         <a>
                             <i class="bi bi-arrow-left"></i>
                         </a>
@@ -94,7 +96,8 @@
                         </ul>
                     </div>
                     <div class="page_total"><span>of</span> {{pagination.count(listAds)}}</div>
-                    <div ng-show="pagination.page < pagination.count(listAds)-1" ng-click="pagination.next(listAds)" id="next_page_1" class="page_next">
+                    <div ng-show="pagination.page < pagination.count(listAds)-1" ng-click="pagination.next(listAds)"
+                        id="next_page_1" class="page_next">
                         <a>
                             <i class="bi bi-arrow-right"></i>
                         </a>
@@ -135,8 +138,7 @@
                                             ng-click="selectSongAlbum(item)">
                                             <div class="card card-play-list-profile">
                                                 <div class="img-car-profile">
-                                                    <img src="{{item.song.image.url}}"
-                                                        class="card-img-top w-100"
+                                                    <img src="{{item.song.image.url}}" class="card-img-top w-100"
                                                         style="height: 150px; object-fit: cover;" alt="...">
                                                 </div>
                                                 <div class="card-body card-body-playlist-profile">
@@ -153,10 +155,12 @@
                                         </div>
                                     </div>
                                     <div class="product_sorting_container product_sorting_container_bottom clearfix">
-                                        <span class="showing_results">Showing {{pagination.page +1}} – {{pagination.count(listSong)}} of
+                                        <span class="showing_results">Showing {{pagination.page +1}} –
+                                            {{pagination.count(listSong)}} of
                                             {{pagination.items(listSong).length}} results</span>
                                         <div class="pages d-flex flex-row align-items-center">
-                                            <div ng-show="pagination.page > 0" ng-click="pagination.prev(listSong)" id="next_page_1" class="page_prev">
+                                            <div ng-show="pagination.page > 0" ng-click="pagination.prev(listSong)"
+                                                id="next_page_1" class="page_prev">
                                                 <a>
                                                     <i class="bi bi-arrow-left"></i>
                                                 </a>
@@ -164,13 +168,16 @@
                                             <div class="page_current">
                                                 <span>{{pagination.page +1}}</span>
                                                 <ul class="page_selection ps-0 pe-4 bg-black" style="z-index: 200000;">
-                                                    <li ng-repeat="i in pagination.getNumbers(pagination.count(listSong))">
-                                                        <a ng-click="pagination.setPageNo($index)" class="text-white">{{$index+1}}</a>
+                                                    <li
+                                                        ng-repeat="i in pagination.getNumbers(pagination.count(listSong))">
+                                                        <a ng-click="pagination.setPageNo($index)"
+                                                            class="text-white">{{$index+1}}</a>
                                                     </li>
                                                 </ul>
                                             </div>
                                             <div class="page_total"><span>of</span> {{pagination.count(listSong)}}</div>
-                                            <div ng-show="pagination.page < pagination.count(listSong)-1" ng-click="pagination.next(listSong)" id="next_page_1" class="page_next">
+                                            <div ng-show="pagination.page < pagination.count(listSong)-1"
+                                                ng-click="pagination.next(listSong)" id="next_page_1" class="page_next">
                                                 <a>
                                                     <i class="bi bi-arrow-right"></i>
                                                 </a>
@@ -201,10 +208,12 @@
                                         </div>
                                     </div>
                                     <div class="product_sorting_container product_sorting_container_bottom clearfix">
-                                        <span class="showing_results">Showing {{pagination.page +1}} – {{pagination.count(listAlbum)}} of
+                                        <span class="showing_results">Showing {{pagination.page +1}} –
+                                            {{pagination.count(listAlbum)}} of
                                             {{pagination.items(listAlbum).length}} results</span>
                                         <div class="pages d-flex flex-row align-items-center">
-                                            <div ng-show="pagination.page > 0" ng-click="pagination.prev(listAlbum)" id="next_page_1" class="page_prev">
+                                            <div ng-show="pagination.page > 0" ng-click="pagination.prev(listAlbum)"
+                                                id="next_page_1" class="page_prev">
                                                 <a>
                                                     <i class="bi bi-arrow-left"></i>
                                                 </a>
@@ -212,13 +221,18 @@
                                             <div class="page_current">
                                                 <span>{{pagination.page +1}}</span>
                                                 <ul class="page_selection ps-0 pe-4 bg-black" style="z-index: 200000;">
-                                                    <li ng-repeat="i in pagination.getNumbers(pagination.count(listAlbum))">
-                                                        <a ng-click="pagination.setPageNo($index)" class="text-white">{{$index+1}}</a>
+                                                    <li
+                                                        ng-repeat="i in pagination.getNumbers(pagination.count(listAlbum))">
+                                                        <a ng-click="pagination.setPageNo($index)"
+                                                            class="text-white">{{$index+1}}</a>
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div class="page_total"><span>of</span> {{pagination.count(listAlbum)}}</div>
-                                            <div ng-show="pagination.page < pagination.count(listAlbum)-1" ng-click="pagination.next(listAlbum)" id="next_page_1" class="page_next">
+                                            <div class="page_total"><span>of</span> {{pagination.count(listAlbum)}}
+                                            </div>
+                                            <div ng-show="pagination.page < pagination.count(listAlbum)-1"
+                                                ng-click="pagination.next(listAlbum)" id="next_page_1"
+                                                class="page_next">
                                                 <a>
                                                     <i class="bi bi-arrow-right"></i>
                                                 </a>
@@ -267,7 +281,7 @@
                             <label for="">
                                 <h6>Subsciption</h6>
                             </label>
-                            <div ng-repeat="item in listSubscription" class="col-3">
+                            <div ng-repeat="item in listSubscription | orderBy: 'priority'" class="col-3 mb-3">
                                 <div ng-click="selectSubScription(item)" class="card card-content shadow"
                                     ng-style="{ 'border': (ads.subscription.subscriptionId === item.subscriptionId) ? '1px solid black' : '0px' }">
                                     <div class="card-body d-flex flex-column justify-content-between">
@@ -378,8 +392,9 @@
                                     <label for="">
                                         <h6>Banner</h6>
                                     </label>
-                                    <img ng-show="ads.status !==1" src="{{ads.image.url}}" class="w-100" alt="">
-                                    <img ng-show="ads.active == false && ads.status==1" ng-click="selectFile('banner')"
+                                    <img ng-show="ads.status > 1" src="{{ads.image.url}}" class="w-100" alt=""
+                                        style="height: 350px; object-fit: cover;">
+                                    <img ng-show="ads.active == null || (ads.active == false && ads.status==1)" ng-click="selectFile('banner')"
                                         src="{{ads.image.url}}" class="w-100 banner" alt=""
                                         style="height: 350px; object-fit: cover;">
                                 </div>
@@ -410,6 +425,15 @@
                                     <div class="input-group">
                                         <span class="input-group-text">@URL</span>
                                         <input ng-model="ads.url" class="form-control" id="" type="text">
+                                    </div>
+                                </div>
+                                <div ng-show="ads.priority == 1 || ads.priority == 2 || ads.priority == 3" class="my-4">
+                                    <span class="">Audio</span>
+                                    <div>
+                                        <audio controls src="{{ads.audioFile}}" class="audio-ads w-100"></audio>
+                                        <button ng-show="ads.active == null || (ads.active == false && ads.status==1)"
+                                            class="rounded-pill bg-dark text-white py-1"
+                                            ng-click="selectFile('audio-ads')">Change audio</button>
                                     </div>
                                 </div>
                             </div>
@@ -554,25 +578,34 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="product_sorting_container product_sorting_container_bottom clearfix">
-                                            <span class="showing_results">Showing {{pagination.page +1}} – {{pagination.count(listSong)}} of
+                                        <div
+                                            class="product_sorting_container product_sorting_container_bottom clearfix">
+                                            <span class="showing_results">Showing {{pagination.page +1}} –
+                                                {{pagination.count(listSong)}} of
                                                 {{pagination.items(listSong).length}} results</span>
                                             <div class="pages d-flex flex-row align-items-center">
-                                                <div ng-show="pagination.page > 0" ng-click="pagination.prev(listSong)" id="next_page_1" class="page_prev">
+                                                <div ng-show="pagination.page > 0" ng-click="pagination.prev(listSong)"
+                                                    id="next_page_1" class="page_prev">
                                                     <a>
                                                         <i class="bi bi-arrow-left"></i>
                                                     </a>
                                                 </div>
                                                 <div class="page_current">
                                                     <span>{{pagination.page +1}}</span>
-                                                    <ul class="page_selection ps-0 pe-4 bg-black" style="z-index: 200000;">
-                                                        <li ng-repeat="i in pagination.getNumbers(pagination.count(listSong))">
-                                                            <a ng-click="pagination.setPageNo($index)" class="text-white">{{$index+1}}</a>
+                                                    <ul class="page_selection ps-0 pe-4 bg-black"
+                                                        style="z-index: 200000;">
+                                                        <li
+                                                            ng-repeat="i in pagination.getNumbers(pagination.count(listSong))">
+                                                            <a ng-click="pagination.setPageNo($index)"
+                                                                class="text-white">{{$index+1}}</a>
                                                         </li>
                                                     </ul>
                                                 </div>
-                                                <div class="page_total"><span>of</span> {{pagination.count(listSong)}}</div>
-                                                <div ng-show="pagination.page < pagination.count(listSong)-1" ng-click="pagination.next(listSong)" id="next_page_1" class="page_next">
+                                                <div class="page_total"><span>of</span> {{pagination.count(listSong)}}
+                                                </div>
+                                                <div ng-show="pagination.page < pagination.count(listSong)-1"
+                                                    ng-click="pagination.next(listSong)" id="next_page_1"
+                                                    class="page_next">
                                                     <a>
                                                         <i class="bi bi-arrow-right"></i>
                                                     </a>
@@ -603,25 +636,34 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="product_sorting_container product_sorting_container_bottom clearfix">
-                                            <span class="showing_results">Showing {{pagination.page +1}} – {{pagination.count(listAlbum)}} of
+                                        <div
+                                            class="product_sorting_container product_sorting_container_bottom clearfix">
+                                            <span class="showing_results">Showing {{pagination.page +1}} –
+                                                {{pagination.count(listAlbum)}} of
                                                 {{pagination.items(listAlbum).length}} results</span>
                                             <div class="pages d-flex flex-row align-items-center">
-                                                <div ng-show="pagination.page > 0" ng-click="pagination.prev(listAlbum)" id="next_page_1" class="page_prev">
+                                                <div ng-show="pagination.page > 0" ng-click="pagination.prev(listAlbum)"
+                                                    id="next_page_1" class="page_prev">
                                                     <a>
                                                         <i class="bi bi-arrow-left"></i>
                                                     </a>
                                                 </div>
                                                 <div class="page_current">
                                                     <span>{{pagination.page +1}}</span>
-                                                    <ul class="page_selection ps-0 pe-4 bg-black" style="z-index: 200000;">
-                                                        <li ng-repeat="i in pagination.getNumbers(pagination.count(listAlbum))">
-                                                            <a ng-click="pagination.setPageNo($index)" class="text-white">{{$index+1}}</a>
+                                                    <ul class="page_selection ps-0 pe-4 bg-black"
+                                                        style="z-index: 200000;">
+                                                        <li
+                                                            ng-repeat="i in pagination.getNumbers(pagination.count(listAlbum))">
+                                                            <a ng-click="pagination.setPageNo($index)"
+                                                                class="text-white">{{$index+1}}</a>
                                                         </li>
                                                     </ul>
                                                 </div>
-                                                <div class="page_total"><span>of</span> {{pagination.count(listAlbum)}}</div>
-                                                <div ng-show="pagination.page < pagination.count(listAlbum)-1" ng-click="pagination.next(listAlbum)" id="next_page_1" class="page_next">
+                                                <div class="page_total"><span>of</span> {{pagination.count(listAlbum)}}
+                                                </div>
+                                                <div ng-show="pagination.page < pagination.count(listAlbum)-1"
+                                                    ng-click="pagination.next(listAlbum)" id="next_page_1"
+                                                    class="page_next">
                                                     <a>
                                                         <i class="bi bi-arrow-right"></i>
                                                     </a>
