@@ -3,7 +3,7 @@ var cookieName = "token";
 
 app.controller("displaySlideController", function ($scope, $http, $cookies, $log) {
 
-	$scope.selectedPosition = "Page";
+	$scope.selectedPosition = "user";
 
 	$scope.SlidePosition = [];
 	$scope.items = [];
@@ -26,7 +26,7 @@ app.controller("displaySlideController", function ($scope, $http, $cookies, $log
 				$scope.accessIds = selectedImages.map(slide => slide.accessId);
 			})
 			.catch(error => {
-
+				console.log(error)
 			});
 	}
 

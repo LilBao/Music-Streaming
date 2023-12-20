@@ -116,7 +116,7 @@ app.controller('album', function ($scope, $http, $routeParams, graphqlService) {
     $('#btn-playlist-play').click(function () {
       $('#btn-playlist-pause').attr('hidden', false);
       $('#btn-playlist-play').attr('hidden', true);
-      $scope.selectAudio($scope.listSong, 'song', $scope.listSong, 0);
+      $scope.selectAudio($scope.listSong[0], 'song', $scope.listSong, 0);
       play.click();
     })
     //pause

@@ -1487,7 +1487,7 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
         $scope.obj = {};
         if (lastSlashIndex !== -1) {
             var result = newUrl.substring(lastSlashIndex + 1);
-            if (newUrl.indexOf("#!/podcast/") !== -1) {
+            if (newUrl.indexOf("show") !== -1) {
                 let url = host + "v1/podcast/" + result;
                 $http.get(url).then(resp => {
                     if (resp.data.data) {

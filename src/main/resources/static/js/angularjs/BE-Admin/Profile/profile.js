@@ -2,8 +2,19 @@
 var apiAdminInfo = "http://localhost:8080/api/v1/admin/profile";
 var cookieName = "token";
 
-app.controller("navbarAdmin", function (graphqlService,$scope, $http, $cookies, $location ) {
+app.controller("navbarAdmin", function (graphqlService,$scope, $http, $cookies, $location, jwtHelper) {
 
+	$scope.statusShow = false;
+
+	$scope.getAuthor = function () {
+	  var token = $cookies.get("token");
+	  var decodeToken = jwtHelper.decodeToken(token);
+	  decodeToken.role.forEach(element => {
+		if( element.authority === "MANAGER")
+		 return $scope.statusShow = true;
+	  });
+	  
+	};
 
     $scope.infoAdmin = {};
 	$scope.listArtistIsVerify = [];
