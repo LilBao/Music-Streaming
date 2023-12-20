@@ -101,6 +101,7 @@ private final AccountDAO dao;
 		return newAccount ;
 	}
 
+
 	public ResponseEntity<String> verifyEmail(Account account) {
 		if (account == null) {
 			return ResponseEntity.badRequest().body("Invalid verification token");

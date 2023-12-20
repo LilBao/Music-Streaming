@@ -56,7 +56,8 @@ public class SecurityConfig implements WebMvcConfigurer {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
+//    	http.formLogin().loginPage("/signin").loginProcessingUrl("/api/v1/accounts/login").defaultSuccessUrl("/", false)
+//		.failureUrl("/signin").usernameParameter("username").passwordParameter("password");
 
         http.cors().and().csrf().disable()
                 .authorizeHttpRequests((authz) -> {
@@ -74,33 +75,34 @@ public class SecurityConfig implements WebMvcConfigurer {
                                                 "/configuration/security").permitAll()
 
                 //                       .requestMatchers(HttpMethod.GET, "/**").permitAll()
-                                        .requestMatchers(HttpMethod.POST, "/api/v1/playlist/**").permitAll()
+//                                        .requestMatchers(HttpMethod.POST, "/api/v1/playlist/**").permitAll()
                 //                        .requestMatchers(HttpMethod.PUT, "/**").permitAll()
                 //                        .requestMatchers(HttpMethod.DELETE, "/**").permitAll()
                 //                        .requestMatchers(HttpMethod.PATCH, "/**").permitAll()
 
-                                         .requestMatchers( "/signin","/subscription/**", "/",
+                                         .requestMatchers( "/signin","/subscription/**", "/", "/admin",
                                                            "/error/404","/getstarted/**",
                                                             "/api/v1/accounts/**","/api/v1/auth/**"
                                                             ,"/api/v1/search/**","/podcast/home",
                                                             "/home","/graphiql/**","/artist/home").permitAll()
 
-                                                .requestMatchers( "/podcaster","/podcast-browse" ).hasAnyAuthority("PODCAST")
-                                                .requestMatchers( "/artist").hasAnyAuthority("ARTIST")
-                                                .requestMatchers( "/api/v1/admin/**","/admin").hasAnyAuthority("MANAGER","STAFF")
+//                                                .requestMatchers( "/podcaster","/podcast-browse" ).hasAuthority("PODCAST")
+//                                                .requestMatchers( "/artist").hasAuthority("ARTIST")
+                                              //  .requestMatchers( "/api/v1/admin/**","/admin").hasAnyAuthority("MANAGER","STAFF")
 
                                          .requestMatchers("/static/**").permitAll().anyRequest().permitAll()
-                                                .and().exceptionHandling().accessDeniedPage("/error/404");
+                                                .and().exceptionHandling().accessDeniedPage("/signin");
                             } catch (Exception e) {
                                 throw new RuntimeException(e);
                             }
                         }
                 )
+                
                 .authenticationProvider(AuthenticationProvider())
                 .addFilterBefore(jwtAuthentitationFilter(), UsernamePasswordAuthenticationFilter.class);
         http.logout().logoutSuccessUrl("/api/v1/auth/logout")
                 .addLogoutHandler(new SecurityContextLogoutHandler())
-                .clearAuthentication(true);;
+                .clearAuthentication(true);
 
         http.oauth2Login()
                 .loginPage("/signin")
