@@ -181,6 +181,7 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService,$cookies) {
     $scope.deleteSong = function (id) {
         let url = host + "/v1/song/" + id
         $http.delete(url).then(resp => {
+            $scope.getListSongReleased();
             showStickyNotification('Delete successfully.', 'success', 3000);
         }).catch(error => {
             showStickyNotification('Delete fail.', 'danger', 3000);
@@ -228,6 +229,7 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService,$cookies) {
     $scope.deleteAlbum = function (idAlbum) {
         let url = host + "/v1/album/" + idAlbum
         $http.delete(url).then(resp => {
+            $scope.listAlbumReleased();
             showStickyNotification('Delete album successfully.', 'success', 3000);
         }).catch(error => {
             showStickyNotification('Delete album fail.', 'danger', 3000);
@@ -411,6 +413,7 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService,$cookies) {
             $http.delete(url).then(resp => {
                 $scope.detail($scope.album.albumId, 'album');
                 $scope.getListAlbumReleased();
+                showStickyNotification('Remove track successfull.', 'success', 3000);
             }).catch(error => {
 
             })
@@ -538,8 +541,8 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService,$cookies) {
     //Elimidate song or album
     $scope.Elimidate = function (id, type) {
         $.confirm({
-            title: 'Disable account!',
-            content: 'Your account will be dissabled.\n If you do not log in your artist profile after 6 months, you will lose access to your account',
+            title: 'Elimidate '+ type,
+            content: 'Your '+type+ ' will be removed.\n Consider before remove',
             buttons: {
                 confirm: function () {
                     if (type === 'song') {
@@ -708,7 +711,6 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService,$cookies) {
         let data = angular.copy($scope.record)
         $scope.updateRecord(data);
         showStickyNotification('Update record successfully.', 'success', 3000);
-
     }
 
     //My project
@@ -766,10 +768,10 @@ app.controller('musicCtrl', function ($scope, $http, graphqlService,$cookies) {
                 confirm: function () {
                     var data = angular.copy($scope.record);
                     data.isDeleted = true;
+                    $('#btn-close-record-detail').click();
                     showStickyNotification('Delete record successfully.\n Record will be moved to garbage', 'success', 3000);
                     $scope.updateRecord(data);
-                    $scope.findListRecordArtist();
-                    $('#btn-close-record-detail').click();
+                    $scope.findListRecordArtist();          
                 },
                 cancel: function () {
 

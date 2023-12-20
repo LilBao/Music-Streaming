@@ -347,8 +347,8 @@
                                     <label for="">
                                         <h6>Banner</h6>
                                     </label>
-                                    <img ng-show="ads.status !==1" src="{{ads.image.url}}" class="w-100" alt="">
-                                    <img ng-show="ads.active == false && ads.status==1" ng-click="selectFile('banner')"
+                                    <img ng-show="ads.status > 1" src="{{ads.image.url}}" class="w-100" alt="" style="height: 350px; object-fit: cover;">
+                                    <img ng-show="ads.active == null || (ads.active == false && ads.status==1)" ng-click="selectFile('banner')"
                                         src="{{ads.image.url}}" class="w-100 banner" alt=""
                                         style="height: 350px; object-fit: cover;">
                                 </div>
@@ -379,6 +379,14 @@
                                         <span class="input-group-text">@URL</span>
                                         <input ng-model="ads.url" class="form-control" id="" type="text">
                                     </div>
+                                </div>
+                                <div ng-show="ads.priority == 1 || ads.priority == 2 || ads.priority == 3" class="my-4">
+                                        <span class="">Audio</span>
+                                        <div>
+                                            <audio controls  class="audio-ads w-100"></audio>
+                                            <button ng-show="ads.active == false && ads.status==1" class="rounded-pill bg-dark text-white py-1"
+                                            ng-click="selectFile('audio-ads')">Change audio</button>
+                                        </div>                             
                                 </div>
                             </div>
                             <div class="col-4">

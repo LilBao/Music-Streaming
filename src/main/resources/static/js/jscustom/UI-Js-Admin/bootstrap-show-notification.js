@@ -15,8 +15,8 @@
             maxWidth: "520px", // the notification maxWidth
             minWidth: "320px", // the notification minWidth
             shadow: "0 2px 6px rgba(0,0,0,0.2)", // the box-shadow
-            zIndex: 100,
-            margin: "1rem", // the margin (above maxWidth)
+            zIndex: 10000,
+            margin: "3rem", // the margin (above maxWidth)
             direction: "prepend" // or "append", the stack direction
         }
         this.containerId = "bootstrap-show-notification-container"
