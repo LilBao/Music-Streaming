@@ -31,8 +31,11 @@ public interface EpisodeDAO extends JpaRepository<Episode, Long>{
 	List<Episode> getRandomPodcasts(@Param("tags") List<String> tags);
 	
 	@Query(value = "select top 50 ep.* from episodes ep "
-			+ "where ep.publishdate <= GETDATE() and ep.ispublic = :ispublic "
-			+ "and ep.podcastid in :tags "
+			+ "where ep.publishdate <= GETDATE() and ep.ispublic = :ispublic and ep.isdeleted = 0 "
+			+ "and ep.podcastid in (:tags) "
+			+ "group by ep.content, ep.descriptions, ep.duration, ep.episodesid, "
+			+ "ep.episodestitle, ep.epnumber, ep.eptype, ep.fileurl, ep.imageep, ep.isdeleted, "
+			+ "ep.ispublic, ep.listened, ep.podcastid, ep.publicidfile, ep.publishdate, ep.publicidfile, ep.sessionnumber "
 			+ "order by NEWID()",nativeQuery = true)
 	List<Episode> top50EpForYou(@Param("ispublic") Boolean ispublic,@Param("tags") List<Integer> tags);
 

@@ -7,14 +7,30 @@ app.controller('myCtrl', function ($scope, $http, $cookies, $window) {
     $scope.listImage = [];
     $scope.dataNews = [];
     $scope.top3 = [];
+    $scope.account={};
+    $scope.Owner = function () {
+        let url = host + "/v1/account";
+        $http.get(url, {
+            headers: { 'Authorization': 'Bearer ' + $cookies.get('token') }
+        }).then(resp => {
+            $scope.account = resp.data.data;
+            $scope.myArtist();
+        })
+    }
+    if ($cookies.get('token')) {
+        $scope.Owner();
+    }
 
-    $http.get(host + "/v1/profile", {
-        headers: { 'Authorization': 'Bearer ' + $cookies.get('token') }
-    }).then(resp => {
-        $scope.artist = resp.data.data;
-    }).catch(error => {
-        console.log(error)
-    })
+    $scope.myArtist = function(){
+        $http.get(host + "/v1/profile", {
+            headers: { 'Authorization': 'Bearer ' + $cookies.get('token') }
+        }).then(resp => {
+            $scope.artist = resp.data.data;
+        }).catch(error => {
+            console.log(error)
+        })
+    }
+    
 
     $scope.displayImage = function (position) {
         $http.get(host + "/v1/display/" + position).then(resp => {
@@ -81,7 +97,9 @@ app.controller('myCtrl', function ($scope, $http, $cookies, $window) {
 
     //Get access artist
     $scope.getAccess = function () {
-        if (Object.keys($scope.artist).length === 0) {
+        if($scope.artist===null){
+            $window.location.href = '/claim';
+        }else if (Object.keys($scope.artist).length === 0) {
             //redirect tới href template information
             $window.location.href = '/claim';
         } else if ($scope.artist.isVerify === false) {
@@ -112,7 +130,6 @@ app.controller('myCtrl', function ($scope, $http, $cookies, $window) {
             showStickyNotification('Your account was locked.\n Contact to administrator unlock', 'success', 3000);
         }
         else {
-            //chuyển đến trang artist controle
             $window.location.href = '/artist';
         }
     }

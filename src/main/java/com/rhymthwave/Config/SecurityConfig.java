@@ -69,13 +69,13 @@ public class SecurityConfig implements WebMvcConfigurer {
 								"/configuration/security")
 						.permitAll()
 
-						.requestMatchers(HttpMethod.GET, "/**").permitAll()
-						.requestMatchers(HttpMethod.POST, "/**").permitAll()
-						.requestMatchers(HttpMethod.PUT, "/**").permitAll()
-						.requestMatchers(HttpMethod.DELETE, "/**").permitAll()
-						.requestMatchers(HttpMethod.PATCH, "/**").permitAll()
+//						.requestMatchers(HttpMethod.GET, "/**").permitAll()
+//						.requestMatchers(HttpMethod.POST, "/**").permitAll()
+//						.requestMatchers(HttpMethod.PUT, "/**").permitAll()
+//						.requestMatchers(HttpMethod.DELETE, "/**").permitAll()
+//						.requestMatchers(HttpMethod.PATCH, "/**").permitAll()
 
-						.requestMatchers("/signin", "/subscription/**", "/", "/error/404", "/getstarted/**",
+						.requestMatchers("/api/v1/top-playlist-new","/signin", "/subscription/**", "/", "/error/404", "/getstarted/**",
 								"/api/v1/accounts/**", "/api/v1/auth/**", "/api/v1/search/**", "/podcast/home", "/home",
 								"/graphiql/**", "/artist/home")
 						.permitAll()

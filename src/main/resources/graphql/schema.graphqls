@@ -112,6 +112,10 @@ type Query {
  top50SongByAreaListened(country: String) : [Recording]
  
  top50SongByDate(country: String): [Recording]
+ 
+ findTopNewPlaylist: [Playlist]
+
+ findTopRecentPlaylist(genre: [String], culture:String, instrument: String, mood:String, songstyle: String, versions: String): [Playlist]
 
  #Nam
  findAlbum(id: ID!): Album

@@ -119,11 +119,21 @@ app.controller('dashboardCtrl', function ($scope, $http, $routeParams, graphqlSe
     }
 
     $scope.findTopPlaylistPopular = function () {
-        let url = host + "v1/top-playlist-new";
-        $http.get(url, {
-            params: { role: [4, 5] }
-        }).then(resp => {
-            $scope.topPlaylistPopular = resp.data.data;
+        const query = `{
+            findTopNewPlaylist {
+                playlistId
+                playlistName
+                quantity
+                isPublic
+                description
+                createDate
+                image{
+                    url
+                }
+            }
+        }`
+        graphqlService.executeQuery(query).then(data => {
+            $scope.topPlaylistPopular = data.findTopNewPlaylist;
         })
     }
 
@@ -135,19 +145,28 @@ app.controller('dashboardCtrl', function ($scope, $http, $routeParams, graphqlSe
         mood = $scope.recent.mood
         songstyle = $scope.recent.songStyle
         versions = $scope.recent.versions
-        let url = host + "v1/top-playlist-recent-listen";
-        $http.get(url, {
-            params: {
-                role: [4, 5],
-                genre: genre,
-                culture: "%" + culture + "%",
-                instrument: "%" + instrument + "%",
-                mood: "%" + mood + "%",
-                songstyle: "%" + songstyle + "%",
-                versions: "%" + versions + "%",
+        const query = `{
+            findTopRecentPlaylist(
+                genre: ["${genre}"]
+                culture: "${"%" + culture + "%"}"
+                instrument: "${"%" + instrument + "%"}"
+                mood: "${"%" + mood + "%"}"
+                songstyle: "${"%" + songstyle + "%"}"
+                versions: "${"%" + versions + "%"}"
+            ){
+                playlistId
+                playlistName
+                quantity
+                isPublic
+                description
+                createDate
+                image {
+                  url
+                }
             }
-        }).then(resp => {
-            $scope.topPlaylistRecentListen = resp.data.data;
+        }`
+        graphqlService.executeQuery(query).then(data => {
+            $scope.topPlaylistRecentListen = data.findTopRecentPlaylist;
         })
     }
 
@@ -155,7 +174,7 @@ app.controller('dashboardCtrl', function ($scope, $http, $routeParams, graphqlSe
         let url = host + "v1/episode-for-you";
         $scope.recent = JSON.parse($cookies.get('recent'));
         $http.get(url, {
-            params: { tag: $scope.recent.idGenre }
+            params: { tag: $scope.recent.tag }
         }).then(resp => {
             $scope.topEpisodeForYou = resp.data.data;
         })
@@ -231,14 +250,14 @@ app.controller('dashboardCtrl', function ($scope, $http, $routeParams, graphqlSe
     $scope.findSlide = function(){
         let url = host + "v1/display/user";
         $http.get(url, {
-            params: { country: "" }
         }).then(resp => {
             $scope.slide = resp.data.data;
+            console.log(resp.data.data)
         })
     }
 
-    if ($cookies.get('tracking')) {
-        $scope.tracking = JSON.parse($cookies.get("tracking"));
+    if (localStorage.getItem('tracking')) {
+        $scope.tracking = JSON.parse(localStorage.getItem('tracking'))
     }
 
     $scope.findTopArtistListen('%%');

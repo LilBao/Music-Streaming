@@ -12,23 +12,23 @@
                     <div class="row">
                         <div ng-repeat="item in slide | limitTo: 3" class="col-sm-4">
                             <a href="{{item.url}}">
-                                <img src="{{item.listImage}}" width="100%" height="350px" style="object-fit: cover;" alt="">
+                                <img src="{{item.urlImage}}" width="100%" height="350px" style="object-fit: cover;" alt="">
                             </a>
                         </div>
                     </div>
                 </div>
-                <div  ng-show="slide.length > 5" class="carousel-item">
+                <div ng-show="slide.length > 3" class="carousel-item">
                     <div class="row">
-                        <div ng-repeat="item in slide | limitTo: 3 : 6" class="col-sm-4">
+                        <div ng-repeat="item in slide | limitTo: 3 : 3" class="col-sm-4">
                             <a href="{{item.url}}">
                                 <img src="{{item.listImage}}" width="100%" height="350px" style="object-fit: cover;" alt="">
                             </a>
                         </div>
                     </div>
                 </div>
-                <div ng-show="slide.length > 8" class="carousel-item">
+                <div ng-show="slide.length > 6" class="carousel-item">
                     <div class="row">
-                        <div ng-repeat="item in slide | limitTo: 3 : 9" class="col-sm-4">
+                        <div ng-repeat="item in slide | limitTo: 3 : 6" class="col-sm-4">
                             <a href="{{item.url}}">
                                 <img src="{{item.listImage}}" width="100%" height="350px" style="object-fit: cover;" alt="">
                             </a>
@@ -906,6 +906,7 @@
                             <div class="d-flex">
                                 <p class="card-text-playlist-profile-folow">{{item.createDate | date: 'yyyy'}}</p>
                                 <i class="bi bi-dot"></i>
+                                <p>Playlist</p>
                             </div>
                         </div>
                     </div>
@@ -979,7 +980,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="carousel-item">
+                    <div ng-show="top50ArtistListen.length > 6" class="carousel-item">
                         <div class="row">
                             <div class="col-sm-2" ng-repeat="item in top50ArtistListen | limitTo : 6 : 6">
                                 <a href="#!episode/{{item.episodeId}}">
@@ -1004,7 +1005,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="carousel-item">
+                    <div ng-show="top50ArtistListen.length > 12" class="carousel-item">
                         <div class="row">
                             <div class="col-sm-2" ng-repeat="item in top50ArtistListen | limitTo : 6 : 12">
                                 <a href="#!episode/{{item.episodeId}}">
@@ -1030,7 +1031,7 @@
                         </div>
                     </div>
                 </div>
-                <div ng-show="top50ArtistListen.length > 5">
+                <div ng-show="top50ArtistListen.length > 6">
                     <button class="icon-prev" type="button" data-bs-target="#carouselExampleControls"
                         data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -1070,6 +1071,7 @@
                             <div class="d-flex">
                                 <p class="card-text-playlist-profile-folow">{{item.createDate | date: 'yyyy'}}</p>
                                 <i class="bi bi-dot"></i>
+                                <p>Playlist</p>
                             </div>
                         </div>
                     </div>
@@ -1231,7 +1233,7 @@
 
                     <div ng-show="show == 5" class="row">
                         <h3 class="text-white text-center">Recommend for you</h3>
-                        <div class="col-sm-2" ng-repeat="item in topSongForYou">
+                        <div class="col-sm-2 mb-3" ng-repeat="item in topSongForYou">
                             <a href="#!song/{{item.recordingId}}">
                                 <div class="card card-play-list-profile">
                                     <div class="img-car-profile">
@@ -1252,7 +1254,7 @@
 
                     <div ng-show="show == 7" class="row mb-3">
                         <h3 class="text-white text-center">Album popular</h3>
-                        <div class="col-2" ng-repeat="item in topAlbumPopular">
+                        <div class="col-2 mb-3" ng-repeat="item in topAlbumPopular">
                             <a href="#!album/album/{{item.albumId}}">
                                 <div class="card card-play-list-profile">
                                     <div class="img-car-profile">
@@ -1277,7 +1279,7 @@
 
                     <div ng-show="show == 8" class="row mb-3">
                         <h3 class="text-white text-center">Rhythm-Wave</h3>
-                        <div class="col-2" ng-repeat="item in topPlaylistPopular">
+                        <div class="col-2 mb-3" ng-repeat="item in topPlaylistPopular">
                             <a href="#!playlist/{{item.playlistId}}">
                                 <div class="card card-play-list-profile">
                                     <div class="img-car-profile">
@@ -1292,6 +1294,7 @@
                                                 'yyyy'}}
                                             </p>
                                             <i class="bi bi-dot"></i>
+                                            <p>Playlist</p>
                                         </div>
                                     </div>
                                 </div>
@@ -1301,7 +1304,7 @@
 
                     <div ng-show="show == 9" class="row mb-3">
                         <h3 class="text-white text-center">New Podcast</h3>
-                        <div class="col-2" ng-repeat="item in topNewPodcast">
+                        <div class="col-2 mb-3" ng-repeat="item in topNewPodcast">
                             <a href="#!show/{{item.podcastId}}">
                                 <div class="card card-play-list-profile">
                                     <div class="img-car-profile">
@@ -1320,7 +1323,7 @@
 
                     <div ng-show="show == 10" class="row">
                         <h3 class="text-white text-center">Episodes for you</h3>
-                        <div class="col-sm-2" ng-repeat="item in topEpisodeForYou">
+                        <div class="col-sm-2 mb-3" ng-repeat="item in topEpisodeForYou">
                             <a href="#!episode/{{item.episodeId}}">
                                 <div class="card card-play-list-profile">
                                     <div class="img-car-profile">
@@ -1345,7 +1348,7 @@
 
                     <div ng-show="show == 11" class="row mb-3">
                         <h3 class="text-white text-center">Recent listened</h3>
-                        <div class="col-2" ng-repeat="item in topPlaylistRecentListen">
+                        <div class="col-2 mb-3" ng-repeat="item in topPlaylistRecentListen">
                             <a href="#!playlist/{{item.playlistId}}">
                                 <div class="card card-play-list-profile">
                                     <div class="img-car-profile">
@@ -1360,6 +1363,7 @@
                                                 'yyyy'}}
                                             </p>
                                             <i class="bi bi-dot"></i>
+                                            <p>Playlist</p>
                                         </div>
                                     </div>
                                 </div>
@@ -1369,7 +1373,7 @@
 
                     <div ng-show="show == 12" class="row mb-3">
                         <h3 class="text-white text-center">New Album</h3>
-                        <div class="col-2" ng-repeat="item in topNewAlbum">
+                        <div class="col-2 mb-3" ng-repeat="item in topNewAlbum">
                             <a href="#!album/album/{{item.albumId}}">
                                 <div class="card card-play-list-profile">
                                     <div class="img-car-profile">
@@ -1394,7 +1398,7 @@
 
                     <div ng-show="show == 13" class="row mb-3">
                         <h3 class="text-white text-center">Podcast popular</h3>
-                        <div class="col-2" ng-repeat="item in topPodcastPopular">
+                        <div class="col-2 mb-3" ng-repeat="item in topPodcastPopular">
                             <a href="#!show/{{item.podcastId}}">
                                 <div class="card card-play-list-profile">
                                     <div class="img-car-profile">

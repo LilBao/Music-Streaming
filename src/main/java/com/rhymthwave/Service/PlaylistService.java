@@ -19,8 +19,8 @@ public interface PlaylistService {
 
 	List<Playlist> findDiscoverArtist(Long artistId, List<Integer> roleId);
 
-	List<Playlist> top50PlaylistLatest(List<Integer> listRole, Boolean isPublic);
+	List<Playlist> top50PlaylistLatest(Boolean isPublic);
 
-	List<Playlist> top50PlaylistRecentListen(List<Integer> listRole, Boolean isPublic, Optional<List<String>> nameGenre,
+	List<Playlist> top50PlaylistRecentListen(Boolean isPublic, Optional<List<String>> nameGenre,
 			Optional<String> culture, Optional<String> instrument, Optional<String> mood, Optional<String> songstyle,Optional<String> versions);
 }

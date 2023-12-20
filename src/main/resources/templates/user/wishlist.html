@@ -125,7 +125,67 @@
                             <div class="d-flex justify-content-center align-items-center">
                                 <button ng-click="removeWishlist(wishList[$index].wishlistId,$index)" class="btn border-0 text-white"><i style="color: green;" class="bi bi-heart-fill"></i></button>
                                 <h6 class="p-0 m-0 text-white"><format-time seconds="item.duration"></format-time></h6>
-                                <button class="btn border-0 text-white"><i class="bi bi-three-dots"></i></button>
+                                <button class="btn border-0 text-white" data-bs-toggle="dropdown"
+                                        aria-expanded="false"><i class="bi bi-three-dots"></i>
+                                    </button>
+                                    <ul class="dropdown-menu p-0 bg-dark ul-dropdown-start-end">
+                                        <li ng-show="account.email" class="li-dropdown-start-end">
+                                            <a class="btn text-white dropdown-item py-2"
+                                                ng-click="checkExisted(item,$event)"><i
+                                                    class="bi bi-hearts"></i>{{isLiked(item) ? 'Remove from liked songs':'Save to your liked songs'}} </a>
+                                        </li>
+                                        <li class="li-dropdown-start-end">
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li class="li-dropdown-start-end">
+                                            <a class="btn text-white dropdown-item py-2" ng-click="enqueue(item)"><i
+                                                    class="bi bi-hdd-stack"></i> Add to queue</a>
+                                        </li>
+                                        <li class="li-dropdown-start-end">
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li class="li-dropdown-start-end">
+                                            <a class="btn text-white dropdown-item py-2"><i
+                                                    class="bi bi-person-lines-fill"></i> Go to artist</a>
+                                            <ul class="nav bg-dark w-100">
+                                                <li class="nav-item" ng-repeat="a in item.song.writters">
+                                                    <a href="#!artist/{{a.artist.artistId}}" class="nav-link text-white">
+                                                        {{a.artist.artistName}}</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="li-dropdown-start-end">
+                                            <a href="{{item.episodeId ? '#!episode/'+item.episode.episodeId : item.tracks.length>0 ? '#!album/'+item.tracks[0].album.albumId : '#!song/'+item.recordingId}}"
+                                                class="btn text-white dropdown-item py-2">
+                                                <i class="bi bi-journal-album"></i> Go to album
+                                            </a>
+                                        </li>
+                                        <li class="li-dropdown-start-end" ng-if="item.recording">
+                                            <a class="btn text-white dropdown-item py-2" data-bs-toggle="modal"
+                                                data-bs-target="#credits-{{item.recordingId}}"><i
+                                                    class="bi bi-share"></i> Show
+                                                credits</a>
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li class="li-dropdown-start-end">
+                                            <a ng-click="item.recordingId ? typeShare('#!/song/'+item.recordingId) : typeShare('#!/episode/'+item.episodeId)"
+                                                data-bs-toggle="modal" data-bs-target="#sharing"
+                                                class="btn text-white dropdown-item py-2"><i class="bi bi-share"></i>
+                                                Share</a>
+                                        </li>
+                                        <li class="li-dropdown-start-end">
+                                            <a ng-show="item.episodeId" href="#!report/episode/{{item.episodeId}}" class="btn text-white dropdown-item py-2">
+                                                <i class="bi bi-flag-fill"></i></i>
+                                                Report
+                                            </a>
+                                            <a ng-show="item.recordingId" href="#!report/recording/{{item.recordingId}}" class="btn text-white dropdown-item py-2">
+                                                <i class="bi bi-flag-fill"></i></i>
+                                                Report
+                                            </a>
+                                        </li>
+                                    </ul>
                             </div>
                         </td>
                     </tr>

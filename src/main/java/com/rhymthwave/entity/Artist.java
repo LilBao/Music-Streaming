@@ -64,7 +64,7 @@ public class Artist implements Serializable {
 	private String[] socialMediaLinks;
 
 	@Column(name = "ACTIVE")
-	private Boolean active;
+	private Boolean active=false;
 
 	@Column(name = "VERIFY")
 	private Boolean isVerify;

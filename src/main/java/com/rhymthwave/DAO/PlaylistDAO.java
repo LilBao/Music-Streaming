@@ -62,12 +62,11 @@ public interface PlaylistDAO extends JpaRepository<Playlist, Long> {
 			+ "order by NEWID()", nativeQuery = true)
 	List<Playlist> findPlaylistDiscoverByArtist(@Param("artistId") Long artistId,@Param("roleId") List<Integer> roleId);
 
-	@Query(value = "select top 50 pl.* from playlists pl " + "join usertype ust on pl.usertypeid = ust.usertypeid "
-			+ "join accounts acc on acc.email = ust.accountid " + "join author auth on auth.email = acc.email "
-			+ "where auth.idrole in :listRole and pl.ispublic= :public "
+	@Query(value = "select top 50 pl.* from playlists pl join usertype ust on pl.usertypeid = ust.usertypeid "
+			+ "join accounts acc on acc.email = ust.accountid join author auth on auth.email = acc.email "
+			+ "where auth.idrole in (4,5) and pl.ispublic= :public "
 			+ "order by pl.createdate desc", nativeQuery = true)
-	List<Playlist> top50PlaylistLatest(@Param("listRole") List<Integer> listRole,
-			@Param("public") Boolean isPublic);
+	List<Playlist> top50PlaylistLatest(@Param("public") Boolean isPublic);
 
 	@Query(value = "select top 50 pl.* from playlists pl "
 			+ "join usertype ust on pl.usertypeid = ust.usertypeid "
@@ -77,13 +76,12 @@ public interface PlaylistDAO extends JpaRepository<Playlist, Long> {
 			+ "join recording r on r.recordingid = plr.recordingid "
 			+ "join songs s on s.songsid = r.songsid "
 			+ "join songgenre sg on sg.idrecord = r.recordingid join genre g on sg.idgenre = g.id "
-			+ "where auth.idrole in :listRole and pl.ispublic= :public and (g.namegenre in :nameGenre "
+			+ "where auth.idrole in (4,5) and pl.ispublic= :public and (g.namegenre in :nameGenre "
 			+ "or r.culture like :culture or r.instrument like :instrument "
 			+ "or r.mood like :mood or r.songstyle like :songstyle or r.versions like :versions) "
 			+ "group by pl.playlistid, pl.playlistname,pl.createdate,pl.description,pl.ispublic,pl.quantity,pl.image,pl.usertypeid "
 			+ "order by pl.createdate desc", nativeQuery = true)
-	List<Playlist> top50PlaylistRecentListen(@Param("listRole") List<Integer> listRole,
-			@Param("public") Boolean isPublic, @Param("nameGenre") List<String> nameGenre,
+	List<Playlist> top50PlaylistRecentListen(@Param("public") Boolean isPublic, @Param("nameGenre") List<String> nameGenre,
 			@Param("culture") String culture, @Param("instrument") String instrument, @Param("mood") String mood,
 			@Param("songstyle") String songstyle,@Param("versions") String versions);
 

@@ -998,3 +998,6 @@ input[type="range"]:hover {
 ::placeholder {
     color: white!important; 
   }
+a, h6{
+    color: white!important;
+}

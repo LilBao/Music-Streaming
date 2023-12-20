@@ -158,15 +158,15 @@ public class PlaylistREST {
 	}
 	
 	@GetMapping("/api/v1/top-playlist-new")
-	public ResponseEntity<MessageResponse> findTopNewPlaylist(@RequestParam("role") List<Integer> role) {
-		return ResponseEntity.ok(new MessageResponse(true, "success", playlistSer.top50PlaylistLatest(role, true)));
+	public ResponseEntity<MessageResponse> findTopNewPlaylist() {
+		return ResponseEntity.ok(new MessageResponse(true, "success", playlistSer.top50PlaylistLatest(true)));
 	}
 	
 	@GetMapping("/api/v1/top-playlist-recent-listen")
-	public ResponseEntity<MessageResponse> findTopRecentPlaylist(@RequestParam("role") List<Integer> role,@RequestParam("genre") Optional<List<String>> genre,
+	public ResponseEntity<MessageResponse> findTopRecentPlaylist(@RequestParam("genre") Optional<List<String>> genre,
 			@RequestParam("culture") Optional<String> culture, @RequestParam("instrument") Optional<String> instrument,
 			@RequestParam("mood") Optional<String> mood, @RequestParam("songstyle") Optional<String> songstyle, 
 			@RequestParam("versions") Optional<String> versions) {
-		return ResponseEntity.ok(new MessageResponse(true, "success", playlistSer.top50PlaylistRecentListen(role, true, genre, culture, instrument, mood, songstyle, versions)));
+		return ResponseEntity.ok(new MessageResponse(true, "success", playlistSer.top50PlaylistRecentListen(true, genre, culture, instrument, mood, songstyle, versions)));
 	}
 }

@@ -80,7 +80,8 @@
                 <div class="dropdown">
                     <div class="bl-install-ring-account-hilden"></div>
                     <button class="bl-install-ring-account-btn" data-bs-toggle="dropdown">
-                        <i class="bi bi-person"></i>
+                        <img src="{{account.image.url}}" alt="" class="rounded-circle" height="22"
+                        loading="lazy">
                         <figure style="color: white !important;">
                             <ul class="dropdown-menu dropdown-menu-dark">
                                 <li ng-show="hideni"><a class="dropdown-item" ng-click="accountInfo()"> <i
@@ -557,7 +558,7 @@
                         <div class="carousel-inner">
                             <div class="carousel-item active">
                                 <a href="{{notify.toURL}}">
-                                    <img src="{{notify.urlImage}}" alt="Los Angeles" class="d-block w-100">
+                                    <img style="height: 500px; object-fit: cover;" src="{{notify.urlImage}}" alt="Los Angeles" class="d-block w-100">
                                 </a>
                             </div>
                             <div class="carousel-item" ng-repeat="item in AdsNotification track by $index">

@@ -479,9 +479,9 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
         if (audio.currentTime === 0) {
             listened = 0;
             currentAds = 0;
-            if ($scope.account.userType) {
+            if ($scope.account.userType || !$cookies.get(token)) {
                 if ((($scope.account.userType.length === 1 || new Date($scope.account.userType[1].endDate) < new Date())
-                    && (Math.floor(Math.random() * 3) + 1 === 3) && $scope.officalAds.length > 0) || !$cookies.get(token)) {
+                    && (Math.floor(Math.random() * 3) + 1 === 3) && $scope.officalAds.length > 0)) {
                     resume.click();
                     play.disabled = true;
                     resume.disabled = true;
@@ -588,7 +588,6 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
 
     function Next() {
         listened = 0;
-        currentAds = 0;
         if (queueService.getQueue().length > 0) {
             let item = queueService.getQueue()[0];
             if (item.recordingId) {
@@ -644,7 +643,6 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
     //prev
     prev.addEventListener('click', function () {
         listened = 0;
-        currentAds = 0;
         var index = audioService.getCurrentAudio();
         if (index === 0) {
             index = audioService.getListPlay().length - 1;
@@ -1027,13 +1025,29 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
                 var ads1 = priority1Ads[random];
                 var twentyPercent = 0.2;
                 var sixtyPercent = 0.6;
-                let selectedObject = ratio <= twentyPercent ? ads3 : (twentyPercent < ratio < sixtyPercent ? ads2 : ads1);
-                $scope.officalAds.push(selectedObject);
-            } else {
-                if (ads2) {
-                    var sixtyPercent = 0.6;
-                    let selectedObject = ratio < sixtyPercent ? ads2 : ads3;
+                let selectedObject;
+                if((ratio <= twentyPercent) && ads3 !==undefined){
+                    selectedObject = ads3;
+                }else if((twentyPercent < ratio < sixtyPercent) && ads2 !==undefined){
+                    selectedObject = ads2;
+                }else{
+                    selectedObject = ads1;
+                }
+                if(selectedObject!==undefined){
                     $scope.officalAds.push(selectedObject);
+                }                
+            } else {
+                if (ads2 !==undefined) {
+                    var sixtyPercent = 0.6;
+                    let selectedObj;
+                    if(ratio <= sixtyPercent){
+                        selectedObj = ads2;
+                    }else if(ads3 !== undefined){
+                        selectedObj = ads3;
+                    }
+                    if(selectedObj){
+                        $scope.officalAds.push(selectedObj);
+                    }
                 }
             }
         }
@@ -1101,7 +1115,7 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
 
     $scope.insertAds = function () {
         $scope.ads = $scope.officalAds[currentAds];
-        audioAds.src = $scope.officalAds[currentAds].audioFile;
+        audioAds.src = $scope.ads.audioFile;
         audioAds.play();
     }
 
@@ -1125,7 +1139,6 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
             var item = angular.copy($scope.ads);
             item.listened += 1;
             $scope.updateAds(item);
-
             $scope.insertAds();
         }
     });
@@ -1466,13 +1479,12 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
     $scope.$on('$locationChangeSuccess', function (event, newUrl, oldUrl) {
         $('#modal-show-all').click();
         var lastSlashIndex = newUrl.lastIndexOf('/');
-        if ($cookies.get("tracking")) {
-            var tracking = JSON.parse($cookies.get("tracking"));
+        if (localStorage.getItem('tracking')) {
+            var tracking = JSON.parse(localStorage.getItem('tracking'));
         } else {
             var tracking = [];
         }
         $scope.obj = {};
-
         if (lastSlashIndex !== -1) {
             var result = newUrl.substring(lastSlashIndex + 1);
             if (newUrl.indexOf("show") !== -1) {
@@ -1568,8 +1580,8 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
             }
         }
         if (!isObjectExist) {
-            list.push(item);
-            setCookie("tracking", JSON.stringify(list).toString(), 30);
+            list.unshift(item);
+            localStorage.setItem('tracking', JSON.stringify(list).toString(), 30);
         }
     }
 
@@ -1588,7 +1600,7 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
     }
 
     $scope.share = function (type) {
-        const link = encodeURI($scope.link);
+        const link = encodeURI('https://www.spotify.com/');
         const msg = encodeURIComponent('Hey, I found this article');
         const title = encodeURIComponent('Article or Post Title Here');
         const imageUrl = encodeURIComponent('https://res.cloudinary.com/div9ldpou/image/upload/v1696394508/Background/System/ss_276c32d569fe8394e31f5f53aaf7ce07b8874387.1920x1080_raeceo.jpg');
@@ -1831,7 +1843,6 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
                             $scope.dataGr[element[22]] = element;
                         }
                     });
-                    console.log($scope.dataArt);
                 })
                 .catch(function (error) {
                     console.error('Error searching');
