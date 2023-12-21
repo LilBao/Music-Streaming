@@ -1,6 +1,7 @@
 package com.rhymthwave.API;
 
 import java.util.Date;
+import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -34,12 +35,12 @@ public class PlaylistPodcastREST {
 
 	@PostMapping("/api/v1/playlist-episode")
 	public ResponseEntity<MessageResponse> additionEpisodeIntoPlaylist(HttpServletRequest req,
-			@RequestBody Playlist_Podcast playlistPodcast, @RequestParam("quantity") Integer quantity) {
+			@RequestBody Playlist_Podcast playlistPodcast, @RequestParam("quantity") Optional<Integer> quantity) {
 		String owner = host.getEmailByRequest(req);
 		Account account = crudAccount.findOne(owner);
 		UserType basic = account.getUserType().get(0);
 		UserType premium = account.getUserType().size() > 1 ? account.getUserType().get(1) : null;
-		Integer lengthPlaylist = quantity;
+		Integer lengthPlaylist = quantity.orElse(0);
 		if (lengthPlaylist <= basic.getSubscription().getNip()) {
 			return ResponseEntity.ok(new MessageResponse(true, "success", crudPlaylistPodcast.create(playlistPodcast)));
 		} else {

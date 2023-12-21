@@ -1,6 +1,7 @@
 package com.rhymthwave.API;
 
 import java.util.Date;
+import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,7 +18,6 @@ import com.rhymthwave.Utilities.GetHostByRequest;
 import com.rhymthwave.entity.Account;
 import com.rhymthwave.entity.PlaylistRecord;
 import com.rhymthwave.entity.UserType;
-import com.rhymthwave.entity.Wishlist;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -34,12 +34,12 @@ public class PlaylistRecordREST {
 
 	@PostMapping("/api/v1/playlist-record")
 	public ResponseEntity<MessageResponse> additionSongIntoPlaylist(HttpServletRequest req,
-			@RequestBody PlaylistRecord playlistRecord, @RequestParam("quantity") Integer quantity) {
+			@RequestBody PlaylistRecord playlistRecord, @RequestParam("quantity") Optional<Integer> quantity) {
 		String owner = host.getEmailByRequest(req);
 		Account account = crudAccount.findOne(owner);
 		UserType basic = account.getUserType().get(0);
 		UserType premium = account.getUserType().size() > 1 ? account.getUserType().get(1) : null;
-		Integer lengthPlaylist = quantity;
+		Integer lengthPlaylist = quantity.orElse(0);
 		if (lengthPlaylist < basic.getSubscription().getNip()) {
 			return ResponseEntity.ok(new MessageResponse(true, "success", crudPlaylistRecord.create(playlistRecord)));
 		} else {

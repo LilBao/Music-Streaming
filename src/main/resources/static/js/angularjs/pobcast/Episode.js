@@ -38,7 +38,7 @@ app.controller('episodeInforCtrl', function ($scope, $http, FileService) {
             data.append('episodeType', $scope.episode.episodeType);
             data.append('content', $scope.episode.content);
             data.append('podcast', $scope.podcast.podcastId);
-            data.append('duration', $scope.duration);
+            data.append('duration', Number(Math.floor($scope.duration)));
             $http.post(url, data, {
                 headers: {
                     'Content-Type': undefined, 'Authorization': 'Bearer ' + getCookie('token')
