@@ -40,8 +40,6 @@ public class SignUpAPI {
 	@Autowired
 	private ApplicationEventPublisher publisher;
 
-	private Account account;
-
 	@Autowired
 	private AccountDAO accountDAO;
 	
@@ -55,44 +53,13 @@ public class SignUpAPI {
 
 	@PostMapping("/signUp")
 	public ResponseEntity<?> signUp(@RequestBody SignUpDTO signUpDTO, final HttpServletRequest request) {
+		System.out.println(signUpDTO.country());
 		Account account = signUpServiceImpl.signUp(signUpDTO);
+		if(account == null) {
+			return ResponseEntity.ok(new MessageResponse(false, "Account is exist!!!"));
+		}
 		publisher.publishEvent(new SignUpCompleteEvent(account, applicationUrl(request)));
 		return ResponseEntity.ok(new MessageResponse(true, "Success! Please, check your email for to complete your signUp"));
-	}
-
-	@GetMapping("/verifyEmail")
-	public ResponseEntity<?> verifyEmail(@RequestParam("token") String verificationToken) {
-		Account account = accountDAO.findByVerificationCode(verificationToken);
-
-		if (account == null) {
-			return ResponseEntity.badRequest().body("Invalid verification token");
-		}
-
-		Calendar calendar = Calendar.getInstance();
-		int remainingVerification = account.getRemainingVerification();
-		
-		if (account.getVerificationCodeExpires().getTime() - calendar.getTime().getTime() <= 0) {
-			remainingVerification--;
-			account.setRemainingVerification(remainingVerification);
-			account.setVerificationCodeExpires(listener.getTokenExpirationTime());
-			accountDAO.save(account);
-			return ResponseEntity.badRequest().body("The token has expired, please click on the verification link again");
-		}
-
-		if (remainingVerification == 0) {
-			account.setVerificationCode(null);
-			account.setVerificationCodeExpires(null);
-			account.setBlocked(true);
-			accountDAO.save(account);
-			return ResponseEntity.badRequest().body("Email is blocked");
-		}
-
-		account.setVerificationCode(null);
-		account.setVerificationCodeExpires(null);
-		account.setVerify(true);
-		accountDAO.save(account);
-
-		return ResponseEntity.ok("Verified successfully");
 	}
 
 	private String applicationUrl(HttpServletRequest request) {

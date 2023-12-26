@@ -65,6 +65,7 @@ p.count {
     align-items: center;
     border-radius: 50%;
     right: -3px;
+    padding: 8px;
 }
 
 .logo {
@@ -245,6 +246,23 @@ nav.animated {
     background-color: var(--second-color);
 }
 
+
+/* CSS RUN SONG MENU LEFT */
+.nav-song{
+    width: 240px;
+    background: var(--white-color);
+}
+.nav-song.hide {
+    width: 0;
+    transition: .7s;
+}
+.navbar-brand.hide{
+    visibility: hidden ;
+    width: 0;
+    transition: .7s;
+}
+
+
 ul#sidebar {
     margin: 0;
     padding: 0;
@@ -279,11 +297,11 @@ ul#sidebar li:hover {
     border-left: 4px solid var(--second-color);
 }
 
-li.active {
+li.activeslidebar {
     border-left: 4px solid var(--second-color) !important;
 }
 
-li.active a {
+li.activeslidebar a {
     color: var(--second-color) !important;
     background: #f4f4f4;
 }

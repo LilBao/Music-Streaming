@@ -56,11 +56,38 @@ public class FollowREST {
 	@DeleteMapping("/api/v1/follow")
 	public ResponseEntity<MessageResponse> cancelFollow(HttpServletRequest req, @RequestParam("email") String email,@RequestParam("type") Integer type){
 		String main = host.getEmailByRequest(req);
-		//System.out.println(author);
 		Author accountA = authorSer.findAuthor(1, main);
 		Author accountB = authorSer.findAuthor(type, email);
 		Follow follow = followSer.findFollowByAccount(accountA, accountB);
-		
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudFollow.delete(follow.getFollowerId())));
+	}
+	
+	@GetMapping("/api/v1/check-follow")
+	public ResponseEntity<MessageResponse> checkFollow(@RequestParam("email") String email,@RequestParam("type") Integer type, HttpServletRequest req){
+		String main = host.getEmailByRequest(req);
+		Author accountA = authorSer.findAuthor(1, main);
+		Author accountB = authorSer.findAuthor(type, email);
+		Follow follow = followSer.findFollowByAccount(accountA, accountB);
+		if (follow!=null) {
+			return ResponseEntity.ok(new MessageResponse(true,"success",follow));
+		}
+		return ResponseEntity.ok(new MessageResponse(false,"fail",null)); 
+	}
+	
+	@GetMapping("/api/v1/quantity-follow")
+	public ResponseEntity<MessageResponse> getQuantityFollow(@RequestParam("email") String email,@RequestParam("type") Integer type,@RequestParam("days") Integer days){
+		Author account = authorSer.findAuthor(type, email);
+		Integer quantity = followSer.getQuantityFollowByDate(account.getAuthorId(), days);
+		return ResponseEntity.ok(new MessageResponse(true,"success",quantity)); 
+	}
+	
+	@DeleteMapping("/api/v1/unfollow/{id}")
+	public ResponseEntity<MessageResponse> unFollow(@PathVariable("id") Long id){
+		return ResponseEntity.ok(new MessageResponse(true,"success",crudFollow.delete(id)));
+	}
+	
+	@GetMapping("/api/v1/monitor-follow")
+	public ResponseEntity<MessageResponse> monitorFollow(@RequestParam("email") String email,@RequestParam("role") Integer role,@RequestParam("duration") Integer duration){
+		return ResponseEntity.ok(new MessageResponse(true,"success",followSer.monitorFollower(email, role, duration))); 
 	}
 }

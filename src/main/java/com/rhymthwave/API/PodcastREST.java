@@ -1,6 +1,7 @@
 package com.rhymthwave.API;
 
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -81,6 +83,7 @@ public class PodcastREST {
 
 	@PutMapping(value="/api/v1/podcast")
 	public ResponseEntity<MessageResponse> updateImage(@RequestBody Podcast podcast){
+		System.out.println(podcast.toString());
 		return ResponseEntity.ok(new MessageResponse(true, "successs", crudPobcast.update(podcast)));
 	}
 	
@@ -103,5 +106,26 @@ public class PodcastREST {
 		Podcast podcast = crudPobcast.findOne(id);
 		cloudinarySer.deleteFile(podcast.getImage().getPublicId());
 		return ResponseEntity.ok(new MessageResponse(true, "successs", crudPobcast.delete(id)));
+	}
+	
+	@GetMapping(value="/api/v1/top-new-podcast")
+	public ResponseEntity<MessageResponse> findTopNewPodcast(@RequestParam("country") Optional<String> country){
+		return ResponseEntity.ok(new MessageResponse(true, "successs", podcastSer.top50NewPodcast(country)));
+	}
+	
+	@GetMapping(value="/api/v1/top-podcast-popular")
+	public ResponseEntity<MessageResponse> findTopPodcastPopular(@RequestParam("country") Optional<String> country){
+		return ResponseEntity.ok(new MessageResponse(true, "successs", podcastSer.top50PodcastPopular(country)));
+	}
+	
+	@GetMapping("/api/v1/profile-podcast")
+	public ResponseEntity<MessageResponse> profilePobcast(HttpServletRequest req) {
+		String owner = host.getEmailByRequest(req);
+		return ResponseEntity.ok(new MessageResponse(true, "successs", podcastSer.checkPocastRole(owner)));
+	}
+	
+	@GetMapping("/api/v1/top3-podcast")
+	public ResponseEntity<MessageResponse> top3Podcast() {
+		return ResponseEntity.ok(new MessageResponse(true, "successs", podcastSer.top3podcast()));
 	}
 }

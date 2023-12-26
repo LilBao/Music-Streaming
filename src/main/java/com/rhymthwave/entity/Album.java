@@ -7,6 +7,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,15 +33,15 @@ public class Album implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ALBUMID")
-	private Long albumId;
+	private Integer albumId;
 
-	@Column(name = "ALBUMNAME")
+	@Column(name = "ALBUMNAME",columnDefinition = "nvarchar(55)")
 	private String albumName;
 
 	@Column(name = "RELEASEDATE")
 	private Date releaseDate;
 	
-	@Column(name = "DESCRIPTIONS")
+	@Column(name = "DESCRIPTIONS",columnDefinition = "nvarchar(max)")
 	private String description;
 
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -55,7 +56,7 @@ public class Album implements Serializable {
 
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "album")
+	@OneToMany(mappedBy = "album",cascade = CascadeType.ALL)
 	private List<Track> tracks;
 
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,12 +17,11 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 @SuppressWarnings("serial")
 @Data
 @AllArgsConstructor
@@ -33,24 +33,24 @@ public class Playlist implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "PLAYLISTID")
-	private long playlistId;
+	private Long playlistId;
 
-	@Column(name = "PLAYLISTNAME")
+	@Column(name = "PLAYLISTNAME",columnDefinition = "nvarchar(55)")
 	private String playlistName;
 
 	@Column(name = "QUANTITY")
-	private int quantity;
+	private int quantity=0;
 
 	@Column(name = "ISPUBLIC")
-	private boolean isPublic;
+	private Boolean isPublic;
 
-	@Column(name = "DESCRIPTION")
+	@Column(name = "DESCRIPTION",columnDefinition = "nvarchar(255)")
 	private String description;
-
+	
+	
 	@Column(name = "CREATEDATE")
 	@Temporal(TemporalType.DATE)
 	private Date createDate = new Date();
-
 
 	@ManyToOne
 	@JoinColumn(name = "USERTYPEID")
@@ -61,10 +61,10 @@ public class Playlist implements Serializable {
 	private Image image;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "playlist")
+	@OneToMany(mappedBy = "playlist",cascade = CascadeType.ALL)
 	private List<PlaylistRecord> playlistRecords;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "playlist")
+	@OneToMany(mappedBy = "playlist",cascade = CascadeType.ALL)
 	private List<Playlist_Podcast> playlistPodcast;
 }

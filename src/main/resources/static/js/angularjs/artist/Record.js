@@ -4,23 +4,28 @@ app.controller('recordCtrl', function ($scope, $http) {
     $scope.songGenre = {};
     //Call API => create Record
     $('#create-record').click(function () {
-        $scope.createRecord() 
+        if($scope.validate()){
+            $scope.createRecord()
+        }else{
+            $('#err').text("Fill in the important information");
+        }
     })
 
-    $scope.createRecord = function(){
+    $scope.createRecord = function () {
         $scope.checkbox();
         var url = host + "/v1/record";
         var data = new FormData();
         data.append('recordingName', $scope.record.name);
-        data.append('studio', $scope.record.studio);
-        data.append('produce', $scope.record.proceduce);
-        data.append('idMv', $scope.record.idMv);
+        data.append('studio', $scope.record.studio ? $scope.record.studio : "");
+        data.append('produce', $scope.record.proceduce ? $scope.record.proceduce : "");
+        data.append('idMv', $scope.record.idMv ? $scope.record.idMv : "");
         data.append('mood', $scope.moods);
         data.append('songStyle', $scope.styles);
         data.append('culture', $scope.cultures);
         data.append('instrument', $scope.instruments);
         data.append('versions', $scope.record.version);
         data.append('fileRecord', $scope.recordFile);
+        data.append('duration', Number($scope.duration));
         if ($scope.lyricsFile) {
             data.append('fileLyrics', $scope.lyricsFile);
         }
@@ -42,6 +47,9 @@ app.controller('recordCtrl', function ($scope, $http) {
                     console.log(error)
                 })
             })
+            $('#btn-close-upload-record').click();
+            $scope.findListRecordArtist();
+            $scope.resetRecord();
             showStickyNotification('Create record success', 'success', 3000);
         }).catch(error => {
             showStickyNotification('Create record fail', 'danger', 3000);
@@ -69,6 +77,22 @@ app.controller('recordCtrl', function ($scope, $http) {
         }
     }
 
+    //reset record
+    $scope.resetRecord = function () {
+        $scope.record = {};
+        $scope.getListGenre();
+        $scope.getListMood();
+        $scope.getListInstrument();
+        $scope.getListSongStyle();
+        $scope.getListCulture();
+        $('input[type="file"]').val(undefined);
+        $('input[name="culture"]').prop('checked', false);
+        $('input[name="mood"]').prop('checked', false);
+        $('input[name="style"]').prop('checked', false);
+        $('input[name="intrument"]').prop('checked', false);
+        $('input[name="genre"]').prop('checked', false);
+    }
+
     //Get File Audio and File lyrics
     $scope.selectFileRecord = function (id) {
         $('#' + id).change(function (event) {
@@ -77,6 +101,13 @@ app.controller('recordCtrl', function ($scope, $http) {
                 $scope.$apply(function () {
                     if (id == 'records') {
                         $scope.recordFile = file;
+                        var audio = new Audio();
+                        audio.src = URL.createObjectURL(file);
+                        audio.onloadedmetadata = function () {
+                            var time = audio.duration;
+                            $scope.duration = Math.floor(time);
+                            URL.revokeObjectURL(audio.src);
+                        };
                     }
                     if (id == 'lyrics') {
                         $scope.lyricsFile = file;
@@ -140,28 +171,37 @@ app.controller('recordCtrl', function ($scope, $http) {
         $scope.instruments = "";
         const selectedValues = [];
         $('input[name="culture"]:checked').each(function () {
-            $scope.cultures += " " + $(this).val();
+            $scope.cultures = $scope.cultures.trim() + " " + $(this).val().trim();
         });
         $('input[name="mood"]:checked').each(function () {
-            $scope.moods += " " + $(this).val();
+            $scope.moods = $scope.moods.trim() + " " + $(this).val();
         });
         $('input[name="style"]:checked').each(function () {
-            $scope.styles += " " + $(this).val();
+            $scope.styles = $scope.styles.trim() + " " + $(this).val();
         });
         $('input[name="intrument"]:checked').each(function () {
-            $scope.instruments += " " + $(this).val();
+            $scope.instruments = $scope.instruments.trim() + " " + $(this).val();
         });
         $('input[name="genre"]:checked').each(function () {
             selectedValues.push($(this).val());
         });
         $scope.genre = selectedValues;
     }
-    
+
     $('#genre').on('keypress', function (event) {
         if (event.key === 'Enter') {
             event.preventDefault();
         }
     });
+
+    $('#genre').click(function () {
+        if ($('input[name="genre"]:checked').length > 2) {
+            $('#genre').attr('readonly', true);
+        } else {
+            $('#genre').attr('readonly', false);
+        }
+    })
+
     $('#genre').on('change', function () {
         var selectedOption = $(this).val().trim();
         var datalist = document.getElementById('genres');
@@ -174,7 +214,7 @@ app.controller('recordCtrl', function ($scope, $http) {
             }
         }
         if (selectedOption && selectedOption != "") {
-            var tag = $('<div class="checkbox"> <input type="checkbox" checked name="genre" value='+selectedOption+'id="" />' +
+            var tag = $('<div class="checkbox"> <input type="checkbox" checked name="genre" value=' + selectedOption + 'id="" />' +
                 '<div class="box bg-black text-white"><p>' + GenreText + '</p></div>' +
                 '</div>');
             tag.find('input[name="genre"]').val(selectedOption);
@@ -183,7 +223,7 @@ app.controller('recordCtrl', function ($scope, $http) {
         }
         $('#genre').val("");
     });
-    
+
     $('#list-genres').on('click', 'input[name="genre"]', function () {
         var selectedGenre = $(this).val();
         var genreName = $(this).find('option:selected').text();
@@ -196,47 +236,60 @@ app.controller('recordCtrl', function ($scope, $http) {
         }
     });
 
-    $('#genre').change(function(){
-        if(document.getElementsByTagName('genre').length > 3){
-            $('#genre').attr('readonly',true);
-        }
+    $('#btn-upload-record').click(function () {
+        var countC = 0;
+        var countM = 0;
+        var countS = 0;
+
+        $('input[name="culture"]').on('change', function () {
+            if (this.checked) {
+                if (countC < 3) {
+                    countC++;
+                } else {
+                    this.checked = false;
+                }
+            } else {
+                countC--;
+            }
+        });
+
+        $('input[name="mood"]').on('change', function () {
+            if (this.checked) {
+                if (countM < 3) {
+                    countM++;
+                } else {
+                    this.checked = false;
+                }
+            } else {
+                countM--;
+            }
+        });
+        $('input[name="style"]').on('change', function () {
+            if (this.checked) {
+                if (countS < 3) {
+                    countS++;
+                } else {
+                    this.checked = false;
+                }
+            } else {
+                countS--;
+            }
+        });
     })
-    
-    var countC = 0;
-    var countM = 0;
-    var countS = 0;
-    $('input[name="culture"]').on('change', function () {
-        console.log("fsdfds")
-        if (this.checked) {
-            if (countC < 3) {
-                countC++;
-            } else {
-                this.checked = false;
-            }
-        } else {
-            countC--;
+
+    $scope.validate = function(){
+        if($scope.record.name == undefined){
+            return false;
         }
-    });
-    $('input[name="mood"]').on('change', function () {
-        if (this.checked) {
-            if (countM < 3) {
-                countM++;
-            } else {
-                this.checked = false;
-            }
-        } else {
-            countM--;
+        if(!$scope.recordFile){
+            return false;
         }
-    });
-    $('input[name="style"]').on('change', function () {
-        if (this.checked) {
-            if (countS < 3) {
-                countS++;
-            } else {
-                this.checked = false;
-            }
-        } else {
-            countS--;
+        if(!$scope.record.version){
+            return false;
         }
-    });
+        if($('input[name="genre"]:checked').length===0){
+            return false;
+        }
+        return true;
+    }
 })

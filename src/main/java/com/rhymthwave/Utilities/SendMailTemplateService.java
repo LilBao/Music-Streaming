@@ -10,6 +10,8 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
+import java.util.Arrays;
+
 
 @Service
 public class SendMailTemplateService {
@@ -59,16 +61,9 @@ public class SendMailTemplateService {
 					"is your email address, you’ll be able to publish episodes and distribute your podcast.");
 			context.setVariable("address", address);
 			context.setVariable("type", "Pobcaster");
-		}
-		if (type.equalsIgnoreCase("USER")) {
-			context.setVariable("content",
-					"is your email address, you’ll be able to publish episodes and distribute your podcast.");
-			context.setVariable("address", address);
-			context.setVariable("type", "USER");
-		} else {
+		}else {
 			context.setVariable("content",
 					"is your email address, you’ll be received from us. Please follow your email to receive latest notifications.");
-			context.setVariable("address", "");
 			context.setVariable("address", address);
 			context.setVariable("type", "Artist");
 		}
@@ -76,12 +71,42 @@ public class SendMailTemplateService {
 	}
 
 	// Send template email  For Role
-	public String getContentForNews(String title, String templateName, String content, String urlImg) {
+	public String getContentForNews(String title, String templateName, String content, String url) {
 		final Context context = new Context();
+		String urls[] = url.split(";");
 		context.setVariable("title", title);
 		context.setVariable("content", content);
-		context.setVariable("img", urlImg);
+		context.setVariable("img", urls[0]);
+		context.setVariable("toUrl", urls[1]);
 
+		return templateEngine.process(templateName, context);
+	}
+	
+	public String getAdvertisingResults(Long listened ,  Long clicked  , Long approach, String templateName) {
+		final Context context = new Context();
+		context.setVariable("listened", listened);
+		context.setVariable("clicked", clicked);
+		context.setVariable("approach", approach);
+
+		return templateEngine.process(templateName, context);
+	}
+	
+	public String getContentForReport(String templateName) {
+		final Context context = new Context();
+
+		return templateEngine.process(templateName, context);
+	}
+
+	public String getContentForArtist(String artistName, String string) {
+		final Context context = new Context();
+		context.setVariable("artistName", artistName);
+		return templateEngine.process(string, context);
+	}
+
+	public String getContentForConfirmAccount(String templateName, String url,String email) {
+		final Context context = new Context();
+		context.setVariable("url", url);
+		context.setVariable("email", email);
 		return templateEngine.process(templateName, context);
 	}
     

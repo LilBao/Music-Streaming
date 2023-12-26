@@ -5,7 +5,9 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,68 +32,71 @@ public class Recording implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "RECORDINGID")
-	private long recordingId;
+	private Long recordingId;
 
-	@Column(name = "RECORDINGIDNAME")
+	@Column(name = "RECORDINGNAME",columnDefinition = "nvarchar(max)")
 	private String recordingName;
 
-	@Column(name = "AUDIOFILEURL")
+	@Column(name = "AUDIOFILEURL",columnDefinition = "varchar(max)")
 	private String audioFileUrl;
 	
-	@Column(name = "PUBLICIDAUDIOFILE")
+	@Column(name = "PUBLICIDAUDIOFILE",columnDefinition = "varchar(max)")
 	private String publicIdAudio;
 
-	@Column(name = "LYRICSURL")
+	@Column(name = "LYRICSURL",columnDefinition = "nvarchar(max)")
 	private String lyricsUrl;
 
-	@Column(name = "PUBLICIDLYRICS")
+	@Column(name = "PUBLICIDLYRICS",columnDefinition = "varchar(max)")
 	private String publicIdLyrics;
 	
-	@Column(name = "LISTENED")
-	private Long listened;
+	@Column(name = "DURATION")
+	private Integer duration;
 
-	@Column(name = "SONGSTYLE")
+	@Column(name = "SONGSTYLE",columnDefinition = "nvarchar(55)")
 	private String songStyle;
 
-	@Column(name = "MOOD")
+	@Column(name = "LISTENED")
+	private Long listened=0L;
+	
+	@Column(name = "MOOD",columnDefinition = "nvarchar(55)")
 	private String mood;
 
-	@Column(name = "CULTURE")
+	@Column(name = "CULTURE",columnDefinition = "nvarchar(55)")
 	private String culture;
 
-	@Column(name = "INSTRUMENT")
+	@Column(name = "INSTRUMENT",columnDefinition = "nvarchar(55)")
 	private String instrument;
 
-	@Column(name = "VERSIONS")
+	@Column(name = "VERSIONS",columnDefinition = "nvarchar(55)")
 	private String versions;
 
-	@Column(name = "STUDIO")
-	private String studio;
+	@Column(name = "STUDIO",columnDefinition = "nvarchar(55)")
+	private String studio="";
 
-	@Column(name = "IDMV")
-	private String idMv;
+	@Column(name = "IDMV",columnDefinition = "varchar(200)")
+	private String idMv="";
 
-	@Column(name = "PRODUCE")
-	private String produce;
+	@Column(name = "PRODUCE",columnDefinition = "nvarchar(55)")
+	private String produce="";
 
 	@Column(name = "RECORDINGDATE")
 	private Date recordingdate = new Date();
 
 	@Column(name = "ISDELETED")
-	private Boolean isDeleted;
+	private Boolean isDeleted=false;
 	
-	@Column(name = "EMAILCREATE")
+	@Column(name = "EMAILCREATE",columnDefinition = "varchar(255)")
 	private String emailCreate;
 
-
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@ManyToOne
-	@JoinColumn(name = "SONGSID")
+	@JoinColumn(name = "SONGSID",nullable = true)
 	private Song song;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "recording")
 	private List<Monitor> monitors;
-
+	
 	@JsonIgnore
 	@OneToMany(mappedBy = "recording")
 	private List<Wishlist> wishlists;
@@ -109,7 +114,7 @@ public class Recording implements Serializable {
 	private List<Track> tracks;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "recording")
+	@OneToMany(mappedBy = "recording",cascade = CascadeType.ALL)
 	private List<SongGenre> songGenres;
 	
 }

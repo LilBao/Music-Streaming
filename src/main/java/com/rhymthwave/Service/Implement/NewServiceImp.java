@@ -20,6 +20,7 @@ import com.rhymthwave.Utilities.GetHostByRequest;
 import com.rhymthwave.entity.Account;
 import com.rhymthwave.entity.Image;
 import com.rhymthwave.entity.News;
+import com.rhymthwave.entity.TypeEnum.EROLE;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +42,8 @@ public class NewServiceImp implements NewService, CRUD<News, Integer>{
 	private final INotification<NewDTO> notification;
 	
 	private String FOLDER_CONTAINING_IMAGE_NEWS  = "ImageManager";
+
+	private String toURL  = "http://localhost:8080/new/home/";
 	
 	@Transactional
 	@Override
@@ -125,8 +128,10 @@ public class NewServiceImp implements NewService, CRUD<News, Integer>{
 			news.setModifiDate(getTimeNow());
 			news.setModifiedBy(email);
 			create(news);
-			
-			notification.sendNotification(newDTO,urlImage);
+			News newUpdateUrl =	findOne(news.getNewsId());
+			news.setToUrl(toURL+newUpdateUrl.getNewsId());
+			update(newUpdateUrl);
+			notification.sendNotification(newDTO,urlImage+";"+news.getToUrl());
 			
 			return news;
 		} catch (Exception e) {
@@ -198,6 +203,11 @@ public class NewServiceImp implements NewService, CRUD<News, Integer>{
 	public List<News> findNewsByYearAndMonth(Integer year, Integer month) {
 	
 		return newDao.findNewsByYearAndMonth(year, month);
+	}
+	@Override
+	public List<News> getAllNewForRole(EROLE createfor) {
+		
+		return newDao.findAllNewsCreateFor(createfor);
 	}
 
 

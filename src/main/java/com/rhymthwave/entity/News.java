@@ -60,12 +60,12 @@ public class News implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "IDNEWS")
-	private long newsId;
+	private Integer newsId;
 
-	@Column(name = "TITLE")
+	@Column(name = "TITLE",columnDefinition = "nvarchar(255)")
 	private String title;
 
-	@Column(name = "CONTENT ")
+	@Column(name = "CONTENT ",columnDefinition = "nvarchar(max)")
 	private String content;
 
 	@Column(name = "PUBLISHDATE")
@@ -74,25 +74,27 @@ public class News implements Serializable {
 	@Column(name = "LASTMODIFIED")
 	private Date lastModified;
 
-	@Column(name = "CREATEDATE")
+	@Column(name = "CREATEDATE" ,columnDefinition = "date")
 	private Date createDate;
 	
-	@Column(name = "CREATEFOR")
+	@Column(name = "CREATEFOR",columnDefinition = "varchar(20)")
 	@Enumerated(EnumType.STRING)
 	private EROLE createFor;
 	
-	@Column(name = "MODIFIEDBY", length = 255)
+	@Column(name = "MODIFIEDBY",columnDefinition = "nvarchar(255)")
 	private String modifiedBy;
 	
 	@Column(name = "MODIFIDATE")
 	private Date modifiDate;
-	
-	
+
+	@Column(name = "TOURL",columnDefinition = "nvarchar(255)")
+	private String toUrl;
+
 	@OneToOne( cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "IMAGE")
 	private Image image;
 
 	@ManyToOne
-	@JoinColumn(name = "AUTHORID")
+	@JoinColumn(name = "EMAIL")
 	private Account account;
 }

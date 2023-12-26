@@ -7,4 +7,6 @@ public class SubscriptionDTO {
 	private Integer subscriptionId;
 	private String prdStripeId;
 	private String prdPaypalId;
+	private Float price;
+	private String packages;
 }

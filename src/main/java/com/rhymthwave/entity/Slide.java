@@ -24,23 +24,26 @@ public class Slide implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "SLIDEID")
-	private int slideId;
+	private Integer slideId;
 
-	@Column(name = "POSITION")
+	@Column(name = "POSITION",columnDefinition = "nvarchar(55)")
 	private String position;
 
-	@Column(name = "LISTIMAGE")
+	@Column(name = "LISTIMAGE",columnDefinition = "nvarchar(max)")
 	private String listImage;
 	
-	@Column(name = "CREATEBY",length = 255)
+	@Column(name = "CREATEBY",columnDefinition = "nvarchar(255)")
 	private String createBy;
 	
 	@Column(name = "CREATEDATE")
 	private Date createDate;
 	
-	@Column(name = "MODIFIEDBY", length = 255)
+	@Column(name = "MODIFIEDBY",columnDefinition = "nvarchar(255)")
 	private String modifiedBy;
 	
 	@Column(name = "MODIFIDATE")
 	private Date modifiDate;
+	
+	@Column(name = "URL",columnDefinition = "varchar(max)")
+	private String url;
 }

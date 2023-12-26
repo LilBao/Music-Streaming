@@ -19,6 +19,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,40 +36,46 @@ public class Artist implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ARTISTID")
-	private long artistId;
+	private Long artistId;
 
-	@Column(name = "ARTISTNAME")
+	@Column(name = "ARTISTNAME",columnDefinition = "nvarchar(55)")
 	private String artistName;
 
 	@Column(name = "DATEOFBIRTH")
+	@Temporal(TemporalType.DATE)
 	private Date dateOfBirth;
 
-	@Column(name = "FULLNAME")
+	@Column(name = "FULLNAME",columnDefinition = "nvarchar(55)")
 	private String fullName;
 
-	@Column(name = "PLACEOFBIRTH")
+	@Column(name = "PLACEOFBIRTH",columnDefinition = "nvarchar(100)")
 	private String placeOfBirth;
 
-	@Column(name = "BIO")
+	@Column(name = "BIO",columnDefinition = "nvarchar(max)")
 	private String bio;
 
-	@Column(name = "IMAGEGALLERY",columnDefinition = "nvarchar")
+	@Column(name = "IMAGEGALLERY",columnDefinition = "nvarchar(max)")
 	private String[] imagesGallery;
 	
-	@Column(name = "PUBLICIDIMAGEGALLERY",columnDefinition = "nvarchar")
+	@Column(name = "PUBLICIDIMAGEGALLERY",columnDefinition = "nvarchar(max)")
 	private String[] publicIdImageGallery;
 
-	@Column(name = "SOCIALMEDIALINKS",columnDefinition = "nvarchar")
+	@Column(name = "SOCIALMEDIALINKS",columnDefinition = "nvarchar(max)")
 	private String[] socialMediaLinks;
 
 	@Column(name = "ACTIVE")
-	private String active;
+	private Boolean active=false;
 
 	@Column(name = "VERIFY")
 	private Boolean isVerify;
+	
+	@Column(name="EXPIREPERMISSION")
+	@Temporal(TemporalType.DATE)
+	private Date expirePermission;
 
 	@Column(name = "DATESTARTED")
-	private Date dateStarted;
+	@Temporal(TemporalType.DATE)
+	private Date dateStarted = new Date();
 
 	@OneToOne
 	@JoinColumn(name = "PROFILEIMAGE")

@@ -1,27 +1,24 @@
 package com.rhymthwave.Controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import java.util.Optional;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import com.paypal.orders.Order;
+import com.rhymthwave.Service.AdvertisementService;
 import com.rhymthwave.Service.CRUD;
+import com.rhymthwave.Service.HistoryPaymentService;
 import com.rhymthwave.Service.UserTypeService;
 import com.rhymthwave.Service.Payment.PaymentService;
-import com.rhymthwave.Utilities.GetHostByRequest;
+import com.rhymthwave.entity.Advertisement;
+import com.rhymthwave.entity.Payment;
 import com.rhymthwave.entity.UserType;
-import com.rhymthwave.entity.payment.CompletedOrder;
-import com.rhymthwave.entity.payment.Payment;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
 public class PaymentController {
-	private final GetHostByRequest host;
 
 	private final PaymentService paymentSer;
 
@@ -29,38 +26,69 @@ public class PaymentController {
 
 	private final UserTypeService usertypeSer;
 
+	private final CRUD<Payment, Long> crudPayment;
+
+	private final CRUD<Advertisement, Long> crudAds;
+
+	private final HistoryPaymentService historyPayment;
+
+	private final AdvertisementService adsSer;
+
 	@GetMapping("/payment")
 	public String completedPayment() {
-		return "";
+		return "User/pay";
 	}
 
 	@GetMapping("/cancelled")
 	public String cancelledPayment() {
-		return "";
+		return "User/payfail";
 	}
 
-	@PostMapping("/complete-payment-vnpay")
-	public String completePaymentVNPay(@RequestParam("total") Integer total,
-			@RequestParam("subcriptionId") Integer subcriptionId, @RequestParam("email") String email,
-			HttpServletRequest req) {
+	@GetMapping("/complete-payment-vnpay")
+	public String completePaymentVNPay(@RequestParam("subcriptionId") Integer subcriptionId,
+			@RequestParam("paymentName") String paymentName, @RequestParam("email") String email,
+			@RequestParam("ads") Optional<Long> ads, @RequestParam("packages") String packages,
+			@RequestParam("vnp_ResponseCode") String vnp_ResponseCode) {
+		if (vnp_ResponseCode.equals("00")) {
+			if (packages.equalsIgnoreCase("ACCOUNT")) {
+				crudUserType.create(usertypeSer.generateEntity(email, subcriptionId, 1));
+				crudPayment.create(historyPayment.payment(email, subcriptionId, paymentName));
+			} else {
+				adsSer.updateStatusAds(ads.orElse(null), false, 1);
+			}
+			return "redirect:/payment";
+		} else {
+			return "redirect:/cancelled";
+		}
 		
-		crudUserType.create(usertypeSer.generateEntity(email, subcriptionId, 1));
-		return "redirect:/payment";
 	}
 
 	@GetMapping("/complete-payment-paypal")
 	public String completePayment(@RequestParam("token") String token, @RequestParam("email") String email,
-			@RequestParam("subscription") Integer subscriptionId) {
-
-		paymentSer.paypal(token);
-		crudUserType.create(usertypeSer.generateEntity(email, subscriptionId, 1));
+			@RequestParam("paymentName") String paymentName, @RequestParam("total") Float total,
+			@RequestParam("PayerID") String PayerID, @RequestParam("packages") String packages,
+			@RequestParam("subcriptionId") Integer subscriptionId, @RequestParam("ads") Optional<Long> adsId) {
+		if (packages.equalsIgnoreCase("ACCOUNT")) {
+			Order order = paymentSer.billing(token);
+			crudUserType.create(usertypeSer.generateEntity(email, subscriptionId, 1));
+			crudPayment.create(historyPayment.payment(email, subscriptionId, paymentName));
+		} else {
+			adsSer.updateStatusAds(adsId.orElse(null), false, 1);
+		}
 		return "redirect:/payment";
 	}
 
-	@GetMapping("/complete-payment-stripe")
-	public String completePayment(HttpServletRequest req, @RequestParam("subscription") Integer subscriptionId,
-			@RequestParam("email") String email) {
-		crudUserType.create(usertypeSer.generateEntity(email, subscriptionId, 1));
+	@GetMapping("/completed-payment-stripe")
+	public String completePayment(@RequestParam("subscription") Integer subscriptionId,
+			@RequestParam("paymentName") String paymentName, @RequestParam("email") String email,
+			@RequestParam("total") Float total, @RequestParam("packages") String packages,
+			@RequestParam("ads") Optional<Long> adsId) {
+		if (packages.equalsIgnoreCase("ACCOUNT")) {
+			crudUserType.create(usertypeSer.generateEntity(email, subscriptionId, 1));
+			crudPayment.create(historyPayment.payment(email, subscriptionId, paymentName));
+		} else {
+			adsSer.updateStatusAds(adsId.orElse(null), false, 1);
+		}
 		return "redirect:/payment";
 	}
 }

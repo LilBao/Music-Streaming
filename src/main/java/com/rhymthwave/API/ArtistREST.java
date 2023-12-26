@@ -1,5 +1,6 @@
 package com.rhymthwave.API;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,7 +40,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ArtistREST {
 
-	private final CRUD<Artist, Integer> crud;
+	private final CRUD<Artist, Long> crud;
 
 	private final CloudinaryService cloudinary;
 
@@ -59,7 +61,7 @@ public class ArtistREST {
 	}
 
 	@GetMapping("/api/v1/artist/{id}")
-	public ResponseEntity<MessageResponse> getById(@PathVariable("id") Integer id) {
+	public ResponseEntity<MessageResponse> getById(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(new MessageResponse(true, "succeess", crud.findOne(id)));
 	}
 	
@@ -147,7 +149,8 @@ public class ArtistREST {
 	@GetMapping("/api/v1/profile")
 	public ResponseEntity<MessageResponse> findProfile(HttpServletRequest req){
 		String owner = host.getEmailByRequest(req);
-		return ResponseEntity.ok(new MessageResponse(true,"success",artistSer.findByEmail(owner)));
+		Artist artist = artistSer.findByEmail(owner);
+		return ResponseEntity.ok(new MessageResponse(true,"success", artist));
 	}
 	
 	@GetMapping("/api/v1/find-artist/{email}")
@@ -168,5 +171,25 @@ public class ArtistREST {
 		Artist artist = artistSer.findByEmail(owner);
 		List<Artist> list = artistSer.findAllArtistNameisVerify(artist.getArtistId(), "%"+artistName+"%");
 		return ResponseEntity.ok(new MessageResponse(true,"success",list));
+	}
+	
+	@GetMapping("/api/v1/artist-pl/{keyword}")
+	public ResponseEntity<MessageResponse> getArtByName(@PathVariable("keyword") String keyword) {
+		return ResponseEntity.ok(new MessageResponse(true, "succeess", artistSer.findByName(keyword)));
+	}
+	
+	@GetMapping("/api/v1/top-artist-listen")
+	public ResponseEntity<MessageResponse> findTopArtistByListen(@RequestParam("country") String country) {
+		return ResponseEntity.ok(new MessageResponse(true, "succeess", artistSer.top50ArtistByListener(country, true, true)));
+	}
+	
+	@GetMapping("/api/v1/top-artist-follow")
+	public ResponseEntity<MessageResponse> findTopArtistByFollow(@RequestParam("country") String country) {
+		return ResponseEntity.ok(new MessageResponse(true, "succeess", artistSer.top50ArtistByFollow(2,country,true)));
+	}
+	
+	@GetMapping("/api/v1/top3-artist")
+	public ResponseEntity<MessageResponse> top3ArtistByEntityListened(){
+		return ResponseEntity.ok(new MessageResponse(true,"success",artistSer.top3ArtistByByListener()));
 	}
 }

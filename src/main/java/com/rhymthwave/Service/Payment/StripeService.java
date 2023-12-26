@@ -6,11 +6,13 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.condition.ParamsRequestCondition;
 
 import com.rhymthwave.DTO.payment.StripeChargeDTO;
 import com.rhymthwave.DTO.payment.StripeTokenDTO;
 import com.rhymthwave.DTO.payment.SubscriptionDTO;
 import com.rhymthwave.Utilities.GetHostByRequest;
+import com.rhymthwave.Utilities.Cookie.CookiesUntils;
 import com.rhymthwave.entity.payment.Payment;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
@@ -21,6 +23,8 @@ import com.stripe.param.checkout.SessionCreateParams;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -84,22 +88,21 @@ public class StripeService {
 		}
 
 	}
-	
-	//phải tạo product trên stripe
-	public Payment checkoutPayment(SubscriptionDTO subscription,String email,HttpServletRequest req){
+
+	// phải tạo product trên stripe
+	public Payment checkoutPayment(SubscriptionDTO subscription, String email, HttpServletRequest req,
+			String pathReturn, String pathCancel, String packages) {
 		try {
 			SessionCreateParams params = SessionCreateParams.builder().setMode(SessionCreateParams.Mode.PAYMENT)
-					.setSuccessUrl(applicationUrl(req, "/completed-payment-stripe?subscription="+subscription.getSubscriptionId()+"&email="+email))
-					.setCancelUrl(applicationUrl(req, "/cancelled-payment-stripe"))
+					.setSuccessUrl(applicationUrl(req, pathReturn)).setCancelUrl(applicationUrl(req, pathCancel))
 					.addLineItem(SessionCreateParams.LineItem.builder().setQuantity(1L)
-					.setPrice(subscription.getPrdStripeId()).build())
+							.setPrice(subscription.getPrdStripeId()).build())
 					.build();
 			Session session = Session.create(params);
-			return new Payment("00","success",session.getUrl());
+			return new Payment("00", "success", session.getUrl());
 		} catch (Exception e) {
-			return new Payment("01","fail","");
+			return new Payment("01", "fail", "");
 		}
-		
 	}
 
 	private String applicationUrl(HttpServletRequest req, String path) {

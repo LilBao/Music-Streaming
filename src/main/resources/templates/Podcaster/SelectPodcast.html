@@ -23,7 +23,7 @@
         <div class="row">
             <h3 class="text-center my-3">Select Podcast</h3>
             <div ng-repeat="item in listPodcast" class="col-3 my-2 p-0 d-flex flex-column align-items-center">
-                <a ng-click="choosePodcast(item)" href="./PodcastControl.html#!/">
+                <a ng-click="choosePodcast(item)" href="./podcaster">
                     <img class="img-podcast img-thumbnail" src="{{item.image.url}}" alt="">
                 </a>
                 <h5 class="text-center mt-1">{{item.podcastName}}</h5>
@@ -48,7 +48,7 @@
                     <div class="row">
                         <div class="col-5">
                             <img ng-click="selectImg('podcast-img')" class="podcast-img img-podcast" src="https://res.cloudinary.com/div9ldpou/image/upload/v1696293833/Avatar/System/807831_rrsd2v.png"  alt="">
-                            <input id="podcast-img" type="file" hidden>
+                            <input accept="image/*" id="podcast-img" type="file" hidden>
                         </div>
                         <div class="col-7">
                             <div class="my-3">
@@ -75,7 +75,7 @@
                         <textarea ng-model="podcast.bio" class="text-white inputCss form-control " name="" id="" cols="30" rows="10"
                             placeholder="Bio"></textarea>
                     </div>
-                    
+                    <h6 class="text-danger">{{$scope.error}}</h6>
                 </div>
 
                 <div class="modal-footer bg-dark">

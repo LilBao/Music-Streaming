@@ -1,20 +1,28 @@
 var host = "http://localhost:8080/api";
-app.controller('profileArtistCtrl', function ($scope, $http) {
+app.controller('profileArtistCtrl', function ($scope, $http,graphqlService,$cookies) {
     $scope.artist = {};
     $scope.image = {};
-
+    $scope.listSong = {};
+    $scope.listAlbum = {};
+    $scope.listened=0;
     //Get information artist - lấy thông tin artist đăng nhập
-    
-    $scope.me = function(){
+
+    $scope.me = function () {
         $http.get(host + "/v1/profile", {
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
             $scope.artist = resp.data.data;
+            $scope.getListSongReleased($scope.artist.account.email);
+            $scope.getListAlbumReleased();
         }).catch(error => {
             console.log("Not found artist profile")
         })
     }
-    $scope.me();
+    if($cookies.get('token')){
+        $scope.me();
+    }else{
+        window.location.href="/signin"
+    }
 
     //update artist
     $scope.updateArtist = function (data) {
@@ -66,7 +74,8 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
                 'Authorization': 'Bearer ' + getCookie('token')
             },
             transformRequest: angular.identity
-        }).then(function (response) {
+        }).then(function (resp) {
+            $scope.artist = resp.data.data;
             showStickyNotification('Update image success', 'success', 3000);
         }).catch(function (error) {
             console.log(error);
@@ -93,7 +102,7 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
         $('#close-modified-background').click(function () {
             icon.removeClass("bi-check-lg");
             icon.addClass("bi-pencil-fill");
-            $('.background').attr('src', $scope.artist.backgroundImage);
+            $('.background').attr('src', $scope.artist.backgroundImage.url);
             $('#modified-background').removeClass("save");
             $('#close-modified-background').remove();
         })
@@ -127,6 +136,31 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
         }
     })
 
+    //Event modifed information
+    $('#modified-information').click(function () {
+        var icon = $(this).find("i");
+        if ($('#modified-information').hasClass("save")) {
+            icon.removeClass("bi-check-lg");
+            icon.addClass("bi-pencil-fill");
+            $('#infor-artistName').attr('readonly', true);
+            $('#infor-fullName').attr('readonly', true);
+            $('#infor-placeOfBirth').attr('readonly', true);
+            $('#infor-dateOfBirth').attr('readonly', true);
+
+            $('#modified-information').removeClass("save");
+            let data = angular.copy($scope.artist)
+            $scope.updateArtist(data);
+        } else {
+            icon.removeClass("bi-pencil-fill");
+            icon.addClass("bi-check-lg");
+            $('#infor-artistName').removeAttr('readonly');
+            $('#infor-fullName').removeAttr('readonly');
+            $('#infor-placeOfBirth').removeAttr('readonly');
+            $('#infor-dateOfBirth').removeAttr('readonly');
+            $('#modified-information').addClass("save");
+        }
+    })
+
     //upload Image gallery
     $scope.uploadGallery = function () {
         if ($scope.listGallery.length > 0) {
@@ -143,9 +177,9 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
                 transformRequest: angular.identity
             }).then(resp => {
                 $scope.me();
-                showStickyNotification('Update gallery successfully','success',3000)
+                showStickyNotification('Update gallery successfully', 'success', 3000)
             }).catch(error => {
-                showStickyNotification('Update gallery fail','danger',3000)
+                showStickyNotification('Update gallery fail', 'danger', 3000)
             })
         }
     }
@@ -246,8 +280,8 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
     }
 
     //Download Image
-    $scope.downloadImage=function(urlFile){
-       
+    $scope.downloadImage = function (urlFile) {
+
     }
 
     //recovery profile-picture
@@ -298,18 +332,103 @@ app.controller('profileArtistCtrl', function ($scope, $http) {
         $("#savedelete").collapse("hide");
         $scope.listGallery = [];
     }
-   
+
     $scope.selectMultipleFile = function (id) {
         $('#' + id).click();
         $('#' + id).change(function (event) {
             $scope.listGallery = [];
+            var containerDiv = $('#imageContainer');
             for (var i = 0; i < event.target.files.length; i++) {
                 if (event.target.files[i]) {
                     $scope.listGallery.push(event.target.files[i]);
+                    var reader = new FileReader();
+                    reader.onload = (function (index) {
+                        return function (e) {
+                            var imageDataUrl = e.target.result;
+                            var img = $('<img>').attr('src', imageDataUrl).addClass('uploaded-image image-gallery');
+                            containerDiv.append(img);
+                        };
+                    })(i);
+                    reader.readAsDataURL(event.target.files[i]);
                 }
             }
+
         })
     };
+
+    //Top 5 Record listened
+    $scope.getListSongReleased = function (email) {
+        const query = `{
+            getListSongReleased(email: "`+ String(email) + `") {
+                recordingName
+                duration
+                songStyle
+                listened
+                mood
+                culture
+                instrument
+                versions
+                studio
+                idMv
+                produce
+                recordingdate
+                songGenres{
+                    genre {
+                      nameGenre
+                    }
+                }
+                song{
+                  image{
+                    url
+                  }
+                  writters{
+                    artist{
+                      artistName
+                    }
+                  }
+                }
+            }
+        }`
+        graphqlService.executeQuery(query).then(data => {
+            $scope.listSong = data.getListSongReleased.slice().sort(function(a, b){
+                return b.listened - a.listened;
+            });
+            $scope.listSong.forEach(element => {
+                $scope.listened += element.listened;
+            });
+        })
+    }
+
+    //Top My album listened
+    $scope.getListAlbumReleased = function () {
+        $http.get(host + "/v1/album-artist-released", {
+            headers: { 'Authorization': 'Bearer ' + getCookie('token') }
+        }).then(resp => {
+            $scope.listAlbum = resp.data.data;
+        }).catch(error => {
+            console.log(error);
+        })
+    }
+
+    //Disabled account
+    $scope.disableAccount = function(){
+        $.confirm({
+            title: 'Disable account!',
+            content: 'Your account will be dissabled.\n If you do not log in your artist profile after 6 months, you will lose access to your account',
+            buttons: {
+                confirm: function () {
+                    var data = angular.copy($scope.artist);
+                    data.active = false;
+                    data.expirePermission = new Date(Date.now() + (180 * 24 * 60 * 60 * 1000));
+                    $scope.updateArtist(data);
+                    window.location.href="/"
+                },
+                cancel: function () {
+
+                },
+            }
+        });
+    }
 
     //JS
     $('#modified-linkSocial').click(function () {

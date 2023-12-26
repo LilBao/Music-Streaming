@@ -21,17 +21,17 @@ public class InstrumentREST {
 	CRUD<Instrument, Integer> crudInstrument;
 	
 	@GetMapping("/api/v1/instrument")
-	public ResponseEntity<MessageResponse> getAllGenre(){
+	public ResponseEntity<MessageResponse> getAllInstrument(){
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudInstrument.findAll()));
 	}
 	
 	@GetMapping("/api/v1/instrument/{id}")
-	public ResponseEntity<MessageResponse> getGenreById(@PathVariable("id") Integer id){
+	public ResponseEntity<MessageResponse> getInstrumentById(@PathVariable("id") Integer id){
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudInstrument.findOne(id)));
 	}
 	
 	@PostMapping("/api/v1/instrument")
-	public ResponseEntity<MessageResponse> createGenre(@RequestBody Instrument instrument){
+	public ResponseEntity<MessageResponse> createInstrument(@RequestBody Instrument instrument){
 		return ResponseEntity.ok(new MessageResponse(true,"success",crudInstrument.create(instrument)));
 	}
 }

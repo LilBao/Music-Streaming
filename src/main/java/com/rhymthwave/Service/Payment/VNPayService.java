@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class VNPayService {
 	@Autowired
 	HttpServletResponse resp;
 
-	public Payment vnpay(Integer total, String email,Integer subscriptionId) {
+	public Payment vnpay(Integer total, String email,Integer subscriptionId,String packages,Long adsId) {
 		try {
 			String vnp_Version = VNPayConfig.vnp_Version;
 			String vnp_Command = VNPayConfig.vnp_Command;
@@ -51,7 +52,7 @@ public class VNPayService {
 	        vnp_Params.put("vnp_OrderInfo", "Thanh toan don hang:" + vnp_TxnRef);
 	        vnp_Params.put("vnp_OrderType", "other");
 	        vnp_Params.put("vnp_Locale", "vn");
-	        vnp_Params.put("vnp_ReturnUrl", VNPayConfig.vnp_Returnurl+"?email="+email+"&subcriptionId="+subscriptionId);
+	        vnp_Params.put("vnp_ReturnUrl", VNPayConfig.vnp_Returnurl+"?email="+email+"&subcriptionId="+subscriptionId+"&paymentName=vnpay"+"&packages="+packages+"&ads="+adsId);
 	        vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
 	        
 			Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));

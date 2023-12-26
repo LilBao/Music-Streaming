@@ -30,9 +30,29 @@ app.controller('myPodcastCtrl',function($scope,$http){
     
     $scope.destroyPodcast=function(){
         let url = host + "/v1/podcast/"+$scope.podcast.podcastId;
-        let data = angular.copy($scope.podcast);
+        var data = angular.copy($scope.podcast);
         $http.delete(url).then(resp => {
+            $scope.deleteImage(data.image.accessId,data.image.publicId)
             window.location.href = "./SelectPodcast.html" 
+        }).catch(error => {
+
+        })
+    }
+
+    $scope.deleteImageCloudinary = function (publicId) {
+        let url = host + "/v1/cloudinary?public_id=" + publicId;
+        $http.delete(url).then(resp => {
+            showStickyNotification('Delete picture success', 'success', 3000);
+        }).catch(error => {
+            showStickyNotification('Delete picture fail', 'danger', 3000);
+        })
+    }
+
+    //Delete image
+    $scope.deleteImage = function (assetId, publicId) {
+        var url = host + "/v1/image/" + assetId;
+        $http.delete(url).then(resp => {
+            $scope.deleteImageCloudinary(publicId);
         }).catch(error => {
 
         })
@@ -63,14 +83,15 @@ app.controller('myPodcastCtrl',function($scope,$http){
         let url = host+"/v1/podcast";
         let data = angular.copy($scope.podcast);
         data.socialMediaLink = $scope.socials.join(" ");
+        data.tag = JSON.parse($scope.podcast.tag)
         $http.put(url,data).then(resp => {
             if($scope.coverImg!==null){
                 $scope.updateImage(resp.data.data.podcastId);
-                showStickyNotification('Update Successfully', 'success', 3000);
-            }      
-            
+            }
+            localStorage.setItem('podcast',JSON.stringify(resp.data.data));
+            showStickyNotification('Update Successfully', 'success', 3000);
         }).catch(error => {
-
+            console.log(error)
         })
     }
 

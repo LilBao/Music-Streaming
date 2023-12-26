@@ -1,7 +1,13 @@
 package com.rhymthwave.Service;
 
-import com.rhymthwave.entity.Subscription;
+import java.util.List;
 
-public interface SubscriptionService {
+import com.rhymthwave.entity.Subscription;
+import com.rhymthwave.entity.TypeEnum.ESubscription;
+
+public interface SubscriptionService extends  CRUD<Subscription, Integer>{
 	Subscription getSubByName(String name);
+	
+	List<Subscription> findByCategory(ESubscription cate,Boolean active);
+	
 }

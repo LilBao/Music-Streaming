@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,18 +31,18 @@ public class Episode implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "EPISODESID")
-	private long episodeId;
+	private Long episodeId;
 
-	@Column(name = "PUBLICIDFILE")
+	@Column(name = "PUBLICIDFILE",columnDefinition = "nvarchar(max)")
 	private String publicIdFile;
 	
-	@Column(name = "FILEURL")
+	@Column(name = "FILEURL",columnDefinition = "nvarchar(max)")
 	private String fileUrl;
 
-	@Column(name = "EPISODESTITLE")
+	@Column(name = "EPISODESTITLE",columnDefinition = "nvarchar(max)")
 	private String episodeTitle;
 
-	@Column(name = "DESCRIPTIONS")
+	@Column(name = "DESCRIPTIONS",columnDefinition = "nvarchar(max)")
 	private String description;
 
 	@Column(name = "PUBLISHDATE")
@@ -55,10 +54,10 @@ public class Episode implements Serializable {
 	@Column(name = "EPNUMBER")
 	private Integer episodeNumber;
 
-	@Column(name = "EPTYPE")
+	@Column(name = "EPTYPE",columnDefinition = "nvarchar(55)")
 	private String episodeType;
 
-	@Column(name = "CONTENT")
+	@Column(name = "CONTENT",columnDefinition = "nvarchar(55)")
 	private String content;
 
 	@Column(name = "ISPUBLIC")
@@ -67,15 +66,18 @@ public class Episode implements Serializable {
 	@Column(name = "ISDELETED")
 	private boolean isDelete;
 	
-	@Column(name = "LIKES")
-	private Long likes;
+	@Column(name = "LISTENED")
+	private Long listened=0L;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@Column(name = "DURATION")
+	private Integer duration;
+	
+	@ManyToOne()
 	@JoinColumn(name = "PODCASTID")
 	@JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
 	private Podcast podcast;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne()
 	@JoinColumn(name = "IMAGEEP")
 	@JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
 	private Image image;
@@ -83,8 +85,16 @@ public class Episode implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "episode")
 	private List<Playlist_Podcast> playlistPodcast;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "episode")
+	private List<Wishlist> wishlist;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "episode")
 	private List<Report> reports;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "episode")
+	private List<MonitorEpisode> monitorEp;
 }

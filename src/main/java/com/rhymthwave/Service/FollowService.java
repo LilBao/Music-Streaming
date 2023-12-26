@@ -11,4 +11,12 @@ public interface FollowService {
 	Follow findFollowByAccount(Author accountA, Author accountB);
 	
 	List<Follow> findMyListFollow(Author accountA);
+		
+	List<Follow> findYourListFollow(Author accountB);
+	
+	Integer getQuantityFollowByDate(Long authorId,Integer days);
+	
+	List<Author> getListArtistFanLiked(List<Long> accountFans,Integer idRole, String country);
+	
+	List<Object[]> monitorFollower(String email,Integer role, Integer date);
 }

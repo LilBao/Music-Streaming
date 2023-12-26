@@ -12,7 +12,7 @@ app.controller('confirmCtrl', function ($scope, $http) {
     })
 
     $scope.sendMail = function(){
-        let url = host + "/v1/email-request-artist"
+        let url = host + "/v1/email-request-artist/"+$scope.account.email;
         $http.post(url,{
             headers: { 
                 'Authorization': 'Bearer ' + getCookie('token')

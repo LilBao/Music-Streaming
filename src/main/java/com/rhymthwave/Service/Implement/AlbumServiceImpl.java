@@ -42,6 +42,7 @@ public class AlbumServiceImpl implements AlbumService, CRUD<Album, Long> {
 	@Override
 	public Boolean delete(Long key) {
 		if (key instanceof Long && key >= 0) {
+			dao.deleteById(key);
 			return true;
 		}
 		return false;
@@ -70,5 +71,25 @@ public class AlbumServiceImpl implements AlbumService, CRUD<Album, Long> {
 	public List<Album> findAlbumReleasedByArtist(Long artistId) {
 		List<Album> listAlbum = dao.getListAlbumReleasedByArtist(artistId);
 		return listAlbum;
+	}
+
+	@Override
+	public List<Object> findByName(String keyword) {
+		return dao.findByName(keyword);
+	}
+
+	@Override
+	public List<Album> findAlbumByArtist(Long artistId) {
+		return dao.getListAlbumByArtist(artistId);
+	}
+
+	@Override
+	public List<Album> top50AlbumLatest() {
+		return dao.top50AlbumLatest();
+	}
+
+	@Override
+	public List<Album> top50AlbumListenest() {
+		return dao.top50AlbumListenest();
 	}	
 }

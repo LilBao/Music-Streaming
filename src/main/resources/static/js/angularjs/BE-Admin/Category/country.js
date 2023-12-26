@@ -1,53 +1,50 @@
 
 var aipCountry = "http://localhost:8080/api/v1/admin/category/country";
 var cookieName = "token";
-app.controller("countryController", function ($scope, $http, $cookies,$log , $timeout) {
+app.controller("countryController", function ($scope, $http, $cookies,$log , $timeout,graphqlService) {
 
 	$scope.form = {};
-	$scope.itemCountries = [];
-	$scope.page = [];
-	$scope.currentPage = 0;
-	$scope.success = false;
+	$scope.items = [];
 
 	$scope.reset = function () {
 		$scope.form = {};
 		$scope.key = null;
 	}
 
-	$scope.load_all = () => {
-		$http.get(aipCountry).then(resp => {
-			$scope.itemCountries = resp.data.data.content;
-			$scope.utilitiesPage.totalPages(resp.data.data.totalPages);
-		}).catch(error => {
-			console.log("Error", error)
-		});
+
+	$scope.load_all = function() {
+		const query = `
+		{
+			getAllCountry {
+			  id
+			  nameCountry
+			  createBy
+			  createDate
+			  modifiedBy
+			  modifiDate
+			}
+		  }`;
+        graphqlService.executeQuery(query)
+            .then(data => {
+                $scope.items = data.getAllCountry;
+            })
+            .catch(error => {
+                console.log(error);
+
+            });
 	}
 
-	$scope.goToPage = function (pageNumber) {
-		// Gửi yêu cầu đến máy chủ Spring Boot để lấy dữ liệu trang mới
-		$http.get(aipCountry + "?page=" + pageNumber)
-			.then(resp =>{
-				$scope.itemCountries = resp.data.data.content;			
-				$scope.currentPage = pageNumber;	
-			}).catch(error => {
-				console.log("Error", error)
-			});
-	};
-
-	$scope.utilitiesPage = {
-
-		totalPages(totalPages) {
-			for (var i = 0; i <= totalPages - 1; i++) {
-				$scope.page.push(i);
-			}
-		},
-
-		firstPage(){
-			$scope.goToPage($scope.page[0]);
-		},
-		endPage(){
-			$scope.goToPage($scope.page[$scope.page.length - 1]);
+	$scope.sortColumn="nameCountry";
+	$scope.revertSort = false;
+	$scope.sortData = function(column){
+		$scope.revertSort = ($scope.sortColumn == column) ? !$scope.revertSort : false;
+		$scope.sortColumn = column;
+	}
+	$scope.getSortClass = function(column){
+		if($scope.sortColumn == column){
+			return $scope.revertSort ?"bi bi-sort-down mx-1":"bi bi-sort-up mx-1"
 		}
+		return "";
 	}
 
 
@@ -60,11 +57,9 @@ app.controller("countryController", function ($scope, $http, $cookies,$log , $ti
 		}).then(resp => {
 			$scope.load_all();
 			$scope.reset();
-			$scope.success = true
-			$timeout( function(){
-				$scope.closeAlert();
-			}, 2000 );
+			showStickyNotification("successful", "success", 2000);
 		}).catch(error => {
+			showStickyNotification("Create fail", "danger", 2000);
 			console.log("Error", error)
 		});
 	}
@@ -81,14 +76,12 @@ app.controller("countryController", function ($scope, $http, $cookies,$log , $ti
 				'Authorization': 'Bearer ' + $cookies.get(cookieName)
 			}
 		}).then(resp => {
-			var index = $scope.itemCountries.findIndex(item => item.id == $scope.form.id);
-			$scope.itemCountries[index] = resp.data;
+			var index = $scope.items.findIndex(item => item.id == $scope.form.id);
+			$scope.items[index] = resp.data;
 			$scope.load_all();
-			$scope.success = true
-			$timeout( function(){
-				$scope.closeAlert();
-			}, 2000 );
+			showStickyNotification("successful", "success", 2000);
 		}).catch(error => {
+			showStickyNotification("Update fail", "danger", 2000);
 			$log.error(error.data);
 		});
 	}
@@ -100,15 +93,13 @@ app.controller("countryController", function ($scope, $http, $cookies,$log , $ti
 				'Authorization': 'Bearer ' + $cookies.get(cookieName)
 			}
 		}).then(resp => {
-			var index = $scope.itemCountries.findIndex(item => item.id == key);
-			$scope.itemCountries.splice(index, 1);
+			var index = $scope.items.findIndex(item => item.id == key);
+			$scope.items.splice(index, 1);
 			$scope.load_all();
 			$scope.reset();
-			$scope.success = true
-			$timeout( function(){
-				$scope.closeAlert();
-			}, 2000 );
+			showStickyNotification("successful", "success", 2000);
 		}).catch(error => {
+			showStickyNotification("Delete fail", "danger", 2000);
 			console.log("Error", error);
 		});
 	}

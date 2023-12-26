@@ -1,6 +1,8 @@
 package com.rhymthwave.API_Admin;
 
-import org.springframework.data.domain.Page;
+import java.util.List;
+
+import com.rhymthwave.DAO.AccountDAO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,16 +26,18 @@ import lombok.RequiredArgsConstructor;
 public class API_MangerAccount {
 		
 	private final IAccountServiceAdmin accountServiceAdmin;
-	
+
+	private final AccountDAO dao;
+
 	@GetMapping()
 	public ResponseEntity<?> getAllUser(
 			@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
 			@RequestParam(value = "sortBy", required = false, defaultValue = "asc") String sortBy,
 			@RequestParam(value = "sortfield", required = false, defaultValue = "email") String sortField,
 			@RequestParam(value = "role", required = false, defaultValue = "USER") EROLE role) {
+		List<Account> pages = accountServiceAdmin.findAllAccountByRole(page, sortBy, sortField,role);
 
 		
-		Page<Account> pages = accountServiceAdmin.findAllAccountByRole(page, sortBy, sortField,role);
 		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", pages));
 	}
 	
@@ -43,6 +47,23 @@ public class API_MangerAccount {
 		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", account));
 	}
 	
+	
 
 
+	@GetMapping("/{idAccount}/report")
+	public ResponseEntity<?> countReport(@PathVariable("idAccount") String idAccount) {
+		int count = accountServiceAdmin.countReportByAccount(idAccount);
+		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", count));
+	}
+	
+	@GetMapping("/{idAccount}/wishlist")
+	public ResponseEntity<?> countWishlist(@PathVariable("idAccount") String idAccount) {
+		int count = accountServiceAdmin.countWithlistByAccount(idAccount);
+		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", count));
+	}
+
+	@GetMapping("/count-country")
+	public ResponseEntity<?> upgradePackageRate() {
+		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(true, "Successfully", dao.countAccountByCountry()));
+	}
 }
