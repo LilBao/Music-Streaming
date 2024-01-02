@@ -102,7 +102,7 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $cookies, 
                         $scope.checkOwnPl = true;
                     }
                 }
-               
+                $scope.quantity = data.playlistById.playlistRecords.length + data.playlistById.playlistPodcast.length;
                 $scope.playlistRE = [...data.playlistById.playlistRecords, ...data.playlistById.playlistPodcast];
                 $scope.listAudioPlaylist = [...data.playlistById.playlistRecords.map(function (item) {
                     return { recording: item.recording };
@@ -241,6 +241,7 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $cookies, 
         data.recording = item;
         data.playlist = playlist;
         $http.post(url, data, {
+            params: {quantity: $scope.quantity },
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
             $scope.findPlaylist();
@@ -248,7 +249,7 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $cookies, 
                 $scope.findPlaylist();
                 showStickyNotification('Addition successfull', 'success', 3000);
             } else {
-                showStickyNotification(resp.data.data, 'warning', 3000);
+                showStickyNotification(resp.data.message, 'warning', 3000);
             }
         }).catch(err => {
 
@@ -261,6 +262,7 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $cookies, 
         data.episode = item;
         data.playlist = playlist;
         $http.post(url, data, {
+            params: {quantity: $scope.quantity },
             headers: { 'Authorization': 'Bearer ' + getCookie('token') }
         }).then(resp => {
             if (resp.data.success == true) {
@@ -476,8 +478,8 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $cookies, 
 
     $scope.createPlaylistAddSong = function (item) {
         var playlist = {};
-        playlist.image = item.song.image;
         if (item.recordingId) {
+            playlist.image = item.song.image;
             playlist.playlistName = item.recordingName;
             let url = host + "v1/playlist";
             $http.post(url, playlist, {
@@ -495,13 +497,14 @@ app.controller('playlistCtrl', function ($scope, $http, $routeParams, $cookies, 
                 console.log(err);
             })
         } else {
+            playlist.image = item.image;
             playlist.playlistName = item.episodeTitle;
             let url = host + "v1/playlist";
             $http.post(url, playlist, {
                 headers: { 'Authorization': 'Bearer ' + getCookie('token') }
             }).then(resp => {
                 if (resp.data.success === true) {
-                    $scope.additionEpisode(episodeTitle, resp.data.data);
+                    $scope.additionEpisode(item, resp.data.data);
                     $scope.findMyPlaylist($scope.account.email);
                 } else {
                     showStickyNotification(resp.data.data, 'warning', 2000);

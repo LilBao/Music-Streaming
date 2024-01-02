@@ -135,6 +135,11 @@
                                                     class="bi bi-hearts"></i>{{isLiked(item) ? 'Remove from liked songs':'Save to your liked songs'}} </a>
                                         </li>
                                         <li class="li-dropdown-start-end">
+                                            <a ng-click="createPlaylistAddSong(item)" class="btn text-white dropdown-item py-2">
+                                                <i class="bi bi-plus-lg"></i> Create playlist
+                                            </a>
+                                        </li>
+                                        <li class="li-dropdown-start-end">
                                             <hr class="dropdown-divider">
                                         </li>
                                         <li class="li-dropdown-start-end">

@@ -480,7 +480,7 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
             listened = 0;
             currentAds = 0;
             if ($scope.account.userType || !$cookies.get(token)) {
-                if ((($scope.account.userType.length === 1 || new Date($scope.account.userType[1].endDate) < new Date())
+                if ((($scope.account.userType.length === 1 || (new Date($scope.account.userType[1].endDate) < new Date()))
                     && (Math.floor(Math.random() * 3) + 1 === 3) && $scope.officalAds.length > 0)) {
                     resume.click();
                     play.disabled = true;
@@ -611,10 +611,13 @@ app.controller('myCtrl', function ($scope, $http, $route, $routeParams, audioSer
             } else if (currentAudioIndex === (audioService.getListPlay().length - 1)) {
                 $scope.getRecordByFavorite().then(data => {
                     currentAudioIndex = 0;
-                    audioService.setListPlay(data.getListRecordByFavorite);
+                    // console.log(data.getListRecordByFavorite)
+                    // audioService.setListPlay(data.getListRecordByFavorite);
                     audioService.setCurrentAudio(currentAudioIndex);
-                    var item = audioService.getListPlay()[currentAudioIndex];
-                    $scope.selectAudio(item, 'song', audioService.getListPlay(), currentAudioIndex)
+                    // var item = audioService.getListPlay()[currentAudioIndex];
+                    // $scope.selectAudio(item, 'song', audioService.getListPlay(), currentAudioIndex)
+                    console.log(data.getListRecordByFavorite)
+                    $scope.selectAudio(data.getListRecordByFavorite[0], 'song', data.getListRecordByFavorite,0);
                 })
             } else {
                 currentAudioIndex += 1;
