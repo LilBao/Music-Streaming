@@ -71,7 +71,7 @@ public class WishlistREST {
 		UserType basic = account.getUserType().get(0);
 		Episode episode = wishlist.getEpisode();
 		Recording recording = wishlist.getRecording();
-		UserType premium=null;
+		UserType premium = null;
 		if (basic.getWishlists().size() <= 50) {
 			Wishlist wishlistData = wishlistSer.create(wishlist, basic, wishlist.getEpisode(), wishlist.getRecording());
 			if (wishlistData != null) {
@@ -80,10 +80,9 @@ public class WishlistREST {
 				return ResponseEntity.ok(new MessageResponse(false, "Existed", null));
 			}
 		} else {
-			 premium = account.getUserType().size() > 1 ? account.getUserType().get(1) : null;
+			premium = account.getUserType().size() > 1 ? account.getUserType().get(1) : null;
 			if (premium != null) {
-				if (wishlistSer.checkExtist(basic, episode, recording) == null
-						&& wishlistSer.checkExtist(premium, episode, recording) == null) {
+				if (wishlistSer.checkExtist(basic, episode, recording) == null && wishlistSer.checkExtist(premium, episode, recording) == null) {
 					if (premium.getEndDate().after(new Date())) {
 						return ResponseEntity.ok(new MessageResponse(false, "Your subscription is expired!", null));
 					} else {
@@ -97,7 +96,6 @@ public class WishlistREST {
 				} else {
 					return ResponseEntity.ok(new MessageResponse(false, "Existed", null));
 				}
-
 			} else {
 				return ResponseEntity.ok(new MessageResponse(false, "Join Premium with us <3", null));
 			}
@@ -111,13 +109,10 @@ public class WishlistREST {
 		Account account = crudAccount.findOne(owner);
 		Episode episode = crudEpisode.findOne(episodeId.orElse(null));
 		Recording recording = crudRecording.findOne(recordingId.orElse(null));
-		UserType premium = account.getUserType().size() > 1 ? account.getUserType().get(1) : null;;
+		UserType premium = account.getUserType().size() > 1 ? account.getUserType().get(1) : null;
 		UserType basic = account.getUserType().get(0);
-		if (premium!=null) {
-			if ((wishlistSer.checkExtist(basic, episode, recording) != null)
-					|| (wishlistSer.checkExtist(premium, episode, recording) != null)) {
-				return ResponseEntity.ok(new MessageResponse(true, "No Existed", true));
-			}
+		if (premium != null && (wishlistSer.checkExtist(premium, episode, recording) != null)) {
+			return ResponseEntity.ok(new MessageResponse(true, "No Existed", true));
 		} else if (wishlistSer.checkExtist(basic, episode, recording) != null) {
 			return ResponseEntity.ok(new MessageResponse(true, "No Existed", true));
 		}
@@ -136,10 +131,13 @@ public class WishlistREST {
 		Account account = crudAccount.findOne(owner);
 		Episode episode = crudEpisode.findOne(episodeId.orElse(null));
 		Recording recording = crudRecording.findOne(recordingId.orElse(null));
-		UserType premium = account.getUserType().get(1);
+		UserType premium = account.getUserType().size() > 2 ?  account.getUserType().get(1) : null;
 		UserType basic = account.getUserType().get(0);
+		Wishlist wlp = null;
+		if(premium!=null) {
+			wlp = wishlistSer.checkExtist(premium, episode, recording);
+		}
 		Wishlist wlb = wishlistSer.checkExtist(basic, episode, recording);
-		Wishlist wlp = wishlistSer.checkExtist(premium, episode, recording);
 
 		if (wlb != null) {
 			return ResponseEntity.ok(new MessageResponse(true, "success", wlb));
