@@ -1,6 +1,7 @@
 package com.rhymthwave.API;
 
 import java.util.Date;
+import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rhymthwave.DTO.MessageResponse;
@@ -33,26 +35,17 @@ public class PlaylistPodcastREST {
 
 	@PostMapping("/api/v1/playlist-episode")
 	public ResponseEntity<MessageResponse> additionEpisodeIntoPlaylist(HttpServletRequest req,
-			@RequestBody Playlist_Podcast playlistPodcast) {
+			@RequestBody Playlist_Podcast playlistPodcast, @RequestParam("quantity") Optional<Integer> quantity) {
 		String owner = host.getEmailByRequest(req);
 		Account account = crudAccount.findOne(owner);
 		UserType basic = account.getUserType().get(0);
-		UserType premium = null;
-		if(account.getUserType().size() > 1) {
-			premium = account.getUserType().get(1);
-		}
-		Integer lengthPlaylist=0;
-		if(playlistPodcast.getPlaylist().getPlaylistPodcast()!=null) {
-			lengthPlaylist += playlistPodcast.getPlaylist().getPlaylistPodcast().toArray().length;
-		}
-		if(playlistPodcast.getPlaylist().getPlaylistRecords()!=null) {
-			lengthPlaylist += playlistPodcast.getPlaylist().getPlaylistRecords().toArray().length;
-		}
+		UserType premium = account.getUserType().size() > 1 ? account.getUserType().get(1) : null;
+		Integer lengthPlaylist = quantity.orElse(0);
 		if (lengthPlaylist <= basic.getSubscription().getNip()) {
 			return ResponseEntity.ok(new MessageResponse(true, "success", crudPlaylistPodcast.create(playlistPodcast)));
 		} else {
 			if (premium != null) {
-				if (premium.getEndDate().before(new Date())) {
+				if (premium.getEndDate().after(new Date())) {
 					return ResponseEntity.ok(new MessageResponse(false, "Your subscription is expired!", null));
 				} else {
 					return ResponseEntity.ok(new MessageResponse(true, "success", crudPlaylistPodcast.create(playlistPodcast)));

@@ -36,7 +36,6 @@ app.controller('dashboardCtrl', function ($scope, $http, $routeParams, graphqlSe
             params: { country: $scope.account.country }
         }).then(resp => {
             $scope.top50ArtistFollow = resp.data.data;
-            console.log(resp.data.data)
         })
     }
 
@@ -252,7 +251,6 @@ app.controller('dashboardCtrl', function ($scope, $http, $routeParams, graphqlSe
         $http.get(url, {
         }).then(resp => {
             $scope.slide = resp.data.data;
-            console.log(resp.data.data)
         })
     }
 

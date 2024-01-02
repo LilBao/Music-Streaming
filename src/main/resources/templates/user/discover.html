@@ -136,36 +136,6 @@
                                             aria-expanded="false"><i class="bi bi-three-dots"></i></button>
                                         <ul class="dropdown-menu p-0 bg-dark ul-dropdown-start-end">
                                             <li class="li-dropdown-start-end">
-                                                <a class="btn text-white dropdown-item py-2"><i
-                                                        class="bi bi-plus-lg"></i>
-                                                    Add to playlist
-                                                </a>
-                                                <ul class="nav bg-dark w-100">
-                                                    <li class="nav-item">
-                                                        <div class="input-group border-0">
-                                                            <span class="input-group-text"
-                                                                style="background-color: transparent;"><i
-                                                                    class="text-white bi bi-search-heart"></i></span>
-                                                            <input ng-model="nameMyPlaylist"
-                                                                ng-change="searchMyPlaylist(nameMyPlaylist)" type="text"
-                                                                class="text-white form-control"
-                                                                placeholder="Search in playlist"
-                                                                style="background-color: transparent;">
-                                                        </div>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a ng-click="createPlaylistAddSong(item)"
-                                                            class="nav-link text-white">
-                                                            <i class="bi bi-plus-lg"></i> Create playlist
-                                                        </a>
-                                                    </li>
-                                                    <hr class="dropdown-divider">
-                                                    <li ng-repeat="item in listPlaylist" class="nav-item">
-                                                        <a class="nav-link text-white">{{item.playlistName}}</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="li-dropdown-start-end">
                                                 <a class="btn text-white dropdown-item py-2" ng-click="enqueue(item)"><i
                                                         class="bi bi-hdd-stack"></i> Add to queue</a>
                                             </li>

@@ -86,7 +86,7 @@ public class PlaylistREST {
 			playlist.setUsertype(account.getUserType().get(0));
 			return ResponseEntity.ok(new MessageResponse(true, "success", crudPlaylist.create(playlist)));
 		} else {
-			if (account.getUserType().toArray().length > 1) {
+			if (account.getUserType().size() > 1) {
 				if (account.getUserType().get(1).getEndDate().before(new Date())) {
 					return ResponseEntity.ok(new MessageResponse(false, "success", "The premium account has expired."));
 				} else {
